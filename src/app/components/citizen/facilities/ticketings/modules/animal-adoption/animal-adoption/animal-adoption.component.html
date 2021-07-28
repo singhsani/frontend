@@ -27,9 +27,9 @@
           </ng-container>
 
           <ng-container matColumnDef="annualBoardingExpenses">
-            <mat-header-cell *matHeaderCellDef>{{'annual_boarding_expense' | translate:translateKey}}</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef>{{'annual_medical_expense' | translate:translateKey}}</mat-header-cell>
             <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
-              <div class="mobile-label">{{'annual_boarding_expense' | translate:translateKey}}</div>
+              <div class="mobile-label">{{'annual_medical_expense' | translate:translateKey}}</div>
               <div class="mobile-label1">:</div>
               <div class="row-inside"> {{row?.annualBoardingExpenses}} </div>
             </mat-cell>
@@ -154,8 +154,8 @@
         </mat-form-field>
 
         <mat-form-field class="col-md-6">
-          <textarea matInput type="text" formControlName="adoptersAddress"
-            placeholder="{{'adopter_organisation_address' | translate: translateKey}}" required></textarea>
+          <input matInput type="text" formControlName="adoptersAddress" maxlength="100"
+            placeholder="{{'adopter_organisation_address' | translate: translateKey}}" required>
           <control-messages [control]="animalAdoptionForm.get('adoptersAddress')"></control-messages>
         </mat-form-field>
 
@@ -167,14 +167,16 @@
 
         <mat-form-field class="col-md-6">
           <input matInput type="email" formControlName="adopterEmailId"
-            placeholder="{{'applicant_email' | translate: translateKey}}">
+            placeholder="{{'applicant_email' | translate: translateKey}}" maxlength="50">
           <control-messages [control]="animalAdoptionForm.get('adopterEmailId')"></control-messages>
         </mat-form-field>
 
         <div class="col-md-6 ngSelect">
-          <ng-select [items]="animalAdoptionPricing"
+          <ng-select [items]="animalAdoptionPricing" [multiple]="true" 
+            (clear)="resetCalculations($event);" 
+            (change)="getValues($event)"
             placeholder="{{'animal_or_bird_preferred_for_adoption'| translate: translateKey}}"
-            (add)="selectAnimal($event)" bindLabel="animalBirdName">
+             bindLabel="animalBirdName">
           </ng-select>
           <control-messages [control]="animalAdoptionForm.get('animalName')">
           </control-messages>
@@ -183,7 +185,7 @@
 
         <mat-form-field class="col-md-6">
           <input matInput type="number" [(ngModel)]="selectedAnimalAnnualBoardingExpenses"
-            [ngModelOptions]="{standalone: true}" placeholder="{{'annual_boarding_expense' | translate: translateKey}}"
+            [ngModelOptions]="{standalone: true}" placeholder="{{'annual_medical_expense' | translate: translateKey}}"
             readonly required>
         </mat-form-field>
 
@@ -199,7 +201,7 @@
           <control-messages [control]="animalAdoptionForm.get('totalAdoptionCost')"></control-messages>
         </mat-form-field>
 
-        <mat-form-field class="col-md-12">
+        <mat-form-field class="col-md-12 labelLonger">
           <textarea matInput type="text" formControlName="message"
             placeholder="{{'adoption_msg' | translate: translateKey}}"
             required></textarea>
@@ -208,7 +210,7 @@
 
         <div class="pl-3">
           
-             <mat-checkbox class="d-block" labelPosition="after" required formControlName="termsCondition">
+             <mat-checkbox class="d-block checkBoxLabel" labelPosition="after" required formControlName="termsCondition">
               {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}} 
               <a  class="stretchedLink" >
                  
@@ -224,6 +226,7 @@
         </div>
 
       </div>
+      <select-payment-gateway #paymentGateway [applicationType]="'Zooticketing'"></select-payment-gateway>
     </form>
 
     <div class="row mt-4 fotButtonBar">
@@ -245,3 +248,4 @@
 
 <!-- this div is used for printing the receipt -->
 <div id="sectionToPrint"></div>
+

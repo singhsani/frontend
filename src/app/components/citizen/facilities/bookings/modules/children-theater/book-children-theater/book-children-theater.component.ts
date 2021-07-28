@@ -64,8 +64,8 @@ export class BookChildrenTheaterComponent implements OnInit {
     /**
      * Date validations
      */
-    startMinDate: Date = moment(new Date()).add(1, 'day').toDate();
-    endMinDate: Date = moment(new Date()).add(1, 'day').toDate();
+    startMinDate: Date = moment(new Date()).add(7, 'day').toDate();
+    endMinDate: Date = moment(new Date()).add(7, 'day').toDate();
     endMaxDate:any = new Date();;
 
 
@@ -89,7 +89,7 @@ export class BookChildrenTheaterComponent implements OnInit {
                             is the convenient and easy way to book the Children Theater
                             of Vadodara Municiple Corporation. You can view the
                             availability details of the Children Theater and select booking
-                            date. The booking is confirmed on approval from department 
+                            date. The booking is confirmed on approval from department
                             and the successful payment of the rent amount for selected date.`;
     }
 
@@ -125,7 +125,7 @@ export class BookChildrenTheaterComponent implements OnInit {
 	 * @param date get the selected date value
 	 */
 	onDateChange(date) {
-        let futureMonth = moment(date).add(3, 'month');
+        let futureMonth = moment(date).add(36, 'day');
         this.endMaxDate = moment(futureMonth).format("YYYY-MM-DD");
 	}
 
@@ -166,8 +166,10 @@ export class BookChildrenTheaterComponent implements OnInit {
             applicantMobile: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
             confirmMobile: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
             emailId: [null, [Validators.required, ValidationService.emailValidator , Validators.maxLength(50)]],
-            confirmEmailId: [null, [Validators.required, ValidationService.emailValidator , Validators.maxLength(20)]],
+            confirmEmailId: [null, [Validators.required, ValidationService.emailValidator , Validators.maxLength(50)]],
             relationshipWithOrg: [null, [Validators.required, Validators.maxLength(20)]],
+            panCard:[null, ValidationService.panValidator],
+            gstNo:[null, ValidationService.gstNoValidator],
 
             //step 3
             // accountHolderName: [null, [Validators.required, Validators.maxLength(50)]],
@@ -197,6 +199,7 @@ export class BookChildrenTheaterComponent implements OnInit {
             resourceType: null,
             payableServiceType: null,
             resourceCode: null,
+            bookingFormId :null
         })
 
     }
@@ -349,4 +352,23 @@ export class BookChildrenTheaterComponent implements OnInit {
             return false;
         }
     }
+
+
+  /**
+   * Get user data
+   */
+  getUserProfile() {
+    this.bookingService.getUserProfile().subscribe(resp => {
+        console.log(resp);
+        this.childrenTheaterApplicationForm.get('applicantName').setValue(resp.data.firstName + ' ' + resp.data.lastName);
+        this.childrenTheaterApplicationForm.get('emailId').setValue(resp.data.email);
+        this.childrenTheaterApplicationForm.get('applicantMobile').setValue(resp.data.cellNo);
+        this.childrenTheaterApplicationForm.get('confirmEmailId').setValue(resp.data.email);
+        this.childrenTheaterApplicationForm.get('confirmMobile').setValue(resp.data.cellNo);
+    },
+      err => {
+        this.toster.error("Server Error");
+      });
+  }
+
 }

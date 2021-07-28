@@ -1,7 +1,6 @@
 <!-- My Bookings Title Bar -->
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
-
 <!-- Search Bookings By providing filter details -->
 <mat-card class="mb-4">
   <form [formGroup]="searchBookingsForm" (ngSubmit)="getAllBooking()" autocomplete="off" ngNativeValidate>
@@ -51,8 +50,8 @@
          matSortDirection="asc">
 
     <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef>{{'s_no' | translate:translateKey}}</mat-header-cell>
-      <mat-cell *matCellDef="let element;let indx=index;">
+      <mat-header-cell class="wMatCell80" *matHeaderCellDef>{{'s_no' | translate:translateKey}}</mat-header-cell>
+      <mat-cell class="wMatCell80" *matCellDef="let element;let indx=index;">
         <div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
         <div class="mobile-label1">:</div>
         <div class="row-inside"> {{(paginator.pageIndex * paginator.pageSize) + (indx+1)}}</div>
@@ -70,8 +69,8 @@
     </ng-container>
 
     <ng-container matColumnDef="bookingDate">
-      <mat-header-cell *matHeaderCellDef> {{'date_of_booking' | translate:translateKey}}</mat-header-cell>
-      <mat-cell *matCellDef="let element;">
+      <mat-header-cell class="wMatCell150" *matHeaderCellDef> {{'date_of_booking' | translate:translateKey}}</mat-header-cell>
+      <mat-cell class="wMatCell150" *matCellDef="let element;">
         <div class="mobile-label">{{'date_of_booking' | translate:translateKey}}</div>
         <div class="mobile-label1">:</div>
         <div class="row-inside">
@@ -81,8 +80,8 @@
     </ng-container>
 
     <ng-container matColumnDef="status">
-      <mat-header-cell *matHeaderCellDef> {{'booking_status' | translate:translateKey}}</mat-header-cell>
-      <mat-cell *matCellDef="let element;">
+      <mat-header-cell class="wMatCell150" *matHeaderCellDef> {{'booking_status' | translate:translateKey}}</mat-header-cell>
+      <mat-cell class="wMatCell150" *matCellDef="let element;">
         <div class="mobile-label">{{'booking_status' | translate:translateKey}}</div>
         <div class="mobile-label1">:</div>
         <div class="row-inside">
@@ -92,11 +91,11 @@
     </ng-container>
 
     <ng-container matColumnDef="action">
-      <mat-header-cell *matHeaderCellDef> {{'actions' | translate:translateKey}}</mat-header-cell>
-      <mat-cell *matCellDef="let element;">
+      <mat-header-cell class="wMatCell120 cellLast" *matHeaderCellDef> {{'actions' | translate:translateKey}}</mat-header-cell>
+      <mat-cell class="wMatCell120 cellLast" *matCellDef="let element;">
         <div class="mobile-label">{{'actions' | translate:translateKey}}</div>
         <div class="mobile-label1">:</div>
-        <button *ngIf="(element.status != bookingConstant.DRAFT) && (element.status != bookingConstant.EXPIRED)"
+        <button *ngIf="enableMoreAction(element)"
                 mat-button [matMenuTriggerFor]="menu">
           <mat-icon>more_vert</mat-icon>
         </button>
@@ -109,6 +108,12 @@
               <mat-icon title="Print Receipt" color="primary">print</mat-icon>
               {{'make_payment' | translate:translateKey}}
             </button>
+
+            <button mat-menu-item *ngIf="(element.status === 'SCRUTINY')" color="primary"
+                        (click)="loiPayments(element)">
+                        <mat-icon title="Make Payment" color="primary">print</mat-icon>
+							{{'make_payment' | translate:translateKey}}
+                    	</button>
 
             <button *ngIf="showRecieptReprint(element)" mat-menu-item color="primary"
                     (click)="printReceipt(element, element.payableServiceType)">
@@ -127,14 +132,21 @@
             </button>
             </div>
 
-              <!-- Recepit Re-print For Atithi Deposit -->
-            <!-- TODO Merge Townhall and Atithi deposit code and make it common-->
+            <div *ngIf="element.resourceType == 'SWIMMING_POOL'">
+              <button *ngIf="element.resourceType == 'SWIMMING_POOL' && element.status == bookingConstant.PAYMENT_REQUIRED"
+              mat-menu-item color="primary" (click)="printReceiptSwimming(element)">
+              <mat-icon title="Print Receipt" color="primary">print</mat-icon>Download LOI
+            </button>
+            </div>
 
-            <button *ngIf="showAtithiDepositReceiptBtn(element)" mat-menu-item color="primary"
+              <!-- Recepit Re-print For Atithi Deposit -->
+            <!-- Hide deposit receipt for Atithigruh as there is no separate payment for Atithigruh deposit payment in citizen -->
+
+            <!-- <button *ngIf="showAtithiDepositReceiptBtn(element)" mat-menu-item color="primary"
               (click)="printReceipt(element, bookingConstant.ATITHIGURH_DEPOSIT)">
               <mat-icon title="Print Receipt" color="primary">print</mat-icon>
               {{'deposit_receipt' | translate:translateKey}}
-            </button>
+            </button> -->
 
             <button
               *ngIf="element.status == bookingConstant.PPL_REQUIRED && element.status != bookingConstant.CANCELLATION_REQUEST && element.status != bookingConstant.PAYMENT_REQUIRED"
@@ -155,12 +167,27 @@
               {{'cancel_advance_booking' | translate:translateKey}}
             </button>
 
+            <!-- -->
+            <button *ngIf="checkingBookingDateWithCurrentDate(element)" mat-menu-item color="primary" (click)="depositRefundRequest(element)">
+              <mat-icon title="send" color="primary">send</mat-icon>
+              {{'refund_request' | translate:translateKey}}
+            </button>
+
+            <button mat-menu-item *ngIf="element.status == bookingConstant.CANCELLATION_APPROVED" data-toggle="modal" color="primary" (click)="cancellationApproveReport(element.refNumber)">
+              <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+              {{'approved_receipt_reprint' | translate:translateKey}}
+            </button>
           </div>
 
-          <button mat-menu-item color="primary" (click)="openJSONModal(template);jsonDisplay(element)">
+          <button *ngIf="(element.resourceType == 'STADIUM' || element.resourceType == 'CHILDREN_THEATER' && element.status == bookingConstant.SUBMITTED)" mat-menu-item color="primary" (click)="printAcknowledge(element.refNumber)">
+            <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+            {{'acknowledgement_reprint' | translate:translateKey}}
+          </button>
+
+          <!-- <button mat-menu-item color="primary" (click)="openJSONModal(template);jsonDisplay(element)">
             <mat-icon class="m-1" title="{{'application_json' | translate:translateKey}}">center_focus_weak</mat-icon>
             {{'application_json' | translate:translateKey}}
-          </button>
+          </button> -->
 
         </mat-menu>
       </mat-cell>
@@ -195,7 +222,12 @@
       <thead class="customthead">
       <tr>
         <th scope="col"> {{'s_no' | translate:translateKey}}</th>
-        <th scope="col">{{'slot_or_shift_no' | translate:translateKey}}</th>
+        <th *ngIf="!isBookingNoSlotNo" scope="col">
+          {{'slot_or_shift_no' | translate:translateKey}}
+        </th>
+        <th *ngIf="isBookingNoSlotNo" scope="col">
+          {{'booking_number' | translate:translateKey}}
+        </th>
         <th scope="col"> {{'date_of_programme' | translate:translateKey}}</th>
         <th scope="col"> {{'day_of_programme' | translate:translateKey}}</th>
         <th scope="col"> {{'start_time' | translate:translateKey}}</th>
@@ -205,7 +237,7 @@
         <th scope="col" class="text-center">
           {{'actions' | translate:translateKey}}
           <mat-checkbox labelPosition="after"
-                        [disabled]="getAllDisabled() || bookingService.resourceType == 'childrenTheater'||isAmphiCancellation"
+                        [disabled]="getAllDisabled() || bookingService.resourceType == 'childrenTheater' ||isAmphiCancellation"
                         [checked]="getAllSelected()"
                         (change)="chooseAllForCancel($event.checked)">
             {{'select_all' | translate:translateKey}}
@@ -216,7 +248,12 @@
       <tbody>
       <tr *ngFor="let shifts of CancelSlotList; let i = index;">
         <th scope="row">{{i+1}}</th>
-        <td>{{shifts.bookingNo?shifts.bookingNo: 'NA' }}</td>
+        <td *ngIf="!isBookingNoSlotNo">
+          {{shifts.bookingNo?shifts.bookingNo : 'NA'}}
+        </td>
+        <td *ngIf="isBookingNoSlotNo">
+          {{refNumber}}
+        </td>
         <td>{{bookingUtils.returnProperDate(shifts.bookingDate)}}</td>
         <td>{{bookingUtils.getDay(shifts.bookingDate)}}</td>
         <td>{{shifts.startTime}}</td>
@@ -225,7 +262,7 @@
         <td>{{bookingUtils.getProperErrorMessage(shifts.status)}}</td>
         <td>
           <mat-checkbox
-            [disabled]="(shifts.status == bookingConstant.CANCELLATION_REQUEST || shifts.status == bookingConstant.CANCELLATION_APPROVED || bookingService.resourceType == 'childrenTheater'||isAmphiCancellation)"
+            [disabled]="(shifts.status == bookingConstant.CANCELLATION_REQUEST || shifts.status == bookingConstant.CANCELLATION_APPROVED || bookingService.resourceType == 'childrenTheater' ||isAmphiCancellation)"
             [checked]="getSelected(shifts.bookingNo) || (shifts.status == bookingConstant.CANCELLATION_REQUEST || shifts.status == bookingConstant.CANCELLATION_APPROVED)"
             (change)="chooseForCancel(shifts, $event.checked)">
           </mat-checkbox>
@@ -355,7 +392,7 @@
       </div>
       <div class="row">
         <div class="col-md-12 ngSelect" formGroupName="bank">
-          <ng-select placeholder="{{'bank_name' | translate: translateKey}}" formControlName="code">
+          <ng-select placeholder="{{'bank_name' | translate: translateKey}}" required formControlName="code">
               <ng-option *ngFor="let bank of bankLists" [value]="bank.code">{{ bank.name }}</ng-option>
               <control-messages [control]="refundBankDetailsForm.get('bank')"></control-messages>
           </ng-select>
@@ -394,7 +431,7 @@
     </form>
   </div>
 </ng-template>
-<select-payment-gateway #paymentGateway></select-payment-gateway>
+<select-payment-gateway #paymentGateway [applicationType]="'booking'"></select-payment-gateway>
 <!-- this div is used for printing the receipt -->
 <!-- changes  -->
 <div id="sectionToPrint"></div>

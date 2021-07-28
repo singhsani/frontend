@@ -1,721 +1,1099 @@
-<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+<app-title-bar [title]="'Application Form (MGY / PMAY)'"></app-title-bar>
 
+<!-- <button (click)="patchValue()">patch</button> -->
 <mat-card class="formClass cardBorder">
-		<form [formGroup]="affordableHousingForm">
-				<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
-	
-					<!-- step 1 Starts -->
-					<mat-tab>
-						<ng-template mat-tab-label>
-							<div>{{'applicant_detail' | translate:translateKey}}</div>
-						</ng-template>
-	
-						<div class="row">
-	
-							<div class="col-md-4 ngSelect" >
-								<ng-select placeholder="{{'appliedFor' | translate: translateKey}} *" formControlName="schemeId" (change)="schemeChange($event)">
-									<ng-option *ngFor="let appliedFor of appliedForData" [value]="appliedFor.id">
-										{{appliedFor.name}}</ng-option>
-								</ng-select>
-								<control-messages [control]="affordableHousingForm.get('schemeId')">
-								</control-messages>
-							</div>
-		
-							<div class="col-md-4 ngSelect" >
-								<ng-select placeholder="{{'project' | translate: translateKey}} *" formControlName="projectId" >
-									<ng-option *ngFor="let project of projectData" [value]="project.id">
-										{{project.projectName}}</ng-option>
-								</ng-select>
-								<control-messages [control]="affordableHousingForm.get('projectId')">
-								</control-messages>
-							</div>
-		
-							<div class="col-md-4 ngSelect" formGroupName="category">
-								<ng-select placeholder="{{'category' | translate: translateKey}} *" formControlName="code">
-									<ng-option *ngFor="let category of MF_CATEGORY_TYPE" [value]="category.code">
-										{{category.name}}
-									</ng-option>
-								</ng-select>
-								<control-messages [control]="affordableHousingForm.get('category').get('code')">
-								</control-messages>
-							</div>
-		
-							
-							<mat-form-field class="col-md-4">
-								<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
-									required maxlength="100" placeholder="{{'applicant_Name' | translate:translateKey}}"
-									formControlName="applicantName">
-								<control-messages [control]="affordableHousingForm.get('applicantName')"></control-messages>
-							</mat-form-field>
-		
-							<mat-form-field class="col-md-4">
-								<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
-									required maxlength="100" placeholder="{{'father_Name' | translate:translateKey}}"
-									formControlName="applicantFatherName">
-								<control-messages [control]="affordableHousingForm.get('applicantFatherName')"></control-messages>
-							</mat-form-field>
-		
-							<mat-form-field class="col-md-4">
-								<input matInput autocomplete="off" appDate formControlName="dateOfBirth" [max]="maxDate"
-									[matDatepicker]="dobpicker" (dateChange)="onDateChange('dateOfBirth', $event.value)"
-									placeholder="{{'applicant_dob' | translate: translateKey}}" required>
-								<mat-datepicker-toggle matSuffix [for]="dobpicker"></mat-datepicker-toggle>
-								<mat-datepicker touchUi="true" #dobpicker></mat-datepicker>
-								<div align="end" class="default-show-hint mat-hint mat-right">
-									{{affordableHousingConfiguration.DATE_HINT_MSG}}</div>
-								<control-messages [control]="affordableHousingForm.get('dateOfBirth')"></control-messages>
-							</mat-form-field>
-		
-							<mat-form-field class="col-md-4">
-								<span matPrefix>+91 &nbsp;</span>
-								<input matInput OnlyNumber placeholder="{{'contact_no' | translate:translateKey}}" type="tel"
-									maxlength="15" formControlName="telephoneNumber">
-								<control-messages [control]="affordableHousingForm.get('telephoneNumber')"></control-messages>
-							</mat-form-field>
-		
-		
-							<mat-form-field class="col-md-4">
-								<input matInput OnlyNumber placeholder="{{'mobile_no' | translate:translateKey}}" type="tel"
-									maxlength="10" formControlName="mobileNumber" required>
-								<control-messages [control]="affordableHousingForm.get('mobileNumber')"></control-messages>
-							</mat-form-field>
-		
-							<mat-form-field class="col-md-4">
-								<input matInput autocomplete="off" maxlength="50"
-									placeholder="{{'email' | translate:translateKey}}" type="email" formControlName="email">
-								<control-messages [control]="affordableHousingForm.get('email')"></control-messages>
-							</mat-form-field>
-		
-						</div>
-	
-	
-	
-						 <div class="row">
-							<h2>{{'applicant_correspondence_address' | translate: translateKey}}</h2>
-							<app-address #applicantCorrespondenceAddr [requiredFeilds]="true" [addressFormGroup]="affordableHousingForm.get('correspondanceAddress')">
-							</app-address>
-						</div> 
-	
-						<app-action-bar [form]="affordableHousingForm" (tabIndex)="onTabChange($event)"
-							[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
-	
-					</mat-tab>
-					<!-- step 1 Ends -->
-	
-					<!-- step 2 Starts -->
-					<mat-tab>
-						<ng-template mat-tab-label>
-							<div>{{'applicant_occupation' | translate:translateKey}}</div>
-						</ng-template>
-						<div class="row">
-							<mat-form-field class="col-md-4">
-								<input matInput type="text" required maxlength="100" placeholder="{{'applicant_Occupation' | translate:translateKey}}"
-								 formControlName="occupation">
-								<control-messages [control]="affordableHousingForm.get('occupation')">
-								</control-messages>
-							</mat-form-field>
-	
-							<mat-form-field class="col-md-4">
-								<input matInput type="text" required maxlength="100" placeholder="{{'organisation_Name' | translate:translateKey}}"
-								 formControlName="organizationName">
-								<control-messages [control]="affordableHousingForm.get('organizationName')">
-								</control-messages>
-							</mat-form-field>
-	
-							<mat-form-field class="col-md-4">
-								<input matInput type="text" required maxlength="100" placeholder="{{'designation_Held' | translate:translateKey}}"
-								 formControlName="occupationDesignation">
-								<control-messages [control]="affordableHousingForm.get('occupationDesignation')">
-								</control-messages>
-							</mat-form-field>
-						</div>
-	
-						<div class="row">
-							<h2>{{'address_proof_with_residence' | translate: translateKey}}</h2>
-							<mat-form-field class="col-md-4">
-								<input matInput type="text" appAlphaNumeric maxlength="50" placeholder="{{'drivingLicense' | translate:translateKey}}"
-								 formControlName="drivingLicenseNumber">
-								<control-messages [control]="affordableHousingForm.get('drivingLicenseNumber')">
-								</control-messages>
-							</mat-form-field>
-							<mat-form-field class="col-md-4">
-								<input matInput type="text" appAlphaNumeric maxlength="25" placeholder="{{'voterID' | translate:translateKey}}"
-								 formControlName="voterIdNumber">
-								<control-messages [control]="affordableHousingForm.get('voterIdNumber')"></control-messages>
-							</mat-form-field>
-							<mat-form-field class="col-md-4">
-									<input matInput OnlyNumber maxlength="12" required formControlName="aadharCardNumber"
-										placeholder="{{'aadharID' | translate:translateKey}}">
-									<control-messages [control]="affordableHousingForm.get('aadharCardNumber')"></control-messages>
-								</mat-form-field>
 
-							<!-- <mat-form-field class="col-md-4">
-								<input matInput type="text" appAlphaNumeric required maxlength="20" placeholder="{{'aadharID' | translate:translateKey}}"
-								 formControlName="aadharCardNumber">
-								<control-messages [control]="affordableHousingForm.get('aadharCardNumber')"></control-messages>
-							</mat-form-field> -->
+	<form [formGroup]="affordableHousingForm">
+		<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
-							<mat-form-field class="col-md-4">
-									<input matInput upperCase appAlphaNumeric maxlength="10" required formControlName="panCardNumber"
-										placeholder="{{'panNo' | translate:translateKey}}"  (change)="onCardChange($event,'panCardNumber')">
-									<control-messages [control]="affordableHousingForm.get('panCardNumber')"></control-messages>
-								</mat-form-field>
+			<!-- step 1 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'First Beneficiary Detail' | translate:translateKey}}</div>
+				</ng-template>
 
-							<mat-form-field class="col-md-4">
-								<input matInput type="text" appAlphaNumeric maxlength="50" placeholder="{{'rationCardNo' | translate:translateKey}}"
-								 formControlName="rationCardNumber">
-								<control-messages [control]="affordableHousingForm.get('rationCardNumber')"></control-messages>
-							</mat-form-field>
-						</div>
-						<div class="row">
-							<h2>{{'occupationAddress' | translate: translateKey}}</h2>
-							<app-address #occupationAddr [requiredFeilds]="true" [addressFormGroup]="affordableHousingForm.get('occupationAddress')"></app-address>
-						</div>
-	
-						<app-action-bar [form]="affordableHousingForm" (tabIndex)="onTabChange($event)"
-							[stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
+				<div class="row">
 
-	
-					</mat-tab>
-	
-					<!-- step 2 Ends -->
-	
-					<!-- step 3 Starts -->
-					<mat-tab>
-						<ng-template mat-tab-label>
-							<div>{{'bank_detail' | translate:translateKey}}</div>
-						</ng-template>
-	
-						<div class="row stepperMinHeight">
-							<mat-form-field class="col-md-4">
-								<input matInput autocomplete="off" minlength="9" maxlength="18" OnlyNumber formControlName="bankAccountNumber" type="text"
-								 placeholder="{{'bank_account_no' | translate: translateKey}}" required>
-								<control-messages [control]="affordableHousingForm.get('bankAccountNumber')"></control-messages>
-							</mat-form-field>
-	
-							<div class="col-md-4 ngSelect" formGroupName="bank">
-								<ng-select placeholder="{{'bank' | translate: translateKey}} *" formControlName="code">
-									<ng-option *ngFor="let bank of bankNameArray" [value]="bank.code">
-										{{bank.name}}
-									</ng-option>
-								</ng-select>
-								<control-messages [control]="affordableHousingForm.get('bank').get('code')">
-								</control-messages>
-							</div>
-							<!-- <div class="col-md-4 ngSelect" formGroupName="bank">
-								<ng-select placeholder="{{'bank_name' | translate: translateKey}} *" formControlName="code">
-									<ng-option *ngFor="let bank of bankNameArray" [value]="bank.code">{{bank.name}}
-									</ng-option>
-								</ng-select>
-								<control-messages [control]="affordableHousingForm.get('bank')">
-								</control-messages>
-							</div> -->
-	
-							<mat-form-field class="col-md-4">
-								<input matInput autocomplete="off" maxlength="100" formControlName="bankBranch" type="text" placeholder="{{'branch_name' | translate: translateKey}}"
-								 required>
-								<control-messages [control]="affordableHousingForm.get('bankBranch')"></control-messages>
-							</mat-form-field>
-	
-							<mat-form-field class="col-md-4">
-								<input matInput autocomplete="off" appAlphaNumeric upperCase maxlength="11" formControlName="bankIFSC" type="tel"
-								 placeholder="{{'IFSCCode' | translate: translateKey}}" required>
-								<control-messages [control]="affordableHousingForm.get('bankIFSC')"></control-messages>
-							</mat-form-field>
-	
-							<mat-form-field class="col-md-4">
-								<input matInput  autocomplete="off" minlength="9" maxlength="9" OnlyNumber formControlName="bankMicrCode" type="tel"
-								 placeholder="{{'MICRCode' | translate: translateKey}}" required>
-								<control-messages [control]="affordableHousingForm.get('bankMicrCode')"></control-messages>
-							</mat-form-field>
-	
-						</div>
-	
-						<app-action-bar [form]="affordableHousingForm" (tabIndex)="onTabChange($event)"
-							[stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
+					<div class="col-md-4 ngSelect">
+						<ng-select placeholder="{{'appliedFor' | translate: translateKey}} *" formControlName="schemeId"
+							(change)="schemeChange($event)">
+							<ng-container *ngFor="let applied of appliedForData">
+								<ng-option *ngIf="applied.isAppliedFor == 'ACTIVE'" [value]="applied.id">
+									{{applied.schemeName}}</ng-option>
+							</ng-container>
+						</ng-select>
+						<control-messages [control]="affordableHousingForm.get('schemeId')">
+						</control-messages>
+					</div>
 
-	
-					</mat-tab>
-	
-					<!-- step 3 Ends -->
-	
-					<!-- step 4 Starts -->
-					<mat-tab>
-						<ng-template mat-tab-label>
-							<div>{{'annual_income' | translate:translateKey}}</div>
-						</ng-template>
-						<div class="row">
-	
-							<mat-form-field class="col-md-4">
-								<input matInput OnlyNumber placeholder="{{'annualIncome' | translate:translateKey}}" type="tel" maxlength="10"
-								 formControlName="aggregateAnnualIncomeAmount" required>
-								<control-messages [control]="affordableHousingForm.get('aggregateAnnualIncomeAmount')"></control-messages>
-							</mat-form-field>
-	
-							<mat-form-field class="col-md-4">
-								<input matInput autocomplete="off" maxlength="200" appValidationFields validationFieldsType='onlyNameWithSpace' placeholder="{{'annualIncomeWords' | translate:translateKey}}"
-								 type="text" formControlName="aggregateAnnualIncomeAmountInWords" required>
-								<control-messages [control]="affordableHousingForm.get('aggregateAnnualIncomeAmountInWords')">
-								</control-messages>
-							</mat-form-field>
-	
-						</div>
-	
-	
-	
-						<div class="row" formArrayName="placeOfChoice">
-							<mat-form-field class="col-md-4" *ngFor="let item of affordableHousingForm.get('placeOfChoice')['controls']; let i = index;"
-							 [formGroupName]="i">
-								<input matInput autocomplete="off" maxlength="200" formControlName="name" placeholder="{{'place_of_choice' | translate: translateKey}}"
-								 required>
-								<button *ngIf="affordableHousingForm.get('placeOfChoice')['controls'].length > 1" title="remove_place_of_choice"
-								 class="deleteBtn pull-right text-right" type="button" mat-icon-button color="warn" (click)="deleteFormArrayRecord('placeOfChoice',i)">
-									<i class="fa fa-times"></i>
-								</button>
-								<control-messages [control]="affordableHousingForm.get('placeOfChoice')['controls'][i].get('name')">
-								</control-messages>
-							</mat-form-field>
-	
-							<div class="col-md-12 pt-3">
-								<button type="button" mat-raised-button color="primary" [disabled]="affordableHousingForm.get('placeOfChoice')['controls'].length > 4"
-								 (click)="addRecordFormArray('placeOfChoice')" title="{{'add_more_place' | translate:'translateKey'}}">
-									<mat-icon matPrefix>add</mat-icon>Add Place
-								</button>
-							</div>
-						</div>
-	
-						<div class="row pb-3">
-							<div class="col-md-10">
-								<h2>{{ 'family_members_details' | translate:translateKey}}</h2>
-							</div>
-							<div class="col-md-2 pt-3" style="text-align: right;">
-								<button type="button" *ngIf="affordableHousingForm.get('canEdit').value" matTooltip="{{'add_more' | translate:translateKey}}"
-								 mat-raised-button color="primary" (click)="addRecordFormArray('familyMembers')">{{'add'|
-									translate:translateKey}}</button>
-							</div>
-						</div>
-	
-						<div *ngIf="affordableHousingForm.get('familyMembers')['controls'].length">
-							<div>
-								<table class="table table-striped responsiveTableRow">
-									<thead>
-										<tr class="mo-d-none">
-											<th>#</th>
-											<th>{{'name' | translate:translateKey}}</th>
-											<th width="100">{{'age' | translate:translateKey}}</th>
-											<th>{{'relationship_with_applicant' | translate:translateKey}}</th>
-											<th colspan="2" *ngIf="affordableHousingForm.get('canEdit').value">
-											</th>
-										</tr>
-									</thead>
-									<tbody formArrayName="familyMembers">
-										<tr *ngFor="let item of affordableHousingForm.get('familyMembers')['controls']; let indx = index;"
-										 [formGroupName]="indx">
-	
-											<td>
-												<div class="d-md-none">#</div>
-												{{indx+1}}
-											</td>
-	
-											<td>
-												<div class="d-md-none">{{'name' | translate:translateKey}}</div>
-												<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
-												<mat-form-field *ngIf="item.isEditMode">
-													<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
-													<control-messages [control]="item.get('name')"></control-messages>
-												</mat-form-field>
-											</td>
-	
-											<td>
-												<div class="d-md-none">{{'age' | translate:translateKey}}</div>
-												<p class="width60" *ngIf="!item.isEditMode">{{item.get('memberAge').value}}</p>
-												<mat-form-field *ngIf="item.isEditMode">
-													<input matInput maxlength="2" OnlyNumber formControlName="memberAge">
-													<control-messages [control]="item.get('memberAge')"></control-messages>
-												</mat-form-field>
-											</td>
-	
-											<td>
-												<div class="d-md-none">{{'relationship' | translate:translateKey}}</div>
-												<p *ngIf="!item.isEditMode">{{item.get('relationshipWithApplicant').value}}</p>
-												<mat-form-field *ngIf="item.isEditMode">
-													<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="relationshipWithApplicant">
-													<control-messages [control]="item.get('relationshipWithApplicant')">
-													</control-messages>
-												</mat-form-field>
-											</td>
-	
-	
-											<td style="width: 40px;" *ngIf="affordableHousingForm.get('canEdit').value">
-												<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
-													<mat-icon title="Edit">edit</mat-icon>
-												</button>
-												<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary" *ngIf="item.isEditMode"
-												 (click)="saveRecord(item)">
-													<mat-icon title="save">save</mat-icon>
-												</button>
-											</td>
-											<td style="width: 40px;" *ngIf="affordableHousingForm.get('canEdit').value">
-												<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteFormArrayRecord('familyMembers',indx)">
-													<mat-icon title="Delete">delete</mat-icon>
-												</button>
-												<button mat-icon-button color="warn" *ngIf="item.isEditMode" (click)="cancelRecord('familyMembers',item,indx)">
-													<mat-icon title="Cancel">cancel</mat-icon>
-												</button>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-	
-						<app-action-bar [form]="affordableHousingForm" (tabIndex)="onTabChange($event)"
-						[stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
-	
-	
-					</mat-tab>
-					<!--  step 4 Ends -->
-	
-	
-					<!-- step 5 Starts -->
-					<mat-tab>
-						<ng-template mat-tab-label>
-							<div>{{'ownHousePloatDetail' | translate:translateKey}}</div>
-						</ng-template>
-	
-						<div class="row pb-3">
-							<div class="col-md-10">
-								<h2>{{ 'ownHouseDetail' | translate:translateKey}}</h2>
-							</div>
-							<div class="col-md-2 pt-3" style="text-align: right;">
-								<button type="button" *ngIf="affordableHousingForm.get('canEdit').value" matTooltip="{{'add_more' | translate:translateKey}}"
-								 mat-raised-button color="primary" (click)="addRecordFormArray('ownHouseDetail')">{{'add'|
-									translate:translateKey}}</button>
-							</div>
-						</div>
-	
-						<div *ngIf="affordableHousingForm.get('ownHouseDetail')['controls'].length">
-							<div>
-								<table class="table table-striped responsiveTableRow">
-									<thead>
-										<tr class="mo-d-none">
-											<th>#</th>
-											<th>{{'name' | translate:translateKey}}</th>
-											<th>{{'flat_no' | translate:translateKey}}</th>
-											<th>{{'street' | translate:translateKey}}</th>
-											<th>{{'city' | translate:translateKey}}</th>
-											<th>{{'district' | translate:translateKey}}</th>
-											<th>{{'pincode' | translate:translateKey}}</th>
-											<th *ngIf="affordableHousingForm.get('canEdit').value">
-											</th>
-										</tr>
-									</thead>
-									<tbody formArrayName="ownHouseDetail">
-										<tr *ngFor="let item of affordableHousingForm.get('ownHouseDetail')['controls']; let indx = index;"
-										 [formGroupName]="indx">
-	
-											<td>
-												<div class="d-md-none">#</div>
-												{{indx+1}}
-											</td>
-	
-											<td>
-												<div class="d-md-none">{{'name' | translate:translateKey}}</div>
-												<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
-												<mat-form-field *ngIf="item.isEditMode">
-													<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
-													<control-messages [control]="item.get('name')"></control-messages>
-												</mat-form-field>
-											</td>
-	
-											<td>
-												<div class="d-md-none">{{'flat_no' | translate:translateKey}}</div>
-												<p *ngIf="!item.isEditMode">{{item.get('flatNo').value}}</p>
-												<mat-form-field *ngIf="item.isEditMode">
-													<input matInput formControlName="flatNo">
-													<control-messages [control]="item.get('flatNo')"></control-messages>
-												</mat-form-field>
-											</td>
-	
-											<td>
-												<div class="d-md-none">{{'street' | translate:translateKey}}</div>
-												<p *ngIf="!item.isEditMode">{{item.get('street').value}}</p>
-												<mat-form-field *ngIf="item.isEditMode">
-													<input matInput formControlName="street">
-													<control-messages [control]="item.get('street')"></control-messages>
-												</mat-form-field>
-											</td>
-	
-											<td>
-												<div class="d-md-none">{{'city' | translate:translateKey}}</div>
-												<p *ngIf="!item.isEditMode">{{item.get('city').value}}</p>
-												<mat-form-field *ngIf="item.isEditMode">
-													<input matInput formControlName="city">
-													<control-messages [control]="item.get('city')"></control-messages>
-												</mat-form-field>
-											</td>
-	
-											<td>
-													<div class="d-md-none">{{'district' | translate:translateKey}}</div>
-													<p *ngIf="!item.isEditMode">{{item.get('district').value}}</p>
-													<mat-form-field *ngIf="item.isEditMode">
-														<input matInput formControlName="district">
-														<control-messages [control]="item.get('district')"></control-messages>
-													</mat-form-field>
-												</td>
-												<td>
-														<div class="d-md-none">{{'pincode' | translate:translateKey}}</div>
-														<p *ngIf="!item.isEditMode">{{item.get('pincode').value}}</p>
-														<mat-form-field *ngIf="item.isEditMode">
-															<input matInput formControlName="pincode">
-															<control-messages [control]="item.get('pincode')"></control-messages>
-														</mat-form-field>
-													</td>
-	
-											<td width="110px">
-												<div *ngIf="affordableHousingForm.get('canEdit').value" class="float-left">
-													<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
-														<mat-icon title="Edit">edit</mat-icon>
-													</button>
-													<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary" *ngIf="item.isEditMode"
-													 (click)="saveRecord(item)">
-														<mat-icon title="save">save</mat-icon>
-													</button>
-												</div>
-	
-												<div *ngIf="affordableHousingForm.get('canEdit').value">
-													<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteFormArrayRecord('ownHouseDetail',indx)">
-														<mat-icon title="Delete">delete</mat-icon>
-													</button>
-													<button mat-icon-button color="warn" *ngIf="item.isEditMode" (click)="cancelRecord('ownHouseDetail',item,indx)">
-														<mat-icon title="Cancel">cancel</mat-icon>
-													</button>
-												</div>
-											</td>
-	
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-	
-						<app-action-bar [form]="affordableHousingForm" (tabIndex)="onTabChange($event)"
-						[stepInfo]="{step: 'step5', next: 5, back: 3}"></app-action-bar>
-	
-	
-					</mat-tab>
-					<!-- step 5 Ends -->
-	
-					<!-- step 6 Starts -->
-					<mat-tab>
-						<ng-template mat-tab-label>
-							<div>{{'ownLandPlotDetail' | translate:translateKey}}</div>
-						</ng-template>
-	
-	
-						<div class="row pb-3">
-							<div class="col-md-10">
-								<h2>{{ 'ownLandPlotDetail' | translate:translateKey}}</h2>
-							</div>
-							<div class="col-md-2 pt-3" style="text-align: right;">
-								<button type="button" *ngIf="affordableHousingForm.get('canEdit').value" matTooltip="{{'add_more' | translate:translateKey}}"
-								 mat-raised-button color="primary" (click)="addRecordFormArray('ownLandPlotDetail')">{{'add'|
-									translate:translateKey}}</button>
-							</div>
-						</div>
-	
-						<div *ngIf="affordableHousingForm.get('ownLandPlotDetail')['controls'].length">
-							<div>
-								<table class="table table-striped responsiveTableRow">
-									<thead>
-										<tr class="mo-d-none">
-											<th>#</th>
-											<th>{{'name' | translate:translateKey}}</th>
-											<th>{{'flat_no' | translate:translateKey}}</th>
-											<th>{{'street' | translate:translateKey}}</th>
-											<th>{{'city' | translate:translateKey}}</th>
-											<th>{{'district' | translate:translateKey}}</th>
-											<th>{{'pincode' | translate:translateKey}}</th>
-											<th *ngIf="affordableHousingForm.get('canEdit').value">
-											</th>
-										</tr>
-									</thead>
-									<tbody formArrayName="ownLandPlotDetail">
-										<tr *ngFor="let item of affordableHousingForm.get('ownLandPlotDetail')['controls']; let indx = index;"
-										 [formGroupName]="indx">
-	
-											<td>
-												<div class="d-md-none">#</div>
-												{{indx+1}}
-											</td>
-	
-											<td>
-												<div class="d-md-none">{{'name' | translate:translateKey}}</div>
-												<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
-												<mat-form-field *ngIf="item.isEditMode">
-													<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
-													<control-messages [control]="item.get('name')"></control-messages>
-												</mat-form-field>
-											</td>
-	
-											<td>
-												<div class="d-md-none">{{'flat_no' | translate:translateKey}}</div>
-												<p *ngIf="!item.isEditMode">{{item.get('flatNo').value}}</p>
-												<mat-form-field *ngIf="item.isEditMode">
-													<input matInput formControlName="flatNo">
-													<control-messages [control]="item.get('flatNo')"></control-messages>
-												</mat-form-field>
-											</td>
-	
-											<td>
-												<div class="d-md-none">{{'street' | translate:translateKey}}</div>
-												<p *ngIf="!item.isEditMode">{{item.get('street').value}}</p>
-												<mat-form-field *ngIf="item.isEditMode">
-													<input matInput formControlName="street">
-													<control-messages [control]="item.get('street')"></control-messages>
-												</mat-form-field>
-											</td>
-	
-											<td>
-												<div class="d-md-none">{{'city' | translate:translateKey}}</div>
-												<p *ngIf="!item.isEditMode">{{item.get('city').value}}</p>
-												<mat-form-field *ngIf="item.isEditMode">
-													<input matInput formControlName="city">
-													<control-messages [control]="item.get('city')"></control-messages>
-												</mat-form-field>
-											</td>
-	
-											<td>
-												<div class="d-md-none">{{'district' | translate:translateKey}}</div>
-												<p *ngIf="!item.isEditMode">{{item.get('district').value}}</p>
-												<mat-form-field *ngIf="item.isEditMode">
-													<input matInput formControlName="district">
-													<control-messages [control]="item.get('district')"></control-messages>
-												</mat-form-field>
-											</td>
-											<td>
-													<div class="d-md-none">{{'pincode' | translate:translateKey}}</div>
-													<p *ngIf="!item.isEditMode">{{item.get('pincode').value}}</p>
-													<mat-form-field *ngIf="item.isEditMode">
-														<input matInput formControlName="pincode">
-														<control-messages [control]="item.get('pincode')"></control-messages>
-													</mat-form-field>
-												</td>
-											 
-											<td width="110px">
-												<div *ngIf="affordableHousingForm.get('canEdit').value" class="float-left">
-	
-	
-													<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
-														<mat-icon title="Edit">edit</mat-icon>
-													</button>
-													<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary" *ngIf="item.isEditMode"
-													 (click)="saveRecord(item)">
-														<mat-icon title="save">save</mat-icon>
-													</button>
-												</div>
-												<div *ngIf="affordableHousingForm.get('canEdit').value">
-													<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteFormArrayRecord('ownLandPlotDetail',indx)">
-														<mat-icon title="Delete">delete</mat-icon>
-													</button>
-													<button mat-icon-button color="warn" *ngIf="item.isEditMode" (click)="cancelRecord('ownLandPlotDetail',item,indx)">
-														<mat-icon title="Cancel">cancel</mat-icon>
-													</button>
-												</div>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-	
-						<app-action-bar [form]="affordableHousingForm" (tabIndex)="onTabChange($event)"
-						[stepInfo]="{step: 'step6', next: 6, back: 4}"></app-action-bar>
-	
-	
-					</mat-tab>
-					<!-- step 6 Ends -->
-	
-					<!-- step 7 Starts -->
-					<mat-tab>
-						<ng-template mat-tab-label>
-							<div>{{'Nominee_details' | translate:translateKey}}</div>
-						</ng-template>
-						<div class="row">
-							<mat-form-field class="col-md-4">
-								<input matInput type="text" required maxlength="100" placeholder="{{'nominee_name' | translate:translateKey}}"
-								 formControlName="nomineeName">
-								<control-messages [control]="affordableHousingForm.get('nomineeName')"></control-messages>
-							</mat-form-field>
-	
-							<mat-form-field class="col-md-4">
-								<input matInput type="text" required maxlength="100" placeholder="{{'relation_with_applicant' | translate:translateKey}}"
-								 formControlName="nomineeApplicantRelationShip">
-								<control-messages [control]="affordableHousingForm.get('nomineeApplicantRelationShip')">
-								</control-messages>
-							</mat-form-field>
-						</div>
-	
-						<div class="row">
-							<h2>{{'nominee_address' | translate: translateKey}}</h2>
-							<app-address #nomineeAddr [requiredFeilds]="true" [addressFormGroup]="affordableHousingForm.get('nomineeAddress')"></app-address>
-						</div>
-	
-						<div class="row">
-							<mat-checkbox class="col accept-terms" required formControlName="licenseAgreed">Lorem Ipsum is simply
-								dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-								standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-								scrambled it to make a type specimen book. It has survived not only five centuries, but also
-								the
-								leap into electronic typesetting, remaining essentially unchanged. It was popularised in the
-								1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
-								with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-							</mat-checkbox>
-						</div>
-	
-						<!-- <div class="fotButtonBar clearfix">
-							<div class="col-sm-12 col-md-12">
-								<button type="button" class="liteBorder pull-left" mat-raised-button (click)="tabIndex = 5">{{'back'
-									|
-									translate: actionBarKey}}</button>
-								<div class="float-right">
-									<button mat-raised-button color="success" (click)="onSubmit()">{{'submit'
-										| translate:
-										actionBarKey}}</button>
-									<button mat-raised-button color="success" (click)="onSubmit()">{{'accept' | translate:actionBarKey}}</button>
-									<button type="button" color="warn" mat-raised-button (click)="onRejectApp()">{{'reject' |
-										translate:actionBarKey}}</button>
-								</div>
-							</div>
-						</div> -->
-						
-					<app-action-bar [form]="affordableHousingForm" (tabIndex)="onTabChange($event)"
-						[stepInfo]="{step: 'step7', next: 7, back: 5}"></app-action-bar>
+					<div class="col-md-4 ngSelect">
+						<ng-select placeholder="{{'project' | translate: translateKey}} *" formControlName="projectId">
+							<ng-option *ngFor="let project of projectData" [value]="project.id">
+								{{project.projectName}}</ng-option>
+						</ng-select>
+						<control-messages [control]="affordableHousingForm.get('projectId')">
+						</control-messages>
+					</div>
 
-	
-					</mat-tab>
-					<!-- step 7 Ends -->
-	
-					 <mat-tab>
-						<ng-template mat-tab-label>
-							<div>{{'attachment' | translate: translateKey}}</div>
-						</ng-template>
-						<div class="row">
-							<div class="col-md-4" *ngFor="let doc of attachmentList">
-								<div *ngIf="doc.requiredOnAdminPortal && doc.isActive">
-									<label>{{doc.documentLabelEn}}
-										<span class="text-danger" *ngIf="doc.mandatory">*</span>
-									</label>
-									<file-upload [form]="affordableHousingForm" [uploadModel]="doc"></file-upload>
-								</div>
-							</div>
+					<div class="col-md-4 ngSelect" formGroupName="category">
+						<ng-select placeholder="{{'category' | translate: translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let category of MF_CATEGORY_TYPE" [value]="category.code">
+								{{category.name}}
+							</ng-option>
+						</ng-select>
+						<control-messages [control]="affordableHousingForm.get('category').get('code')">
+						</control-messages>
+					</div>
+
+					<div class="col-md-12">
+						<h2 style="margin-left: -16px;"><b>{{'First Applicant / Beneficiary' | translate:
+								translateKey}}</b></h2>
+					</div>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+							required maxlength="100" placeholder="{{'First Name' | translate:translateKey}}"
+							formControlName="firstApplicantFirstName">
+						<control-messages [control]="affordableHousingForm.get('firstApplicantFirstName')">
+						</control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+							maxlength="100" placeholder="{{'Middle Name' | translate:translateKey}}"
+							formControlName="firstApplicantMiddleName">
+						<control-messages [control]="affordableHousingForm.get('firstApplicantMiddleName')">
+						</control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+							required maxlength="100" placeholder="{{'Last Name' | translate:translateKey}}"
+							formControlName="firstApplicantLastName">
+						<control-messages [control]="affordableHousingForm.get('firstApplicantLastName')">
+						</control-messages>
+					</mat-form-field>
+					<div class="col-md-12">
+						<h2 style="margin-left: -16px;"><b>{{'Husband/Wife/Father Name' | translate:
+								translateKey}}</b></h2>
+					</div>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+							maxlength="100" placeholder="{{'First Name' | translate:translateKey}}"
+							formControlName="firstAppHusWifeFirstName" required>
+						<control-messages [control]="affordableHousingForm.get('firstAppHusWifeFirstName')">
+						</control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+							maxlength="100" placeholder="{{'Middle Name' | translate:translateKey}}"
+							formControlName="firstAppHusWifeMiddleName">
+						<control-messages [control]="affordableHousingForm.get('firstAppHusWifeMiddleName')">
+						</control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+							maxlength="100" placeholder="{{'Last Name' | translate:translateKey}}"
+							formControlName="firstAppHusWifeLastName" required>
+						<control-messages [control]="affordableHousingForm.get('firstAppHusWifeLastName')">
+						</control-messages>
+					</mat-form-field>
+
+
+					<mat-form-field class="col-md-4">
+						<input matInput autocomplete="off" appDate formControlName="firstAppDateOfBirth"
+							[max]="dobMaxDate" [matDatepicker]="firstdobpicker" [matDatepicker]="firstdobpicker"
+							(dateChange)="onDateChange('firstAppDateOfBirth', $event.value)"
+							placeholder="{{'applicant_dob' | translate: translateKey}}" required>
+						<mat-datepicker-toggle matSuffix [for]="firstdobpicker"></mat-datepicker-toggle>
+						<mat-datepicker touchUi="true" #firstdobpicker></mat-datepicker>
+						<div align="end" class="default-show-hint mat-hint mat-right">
+							{{affordableHousingConfiguration.DATE_HINT_MSG}}</div>
+						<control-messages [control]="affordableHousingForm.get('firstAppDateOfBirth')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<span matPrefix>+91 &nbsp;</span>
+						<input matInput OnlyNumber placeholder="{{'contact_no' | translate:translateKey}}" type="tel"
+							maxlength="10" minlength="10" formControlName="firstAppTelephoneNumber">
+						<control-messages [control]="affordableHousingForm.get('firstAppTelephoneNumber')">
+						</control-messages>
+					</mat-form-field>
+
+
+					<mat-form-field class="col-md-4">
+						<input matInput OnlyNumber placeholder="{{'Mobile No 1' | translate:translateKey}}" type="tel"
+							maxlength="10" minlength="10" formControlName="firstAppMobileNumOne" required>
+						<control-messages [control]="affordableHousingForm.get('firstAppMobileNumOne')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput OnlyNumber placeholder="{{'Mobile No 2' | translate:translateKey}}" type="tel"
+							formControlName="firstAppMobileNumTwo" minlength="10" maxlength="10">
+						<control-messages [control]="affordableHousingForm.get('firstAppMobileNumTwo')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput autocomplete="off" maxlength="50"
+							placeholder="{{'email' | translate:translateKey}}" type="email"
+							formControlName="firstAppEmail">
+						<control-messages [control]="affordableHousingForm.get('firstAppEmail')"></control-messages>
+					</mat-form-field>
+
+				</div>
+
+
+				<!-- <div class="row">
+					<h2>{{'applicant_correspondence_address' | translate: translateKey}}</h2>
+					<app-address #applicantCorrespondenceAddr [requiredFeilds]="true" [addressFormGroup]="affordableHousingForm.get('applicantCorrespondenceAddress')">
+					</app-address>
+				</div>  -->
+
+				<div class="row">
+					<h2><b>{{'applicant_correspondence_address' | translate: translateKey}}</b></h2>
+					<app-address #firstAppCorrespondenceAddress [requiredFeilds]="true"
+						[addressFormGroup]="affordableHousingForm.get('firstAppCorrespondenceAddress')">
+					</app-address>
+				</div>
+
+				<div class="col-md-12">
+					<h2 style="margin-left: -16px;"><b>Applicant Occupation Details</b></h2>
+				</div>
+
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" required maxlength="100"
+							placeholder="{{'applicant_Occupation' | translate:translateKey}}"
+							formControlName="firstAppOccupation">
+						<control-messages [control]="affordableHousingForm.get('firstAppOccupation')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" required maxlength="100"
+							placeholder="{{'organisation_Name' | translate:translateKey}}"
+							formControlName="firstAppOrganizationName">
+						<control-messages [control]="affordableHousingForm.get('firstAppOrganizationName')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" required maxlength="100"
+							placeholder="{{'designation_Held' | translate:translateKey}}"
+							formControlName="firstAppOccupationDesignation">
+						<control-messages [control]="affordableHousingForm.get('firstAppOccupationDesignation')">
+						</control-messages>
+					</mat-form-field>
+				</div>
+
+				<div class="row">
+					<h2><b>{{'address_proof_with_residence' | translate: translateKey}}</b></h2>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appAlphaNumeric maxlength="15"
+							placeholder="{{'drivingLicense' | translate:translateKey}}"
+							formControlName="firstAppDrivingLicenseNumber">
+						<control-messages [control]="affordableHousingForm.get('firstAppDrivingLicenseNumber')">
+						</control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appAlphaNumeric maxlength="10"
+							placeholder="{{'voterID' | translate:translateKey}}"
+							formControlName="firstAppVoterIdNumber">
+						<control-messages [control]="affordableHousingForm.get('firstAppVoterIdNumber')">
+						</control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appAlphaNumeric required OnlyNumber minlength="12" maxlength="12"
+							placeholder="{{'aadharID' | translate:translateKey}}"
+							formControlName="firstAppAadharCardNumber">
+						<control-messages [control]="affordableHousingForm.get('firstAppAadharCardNumber')">
+						</control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" #inputPAN [value]="inputPAN.value.toUpperCase()" appAlphaNumeric
+							required maxlength="10" placeholder="{{'panNo' | translate:translateKey}}"
+							formControlName="firstAppPanCardNumber">
+						<control-messages [control]="affordableHousingForm.get('firstAppPanCardNumber')">
+						</control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appAlphaNumeric maxlength="50"
+							placeholder="{{'rationCardNo' | translate:translateKey}}"
+							formControlName="firstAppRationCardNumber">
+						<control-messages [control]="affordableHousingForm.get('firstAppRationCardNumber')">
+						</control-messages>
+					</mat-form-field>
+				</div>
+				<div class="row">
+					<h2><b>{{'occupationAddress' | translate: translateKey}}</b></h2>
+					<app-address #firstAppOccupationAddress [requiredFeilds]="true"
+						[addressFormGroup]="affordableHousingForm.get('firstAppOccupationAddress')"></app-address>
+				</div>
+
+
+				<div class="fotButtonBar clearfix">
+					<div class="col-sm-12 col-md-12">
+						<button class="pull-right" mat-raised-button color="primary" (click)="tabIndex = 1">{{'next'
+							| translate:
+							actionBarKey}}</button>
+					</div>
+				</div>
+
+			</mat-tab>
+			<!-- step 1 Ends -->
+
+			<!-- step 1 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'Second Beneficiary Detail' | translate:translateKey}}</div>
+				</ng-template>
+
+				<div class="row">
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+							required maxlength="100" placeholder="{{'First Name' | translate:translateKey}}"
+							formControlName="secondApplicantFirstName">
+						<control-messages [control]="affordableHousingForm.get('secondApplicantFirstName')">
+						</control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+							maxlength="100" placeholder="{{'Middle Name' | translate:translateKey}}"
+							formControlName="secondApplicantMiddleName">
+						<control-messages [control]="affordableHousingForm.get('secondApplicantMiddleName')">
+						</control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+							required maxlength="100" placeholder="{{'Last Name' | translate:translateKey}}"
+							formControlName="secondApplicantLastName">
+						<control-messages [control]="affordableHousingForm.get('secondApplicantLastName')">
+						</control-messages>
+					</mat-form-field>
+					<div class="col-md-12">
+						<h2 style="margin-left: -16px;"><b>{{'Husband/Wife/Father Name' | translate:
+								translateKey}}</b></h2>
+					</div>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+							maxlength="100" placeholder="{{'First Name' | translate:translateKey}}"
+							formControlName="secondAppHusWifeFirstName" required>
+						<control-messages [control]="affordableHousingForm.get('secondAppHusWifeFirstName')">
+						</control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+							maxlength="100" placeholder="{{'Middle Name' | translate:translateKey}}"
+							formControlName="secondAppHusWifeMiddleName">
+						<control-messages [control]="affordableHousingForm.get('secondAppHusWifeMiddleName')">
+						</control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+							maxlength="100" placeholder="{{'Last Name' | translate:translateKey}}"
+							formControlName="secondAppHusWifeLastName" required>
+						<control-messages [control]="affordableHousingForm.get('secondAppHusWifeLastName')">
+						</control-messages>
+					</mat-form-field>
+
+
+					<mat-form-field class="col-md-4">
+						<input matInput autocomplete="off" appDate formControlName="secondAppDateOfBirth"
+							[max]="dobMaxDate" [matDatepicker]="seconddobpicker" [matDatepicker]="seconddobpicker"
+							(dateChange)="onDateChange('secondAppDateOfBirth', $event.value)"
+							placeholder="{{'applicant_dob' | translate: translateKey}}" required>
+						<mat-datepicker-toggle matSuffix [for]="seconddobpicker"></mat-datepicker-toggle>
+						<mat-datepicker touchUi="true" #seconddobpicker></mat-datepicker>
+						<div align="end" class="default-show-hint mat-hint mat-right">
+							{{affordableHousingConfiguration.DATE_HINT_MSG}}</div>
+						<control-messages [control]="affordableHousingForm.get('secondAppDateOfBirth')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<span matPrefix>+91 &nbsp;</span>
+						<input matInput OnlyNumber placeholder="{{'contact_no' | translate:translateKey}}" type="tel"
+							maxlength="10" minlength="10" formControlName="secondAppTelephoneNumber">
+						<control-messages [control]="affordableHousingForm.get('secondAppTelephoneNumber')">
+						</control-messages>
+					</mat-form-field>
+
+
+					<mat-form-field class="col-md-4">
+						<input matInput OnlyNumber placeholder="{{'Mobile No 1' | translate:translateKey}}" type="tel"
+							maxlength="10" minlength="10" formControlName="secondAppMobileNumOne" required>
+						<control-messages [control]="affordableHousingForm.get('secondAppMobileNumOne')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput OnlyNumber placeholder="{{'Mobile No 2' | translate:translateKey}}" type="tel"
+							formControlName="secondAppMobileNumTwo" minlength="10" maxlength="10">
+						<control-messages [control]="affordableHousingForm.get('secondAppMobileNumTwo')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput autocomplete="off" maxlength="50"
+							placeholder="{{'email' | translate:translateKey}}" type="email"
+							formControlName="secondAppEmail">
+						<control-messages [control]="affordableHousingForm.get('secondAppEmail')">
+						</control-messages>
+					</mat-form-field>
+
+				</div>
+
+				<div class="row">
+					<h2><b>{{'applicant_correspondence_address' | translate: translateKey}}</b></h2>
+					<app-address #secondAppCorrespondenceAddress [requiredFeilds]="true"
+						[addressFormGroup]="affordableHousingForm.get('secondAppCorrespondenceAddress')">
+					</app-address>
+				</div>
+
+				<div class="col-md-12">
+					<h2 style="margin-left: -16px;"><b>Applicant Occupation Details</b></h2>
+				</div>
+
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" required maxlength="100"
+							placeholder="{{'applicant_Occupation' | translate:translateKey}}"
+							formControlName="secondAppOccupation">
+						<control-messages [control]="affordableHousingForm.get('secondAppOccupation')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" required maxlength="100"
+							placeholder="{{'organisation_Name' | translate:translateKey}}"
+							formControlName="secondAppOrganizationName">
+						<control-messages [control]="affordableHousingForm.get('secondAppOrganizationName')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" required maxlength="100"
+							placeholder="{{'designation_Held' | translate:translateKey}}"
+							formControlName="secondAppOccupationDesignation">
+						<control-messages [control]="affordableHousingForm.get('secondAppOccupationDesignation')">
+						</control-messages>
+					</mat-form-field>
+				</div>
+
+				<div class="row">
+					<h2><b>{{'address_proof_with_residence' | translate: translateKey}}</b></h2>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appAlphaNumeric maxlength="15"
+							placeholder="{{'drivingLicense' | translate:translateKey}}"
+							formControlName="secondAppDrivingLicenseNumber">
+						<control-messages [control]="affordableHousingForm.get('secondAppDrivingLicenseNumber')">
+						</control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appAlphaNumeric maxlength="10"
+							placeholder="{{'voterID' | translate:translateKey}}"
+							formControlName="secondAppVoterIdNumber">
+						<control-messages [control]="affordableHousingForm.get('secondAppVoterIdNumber')">
+						</control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appAlphaNumeric required OnlyNumber minlength="12" maxlength="12"
+							placeholder="{{'aadharID' | translate:translateKey}}"
+							formControlName="secondAppAadharCardNumber">
+						<control-messages [control]="affordableHousingForm.get('secondAppAadharCardNumber')">
+						</control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" #inputPAN2 [value]="inputPAN2.value.toUpperCase()" appAlphaNumeric
+							required maxlength="10" placeholder="{{'panNo' | translate:translateKey}}"
+							formControlName="secondAppPanCardNumber">
+						<control-messages [control]="affordableHousingForm.get('secondAppPanCardNumber')">
+						</control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appAlphaNumeric maxlength="50"
+							placeholder="{{'rationCardNo' | translate:translateKey}}"
+							formControlName="secondAppRationCardNumber">
+						<control-messages [control]="affordableHousingForm.get('secondAppRationCardNumber')">
+						</control-messages>
+					</mat-form-field>
+				</div>
+				<div class="row">
+					<h2><b>{{'occupationAddress' | translate: translateKey}}</b></h2>
+					<app-address #secondAppOccupationAddress [requiredFeilds]="true"
+						[addressFormGroup]="affordableHousingForm.get('secondAppOccupationAddress')"></app-address>
+				</div>
+
+
+				<div class="fotButtonBar clearfix">
+
+					<div class="col-sm-12 col-md-12">
+						<button type="button" class="liteBorder pull-left" mat-raised-button
+							(click)="tabIndex = 0">{{'back' |
+							translate: actionBarKey}}</button>
+						<button class="pull-right" mat-raised-button color="primary" (click)="tabIndex = 2">{{'next'
+							| translate:
+							actionBarKey}}</button>
+					</div>
+				</div>
+
+			</mat-tab>
+
+			<!-- step 2 Ends -->
+
+			<!-- step 3 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'bank_detail' | translate:translateKey}}</div>
+				</ng-template>
+
+				<div class="col-md-12">
+					<h2 style="margin-left: -16px;">{{'Beneficiary Bank Details' | translate: translateKey}}</h2>
+				</div>
+
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput autocomplete="off" maxlength="18" minlength="9" appAlphaNumeric
+							formControlName="bankAccountNumber" type="text"
+							placeholder="{{'bank_account_no' | translate: translateKey}}" required>
+						<control-messages [control]="affordableHousingForm.get('bankAccountNumber')">
+						</control-messages>
+					</mat-form-field>
+
+					<div class="col-md-4 ngSelect" formGroupName="bank">
+						<ng-select placeholder="{{'bank' | translate: translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let bank of bankNameArray" [value]="bank.code">
+								{{bank.name}}
+							</ng-option>
+						</ng-select>
+						<control-messages [control]="affordableHousingForm.get('bank').get('code')">
+						</control-messages>
+					</div>
+
+
+					<mat-form-field class="col-md-4">
+						<input matInput autocomplete="off" maxlength="200" formControlName="bankBranch" type="text"
+							placeholder="{{'branch_name' | translate: translateKey}}" required>
+						<control-messages [control]="affordableHousingForm.get('bankBranch')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput autocomplete="off" #inputIFSC [value]="inputIFSC.value.toUpperCase()"
+							appAlphaNumeric upperCase maxlength="11" formControlName="bankIFSC" type="tel"
+							placeholder="{{'IFSCCode' | translate: translateKey}}" required>
+						<control-messages [control]="affordableHousingForm.get('bankIFSC')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput autocomplete="off" maxlength="9" OnlyNumber formControlName="bankMicrCode"
+							type="tel" placeholder="{{'MICRCode' | translate: translateKey}}">
+						<control-messages [control]="affordableHousingForm.get('bankMicrCode')"></control-messages>
+					</mat-form-field>
+
+				</div>
+
+				<div class="col-md-12">
+					<h2 style="margin-left: -16px;">{{'Beneficiary DD/Banker Cheque Details' | translate:
+						translateKey}}</h2>
+				</div>
+
+				<div class="row">
+					<div class="col-md-4 ngSelect" formGroupName="ddBank">
+						<ng-select placeholder="{{'Bank Name *' | translate: translateKey}}" formControlName="code">
+							<ng-option *ngFor="let ddbank of bankNameArray" [value]="ddbank.code">{{ ddbank.name
+								}}
+							</ng-option>
+							<control-messages [control]="affordableHousingForm.get('ddBank').get('code')">
+							</control-messages>
+						</ng-select>
+					</div>
+					<mat-form-field class="col-md-4">
+						<input matInput placeholder="{{'Branch Name *' | translate: translateKey}}"
+							formControlName="ddBankBranch" type="text" appValidationFields
+							validationFieldsType='onlyNameWithSpace' maxlength="20">
+						<control-messages [control]="affordableHousingForm.get('ddBankBranch')"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput OnlyNumber maxlength="6" formControlName="ddNumber"
+							placeholder="{{'DD Number' | translate: translateKey}}">
+						<control-messages [control]="affordableHousingForm.get('ddNumber')"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput OnlyNumber maxlength="6" formControlName="ddAmount"
+							placeholder="{{'DD Amount' | translate: translateKey}}">
+						<control-messages [control]="affordableHousingForm.get('ddAmount')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<mat-label>{{'Cheque/DD Issuing date *'| translate: translateKey}}</mat-label>
+						<input appDate matInput [min]="minDate" [max]="maxDate" [matDatepicker]="chequeDate"
+							formControlName="ddIssuingDate">
+						<mat-datepicker-toggle matSuffix [for]="chequeDate"></mat-datepicker-toggle>
+						<mat-datepicker #chequeDate touchUi="true"></mat-datepicker>
+						<control-messages [control]="affordableHousingForm.get('ddIssuingDate')"></control-messages>
+						<div align="end" class="default-show-hint mat-hint mat-right">
+							Hint: DD/MM/YYYY
 						</div>
-					
-						<app-action-bar  [form]="affordableHousingForm" (tabIndex)="onTabChange($event)"
-				 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next:7, back:6} "></app-action-bar>
-					
-					</mat-tab> 
-	
-				</mat-tab-group>
-			</form>
+
+					</mat-form-field>
+				</div>
+
+				<div class="fotButtonBar clearfix">
+					<div class="col-sm-12 col-md-12">
+						<button type="button" class="liteBorder pull-left" mat-raised-button
+							(click)="tabIndex = 1">{{'back' |
+							translate: actionBarKey}}</button>
+						<button mat-raised-button class="pull-right" color="primary" (click)="tabIndex = 3">{{'next'
+							| translate:
+							actionBarKey}}</button>
+					</div>
+				</div>
+
+			</mat-tab>
+
+			<!-- step 3 Ends -->
+
+			<!-- step 4 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'annual_income' | translate:translateKey}}</div>
+				</ng-template>
+				<div class="row">
+
+					<mat-form-field class="col-md-4">
+						<input matInput minlength="6" maxlength="7" #amountvalue
+							(change)="getWordAmount(amountvalue.value)" OnlyNumber
+							placeholder="{{'annualIncome' | translate:translateKey}}" type="tel"
+							formControlName="aggregateAnnualIncomeAmount" required>
+						<control-messages [control]="affordableHousingForm.get('aggregateAnnualIncomeAmount')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-8">
+						<input matInput readonly autocomplete="off" maxlength="200"
+							placeholder="{{'annualIncomeWords' | translate:translateKey}}" type="text"
+							formControlName="aggregateAnnualIncomeAmountInWords" required>
+						<control-messages [control]="affordableHousingForm.get('aggregateAnnualIncomeAmountInWords')">
+						</control-messages>
+					</mat-form-field>
+
+				</div>
+
+
+				<div class="row pb-3">
+					<div class="col-md-10">
+						<h2>{{ 'family_members_details' | translate:translateKey}}</h2>
+					</div>
+					<div class="col-md-2 pt-3" style="text-align: right;">
+						<button type="button" *ngIf="addnewBtnfamily"
+							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
+							(click)="addRecordFormArray('familyMembers')">{{'add'|
+							translate:translateKey}}</button>
+					</div>
+				</div>
+
+				<div *ngIf="affordableHousingForm.get('familyMembers')['controls'].length">
+					<div>
+						<table class="table table-striped responsiveTableRow">
+							<thead>
+								<tr class="mo-d-none">
+									<th>#</th>
+									<th>{{'Full Name' | translate:translateKey}}</th>
+									<th width="100">{{'age' | translate:translateKey}}</th>
+									<th>{{'relationship_with_applicant' | translate:translateKey}}</th>
+									<th colspan="2" *ngIf="affordableHousingForm.get('canEdit').value">
+									</th>
+								</tr>
+							</thead>
+							<tbody formArrayName="familyMembers">
+								<tr *ngFor="let item of affordableHousingForm.get('familyMembers')['controls']; let indx = index;"
+									[formGroupName]="indx">
+
+									<td>
+										<div class="d-md-none">#</div>
+										{{indx+1}}
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'Full Name' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput appValidationFields
+												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
+											<control-messages [control]="item.get('name')"></control-messages>
+										</mat-form-field>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'age' | translate:translateKey}}</div>
+										<p class="width60" *ngIf="!item.isEditMode">{{item.get('memberAge').value}}
+										</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput maxlength="2" OnlyNumber formControlName="memberAge">
+											<control-messages [control]="item.get('memberAge')"></control-messages>
+										</mat-form-field>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'relationship' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('relationshipWithApplicant').value}}
+										</p>
+
+										<mat-form-field *ngIf="item.isEditMode">
+											<mat-select formControlName="relationshipWithApplicant" required>
+												<mat-option *ngFor="let rel of relationArray" [value]="rel">
+													{{rel}}
+												</mat-option>
+											</mat-select>
+										</mat-form-field>
+
+										<control-messages [control]="item.get('relationshipWithApplicant')">
+										</control-messages>
+
+
+
+
+									</td>
+
+
+									<td style="width: 40px;" *ngIf="affordableHousingForm.get('canEdit').value">
+										<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
+											(click)="editRecord(item)">
+											<mat-icon title="Edit">edit</mat-icon>
+										</button>
+										<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary"
+											*ngIf="item.isEditMode" (click)="saveRecord(item)">
+											<mat-icon title="save">save</mat-icon>
+										</button>
+									</td>
+									<td style="width: 40px;" *ngIf="affordableHousingForm.get('canEdit').value">
+										<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
+											(click)="deleteFormArrayRecord('familyMembers',indx)">
+											<mat-icon title="Delete">delete</mat-icon>
+										</button>
+										<button mat-icon-button color="warn" *ngIf="item.isEditMode"
+											(click)="cancelRecord('familyMembers',item,indx)">
+											<mat-icon title="Cancel">cancel</mat-icon>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="fotButtonBar clearfix">
+					<div class="col-sm-12 col-md-12">
+						<button type="button" class="liteBorder pull-left" mat-raised-button
+							(click)="tabIndex = 2">{{'back' |
+							translate: actionBarKey}}</button>
+						<button mat-raised-button class="pull-right" color="primary" (click)="tabIndex = 4">{{'next'
+							| translate:
+							actionBarKey}}</button>
+					</div>
+				</div>
+
+			</mat-tab>
+			<!--  step 4 Ends -->
+
+
+			<!-- step 5 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'Own House Detail' | translate:translateKey}}</div>
+				</ng-template>
+
+				<div class="row pb-3">
+					<div class="col-md-10">
+						<h2>{{ 'Own House Detail' | translate:translateKey}}</h2>
+					</div>
+					<div class="col-md-2 pt-3" style="text-align: right;">
+						<button type="button" *ngIf="addnewBtnown" matTooltip="{{'add_more' | translate:translateKey}}"
+							mat-raised-button color="primary" (click)="addRecordFormArray('ownHouseDetail')">{{'add'|
+							translate:translateKey}}</button>
+					</div>
+				</div>
+
+				<div style="overflow: scroll !important"
+					*ngIf="affordableHousingForm.get('ownHouseDetail')['controls'].length">
+					<div>
+						<table class="table table-striped responsiveTableRow">
+							<thead>
+								<tr class="mo-d-none">
+									<th>#</th>
+									<th>{{'Full Name' | translate:translateKey}}</th>
+									<th>{{'flat_no' | translate:translateKey}}</th>
+									<th>{{'street' | translate:translateKey}}</th>
+									<th>{{'city' | translate:translateKey}}</th>
+									<th>{{'district' | translate:translateKey}}</th>
+									<th>{{'pincode' | translate:translateKey}}</th>
+									<th *ngIf="affordableHousingForm.get('canEdit').value">
+									</th>
+								</tr>
+							</thead>
+							<tbody formArrayName="ownHouseDetail">
+								<tr *ngFor="let item of affordableHousingForm.get('ownHouseDetail')['controls']; let indx = index;"
+									[formGroupName]="indx">
+
+									<td>
+										<div class="d-md-none">#</div>
+										{{indx+1}}
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'Full Name' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput appValidationFields
+												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
+											<control-messages [control]="item.get('name')"></control-messages>
+										</mat-form-field>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'flat_no' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('flatNo').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput formControlName="flatNo">
+											<control-messages [control]="item.get('flatNo')"></control-messages>
+										</mat-form-field>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'street' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('street').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput formControlName="street">
+											<control-messages [control]="item.get('street')"></control-messages>
+										</mat-form-field>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'city' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('city').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput formControlName="city">
+											<control-messages [control]="item.get('city')"></control-messages>
+										</mat-form-field>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'district' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('district').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput formControlName="district">
+											<control-messages [control]="item.get('district')"></control-messages>
+										</mat-form-field>
+									</td>
+									<td>
+										<div class="d-md-none">{{'pincode' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('pincode').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input OnlyNumber maxlength="6" matInput formControlName="pincode">
+											<control-messages [control]="item.get('pincode')"></control-messages>
+										</mat-form-field>
+									</td>
+
+									<td width="110px">
+										<div *ngIf="affordableHousingForm.get('canEdit').value" class="float-left">
+											<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
+												(click)="editRecord(item)">
+												<mat-icon title="Edit">edit</mat-icon>
+											</button>
+											<button type="submit" [disabled]="item.invalid" mat-icon-button
+												color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
+												<mat-icon title="save">save</mat-icon>
+											</button>
+										</div>
+
+										<div *ngIf="affordableHousingForm.get('canEdit').value">
+											<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
+												(click)="deleteFormArrayRecord('ownHouseDetail',indx)">
+												<mat-icon title="Delete">delete</mat-icon>
+											</button>
+											<button mat-icon-button color="warn" *ngIf="item.isEditMode"
+												(click)="cancelRecord('ownHouseDetail',item,indx)">
+												<mat-icon title="Cancel">cancel</mat-icon>
+											</button>
+										</div>
+									</td>
+
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="fotButtonBar clearfix">
+					<div class="col-sm-12 col-md-12">
+						<button type="button" class="liteBorder pull-left" mat-raised-button
+							(click)="tabIndex = 3">{{'back' |
+							translate: actionBarKey}}</button>
+						<button mat-raised-button class="pull-right" color="primary" (click)="tabIndex = 5">{{'next'
+							| translate:
+							actionBarKey}}</button>
+					</div>
+				</div>
+
+			</mat-tab>
+			<!-- step 5 Ends -->
+
+			<!-- step 6 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'Own Plot Detail' | translate:translateKey}}</div>
+				</ng-template>
+
+
+				<div class="row pb-3">
+					<div class="col-md-10">
+						<h2>{{ 'Own Plot Detail' | translate:translateKey}}</h2>
+					</div>
+					<div class="col-md-2 pt-3" style="text-align: right;">
+						<button type="button" *ngIf="addnewBtnPlot" matTooltip="{{'add_more' | translate:translateKey}}"
+							mat-raised-button color="primary" (click)="addRecordFormArray('ownLandPlotDetail')">{{'add'|
+							translate:translateKey}}</button>
+					</div>
+				</div>
+
+				<div style="overflow: scroll" *ngIf="affordableHousingForm.get('ownLandPlotDetail')['controls'].length">
+					<div>
+						<table class="table table-striped responsiveTableRow">
+							<thead>
+								<tr class="mo-d-none">
+									<th>#</th>
+									<th>{{'Full Name' | translate:translateKey}}</th>
+									<th>{{'flat_no' | translate:translateKey}}</th>
+									<th>{{'street' | translate:translateKey}}</th>
+									<th>{{'city' | translate:translateKey}}</th>
+									<th>{{'district' | translate:translateKey}}</th>
+									<th>{{'pincode' | translate:translateKey}}</th>
+									<th *ngIf="affordableHousingForm.get('canEdit').value">
+									</th>
+								</tr>
+							</thead>
+							<tbody formArrayName="ownLandPlotDetail">
+								<tr *ngFor="let item of affordableHousingForm.get('ownLandPlotDetail')['controls']; let indx = index;"
+									[formGroupName]="indx">
+
+									<td>
+										<div class="d-md-none">#</div>
+										{{indx+1}}
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'Full Name' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput appValidationFields
+												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
+											<control-messages [control]="item.get('name')"></control-messages>
+										</mat-form-field>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'flat_no' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('flatNo').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput formControlName="flatNo">
+											<control-messages [control]="item.get('flatNo')"></control-messages>
+										</mat-form-field>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'street' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('street').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput formControlName="street">
+											<control-messages [control]="item.get('street')"></control-messages>
+										</mat-form-field>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'city' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('city').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput formControlName="city">
+											<control-messages [control]="item.get('city')"></control-messages>
+										</mat-form-field>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'district' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('district').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput formControlName="district">
+											<control-messages [control]="item.get('district')"></control-messages>
+										</mat-form-field>
+									</td>
+									<td>
+										<div class="d-md-none">{{'pincode' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('pincode').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input OnlyNumber maxlength="6" matInput formControlName="pincode">
+											<control-messages [control]="item.get('pincode')"></control-messages>
+										</mat-form-field>
+									</td>
+
+									<td width="110px">
+										<div *ngIf="affordableHousingForm.get('canEdit').value" class="float-left">
+
+
+											<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
+												(click)="editRecord(item)">
+												<mat-icon title="Edit">edit</mat-icon>
+											</button>
+											<button type="submit" [disabled]="item.invalid" mat-icon-button
+												color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
+												<mat-icon title="save">save</mat-icon>
+											</button>
+										</div>
+										<div *ngIf="affordableHousingForm.get('canEdit').value">
+											<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
+												(click)="deleteFormArrayRecord('ownLandPlotDetail',indx)">
+												<mat-icon title="Delete">delete</mat-icon>
+											</button>
+											<button mat-icon-button color="warn" *ngIf="item.isEditMode"
+												(click)="cancelRecord('ownLandPlotDetail',item,indx)">
+												<mat-icon title="Cancel">cancel</mat-icon>
+											</button>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="fotButtonBar clearfix">
+					<div class="col-sm-12 col-md-12">
+						<button type="button" class="liteBorder pull-left" mat-raised-button
+							(click)="tabIndex = 4">{{'back' |
+							translate: actionBarKey}}</button>
+						<button mat-raised-button class="pull-right" color="primary" (click)="tabIndex = 6">{{'next'
+							| translate:
+							actionBarKey}}</button>
+					</div>
+				</div>
+
+			</mat-tab>
+			<!-- step 6 Ends -->
+
+			<!-- step 7 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'Nominee_details' | translate:translateKey}}</div>
+				</ng-template>
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" required maxlength="100"
+							placeholder="{{'nominee_name' | translate:translateKey}}" formControlName="nomineeName">
+						<control-messages [control]="affordableHousingForm.get('nomineeName')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+
+						<mat-select placeholder="{{'relation_with_applicant' | translate:translateKey}}"
+							formControlName="nomineeApplicantRelationShip" required>
+							<mat-option *ngFor="let rele of relationArray" [value]="rele">
+								{{rele}}
+							</mat-option>
+						</mat-select>
+
+						<control-messages [control]="affordableHousingForm.get('nomineeApplicantRelationShip')">
+						</control-messages>
+					</mat-form-field>
+				</div>
+
+				<div class="row">
+					<h2>{{'nominee_address' | translate: translateKey}}</h2>
+					<app-address #nomineeAddr [requiredFeilds]="true"
+						[addressFormGroup]="affordableHousingForm.get('nomineeAddress')"></app-address>
+				</div>
+
+
+
+				<!-- <div class="fotButtonBar clearfix">
+					<div class="col-sm-12 col-md-12">
+						<button type="button" class="liteBorder pull-left" mat-raised-button (click)="tabIndex = 5">{{'back'
+							|
+							translate: actionBarKey}}</button>
+						<div class="float-right">
+							<button mat-raised-button color="success" (click)="onSubmit()">{{'submit'
+								| translate:
+								actionBarKey}}</button>
+							<button mat-raised-button color="success" (click)="onSubmit()">{{'accept' | translate:actionBarKey}}</button>
+							<button type="button" color="warn" mat-raised-button (click)="onRejectApp()">{{'reject' |
+								translate:actionBarKey}}</button>
+						</div>
+					</div>
+				</div> -->
+				<div class="fotButtonBar clearfix">
+					<div class="col-sm-12 col-md-12">
+						<button type="button" class="liteBorder pull-left" mat-raised-button
+							(click)="tabIndex = 5">{{'back' |
+							translate: actionBarKey}}</button>
+						<button mat-raised-button class="pull-right" color="primary" (click)="tabIndex = 7">{{'next'
+							| translate:
+							actionBarKey}}</button>
+					</div>
+				</div>
+
+			</mat-tab>
+			<!-- step 7 Ends -->
+
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'attachment' | translate: translateKey}}</div>
+				</ng-template>
+				<div class="row">
+					<div class="col-md-4" *ngFor="let doc of attachmentList">
+						<div *ngIf="doc.requiredOnAdminPortal && doc.isActive">
+							<label>{{doc.documentLabelEn}}
+								<span class="text-danger" *ngIf="doc.mandatory">*</span>
+							</label>
+							<file-upload [form]="affordableHousingForm" [uploadModel]="doc"></file-upload>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div>
+						<mat-checkbox class="col accept-terms" required formControlName="licenseAgreed">
+
+						</mat-checkbox>
+					</div>
+					<a (click)="openTermModel(termCondition);" style="margin-top: 5px; margin-left: -25px"> I have
+						read and agree with <u style="color: rebeccapurple;">Terms and conditions</u> </a>
+				</div>
+
+				<app-action-bar [uploadFiles]="serverUploadFilesArray" [form]="affordableHousingForm"
+					(tabIndex)="onTabChange($event)" [paymentGateway]="paymentGateway"
+					(handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next:7, back:6} ">
+				</app-action-bar>
+
+				<!-- step Attachment Ends -->
+				<select-payment-gateway #paymentGateway></select-payment-gateway>
+			</mat-tab>
+		</mat-tab-group>
+	</form>
 </mat-card>
+
+<ng-template #termCondition>
+
+	<div class="modal-body scrollModel">
+
+		• અરજી ફોર્મની રકમ રૂ.૧૦૦/- (રૂપિયા સો પુરા) રોકડેથી ભરવાના રહેશે, જે નોન-રીફંડેબલ રહેશે.<br>
+		૧.	અરજી સાથે ભરવાની ડિપોઝીટની રકમ રૂ.૨૦,૦૦૦/- (રૂપિયા વીસ હજાર પુરા) અરજી ફોર્મ સાથે ભરવાની રકમનો વડોદરામાં ચુકવણું થઇ શકે તેવા ડી.ડી./પે ઓર્ડર “મ્‍યુનિસિપલ કમિશ્‍નર, વડોદરા” ના નામનો આપવાનો રહેશે અથવા POS થી ચુકવણુ કરી શકાશે.
+		<br>૨.	મકાનની કુલ કિંમતની ઓછામાં ઓછી ૨૦% રકમ ડ્રો માં સફળ થયા બાદ વડોદરા મ્‍યુનિસિપલ કોર્પોરેશનમાં અરજદારે ત્રણ માસમાં ભરવાની રહેશે. ત્‍યારબાદ બાકી રહેતી ૮૦% રકમના એક સરખા દસ (૧૦) હપ્તા કરી પઝેશન સુધીના સમયગાળામાં સરખા માસિક અંતરે જમા કરાવવાની રહેશે તે ઉપરાંત છેલ્લા હપ્તા સાથે મેન્‍ટેનન્‍સ ડીપોઝીટ તરીકે ૫૦,૦૦૦ તથા અન્‍ય લગત, જો હોય તો, ચાર્જીસ પણ ભરપાઇ કરવાના રહેશે. સમયસર નાણાં જમા નહીં કરાવવામાં આવે તો મકાન નોટીસ આપ્યા વગર રદ કરવામાં આવશે ઉપરાંત ડિપોઝીટની રકમ સિવાયની રકમ જ પરત કરવામાં આવશે તેમજ આ રકમ પર કોઈ વ્યાજ આપવામાં આવશે નહી. 
+		<br>૩.	આવાસ યોજનાનું બાંધકામ પૂર્ણ થયા બાદ મકાનોની ફાળવણી થાય ત્યાં સુધી અરજદારે મકાનની નક્કી થયેલ પૂરેપૂરી કિંમત ભરપાઇ કરવાની રહેશે. ત્‍યારબાદ જ અરજદારને ફાળવવામાં આવેલા મકાનનો કબજો સોંપવામાં આવશે.
+
+	</div>
+	<div class="modal-footer customthead">
+		<button color="white" mat-stroked-button (click)="hideModel()">
+			{{'Ok' | translate: translateKey}}
+		</button>
+	</div>
+</ng-template>

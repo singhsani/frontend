@@ -34,6 +34,7 @@ export class AnimalPondTransferComponent implements OnInit {
 	public showButtons: boolean = false;
 
 	//Lookups Array
+	ANIMAL_POND_STATUS_OF_BUSINESS: Array<any> = [];
 	MF_RELATIONSHIP_OF_APPLICANT: Array<any> = [];
 	MF_STATUS_OF_BUSINESS: Array<any> = [];
 	PERSON_TYPE: Array<any> = [];
@@ -118,7 +119,7 @@ export class AnimalPondTransferComponent implements OnInit {
 			this.getLookupData();
 			this.getAnimalPondLicNewData();
 
-			this.animalPondTransferForm.disable();
+			// this.animalPondTransferForm.disable();
 			this.enableFielList();
 		}
 	}
@@ -127,6 +128,7 @@ export class AnimalPondTransferComponent implements OnInit {
     * Method is add required document  
     */
 	requiredDocumentList() {
+		this.uploadFilesArray = [];
 		_.forEach(this.animalPondTransferForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
 				this.uploadFilesArray.push({
@@ -157,7 +159,8 @@ export class AnimalPondTransferComponent implements OnInit {
 			maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
 			requiredOnAdminPortal: [data.requiredOnAdminPortal],
 			requiredOnCitizenPortal: [data.requiredOnCitizenPortal],
-			dmsEnabled:[data.dmsEnabled]
+			dmsEnabled:[data.dmsEnabled],
+			orderSequence:[data.orderSequence ? data.orderSequence : null]
 			// version: [data.version ? data.version : null]
 		});
 	}
@@ -169,7 +172,6 @@ export class AnimalPondTransferComponent implements OnInit {
 		this.animalPondTransferForm.get('animalDetails').enable();
 		this.animalPondTransferForm.get('totalAnimal').enable();
 		this.animalPondTransferForm.get('temporaryAddress').enable();
-
 	}
 
 	/**
@@ -233,7 +235,7 @@ export class AnimalPondTransferComponent implements OnInit {
 				app.serviceFormId = null;
 				(<FormArray>this.animalPondTransferForm.get('animalDetails')).push(this.createAnimalArray(app));
 			});
-			this.animalPondTransferForm.disable();
+			// this.animalPondTransferForm.disable();
 			this.enableFielList();
 
 			let currentUrl = this.location.path().replace('false', this.formId.toString());
@@ -242,7 +244,10 @@ export class AnimalPondTransferComponent implements OnInit {
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
 				(<FormArray>this.animalPondTransferForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
 			});
-			this.requiredDocumentList();
+			this.animalPondTransferForm.get('serviceDetail').get('serviceUploadDocuments').value.sort(
+				(a,b) => a.orderSequence - b.orderSequence);
+			// this.requiredDocumentList();
+			this.onChangeStatusOfBusiness();
 		});
 
 	}
@@ -287,8 +292,8 @@ export class AnimalPondTransferComponent implements OnInit {
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.animalPondTransferForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
 				});
-				this.requiredDocumentList();
-
+				// this.requiredDocumentList();
+				this.onChangeStatusOfBusiness();
 				// selected animal filter
 				this.getSelectedAnimal();
 			} catch (error) {
@@ -308,6 +313,7 @@ export class AnimalPondTransferComponent implements OnInit {
 			this.PERSON_TYPE = res.PERSON_TYPE;
 			this.FIRM_ZONE = res.FIRM_ZONE;
 			this.ANIMAL_TYPE = res.ANIMAL_TYPE;
+			this.ANIMAL_POND_STATUS_OF_BUSINESS = res.ANIMAL_POND_STATUS_OF_BUSINESS
 			// selected animal filter
 			this.getSelectedAnimal();
 			this.onChangeZone(this.animalPondTransferForm.get('zoneNo').value.code);
@@ -360,16 +366,16 @@ export class AnimalPondTransferComponent implements OnInit {
 				code: [null, Validators.required]
 			}),
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30)]],
-			holderMiddleName: [null, [Validators.required, Validators.maxLength(30)]],
+			holderMiddleName: [null,[Validators.maxLength(30)]],
 			holderLastName: [null, [Validators.required, Validators.maxLength(30)]],
 			holderFirstNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
-			holderMiddleNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
+			holderMiddleNameGuj: [null,[Validators.maxLength(30)]],
 			holderLastNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
 
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			temporaryAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 
-			holderTelephoneNo: [null, [Validators.maxLength(10), Validators.minLength(10)]],
+			holderTelephoneNo: [null, [Validators.maxLength(11), Validators.minLength(11)]],
 			holderMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
 			holderAadharNo: [null, [Validators.required, Validators.maxLength(12), Validators.minLength(12)]],
@@ -402,8 +408,12 @@ export class AnimalPondTransferComponent implements OnInit {
 			loinumber: [null],
 
 			/* Step 4 controls start*/
-			attachments: []
+			attachments: [],
 			/* Step 4 controls end */
+
+			businessType:this.fb.group({
+				code: [null, Validators.required],
+			}),
 		});
 	}
 
@@ -500,7 +510,7 @@ export class AnimalPondTransferComponent implements OnInit {
 			}
 		}
 		else {
-			this.commonService.openAlert("Warning", "You can add new recode after save existing recode.", "warning");
+			this.commonService.openAlert("Warning", "You can add new record after saving existing record", "warning");
 		}
 	}
 
@@ -509,8 +519,8 @@ export class AnimalPondTransferComponent implements OnInit {
 	 */
 	onChangeRelationWithOrg() {
 		try {
-			// (<FormArray>this.animalPondRenewForm.get('relationshipList')).controls = [];
-			// this.animalPondRenewForm.get('relationshipList').setValue([]);
+			(<FormArray>this.animalPondTransferForm.get('relationshipList')).controls = [];
+			this.animalPondTransferForm.get('relationshipList').setValue([]);
 			let relationshipId = this.animalPondTransferForm.get('relationshipId').value.code;
 			if (relationshipId == 'PROPRIETOR') {
 				(<FormArray>this.animalPondTransferForm.get('relationshipList')).controls = [];
@@ -542,7 +552,7 @@ export class AnimalPondTransferComponent implements OnInit {
 			}
 		}
 		else {
-			this.commonService.openAlert("Warning", "You can add new recode after save existing recode.", "warning");
+			this.commonService.openAlert("Warning", "You can add new record after saving existing record", "warning");
 		}
 	}
 
@@ -708,4 +718,22 @@ export class AnimalPondTransferComponent implements OnInit {
 		this.tabIndex = evt;
 	}
 
+	onChangeStatusOfBusiness(){
+		const subject = this.animalPondTransferForm.get('businessType').get('code').value
+		const documents = this.animalPondTransferForm.get('serviceDetail').get('serviceUploadDocuments').value;
+		const transferFormValue =  this.animalPondTransferForm;
+		this.animalPondService.changeStatusOfBusinessAccordingAtatchment(subject,documents,transferFormValue);
+		this.requiredDocumentList();
+	}
+
+	onSameAddressChange(event){
+		if(event.checked){
+			this.animalPondTransferForm.get('temporaryAddress').patchValue(this.animalPondTransferForm.get('permanantAddress').value);
+			// this.animalPondRenewForm.get('temporaryAddress.addressType').setValue('APL_TEMPORARY_ADDRESS');
+			this.animalPondTransferForm.get('temporaryAddress').disable();
+		}else{
+			this.animalPondTransferForm.get('temporaryAddress').enable();
+			this.animalPondTransferForm.get('temporaryAddress').reset();
+		}
+	}
 }

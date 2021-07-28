@@ -12,6 +12,8 @@ import { NewWaterConnectionEntryService } from '../../tax/water-supply/new-water
 import { WaterDrinageConfig} from '../water-drinage-config';
 import * as _ from 'lodash';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
+import { BookingUtils } from '../../facilities/bookings/config/booking-config';
+import { ToastrService } from 'ngx-toastr';
 
 
  
@@ -54,6 +56,8 @@ export class NewDrainageConnectionComponent implements OnInit {
   waterDrainageConnPropertyDetailsDTOList = [];
   isprimaryProperty : boolean = false;
   propertyaryy = [];
+  public formControlNameToTabIndex = new Map();
+  bookingUtils: BookingUtils;
 
   constructor(
     private fb: FormBuilder,
@@ -66,7 +70,10 @@ export class NewDrainageConnectionComponent implements OnInit {
     private newWaterConnectionEntryService: NewWaterConnectionEntryService,
     private alertService: AlertService,
     private commonService: CommonService,
-  ) { }
+    private toaster: ToastrService,
+  ) { 
+    this.bookingUtils = new BookingUtils(formService, toaster);
+  }
 
   ngOnInit() {
 
@@ -94,6 +101,8 @@ export class NewDrainageConnectionComponent implements OnInit {
       this.limitList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.Water_Within_Limit))[0].items;
      
     });
+
+    this.setFormControlToTabIndexMap();
   
   }
 
@@ -131,28 +140,35 @@ export class NewDrainageConnectionComponent implements OnInit {
       }
     });
   }
+
   handleErrorsOnSubmit(flag) {
+   
+    const key = this.bookingUtils.getInvalidFormControlKey(this.newDrainageConnectionForm);
+		const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 1;
+		if (index) {
+			this.tabIndex = index - 1;
+			return false;
+		}
+    // console.log("flag", flag);
+    // let step0 = 11;
+    // let step1 = 26;
+
+    // if (flag != null) {
+    //   //Check validation for step by step
+    //   let count = flag;
+
+    //   if (count <= step0) {
+    //     this.tabIndex = 0;
+    //     return false;
+    //   } else if (count <= step1) {
+    //     this.tabIndex = 1;
+    //     return false;
+    //   }
+    //   else {
+    //     console.log("else condition");
+    //   }
+
     
-    console.log("flag", flag);
-    let step0 = 11;
-    let step1 = 26;
-
-    if (flag != null) {
-      //Check validation for step by step
-      let count = flag;
-
-      if (count <= step0) {
-        this.tabIndex = 0;
-        return false;
-      } else if (count <= step1) {
-        this.tabIndex = 1;
-        return false;
-      }
-      else {
-        console.log("else condition");
-      }
-
-    }
   }
 
   deleteProperty(index: number){
@@ -168,7 +184,7 @@ export class NewDrainageConnectionComponent implements OnInit {
 
   }
   getPropertyAddressDetail() {
-    if(this.newDrainageConnectionForm.get('primaryProperty').value)
+    if(this.newDrainageConnectionForm.get('primaryProperty').value && this.newDrainageConnectionForm.get('propertyNo').value)
     this.newWaterConnectionEntryService.getPropertyAddress(this.newDrainageConnectionForm.get('propertyNo').value).subscribe(
       (data) => {
         if (data.status === 200) {
@@ -268,10 +284,10 @@ export class NewDrainageConnectionComponent implements OnInit {
       /* Step 1 controls start */
       drainageConnectionNo: [null],
       oldDrainageConnectionNo: [null],
-      aadharNo: [null, [Validators.maxLength(12)]],
+      aadharNo: [null, ValidationService.aadharValidation],
       ownerName: [null, [Validators.required]],
       ownerMobileNo: [null, [Validators.maxLength(10)]],
-      ownerEmailId: [null],
+      ownerEmailId: [null, ValidationService.emailValidator],
   
       limit: [null],
       waterDrainageZoneId: [null, [Validators.required]],
@@ -288,7 +304,7 @@ export class NewDrainageConnectionComponent implements OnInit {
       connectionUsage: [null, [Validators.required]],
       connectionSubUsage: [null, [Validators.required]],
       plumberId: [null, [Validators.required]],
-      propertyNo: [null],
+      propertyNo: [null,[ValidationService.propertyNoValidator]],
       primaryProperty: [null],
       fpNo: [null ],
       plotPartNo: [null ],
@@ -297,12 +313,13 @@ export class NewDrainageConnectionComponent implements OnInit {
       houseNo: [null ],
       buildingName: [null],
       societyName: [null],
-      streetName: [null, ],
+      streetName: [null,[Validators.required ]],
       pincode: [null, [Validators.maxLength(6)]],
       postalAddress: [null],
       postalAddressDiff: [null],
       correspondenceAddress: [null],
       waterDrainageConnPropertyDetailsDTOList: this.fb.array([]),
+      attachments: [''],
     }, {});
   }
 
@@ -506,5 +523,23 @@ export class NewDrainageConnectionComponent implements OnInit {
       }
     )
   }
+
+  setFormControlToTabIndexMap() {
+		// First tab
+		this.formControlNameToTabIndex.set('limit', 1)
+		this.formControlNameToTabIndex.set('waterDrainageZoneId', 1)
+		this.formControlNameToTabIndex.set('waterDrainageWardId', 1)
+		this.formControlNameToTabIndex.set('waterDrainageBlockId', 1)
+
+    this.formControlNameToTabIndex.set('ownerName', 1)
+    this.formControlNameToTabIndex.set('ownerMobileNo', 1)
+    this.formControlNameToTabIndex.set('connectionUsage', 1)
+    this.formControlNameToTabIndex.set('connectionSubUsage', 1)
+   	// second tab
+		
+		this.formControlNameToTabIndex.set('pincode', 2)
+		this.formControlNameToTabIndex.set('streetName', 2)
+	
+	  }
 
 }

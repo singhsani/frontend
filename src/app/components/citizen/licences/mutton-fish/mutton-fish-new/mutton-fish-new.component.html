@@ -35,16 +35,16 @@
 						<control-messages [control]="muttonFishNewForm.get('personType').get('code')">
 						</control-messages>
 					</div>
-					<mat-form-field class="col-md-2">
+					<mat-form-field class="col-md-3">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithOutSpace'
 							required maxlength="30" placeholder="{{'holder_firstname' | translate:translateKey}}"
 							formControlName="holderFirstName" appGujInputSource targetElement="holderFirstNameGuj"
 							[form]="muttonFishNewForm">
 						<control-messages [control]="muttonFishNewForm.get('holderFirstName')"></control-messages>
 					</mat-form-field>
-					<mat-form-field class="col-md-4">
-						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithOutSpace'
-							required maxlength="30" placeholder="{{'holder_middlename' | translate:translateKey}}"
+					<mat-form-field class="col-md-3">
+						<input matInput type="text" appValidationFields
+							 maxlength="30" placeholder="{{'holder_middlename' | translate:translateKey}}"
 							formControlName="holderMiddleName" appGujInputSource targetElement="holderMiddleNameGuj"
 							[form]="muttonFishNewForm">
 						<control-messages [control]="muttonFishNewForm.get('holderMiddleName')"></control-messages>
@@ -65,7 +65,7 @@
 							placeholder="{{'person_type' | translate: translateKey:'gu' }}" maxlength="180" required>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-2">
+					<mat-form-field class="col-md-3">
 						<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj"
 							appGujInputTarget [form]="muttonFishNewForm"
 							placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">
@@ -75,8 +75,8 @@
 						<!--placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">-->
 						<control-messages [control]="muttonFishNewForm.get('holderFirstNameGuj')"></control-messages>
 					</mat-form-field>
-					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="90"
+					<mat-form-field class="col-md-3">
+						<input matInput type="text"  maxlength="90"
 							placeholder="{{'holder_middlename' | translate:translateKey:'gu'}}"
 							formControlName="holderMiddleNameGuj" appGujInputTarget [form]="muttonFishNewForm">
 						<!--<input matInput type="text" required maxlength="90"-->
@@ -109,7 +109,7 @@
 					<mat-checkbox class="col-md-12 mt-2"
 						[checked]="muttonFishNewForm.get('isSameAsPermanantAddress').get('code').value == 'YES'? true : false"
 						(change)="onSameAddressChange($event)">
-						{{'Temporary Address Is Same As Permanant Address ?' | translate: translateKey}}</mat-checkbox>
+						{{'Temporary Address Is Same As Permanent Address ?' | translate: translateKey}}</mat-checkbox>
 				</div>
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
@@ -118,11 +118,11 @@
 				</div>
 
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="12" formControlName="holderTelephoneNo"
+					<input matInput OnlyNumber maxlength="11" minlength="11" formControlName="holderTelephoneNo"
 						placeholder="{{'holder_telephone_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="10" required formControlName="holderMobileNo"
+					<input matInput OnlyNumber maxlength="10" minlength="10" required formControlName="holderMobileNo"
 						placeholder="{{'holder_mobile_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
@@ -205,7 +205,7 @@
 						<control-messages [control]="muttonFishNewForm.get('extraDetailsOfBusiness')">
 						</control-messages>
 					</mat-form-field> -->
-					<div class="col-md-6 ngSelect" formGroupName="relationshipId">
+					<!-- <div class="col-md-6 ngSelect" formGroupName="relationshipId">
 						<ng-select placeholder="{{'relationship_id' | translate:translateKey}} *" formControlName="code"
 							(change)="onChangeRelationWithOrg()">
 							<ng-option *ngFor="let id of MF_RELATIONSHIP_OF_APPLICANT" [value]="id.code">{{id.name}}
@@ -213,7 +213,7 @@
 						</ng-select>
 						<control-messages [control]="muttonFishNewForm.get('relationshipId').get('code')">
 						</control-messages>
-					</div>
+					</div> -->
 
 					<!-- <div class="col-md-6 ngSelect" formGroupName="statusOfBusinessId">
 						<ng-select (change)="onChangeStatusOfBusiness()"
@@ -229,14 +229,16 @@
 				<!-- table -->
 				<div class="row">
 					<div class="col-md-10">
-						<h2 *ngIf="muttonFishNewForm.get('relationshipId').value.code == 'PROPRIETOR'">
-							{{ 'if_shop_is_in_properitership' | translate:translateKey}}</h2>
-						<h2 *ngIf="muttonFishNewForm.get('relationshipId').value.code != 'PROPRIETOR'">
+						<h2 *ngIf="muttonFishNewForm.get('statusOfBusinessId').value.code == 'PROPRIETORSHIPFIRM'">
+								{{ 'if_shop_is_in_properitership' | translate:translateKey}}</h2>
+						
+							<h2 *ngIf="muttonFishNewForm.get('statusOfBusinessId').value.code == 'PARTNERSHIPFIRM'">	
 							{{ 'if_shop_is_in_partnership' | translate:translateKey}}</h2>
 					</div>
 					<div class="col-md-2 pt-3 text-right">
-						<button type="button" *ngIf="muttonFishNewForm.get('canEdit').value"
-							[disabled]="muttonFishNewForm.get('relationshipId').value.code ? muttonFishNewForm.get('relationshipId').value.code=='PROPRIETOR' ? !(muttonFishNewForm.get('relationshipList').length < 1) : !(muttonFishNewForm.get('relationshipList').length < 10) : true"
+					
+							<button type="button" *ngIf="muttonFishNewForm.get('canEdit').value"
+							[disabled]="muttonFishNewForm.get('statusOfBusinessId').value.code ? muttonFishNewForm.get('statusOfBusinessId').value.code =='PROPRIETORSHIPFIRM' ? !(muttonFishNewForm.get('relationshipList').length < 1) : !(muttonFishNewForm.get('relationshipList').length < 10) : true"
 							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
 							(click)="addMorePerson('MF_PERSON')">{{'add'| translate:translateKey}}</button>
 					</div>

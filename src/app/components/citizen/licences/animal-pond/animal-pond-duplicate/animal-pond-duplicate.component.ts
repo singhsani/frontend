@@ -38,6 +38,7 @@ export class AnimalPondDuplicateComponent implements OnInit {
 
 	// required attachment array
 	public uploadFileArray: Array<any> = [];
+	ANIMAL_POND_STATUS_OF_BUSINESS: Array<any> = [];
 
 	// serach api variable
 	serachLicenceObj = {
@@ -170,7 +171,7 @@ export class AnimalPondDuplicateComponent implements OnInit {
 	 * This method use for edit some fiels.
 	 */
 	enableFielList() {
-		this.animalPondDuplicateForm.get('temporaryAddress').enable();
+		// this.animalPondDuplicateForm.get('temporaryAddress').enable();
 		this.animalPondDuplicateForm.get('noOfCopies').enable();
 	}
 
@@ -194,6 +195,7 @@ export class AnimalPondDuplicateComponent implements OnInit {
 	getLookupData() {
 		this.formService.getDataFromLookups().subscribe(res => {
 			this.PERSON_TYPE = res.PERSON_TYPE;
+			this.ANIMAL_POND_STATUS_OF_BUSINESS = res.ANIMAL_POND_STATUS_OF_BUSINESS
 		});
 	}
 
@@ -212,16 +214,16 @@ export class AnimalPondDuplicateComponent implements OnInit {
 				code: [null]
 			}),
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30)]],
-			holderMiddleName: [null, [Validators.required, Validators.maxLength(30)]],
+			holderMiddleName: [null,[Validators.maxLength(30)]],
 			holderLastName: [null, [Validators.required, Validators.maxLength(30)]],
 			holderFirstNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
-			holderMiddleNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
+			holderMiddleNameGuj: [null,[Validators.maxLength(30)]],
 			holderLastNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
 
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			temporaryAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 
-			holderTelephoneNo: [null, [Validators.maxLength(12), Validators.minLength(10)]],
+			holderTelephoneNo: [null, [Validators.maxLength(11), Validators.minLength(11)]],
 			holderMobileNo: [null, [Validators.required, Validators.maxLength(11), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
 			holderAadharNo: [null, [Validators.required, Validators.maxLength(12), Validators.minLength(12)]],
@@ -234,7 +236,10 @@ export class AnimalPondDuplicateComponent implements OnInit {
 			loinumber: [null],
 			noOfCopies: [1, [Validators.required]],
 			/* Step 4 controls start*/
-			attachments: []
+			attachments: [],
+			businessType:this.fb.group({
+				code: [null, Validators.required]
+			})
 			/* Step 4 controls end */
 		});
 	}

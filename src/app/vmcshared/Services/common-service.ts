@@ -197,12 +197,47 @@ export class CommonService {
       }
     
     dueToOutstandingMessage(pNo) {
-        this.alertService.warning('Due to outstanding application can not proceed. Click ok button to make payment.',' ');
+        // this.alertService.warning('Due to outstanding application can not proceed. Click ok button to make payment.',' ');
+        this.alertService.warning('Due to outstanding application can not proceed. Please first make outstanding payment.',' ');
         var subConfirm = this.alertService.getConfirm().subscribe(isConfirm => {
         if (isConfirm) {
-            this.router.navigateByUrl('/property/transaction/collection?pNo='+pNo);
+            // this path is present in admin side so it can't reach there. 
+            // As disscuss with BA now we have commented this because payment flow is not define from citizen side.
+            //this.router.navigateByUrl('/property/transaction/collection?pNo='+pNo);
         }
         subConfirm.unsubscribe();
         });
+    }
+
+    getToWords(amount){
+		let toWords = require('to-words');
+					let words = '';
+						//toWords.convert(payData.amount);
+						if(amount>0){
+							words = toWords(amount);
+						}else{
+							words =  " "
+						}
+					return words;
+	}
+
+
+    // handle error response globally 
+    callInfoResponse(error) {
+        if (error.status === 400) {
+            var errorMessage = '';
+            error.error[0].propertyList.forEach(element => {
+              errorMessage = errorMessage + element + "</br>";
+            });
+            this.alertService.info(errorMessage);
+          }
+          else {
+            if(error.error instanceof ArrayBuffer) {
+                let responseData = this.convertArrayBufferToNumber(error.error);
+                this.alertService.info(responseData.message);
+            } else {
+              this.alertService.info(error.error.message);
+            }
+          }
     }
 }

@@ -93,7 +93,7 @@
 			</div>
 
 			<mat-form-field class="col-md-4">
-				<input matInput [min]="minDate" required (dateChange)="dateFormate($event.value,'appointmentdate')"
+				<input matInput [min]="minDate" [matDatepickerFilter]="disableSunday" required (dateChange)="dateFormate($event.value,'appointmentdate')"
 					[matDatepicker]="appointmentPicker" formControlName="appointmentdate"
 					placeholder="{{'select_date' | translate: translateKey}}" (click)="appointmentPicker.open()"
 					(focus)="appointmentPicker.open()" readonly>

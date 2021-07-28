@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppService } from '../../../../core/services/citizen/app-services/app.service';
 import { ManageRoutes } from '../../../../config/routes-conf';
 import { ToastrService } from 'ngx-toastr';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
 	selector: 'app-userverification',
@@ -14,6 +15,9 @@ import { ToastrService } from 'ngx-toastr';
 export class UserVerificationComponent implements OnInit {
 
 	verifyForm: FormGroup;
+	loading: boolean = false;
+	emailobj : any;
+	userType = 'CITIZEN';
 
 	/**
 	 * Constructor to declare defualt propeties of class.
@@ -26,6 +30,7 @@ export class UserVerificationComponent implements OnInit {
 		private route: ActivatedRoute,
 		private router: Router,
 		private fb: FormBuilder,
+		private commonService: CommonService,
 		private toster: ToastrService
 	) {
 
@@ -39,12 +44,12 @@ export class UserVerificationComponent implements OnInit {
 
 		this.verifyForm = this.fb.group({
 			uniqueId: '',
-			code: ['', Validators.required]
+			code: [null, Validators.maxLength(5)]
 		});
 
 		//  get the values from queryparams
 		this.route.queryParams.subscribe(params => {
-
+			this.emailobj = params.email;
 			this.verifyForm.get('uniqueId').setValue(params['uniqueId']);
 
 			// if code value is exist then disabled field otherwise allow user to enter manually
@@ -65,12 +70,36 @@ export class UserVerificationComponent implements OnInit {
 	 */
 	verifyUser(formVals: FormGroup) {
 
-
+if(this.verifyForm.valid){
 			this.appService.verifyUser(formVals.getRawValue()).subscribe(
 				res => {
 					this.toster.success("Successfully Authenticated");
 					this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
+				},
+				err => {
+					this.toster.error("Please enter valid OTP to signup OR use latest OTP received in Email/SMS to signup");
 				});
+			}
 		
+	}
+
+	onForgotPassword() {
+		this.loading = true;
+		let obj = {'email':this.emailobj,
+					'userType' : this.userType
+		}
+
+		this.appService.forgotPassword(obj).subscribe(
+			res => {
+				this.loading = false;
+				/**
+				 * Redirect to reset password
+				 */
+				this.commonService.successAlert("Success", "For OTP update you can check your registered mail ID and Mobile number. Thank you.", "success");
+				
+			}, err => {
+				this.loading = false;
+				this.toster.error(err.error[0].code);
+			});
 	}
 }

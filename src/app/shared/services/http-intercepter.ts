@@ -50,6 +50,11 @@ export class TokenInterceptor implements HttpInterceptor {
 		this.commonService.isLoading.next(true);
 
 		var isCustomHeader: boolean = false;
+		// For skip header
+		if (req.headers.has('X-Skip-Interceptor')) {
+			const headers = req.headers.delete('X-Skip-Interceptor');
+			return next.handle(req.clone({ headers }));
+		}
 		/* If headers not present then set the authorisation headers for elegant request */
 		if (req.headers instanceof HttpHeaders) {
 			if (req.headers.keys().length == 0) {

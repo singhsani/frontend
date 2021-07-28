@@ -17,189 +17,198 @@
     <mat-step>
       <ng-template matStepLabel>Detail</ng-template>
 
-  <div class="row">
-    <div class="col-md-3">
-      <mat-card>Total Outstanding : <b>{{model.totalOutstanding}}</b></mat-card>
-    </div>
-  </div>
-  <div class="row" [ngClass]="{'overlay': isShaved }">
-    <div class="col-md-12 mt-3">
-      <form #formDetail="ngForm" (ngSubmit)="onSubmit(formDetail)">
-        <div class="row">
-          <div class="col-md-6">
-              <mat-form-field class="full-width-input">
+      <div class="row">
+        <div class="col-md-3">
+          <mat-card>Total Outstanding : <b>{{model.totalOutstanding}}</b></mat-card>
+        </div>
+      </div>
+      <div class="row" [ngClass]="{'overlay': isShaved }">
+        <div class="col-md-12 mt-3">
+          <form #formDetail="ngForm" (ngSubmit)="onSubmit(formDetail)">
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="full-width-input">
                   <input matInput name="propertyNo" placeholder="Property No" [(ngModel)]="model.propertyNo" readonly>
                 </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <mat-form-field class="full-width-input">
-                    <input matInput name="ownerName" placeholder="Owner Name" [(ngModel)]="model.ownerName" readonly>
-                  </mat-form-field>
+              </div>
             </div>
-            <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <input matInput name="occupierName" placeholder="Occupier Name" [(ngModel)]="model.occupierName" readonly>
-                  </mat-form-field>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
+                  <input matInput name="ownerName" placeholder="Owner Name" [(ngModel)]="model.ownerName" readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                     <textarea matInput name="propertyAddress" placeholder="Property Address"
-                        [(ngModel)]="model.propertyAddress.propertyAddress" readonly rows="2"></textarea>
-                  </mat-form-field>
+                  <input matInput name="occupierName" placeholder="Occupier Name" [(ngModel)]="model.occupierName"
+                    readonly>
+                </mat-form-field>
+              </div>
             </div>
-          </div>
-        <!-- <div class="row" *ngIf="isShaved">
+            <div class="row">
+              <div class="col">
+                <mat-form-field class="full-width-input">
+                  <textarea matInput name="propertyAddress" placeholder="Property Address"
+                    [(ngModel)]="model.propertyAddress.propertyAddress" readonly rows="2"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <!-- <div class="row" *ngIf="isShaved">
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input matInput name="certificateNumber" placeholder="Certification No" [(ngModel)]="model.certificateNumber" readonly>
                   </mat-form-field>
             </div>
         </div>   -->
-        <div class="row">
-          <div class="col-md-6">
-            <mat-form-field class="full-width-input">
-              <input matInput required [matDatepicker]="VacancyFrom" placeholder="Vacancy From" name="vacancyFrom"
-                #VFD="ngModel" [(ngModel)]="model.vacancyFrom" [min]="minDate"
-                (dateChange)="onChangeVacancyFrom($event)" mask-date>
-              <mat-datepicker-toggle matSuffix [for]="VacancyFrom"></mat-datepicker-toggle>
-              <mat-datepicker #VacancyFrom disabled="false"></mat-datepicker>
-              <mat-error *ngIf="VFD.invalid">*Vacancy From Date is invalid.</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="col-md-6">
-            <mat-form-field class="full-width-input">
-              <input matInput [matDatepicker]="VacancyTo" placeholder="Vacancy To" name="vacancyTo" #VTD="ngModel"
-                [min]="vacancyToMinDate" [(ngModel)]="model.vacancyTo" mask-date>
-              <mat-datepicker-toggle matSuffix [for]="VacancyTo"></mat-datepicker-toggle>
-              <mat-datepicker #VacancyTo disabled="false"></mat-datepicker>
-              <mat-error *ngIf="VTD.invalid">*Vacancy To date should be greater than or equal to Vacancy From date.
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="ngSelect">
-              <ng-select required placeholder="Action on Vacancy Amount *" [items]="actionOnList" bindValue="itemId"
-                bindLabel="itemName" name="titleId" [(ngModel)]="model.actionOnVacancyAmountLookupId"
-                #ActionOnVacancyAmountLookupId="ngModel" (ngModelChange)="onActionOnVacancy($event)"
-                [ngClass]="{'ng-invalid ng-touched':  formDetail.submitted && ActionOnVacancyAmountLookupId.invalid}">
-              </ng-select>
-              <div
-                *ngIf="(formDetail.submitted && ActionOnVacancyAmountLookupId.invalid)  || (ActionOnVacancyAmountLookupId.invalid && ActionOnVacancyAmountLookupId.touched)">
-                <mat-error *ngIf="ActionOnVacancyAmountLookupId.errors.required">*Action on Vacancy Amount is required.
-                </mat-error>
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                  <input matInput required [matDatepicker]="VacancyFrom" placeholder="Vacancy From" name="vacancyFrom"
+                    #VFD="ngModel" [(ngModel)]="model.vacancyFrom" [min]="minDate"
+                    (dateChange)="onChangeVacancyFrom($event)" mask-date>
+                  <mat-datepicker-toggle matSuffix [for]="VacancyFrom"></mat-datepicker-toggle>
+                  <mat-datepicker #VacancyFrom disabled="false"></mat-datepicker>
+                  <mat-error *ngIf="VFD.invalid">*Vacancy From Date is invalid.</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                  <input matInput [matDatepicker]="VacancyTo" placeholder="Vacancy To" name="vacancyTo" #VTD="ngModel"
+                    [min]="vacancyToMinDate" [(ngModel)]="model.vacancyTo" mask-date>
+                  <mat-datepicker-toggle matSuffix [for]="VacancyTo"></mat-datepicker-toggle>
+                  <mat-datepicker #VacancyTo disabled="false"></mat-datepicker>
+                  <mat-error *ngIf="VTD.invalid">*Vacancy To date should be greater than or equal to Vacancy From date.
+                  </mat-error>
+                </mat-form-field>
               </div>
             </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="ngSelect">
+                  <ng-select required placeholder="Action on Vacancy Amount *" [items]="actionOnList" bindValue="itemId"
+                    bindLabel="itemName" name="titleId" [(ngModel)]="model.actionOnVacancyAmountLookupId"
+                    #ActionOnVacancyAmountLookupId="ngModel" (ngModelChange)="onActionOnVacancy($event)"
+                    [ngClass]="{'ng-invalid ng-touched':  formDetail.submitted && ActionOnVacancyAmountLookupId.invalid}">
+                  </ng-select>
+                  <div
+                    *ngIf="(formDetail.submitted && ActionOnVacancyAmountLookupId.invalid)  || (ActionOnVacancyAmountLookupId.invalid && ActionOnVacancyAmountLookupId.touched)">
+                    <mat-error *ngIf="ActionOnVacancyAmountLookupId.errors.required">*Action on Vacancy Amount is
+                      required.
+                    </mat-error>
+                  </div>
+                </div>
 
-          </div>
-          <div class="col-md-6">
-              <!-- <div class="col-md-2"> -->
-                  <mat-form-field class="full-width-input" hidden>
-                    <input matInput trim="blur" placeholder="Application No" maxlength="20" #ApplicationNo="ngModel" name="applicationNo" [(ngModel)]="model.applicationNo">
-                    <mat-error *ngIf="ApplicationNo.invalid">*Application No is required.</mat-error>
-                  </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <!-- <div class="col-md-2"> -->
+                <mat-form-field class="full-width-input" hidden>
+                  <input matInput trim="blur" placeholder="Application No" maxlength="20" #ApplicationNo="ngModel"
+                    name="applicationNo" [(ngModel)]="model.applicationNo">
+                  <mat-error *ngIf="ApplicationNo.invalid">*Application No is required.</mat-error>
+                </mat-form-field>
                 <!-- </div> -->
-          </div>
-        </div>
-        <div *ngIf="isBankDetailRequired">
-          <div class="row">
-            <div class="col-md-6">
-              <mat-form-field class="full-width-input">
-                <input trim="blur" matInput [required]="isBankDetailRequired" placeholder="Account Name" maxlength="50"
-                  name="refundAccountName" [(ngModel)]="model.refundAccountName" #RefundAccountName="ngModel" 
-                  letter-digits-only pattern="^[a-zA-Z_]*$" (keydown.space)="$event.preventDefault()">
-                <mat-error *ngIf="RefundAccountName.invalid">*Account Name is required.</mat-error>
-              </mat-form-field>
+              </div>
             </div>
-            <div class="col-md-6">
-              <mat-form-field class="full-width-input">
-                <input matInput [required]="isBankDetailRequired" placeholder="Account Number" maxlength="30"
-                  name="refundAccountNumber" [(ngModel)]="model.refundAccountNumber" #RefundAccountNumber="ngModel"
-                  digits-only pattern="[0-9_]*" (keydown.space)="$event.preventDefault()">
-                <mat-error *ngIf="RefundAccountNumber.invalid">*Account Number is required.</mat-error>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="ngSelect">
-                <ng-select [required]="isBankDetailRequired" placeholder="Bank Name *" [items]="bankList"
-                  bindValue="bankId" bindLabel="name" name="bankId" [(ngModel)]="model.bankId" #BankId="ngModel"
-                  (ngModelChange)="onChangeBank($event)"
-                  [ngClass]="{'ng-invalid ng-touched':  formDetail.submitted && BankId.invalid}">
-                </ng-select>
-                <div *ngIf="(formDetail.submitted && BankId.invalid)  || (BankId.invalid && BankId.touched)">
-                  <mat-error *ngIf="BankId.errors.required">*Bank Name is required.</mat-error>
+            <div *ngIf="isBankDetailRequired">
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field class="full-width-input">
+                    <input trim="blur" matInput [required]="isBankDetailRequired" placeholder="Account Name"
+                      maxlength="50" name="refundAccountName" [(ngModel)]="model.refundAccountName"
+                      #RefundAccountName="ngModel" letter-digits-only pattern="^[a-zA-Z_]*$"
+                      (keydown.space)="$event.preventDefault()">
+                    <mat-error *ngIf="RefundAccountName.invalid">*Account Name is required.</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="full-width-input">
+                    <input matInput [required]="isBankDetailRequired" placeholder="Account Number" maxlength="30"
+                      minlength="9" name="refundAccountNumber" [(ngModel)]="model.refundAccountNumber"
+                      #RefundAccountNumber="ngModel" digits-only pattern="[0-9_]*"
+                      (keydown.space)="$event.preventDefault()">
+                    <mat-error *ngIf="RefundAccountNumber.invalid">*Account Number is required.</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="ngSelect">
+                    <ng-select [required]="isBankDetailRequired" placeholder="Bank Name *" [items]="bankList"
+                      bindValue="bankId" bindLabel="name" name="bankId" [(ngModel)]="model.bankId" #BankId="ngModel"
+                      (ngModelChange)="onChangeBank($event)"
+                      [ngClass]="{'ng-invalid ng-touched':  formDetail.submitted && BankId.invalid}">
+                    </ng-select>
+                    <div *ngIf="(formDetail.submitted && BankId.invalid)  || (BankId.invalid && BankId.touched)">
+                      <mat-error *ngIf="BankId.errors.required">*Bank Name is required.</mat-error>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="ngSelect">
+                    <ng-select [required]="isBankDetailRequired" placeholder="Branch Name *" [items]="branchList"
+                      bindValue="branchId" bindLabel="name" name="branchId" [(ngModel)]="model.bankBranchId"
+                      #BranchId="ngModel"
+                      [ngClass]="{'ng-invalid ng-touched':  formDetail.submitted && BranchId.invalid}">
+                    </ng-select>
+                    <div *ngIf="(formDetail.submitted && BranchId.invalid)  || (BranchId.invalid && BranchId.touched)">
+                      <mat-error *ngIf="BranchId.errors.required">*Branch Name is required.</mat-error>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field class="full-width-input">
+                    <input trim="blur" matInput [required]="isBankDetailRequired" placeholder="IFSC Code"
+                      name="ifscCode" [(ngModel)]="model.ifscCode" #IfscCode="ngModel" maxlength="20" letter-digits-only
+                      pattern="[a-zA-Z0-9]*">
+                    <mat-error *ngIf="IfscCode.invalid">*IFSC Code is required.</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
-              <div class="ngSelect">
-                <ng-select [required]="isBankDetailRequired" placeholder="Branch Name *" [items]="branchList"
-                  bindValue="branchId" bindLabel="name" name="branchId" [(ngModel)]="model.bankBranchId"
-                  #BranchId="ngModel" [ngClass]="{'ng-invalid ng-touched':  formDetail.submitted && BranchId.invalid}">
-                </ng-select>
-                <div *ngIf="(formDetail.submitted && BranchId.invalid)  || (BranchId.invalid && BranchId.touched)">
-                  <mat-error *ngIf="BranchId.errors.required">*Branch Name is required.</mat-error>
-                </div>
+            <div class="row" *ngIf="!isShaved">
+              <div class="col-md-12 text-right">
+                <button class="ml-3" mat-raised-button color="primary" type="submit">
+                  <mat-icon>save</mat-icon> Save & Next
+                </button>
+                <button mat-raised-button class=" ml-3" type="button" color="warn" (click)="onClear()">
+                  <mat-icon>clear_all</mat-icon> Clear
+                </button>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <mat-form-field class="full-width-input">
-                <input trim="blur" matInput [required]="isBankDetailRequired" placeholder="IFSC Code" name="ifscCode"
-                  [(ngModel)]="model.ifscCode" #IfscCode="ngModel" maxlength="20" letter-digits-only pattern="[a-zA-Z0-9]*">
-                <mat-error *ngIf="IfscCode.invalid">*IFSC Code is required.</mat-error>
-              </mat-form-field>
-            </div>
-            <div class="col-md-6">
-            </div>
-          </div>
+          </form>
         </div>
-        <div class="row" *ngIf="!isShaved">
-          <div class="col-md-12 text-right">
-            <button class="ml-3" mat-raised-button color="primary" type="submit">
-              <mat-icon>save</mat-icon> Save & Next
-            </button>
-            <button mat-raised-button class=" ml-3" type="button" color="warn" (click)="onClear()">
-              <mat-icon>clear_all</mat-icon> Clear
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
+      </div>
 
-</mat-step>
-<mat-step>
-  <ng-template matStepLabel>Attachment</ng-template>
-  <mat-card>
-    <div class="row">
-    <ng-container *ngFor="let doc of vacancyPremiseCertficateDocumentUploadDocs">
-      <div class="col-md-4">
-        <label>{{doc.documentLabelEn}}<span *ngIf="doc.mandatory">*</span></label>
-        <file-upload-water-tax [form]="vacancyPremiseCertficateDocumentUploadDocs" [uploadModel]="doc"></file-upload-water-tax>
-      </div>
-      </ng-container>
-    </div>
-    
-      
-      <div class="button-row text-right mt-3">
-          <button mat-raised-button class="ml-3" color="primary" (click)="onSubmitApproved()" type="button">
-              <mat-icon>save</mat-icon>Submit
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Attachment</ng-template>
+      <mat-card>
+        <div class="row">
+          <ng-container *ngFor="let doc of vacancyPremiseCertficateDocumentUploadDocs">
+            <div class="col-md-4">
+              <label>{{doc.documentLabelEn}}<span *ngIf="doc.mandatory">*</span></label>
+              <file-upload-water-tax [form]="vacancyPremiseCertficateDocumentUploadDocs" [uploadModel]="doc"
+                (change)="onUploadDoc(1)"></file-upload-water-tax>
+            </div>
+          </ng-container>
+        </div>
+
+
+        <div class="button-row text-right mt-3">
+          <button mat-raised-button class="ml-3" color="primary" (click)="onSubmitApproved()"
+            type="button">
+            <mat-icon>save</mat-icon>Submit
           </button>
-      </div>
-  
-  </mat-card> 
-</mat-step>
-      
-    
+        </div>
+
+      </mat-card>
+    </mat-step>
+
+
   </mat-horizontal-stepper>
 
 
@@ -215,7 +224,7 @@
   </div>
 
   <div *ngIf="isShaved || isApprovedorDecline">
-        <app-response-download-list></app-response-download-list>
+    <app-response-download-list></app-response-download-list>
   </div>
 
 </mat-card>

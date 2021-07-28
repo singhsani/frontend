@@ -10,7 +10,8 @@ import { MatStepper } from '@angular/material';
 
 @Component({
     selector: 'app-application-change-usage-form',
-    templateUrl: './application-change-usage-form.component.html'
+    templateUrl: './application-change-usage-form.component.html',
+    styleUrls: ['./application-change-usage-form.component.scss']
 })
 
 export class ApplicationChangeUsageFormComponent implements OnInit {
@@ -141,11 +142,11 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
                         this.getFormDataDocuments(this.dataModel.changeOfUsageId);
                         this.applicationChangeUsageDataSharingService.setApprovalModel(this.dataModel);
 
-                        this.dataModel = new DataModel();
-                        this.connectionsModel = new ConnectionsModel();
-                        this.connectionsModel.connectionDetail = new ConnectionDetail();
-                        this.connectioNo = null;
-                        this.isShowSaveButton = false;
+                        // this.dataModel = new DataModel();
+                        // this.connectionsModel = new ConnectionsModel();
+                        // this.connectionsModel.connectionDetail = new ConnectionDetail();
+                        // this.connectioNo = null;
+                        // this.isShowSaveButton = false;
                         //this.applicationChangeUsageDataSharingService.setIsShowApproval(true);
                     }
                 },
@@ -178,6 +179,7 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
 
     }
     getFormDataDocuments(id : any) {
+        if(this.changeOfUsageDocumentUploadDocs.length == 0){
         this.changeOfUsageDocumentUploadDocs = [];
         this.applicationChangeUsageService.getchangeOfUsageIdDocUpload(id).subscribe(
           (data) => {
@@ -190,6 +192,7 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
             
           });
       }
+      }
 
     onWaterDetailClick() {
         this.applicationChangeUsageDataSharingService.setWaterBillDetail(this.outstandingDetail.waterOutstandingDTO.billWiseOutstandings);
@@ -199,6 +202,14 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
     onPropertyDetailClick() {
         this.applicationChangeUsageDataSharingService.setPropertyDetail(this.outstandingDetail.propertyOutstandings);
         this.applicationChangeUsageDataSharingService.setIsShowPropertyDetail(true);
+    }
+
+    onBackClick(){
+        this.stepper.selectedIndex = 0;
+    }
+
+    stepChanged(event, stepper){
+        stepper.selected.interacted = false;
     }
 }
 

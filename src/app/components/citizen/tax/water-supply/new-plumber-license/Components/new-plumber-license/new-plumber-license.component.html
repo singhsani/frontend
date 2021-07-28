@@ -2,11 +2,16 @@
 <!-- <mat-card class="cardH1">
     <h1>New Plumber License</h1>
 </mat-card> -->
-<div *ngIf="isShowForm">
+<!-- <mat-horizontal-stepper #stepper (selectionChange)="stepChanged($event, stepper);" class="stepperToTab"> -->
+    <!-- <mat-step > -->
+    <div *ngIf="isShowForm">
     <app-new-plumber-license-form></app-new-plumber-license-form>
  </div>
- 
+ <!-- </mat-step>
+ <mat-step > -->
  <div *ngIf="isShowApproval">
      <app-new-plumber-license-approval></app-new-plumber-license-approval>
  </div>
+<!-- </mat-step> -->
 <br>
+<!-- </mat-horizontal-stepper> -->

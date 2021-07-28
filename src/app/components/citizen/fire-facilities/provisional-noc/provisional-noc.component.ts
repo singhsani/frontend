@@ -142,7 +142,8 @@ export class ProvisionalNocComponent implements OnInit {
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.provisionalNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
 				});
-				this.requiredDocumentList();
+				// this.requiredDocumentList();
+				this.documentManage();
 
 			} catch (error) {
 				console.log(error.message)
@@ -179,7 +180,8 @@ export class ProvisionalNocComponent implements OnInit {
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			contactNo: [null, [Validators.required, Validators.maxLength(10)]],
-			officeContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
+			// officeContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
+			officeContactNo : [null, [Validators.required, Validators.maxLength(10)]],
 			onsitePersonMobileNo: [null, [Validators.maxLength(10)]],
 			applicantPermanentAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			applicantPermanentAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
@@ -205,7 +207,8 @@ export class ProvisionalNocComponent implements OnInit {
 			architectPermanentAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			architectPermanentAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
 
-			architectContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
+			// architectContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
+			architectContactNo : [null, [Validators.required, Validators.maxLength(10)]],
 			siteAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			siteAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
 			fireVendorType: this.fb.group({
@@ -321,7 +324,8 @@ export class ProvisionalNocComponent implements OnInit {
 	 * @param res - form response after save event
 	 */
 	handleOnSaveAndNext(res) {
-		this.requiredDocumentList();
+		// this.requiredDocumentList();
+		this.documentManage();
 	}
 
 	/**
@@ -344,6 +348,24 @@ export class ProvisionalNocComponent implements OnInit {
 		} catch (e) {
 
 		}
+	}
+
+	documentManage(){
+		const usageType = this.provisionalNocForm.get('usageTypeId').value;
+		let explosiveLicenseMandatory = false;
+		if(usageType && usageType.code && usageType.code == 'FS_COMMERCIAL'){
+			explosiveLicenseMandatory = true;
+		}
+
+		const documents = this.provisionalNocForm.get('serviceDetail').get('serviceUploadDocuments').value;
+
+		for(const document of documents){
+			if(document.documentIdentifier == 'EXPLOSIVE_LICENSE')
+				document.mandatory = explosiveLicenseMandatory;
+		}
+
+		this.provisionalNocForm.get('serviceDetail').patchValue({'serviceUploadDocuments': documents});
+						this.requiredDocumentList();
 	}
 
 	patchValue(){

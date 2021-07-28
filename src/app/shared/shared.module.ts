@@ -26,6 +26,7 @@ import { GujInputSourceDirective } from './directives/guj-input-source.directive
 import { GujInputTargetDirective } from './directives/guj-input-target.directive';
 import { InputTrimDirective } from './directives/input-trim.directive';
 import { AlphaNumericDirective } from './directives/alpha-numeric.directive';
+import { BlockCopyPasteDirective } from './directives/block-copy-paste.directive';
 import { ReloadDirective } from './directives/reload.directive';
 import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
 
@@ -62,6 +63,9 @@ import { OfflinePaymentComponent } from './components/offline-payment/offline-pa
 import { OfflinePaymentService } from './services/offlinePayment.service';
 import { PaymentNewService } from './services/paymentNew.service';
 import { BankDetailsBookingComponent } from './components/bank-details-booking/bank-details-booking.component'
+import { AppMonthPicker } from './components/month-picker/month-picker.component';
+import { CollectionService } from '../components/citizen/tax/water-supply/tax-transaction-history/Services/collection.service';
+import { MaskRegistrationNumVtDirective } from './directives/mask-registration-num-vt.directive';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -84,6 +88,7 @@ const COMPONENTS = [
 	GujInputSourceDirective,
 	GujInputTargetDirective,
 	AlphaNumericDirective,
+	BlockCopyPasteDirective,
 	ReloadDirective,
 	HosPaymentResponsePageComponent,
 	GatewayResponseComponent,
@@ -99,14 +104,17 @@ const COMPONENTS = [
 	MaskPropertyNumberDirective,
 	ApplicantDetailsComponent,
 	OfflinePaymentComponent,
-	BankDetailsBookingComponent
+	BankDetailsBookingComponent,
+	AppMonthPicker,
+	MaskRegistrationNumVtDirective
 	
 ]
 
 @NgModule({
 	declarations: [
 		...COMPONENTS,
-		BankDetailsBookingComponent
+		BankDetailsBookingComponent,
+		MaskRegistrationNumVtDirective
 	],
 	imports: [
 		CommonModule,
@@ -144,7 +152,8 @@ const COMPONENTS = [
 		HosHttpService,
 		CountryService,
 		OfflinePaymentService,
-		PaymentNewService
+		PaymentNewService,
+		CollectionService
 	],
 	entryComponents: [DialogContentComponent,ApplicantDetailsComponent, OfflinePaymentComponent],
 

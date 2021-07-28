@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 import { FireFacilitiesService } from '../common/services/fire-facilities.service';
 import { TranslateService } from '../../../../shared/modules/translate/translate.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-water-tanker-app',
@@ -36,6 +37,7 @@ export class WaterTankerAppComponent implements OnInit {
 	LOOKUP: any;
 
 	disablepastDate = new Date(moment().format('YYYY-MM-DD'));
+	appDate = moment(new Date()).add('day').toISOString();
 
 	// required attachment array
 	uploadFilesArray: Array<any> = [];
@@ -53,7 +55,8 @@ export class WaterTankerAppComponent implements OnInit {
 		private route: ActivatedRoute,
 		private formService: FormsActionsService,
 		public TranslateService: TranslateService,
-		public fireFacilitiesService: FireFacilitiesService
+		public fireFacilitiesService: FireFacilitiesService,
+		private toaster: ToastrService,
 
 	) { }
 
@@ -144,6 +147,7 @@ export class WaterTankerAppComponent implements OnInit {
 	 * @param dependedKey 
 	 */
 	dependentAttachment(dependedKey: string) {
+		// debugger  
 		var control = (<FormArray>this.waterTankerAppForm.get('serviceDetail').get('serviceUploadDocuments')).controls
 		var fields = control.find((data) => data.get('documentIdentifier').value === dependedKey);
 
@@ -158,11 +162,12 @@ export class WaterTankerAppComponent implements OnInit {
 			}
 		} else {
 
-			fields.get('mandatory').setValue(false);
-			var indewx = this.uploadFilesArray.findIndex((data) => data.documentIdentifier === dependedKey)
-			if (indewx != -1) {
-				this.uploadFilesArray.splice(indewx, 1);
-			}
+			this.uploadFilesArray = []; 
+			// fields.get('mandatory').setValue(false); 
+			// var indewx = this.uploadFilesArray.findIndex((data) => data.documentIdentifier === dependedKey) 
+			// if (indewx != -1) { 
+			// 	this.uploadFilesArray.splice(indewx, 1); 
+			// } 
 
 		}
 
@@ -243,6 +248,7 @@ export class WaterTankerAppComponent implements OnInit {
 	 * This method for reset dependent field.
 	 */
 	resetsuggestedfields() {
+		this.waterTankerAppForm.get('applicationDate').disable();
 
 		if (this.waterTankerAppForm.get('purpose').get('code').value == 'FS_SUGGESTED') {
 			this.waterTankerAppForm.controls.whoSuggested.setValidators([Validators.required]);
@@ -253,6 +259,7 @@ export class WaterTankerAppComponent implements OnInit {
 			this.waterTankerAppForm.get('whoSuggested').clearValidators();
 			this.waterTankerAppForm.get('whoSuggested').reset();
 			this.waterTankerAppForm.get('attachments').reset();
+			this.dependentAttachment('');
 		}
 		this.waterTankerAppForm.get('whoSuggested').updateValueAndValidity();
 
@@ -265,7 +272,19 @@ export class WaterTankerAppComponent implements OnInit {
 		if (this.waterTankerAppForm.get('totalTankRequired').value && this.waterTankerAppForm.controls.requiredOnFloor.get('code')) {
 			this.fireFacilitiesService.getWaterTankersFee(this.waterTankerAppForm.value).subscribe(
 				res => {
-					this.waterTankerAppForm.patchValue(res);
+					if(res.totalTanks != 9){
+						let maxTank = 9;
+						let tempTank = maxTank - res.totalTanks;
+						if(tempTank < Number(this.waterTankerAppForm.get('totalTankRequired').value)){
+							this.toaster.warning('Water Tanker limit is fixed for 9. No booking is Acceptable');
+							this.waterTankerAppForm.get('totalTankRequired').reset();
+						}else{
+							this.waterTankerAppForm.patchValue(res);
+						}
+					}else{
+						this.waterTankerAppForm.patchValue(res);
+					}
+					
 				},
 				err => {
 					console.log(err.message)

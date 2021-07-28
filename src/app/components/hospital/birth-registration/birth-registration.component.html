@@ -1,7 +1,7 @@
 <app-hos-title-bar [title]="'screen_title' | translate: translateKey">
-	<button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
+	<!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
 		Patch Value
-	</button>
+	</button> -->
 </app-hos-title-bar>
 
 <div  *ngIf="isGuideLineActive">
@@ -418,7 +418,7 @@
                     </div>
 
                     <div formGroupName="motherMarriageAge" class="col-md-4 ngSelect">
-                        <ng-select OnlyNumber placeholder="{{'mother_age_at_time_of_marriage' | translate:translateKey}} *" formControlName="code">
+                        <ng-select OnlyNumber (change)="onChangeMerriageAge()" placeholder="{{'mother_age_at_time_of_marriage' | translate:translateKey}} *" formControlName="code">
                             <ng-option matTooltip="{{maamt.name}}" *ngFor="let maamt of MOTHER_MARRIAGE_AGE" [value]="maamt.code">
                                 {{maamt.name}}
                             </ng-option>
@@ -428,7 +428,7 @@
                     </div>
 
                     <div formGroupName="motherDeliveryAge" class="col-md-4 ngSelect">
-                        <ng-select OnlyNumber placeholder="{{'mother_age_at_time_of_said_delivery' | translate:translateKey}} *" formControlName="code">
+                        <ng-select OnlyNumber (change)="onChangeDeliveryAge($event)" placeholder="{{'mother_age_at_time_of_said_delivery' | translate:translateKey}} *" formControlName="code">
                             <ng-option matTooltip="{{maasd.name}}" *ngFor="let maasd of MOTHER_DELIVERY_AGE" [value]="maasd.code">
                                 {{maasd.name}}
                             </ng-option>
@@ -507,7 +507,7 @@
                     </div>
 
                     <mat-form-field class="col-md-4">
-                        <input matInput maxlength="2" type="text" OnlyNumber placeholder="{{'pregnancy_duration' | translate:translateKey}}" formControlName="pregnancyDuration"
+                        <input matInput maxlength="2" OnlyNumber placeholder="{{'pregnancy_duration' | translate:translateKey}}" formControlName="pregnancyDuration"
                             required>
                         <control-messages [control]="birthCertificateForm.get('pregnancyDuration')"></control-messages>
                     </mat-form-field>

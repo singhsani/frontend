@@ -747,8 +747,8 @@ export class BirthRegistrationComponent implements OnInit {
 		this.submit = true;
 		let step1 = 5;
 		let step2 = 15;
-		let step3 = 36;
-		let step4 = 44;
+		let step3 = 39;
+		let step4 = 46;
 		let step5 = 48;
 
 		if (count <= step1) {
@@ -1051,7 +1051,18 @@ export class BirthRegistrationComponent implements OnInit {
 		   this.totalChildCalculate();
 		});
 	}
-	
+
+	onChangeMerriageAge(){
+		this.birthCertificateForm.get('motherDeliveryAge').get('code').reset();
+	}
+
+	onChangeDeliveryAge(event){
+		let merriageAge = this.birthCertificateForm.get('motherMarriageAge').get('code').value;
+		if(event < merriageAge){
+			this.commonService.openAlert(this.config.ERROR, "", "warning", this.config.AGE_ERROR);
+			this.birthCertificateForm.get('motherDeliveryAge').get('code').reset();
+		}
+	}
 
 	dummyJSON:any = {
 		"birthPlace": {

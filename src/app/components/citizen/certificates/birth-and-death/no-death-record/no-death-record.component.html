@@ -17,7 +17,7 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" formControlName="deceasedName"
-							placeholder="{{'deceased_name' | translate: translateKey}}" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" maxlength="60" required>
+							placeholder="{{'deceased_name' | translate: translateKey}}" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" maxlength="60" required>
 						<control-messages [control]="noRecordDeathForm.get('deceasedName')"></control-messages>
 					</mat-form-field>
 
@@ -31,8 +31,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" formControlName="fatherHusbandName" appAlphaNumeric maxlength="60" appValidationFields
-							validationFieldsType="onlyNameWithSpace"
+						<input matInput type="text" formControlName="fatherHusbandName"  maxlength="60" appValidationFields validationFieldsType="onlyNameWithSpace"
 							placeholder="{{'father_or_husband_name' | translate: translateKey}}" required>
 						<control-messages [control]="noRecordDeathForm.get('fatherHusbandName')"></control-messages>
 					</mat-form-field>

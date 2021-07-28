@@ -1,69 +1,71 @@
 <div class="row">
     <div class="col-md-3">
-        <b>Code: </b>{{modelOccupier.occupierCode}}
+        <b>{{'code' | translate:translateKey }}: </b>{{modelOccupier.occupierCode}}
     </div>
     <div class="col-md-9">
-        <b>Occupier Name: </b>{{modelOccupier.titleName}} {{modelOccupier.firstName}} {{modelOccupier.middleName}}
+        <b>{{'occupier_name' | translate:translateKey }}: </b>{{modelOccupier.titleName}} {{modelOccupier.firstName}} {{modelOccupier.middleName}}
         {{modelOccupier.lastName}}
     </div>
 </div>
 <mat-card class="margin-top-20" *ngIf="isShowUnitable">
     <div class="row">
         <div class="col-md-12" style="overflow:auto;">
-            <table mat-table [dataSource]="dataSource" matSort class="width100">
-                <ng-container matColumnDef="unitNo">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Unit No</th>
-                    <td mat-cell *matCellDef="let element"> {{element.unitNo}} </td>
-                </ng-container>
-                <ng-container matColumnDef="usageName">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Usage </th>
-                    <td mat-cell *matCellDef="let element"> {{element.usageName}} </td>
-                </ng-container>
-                <ng-container matColumnDef="subUsage">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Sub Usage</th>
-                    <td mat-cell *matCellDef="let element"> {{element.subUsage}} </td>
-                </ng-container>
-                <ng-container matColumnDef="builtUpArea">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Built-Up Area</th>
-                    <td mat-cell *matCellDef="let element"> {{element.propertyMeasurement.builtUpArea}}
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="carpetArea">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Carpet Area</th>
-                    <td mat-cell *matCellDef="let element"> {{element.propertyMeasurement.carpetArea}}
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="assessibleArea">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Accessible Area</th>
-                    <td mat-cell *matCellDef="let element">
-                        {{element.propertyMeasurement.assessableArea}} </td>
-                </ng-container>
-                <ng-container matColumnDef="generalTax">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>General Tax</th>
-                    <td mat-cell *matCellDef="let element"> {{element.propertyMeasurement.generalTax}}
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="action">
-                    <th mat-header-cell *matHeaderCellDef>Action</th>
-                    <td mat-cell *matCellDef="let element">
-                        <button mat-button title="Edit" class="btn-width-auto" color="primary"
-                            (click)="editUnit(element)">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                        <button mat-button title="Copy" class="btn-width-auto" color="accent"
-                            (click)="copyUnit(element)">
-                            <mat-icon>file_copy</mat-icon>
-                        </button>
-                        <button mat-button title="Delete" class="btn-width-auto" color="warn"
-                            (click)="deleteUnit(element)">
-                            <mat-icon>delete_forever</mat-icon>
-                        </button>
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="columns"></tr>
-                <tr mat-row *matRowDef="let row; columns: columns;"
-                    [ngClass]="{'highlight': selectedRowIndex == row.propertyUnitId}" (click)="highlight(row)"></tr>
-            </table>
+            <div class="table-responsive paddLeftRight5">
+                <table mat-table [dataSource]="dataSource" matSort class="width100 w-100 minWidth1000px ">
+                    <ng-container matColumnDef="unitNo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Unit No</th>
+                        <td mat-cell *matCellDef="let element"> {{element.unitNo}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="usageName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Usage </th>
+                        <td mat-cell *matCellDef="let element"> {{element.usageName}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="subUsage">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Sub Usage</th>
+                        <td mat-cell *matCellDef="let element"> {{element.subUsage}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="builtUpArea">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Built-Up Area</th>
+                        <td mat-cell *matCellDef="let element"> {{element.propertyMeasurement.builtUpArea}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="carpetArea">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Carpet Area</th>
+                        <td mat-cell *matCellDef="let element"> {{element.propertyMeasurement.carpetArea}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="assessibleArea">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Accessible Area</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.propertyMeasurement.assessableArea}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="generalTax">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>General Tax</th>
+                        <td mat-cell *matCellDef="let element"> {{element.propertyMeasurement.generalTax}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef class="text-center">Action</th>
+                        <td mat-cell *matCellDef="let element">
+                            <button mat-button title="Edit" class="btn-width-auto" color="primary"
+                                (click)="editUnit(element)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-button title="Copy" class="btn-width-auto" color="accent"
+                                (click)="copyUnit(element)">
+                                <mat-icon>content_copy</mat-icon>
+                            </button>
+                            <button mat-button title="Delete" class="btn-width-auto" color="warn"
+                                (click)="deleteUnit(element)">
+                                <mat-icon>delete_forever</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: columns;"
+                        [ngClass]="{'highlight': selectedRowIndex == row.propertyUnitId}" (click)="highlight(row)"></tr>
+                </table>
+            </div>
         </div>
     </div>
 </mat-card>
@@ -83,7 +85,7 @@
                         <div class="col-md-6">
                             <mat-form-field class="full-width-input">
                                 <input maxlength="10" matInput [disabled]="isEditMode" name="unitNo"
-                                    [(ngModel)]="unitDetailModel.unitNo" #UnitNo="ngModel" placeholder='Unit No'
+                                    [(ngModel)]="unitDetailModel.unitNo" #UnitNo="ngModel" placeholder="{{'unit_no' | translate:translateKey }}"
                                     (ngModelChange)="checkDuplicateUnitNo($event);" required>
                                 <mat-error *ngIf="UnitNo.invalid">*Unit No is required.</mat-error>
                             </mat-form-field>
@@ -91,7 +93,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="ngSelect">
-                                <ng-select required placeholder="Floor No *" [items]="floorList" bindValue="itemId"
+                                <ng-select required placeholder="{{'floor_no' | translate:translateKey }} *" [items]="floorList" bindValue="itemId"
                                     bindLabel="itemName" name="floorNoLookupId"
                                     [(ngModel)]="unitDetailModel.floorNoLookupId" #FloorNoLookupId="ngModel"
                                     (ngModelChange)="checkDuplicateUnitNo($event);"
@@ -108,7 +110,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="ngSelect">
-                                <ng-select required placeholder="Usage *" [items]="usageList" bindValue="usageId"
+                                <ng-select required placeholder="{{'usage' | translate:translateKey }} *" [items]="usageList" bindValue="usageId"
                                     bindLabel="usageName" name="usageMstId" [(ngModel)]="unitDetailModel.usageMstId"
                                     #UsageMstId="ngModel" (ngModelChange)="onChangedUsage($event);"
                                     [ngClass]="{'ng-invalid ng-touched':  form.submitted && UsageMstId.invalid}">
@@ -121,7 +123,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="ngSelect">
-                                <ng-select required placeholder="Sub Usage *" [items]="subUsageList"
+                                <ng-select required placeholder="{{'sub_usage' | translate:translateKey }} *" [items]="subUsageList"
                                     bindValue="subUsageId" bindLabel="subUsage" name="subUsageMstId"
                                     [(ngModel)]="unitDetailModel.subUsageMstId" #SubUsageMstId="ngModel"
                                     [ngClass]="{'ng-invalid ng-touched':  form.submitted && SubUsageMstId.invalid}">
@@ -138,7 +140,7 @@
                             <mat-form-field class="full-width-input">
                                 <input matInput [max]="effectiveFromDateMaxDate" [matDatepicker]="EffectiveFromDate"
                                     name="effectiveFromDate" [(ngModel)]="unitDetailModel.effectiveFromDate"
-                                    placeholder="Effective from Date" (dateChange)="constructionYearBind($event)"
+                                    placeholder="{{'effective_from_date' | translate:translateKey }}" (dateChange)="constructionYearBind($event)"
                                     #EFD="ngModel" required mask-date>
                                 <mat-datepicker-toggle matSuffix [for]="EffectiveFromDate"></mat-datepicker-toggle>
                                 <mat-datepicker #EffectiveFromDate disabled="false"></mat-datepicker>
@@ -149,7 +151,7 @@
                             <mat-form-field class="full-width-input">
                                 <input matInput [min]="effectiveToDateMinDate" [matDatepicker]="EffectiveToDate"
                                     #ETD="ngModel" [(ngModel)]="unitDetailModel.effectiveToDate"
-                                    placeholder="Effective to Date" name="effectiveToDate" mask-date>
+                                    placeholder="{{'effective_to_date' | translate:translateKey }}" name="effectiveToDate" mask-date>
                                 <mat-datepicker-toggle matSuffix [for]="EffectiveToDate"></mat-datepicker-toggle>
                                 <mat-datepicker #EffectiveToDate disabled="false"></mat-datepicker>
                                 <mat-error *ngIf="ETD.invalid">*Effective to Date must be greater than effective from
@@ -160,7 +162,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="ngSelect">
-                                <ng-select placeholder="Construction Class" [items]="constructionClassList"
+                                <ng-select placeholder="{{'construction_class' | translate:translateKey }}" [items]="constructionClassList"
                                     bindValue="constructionClassId" bindLabel="description"
                                     name="constructionClassMstId" [(ngModel)]="unitDetailModel.constructionClassMstId">
                                 </ng-select>
@@ -168,7 +170,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="ngSelect">
-                                <ng-select required placeholder="Occupancy Status *" [items]="occupancyTypeList"
+                                <ng-select required placeholder="{{'occupancy_status' | translate:translateKey }} *" [items]="occupancyTypeList"
                                     bindValue="occypancyTypeId" bindLabel="occypancyType" name="occupancyFactorMstId"
                                     [(ngModel)]="unitDetailModel.occupancyFactorMstId" #OccupancyFactorMstId="ngModel"
                                     [ngClass]="{'ng-invalid ng-touched':  form.submitted && OccupancyFactorMstId.invalid}">
@@ -184,7 +186,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="ngSelect">
-                                <ng-select required placeholder="Has Khalkuva Connection *"
+                                <ng-select required placeholder="{{'has_khalkuva_connection' | translate:translateKey }}*"
                                     [items]="khalkuvaConnectionList" bindValue="itemId" bindLabel="itemName"
                                     name="hasKhalkuvaConnection" [(ngModel)]="unitDetailModel.hasKhalkuvaConnection"
                                     #HasKhalkuvaConnection="ngModel"
@@ -201,7 +203,7 @@
                             <mat-form-field class="full-width-input">
                                 <input matInput number-only name="constructionYear"
                                     [(ngModel)]="unitDetailModel.constructionYear" required #ConstructionYear="ngModel"
-                                    placeholder='Construction Year' maxlength="4" minlength="4">
+                                    placeholder="{{'construction_year' | translate:translateKey }}" maxlength="4" minlength="4">
                                 <mat-error *ngIf="ConstructionYear.invalid && !unitDetailModel.constructionYear">
                                     *Construction
                                     Year is required.</mat-error>
@@ -215,13 +217,13 @@
                         <div class="col-md-6">
                             <mat-form-field class="full-width-input">
                                 <input trim="blur" matInput name="tikaNo" [(ngModel)]="unitDetailModel.tikaNo"
-                                    placeholder='Tikka No'>
+                                    placeholder="{{'tikka_no' | translate:translateKey }}" maxlength="50">
                             </mat-form-field>
                         </div>
                         <div class="col-md-6">
                             <mat-form-field class="full-width-input">
                                 <input matInput [matDatepicker]="TikaDate" [max]="unitDetailModel.effectiveFromDate"
-                                    #TD="ngModel" [(ngModel)]="unitDetailModel.tikaDate" placeholder="TiKka Date"
+                                    #TD="ngModel" [(ngModel)]="unitDetailModel.tikaDate" placeholder="{{'tikka_date' | translate:translateKey }}"
                                     name="tikaDate" mask-date>
                                 <mat-datepicker-toggle matSuffix [for]="TikaDate"></mat-datepicker-toggle>
                                 <mat-datepicker #TikaDate disabled="false"></mat-datepicker>
@@ -235,7 +237,7 @@
                             <mat-form-field class="full-width-input">
                                 <input trim="blur" matInput name="buildingPermissionNo"
                                     [(ngModel)]="unitDetailModel.buildingPermissionNo"
-                                    placeholder='Building Permission No'>
+                                    placeholder="{{'building_permission_no' | translate:translateKey }}" maxlength="50">
                             </mat-form-field>
                         </div>
                         <div class="col-md-6">
@@ -243,7 +245,7 @@
                                 <input matInput [max]="unitDetailModel.effectiveFromDate"
                                     [matDatepicker]="BuildingPermissionDate" #BPD="ngModel"
                                     [(ngModel)]="unitDetailModel.buildingPermissionDate"
-                                    placeholder="Building Permission Date" name="buildingPermissionDate" mask-date>
+                                    placeholder="{{'building_permission_date' | translate:translateKey }}" name="buildingPermissionDate" mask-date>
                                 <mat-datepicker-toggle matSuffix [for]="BuildingPermissionDate"></mat-datepicker-toggle>
                                 <mat-datepicker #BuildingPermissionDate disabled="false"></mat-datepicker>
                                 <mat-error *ngIf="BPD.invalid">*Permission Date must be less than or equal to effective
@@ -256,7 +258,7 @@
                             <mat-form-field class="full-width-input">
                                 <input trim="blur" matInput name="occupancyCertificateNo"
                                     [(ngModel)]="unitDetailModel.occupancyCertificateNo"
-                                    placeholder='Occupancy Certificate No'>
+                                    placeholder="{{'occupancy_certificate_no' | translate:translateKey }}" maxlength="50">
                             </mat-form-field>
                         </div>
                         <div class="col-md-6">
@@ -264,7 +266,7 @@
                                 <input matInput [max]="unitDetailModel.effectiveFromDate"
                                     [matDatepicker]="OccupancyCertificateDate" #OCD="ngModel"
                                     [(ngModel)]="unitDetailModel.occupancyCertificateDate"
-                                    placeholder="Occupancy Certificate Date" name="occupancyCertificateDate" mask-date>
+                                    placeholder="{{'occupancy_certificate_date' | translate:translateKey }}" name="occupancyCertificateDate" mask-date>
                                 <mat-datepicker-toggle matSuffix [for]="OccupancyCertificateDate">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #OccupancyCertificateDate disabled="false"></mat-datepicker>
@@ -277,16 +279,15 @@
                         <div class="col-md-6">
                             <mat-form-field class="full-width-input">
                                 <input trim="blur" matInput name="completionNo"
-                                    [(ngModel)]="unitDetailModel.completionNo"
-                                    placeholder='Completion No'>
+                                    [(ngModel)]="unitDetailModel.completionNo" placeholder="{{'completion_no' | translate:translateKey }}"
+                                    maxlength="50">
                             </mat-form-field>
                         </div>
                         <div class="col-md-6">
                             <mat-form-field class="full-width-input">
-                                <input matInput 
-                                    [matDatepicker]="CompletionDate" #CompDate="ngModel"
-                                    [(ngModel)]="unitDetailModel.completionDate"
-                                    placeholder="Completion Date" name="completionDate" mask-date>
+                                <input matInput [matDatepicker]="CompletionDate" #CompDate="ngModel"
+                                    [(ngModel)]="unitDetailModel.completionDate" placeholder="{{'completion_date' | translate:translateKey }}"
+                                    name="completionDate" mask-date>
                                 <mat-datepicker-toggle matSuffix [for]="CompletionDate"></mat-datepicker-toggle>
                                 <mat-datepicker #CompletionDate disabled="false"></mat-datepicker>
                             </mat-form-field>
@@ -295,7 +296,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="ngSelect">
-                                <ng-select placeholder="Drainage Connection" [items]="drainageConnections"
+                                <ng-select placeholder="{{'drainage_connection' | translate:translateKey }}" [items]="drainageConnections"
                                     bindValue="itemId" bindLabel="itemName" name="hasDrainageConnection"
                                     [(ngModel)]="unitDetailModel.hasDrainageConnection">
                                 </ng-select>
@@ -303,7 +304,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="ngSelect">
-                                <ng-select placeholder="Gas Connection" [items]="gasConnections" bindValue="itemId"
+                                <ng-select placeholder="{{'gas_connection' | translate:translateKey }}" [items]="gasConnections" bindValue="itemId"
                                     bindLabel="itemName" name="hasGasConnection"
                                     [(ngModel)]="unitDetailModel.hasGasConnection">
                                 </ng-select>
@@ -317,7 +318,7 @@
                                 <mat-icon>save</mat-icon> {{isEditMode ? 'Update Unit':'Save Unit' }}
                             </button>
                             <button mat-raised-button class="ml-3" type="button" color="warn" (click)="clearUnitData()">
-                                <mat-icon>clear_all</mat-icon> Clear
+                                <mat-icon>clear_all</mat-icon> Clear{{'clear' | translate:translateKey }}
                             </button>
                         </div>
                     </div>
@@ -351,8 +352,9 @@
                                 <div class="col-md-6">
                                     <mat-form-field class="full-width-input">
                                         <input matInput number-only name="builtUpArea" formControlName="builtUpArea"
-                                            [(ngModel)]="measurementModel.builtUpArea" placeholder="Built-­Up Area"
-                                            maxlength="10" [required]="measurementModel.manualArea">
+                                            [(ngModel)]="measurementModel.builtUpArea"
+                                            placeholder="{{'built_up_area' | translate:translateKey }} (Sq.Meter)" maxlength="10"
+                                            [required]="measurementModel.manualArea">
                                         <mat-error *ngIf="formMeasurement.builtUpArea.errors">
                                             <div *ngIf="formMeasurement.builtUpArea.errors.required">*Built-­Up Area is
                                                 required.</div>
@@ -363,8 +365,9 @@
                                 <div class="col-md-6">
                                     <mat-form-field class="full-width-input">
                                         <input matInput number-only name="carpetArea" formControlName="carpetArea"
-                                            [(ngModel)]="measurementModel.carpetArea" placeholder="Carpet Area"
-                                            maxlength="20" [required]="measurementModel.manualArea"
+                                            [(ngModel)]="measurementModel.carpetArea"
+                                            placeholder="{{'carpet_area' | translate:translateKey }} (Sq.Meter)" maxlength="20"
+                                            [required]="measurementModel.manualArea"
                                             (input)="setMeasurementAssessableArea()">
                                         <mat-error *ngIf="formMeasurement.carpetArea.errors">
                                             <div *ngIf="formMeasurement.carpetArea.errors.required">*Carpet Area is
@@ -380,7 +383,8 @@
                                     <mat-form-field class="full-width-input">
                                         <input matInput number-only name="exemptedArea" formControlName="exemptedArea"
                                             maxlength="20" [required]="measurementModel.manualArea"
-                                            [(ngModel)]="measurementModel.exemptedArea" placeholder="Exempted Area"
+                                            [(ngModel)]="measurementModel.exemptedArea"
+                                            placeholder="{{'exempted_area' | translate:translateKey }} (Sq.Meter)"
                                             (input)="setMeasurementAssessableArea()">
                                         <mat-error *ngIf="formMeasurement.exemptedArea.errors">
                                             <div *ngIf="formMeasurement.exemptedArea.errors.required">*Exempted Area is
@@ -395,7 +399,8 @@
                                     <mat-form-field class="full-width-input">
                                         <input matInput disabled number-only name="assessableArea"
                                             formControlName="assessableArea"
-                                            [(ngModel)]="measurementModel.assessableArea" placeholder="Accessible Area">
+                                            [(ngModel)]="measurementModel.assessableArea"
+                                            placeholder="{{'accessible_area' | translate:translateKey }} (Sq.Meter)">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -404,7 +409,7 @@
                                     <mat-form-field class="full-width-input">
                                         <input matInput disabled number-only name="valuation"
                                             formControlName="valuation" [(ngModel)]="measurementModel.valuation"
-                                            placeholder="Valuation">
+                                            placeholder="{{'valuation' | translate:translateKey }}">
 
                                     </mat-form-field>
                                 </div>
@@ -412,7 +417,7 @@
                                     <mat-form-field class="full-width-input">
                                         <input matInput disabled number-only name="generalTax"
                                             formControlName="generalTax" [(ngModel)]="measurementModel.generalTax"
-                                            placeholder="General Tax">
+                                            placeholder="{{'general_tax' | translate:translateKey }}">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -426,7 +431,7 @@
                                 </button>
                                 <button mat-raised-button class="ml-3" type="button" color="warn"
                                     (click)="clearMeasurement()">
-                                    <mat-icon>clear_all</mat-icon> Clear
+                                    <mat-icon>clear_all</mat-icon>{{'clear' | translate:translateKey }}
                                 </button>
                             </div>
                         </div>
@@ -434,7 +439,7 @@
 
 
                     <div *ngIf="!measurementModel.manualArea">
-                        <form [formGroup]="roomForm" (ngSubmit)="onSubmitRoom(form)"  #form="ngForm">
+                        <form [formGroup]="roomForm" (ngSubmit)="onSubmitRoom(form)" #form="ngForm">
                             <mat-card class="mt-3">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -489,13 +494,13 @@
                                     <div class="col-md-6">
                                         <mat-form-field class="full-width-input">
                                             <input matInput maxlength="10" name="unitNo"
-                                                [value]="unitDetailModel.unitNo" placeholder="Unit No" disabled>
+                                                [value]="unitDetailModel.unitNo" placeholder= "{{'unit_no' | translate:translateKey }}" disabled>
                                         </mat-form-field>
                                     </div>
                                     <div class="col-md-6">
                                         <mat-form-field class="full-width-input">
                                             <input matInput name="floorNoLookupName"
-                                                [value]="unitDetailModel.floorNoLookupName" placeholder="Floor No"
+                                                [value]="unitDetailModel.floorNoLookupName" placeholder="{{'floor_no' | translate:translateKey }}"
                                                 disabled>
                                         </mat-form-field>
                                     </div>
@@ -504,14 +509,14 @@
                                     <div class="col-md-6">
                                         <mat-form-field class="full-width-input">
                                             <input matInput name="usageName" [value]="unitDetailModel.usageName"
-                                                placeholder="Usage" disabled>
+                                                placeholder="{{'usage' | translate:translateKey }}" disabled>
                                         </mat-form-field>
                                     </div>
 
                                     <div class="col-md-6">
                                         <mat-form-field class="full-width-input">
                                             <input matInput name="subUsage" [value]="unitDetailModel.subUsage"
-                                                placeholder="Sub Usage" disabled>
+                                                placeholder="{{'sub_usage' | translate:translateKey }}" disabled>
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -531,13 +536,15 @@
                                         </mat-form-field> -->
 
                                         <div class="ngSelect">
-                                            <ng-select required placeholder="Room Type *" [items]="roomTypeList"
-                                                bindValue="itemId" bindLabel="itemName" formControlName="roomTypeLookupId"
+                                            <ng-select required placeholder="{{'room_type' | translate:translateKey }} *" [items]="roomTypeList"
+                                                bindValue="itemId" bindLabel="itemName"
+                                                formControlName="roomTypeLookupId"
                                                 [(ngModel)]="roomModel.roomTypeLookupId"
                                                 [ngClass]="{'ng-invalid ng-touched':  form.submitted && formRoom.roomTypeLookupId.errors}">
                                             </ng-select>
                                             <div *ngIf="form.submitted && formRoom.roomTypeLookupId.errors">
-                                                <mat-error *ngIf="formRoom.roomTypeLookupId.errors.required">*Room Type is required.
+                                                <mat-error *ngIf="formRoom.roomTypeLookupId.errors.required">*Room Type
+                                                    is required.
                                                 </mat-error>
                                             </div>
                                         </div>
@@ -546,7 +553,7 @@
                                         <mat-form-field class="full-width-input">
                                             <input matInput formControlName="builtUpAreaRoom" number-only
                                                 name="builtUpAreaRoom" [(ngModel)]="roomModel.builtUpArea"
-                                                placeholder="Built Up Area" maxlength="10" required>
+                                                placeholder="{{'built_up_area' | translate:translateKey }} (Sq.Meter)" maxlength="10" required>
                                             <mat-error [hidden]="!formRoom.builtUpAreaRoom.errors">
                                                 <div
                                                     [hidden]="formRoom.builtUpAreaRoom.errors && !formRoom.builtUpAreaRoom.errors.required">
@@ -565,8 +572,8 @@
                                     <div class="col-md-6">
                                         <mat-form-field class="full-width-input">
                                             <input matInput formControlName="length" number-only name="length"
-                                                maxlength="10" [(ngModel)]="roomModel.length" placeholder="Length"
-                                                (input)="setRoomCarpetArea()" required>
+                                                maxlength="10" [(ngModel)]="roomModel.length"
+                                                placeholder="{{'length' | translate:translateKey }} (Meter)" (input)="setRoomCarpetArea()" required>
                                             <mat-error *ngIf="formRoom.length.errors">
                                                 <div *ngIf="formRoom.length.errors.required">*Length is
                                                     required.</div>
@@ -578,8 +585,8 @@
                                     <div class="col-md-6">
                                         <mat-form-field class="full-width-input">
                                             <input matInput formControlName="breadth" number-only name="breadth"
-                                                maxlength="10" [(ngModel)]="roomModel.breadth" placeholder="Breadth"
-                                                (input)="setRoomCarpetArea()" required>
+                                                maxlength="10" [(ngModel)]="roomModel.breadth"
+                                                placeholder="{{'branch' | translate:translateKey }} (Meter)" (input)="setRoomCarpetArea()" required>
                                             <mat-error *ngIf="formRoom.breadth.errors">
                                                 <div *ngIf="formRoom.breadth.errors.required">*Breadth is
                                                     required.</div>
@@ -592,7 +599,7 @@
                                         <mat-form-field class="full-width-input">
                                             <input matInput disabled formControlName="carpetAreaRoom" number-only
                                                 name="carpetAreaRoom" [(ngModel)]="roomModel.carpetArea"
-                                                placeholder="Carpet Area">
+                                                placeholder="Carpet Area (Sq.Meter)">
 
                                         </mat-form-field>
                                     </div>
@@ -601,7 +608,7 @@
                                             <input matInput required number-only formControlName="exemptedAreaRoom"
                                                 name="exemptedAreaRoom" [(ngModel)]="roomModel.exemptedArea"
                                                 maxlength="10" (ngModelChange)="setRoomeAssessableArea()"
-                                                placeholder="Exempted Area">
+                                                placeholder="{{'exempted_area' | translate:translateKey }} (Sq.Meter)">
                                             <mat-error *ngIf="formRoom.exemptedAreaRoom.errors">
                                                 <div *ngIf="formRoom.exemptedAreaRoom.errors.required">*Exempted
                                                     Area is required.</div>
@@ -618,14 +625,14 @@
                                         <mat-form-field class="full-width-input">
                                             <input matInput disabled formControlName="assessableAreaRoom"
                                                 name="assessableAreaRoom" [(ngModel)]="roomModel.assessableArea"
-                                                placeholder="Accessible Area">
+                                                placeholder="{{'accessible_area' | translate:translateKey }} (Sq.Meter)">
 
                                         </mat-form-field>
                                     </div>
                                     <div class="col-md-6">
                                         <mat-form-field class="full-width-input">
                                             <input matInput disabled formControlName="valuation" name="valuation"
-                                                [ngModel]="roomModel.valuation" placeholder="Valuation">
+                                                [ngModel]="roomModel.valuation" placeholder="{{'valuation' | translate:translateKey }}">
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -637,7 +644,7 @@
                                     </button>
                                     <button mat-raised-button class="ml-3" type="button" color="warn"
                                         (click)="clearRoom()">
-                                        <mat-icon>clear_all</mat-icon> Clear
+                                        <mat-icon>clear_all</mat-icon>{{'clear' | translate:translateKey }}
                                     </button>
                                 </div>
                             </div>
@@ -651,10 +658,10 @@
 <div class="row text-right mt-3">
     <div class="col-md-12">
         <button mat-raised-button class="ml-3" color="primary" type="button" (click)="onBackClick()">
-            <mat-icon>skip_previous</mat-icon>Back
+            <mat-icon>skip_previous</mat-icon>{{'back' | translate:translateKey }}
         </button>
         <button mat-raised-button class="ml-3" color="primary" type="button" (click)="clearUnit()">
-            <mat-icon>add_circle_outline</mat-icon>Add New Unit
+            <mat-icon>add_circle_outline</mat-icon>{{'add_new_unit' | translate:translateKey }}
         </button>
     </div>
 </div>

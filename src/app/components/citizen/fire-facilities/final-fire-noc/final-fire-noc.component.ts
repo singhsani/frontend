@@ -10,6 +10,7 @@ import { FireFacilitiesService } from '../common/services/fire-facilities.servic
 import { Location } from '@angular/common';
 import * as _ from 'lodash';
 import { TranslateService } from '../../../../shared/modules/translate/translate.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-final-fire-noc',
@@ -53,11 +54,12 @@ export class FinalFireNocComponent implements OnInit {
 	searchLicence() {
 		this.FireFacilitiesService.searchByProvisionalNumber(this.serachLicenceObj.searchLicenceNumber).subscribe(
 			(res: any) => {
-
-				if (res.success) {
+				
+				if (res.success && res.displayForm) {
 					this.serachLicenceObj.isDisplayRenewLicenceForm = true;
 					this.createRecordPatchSerachData(res.data);
 				} else {
+					this.toaster.warning('No record Found');
 					this.serachLicenceObj.isDisplayRenewLicenceForm = false;
 				}
 			}, (err: any) => {
@@ -86,7 +88,8 @@ export class FinalFireNocComponent implements OnInit {
 		private commonService: CommonService,
 		private FireFacilitiesService: FireFacilitiesService,
 		private location: Location,
-		public TranslateService: TranslateService
+		public TranslateService: TranslateService,
+		private toaster: ToastrService,
 	) { }
 
 	/**
@@ -272,8 +275,8 @@ export class FinalFireNocComponent implements OnInit {
 			oldReferenceNumber: [null],
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
-			contactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength)]],
-			officeContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
+			contactNo: [null, [Validators.required, Validators.maxLength(10)]],
+			officeContactNo: [null, [Validators.required, Validators.maxLength(10)]],
 			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			applicantPermanentAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			applicantPermanentAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
@@ -298,7 +301,7 @@ export class FinalFireNocComponent implements OnInit {
 			architectPermanentAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			architectPermanentAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
 
-			architectContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
+			architectContactNo: [null, [Validators.required, Validators.maxLength(10)]],
 			siteAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			siteAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
 			fireVendorType: this.fb.group({

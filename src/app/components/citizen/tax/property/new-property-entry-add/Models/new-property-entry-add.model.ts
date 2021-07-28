@@ -23,6 +23,7 @@ export class AddressModel {
   version: number;
   entryModeLookupCode: string;
   reasonForCreationItemCode: string;
+  subReasonForCreationItemId : string;
   propertyAddressDTO: PropertyAddressDTO
 }
 

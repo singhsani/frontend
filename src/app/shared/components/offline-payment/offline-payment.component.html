@@ -1,7 +1,7 @@
 <div class="container">
 
-	
-	<mat-dialog-content  *ngIf="paymentsForm" [formGroup]="paymentsForm">
+
+	<mat-dialog-content *ngIf="paymentsForm" [formGroup]="paymentsForm">
 
 		<div class="text-center">
 			<h2>Total Fee Pay</h2>
@@ -9,26 +9,27 @@
 				<i class="fa fa-inr" aria-hidden="true"> {{payData.amount}} </i>
 			</div>
 			<p>Rupees in words</p>
+			<h2>{{wordAmount}}</h2>
 		</div>
-	
-		
+
+
 		<div class="col-md-12" *ngIf="payModes">
-			<ng-select (change)="changePayMode($event)" placeholder="Select Pay Mode" [ngModelOptions]="{standalone: true}"
-			  [(ngModel)]="paymentModeSelect">
+			<ng-select (change)="changePayMode($event)" placeholder="Select Pay Mode"
+				[ngModelOptions]="{standalone: true}" [(ngModel)]="paymentModeSelect">
 				<ng-option *ngFor="let payMode of payModes" [value]="payMode.code">
 					{{payMode.name}}
 				</ng-option>
 			</ng-select>
 		</div>
-		
+
 		<div class="col-md-12" *ngIf="paymentsForm.get('paymentMode').value=='DD_BANKER_CHEQUE'">
 			<mat-card class="cardH1">
 				<h1>DD Banker Details</h1>
 			</mat-card>
 			<div class="row">
-				<div class="col-md-4 ngSelect" >
+				<div class="col-md-4 ngSelect">
 					<ng-select placeholder="Bank Name *" formControlName="bankName">
-					  <ng-option *ngFor="let bankObj of bankList" [value]="bankObj.code">{{bankObj.name}}</ng-option>
+						<ng-option *ngFor="let bankObj of bankList" [value]="bankObj.code">{{bankObj.name}}</ng-option>
 					</ng-select>
 				</div>
 				<mat-form-field class="col-md-4">
@@ -44,7 +45,8 @@
 					<input matInput placeholder="Account Holder Name" formControlName="accountHolderName">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput [matDatepicker]="chequeDatePicker" placeholder="Cheque/DD Date" formControlName="chequeDate" (click)="chequeDatePicker.open()">
+					<input matInput [matDatepicker]="chequeDatePicker" placeholder="Cheque/DD Date"
+						formControlName="chequeDate" (click)="chequeDatePicker.open()">
 					<mat-datepicker-toggle matSuffix [for]="chequeDatePicker"></mat-datepicker-toggle>
 					<mat-datepicker touchUi="true" #chequeDatePicker></mat-datepicker>
 				</mat-form-field>
@@ -55,62 +57,125 @@
 				<h1>Check Details</h1>
 			</mat-card>
 			<div class="row">
-				<div class="col-md-4 ngSelect" >
+				<div class="col-md-4 ngSelect">
 					<ng-select placeholder="Bank Name *" formControlName="bankName">
-					  <ng-option *ngFor="let bankObj of bankList" [value]="bankObj.code">{{bankObj.name}}</ng-option>
+						<ng-option *ngFor="let bankObj of bankList" [value]="bankObj.code">{{bankObj.name}}</ng-option>
 					</ng-select>
 				</div>
 				<mat-form-field class="col-md-4">
-					<input matInput placeholder="Branch Name" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="branchName">
+					<input matInput placeholder="Branch Name" appValidationFields
+						[validationFieldsType]="'onlyNameWithSpace'" formControlName="branchName">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput placeholder="Cheque/DD Number" OnlyNumber formControlName="chequeNumber">
 				</mat-form-field>
 				<!--<mat-form-field class="col-md-4">-->
-					<!--<input matInput placeholder="Account Number" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountNumber">-->
+				<!--<input matInput placeholder="Account Number" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountNumber">-->
 				<!--</mat-form-field>-->
 				<mat-form-field class="col-md-4">
 					<input matInput placeholder="Account Number" OnlyNumber formControlName="accountNumber">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput placeholder="Account Holder Name" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName">
+					<input matInput placeholder="Account Holder Name" appValidationFields
+						[validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput [min]="startMinDate" [matDatepicker]="chequeDatePicker" placeholder="Cheque/DD Date" formControlName="chequeDate" (click)="chequeDatePicker.open()">
+					<input matInput [min]="startMinDate" [matDatepicker]="chequeDatePicker" placeholder="Cheque/DD Date"
+						formControlName="chequeDate" (click)="chequeDatePicker.open()">
 					<mat-datepicker-toggle matSuffix [for]="chequeDatePicker"></mat-datepicker-toggle>
 					<mat-datepicker touchUi="true" #chequeDatePicker></mat-datepicker>
 				</mat-form-field>
 			</div>
 		</div>
-		
+
 		<div class="col-md-12" *ngIf="paymentsForm.get('paymentMode').value=='POS'">
 			<mat-card class="cardH1">
 				<h1>POS Details</h1>
+				<div *ngIf="IsposDetails">
+					<div class="row">
+						<span>Deposit Merchant Id : {{resMerchant?.depositMerchantid}}</span>
+						<span style="margin-left: 15px;">Deposit IMEI : {{resMerchant?.depositImei}}</span>
+					</div>
+					<div class="row">
+						<span>Income Merchant Id : {{resMerchant?.incomeMerchantid}}</span>
+						<span style="margin-left: 15px;">Income IMEI : {{resMerchant?.incomeImei}}</span>
+
+					</div>
+				</div>
+				<span style="color: blue; margin-left: 10px;"><a (click)="changePosPayment()">Add/Update</a></span>
+
 			</mat-card>
 			<div class="row">
-				<mat-form-field class="col-md-4">
-					<input matInput placeholder="Transaction No" formControlName="posTransactionId">
+				<div class="col-md-12 row">
+					<div *ngIf="!isUpdatePos" class="col-md-4">
+						<ng-select (change)="posModeChange($event);"
+							placeholder="{{'Income Type' | translate: translateKey}}" formControlName="code">
+							<ng-option [value]="deposite">Deposit</ng-option>
+							<ng-option [value]="income">Income</ng-option>
+						</ng-select>
+					</div>
+					<button class="col-md-4" *ngIf="!isUpdatePos" mat-raised-button color="primary" type="button"
+						(click)="generateNumber()">
+						Generate Number
+					</button>
+
+					<div class="col-md-6" *ngIf="refno">
+						Transaction Reference ID :- <span>
+							<b>{{responseObject.PlutusTransactionReferenceID}}</b></span>
+					</div>
+				</div>
+				<div class="row">
+					<div *ngIf="responseObject?.ResponseMessage != 'APPROVE'" class="col-md-12">
+						<b style="color: red;">{{responseObject?.ResponseMessage}}</b>
+					</div>
+				</div>
+
+				<div *ngIf="isUpdatePos" class="row">
+					<div style="margin-top: 20px;" class="col-md-2"><span><b>Income</b></span></div>
+					<mat-form-field class="col-md-4">
+						<input matInput placeholder="Merchant Id" formControlName="incomeMerchantid">
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="30" matInput placeholder="IMEI" formControlName="incomeImei">
+					</mat-form-field>
+					<div class="col-md-2"></div>
+
+					<div style="margin-top: 20px;" class="col-md-2"><span><b>Deposit</b></span></div>
+					<mat-form-field class="col-md-4">
+						<input matInput placeholder="Merchant Id" formControlName="depositMerchantid">
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="30" matInput placeholder="IMEI" formControlName="depositImei">
+					</mat-form-field>
+					<div class="col-md-2"></div>
+					<button class="col-md-4" mat-raised-button color="primary" type="button"
+						(click)="UpdatePosPayment()">
+						Update Pos Details
+					</button>
+				</div>
+				<!-- <mat-form-field class="col-md-4">
+					<input matInput [matDatepicker]="cardExpPicker" placeholder="{{'card_expiry' | translate: translateKey}}" formControlName="cardExpiry" (click)="cardExpPicker.open()">
+					<mat-datepicker-toggle matSuffix [for]="cardExpPicker"></mat-datepicker-toggle>
+					<mat-datepicker touchUi="true" #cardExpPicker></mat-datepicker>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput placeholder="Remarks" formControlName="remarks">
-				</mat-form-field>
+					<input matInput  matInput type="text" maxlength="25" appAlphaNumeric placeholder="{{'transaction_number' | translate: translateKey}}" formControlName="transNo">
+				</mat-form-field> -->
 			</div>
 		</div>
 
 		<mat-dialog-actions>
 			<button class="mat-raised-button mat-primary" [disabled]="!paymentsForm.valid" (click)="save()">
-			  Save
+				Save
 			</button>
-			<button class="mat-raised-button mat-primary"  (click)="cancel()">
+			<button class="mat-raised-button mat-primary" (click)="cancel()">
 				Cancel
 			</button>
 		</mat-dialog-actions>
-	
+
 	</mat-dialog-content>
-		
-	
-	
+
+
+
 
 </div>
-
-

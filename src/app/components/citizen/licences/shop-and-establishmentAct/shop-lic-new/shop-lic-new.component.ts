@@ -1,9 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ManageRoutes } from './../../../../../config/routes-conf';
 import { CommonService } from '../../../../../shared/services/common.service';
-
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import * as _ from 'lodash';
@@ -14,6 +13,10 @@ import { TranslateService } from '../../../../../shared/modules/translate/transl
 import { LicenseConfiguration } from '../../license-configuration';
 import { TaxRebateApplicationService } from '../../../tax/property/tax-rebate-application/Services/tax-rebate-application.service';
 import { Constants } from 'src/app/vmcshared/Constants';
+import { AlertService } from 'src/app/vmcshared/Services/alert.service';
+import { ProfessionalTaxService } from 'src/app/core/services/citizen/data-services/professional-tax.service';
+import { ItemsList } from '@ng-select/ng-select/ng-select/items-list';
+
 
 @Component({
 	selector: 'app-shop-lic-new',
@@ -30,12 +33,17 @@ export class ShopLicNewComponent implements OnInit {
 
 	formId: number;
 	apiCode: string;
+	TotalNoOfPerson: number = 0;
 
+	hidesave:boolean = false;
+	
 	wardZoneLevel = [];
 	wardZoneLevel1List = [];
 	wardZoneLevel2List = [];
 	wardZoneLevel3List = [];
 	wardZoneLevel4List = [];
+
+	workerTypes :Array<any> = [];
 
 	isGuideLineActive: boolean = false;
 
@@ -48,11 +56,11 @@ export class ShopLicNewComponent implements OnInit {
 	//regiTyep: string[] = ['CERTIFICATION', 'INTIMATION'];
 	regiTyep: Array<any> = [{
 		code: 'INTIMATION',
-		name: 'less than or equal to 10',
+		name: 'Intimation (Less than 10 Employees)',
 	},
 	{
 		code: 'CERTIFICATION',
-		name: 'more than 10',
+		name: 'Registration (10 or more than 10 Employees)',
 	},
 
 	];
@@ -67,15 +75,19 @@ export class ShopLicNewComponent implements OnInit {
 		code: 'WORKERS',
 		name: 'Workers',
 	}];
+
 	SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP: Array<any> = [];
 	SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP: Array<any> = [];
 	SHOP_LIC_PARTNER_PERSON_RELATIONSHIP: Array<any> = [];
 	SHOP_LIC_TYPE_OF_ORGANIZATION: Array<any> = [];
+	relationshipTypeList:Array<any>=[];
+	workerTypeList:Array<any>=[];
+
 	YES_NO: Array<any> = [];
 	businessCategory: Array<any> = [];
 	businessNature: Array<any> = [];
 
-	businessSubCategory: Array<any> = [];
+	businessSubCategoryList: Array<any> = [];
 	wardNo: Array<any> = [];
 	SHOP_LIC_HOLIDAY: Array<any> = [];
 	ownershipTypeList: Array<any> = [
@@ -98,6 +110,10 @@ export class ShopLicNewComponent implements OnInit {
 
 	public serverUploadFilesArray: Array<any> = [];
 
+	// Map for the formcontrol to tabIndex id;
+
+	public formControlNameToTabIndex = new Map();
+
     /**
      * @param fb - Declare FormBuilder property.
      * @param validationError - Declare validation service property
@@ -119,6 +135,8 @@ export class ShopLicNewComponent implements OnInit {
 		private toastrService: ToastrService,
 		public TranslateService: TranslateService,
 		private taxRebateApplicationService: TaxRebateApplicationService,
+		private professionalTaxService : ProfessionalTaxService,
+		private alertService: AlertService,
 
 	) { }
 
@@ -132,6 +150,8 @@ export class ShopLicNewComponent implements OnInit {
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
 
+		this.setFormControlToTabIndexMap();
+
 		if (!this.formId) {
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 		}
@@ -143,25 +163,38 @@ export class ShopLicNewComponent implements OnInit {
 			this.shopLicNewFormControls();
 
 			this.getWardZoneLevel();
-			if(this.shopLicNewForm.get('ownershipType').value){
-				this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value)
-			}
-			
-
-
 		}
+
 	}
 
 	calculateWorkers(indx) {
+		
 		let men = Number(this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfMen').value);
 		let woman = Number(this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfWomen').value);
 		let total = men + woman;
 		this.shopLicNewForm.get('workerCounts')['controls'][indx].get('total').setValue(total);
-	}
 
+	}
+	
 	hideGuideLine(flag: boolean) {
-		if (this.shopLicNewForm.get('organizationType').value != null) {
-			this.isGuideLineActive = flag;
+		if(this.registrationType == "INTIMATION"){
+			if (this.shopLicNewForm.get('organizationType').value != null) {
+				this.isGuideLineActive = flag;
+				
+			}else{
+				this.alertService.error("Error in fetching data")
+			}
+		}
+		else if(this.registrationType == "CERTIFICATION"){
+			if (this.shopLicNewForm.get('organizationType').value != null) {
+				this.isGuideLineActive = flag;
+			}else{
+				this.alertService.error("Error in fetching data")
+			}
+		}
+		else{
+			this.alertService.error("Please Select Certificate Type")
+			return;
 		}
 	}
 
@@ -194,10 +227,46 @@ export class ShopLicNewComponent implements OnInit {
 					(<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 				});
 				this.requiredDocumentList();
+
+				// if (this.shopLicNewForm.get('ownershipType').value) {
+				// 	this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value)
+				// }
 				// if(res.serviceDetail)
 				// //this.isGuideLineActive = false;
 
+				if (this.shopLicNewForm.get('ownershipType').value,this.shopLicNewForm.get('organizationType').get('code').value) {
+					this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value,this.shopLicNewForm.get('organizationType').get('code').value);
+				}
+				if(this.shopLicNewForm.get('waterDrainageZoneId')){
+					this.shopLicNewForm.get('zone').setValue(res.waterDrainageZoneName);
+				}
 
+				if(this.shopLicNewForm.get('waterDrainageWardId')){
+					this.shopLicNewForm.get('ward').setValue(res.waterDrainageWardName);
+				}
+
+				if(this.shopLicNewForm.get('waterDrainageBlockId')){
+					this.shopLicNewForm.get('block').setValue(res.waterDrainageBlockName);
+				}
+
+				if(this.shopLicNewForm.get('workerType')){
+					this.shopLicNewForm.get('workerType').setValue(res.workerType);
+				}
+
+
+				if(res.waterDrainageZoneId) {
+					this.getWardZone(res.waterDrainageZoneId,2);
+				}
+
+				if (res.waterDrainageWardId) {
+					this.getWardZone(res.waterDrainageZoneId, 2);
+					this.getWardZone(res.waterDrainageWardId,3);
+				}
+				if (res.waterDrainageBlockId) {
+					this.getWardZone(res.waterDrainageWardId, 3);
+				}
+
+				
 			} catch (error) {
 				console.log(error.message)
 			}
@@ -208,12 +277,13 @@ export class ShopLicNewComponent implements OnInit {
 	* Method is used to get lookup data
 	*/
 	getLookupData() {
+	
 		this.formService.getDataFromLookups().subscribe(res => {
-
 			this.SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP = res.SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP;
 			this.SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP = res.SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP;
 			this.SHOP_LIC_PARTNER_PERSON_RELATIONSHIP = res.SHOP_LIC_PARTNER_PERSON_RELATIONSHIP;
-
+			this.relationshipTypeList = res.SHOP_ESTABLISHMENT_RELATIONSHIP_TYPE;
+			this.workerTypeList = res.SHOP_ESTABLISHMENT_WORKERS_TYPE;
 			this.SHOP_LIC_TYPE_OF_ORGANIZATION = res.SHOP_ESTABLISHMENT_ORGANIZATION_TYPE;
 			this.businessCategory = res.SHOP_ESTABLISHMENT_CATEGORY;
 			this.businessNature = res.SHOP_NATURE_OF_BUSINESS;
@@ -244,25 +314,33 @@ export class ShopLicNewComponent implements OnInit {
 			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],//count=4
 			postalAddress: this.fb.group(this.postalAddressEstablishment.addressControls()),
 			
-			zone: [null, [Validators.required]],
-      		ward: [null, [Validators.required]],
-			block: [null, [Validators.required]],
+			zone: [null],
+      		ward: [null],
+			block: [null],
 			 
-			waterDrainageZoneId: [null],
-			waterDrainageWardId: [null],
+			waterDrainageZoneId: [null,Validators.required],
+			waterDrainageWardId: [null,Validators.required],
 			waterDrainageBlockId: [null],
 			ownershipType: [null, [Validators.required]],
 
+			pecNumber:[null,Validators.required],
+			prcNumber:[null,Validators.required],
+			censusOrPropertyNumber:[null,Validators.required],
+			oldRegistrationNumber: null,
+			oldRegistrationDate: null,
 			number: null,
-			otherAddresses: [null, [Validators.required, Validators.maxLength(100)]],
+			otherAddresses: [null],
 			/* Step 1 controls end */
 
 			/* Step 2 controls start */
 			nameOfEmployer: [null, [Validators.required, Validators.maxLength(100)]],
 
 			employerDesignation: [null, [Validators.required, Validators.maxLength(100)]],
-			employerMobileNumber: [null, [Validators.required, Validators.maxLength(100)]],
-			employerEmailId: [null, [Validators.required, ValidationService.emailValidator]],
+			employerMobileNumber: [null, [ValidationService.mobileNumberValidation]],
+			alternateMobileNumber:[null, [ValidationService.mobileNumberValidation]],
+			landlineNumber:null,
+			 employerEmailId: [null,ValidationService.emailValidator],
+			
 			residentialAddressOfEmployer: [null, [Validators.required, Validators.maxLength(500)]],
 
 			//nameOfManager: [null, [Validators.required, Validators.maxLength(60)]],
@@ -271,7 +349,7 @@ export class ShopLicNewComponent implements OnInit {
 				code: [null, Validators.required],
 				name: null,
 			}),
-			subCategoryOfBusiness: this.fb.group({
+			businessSubCategory: this.fb.group({
 				code: [null, Validators.required],
 				name: null,
 			}),
@@ -309,21 +387,24 @@ export class ShopLicNewComponent implements OnInit {
 
 			/*  */
 			attachments: [''],
-			agree: [false,Validators.required]
+			agree: [false,null],
 			/*  */
 		});
 		//this.addMorePerson('EMPLOYER_FAMILY');
 		//this.addMorePerson('OCCUPANCY');
 
-		this.shopLicNewForm.get('zone').valueChanges.subscribe(data => {
-			this.shopLicNewForm.get('waterDrainageZoneId').setValue(data);
-		});
-		this.shopLicNewForm.get('ward').valueChanges.subscribe(data => {
-			this.shopLicNewForm.get('waterDrainageWardId').setValue(data);
-		});
-		this.shopLicNewForm.get('block').valueChanges.subscribe(data => {
-			this.shopLicNewForm.get('waterDrainageBlockId').setValue(data);
-		});
+		// this.shopLicNewForm.get('zone').valueChanges.subscribe(data => {
+		// 	console.log(this.wardZoneLevel1List)
+		// 	// this.shopLicNewForm.get('waterDrainageZoneId').setValue(data);
+		// });
+		// this.shopLicNewForm.get('ward').valueChanges.subscribe(data => {
+		// 	this.shopLicNewForm.get('waterDrainageWardId').setValue(data);
+		// });
+		// this.shopLicNewForm.get('block').valueChanges.subscribe(data => {
+		// 	this.shopLicNewForm.get('waterDrainageBlockId').setValue(data);
+		// });
+
+		
 	}
 
 
@@ -363,15 +444,17 @@ export class ShopLicNewComponent implements OnInit {
 
 	createArrayWorkOut(data?: any): FormGroup {
 		return this.fb.group({
+			noOfMenOldValue: null,
+			noOfWomenldValue:null,
 			id: data.id ? data.id : null,
-			noOfMen: [data.noOfMen ? data.noOfMen : null, [Validators.required]],
-			noOfWomen: [data.noOfWomen ? data.noOfWomen : null, [Validators.required]],
-			workerType: [data.workerType ? data.workerType : null, [Validators.required]],
-			total: [data.total ? data.total : null, [Validators.required]],
+			noOfMen: [data.noOfMen ? data.noOfMen : null,[Validators.required,Validators.min(0)]],
+			noOfWomen: [data.noOfWomen ? data.noOfWomen : null,[Validators.required,Validators.min(0)]],
+			// //workerType: [data.workerType ? data.workerType : null, [Validators.required]],
+			workersType: [data.workersType,[Validators.required]],
+			total: [data.total ? data.total : null,{validators:[Validators.required,Validators.min(0) ]}]
 		})
 
 	}
-
 	/**
 	 * Method is used to return array
 	 * @param data : person data array 
@@ -382,16 +465,18 @@ export class ShopLicNewComponent implements OnInit {
 			id: data.id ? data.id : null,
 			name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(100)]],
 			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(150)]],
-			relationship: [data.relationship ? data.relationship : null, [Validators.required, Validators.maxLength(100)]],
+			// relationship: [data.relationship ? data.relationship : null, [Validators.required, Validators.maxLength(100)]],
 			designation: [data.designation ? data.designation : null, [Validators.required, Validators.maxLength(100)]],
 			gender: this.fb.group({
 				//code: [data.gender ? (data.gender.code ? data.gender.code : null) : null]
 				code: [data.gender ? (data.gender.code ? data.gender.code : null) : null, [Validators.required]],
 			}),
-			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.required]],
-			// employee: [data.employee ? data.employee : null],
-			emailId: [null, [Validators.required, ValidationService.emailValidator]],
-			// [data.emailId ? data.emailId :
+			relationshipType:this.fb.group({
+				code:[data.relationshipType ? (data.relationshipType.code ? data.relationshipType.code : null) :  null,[Validators.required]]
+			}),
+			
+			mobileNo: [data.mobileNo ? data.mobileNo : null],
+			emailId: [data.emailId ? data.emailId : null, [ ValidationService.emailValidator]],
 		})
 
 	}
@@ -404,8 +489,9 @@ export class ShopLicNewComponent implements OnInit {
 			designation: [data.designation ? data.designation : null, [Validators.required, Validators.maxLength(100)]],
 			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.required]],
 			// employee: [data.employee ? data.employee : null],
-			emailId: [null, [Validators.required, ValidationService.emailValidator]],
+			//emailId: [null, [Validators.required, ValidationService.emailValidator]],
 			// [data.emailId ? data.emailId :
+			emailId: [data.emailId ? data.emailId : null, [Validators.required, ValidationService.emailValidator]]
 		})
 
 	}
@@ -425,6 +511,7 @@ export class ShopLicNewComponent implements OnInit {
 				console.log('error', error);
 			}
 		)
+
 	}
 
 	getWardZoneFirstLevel() {
@@ -440,16 +527,46 @@ export class ShopLicNewComponent implements OnInit {
 			})
 	}
 
+	getListByWardZoneLevel(value, level) {
+		if(value) {
+			this.getWardZone(value, level)
+		}
+		
+	}
+
 	onChangedWardZone(value, level) {
 		if (level == 2) {
 			//this.waterPipeliConnectionForm.controls.waterPipelineWard.setValue();
 			this.wardZoneLevel2List = [];
 			this.wardZoneLevel3List = [];
 			this.wardZoneLevel4List = [];
+			if (!value) {
+				this.shopLicNewForm.patchValue({
+					waterDrainageZoneId: null,
+					// zone: null,
+					waterDrainageZoneName : null
+				});
+			}
+			this.shopLicNewForm.patchValue({
+				waterDrainageWardId: null,
+				waterDrainageBlockId: null,
+				waterDrainageWardName: null,
+				waterDrainageBlockName: null
+			});
 		}
 		else if (level == 3) {
 			this.wardZoneLevel3List = [];
 			this.wardZoneLevel4List = [];
+			if (!value) {
+				this.shopLicNewForm.patchValue({
+					waterDrainageWardId: null,
+					waterDrainageWardName: null
+				});
+			}
+			this.shopLicNewForm.patchValue({
+				waterDrainageBlockId: null,
+				waterDrainageBlockName : null
+			 });
 		}
 		else if (level == 4) {
 			this.wardZoneLevel4List = [];
@@ -466,6 +583,9 @@ export class ShopLicNewComponent implements OnInit {
 				if (data.status === 200 && data.body.length) {
 					if (level == 2) {
 						this.wardZoneLevel2List = data.body;
+						this.wardZoneLevel2List.sort((a, b) => {
+							return a.shortCode - b.shortCode;
+						});						
 					}
 					else if (level == 3) {
 						this.wardZoneLevel3List = data.body;
@@ -481,12 +601,12 @@ export class ShopLicNewComponent implements OnInit {
 	}
 
 	/**
-	 * Method is used to add array in form
-	 * @param persontype : person array type
+	 * Method is used to get array from form
+	 * @param type : person array type
 	 */
-	addItem(persontype: string) {
+	getArrayByType(type: string) {
 		let returnArray: any;
-		switch (persontype) {
+		switch (type) {
 			case 'EMPLOYER_FAMILY':
 				returnArray = this.shopLicNewForm.get('shopPersonList') as FormArray;
 				break;
@@ -507,18 +627,18 @@ export class ShopLicNewComponent implements OnInit {
 		let isEditAnotherRow = this.isTableInEditMode(persontype);
 		if (!isEditAnotherRow) {
 
-			if (persontype === "PATNERS" && this.addItem(persontype).controls.length >= 2) {
-				this.toastrService.warning("Occuping Person not allowed more than 2");
-				return false;
-			}
+			// if (persontype === "PATNERS" && this.getArrayByType(persontype).controls.length >= 2) {
+			// 	this.toastrService.warning("Occuping Person not allowed more than 2");
+			// 	return false;
+			// }
 
 			if (persontype === "PATNERS") {
-				this.addItem(persontype).push(this.createArrayPatner({
+				this.getArrayByType(persontype).push(this.createArrayPatner({
 					personType: persontype
 				}));
 			}
 
-			let newlyadded = this.addItem(persontype).controls;
+			let newlyadded = this.getArrayByType(persontype).controls;
 			if (newlyadded.length) {
 				this.editRecord((newlyadded[newlyadded.length - 1]));
 				(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
@@ -537,18 +657,18 @@ export class ShopLicNewComponent implements OnInit {
 		let isEditAnotherRow = this.isTableInEditMode(persontype);
 		if (!isEditAnotherRow) {
 
-			if (persontype === "OCCUPANCY" && this.addItem(persontype).controls.length >= 2) {
-				this.toastrService.warning("Occuping Person not allowed more than 2");
-				return false;
-			}
+			// if (persontype === "OCCUPANCY" && this.getArrayByType(persontype).controls.length >= 2) {
+			// 	this.toastrService.warning("Occuping Person not allowed more than 2");
+			// 	return false;
+			// }
 
 
 			if (persontype === "OCCUPANCY") {
-				this.addItem(persontype).push(this.createArrayWorkOut({
+				this.getArrayByType(persontype).push(this.createArrayWorkOut({
 					personType: persontype
 				}));
 			} else {
-				this.addItem(persontype).push(this.createArray({
+				this.getArrayByType(persontype).push(this.createArray({
 					personType: persontype
 				}));
 			}
@@ -556,7 +676,7 @@ export class ShopLicNewComponent implements OnInit {
 			this.shopLicNewForm.get('workerCounts').clearValidators();
 
 			this.CD.detectChanges();
-			let newlyadded = this.addItem(persontype).controls;
+			let newlyadded = this.getArrayByType(persontype).controls;
 			if (newlyadded.length) {
 				this.editRecord((newlyadded[newlyadded.length - 1]));
 				(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
@@ -572,30 +692,30 @@ export class ShopLicNewComponent implements OnInit {
 
 		let isEditAnotherRow = this.isTableInEditMode(persontype);
 		if (!isEditAnotherRow) {
-			if (persontype === "EMPLOYER_FAMILY" && this.addItem(persontype).controls.length >= 5) {
+			if (persontype === "EMPLOYER_FAMILY" && this.getArrayByType(persontype).controls.length >= 5) {
 				this.toastrService.warning("Employer family not allowed more than 5");
 				return false;
 			}
 			
 			if (persontype === "PARTNER") {
-				if (this.shopLicNewForm.get('organizationType').value.code === 'SHOP_LIC_SELF_OWNERSHIP' && this.addItem(persontype).controls.length >= 1) {
+				if (this.shopLicNewForm.get('organizationType').value.code === 'SHOP_LIC_SELF_OWNERSHIP' && this.getArrayByType(persontype).controls.length >= 1) {
 					this.toastrService.warning("You can add only one partner becouse you are self ownership");
 					return false;
 				}
-				if (this.shopLicNewForm.get('organizationType').value.code != 'SHOP_LIC_SELF_OWNERSHIP' && this.addItem(persontype).controls.length >= 10) {
+				if (this.shopLicNewForm.get('organizationType').value.code != 'SHOP_LIC_SELF_OWNERSHIP' && this.getArrayByType(persontype).controls.length >= 10) {
 					this.toastrService.warning("Parners not allowed more than 10");
 					return false;
 				}
 			}
 			
-				this.addItem(persontype).push(this.createArray({
+				this.getArrayByType(persontype).push(this.createArray({
 					personType: persontype
 				}));
 				
 			
 			 this.shopLicNewForm.get('shopPersonList').clearValidators();
 			 this.CD.detectChanges();
-			let newlyadded = this.addItem(persontype).controls;
+			let newlyadded = this.getArrayByType(persontype).controls;
 			if (newlyadded.length) {
 				this.editRecord((newlyadded[newlyadded.length - 1]));
 				(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
@@ -681,7 +801,7 @@ export class ShopLicNewComponent implements OnInit {
 	*  Method is used check table is in edit mode
 	*/
 	isTableInEditMode(persontype: string) {
-		return this.addItem(persontype).controls.find((obj: any) => obj.isEditMode === true);
+		return this.getArrayByType(persontype).controls.find((obj: any) => obj.isEditMode === true);
 	}
 
 	/**
@@ -698,7 +818,7 @@ export class ShopLicNewComponent implements OnInit {
 	*/
 	deleteRecord(persontype: string, index: any) {
 		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
-			this.addItem(persontype).removeAt(index);
+			this.getArrayByType(persontype).removeAt(index);
 			this.toastrService.success("Succesfully deleted", "Deleted");
 		});
 	}
@@ -708,60 +828,92 @@ export class ShopLicNewComponent implements OnInit {
 	* @param row: table row id
 	*/
 	saveRecord(row: any) {
+		
 		if (row.valid) {
+				
 			row.isEditMode = false;
 			row.newRecordAdded = false;
 		}
 	}
 
-	/**
-	*  Method is used cancel editable dataview.
-	* @param row: table row id
-	*/
-	cancelRecord(row: any, index: number) {
-		try {
-			if (row.newRecordAdded) {
-				this.addItem(row.get('personType').value).removeAt(index);
-			} else {
-				if (row.deepCopyInEditMode) {
-					row.patchValue(row.deepCopyInEditMode);
-				}
+
+	savePersonOccupyingRecord(row: any) {
+		let grandTotal = 0;
+		if (this.registrationType === this.regiTyep[0].code) {
+			let control = this.shopLicNewForm.get('workerCounts')['controls'];
+			for (let i = 0; i < control.length; i++) {
+				grandTotal += control[i].get('total').value;
+			}
+
+			let max = grandTotal - 9;
+			if (max > 0) {
+			
+				this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");
+			}
+			// console.log("grandTotal" +grandTotal);
+			// if(row.valid) {
+			else {
 				row.isEditMode = false;
 				row.newRecordAdded = false;
 			}
-		} catch (error) {
-
+		}
+		else {
+			this.saveRecord(row);
 		}
 	}
+		/**
+		*  Method is used cancel editable dataview.
+		* @param row: table row id
+		*/
+		cancelRecord(row: any, index: number) {
+			
+			try {
+				if (row.newRecordAdded) {
+					this.getArrayByType(row.get('personType').value).removeAt(index);
+				} else {
+					if (row.deepCopyInEditMode) {
+						row.patchValue(row.deepCopyInEditMode);
+					}
+					row.isEditMode = false;
+					row.newRecordAdded = false;
+				}
+			} catch (error) {
 
-	/**
-	*  Method is used get selected data from lookup when change.
-	* @param lookups : Array
-	* @param code : String
-	* return object
-	*/
-	getSelectedDataFromLookUps(lookups: Array<any>, code: string) {
-		return lookups.find((obj: any) => obj.code === code);
-	}
+			}
+		}
+
+		/**
+		*  Method is used get selected data from lookup when change.
+		* @param lookups : Array
+		* @param code : String
+		* return object
+		*/
+		getSelectedDataFromLookUps(lookups: Array<any>, code: string) {
+			return lookups.find((obj: any) => obj.code === code);
+		}
 
 
-	/**
-	* Method is used when get business sub category dropdown data
-	* @event is value fro category dropdown
-	*/
-	getSubCategoryDropdownData(event) {
-		this.shopAndEstablishmentService.getSubCategory(event).subscribe(res => {
-			this.businessSubCategory = res;
-		})
-	}
+		/**
+		* Method is used when get business sub category dropdown data
+		* @event is value fro category dropdown
+		*/
+		getSubCategoryDropdownData(event) {
+			this.shopAndEstablishmentService.getSubCategory(event).subscribe(res => {
+				this.businessSubCategoryList = res;
+			})
+		}
 
-	/**
-	* Method is used when change data of NoOfHumanWorking dropdown
-	* @event is value of NoOfHumanWorking dropdown
-	*/
+		/**
+		* Method is used when change data of NoOfHumanWorking dropdown
+		* @event is value of NoOfHumanWorking dropdown
+		*/
 	onChangeNoOfHumanWorking(event) {
-		// debugger
-		this.isDisabledBtn = false;
+		// 
+		if (event)
+			this.isDisabledBtn = false;
+		else
+			this.isDisabledBtn = true;
+
 		this.shopLicNewForm.get('registrationType').setValue(event);
 		this.registrationType = event;
 		console.log(this.registrationType);
@@ -779,7 +931,7 @@ export class ShopLicNewComponent implements OnInit {
 	*/
 	onChangeCategorySelect(event) {
 		try {
-			this.shopLicNewForm.get('subCategoryOfBusiness').reset();
+			this.shopLicNewForm.get('businessSubCategory').reset();
 			this.getSubCategoryDropdownData(event);
 		} catch (error) {
 			console.log(error.message)
@@ -792,8 +944,11 @@ export class ShopLicNewComponent implements OnInit {
 	*/
 	onChangeTypeOfOrganization(event) {
 
+		this.shopLicNewForm.get('organizationType').get('code').setValue(event);
+	 	this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value,event);
+
 		try {
-			this.updateServiceUploadDocument(event);
+			// this.updateServiceUploadDocument(event);
 			this.isPatners = false;
 
 			this.shopLicNewForm.get('attachments').setValue([]);
@@ -805,7 +960,7 @@ export class ShopLicNewComponent implements OnInit {
 				this.isPatners = true;
 				//this.addMorePersonPataner('PATNERS');
 			}
-			this.requiredDocumentList();
+			// this.requiredDocumentList();
 
 		} catch (error) {
 			console.log(error.message)
@@ -833,38 +988,25 @@ export class ShopLicNewComponent implements OnInit {
      * This method required for final form submition.
      * @param flag - flag of invalid control.
      */
-	handleErrorsOnSubmit(flag) {
+	handleErrorsOnSubmit(key) {
 
-		switch (true) {
-			case flag <= 21:
-				this.licenseConfiguration.currentTabIndex = 0;
-				break;
-			case flag <= 33:
-				this.licenseConfiguration.currentTabIndex = 1;
-				break;
-			case flag <= 40:
-				this.licenseConfiguration.currentTabIndex = 2;
-				break;
-			case flag <= 47:
-				this.licenseConfiguration.currentTabIndex = 3;
-				break;
-			case flag <= 55:
-				this.licenseConfiguration.currentTabIndex = 4;
-				break;
-			case flag <= 61:
-				this.licenseConfiguration.currentTabIndex = 5;
-				break;
-			case flag <= 62:
-				this.licenseConfiguration.currentTabIndex = 6;
-				break;
-			case flag <= 63:
-				this.licenseConfiguration.currentTabIndex = 7;
-				this.commonService.openAlert('Feild Error', 'Should be agree with given details', 'warning');
-				break;
-			default:
-				this.licenseConfiguration.currentTabIndex = 0;
+		const index = this.formControlNameToTabIndex.get(key)
+		
+		if(index == 5) {
+			this.licenseConfiguration.currentTabIndex = 5;
+				this.commonService.openAlert('Field Error', 'Should be agree with given details', 'warning');
+				this.checkDynamicTableValidate();
+				return;
+		} else if (index) {
+			this.licenseConfiguration.currentTabIndex = index;
+			this.checkDynamicTableValidate();
+			return
+		} else {
+			this.licenseConfiguration.currentTabIndex = 0;
+			this.checkDynamicTableValidate();
+			return
 		}
-		this.checkDynamicTableValidate();
+
 	}
 
 	/**
@@ -872,19 +1014,19 @@ export class ShopLicNewComponent implements OnInit {
 	 */
 	checkDynamicTableValidate(): void {
 		try {
-			this.addItem("PATNERS").controls.forEach(ele => {
+			this.getArrayByType("PATNERS").controls.forEach(ele => {
 				if (ele.invalid) {
 					ele.isEditMode = true;
 				}
 			});
 
-			this.addItem("EMPLOYER_FAMILY").controls.forEach(familyEle => {
+			this.getArrayByType("EMPLOYER_FAMILY").controls.forEach(familyEle => {
 				if (familyEle.invalid) {
 					familyEle.isEditMode = true;
 				}
 			});
 
-			this.addItem("OCCUPANCY").controls.forEach(occupancy => {
+			this.getArrayByType("OCCUPANCY").controls.forEach(occupancy => {
 				if (occupancy.invalid) {
 					occupancy.isEditMode = true;
 				}
@@ -1128,28 +1270,22 @@ export class ShopLicNewComponent implements OnInit {
 
 
 
-	updateServiceUploadDocument(ownershipType) {
+	updateServiceUploadDocument(ownershipType,organizationCode) {
 		let array = (<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments'));
 		for (let i = array.length - 1; i >= 0; i--) {
 			array.removeAt(i)
 		}
 
-
-
-		const documentCodeList = this.filterDocumentList(ownershipType);
-
+		const documentCodeList = this.filterDocumentList(ownershipType,organizationCode);
 		const localUploadArray = [...this.serverUploadFilesArray];
-
 		this.displayDocs = [];
-
 		this.uploadFilesArray = [];
 
 		for (let file of localUploadArray) {
 			if (this.checkFileNeedToAddInDocumentList(file, documentCodeList)) {
-				debugger
 				file['mandatory'] = this.isFileMandatory(file, documentCodeList);
 				this.displayDocs.push(file);
-				debugger
+				
 				if (file['mandatory']) {
 					this.uploadFilesArray.push({
 						'labelName': file.documentLabelEn,
@@ -1164,6 +1300,7 @@ export class ShopLicNewComponent implements OnInit {
 			}
 		}
 
+	
 		// switch (event) {
 		// 	case 'SHOP_LIC_COMPANY':
 		// 	case 'SHOP_LIC_TRUST':
@@ -1193,6 +1330,7 @@ export class ShopLicNewComponent implements OnInit {
 
    
 	checkFileNeedToAddInDocumentList(file,documentCodeList){
+	
       if(documentCodeList.filter( obj => obj.documentIdentifier == file.documentIdentifier).length > 0){
 		  return true;
 	  } else {
@@ -1208,44 +1346,25 @@ export class ShopLicNewComponent implements OnInit {
 
 	ownershipChange(ownershipType) {
 		this.shopLicNewForm.get('ownershipType').setValue(ownershipType);
-		this.updateServiceUploadDocument(ownershipType)
+		this.updateServiceUploadDocument(ownershipType,this.shopLicNewForm.get('organizationType').get('code').value)
 	}
 
 	/**
 	 * This method return upload document list based on registration type and ownership type.
 	 * @param ownershipType 
 	 */
-	filterDocumentList(ownershipType) {
+	filterDocumentList(ownershipType, organizationCode) {
+		
+
+		const isPartnerShipSelected =  (organizationCode == 'PARTNERSHIP') ? true : false;
 
 
 		if (this.isIntimation) {
-
-			return [
-				{
-					documentIdentifier: 'EMPLOYER_ID_PROOF',
-					mandatory: true
-				},
-				{
-					documentIdentifier: 'ESTABLISHMENT_PHOTO',
-					mandatory: true
-				}
-			];
-
-
+			return isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument();
 		} else {
 			// Certificate type
-
 			if (ownershipType == "OWN") {
-
-				return[
-					{
-						documentIdentifier: 'EMPLOYER_ID_PROOF',
-						mandatory: true
-					},
-					{
-						documentIdentifier: 'ESTABLISHMENT_PHOTO',
-						mandatory: true
-					},
+				let docArray = [
 					{
 						documentIdentifier: 'LICENSE_COPY',
 						mandatory: true
@@ -1255,18 +1374,10 @@ export class ShopLicNewComponent implements OnInit {
 						mandatory: true
 					}
 				];
-
+			return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument());
+	
 			} else if (ownershipType == "RENTED") {
-
-				return[
-					{
-						documentIdentifier: 'EMPLOYER_ID_PROOF',
-						mandatory: true
-					},
-					{
-						documentIdentifier: 'ESTABLISHMENT_PHOTO',
-						mandatory: true
-					},
+				let docArray = [
 					{
 						documentIdentifier: 'LICENSE_COPY',
 						mandatory: true
@@ -1284,14 +1395,332 @@ export class ShopLicNewComponent implements OnInit {
 						mandatory: false
 					}
 				];
-
-
+				return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument());
 			} else {
 				return [];
 			}
-
 		}
 
+
+	}
+
+
+	commonUploadDocumentForPartnerShip(){
+		
+		const docs = this.commonUploadDocument();
+		docs.push({
+			documentIdentifier: 'PARTNERSHIP_DEED',
+			mandatory: true
+		})
+
+		docs.forEach(element => {
+			if(element.documentIdentifier == 'SHOP_PAN_CARD') {
+				element.mandatory = true;
+			}
+		});
+
+		return docs;
+
+	}
+
+
+	commonUploadDocument(){
+		
+		
+	 	const comonDocument = [
+			{
+				documentIdentifier: 'EMPLOYER_ID_PROOF',
+				mandatory: true
+			},
+			{
+				documentIdentifier: 'ESTABLISHMENT_PHOTO',
+				mandatory: true
+			},
+			{
+				documentIdentifier: 'SHOP_AADHAR_CARD',
+				mandatory: false
+			},
+			{
+				documentIdentifier: 'SHOP_PAN_CARD',
+				mandatory: false
+			},
+			{
+				documentIdentifier: 'SOCIETY_NOC',
+				mandatory: false
+			},
+			{
+				documentIdentifier: 'OTHER_DOC',
+				mandatory: false
+			}
+		
+		];
+		
+		if(this.commonService.fromAdmin()){
+				
+			comonDocument.push({
+					documentIdentifier: 'REVIEW_APPLICATION',
+					mandatory: true
+				})
+			}
+
+		
+		return comonDocument;
+	}
+
+	/**
+	*  Method is used cancel editable dataview.
+	* @param row: table row id
+	*/
+	cancelRecordWithPersonType(row: any, index: number,personType : string) {
+		
+		try {
+			if (row.newRecordAdded) {
+				console.log('array',this.getArrayByType(personType))
+				this.getArrayByType(personType).removeAt(index);
+			} else {
+				if (row.deepCopyInEditMode) {
+					row.patchValue(row.deepCopyInEditMode);
+				}
+				row.isEditMode = false;
+				row.newRecordAdded = false;
+			}
+		} catch (error) {
+
+		}
+	}
+
+	// validatePecPrcNumber(formControl : FormControl){
+	// 	  console.log("Pec/Prc ", formControl);
+		  
+	// 	  if(!formControl.value || formControl.value == ""){
+	// 		  return true;
+	// 	  } else {
+	// 		  this.professionalTaxService.getSearchDetails(formControl.value,true).subscribe(res => {
+    //               if(!res.data){
+	// 				  formControl.setValue("");
+	// 				  this.commonService.openAlert("Error", "Please enter valid EC/RC number", "error");
+	// 			  }
+	// 		  }, error => {
+	// 			  formControl.setValue("");
+	// 			  console.error("error",error);
+	// 		  })
+	// 	  }
+	// }
+
+	validatePECNumber(formControl:any){
+		
+		let numberValue = formControl.value.substring(0,3)
+		if(!formControl.value || formControl.value == ""){
+			return true;
+		}
+		else if("PEC"== numberValue){
+			if(false == numberValue){
+				formControl.setValue("");
+			 	this.commonService.openAlert("Error", "Please enter valid PEC number","error");	 
+			}error=>{
+				formControl.setValue("");
+				console.error("error",error);
+			}
+			
+			// this.professionalTaxService.getVerifyNumber(numberValue,formControl.value).subscribe(res => {
+			// 	console.log(res);
+			// 	console.log(res.data);
+			// 			if(false == res.data.success){
+			// 				formControl.setValue("");
+			// 				this.commonService.openAlert("Error", "Please enter valid PEC number","error");
+			// 			}
+			// 		},error =>{
+			// 			formControl.setValue("");
+			// 			console.error("error",error);
+			// 		})
+		}else{
+			formControl.setValue("");
+			this.commonService.openAlert("Error", "Please enter valid PEC number","error");
+		}
+		
+	}
+
+	validatePRCNumber(formControl:any){
+		
+		let numberValue = formControl.value.substring(0,3)
+		if(!formControl.value || formControl.value == ""){
+			return true;
+		}else if("PRC" == numberValue){
+			if(false == numberValue){
+				formControl.setValue("");
+			 	this.commonService.openAlert("Error", "Please enter valid PRC number","error");
+			}error=>{
+				formControl.setValue("");
+				console.error("error",error);
+			}
+			// this.professionalTaxService.getVerifyNumber(numberValue,formControl.value).subscribe(res => {
+			// 	if(false == res.data){
+			// 		formControl.setValue("");
+			// 		this.commonService.openAlert("Error", "Please enter valid PRC number","error");
+			// 	}
+			// },error =>{
+			// 	formControl.setValue("");+
+			// 	console.error("error",error);
+			// })
+		}else{
+			formControl.setValue("");
+			this.commonService.openAlert("Error", "Please enter valid PRC number","error");
+		}
+	}
+
+	
+	
+
+	validatePecPropertyNumber(formControl : FormControl){
+		
+		if(!formControl.value || formControl.value == ""){
+			return true;
+		} else {
+			this.professionalTaxService.isExistPropertyNoCheck(formControl.value).subscribe(res => {
+				return true;
+			}, error => {
+				formControl.setValue("");
+				if (error.error[0]){
+					this.commonService.openAlert("error", error.error[0].message, "error");
+				} else {
+					this.commonService.openAlert("Error", "Property/Census No Not found", "error");
+				}
+					
+			})
+		}
+  }
+
+
+  setFormControlToTabIndexMap(){
+	  this.formControlNameToTabIndex.set('establishmentName',0)
+	  this.formControlNameToTabIndex.set('ownershipType',0)
+	  this.formControlNameToTabIndex.set('otherAddresses',0)
+
+	  this.formControlNameToTabIndex.set('nameOfEmployer',1)
+	  this.formControlNameToTabIndex.set('employerDesignation',1)
+	  this.formControlNameToTabIndex.set('employerMobileNumber',1)
+	  this.formControlNameToTabIndex.set('alternateMobileNumber',1)
+	  this.formControlNameToTabIndex.set('residentialAddressOfEmployer',1)
+	  this.formControlNameToTabIndex.set('establishmentCategory',1)
+	  this.formControlNameToTabIndex.set('businessSubCategory',1)
+	  this.formControlNameToTabIndex.set('natureOfBusiness',1)
+	  this.formControlNameToTabIndex.set('commencementOfBusinessDate',1)
+
+	  this.formControlNameToTabIndex.set('organizationType',4)
+
+	  this.formControlNameToTabIndex.set('agree',5)
+
+  }
+
+  patchValue2(){
+	 
+	const data = {
+ 
+		"contactNo": "9558295586",
+		"mobileNo": "9558295586",
+		"email": "barad@gmail.com",
+		"aadhaarNo": null,
+		"agree": false,
+		"paymentStatus": null,
+		"canEdit": true,
+		"canDelete": true,
+		"canSubmit": true,
+		"serviceCode": "SHOP-ESTAB-LIC-NEW",
+		"canReceiptPrint": false,
+		"fieldView": "ALL",
+		"fieldList": null,
+		"applicantName": null,
+		"applicantNameGuj": null,
+		"establishmentName": "fgfhgfh",
+		"postalAddress": {
+		  "buildingName": "1",
+		  "buildingNameGuj": "૧",
+		  "streetName": "gfhfghgf",
+		  "streetNameGuj": "ગ્ફ્હ્ફ્ઘ્ગ્ફ",
+		  "landmark": "gfhgfhfgh",
+		  "landmarkGuj": "ગ્ફ્હ્ગ્ફ્હ્ફ્ઘ",
+		  "area": "gfhgfh",
+		  "areaGuj": "ગ્ફ્હ્ગ્ફ્હ",
+		  "state": "GUJARAT",
+		  "stateGuj": "ગુજરાત",
+		  "district": null,
+		  "districtGuj": null,
+		  "city": "Vadodara",
+		  "cityGuj": "વડોદરા",
+		  "pincode": "454158",
+		  "country": "INDIA",
+		  "countryGuj": "ભારત"
+		},
+		"commencementOfBusinessDate": "2021-01-07",
+		"otherAddresses": "gfh  gfghfh",
+		"nameOfEmployer": "ghgfhf",
+	   
+		"residentialAddressOfEmployer": "ghfghgfh",
+		"employerDesignation": "ghgfhgf",
+		"employerMobileNumber": "4874584554",
+		"employerEmailId": null,
+		
+		"shopPersonList": [
+		  {
+			
+			"mobileNo": "5695266566",
+			"canReceiptPrint": false,
+			"fieldView": "ALL",
+			"name": "fghfgh",
+			"address": "gfhfghgf",
+			"gender": {
+			  "code": "MALE",
+			  "name": "Male",
+			  "gujName": "પુરૂષ"
+			},
+			"emailId": "ghfg@gmail.com",
+			"designation": "ghgfhgf",
+			"relationshipType": {
+			  "code": "FATHER",
+			  "name": "Father"
+			}
+		  }
+		],
+		"workerCounts": [
+		  {
+		   
+			"canReceiptPrint": false,
+			"fieldView": "ALL",
+			"noOfMen": 1,
+			"noOfWomen": 1,
+			"total": 2,
+			"workersType": "WORKERS"
+		  }
+		],
+		"previousRegistrationNo": null,
+		"serviceForm": null,
+		"waterDrainageZoneId": 1,
+		"waterDrainageZoneName": "East",
+		"waterDrainageWardId": 5,
+		"waterDrainageWardName": "Ward 1",
+		"waterDrainageBlockId": 17,
+		"waterDrainageBlockName": "Block 01",
+		"shopPartnerList": [],
+		"ownershipType": "OWN",
+		
+		"alternateMobileNumber": null,
+		"landlineNumber": null,
+		"prcNumber": null,
+		"pecNumber": null,
+		"censusOrPropertyNumber": null,
+		"remarks": null,
+		"oldRegistrationNumber": null,
+		"oldRegistrationDate": null,
+		"intimation": null,
+		"certification": null,
+		"transferCertificateNumber": null
+	  }
+		this.shopLicNewForm.patchValue(data);
+	}
+
+	getCommonWorkerType(){
+		let workerGrid = <FormArray>this.shopLicNewForm.get('workerCounts');
+		this.shopAndEstablishmentService.getSelectedWorkerType(this.workerTypeList,workerGrid)
 	}
 
 }

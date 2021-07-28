@@ -1,17 +1,20 @@
 <mat-card>
   <div class="row">
-  <ng-container *ngFor="let doc of PropertyDocumentUploadDocs">
-    <div class="col-md-4">
-      <label>{{doc.documentLabelEn}}<span *ngIf="doc.mandatory">*</span></label>
-      <file-upload-water-tax [form]="PropertyDocumentUploadDocs" [uploadModel]="doc"></file-upload-water-tax>
-    </div>
+    <ng-container *ngFor="let doc of PropertyDocumentUploadDocs">
+      <div class="col-md-4">
+        <label>{{doc.documentLabelEn}}<span *ngIf="doc.mandatory">*</span></label>
+        <file-upload-water-tax [form]="PropertyDocumentUploadDocs" [uploadModel]="doc"></file-upload-water-tax>
+      </div>
     </ng-container>
   </div>
-  <div class="button-row text-right mt-3">
-  <button mat-raised-button class="ml-3" color="primary" type="submit" (click)="onSubmit()">
-    <mat-icon>save</mat-icon>Submit
-  </button>
-</div>
-</mat-card> 
-
-
+  <div class="row text-right mt-3">
+    <div class="col-md-12">
+      <button mat-raised-button class="ml-3" color="primary" type="button" (click)="onBackClick()">
+        <mat-icon>skip_previous</mat-icon>{{'back' | translate:translateKey }}
+      </button>
+      <button mat-raised-button class="ml-3" color="primary" type="submit" (click)="onSubmit()">
+        <mat-icon>save</mat-icon>{{'submit' | translate:translateKey }}
+      </button>
+    </div>
+  </div>
+</mat-card>

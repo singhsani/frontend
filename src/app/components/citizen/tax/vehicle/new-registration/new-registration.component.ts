@@ -35,7 +35,12 @@ export class NewRegistrationComponent implements OnInit {
   stepLable4: string = "cheque_return_details";
 
   maxDate: Date = new Date();
-  minDate: any = moment().subtract(6, 'months').format('YYYY-MM-DD');
+  //minDate: any = moment().subtract(6, 'months').format('YYYY-MM-DD');
+  minDate: Date = new Date(
+    new Date().getFullYear(),
+    new Date().getMonth() - 1,
+    new Date().getDate()
+  );
   vehicleRegistrationForm: FormGroup;
   paymentForm: FormGroup;
   // purchasingTypeArray: any = [{ code: 'OLD_RATE', name: 'Old Rate' }, { code: 'NEW_RATE', name: 'New Rate' }];
@@ -55,6 +60,8 @@ export class NewRegistrationComponent implements OnInit {
   totalVehicleTaxAmt: number = 0;
   attachmentList: any = [];
   showButton: boolean = false;
+  placeHolderMessage = 'Please enter valid Registration no. e.g. GJ-06-AB-1234';
+
   public config: PftConfig;
 
   constructor(
@@ -77,6 +84,7 @@ export class NewRegistrationComponent implements OnInit {
 
     this.route.paramMap.subscribe(param => {
       if (param) {
+        
         this.vehicleId = Number(param.get('id'));
         // this.apiCode = Number(param.get('apiCode'));
       }
@@ -88,18 +96,19 @@ export class NewRegistrationComponent implements OnInit {
     // this.getBillingPeriodLookups();
     this.getWardLookups();
 
-		/**
-		 * call the get method for edit vehicle information if vehicle id is present
-		 */
+    /**
+     * call the get method for edit vehicle information if vehicle id is present
+     */
+     
     if (this.vehicleId) {
       this.getVehicleData(this.vehicleId);
       this.getAllDocumentLists(this.vehicleId);
     }
   }
 
-	/**
-	 * this method is used to initialize the form control for vehicle registration
-	 */
+  /**
+   * this method is used to initialize the form control for vehicle registration
+   */
   vehicleRegistrationFormControls() {
 
     this.vehicleRegistrationForm = this.fb.group({
@@ -110,14 +119,14 @@ export class NewRegistrationComponent implements OnInit {
       code: null,
       fieldView: null,
       fieldList: null,
-      vehicleNo: [null, Validators.required],
+      vehicleNo: [null],
       vehicleType: this.fb.group({
         code: [null, Validators.required],
         name: null
       }),
-      engineNo: null,
-      chasisNo: null,
-      registrationNo: "GJ-06-",
+      engineNo: [null, [Validators.required, ValidationService.alphaNumericValidation]],
+      chasisNo: [null, [Validators.required, ValidationService.alphaNumericValidation]],
+      registrationNo: ["GJ-06-", ValidationService.alphaNumericValidation],
       vehicleBasicValue: null,
       makeModel: null,
       dealerName: [null, Validators.required],
@@ -143,9 +152,9 @@ export class NewRegistrationComponent implements OnInit {
         name: null
       }),
       // billingPeriod: "2016-17",
-      ward: this.fb.group({
-        code: [null, Validators.required],
-        name: null
+      wardZoneMst: this.fb.group({
+        wardzoneId: null,
+        wardzoneName: null
       }),
       paid: false,
       vehicleReceipts: [],
@@ -153,14 +162,16 @@ export class NewRegistrationComponent implements OnInit {
       canDelete: null,
       canSubmit: true,
       tokenFees: [{ value: 100, disabled: true }],
+      adminFees: [{ value: 0, disabled: true }],
       dishonorCharges: [{ value: 0, disabled: true }],
       vehicleApplicableRate: [{ value: 0, disabled: true }],
       totalPayable: [{ value: 0, disabled: true }],
       attachments: [],
+      serviceFormId: null,
       formStatus: null,
       dealerEmail: ['', [ValidationService.emailValidator]],
-			dealerMobileNo: [null, Validators.required],
-			vehicleTax: [{ value: 0, disabled: true }],
+      dealerMobileNo: [null, Validators.required],
+      vehicleTax: [{ value: 0, disabled: true }],
     });
 
     this.vehicleRegistrationForm.patchValue({
@@ -206,15 +217,24 @@ export class NewRegistrationComponent implements OnInit {
       this.billingPeriodArray = res.BILLING_PERIOD;
       // this.wardNoArray = res.WARD_NO;
       _.forEach(this.vehicleTypeArray, (key) => {
-				key.name = _.replace(key.name, /&/g, "and");
-			});
+        key.name = _.replace(key.name, /&/g, "and");
+      });
+      //   this.setBillingPeriod( this.billingPeriodArray);
+      this.vehicleRegistrationForm.get('billingPeriod').disable();
     });
+
   }
 
-	/**
-	 * This method is used to get vehicle information
-	 * @param id - vehicle id
-	 */
+  // this method will set billing period in column
+  // setBillingPeriod(billingPeriodArray:any){
+  //     this.vehicleRegistrationForm.get('billingPeriod').patchValue(billingPeriodArray[billingPeriodArray.length - 1]);
+  //     this.vehicleRegistrationForm.get('billingPeriod').disable();
+  // }
+
+  /**
+   * This method is used to get vehicle information
+   * @param id - vehicle id
+   */
   getVehicleData(id: number) {
     this.formService.getFormData(id).subscribe(res => {
       this.formService.getFormData(id).subscribe(res => {
@@ -225,6 +245,7 @@ export class NewRegistrationComponent implements OnInit {
         if (!this.vehicleRegistrationForm.get('canEdit').value) {
           this.vehicleRegistrationForm.disable();
         }
+        
 
         // if vehicle receipt present then format the receipt date
         if (res.vehicleReceipts && res.vehicleReceipts.length > 0) {
@@ -232,21 +253,50 @@ export class NewRegistrationComponent implements OnInit {
             value.receiptDate = moment(value.receiptDate).format("DD/MM/YYYY")
           });
         }
+        if(this.vehicleRegistrationForm.get('formStatus').value == "DRAFT"){
+          this.vehicleRegistrationForm.get('attachments').setValue([]);
+        }
+        
       });
     });
   }
 
-	/**
-	 * 
-	 * @param date get the selected vehicle purchasing date
-	 */
+  getFinancialYear() {
+    var fiscalyear = "";
+    var today = this.vehicleRegistrationForm.get('purchaseDate').value;
+    console.log(today);
+    if ((today.getMonth() + 1) <= 3) {
+      fiscalyear = "" + (today.getFullYear() - 1)
+    } else {
+      fiscalyear = "" + (today.getFullYear())
+    }
+    console.log(fiscalyear);
+    return fiscalyear
+  }
+  /**
+   * 
+   * @param date get the selected vehicle purchasing date
+   */
   onDateChange(date) {
+    this.vehicleRegistrationForm.get('purchaseDate').value.toISOString().split('T')[0];
+    // this.vehicleRegistrationForm.get('purchaseDate').setValue(moment(date).format("YYYY-MM-DD"));
+    var billingPeriod = this.getFinancialYear();
     this.vehicleRegistrationForm.get('purchaseDate').setValue(moment(date).format("YYYY-MM-DD"));
+    console.log(billingPeriod);
+    this.billingPeriodArray.forEach(element => {
+
+      if (billingPeriod == element.code.substr(0, 4)) {
+        console.log(element);
+        console.log(element.code);
+        this.vehicleRegistrationForm.get('billingPeriod').patchValue(element);
+      }
+    });
+
   }
 
-	/**
-	 * This method is use for get Vehicle Type dropdown data from API
-	 */
+  /**
+   * This method is use for get Vehicle Type dropdown data from API
+   */
   getVehicleTypeData() {
     this.vehicleServise.getVehicletaxLookups().subscribe(res => {
       // _.forEach(res.VEHICLE_TYPE, (key) => {
@@ -258,28 +308,29 @@ export class NewRegistrationComponent implements OnInit {
     });
   }
 
-	/**
-	 * This method is used to get billing period dropdown data from API
-	 */
+  /**
+   * This method is used to get billing period dropdown data from API
+   */
   getBillingPeriodLookups() {
     this.vehicleServise.getBillingPeriodLookups().subscribe(res => {
       this.billingPeriodArray = res.data;
     });
+
   }
 
-	/**
-	 * This method is used to get ward dropdown data from API
-	 */
+  /**
+   * This method is used to get ward dropdown data from API
+   */
   getWardLookups() {
     this.vehicleServise.getWardLookup().subscribe(res => {
-      this.wardNoArray = res.WARD;
+      this.wardNoArray = res;
     });
   }
 
-	/**
-	 * This method is used to get form data by using engine no if exist
-	 * @param engineNo - vehicle engine no.
-	 */
+  /**
+   * This method is used to get form data by using engine no if exist
+   * @param engineNo - vehicle engine no.
+   */
   checkDataFromEngineNo(engineNo) {
     if (engineNo != "" && engineNo.trim() != "") {
       this.vehicleServise.getDataFromEngineNo(engineNo).subscribe(res => {
@@ -291,20 +342,20 @@ export class NewRegistrationComponent implements OnInit {
     }
   }
 
-	/**
-	 * This method is used to submit the Vehicle registration data
-	 */
+  /**
+   * This method is used to submit the Vehicle registration data
+   */
   onSubmit() {
 
     if (this.vehicleRegistrationForm.invalid) {
       let count = this.config.getAllErrors(this.vehicleRegistrationForm);
-			this.commonService.openAlert("Warning", this.config.ALL_FEILD_REQUIRED_MESSAGE, "warning", "", cb => {
+      this.commonService.openAlert("Warning", this.config.ALL_FEILD_REQUIRED_MESSAGE, "warning", "", cb => {
 
-				switch (true) {
-					case (count <= 12):
+        switch (true) {
+					case (count <= 16):
 						this.tabIndex = 0;
 						break;
-					case (count <= 26):
+					case (count <= 27):
 						this.tabIndex = 1;
 						break;
 					case (count <= 33):
@@ -315,9 +366,6 @@ export class NewRegistrationComponent implements OnInit {
 				}
 			});
 			return;
-      // this.markFormGroupTouched(this.vehicleRegistrationForm);
-      // this.commonService.openAlert("Warning", "Enter all the required information", "warning");
-      // return;
     }
 
     this.vehicleRegistrationForm.get('formStatus').setValue('SUBMITTED');
@@ -365,9 +413,9 @@ export class NewRegistrationComponent implements OnInit {
     })
   }
 
-	/**
-	 * This method is used to submit vehicle tax form
-	 */
+  /**
+   * This method is used to submit vehicle tax form
+   */
   onVehicleTaxSubmit() {
     if (this.paymentForm.invalid) {
       this.markFormGroupTouched(this.paymentForm);
@@ -376,11 +424,11 @@ export class NewRegistrationComponent implements OnInit {
     }
     this.isSubmitBtnVisible = false;
 
-      // this.paymentForm.get('bankName').setValue(this.paymentForm.get('bank').get('code').value);
-      // this.paymentForm.get('accountNo').setValue(this.paymentForm.get('bankAccountNo').value);
-      // this.paymentForm.get('amountPaid').setValue(this.totalVehicleTaxAmt);
-      // this.paymentForm.get('instrumentDate').setValue(this.paymentForm.get('chequeDate').value);
-      // this.paymentForm.get('instrumentNumber').setValue(this.paymentForm.get('chequeNo').value);
+    // this.paymentForm.get('bankName').setValue(this.paymentForm.get('bank').get('code').value);
+    // this.paymentForm.get('accountNo').setValue(this.paymentForm.get('bankAccountNo').value);
+    // this.paymentForm.get('amountPaid').setValue(this.totalVehicleTaxAmt);
+    // this.paymentForm.get('instrumentDate').setValue(this.paymentForm.get('chequeDate').value);
+    // this.paymentForm.get('instrumentNumber').setValue(this.paymentForm.get('chequeNo').value);
 
     this.vehicleServise.saveVehicleTaxFormData(this.paymentForm.value).subscribe(res => {
       this.printReceipt(res);
@@ -392,10 +440,10 @@ export class NewRegistrationComponent implements OnInit {
     });
   }
 
-	/**
-	 * This method is used to get the vehicle tax details
-	 * @param vehicleId - vehicle id
-	 */
+  /**
+   * This method is used to get the vehicle tax details
+   * @param vehicleId - vehicle id
+   */
   getVehicleTaxForPayment(vehicleId) {
     this.totalVehicleTaxAmt = 0;
     this.vehicleServise.getVehicleTaxForPayment(vehicleId).subscribe(res => {
@@ -408,15 +456,16 @@ export class NewRegistrationComponent implements OnInit {
     });
   }
 
-	/**
-	 * This method is used to edit the vehicle tax form
-	 * Edit button Click handler
-	 */
+  /**
+   * This method is used to edit the vehicle tax form
+   * Edit button Click handler
+   */
   editVehicleTaxForm() {
     this.vehicleRegistrationForm.enable();
     this.isSubmitBtnVisible = true;
 
     this.vehicleRegistrationForm.get('tokenFees').disable();
+    this.vehicleRegistrationForm.get('adminFees').disable();
     this.vehicleRegistrationForm.get('dishonorCharges').disable();
     this.vehicleRegistrationForm.get('vehicleApplicableRate').disable();
     this.vehicleRegistrationForm.get('totalPayable').disable();
@@ -428,9 +477,9 @@ export class NewRegistrationComponent implements OnInit {
     }
   }
 
-	/**
-	 * This method is used to open payment dialog and process for the payment
-	 */
+  /**
+   * This method is used to open payment dialog and process for the payment
+   */
   processPayment(saveRes) {
 
     // this.formService.paymentDetails(this.makePaymentObj.id).subscribe(res => {
@@ -481,28 +530,28 @@ export class NewRegistrationComponent implements OnInit {
   }
 
 
-	/**
-	 * This method is used for printing the receipt 
-	 * @param id - vehicle id
-	 */
+  /**
+   * This method is used for printing the receipt 
+   * @param id - vehicle id
+   */
   printReceipt(id: number) {
     this.vehicleServise.printReceipt(id).subscribe(res => {
-        let sectionToPrint: any = document.getElementById('sectionToPrint');
-        sectionToPrint.innerHTML = res;
-        setTimeout(() => {
-          window.print();
-          this.router.navigate(['/citizen/my-applications']);
-        }, 300);
-      },
+      let sectionToPrint: any = document.getElementById('sectionToPrint');
+      sectionToPrint.innerHTML = res;
+      setTimeout(() => {
+        window.print();
+        this.router.navigate(['/citizen/my-applications']);
+      }, 300);
+    },
       err => {
         this.toastr.error(err.error[0].message);
       });
   }
 
-	/**
-	 * call calculateTax() method if step changes from 2 to 3
-	 * @param event - get the previous step index
-	 */
+  /**
+   * call calculateTax() method if step changes from 2 to 3
+   * @param event - get the previous step index
+   */
   calculateTax(event: any) {
 
     if (event.index === 2 && (this.vehicleRegistrationForm.get('purchaseDate').value == null || this.vehicleRegistrationForm.get('vehicleBasicValue').value == null || this.vehicleRegistrationForm.get('vehicleType').get('code').value == null)) {
@@ -513,17 +562,18 @@ export class NewRegistrationComponent implements OnInit {
       this.vehicleServise.calculateTax(this.vehicleRegistrationForm.getRawValue()).subscribe(res => {
 
         this.vehicleRegistrationForm.patchValue({
+          adminFees : res.amountFields.adminFee,
           tokenFess: res.amountFields.vehicleTokenFee,
-					dishonorCharges: res.amountFields.dishonorCharges ? res.amountFields.dishonorCharges : 0,
-					vehicleApplicableRate: res.amountFields.vehicleBasicValue,
-					// totalPayable: res.amountFields.vehicleBasicValue,
-					vehicleTax: res.vehicleApplicableRate
-				});
+          dishonorCharges: res.amountFields.dishonorCharges ? res.amountFields.dishonorCharges : 0,
+          vehicleApplicableRate: res.amountFields.vehicleBasicValue,
+          // totalPayable: res.amountFields.vehicleBasicValue,
+          vehicleTax: res.vehicleApplicableRate
+        });
 
-				let totalPayable = res.amountFields.adminFee + res.amountFields.interest +
-				res.amountFields.penalty + res.amountFields.vehicleBasicValue + res.amountFields.vehicleTokenFee;
-				
-				this.vehicleRegistrationForm.get('totalPayable').setValue(totalPayable);
+        let totalPayable = res.amountFields.adminFee + res.amountFields.interest +
+          res.amountFields.penalty + res.amountFields.vehicleBasicValue + res.amountFields.vehicleTokenFee;
+
+        this.vehicleRegistrationForm.get('totalPayable').setValue(totalPayable);
       });
     }
   }
@@ -539,17 +589,17 @@ export class NewRegistrationComponent implements OnInit {
     );
   }
 
-	/**
-	 * This method is use for resetting the form
-	 */
+  /**
+   * This method is use for resetting the form
+   */
   resetForm() {
     this.vehicleRegistrationForm.reset();
   }
 
-	/**
-	 * Marks all controls in a form group as touched
-	 * @param formGroup - The group to caress
-	*/
+  /**
+   * Marks all controls in a form group as touched
+   * @param formGroup - The group to caress
+  */
   markFormGroupTouched(formGroup: FormGroup) {
     if (Reflect.getOwnPropertyDescriptor(formGroup, 'controls')) {
       (<any>Object).values(formGroup.controls).forEach(control => {
@@ -578,26 +628,26 @@ export class NewRegistrationComponent implements OnInit {
     },
     "engineNo": new Date().getTime(),
     "chasisNo": new Date().getTime(),
-    "registrationNo": "GJ-01-1234",
+    "registrationNo": "GJ-06-1234",
     "vehicleBasicValue": "423543",
     "makeModel": "sdfsdf",
     "dealerName": "sdfsdfsdf",
-    "purchaseDate": "2019-12-01",
+    "purchaseDate": "2021-06-01",
     "purchasingType": "NEW_RATE",
     "tokenNo": null,
-    "firstName": "sdfsdfsdf",
+    "firstName": "Ram Bhai",
     "middleName": null,
-    "lastName": "sdfsdfsdf",
+    "lastName": "Patel",
     "applicantAadhaarNo": null,
-    "mobileNo": "2342342342",
+    "mobileNo": "8962749074",
     "aadhaarNo": "111111111111",
-    "email": "a@a.com",
+    "email": "chetan.porwal@nascentinfo.com",
     "address": {
       "addressType": "VEHICLE_ADDRESS",
-      "buildingName": "sdfsdf",
-      "streetName": "dsfsdfsdf",
-      "landmark": "sdfsdf",
-      "area": "sdfsdf",
+      "buildingName": "44",
+      "streetName": "",
+      "landmark": "",
+      "area": "Akota",
       "state": "GUJARAT",
       "district": null,
       "city": "Vadodara",
@@ -613,7 +663,7 @@ export class NewRegistrationComponent implements OnInit {
       "countryGuj": "ભારત"
     },
     "billingPeriod": {
-      "code": "2018_19",
+      "code": "2021_22",
       "name": null
     },
     "ward": {

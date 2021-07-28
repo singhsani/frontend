@@ -1,0 +1,13 @@
+<div [formGroup]="formGroup">
+    <mat-form-field>
+        <input matInput  autocomplete="off" appDate [matDatepicker]="datepicker1"
+            formControlName="dateControl"
+            placeholder="Swimming Pool Joining Month"
+            disabled [min]="min" [max]="max"
+            >
+        <mat-datepicker-toggle matSuffix [for]="datepicker1"></mat-datepicker-toggle>
+        <mat-datepicker #datepicker1 startView="year" touchUi="true"
+        (monthSelected)="chosenMonthHandler($event, datepicker1)" [disabled]="disabled"
+        ></mat-datepicker>
+        </mat-form-field>
+</div>

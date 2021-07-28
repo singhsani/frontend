@@ -102,6 +102,7 @@ export class PropertyInfoComponent implements OnInit {
         if (data.status === 200) {
           this.applicationModel = data.body;
           this.applicationModel.carpetArea = this.carpetArea;
+          this.transferPropertyDataSharingService.applicationNo = this.applicationModel.applicationNo;
         }
       },
       (error) => {

@@ -1,5 +1,5 @@
 import { FireFacilityConfig } from './../config/FireFacilityConfig';
-import { Component, OnInit , ChangeDetectorRef} from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ManageRoutes } from '../../../../config/routes-conf';
@@ -76,7 +76,8 @@ export class GasConnectionNocComponent implements OnInit {
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
 				(<FormArray>this.gasConnectionForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
 			});
-			this.requiredDocumentList();
+
+			this.documentManage();
 		});
 	}
 
@@ -105,7 +106,7 @@ export class GasConnectionNocComponent implements OnInit {
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			applicationDate: [null, Validators.required],
-			contactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
+			contactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), , Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			mobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			email: [null, [Validators.required, Validators.maxLength(50)]],
 
@@ -117,7 +118,7 @@ export class GasConnectionNocComponent implements OnInit {
 			connectionPurpose: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			shopNo: [null,  Validators.maxLength(12)],
+			shopNo: [null, Validators.maxLength(12)],
 			propertyNo: [null, [Validators.required, Validators.maxLength(15)]],
 
 			firePlaceType: this.fb.group({
@@ -131,7 +132,7 @@ export class GasConnectionNocComponent implements OnInit {
 			}),
 			firePlaceAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			firePlaceAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
-			fireLossAmount: [null, [Validators.required, Validators.maxLength(10)]],
+			fireLossAmount: [null, [Validators.maxLength(10)]],
 			highRiseFireNOCTaken: [null],
 
 			/* Step 3 controls start */
@@ -190,9 +191,32 @@ export class GasConnectionNocComponent implements OnInit {
 		})
 	}
 
+
+	documentManage() {
+		const subject = this.gasConnectionForm.get('subject').value;
+		const highRiseFireNOCTaken = this.gasConnectionForm.get('highRiseFireNOCTaken').value;
+		let buildingCollapseMandatory = false;
+		let highriseFireNocwMandatory = highRiseFireNOCTaken;
+		if (subject && subject.code && subject.code == 'BUILDING_COLLAPSE') {
+			buildingCollapseMandatory = true;
+		}
+
+		const documents = this.gasConnectionForm.get('serviceDetail').get('serviceUploadDocuments').value;
+
+		for (const document of documents) {
+			if (document.documentIdentifier == 'BUILDING_NIRBHAYATA_CERTIFICATE')
+				document.mandatory = buildingCollapseMandatory;
+			else if (document.documentIdentifier == 'FIRE_NOC_XEROX_COPY')
+				document.mandatory = highriseFireNocwMandatory;
+		}
+		this.gasConnectionForm.get('serviceDetail').patchValue({ 'serviceUploadDocuments': documents });
+		this.requiredDocumentList();
+	}
+
+
 	onChangeConnectionPurpose(event) {
-		
-		if ( event == "COMMERCIAL") {
+
+		if (event == "COMMERCIAL") {
 			this.gasConnectionForm.get('shopNo').reset();
 			this.gasConnectionForm.get('shopNo').setValidators([Validators.required, Validators.maxLength(12)]);
 		} else {
@@ -205,9 +229,9 @@ export class GasConnectionNocComponent implements OnInit {
 
 
 	/**
-     * This method required for final form submition.
-     * @param flag - flag of invalid control.
-     */
+	 * This method required for final form submition.
+	 * @param flag - flag of invalid control.
+	 */
 	handleErrorsOnSubmit(flag) {
 
 		let step0 = 9;
@@ -239,7 +263,7 @@ export class GasConnectionNocComponent implements OnInit {
 	}
 
 	dummyJSON: any = {
-	
+
 		"gasConnectionNo": "sdfdfsdfsdf",
 		"connectionHolderName": "sdfsdfsdf",
 		"connectionHolderNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
@@ -255,7 +279,6 @@ export class GasConnectionNocComponent implements OnInit {
 		"subject": "dfsd",
 		"firePlaceAddress": "fsdgdfgdfgdfgfdg",
 		"firePlaceAddressGuj": "ફ્સ્દ્ગ્દ્ફ્ગ્દ્ફ્ગ્દ્ફ્ગ્ફ્દ્ગ",
-		"fireLossAmount": 24343434,
 		"highRiseFireNOCTaken": true,
 		"fileStatus": "DRAFT",
 		"serviceName": null,

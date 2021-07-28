@@ -18,6 +18,7 @@ import * as moment from 'moment';
 
 export class UnitDetailComponent implements OnInit {
 
+  translateKey: string = 'newPropertyTaxScreen';
   subscription: Subscription;
   modelOccupier: any = {};
   selectedRowIndex: number = -1;
@@ -500,7 +501,7 @@ export class UnitDetailComponent implements OnInit {
           this.measurementModel.propertyMeasurementId = data.body.data;
           this.getUnitListByOccupierId();
           this.viewMeasurement();
-        }
+          }
       },
       (error) => {
         this.commonService.callErrorResponse(error);

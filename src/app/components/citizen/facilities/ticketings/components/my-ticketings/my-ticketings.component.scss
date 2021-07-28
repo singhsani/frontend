@@ -83,6 +83,10 @@ table { width: 100%; }
 
    .mat-footer-row::after, .mat-header-row::after, .mat-row::after {min-height: initial !important;}
 
+
+.paddLeftRight5 .mat-table .mat-cell, 
+.paddLeftRight5 td.mat-cell, td.mat-footer-cell, .paddLeftRight5 th.mat-header-cell {padding: 0 6px;}
+
 }
 
 

@@ -1,0 +1,1276 @@
+<div class="pb-3">
+  <app-title-bar [title]="'Vendor Registration'">
+    <!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
+      Patch Value
+    </button> -->
+  </app-title-bar>
+
+
+  <mat-card class="formClass cardBorder">
+
+    <form [formGroup]="vendorRegistrationForm">
+      <mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+
+        <!-- Tab 1 Starts -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div>{{'Firm Detail'}}</div>
+          </ng-template>
+
+          <div class="row">
+            <div class="col-md-12">
+              <h2 style="margin-left: -16px;"><b>{{'Details of Firm'}}</b></h2>
+            </div>
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required
+                maxlength="100" placeholder="{{'Name of the Firm'}}" formControlName="nameOfTheFirm"
+                class="capitalCase">
+              <control-messages [control]="vendorRegistrationForm.get('nameOfTheFirm')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" onlyNumber maxlength="4" placeholder="{{'Year of Establishment'}}"
+                formControlName="yearOfEstablishment">
+              <control-messages [control]="vendorRegistrationForm.get('yearOfEstablishment')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput autocomplete="off" appDate formControlName="commencementDate" [max]="maxDate"
+                [matDatepicker]="docpicker" (dateChange)="onDateChange('commencementDate', $event.value)"
+                placeholder="{{'The date of Commencement of commercial production'}}" required>
+              <mat-datepicker-toggle matSuffix [for]="docpicker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #docpicker></mat-datepicker>
+              <div align="end" class="default-show-hint mat-hint mat-right"></div>
+              <control-messages [control]="vendorRegistrationForm.get('commencementDate')"></control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" appValidationFields validationFieldsType='appAlphanumericNumber' required
+                maxlength="10" placeholder="{{'PAN No. (Attach certified copy)'}}" formControlName="panNo"
+                class="capitalCase">
+              <control-messages [control]="vendorRegistrationForm.get('panNo')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" appValidationFields validationFieldsType='appAlphanumericNumber' required
+                maxlength="10" placeholder="{{'TAN No. (Attach certified copy)'}}" formControlName="tanNo"
+                class="capitalCase">
+              <control-messages [control]="vendorRegistrationForm.get('tanNo')">
+              </control-messages>
+            </mat-form-field>
+
+          </div>
+
+          <div class="row">
+            <h2><b>{{'Address of the factory/works from where material will be supplied'}}</b></h2>
+
+            <div class="col-md-4 ngSelect" formGroupName="locationOfFactoryWorks">
+              <ng-select placeholder="{{'Locations *'}}" formControlName="code" (change)="locationChange($event)">
+                <ng-option *ngFor="let impl of locations" [value]="impl.code">{{ impl.name
+                  }}
+                </ng-option>
+                <control-messages [control]="vendorRegistrationForm.get('locationOfFactoryWorks').get('code')">
+                </control-messages>
+              </ng-select>
+            </div>
+
+            <app-address #officeAddr [requiredFeilds]="true"
+              [addressFormGroup]="vendorRegistrationForm.get('factoryAddress')">
+            </app-address>
+          </div>
+
+          <mat-form-field class="col-md-4">
+            <input matInput type="text" onlyNumber required maxlength="10" placeholder="{{'Telephone Number'}}"
+              formControlName="officeContactNumber">
+            <control-messages [control]="vendorRegistrationForm.get('officeContactNumber')">
+            </control-messages>
+          </mat-form-field>
+
+          <mat-form-field class="col-md-4">
+            <input matInput type="text" required placeholder="{{'Fax Number'}}" maxlength="15"
+              formControlName="officeFaxNumber">
+            <control-messages [control]="vendorRegistrationForm.get('officeFaxNumber')">
+            </control-messages>
+          </mat-form-field>
+
+          <mat-form-field class="col-md-4">
+            <input matInput type="text" required placeholder="{{'Email Id'}}" maxlength="50"
+              formControlName="officeEmailId">
+            <control-messages [control]="vendorRegistrationForm.get('officeEmailId')">
+            </control-messages>
+          </mat-form-field>
+
+          <div class="row">
+            <h2><b>{{'Address of the Registered Office'}}</b></h2>
+            <app-address #resAddr [requiredFeilds]="true"
+              [addressFormGroup]="vendorRegistrationForm.get('registeredAddress')">
+            </app-address>
+          </div>
+
+          <mat-form-field class="col-md-4">
+            <input matInput type="text" onlyNumber required maxlength="10" placeholder="{{'Telephone Number'}}"
+              formControlName="resContactNumber">
+            <control-messages [control]="vendorRegistrationForm.get('resContactNumber')">
+            </control-messages>
+          </mat-form-field>
+
+          <mat-form-field class="col-md-4">
+            <input matInput type="text" required placeholder="{{'Fax Number'}}" maxlength="15"
+              formControlName="resFaxNumber">
+            <control-messages [control]="vendorRegistrationForm.get('resFaxNumber')">
+            </control-messages>
+          </mat-form-field>
+
+          <mat-form-field class="col-md-4">
+            <input matInput type="text" required placeholder="{{'Email Id'}}" maxlength="50"
+              formControlName="resEmailId">
+            <control-messages [control]="vendorRegistrationForm.get('resEmailId')">
+            </control-messages>
+          </mat-form-field>
+
+
+          <div class="fotButtonBar clearfix">
+            <div class="col-sm-12 col-md-12">
+              <button class="pull-right" mat-raised-button color="primary" (click)="tabIndex = 1">{{'Next'}}</button>
+            </div>
+          </div>
+        </mat-tab>
+        <!-- Tab 1 Finish -->
+
+        <!-- Tab 2 start -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div>{{'Registration Detail'}}</div>
+          </ng-template>
+
+          <div class="row">
+
+            <h2>{{'Whether Proprietary or Partnership or Pvt. Ltd., or public Ltd.
+              (Copy of Income Tax Returns for 3 years in case of Proprietary Firm,
+              Partnership Deed in case of Partnership Firm and Memorandum and article of Association in case of
+              Company)'}}</h2>
+
+            <div class="col-md-12 ngSelect">
+              <ng-select formControlName="isIncomeTaxDetails">
+                <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
+                </ng-option>
+              </ng-select>
+              <control-messages [control]="vendorRegistrationForm.get('isIncomeTaxDetails')">
+              </control-messages>
+            </div>
+          </div>
+          <div class="row">
+            <h2>{{'Name of the Propreitor / Partners / Directors'}}</h2>
+            <div class="col-sm-12 col-md-12 text-left">
+              <button mat-raised-button color="primary" (click)="addRowVendorName()">{{'Add New'}}</button>
+            </div>
+          </div>
+
+          <div class=" pl-1 pr-1 mt-12 w100p" style="overflow-x:scroll;">
+            <div class="example-container mat-elevation-z8">
+              <div class="">
+                <table class="table table-bordered table-responsive-md table-striped text-center">
+                  <tbody>
+                    <tr>
+                      <th class="text-center">S.no.</th>
+                      <th class="text-center">Owner Type</th>
+                      <th class="text-center">Owner Name</th>
+                      <th class="text-center">Action</th>
+                    </tr>
+                    <tr *ngFor="let row of vendorRegistrationForm.get('vendorNameArray')?.controls;let index = index;">
+
+                      <td>
+                        {{index+1}}
+                      </td>
+
+                      <td>
+                        <mat-form-field>
+                          <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+                            maxlength="100" [formControl]="row.get('ownerType')">
+                          <control-messages [control]="row.get('ownerType')">
+                          </control-messages>
+                        </mat-form-field>
+                      </td>
+
+                      <td>
+                        <mat-form-field>
+                          <input matInput type="text" appValidationFields maxlength="100"
+                            [formControl]="row.get('ownerName')">
+                          <control-messages [control]="row.get('ownerName')">
+                          </control-messages>
+                        </mat-form-field>
+                      </td>
+
+                      <td>
+                        <!-- <div class="col-sm-12 col-md-12 text-right"> -->
+                        <button mat-raised-button color="warn" style="margin-top: 22px;"
+                          (click)="onRemoveRowVendorType(index)">
+                          <mat-icon title="Cancel">cancel</mat-icon>
+                        </button>
+                        <!-- </div> -->
+                        <!-- <button class="close" aria-label="Close"
+                              (click)="onRemoveRow(index)">Remove</button> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <h2>{{'List of Items/Materials to be registered for supply with rating/description. The relevant IS number
+              shall be Mentioned.'}}</h2>
+            <div class="col-sm-12 col-md-12 text-left">
+              <button mat-raised-button color="primary" (click)="addRow()">{{'Add New Item/Material'}}</button>
+            </div>
+          </div>
+
+          <div class=" pl-1 pr-1 mt-12 w100p" style="overflow-x:scroll;">
+            <div class="example-container mat-elevation-z8">
+              <div class="">
+                <table class="table table-bordered table-responsive-md table-striped text-center">
+                  <tbody>
+                    <tr>
+                      <th class="text-center">Items / Materials</th>
+                      <th class="text-center">Rating</th>
+                      <th class="text-center">Description</th>
+                      <th class="text-center">IS Number</th>
+                      <th class="text-center">Action</th>
+                    </tr>
+                    <tr
+                      *ngFor="let row of vendorRegistrationForm.get('listOfItemMaterialSupplier')?.controls;let index = index;">
+
+                      <td>
+                        <mat-form-field>
+                          <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+                            maxlength="100" [formControl]="row.get('itemsMaterial')">
+                          <control-messages [control]="row.get('itemsMaterial')">
+                          </control-messages>
+                        </mat-form-field>
+                      </td>
+
+                      <td>
+                        <mat-form-field>
+                          <input matInput type="text" appValidationFields OnlyNumber maxlength="10"
+                            [formControl]="row.get('rating')">
+                          <control-messages [control]="row.get('rating')">
+                          </control-messages>
+                        </mat-form-field>
+                      </td>
+
+                      <td>
+                        <mat-form-field>
+                          <input matInput type="text" appValidationFields maxlength="100"
+                            [formControl]="row.get('description')">
+                          <control-messages [control]="row.get('description')">
+                          </control-messages>
+                        </mat-form-field>
+                      </td>
+
+                      <td>
+                        <mat-form-field>
+                          <input matInput type="text" appValidationFields OnlyNumber maxlength="100"
+                            [formControl]="row.get('isNumber')">
+                          <control-messages [control]="row.get('isNumber')">
+                          </control-messages>
+                        </mat-form-field>
+                      </td>
+
+                      <td>
+                        <!-- <div class="col-sm-12 col-md-12 text-right"> -->
+                        <button mat-raised-button color="warn" style="margin-top: 22px;"
+                          (click)="onRemoveRowItemMaterial(index)">
+                          <mat-icon title="Cancel">cancel</mat-icon>
+                        </button>
+                        <!-- </div> -->
+                        <!-- <button class="close" aria-label="Close"
+                            (click)="onRemoveRow(index)">Remove</button> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+
+            <h2><b>{{'Details of Registration Non-Refundable Fees'}}</b></h2>
+
+            <div class="col-md-4 ngSelect" formGroupName="registrationBank">
+              <ng-select placeholder="{{'Bank Name *'}}" formControlName="code">
+                <ng-option *ngFor="let bank of bankNameArray" [value]="bank.code">{{ bank.name
+                  }}
+                </ng-option>
+                <control-messages [control]="vendorRegistrationForm.get('registrationBank').get('code')">
+                </control-messages>
+              </ng-select>
+            </div>
+
+            <mat-form-field class="col-md-4">
+              <input matInput OnlyNumber maxlength="6" formControlName="registrationAmount" readonly
+                placeholder="{{'DD Amount'}}">
+              <control-messages [control]="vendorRegistrationForm.get('registrationAmount')"></control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput OnlyNumber maxlength="6" formControlName="registrationDDNumber"
+                placeholder="{{'DD Number'}}">
+              <control-messages [control]="vendorRegistrationForm.get('registrationDDNumber')"></control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <mat-label>{{'DD Issuing date *'}}</mat-label>
+              <input appDate matInput [min]="minDate" [max]="maxDate" [matDatepicker]="chequeDate"
+                formControlName="registrationDDIssuingDate">
+              <mat-datepicker-toggle matSuffix [for]="chequeDate"></mat-datepicker-toggle>
+              <mat-datepicker #chequeDate touchUi="true"></mat-datepicker>
+              <control-messages [control]="vendorRegistrationForm.get('registrationDDIssuingDate')">
+              </control-messages>
+              <div align="end" class="default-show-hint mat-hint mat-right">
+                Hint: DD/MM/YYYY
+              </div>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+
+            <h2>{{'Whether the factory is owned by the firm (docuemntory evidence of Ownership must be produced). In
+              case firm does not own factory but utilize the facility for manufacturing / fabrication of
+              equipments/stores for which firm has applied on live & licence or other basis, the Firm should furnish
+              valid legal agreement that factory of(here indicate the name of the firm whose factory is being
+              utilized)
+              has been put at the firms disposal for the equipments / stores for which the firms disposal for the
+              equipments/stores for whcih the firms have applied.'}}</h2>
+
+            <div class="col-md-12 ngSelect">
+              <ng-select formControlName="isManufacturingOwnedDetails">
+                <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
+                </ng-option>
+              </ng-select>
+              <control-messages [control]="vendorRegistrationForm.get('isManufacturingOwnedDetails')">
+              </control-messages>
+            </div>
+          </div>
+
+          <div class="row">
+
+            <h2><b>{{'Name and Full Address of the bankers and account number along with details of credit facilities
+                sanctioned.'}}</b></h2>
+
+            <div class="col-md-12 ngSelect">
+              <ng-select
+                placeholder="{{'Total investment excluding Loan Capital (PI attach certified true copy of the last 3 year balance sheets'}}"
+                formControlName="isTotalInvestmentDetail">
+                <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
+                </ng-option>
+              </ng-select>
+              <control-messages [control]="vendorRegistrationForm.get('isTotalInvestmentDetail')">
+              </control-messages>
+            </div>
+
+            <mat-form-field class="col-md-12">
+              <input matInput type="text" maxlength="100" validationFieldsType='onlyNameWithSpace'
+                placeholder="{{'Total turnover for the last three years of regd. charted accountant'}}"
+                formControlName="totalTurnoverLastThreeYears">
+              <control-messages [control]="vendorRegistrationForm.get('totalTurnoverLastThreeYears')">
+              </control-messages>
+            </mat-form-field>
+
+            <div class="col-md-12 ngSelect">
+              <ng-select placeholder="{{'Copies of Income Tax Return for last 3 years.'}}"
+                formControlName="isLastThreeYearsCopies">
+                <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
+                </ng-option>
+              </ng-select>
+              <control-messages [control]="vendorRegistrationForm.get('isLastThreeYearsCopies')">
+              </control-messages>
+            </div>
+          </div>
+
+          <div class="fotButtonBar clearfix">
+            <div class="col-sm-12 col-md-12">
+              <span class="pull-left">
+                <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 0">{{'Back'}}</button>
+
+              </span>
+              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 2">{{'Next'
+                }}</button>
+            </div>
+          </div>
+
+        </mat-tab>
+        <!--Tab 2 end-->
+
+        <!--Tab 3 Start-->
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div>{{'Factory & Employee Detail'}}</div>
+          </ng-template>
+
+          <div class="row">
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" maxlength="7" required onlyNumber
+                placeholder="{{'Loan Capital with Bank Limit.'}}" formControlName="loanCapitalWithBankLimit">
+              <control-messages [control]="vendorRegistrationForm.get('loanCapitalWithBankLimit')">
+              </control-messages>
+            </mat-form-field>
+
+            <div class="col-md-6 ngSelect">
+              <ng-select placeholder="{{'Copy of Latest Income Tax Clearance certifcate.'}}"
+                formControlName="isCopyOfITCClearanceCertificate">
+                <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
+                </ng-option>
+              </ng-select>
+              <control-messages [control]="vendorRegistrationForm.get('isCopyOfITCClearanceCertificate')">
+              </control-messages>
+            </div>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" maxlength="100" required validationFieldsType='onlyNameWithSpace'
+                placeholder="{{'Product Manufactured with complete description'}}"
+                formControlName="productManufacturedDescription">
+              <control-messages [control]="vendorRegistrationForm.get('productManufacturedDescription')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" maxlength="100" OnlyNumber
+                placeholder="{{'Area of land occupied by the factory'}}" formControlName="areaOfLandFactory">
+              <control-messages [control]="vendorRegistrationForm.get('areaOfLandFactory')">
+              </control-messages>
+            </mat-form-field>
+
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" maxlength="100" placeholder="{{'Built up area of the factory.'}}"
+                formControlName="builtAreaFactory">
+              <control-messages [control]="vendorRegistrationForm.get('builtAreaFactory')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" maxlength="2" onlyNumber
+                placeholder="{{'No. of working shifts in the factory.'}}" formControlName="noOfWorkingShifts">
+              <control-messages [control]="vendorRegistrationForm.get('noOfWorkingShifts')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" maxlength="10" onlyNumber placeholder="{{'Factory licence No.'}}"
+                formControlName="factoryLicenceNumber">
+              <control-messages [control]="vendorRegistrationForm.get('factoryLicenceNumber')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" maxlength="10" onlyNumber
+                placeholder="{{'Small Scale Industries / NSIC Certificate No.'}}"
+                formControlName="sscNSICCertificateNumber">
+              <control-messages [control]="vendorRegistrationForm.get('sscNSICCertificateNumber')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-12">
+              <input matInput type="text" maxlength="100" validationFieldsType='onlyNameWithSpace'
+                placeholder="{{'Value of plant and Machinery certified by SSI in case of SSI units, alongwith the date of assessment of said value.'}}"
+                formControlName="valueOfPlantAndMachinery">
+              <control-messages [control]="vendorRegistrationForm.get('valueOfPlantAndMachinery')">
+              </control-messages>
+            </mat-form-field>
+
+            <div class="col-md-12 ngSelect">
+              <ng-select
+                placeholder="{{'If registered under the companies ACT or any other ACT, give registration no. and date of registration etc. along with copy of regsitration office.'}}"
+                formControlName="isRegistrationOfficeACT">
+                <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
+                </ng-option>
+              </ng-select>
+              <control-messages [control]="vendorRegistrationForm.get('isRegistrationOfficeACT')">
+              </control-messages>
+            </div>
+
+            <div class="col-md-12 ngSelect">
+              <ng-select placeholder="{{'Whether the product manufactured carry ISI mark (PI Specify).'}}"
+                formControlName="isISIProductManufactured">
+                <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
+                </ng-option>
+              </ng-select>
+              <control-messages [control]="vendorRegistrationForm.get('isISIProductManufactured')">
+              </control-messages>
+            </div>
+
+            <div class="col-md-12 ngSelect">
+              <ng-select
+                placeholder="{{'Whether registeres with other central Govt/State Govt./Govt. Undertaking Department and validity thereof. (attach a copy of such registration certificate).'}}"
+                formControlName="isRegisteredByGovt">
+                <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
+                </ng-option>
+              </ng-select>
+              <control-messages [control]="vendorRegistrationForm.get('isRegisteredByGovt')">
+              </control-messages>
+            </div>
+
+            <mat-form-field class="col-md-12">
+              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+                placeholder="{{'Deatils of Machinery installed with their capacities.'}}"
+                formControlName="detailsMachineryCapacity">
+              <control-messages [control]="vendorRegistrationForm.get('detailsMachineryCapacity')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-12">
+              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+                placeholder="{{'Deatils of testing equipment with their capacities and details of calibration.'}}"
+                formControlName="detailsEquipmentCapacity">
+              <control-messages [control]="vendorRegistrationForm.get('detailsEquipmentCapacity')">
+              </control-messages>
+            </mat-form-field>
+
+          </div>
+          <div class="row">
+
+            <h2><b>{{'A. Qualified personnel working in the factory/office, their academic qualification and
+                Experience.'}}</b></h2>
+
+            <div class="col-sm-12 col-md-12">
+              <div class="example-container mat-elevation-z8">
+                <div class=" ">
+                  <table class="table table-bordered table-responsive-md table-striped text-center">
+                    <tbody>
+                      <tr>
+                        <th class="text-center">S.No.</th>
+                        <th class="text-center">Designation</th>
+                        <th class="text-center">Full Name</th>
+                        <th class="text-center">Qualification</th>
+                        <th class="text-center">Experience (In Years)</th>
+                      </tr>
+                      <tr>
+                        <td class="text-center">
+                          {{1}}
+                        </td>
+                        <td class="text-center">
+                          {{'Managerial'}}
+                        </td>
+                        <td class="text-center">
+                          <mat-form-field>
+                            <input matInput type="text" appValidationFields maxlength="100"
+                              formControlName="managerialFullName">
+                            <control-messages [control]="vendorRegistrationForm.get('managerialFullName')">
+                            </control-messages>
+                          </mat-form-field>
+                        </td>
+
+                        <td class="text-center">
+                          <mat-form-field>
+                            <input matInput type="text" appValidationFields maxlength="100"
+                              formControlName="managerialQualification">
+                            <control-messages [control]="vendorRegistrationForm.get('managerialQualification')">
+                            </control-messages>
+                          </mat-form-field>
+                        </td>
+
+                        <td class="text-center">
+                          <mat-form-field>
+                            <input matInput type="text" appValidationFields maxlength="100"
+                              formControlName="managerialExperienceInYears">
+                            <control-messages [control]="vendorRegistrationForm.get('managerialExperienceInYears')">
+                            </control-messages>
+                          </mat-form-field>
+                        </td>
+                      </tr>
+
+                      <tr>
+
+                        <td class="text-center">
+                          {{2}}
+                        </td>
+                        <td class="text-center">
+                          {{'Production/Work Staff'}}
+                        </td>
+                        <td class="text-center">
+                          <mat-form-field>
+                            <input matInput type="text" appValidationFields maxlength="100"
+                              formControlName="productionStaffFullName">
+                            <control-messages [control]="vendorRegistrationForm.get('productionStaffFullName')">
+                            </control-messages>
+                          </mat-form-field>
+                        </td>
+
+                        <td class="text-center">
+                          <mat-form-field>
+                            <input matInput type="text" appValidationFields maxlength="100"
+                              formControlName="productionStaffQualification">
+                            <control-messages [control]="vendorRegistrationForm.get('productionStaffQualification')">
+                            </control-messages>
+                          </mat-form-field>
+                        </td>
+
+                        <td class="text-center">
+                          <mat-form-field>
+                            <input matInput type="text" appValidationFields maxlength="100"
+                              formControlName="productionStaffExperienceInYears">
+                            <control-messages
+                              [control]="vendorRegistrationForm.get('productionStaffExperienceInYears')">
+                            </control-messages>
+                          </mat-form-field>
+                        </td>
+                      </tr>
+
+                      <tr>
+
+                        <td class="text-center">
+                          {{3}}
+                        </td>
+                        <td class="text-center">
+                          {{'Quality Control Staff'}}
+                        </td>
+                        <td class="text-center">
+                          <mat-form-field>
+                            <input matInput type="text" appValidationFields maxlength="100"
+                              formControlName="qualityControlStaffFullName">
+                            <control-messages [control]="vendorRegistrationForm.get('qualityControlStaffFullName')">
+                            </control-messages>
+                          </mat-form-field>
+                        </td>
+
+                        <td class="text-center">
+                          <mat-form-field>
+                            <input matInput type="text" appValidationFields maxlength="100"
+                              formControlName="qualityControlStaffQualification">
+                            <control-messages
+                              [control]="vendorRegistrationForm.get('qualityControlStaffQualification')">
+                            </control-messages>
+                          </mat-form-field>
+                        </td>
+
+                        <td class="text-center">
+                          <mat-form-field>
+                            <input matInput type="text" appValidationFields maxlength="100"
+                              formControlName="qualityControlStaffExperienceInYears">
+                            <control-messages
+                              [control]="vendorRegistrationForm.get('qualityControlStaffExperienceInYears')">
+                            </control-messages>
+                          </mat-form-field>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+            <h2><b>{{'B. Other Personnel working in the factory and their Experience.'}}</b></h2>
+
+            <mat-form-field class="col-md-12">
+              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+                placeholder="{{'Skilled'}}" formControlName="personnelDetailSkilled">
+              <control-messages [control]="vendorRegistrationForm.get('personnelDetailSkilled')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-12">
+              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+                placeholder="{{'Unskilled'}}" formControlName="personnelDetailUnSkilled">
+              <control-messages [control]="vendorRegistrationForm.get('personnelDetailUnSkilled')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-12">
+              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+                placeholder="{{'Other'}}" formControlName="personnelDetailOther">
+              <control-messages [control]="vendorRegistrationForm.get('personnelDetailOther')">
+              </control-messages>
+            </mat-form-field>
+
+          </div>
+
+          <div class="fotButtonBar clearfix">
+            <div class="col-sm-12 col-md-12">
+              <span class="pull-left">
+                <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 1">{{'Back'}}</button>
+
+              </span>
+              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 3">{{'Next'
+                }}</button>
+            </div>
+          </div>
+        </mat-tab>
+
+        <!--Tab 3 end-->
+
+        <!--Tab 4 Start-->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div>{{'Product & Supplier Detail'}}</div>
+          </ng-template>
+
+          <div class="row">
+
+            <mat-form-field class="col-md-12">
+              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+                placeholder="{{'Is testing record maintained and if so, since when'}}"
+                formControlName="isTestingRecordMaintanedDetail">
+              <control-messages [control]="vendorRegistrationForm.get('isTestingRecordMaintanedDetail')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-12">
+              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+                placeholder="{{'Type of tests as per Standards (This is must for registration) MTC as well as govt. Lab or Approved govt.Lab.'}}"
+                formControlName="testStandardGovtLabApproved">
+              <control-messages [control]="vendorRegistrationForm.get('testStandardGovtLabApproved')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-12">
+              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+                placeholder="{{'Method adopted for Quality Control'}}" formControlName="adoptedForQualityControl">
+              <control-messages [control]="vendorRegistrationForm.get('adoptedForQualityControl')">
+              </control-messages>
+            </mat-form-field>
+
+
+            <div class="col-md-12 ngSelect">
+              <ng-select
+                placeholder="{{'Is the person in charge for Quality control independent of production control.'}}"
+                formControlName="isPersonInChargeProductionControl">
+                <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
+                </ng-option>
+              </ng-select>
+              <control-messages [control]="vendorRegistrationForm.get('isPersonInChargeProductionControl')">
+              </control-messages>
+            </div>
+
+            <mat-form-field class="col-md-12">
+              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+                placeholder="{{'Distinguised marks or method employed to identify, materials, if any.'}}"
+                formControlName="methodEmployeeIdentify">
+              <control-messages [control]="vendorRegistrationForm.get('methodEmployeeIdentify')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-12">
+              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+                placeholder="{{'Source of supply of Raw materials (with address).'}}"
+                formControlName="sourceOfRawMaterialAddress">
+              <control-messages [control]="vendorRegistrationForm.get('sourceOfRawMaterialAddress')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-12">
+              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+                placeholder="{{'Production capacity per annum (quantity).'}}"
+                formControlName="productionCapacityPerAnnum">
+              <control-messages [control]="vendorRegistrationForm.get('productionCapacityPerAnnum')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-12">
+              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+                placeholder="{{'Maximum production per annum (in city. as well as value) acheived so far.'}}"
+                formControlName="maximumProductionPerAnnum">
+              <control-messages [control]="vendorRegistrationForm.get('maximumProductionPerAnnum')">
+              </control-messages>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+
+            <h2><b>{{'A. Deatils of order executed indication quantity, value for each item/materials to be registered
+                for supply, self certified statement to be attached.'}}</b></h2>
+
+            <div class="col-sm-12 col-md-12">
+              <div class="example-container mat-elevation-z8">
+                <div class=" ">
+                  <table class="table table-bordered table-responsive-md table-striped text-center">
+                    <tbody>
+                      <tr>
+                        <td class="text-center">
+                          {{1}}
+                        </td>
+                        <td class="text-center">
+                          {{'Purchasers Name'}}
+                        </td>
+                        <td class="text-center">
+                          <mat-form-field>
+                            <input matInput type="text" appValidationFields maxlength="100"
+                              formControlName="purchaserName">
+                            <control-messages [control]="vendorRegistrationForm.get('purchaserName')">
+                            </control-messages>
+                          </mat-form-field>
+                        </td>
+                      </tr>
+
+                      <tr>
+
+                        <td class="text-center">
+                          {{2}}
+                        </td>
+                        <td class="text-center">
+                          {{'Order no.'}}
+                        </td>
+                        <td class="text-center">
+                          <mat-form-field>
+                            <input matInput type="text" appValidationFields maxlength="100"
+                              formControlName="orderNumber">
+                            <control-messages [control]="vendorRegistrationForm.get('orderNumber')">
+                            </control-messages>
+                          </mat-form-field>
+                        </td>
+                      </tr>
+
+                      <tr>
+
+                        <td class="text-center">
+                          {{3}}
+                        </td>
+                        <td class="text-center">
+                          {{'Order Date'}}
+                        </td>
+                        <td class="text-center">
+                          <mat-form-field>
+                            <input matInput type="text" appValidationFields maxlength="100" formControlName="orderDate">
+                            <control-messages [control]="vendorRegistrationForm.get('orderDate')">
+                            </control-messages>
+                          </mat-form-field>
+                        </td>
+                      </tr>
+
+
+                      <tr>
+
+                        <td class="text-center">
+                          {{4}}
+                        </td>
+                        <td class="text-center">
+                          {{'Quantity supplied till actual completion Date'}}
+                        </td>
+                        <td class="text-center">
+                          <mat-form-field>
+                            <input matInput type="text" appValidationFields maxlength="100"
+                              formControlName="quantitySuppliedCompletionDate">
+                            <control-messages [control]="vendorRegistrationForm.get('quantitySuppliedCompletionDate')">
+                            </control-messages>
+                          </mat-form-field>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+
+            <h2>{{'B. Please confirm whether your firm is under stop deal/blcklisted by any Central Govt/State Govt.
+              or any Govt. undertaking department. Submit details this is must (Affidavit by director required). False
+              information may lead legal action and direct ban on product registered in VMC.'}}</h2>
+
+            <div class="col-md-12 ngSelect">
+              <ng-select formControlName="isFirmUnderDealBlacklisted">
+                <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
+                </ng-option>
+              </ng-select>
+              <control-messages [control]="vendorRegistrationForm.get('isFirmUnderDealBlacklisted')">
+              </control-messages>
+            </div>
+
+            <mat-form-field class="col-md-12">
+              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+                placeholder="{{'Estimation of Stocks of raw material held and the estimated production on single shift basis from the stock so available.'}}"
+                formControlName="estimationOfStocks">
+              <control-messages [control]="vendorRegistrationForm.get('estimationOfStocks')">
+              </control-messages>
+            </mat-form-field>
+
+            <div class="col-md-12 ngSelect">
+              <ng-select formControlName="isResultSampleTesting" placeholder="{{'Results of Sample Testing'}}">
+                <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
+                </ng-option>
+              </ng-select>
+              <control-messages [control]="vendorRegistrationForm.get('isResultSampleTesting')">
+              </control-messages>
+            </div>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" maxlength="250" onlyNumber
+                placeholder="{{'List of Items holding ISO 9001 Certificate.'}}"
+                formControlName="numberOfItemsHoldingISOCertificate">
+              <control-messages [control]="vendorRegistrationForm.get('numberOfItemsHoldingISOCertificate')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-8">
+              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+                placeholder="{{'Remarks'}}" formControlName="remarks">
+              <control-messages [control]="vendorRegistrationForm.get('remarks')">
+              </control-messages>
+            </mat-form-field>
+
+
+          </div>
+          <div class="fotButtonBar clearfix">
+            <div class="col-sm-12 col-md-12">
+              <span class="pull-left">
+                <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 2">{{'Back'}}</button>
+
+              </span>
+              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 4">{{'Next'
+                }}</button>
+            </div>
+          </div>
+        </mat-tab>
+
+        <!--Tab 4 End-->
+
+        <!--tab 5 start-->
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div>{{'Refrence Document'}}</div>
+          </ng-template>
+
+
+          <div class="row">
+            <div class="col-md-4" *ngFor="let doc of attachmentList">
+              <div *ngIf="doc.requiredOnAdminPortal && doc.isActive">
+                <label>{{doc.documentLabelEn}}
+                  <span class="text-danger" *ngIf="doc.mandatory">*</span>
+                </label>
+                <file-upload [form]="vendorRegistrationForm" [uploadModel]=" doc"></file-upload>
+              </div>
+            </div>
+          </div>
+
+        
+          <div class="checkboxHref">
+              <mat-checkbox class="col accept-terms" required formControlName="acceptAndCondition">
+
+              </mat-checkbox>
+            
+            <a (click)="openTermModel(termCondition);"> I have
+              read and agree with <u style="color: rebeccapurple;">Terms and conditions</u> </a>
+            </div>
+
+          <div class="fotButtonBar clearfix">
+            <div class="col-sm-12 col-md-12">
+              <span class="pull-left">
+                <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 3">{{'Back'}}</button>
+              </span>
+              <button class="pull-right" type="button" mat-raised-button color="primary"
+                (click)="onSubmit();">{{'Submit'}}</button>
+                <button class="pull-right" type="button" mat-raised-button color="primary"
+                (click)="openTermModel(templateViewDetails);">{{'Review
+                '}}</button> 
+            </div>
+          </div>
+
+
+        </mat-tab>
+
+        <!--Tab 5 End-->
+      </mat-tab-group>
+    </form>
+  </mat-card>
+</div>
+
+<ng-template #termCondition>
+
+  <div class="modal-body">
+    <p>Terms and Condition <br>
+    * If, Registration is not recommended / rejected, registration fee paid is not Refundable.
+    </p>
+  </div>
+  
+  <div class="modal-footer customthead">
+    <button color="white" mat-stroked-button (click)="hideModel()">
+      {{'Ok' | translate: translateKey}}
+    </button>
+  </div>
+</ng-template>
+
+
+<ng-template #templateViewDetails>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">View Details</h4>
+    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close" (click)="hideModel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body fillLabel">
+    <mat-card class="formClass formBorder">
+      <div class="p-15">
+        <form [hidden]="result==0" [formGroup]="vendorRegistrationForm" autocomplete="off">
+          <div class="row">
+            <mat-form-field class="col-md-4">
+              <input matInput maxlength="50" type="text" placeholder="{{'Name of The Owner'}}" required readonly
+                trim="blur" formControlName="nameOfTheFirm">
+              <control-messages [control]="vendorRegistrationForm.get('nameOfTheFirm')"></control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" placeholder="{{'Year Of Establishment'}}" required readonly
+                formControlName="yearOfEstablishment">
+              <control-messages [control]="vendorRegistrationForm.get('yearOfEstablishment')"></control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" placeholder="{{'The date of Commencement of commercial production'}}" required
+                readonly formControlName="commencementDate">
+              <control-messages [control]="vendorRegistrationForm.get('commencementDate')"></control-messages>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" placeholder="{{'PAN Number'}}" required readonly formControlName="panNo">
+              <control-messages [control]="vendorRegistrationForm.get('panNo')"></control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" placeholder="{{'TAN Number'}}" required readonly formControlName="tanNo">
+              <control-messages [control]="vendorRegistrationForm.get('tanNo')"></control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4" formGroupName="locationOfFactoryWorks">
+              <input matInput type="text" placeholder="{{'Locations'}}" required readonly formControlName="code">
+              <control-messages [control]="vendorRegistrationForm.get('locationOfFactoryWorks').get('code')">
+              </control-messages>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-md-4" formGroupName="registrationBank">
+              <input matInput type="text" placeholder="{{'Bank'}}" required readonly formControlName="code">
+              <control-messages [control]="vendorRegistrationForm.get('locationOfFactoryWorks').get('code')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" placeholder="{{'DD Number'}}" required readonly
+                formControlName="registrationDDNumber">
+              <control-messages [control]="vendorRegistrationForm.get('registrationDDNumber')"></control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" placeholder="{{'DD Amount'}}" required readonly
+                formControlName="registrationAmount">
+              <control-messages [control]="vendorRegistrationForm.get('registrationAmount')"></control-messages>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" placeholder="{{'DD Issuing Date'}}" required readonly
+                formControlName="registrationDDIssuingDate">
+              <control-messages [control]="vendorRegistrationForm.get('registrationDDIssuingDate')"></control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" placeholder="{{'Factory Mobile Number'}}" required readonly
+                formControlName="officeContactNumber">
+              <control-messages [control]="vendorRegistrationForm.get('officeContactNumber')"></control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" placeholder="{{'Factory Fax Number'}}" required readonly
+                formControlName="officeFaxNumber">
+              <control-messages [control]="vendorRegistrationForm.get('officeFaxNumber')"></control-messages>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" placeholder="{{'Factory email Id'}}" required readonly
+                formControlName="officeEmailId">
+              <control-messages [control]="vendorRegistrationForm.get('officeEmailId')"></control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" placeholder="{{'Reg Office Mobile Number'}}" required readonly
+                formControlName="resContactNumber">
+              <control-messages [control]="vendorRegistrationForm.get('resContactNumber')"></control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" placeholder="{{'Reg Office Fax Number'}}" required readonly
+                formControlName="resFaxNumber">
+              <control-messages [control]="vendorRegistrationForm.get('resFaxNumber')"></control-messages>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" placeholder="{{'Reg Office email Id'}}" required readonly
+                formControlName="resEmailId">
+              <control-messages [control]="vendorRegistrationForm.get('resEmailId')"></control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" required readonly
+                placeholder="{{'Total turnover for the last three years of regd. charted accountant'}}"
+                formControlName="totalTurnoverLastThreeYears">
+              <control-messages [control]="vendorRegistrationForm.get('totalTurnoverLastThreeYears')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" required readonly placeholder="{{'Loan Capital with Bank Limit.'}}"
+                formControlName="loanCapitalWithBankLimit">
+              <control-messages [control]="vendorRegistrationForm.get('loanCapitalWithBankLimit')"></control-messages>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" required readonly
+                placeholder="{{'Product Manufactured with complete description'}}"
+                formControlName="productManufacturedDescription">
+              <control-messages [control]="vendorRegistrationForm.get('productManufacturedDescription')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" required readonly placeholder="{{'Area of land occupied by the factory'}}"
+                formControlName="areaOfLandFactory">
+              <control-messages [control]="vendorRegistrationForm.get('areaOfLandFactory')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" required readonly placeholder="{{'Built up area of the factory.'}}"
+                formControlName="builtAreaFactory">
+              <control-messages [control]="vendorRegistrationForm.get('builtAreaFactory')">
+              </control-messages>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" required readonly placeholder="{{'No. of working shifts in the factory.'}}"
+                formControlName="noOfWorkingShifts">
+              <control-messages [control]="vendorRegistrationForm.get('noOfWorkingShifts')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" required readonly placeholder="{{'Factory licence No.'}}"
+                formControlName="factoryLicenceNumber">
+              <control-messages [control]="vendorRegistrationForm.get('factoryLicenceNumber')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" required readonly
+                placeholder="{{'Small Scale Industries / NSIC Certificate No.'}}"
+                formControlName="sscNSICCertificateNumber">
+              <control-messages [control]="vendorRegistrationForm.get('sscNSICCertificateNumber')">
+              </control-messages>
+            </mat-form-field>
+          </div>
+
+
+          <div class="row">
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" required readonly
+                placeholder="{{'Value of plant and Machinery certified by SSI in case of SSI units, alongwith the date of assessment of said value.'}}"
+                formControlName="valueOfPlantAndMachinery">
+              <control-messages [control]="vendorRegistrationForm.get('valueOfPlantAndMachinery')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" required readonly
+                placeholder="{{'Deatils of testing equipment with their capacities and details of calibration.'}}"
+                formControlName="detailsEquipmentCapacity">
+              <control-messages [control]="vendorRegistrationForm.get('detailsEquipmentCapacity')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" required readonly
+                placeholder="{{'Deatils of Machinery installed with their capacities.'}}"
+                formControlName="detailsMachineryCapacity">
+              <control-messages [control]="vendorRegistrationForm.get('detailsMachineryCapacity')">
+              </control-messages>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" required readonly
+                placeholder="{{'Type of tests as per Standards (This is must for registration) MTC as well as govt. Lab or Approved govt.Lab.'}}"
+                formControlName="testStandardGovtLabApproved">
+              <control-messages [control]="vendorRegistrationForm.get('testStandardGovtLabApproved')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" required readonly placeholder="{{'Method adopted for Quality Control'}}"
+                formControlName="adoptedForQualityControl">
+              <control-messages [control]="vendorRegistrationForm.get('adoptedForQualityControl')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" required readonly
+                placeholder="{{'Distinguised marks or method employed to identify, materials, if any.'}}"
+                formControlName="methodEmployeeIdentify">
+              <control-messages [control]="vendorRegistrationForm.get('methodEmployeeIdentify')">
+              </control-messages>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" required readonly
+                placeholder="{{'Source of supply of Raw materials (with address).'}}"
+                formControlName="sourceOfRawMaterialAddress">
+              <control-messages [control]="vendorRegistrationForm.get('sourceOfRawMaterialAddress')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" required readonly
+                placeholder="{{'Production capacity per annum (quantity).'}}"
+                formControlName="productionCapacityPerAnnum">
+              <control-messages [control]="vendorRegistrationForm.get('productionCapacityPerAnnum')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" required readonly
+                placeholder="{{'Maximum production per annum (in city. as well as value) acheived so far.'}}"
+                formControlName="maximumProductionPerAnnum">
+              <control-messages [control]="vendorRegistrationForm.get('maximumProductionPerAnnum')">
+              </control-messages>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="col-md-12">
+              <input matInput type="text" required readonly placeholder="{{'Remarks'}}" formControlName="remarks">
+              <control-messages [control]="vendorRegistrationForm.get('remarks')">
+              </control-messages>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+            <button class="pull-right" type="button" mat-raised-button color="primary"
+              (click)="hideModel();">{{'Ok'}}</button>
+            </div>     
+          </div>
+        </form>
+      </div>
+    </mat-card>
+  </div>
+</ng-template>

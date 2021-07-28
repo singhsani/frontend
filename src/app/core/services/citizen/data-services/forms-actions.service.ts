@@ -2,8 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpService } from '../../../../shared/services/http.service';
 import { Observable } from 'rxjs/Observable';
 import { SessionStorageService } from 'angular-web-storage';
-import { HttpEventType } from '@angular/common/http';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
+import { CommonService } from 'src/app/shared/services/common.service';
+import { map } from 'rxjs/operators';
+import { Constants } from 'src/app/vmcshared/Constants';
 
 @Injectable()
 export class FormsActionsService {
@@ -12,12 +15,16 @@ export class FormsActionsService {
 
 	requestURL: string;
 	apiType: string;
+	resourceType: string;
+
 
 	/**
 	 * Constructor to declare defualt propeties of class.
 	 * @param http - Declare Http Service property.
 	 */
-	constructor(private http: HttpService) {
+	constructor(private http: HttpService,
+		private commonService: CommonService,
+		private httpClient: HttpClient,) {
 
 	}
 
@@ -25,8 +32,12 @@ export class FormsActionsService {
 	 * This method is use to create new citizen app
 	 */
 	createFormData() {
-
+       
 		this.requestURL = `api/form/${this.apiType}/create`;
+		if (this.commonService.fromAdmin()) {
+			this.requestURL = `api/form/${this.apiType}/admin-create?fromAdmin=${this.commonService.fromAdmin()}`;
+		}
+
 
 		return this.http.get(this.requestURL);
 	}
@@ -137,10 +148,15 @@ export class FormsActionsService {
 		return this.http.get(this.requestURL, 'printReceipt');
 	}
 
+	printPaymentReceipt(appId){
+		this.requestURL = `api/form/${this.apiType}/printReceiptForPayment?id=${appId}`;
+		return this.http.get(this.requestURL,'printReceipt');
+	}
+
 	/**
-     * This method is use to generate print view
-     * @param appId - citizen app id
-     */
+	 * This method is use to generate print view
+	 * @param appId - citizen app id
+	 */
 	printView(appId) {
 
 		this.requestURL = `api/form/${this.apiType}/printView/${appId}`;
@@ -353,11 +369,25 @@ export class FormsActionsService {
 	}
 
 	getDueDetails(num) {
-		return this.http.get(`api/professional/receipt/search/${num}`);
+		return this.http.get(`api/professional/receipt/citizen/search/${num}`);
 	}
 
 	saveTaxPaymentDetails(data) {
-		return this.http.post(`api/professional/taxPayment`, data);
+				return this.http.post(`api/professional/taxPayment`, data);
+	}
+
+
+
+	savePropertyTaxPaymentDetails(data: any) {
+		return this.httpClient.post(`${Constants.assessmentModuleApiUrl}collection/citizen-payment`, data,
+			{ responseType: 'arraybuffer' })
+			.pipe(map((response: any) => response))
+	}
+
+	saveWaterTaxPaymentDetails(data: any) {
+		return this.httpClient.post(`${Constants.baseApiWaterUrl}collection/citizen-payment`, data,
+			{ responseType: 'arraybuffer' })
+			.pipe(map((response: any) => response))
 	}
 
 	printProfReceipt(refNumber) {
@@ -385,7 +415,7 @@ export class FormsActionsService {
 	setNBCtoDuplicateBirth(data: any) {
 		this.NBCtoDuplicateBirth.next(data);
 	}
-    /**
+	/**
 	 * This method get value 
 	 */
 	getNDCtoDuplicateDeath(): Observable<any> {
@@ -417,12 +447,12 @@ export class FormsActionsService {
 		return this.http.get(`api/loidetail/list?appId=${appId}`);
 	}
 
-	saveOfflinePayment(serviceId,paymentData) {
+	saveOfflinePayment(serviceId, paymentData) {
 		this.requestURL = `api/form/${this.apiType}/offlinePayment/${serviceId}`;
 		return this.http.post(this.requestURL, paymentData);
 	}
 
-	getCitizenForm(reqData){
+	getCitizenForm(reqData) {
 		this.requestURL = `api/user/${this.apiType}`;
 		return this.http.post(this.requestURL, reqData);
 	}
@@ -431,8 +461,56 @@ export class FormsActionsService {
 		return this.http.post(this.requestURL, {});
 	}
 
-	saveNoDueCertificate(apiName: any, noofCopies: any, asonDate: any, occupierId: any,propertyBasicId: any) {
+	saveNoDueCertificate(apiName: any, noofCopies: any, asonDate: any, occupierId: any, propertyBasicId: any) {
 		this.requestURL = `api/form/${this.apiType}/${apiName}?noofCopies=${noofCopies}&asonDate=${asonDate}&occupierId=${occupierId}&propertyBasicId=${propertyBasicId}`;
 		return this.http.post(this.requestURL, {});
+	}
+
+	/**
+	 * This method is used to send sms after completion of booking payment.
+	 * @param refNumber 
+	 */
+	sendSms(refNumber: any, resourceType: any, eventType: any) {
+		this.requestURL = `api/booking/${resourceType}/sendSms?refNumber=${refNumber}&eventType=${eventType}`;
+		return this.http.get(this.requestURL);
+	}
+
+	/**
+	 * This method is used to send Mail after completion of payment to user
+	 * @param refNumber 
+	 */
+	sendMail(refNumber: any, resourceType: any, eventType: any) {
+		this.requestURL = `api/booking/${resourceType}/sendMail?refNumber=${refNumber}&eventType=${eventType}`;
+		return this.http.get(this.requestURL);
+
+	}
+
+	cancelReceiptForShop(fileNumber) {
+		this.requestURL = `api/form/shop/resonForCancel?fileNumebr=${fileNumber}`;
+		return this.http.get(this.requestURL, 'printReceipt');
+	}
+
+	setUserData(details, applicationNumber: any) {
+
+		var applicantDetalis = {
+
+			applicantName: details.applicantName,
+			emailId: details.email,
+			mobileNo: details.cellNo,
+			applicationNo: applicationNumber
+		}
+		return this.saveApplicantDetails(applicantDetalis);
+
+	}
+
+	saveApplicantDetails(data:any){
+		this.requestURL = `api/form/propertyAssessment/saveApplicantDetails`;
+		return this.http.post(this.requestURL, data);
+	  }
+
+	saveDuplicateBill(apiName: any, data: any) {
+		this.requestURL = `api/form/${this.apiType}/${apiName}`;
+		return this.http.post(this.requestURL, data);
+
 	}
 }

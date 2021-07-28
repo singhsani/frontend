@@ -43,6 +43,8 @@ export class TownHallBookComponent implements OnInit {
 	bookingConstants = BookingConstants;
 	bookingUtils: BookingUtils;
 
+	public formControlNameToTabIndex = new Map();
+
 	/**
 	 * language translate key.
 	 */
@@ -82,7 +84,7 @@ export class TownHallBookComponent implements OnInit {
 	 * Minimum end date.
 	 */
 	//endMinDate = moment(new Date()).add(1, 'day').toISOString();
-	endMinDate = moment(new Date()).add(179, 'day').toDate();
+	endMaxDate = moment(new Date()).add(179, 'day').toDate();
 	toStartDate: Date;
 
 
@@ -93,7 +95,8 @@ export class TownHallBookComponent implements OnInit {
 	 * Available Dates for Shortlist.
 	 */
 	Dates: Array<any> = [];
-	endMaxDate:any = new Date();
+	//endMaxDate:any = new Date();
+	endMinDate :any = new Date;
 
 	/**
 	 * Bank Lookups
@@ -155,11 +158,13 @@ export class TownHallBookComponent implements OnInit {
 		 * Subscribe start date changes
 		 */
 		this.searchTownHallForm.controls.startDate.valueChanges.subscribe(data => {
-			this.searchTownHallForm.controls.endDate.reset();
-		//	this.endMinDate = data;
-			this.toStartDate = data;
+			  this.searchTownHallForm.controls.endDate.reset();
+			  this.endMinDate = data;
+			  this.toStartDate = data;
 			return;
 		});
+
+		this.setFormControlToTabIndexMap();
 
 	}
 
@@ -260,7 +265,7 @@ export class TownHallBookComponent implements OnInit {
 	//  */
 	onDateChange(date) {
         let futureMonth = moment(date).add(3, 'month');
-        this.endMaxDate = moment(futureMonth).format("YYYY-MM-DD");
+      //  this.endMaxDate = moment(futureMonth).format("YYYY-MM-DD");
 	}
 
 	/**
@@ -396,18 +401,22 @@ export class TownHallBookComponent implements OnInit {
 		}
 	
 	  }
+
+
+	  
 	/**
 	 * Method is used to submit townhall application form.
 	 */
 	submitTownhallApplication() {
-		let errCount = this.bookingUtils.getAllErrors(this.townHallApplicationForm);
+		
+		
 		if (this.townHallApplicationForm.invalid) {
-			this.handleErrorsOnSubmit(errCount);
+			this.handleErrorsOnSubmit();
 			this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
 			return;
 		}
 		else if (!this.bookingUtils.matcher(this.townHallApplicationForm, 'emailID', 'confirmEmailID') || !this.bookingUtils.matcher(this.townHallApplicationForm, 'applicantMobile', 'confirmMobile')) {
-			this.handleErrorsOnSubmit(7);
+			this.handleErrorsOnSubmit();
 			this.commonService.openAlert("Field Error", !this.bookingUtils.matcher(this.townHallApplicationForm, 'emailID', 'confirmEmailID') ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning')
 			return;
 		} else if (!this.townHallApplicationForm.get('agree').value) {
@@ -449,27 +458,41 @@ export class TownHallBookComponent implements OnInit {
 	 * Method is used to handle error/validation on submit
 	 * @param count - count of invalid control.
 	 */
-	handleErrorsOnSubmit(count) {
-		/**
-		 * No Of controls on perticular tab
-		 */
-		let step1 = 4;
-		let step2 = 11;
-		let step3 = 17;
+	 handleErrorsOnSubmit() {
 
-		/**
-		 * Redirection
-		 */
-		if (count < step1) {
-			this.tabIndex = 0;
-			return false;
-		} else if (count < step2) {
-			this.tabIndex = 1;
-			return false;
-		} else if (count < step3) {
-			this.tabIndex = 2;
-			return false;
-		}
+		const key = this.bookingUtils.getInvalidFormControlKey(this.townHallApplicationForm);
+		const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 0;
+		
+		this.tabIndex = index;
+		return false;
+		
+
+	}
+
+	setFormControlToTabIndexMap(){
+		// index 2
+		this.formControlNameToTabIndex.set("organizationName",0);
+		this.formControlNameToTabIndex.set("orgTelephoneNo",0);
+		this.formControlNameToTabIndex.set("organizationPresidentName",0);
+		this.formControlNameToTabIndex.set("programmeName",0);
+		this.formControlNameToTabIndex.set("organizationAddress",0);
+		// index 1
+		this.formControlNameToTabIndex.set("applicantName",1);
+		this.formControlNameToTabIndex.set("applicantMobile",1);
+		this.formControlNameToTabIndex.set("confirmMobile",1);
+		this.formControlNameToTabIndex.set("emailID",1);
+		this.formControlNameToTabIndex.set("confirmEmailID",1);
+		this.formControlNameToTabIndex.set("relationshipWithOrg",1);
+		this.formControlNameToTabIndex.set("applicantAddress",1);
+
+		// index 2
+		this.formControlNameToTabIndex.set('bankName', 2)
+		this.formControlNameToTabIndex.set('accountHolderName', 2)
+		this.formControlNameToTabIndex.set('accountNo', 2)
+		this.formControlNameToTabIndex.set('ifscCode', 2)
+		this.formControlNameToTabIndex.set('programShortDetails', 2)
+		this.formControlNameToTabIndex.set('programPurpose', 2)
+	
 	}
   /**
    * Get user data

@@ -21,6 +21,7 @@ export class DashboardComponent implements OnInit {
 	services: any = [];
 	isRecentApp: boolean = false;
 	recentApp: any;
+	// bookingsAndTicketings = [];
 	bookingsAndTicketings: any = [
 		{
 			"id": 1,
@@ -98,22 +99,38 @@ export class DashboardComponent implements OnInit {
 					"appointmentRequired": false,
 					"active": true
 				},
+				// {
+				// 	"code": "SWIMMINGPOOL",
+				// 	"fieldView": "ALL",
+				// 	"name": "Swimming Pool",
+				// 	"gujName": "સ્નાનાગાર",
+				// 	"appointmentRequired": false,
+				// 	"active": true
+				// },
+				// {
+				// 	"code": "SWIMMINGPOOLRENEWAL",
+				// 	"fieldView": "ALL",
+				// 	"name": "Swimming Pool Renewal",
+				// 	"gujName": "સ્નાનાગાર",
+				// 	"appointmentRequired": false,
+				// 	"active": true
+				// },
 				{
-					"code": "SWIMMINGPOOL",
+					"code": "SWIMMINGPOOLDASHBOARD",
 					"fieldView": "ALL",
-					"name": "Swimming Pool",
+					"name": "Swimming-Pool-Dashboard",
 					"gujName": "સ્નાનાગાર",
 					"appointmentRequired": false,
 					"active": true
 				},
-				{
-					"code": "SWIMMINGPOOLRENEWAL",
-					"fieldView": "ALL",
-					"name": "Swimming Pool Renewal",
-					"gujName": "સ્નાનાગાર",
-					"appointmentRequired": false,
-					"active": true
-				}
+				// {
+				// 	"code": "BAND",
+				// 	"fieldView": "ALL",
+				// 	"name": "Band",
+				// 	"gujName": "બેન્ડ",
+				// 	"appointmentRequired": false,
+				// 	"active": true
+				// },
 			]
 		},
 		{
@@ -185,7 +202,7 @@ export class DashboardComponent implements OnInit {
 		private formService: FormsActionsService,
 		private toastr: ToastrService,
 		private paginationService: PaginationService,
-		public commonService : CommonService
+		public commonService: CommonService
 	) {
 		this.getAllServices();
 	}
@@ -251,10 +268,19 @@ export class DashboardComponent implements OnInit {
 				break;
 			case 'HEL-WTRPIP-WRK-COMPL':
 			case 'HEL-DRNGPIP-WRK-COMPL':
-			// case 'HEL-WTR-DRAINAGE-DISCONNECTION':
-			//case 'HEL-WTR-DRAINAGE-RECONNECTION':
-			//case 'HEL-WTR-DRAINAGE-TRANS-CONNECTION':
+				// case 'HEL-WTR-DRAINAGE-DISCONNECTION':
+				//case 'HEL-WTR-DRAINAGE-RECONNECTION':
+				//case 'HEL-WTR-DRAINAGE-TRANS-CONNECTION':
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode), apiCode]);
+				break;
+			case 'PAY_PROF_TAX':
+				this.router.navigate([ManageRoutes.getFullRoute(apiCode)], { queryParams: { code: 'PROFESSIONAL' } });
+				break;
+			case 'PAY-PRO-TAX':
+				this.router.navigate([ManageRoutes.getFullRoute(apiCode)], { queryParams: { code: 'PROPERTY-TAX' } });
+				break;
+			case 'PAY-WTR-TAX':
+				this.router.navigate([ManageRoutes.getFullRoute(apiCode)], { queryParams: { code: 'WATER-TAX' } });
 				break;
 			case 'PRC_REG':
 			case 'PRO-ASS':
@@ -275,6 +301,7 @@ export class DashboardComponent implements OnInit {
 			case 'WTR-PLUMB-LIC':
 			case 'WTR-RNW-PLUMB-LIC':
 			case 'PRO-TAX-TRAS-HISTORY':
+			case 'PROPERTY_UPDATE_EMAIL_AND_MOBILE':
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode)]);
 				break;
 			default:
@@ -289,6 +316,7 @@ export class DashboardComponent implements OnInit {
 					this.toastr.error("Invalid API Code");
 				}
 				break;
+
 		}
 
 	}
@@ -298,7 +326,7 @@ export class DashboardComponent implements OnInit {
 			res => {
 				console.log("res", res);
 				this.userServicesList = res.modules;
-				
+
 				_.forEach(res.modules, (value, key) => {
 					_.forEach(value.services, (value1, key1) => {
 						this.services.push(value1);

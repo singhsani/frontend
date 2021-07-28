@@ -1,17 +1,22 @@
 import { environment } from './../../../../environments/environment';
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from './../../../shared/services/common.service';
 import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
-import * as _ from 'lodash'; 
+import * as _ from 'lodash';
 import { SessionStorageService } from 'angular-web-storage';
-import { MyApplicationsComponent} from '../my-applications/my-applications.component'
+import { MyApplicationsComponent } from '../my-applications/my-applications.component'
 import { error } from 'protractor';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ManageRoutes } from 'src/app/config/routes-conf';
+import { ProfessionalTaxService } from 'src/app/core/services/citizen/data-services/professional-tax.service';
+import { CollectionService } from '../tax/water-supply/tax-transaction-history/Services/collection.service';
+import { AlertService } from 'src/app/vmcshared/Services/alert.service';
+
+declare var $: any;
 
 @Component({
   selector: 'app-common-payble',
@@ -21,33 +26,59 @@ import { ManageRoutes } from 'src/app/config/routes-conf';
 export class CommonPaybleComponent implements OnInit {
 
   @ViewChild("paymentGateway") paymentGateway: any;
-  
+
   translateKey: string = "addTransctionScreen";
 
   paymentsForm: FormGroup;
   PayableServices: Object[];
   currPaySerData: any;
   isRecordExists: boolean = false;
+  isPropertyRecordExists: boolean = false;
+  isWaterRecordExists: boolean = false;
   isECRCSearch: boolean = false;
-  userServicesList = [];  
+
+  isPropertyTax: boolean = false;
+  isWaterTax: boolean = false
+  userServicesList = [];
+  applicationrouter: any;
+  redirectURLAfterPayment: any;
+
+  model: any;
+
   payModeArr: Array<any> = [
     { name: 'Net Banking', code: 'NETBANKING' }, { name: 'Debit / Credit Card banking', code: 'CARDBANKING' }
   ];
   placeholder: string = 'Reference Number';
+  placeHolderMessage: string;
   responseData: any;
+  receiptEntry: any;
+  feePaymentData: any;
   duesDetailsArr: any = [];
+  isProfessionalTax: boolean = false;
+  inputData: any
+  selected: any;
 
-  inputData : any
+  collectionModel: any;
+  collectionWaterModel: any;
+  isShowTaxDetailTable: boolean = false;
+  isShowPayableScreen: boolean = true;
+  propertyTaxDetailData = [];
+
+  isShowWaterTaxDetailTable: boolean = false;
+  waterTaxDetailData = [];
 
   constructor(
     private formService: FormsActionsService,
     private fb: FormBuilder,
+    private collectionService: CollectionService,
     private toaster: ToastrService,
     private commonService: CommonService,
+    private profeService: ProfessionalTaxService,
     private session: SessionStorageService,
     private route: ActivatedRoute,
     private location: Location,
-    private router: Router
+    private router: Router,
+    private alertService:AlertService
   ) {
     this.getPayableServicesList();
     this.createPayementControls();
@@ -62,17 +93,33 @@ export class CommonPaybleComponent implements OnInit {
           this.location.go(this.router.url.split('?')[0]);
         }, 3000);
       }
+      if (d.code) {
+        this.selected = d.code;
+      }
     })
 
     this.getAllServices();
 
   }
 
-	/**
-	 * This method is used to initialize controls for payement form
-	 */
+  showHidePaybleScreen(event: boolean){
+    this.isShowPayableScreen = event;
+  }
+
+  showHideTaxDetailScreen(event: boolean){
+    this.isShowTaxDetailTable = event;
+  }
+
+  showHideWaterTaxDetailScreen(event: boolean){
+    this.isShowWaterTaxDetailTable = event;
+  }
+
+  /**
+   * This method is used to initialize controls for payement form
+   */
   createPayementControls() {
     this.paymentsForm = this.fb.group({
+      id: null,
       refNumber: [null, Validators.required],
       amount: 0,
       payableServices: this.fb.group({
@@ -87,82 +134,160 @@ export class CommonPaybleComponent implements OnInit {
     });
   }
 
-	/**
-	 * 
-	 * @param payData - json data as payment data.
-	 */
+  /**
+   * 
+   * @param payData - json data as payment data.
+   */
   makePayment(payData) {
 
     if (this.paymentsForm.get('amount').value < 0 || !this.paymentsForm.get('amount').value) {
       this.commonService.openAlert("Warning", "Insufficient amount", "warning");
       return;
     }
-
-    if (!this.paymentsForm.get('payMode.code').value) {
-      this.commonService.openAlert("Warning", "Select payment mode", "warning");
-      return;
-    }
+    this.formService.apiType = 'professional'
 
     let serviceType = this.paymentsForm.get('payableServices').get('code').value;
 
-    let filterObj = _.filter(this.PayableServices, { 'code' : serviceType })[0];
+    let filterObj = _.filter(this.PayableServices, { 'code': serviceType })[0];
 
-    let retUrl: string = '/citizen/payable-services';
+    this.paymentsForm.get('payableServices').get('code').setValue('PROFESSIONAL_TAX');
 
-    let obj = {
-      payableServiceType: payData.payableServices.code,
-      refNumber: payData.refNumber,
-      amount: payData.amount,
-      paymentMode: payData.payMode.code,
-      returnUrl: retUrl,
-      searchable: filterObj.searchable
+    let updateAmount = '';
+    let updatePayableServiceType = ''
+    if(payData.module.code == 'PROPERTY-TAX' || payData.module.code == 'WATER-TAX'){
+      updateAmount = this.model;
+      updatePayableServiceType = payData.payableServices.code;
+    }else{
+      updateAmount = payData.amount;
+      updatePayableServiceType = payData.module.code
     }
 
-    this.session.set('paymentData', JSON.stringify(obj));
+    let retUrl: string = environment.returnUrl;
 
-    this.paymentGateway.setPaymentDetailsFromActionBar(obj);
-    this.paymentGateway.openModel();
-    
-    // this.formService.paymentGatewayUrl(obj).subscribe(res => {
+    let obj = {
+      payableServiceType: updatePayableServiceType,
+      refNumber: payData.refNumber,
+      amount: updateAmount,
+      paymentMode: "NETBANKING",
+      returnUrl: retUrl,
+      searchable: false
+    }
+
+    if(payData.payableServices.code == 'PAY-PRO-TAX' ) {
+          obj['txtadditionalInfo1'] = 'PAY-PRO-TAX';
+    }else if(payData.payableServices.code == 'PAY-WTR-TAX'){
+      obj['txtadditionalInfo1'] = 'PAY-WTR-TAX';
+    }
+
+    let words = this.commonService.getToWords(updateAmount)
+    let html =
+      `
+					<div class="text-center">
+						<h2>Total Fee Pay</h2>
+						<div class="payAmount">
+							<i class="fa fa-inr" aria-hidden="true">` + updateAmount + `</i>
+						</div>
+						<p>Rupees in words</p>`
+      + words + `
+					</div>`
+
+
+    this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
+      // this.formService.createTokenforServicePayment(payData).subscribe(resp => {
+      // 	window.open(resp.data, "_self");
+      // }, err => {
+      // 	this.toastr.error(err.error.message);
+      // })
+      this.session.set('paymentData', JSON.stringify(obj));
+
+      this.paymentGateway.setPaymentDetails(obj, this.paymentsForm, this.router, this.applicationrouter, retUrl)
+      this.paymentGateway.setPaymentDetailsFromActionBar(obj);
+      this.paymentGateway.openModel();
+
+    });
+
+
+
+
+
+    // this.formService.ccAvenueMakePayment(obj).subscribe(res => {
     //   if (res) {
     //     this.session.set('paymentData', JSON.stringify(obj));
-    //     window.open(res.data, "_self");
     //   } else {
     //     this.toaster.warning('something went wrong!');
     //   }
+    // });
 
+    // this.formService.ccAvenueMakePayment(obj).subscribe(res => {
+    //   this.getTransactionDetail(res.data);
     // });
 
   }
+
+
+  getTransactionDetail(data) {
+    let form = $(document.createElement('form'));
+    $(form).attr("action", data.url);
+    $(form).attr("method", "POST");
+
+    let input = $("<input>")
+      .attr("type", "hidden")
+      .attr("name", "access_code")
+      .val(data.access_code);
+
+    let input2 = $("<input>")
+      .attr("type", "hidden")
+      .attr("name", "encRequest")
+      .val(data.encRequest);
+
+    $(form).append($(input));
+    $(form).append($(input2));
+
+    form.appendTo(document.body);
+
+    $(form).submit();
+
+  }
+
 
   get f() {
     return this.paymentsForm.controls;
   }
 
-	/**
-	 * Method is used to get all payable services list from api.
-	 */
+  /**
+   * Method is used to get all payable services list from api.
+   */
   getPayableServicesList() {
     this.formService.apiType = 'payableServices';
     this.formService.paymentServiceGet().subscribe(respData => {
       this.PayableServices = respData.list;
-
       if (this.paymentsForm.get('payableServices').get('code')) {
         this.showHideSearchable(this.paymentsForm.get('payableServices').get('code').value);
       }
     })
   }
 
-	/**
-	 * This method is used for show hide searchable option
-	 * @param searchable - boolean (true/false)
-	 */
+  /**
+   * This method is used for show hide searchable option
+   * @param searchable - boolean (true/false)
+   */
   showHideSearchable(paySerCode) {
-
-    if (paySerCode === 'PROFESSIONAL_TAX')
-      this.placeholder = 'EC / RC Number';
-    else
+    this.updateIsProfessionalTax(paySerCode);
+    if (paySerCode === 'PAY_PROF_TAX' || paySerCode === 'PEC_REG' || paySerCode === 'PRC_REG') {
+      // this.isProfessionalTax = true;
+      this.placeholder = 'PEC Number';
+      this.placeHolderMessage = 'PEC Number is Required';
+    } else if (paySerCode === 'PAY-PRO-TAX') {
+      this.placeholder = 'Property Number';
+      this.placeHolderMessage = 'Property Number is Required';
+    } else if(paySerCode === 'PAY-WTR-TAX'){
+      this.placeholder = 'Connection Number';
+      this.placeHolderMessage = 'Connection Number is Required';
+    }
+    else {
       this.placeholder = 'Reference Number';
+      this.placeHolderMessage = 'Reference Number is Required';
+    }
 
     this.isRecordExists = false;
     this.responseData = undefined;
@@ -171,9 +296,85 @@ export class CommonPaybleComponent implements OnInit {
     this.currPaySerData = _.filter(this.PayableServices, { 'code': paySerCode })[0];
   }
 
-	/**
-	 * - This method is used to get the type of tax and referance number and get the amount from the API
-	 */
+  updateIsProfessionalTax(paySerCode) {
+    if (paySerCode === 'PAY_PROF_TAX' || paySerCode === 'PEC_REG' || paySerCode === 'PRC_REG') {
+      this.isProfessionalTax = true;
+    } else {
+      this.isProfessionalTax = false;
+      this.paymentsForm.get('refNumber').setValidators(null);
+    }
+  }
+
+  getServices() {
+    let serviceType = this.paymentsForm.get('payableServices').get('code').value;
+    if (serviceType === 'PAY-PRO-TAX') {
+      this.getAmountDataProperty();
+    } else if (serviceType === 'PAY_PROF_TAX') {
+      this.isPropertyTax = false;
+      this.isWaterTax = false;
+      this.getAmountData();
+    } else if(serviceType === 'PAY-WTR-TAX'){
+      this.getAmountDataWater();
+    }
+    else {
+      this.isPropertyTax = false;
+      this.getCitizenForm();
+    }
+
+  }
+  getAmountDataProperty() {
+    this.isPropertyTax = true;
+    if (this.paymentsForm.invalid) {
+      this.markFormGroupTouched(this.paymentsForm);
+      this.commonService.openAlert("Warning", "Enter all the required information", "warning");
+      return;
+    }
+  else{
+    this.collectionService.getoccupierOutstandingAmount({ propertyNo: this.paymentsForm.get('refNumber').value }).subscribe(
+      (data) => {
+        if (data.status === 200) {
+          this.isPropertyRecordExists = true;
+          this.collectionModel = data.body;
+          this.model = this.collectionModel.payableAmount;
+          this.paymentsForm.get('amount').setValue(this.model);
+          console.log("model: "+this.model)
+        }
+      },
+      (error) => {
+        this.commonService.openAlert("Warning", "Enter Valid Property Number", "warning");
+        this.paymentsForm.get('refNumber').setValue(null);
+        this.isPropertyRecordExists = false
+      });
+}
+
+  }
+
+  getAmountDataWater() {
+    this.isWaterTax = true;
+    if (this.paymentsForm.invalid) {
+      this.markFormGroupTouched(this.paymentsForm);
+      this.commonService.openAlert("Warning", "Enter all the required information", "warning");
+      return;
+    } else {
+    this.collectionService.getWaterOccupierOutstandingAmount(this.paymentsForm.get('refNumber').value).subscribe(     (data) => {
+          if (data.status === 200) {
+            this.isWaterRecordExists = true;
+            this.collectionWaterModel = data.body;
+            this.collectionWaterModel.collectedAmount = data.body.outstandingAmount;
+            this.model = this.collectionWaterModel.collectedAmount;
+            this.paymentsForm.get('amount').setValue(this.model);
+          }
+        },
+        (error) => {
+          this.commonService.openAlert("Warning", "Enter Valid Connection Number", "warning");
+          this.paymentsForm.get('refNumber').setValue(null);
+          this.isWaterRecordExists = false;
+      });
+   }
+  }
+  /**
+   * - This method is used to get the type of tax and referance number and get the amount from the API
+   */
   getAmountData() {
 
     if (this.paymentsForm.invalid) {
@@ -185,7 +386,7 @@ export class CommonPaybleComponent implements OnInit {
     let serviceType = this.paymentsForm.get('payableServices').get('code').value;
     let refNumber = this.paymentsForm.get('refNumber').value;
 
-    this.formService.apiType = 'searchPayment';
+    this.formService.apiType = 'professional';
 
     let resData = {
       refNumber: refNumber,
@@ -193,11 +394,12 @@ export class CommonPaybleComponent implements OnInit {
     }
 
     this.isRecordExists = false;
+    this.isPropertyRecordExists = false;
     this.isECRCSearch = false;
 
     this.paymentsForm.get('amount').setValue(null);
 
-    if (serviceType === 'PROFESSIONAL_TAX') {
+    if (serviceType === 'PAY_PROF_TAX') {
 
       this.formService.getDueDetails(refNumber).subscribe(
         res => {
@@ -218,14 +420,19 @@ export class CommonPaybleComponent implements OnInit {
                 this.duesDetailsArr = _.cloneDeep(this.responseData.prcPendingDemands);
               }
             }
+
+            this.paymentsForm.get('id').setValue(this.responseData.serviceFormId);
             this.paymentsForm.get('amount').setValue(this.responseData.dueAmount);
+
+            // this.profeService.saveReceiptDetails(this.responseData).subscribe(res => {
+
+            //     this.receiptEntry = res.data;
+            //         console.log(this.receiptEntry);
+            // });
           } else {
             this.toaster.warning('No record found !');
           }
-
-        }
-      );
-
+        });
     } else {
       this.formService.paymentServicePost(resData).subscribe(
         res => {
@@ -253,10 +460,10 @@ export class CommonPaybleComponent implements OnInit {
     obj.hidden = !obj.hidden;
   }
 
-	/**
-	 * Marks all controls in a form group as touched
-	 * @param formGroup - The group to caress
-	*/
+  /**
+   * Marks all controls in a form group as touched
+   * @param formGroup - The group to caress
+  */
   markFormGroupTouched(formGroup: FormGroup) {
     if (Reflect.getOwnPropertyDescriptor(formGroup, 'controls')) {
       (<any>Object).values(formGroup.controls).forEach(control => {
@@ -270,7 +477,8 @@ export class CommonPaybleComponent implements OnInit {
     }
   }
 
-  getCitizenForm(){
+  getCitizenForm() {
+
     if (this.paymentsForm.invalid) {
       this.markFormGroupTouched(this.paymentsForm);
       this.commonService.openAlert("Warning", "Enter all the required information", "warning");
@@ -289,55 +497,98 @@ export class CommonPaybleComponent implements OnInit {
 
     this.formService.getCitizenForm(resData).subscribe(data => {
       this.inputData = data.data;
-      console.log('input data',this.inputData);
-    },error => {
+      console.log('input data', this.inputData);
+    }, error => {
       console.log(error)
     })
   }
 
   /**
-	 * This method use to application print receipt.
-	 * @param id citizen api code
-	 * @param id citizen api name
-	 * @param id citizen id
-	 */
-	printReceipt(apiCode: string, apiName: string, id: number) {
+   * This method use to application print receipt.
+   * @param id citizen api code
+   * @param id citizen api name
+   * @param id citizen id
+   */
+  printReceipt(apiCode: string, apiName: string, id: number) {
 
-		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
-		this.formService.printReceipt(id).subscribe(
-			receiptResponse => {
+    this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+    this.formService.printReceipt(id).subscribe(
+      receiptResponse => {
         let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
-        debugger;
-				sectionToPrintReceipt.innerHTML = receiptResponse;
-				setTimeout(() => {
-					window.print();
-				},400);
-			},
-			err => {
-				this.commonService.openAlert('Error!', err.error[0].message, 'error');
-			}
-		);
+        sectionToPrintReceipt.innerHTML = receiptResponse;
+        setTimeout(() => {
+          window.print();
+        }, 400);
+      },
+      err => {
+        this.commonService.openAlert('Error!', err.error[0].message, 'error');
+      }
+    );
   }
-  
-  getAllServices(){
-		this.formService.getUserServices().subscribe(
-			res => {
-				this.userServicesList = res.modules;
-			},
-			err => {
-				
-			}
-		);
+
+  getAllServices() {
+    this.formService.getUserServices().subscribe(
+      res => {
+        this.userServicesList = res.modules;
+        if (this.selected == 'PROFESSIONAL') {
+          this.paymentsForm.get('module').get('code').setValue(this.selected);
+          this.setPayableServices('PROFESSIONAL')
+          this.paymentsForm.get('payableServices').get('code').setValue('PAY_PROF_TAX');
+          this.showHideSearchable('PAY_PROF_TAX');
+        }
+        else if(this.selected == 'PROPERTY-TAX'){
+          this.paymentsForm.get('module').get('code').setValue(this.selected);
+          this.setPayableServices('PROPERTY-TAX');
+          this.paymentsForm.get('payableServices').get('code').setValue('PAY-PRO-TAX');
+          this.showHideSearchable('PAY-PRO-TAX');
+        }
+        else if(this.selected == 'WATER-TAX'){
+          this.paymentsForm.get('module').get('code').setValue(this.selected);
+          this.setPayableServices('WATER-TAX');
+          this.paymentsForm.get('payableServices').get('code').setValue('PAY-WTR-TAX');
+          this.showHideSearchable('PAY-WTR-TAX');
+        }
+      },
+      err => {
+
+      }
+    );
   }
-  
 
   setPayableServices(code) {
-    const filteredModules = this.userServicesList.filter( module => module.code === code);
-    if(filteredModules.length > 0){
-      this.PayableServices = filteredModules[0].services;
+    const filteredModules = this.userServicesList.filter(module => module.code === code);
+    if (filteredModules.length > 0) {
+      if(filteredModules[0].code == 'PROFESSIONAL'){
+        this.PayableServices = filteredModules[0].services.filter(services => services.code == 'PAY_PROF_TAX');
+      }else{
+        this.PayableServices = filteredModules[0].services;
+      }
       this.paymentsForm.get('payableServices').get('code').setValue(null);
+      this.isWaterRecordExists = false;
+      this.isPropertyRecordExists = false;
     }
   }
 
+  onDetailClick(item) {
+    if (item.taxWiseOutstandings && item.taxWiseOutstandings.length > 0) {
+      this.propertyTaxDetailData = item.taxWiseOutstandings;
+      this.isShowPayableScreen = false
+      this.isShowTaxDetailTable = true;
+    }
+    else {
+      this.alertService.info('No detail found!');
+    }
+  }
+
+  onWaterDetailClick(item){
+    debugger
+    if (item.taxWiseOutstandings && item.taxWiseOutstandings.length > 0){
+      this.waterTaxDetailData = item.taxWiseOutstandings;
+      this.isShowPayableScreen = false;
+      this.isShowWaterTaxDetailTable = true;
+    }else {
+      this.alertService.info('No detail found!');
+    }
+  }
 
 }

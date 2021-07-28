@@ -144,7 +144,8 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 			email: ['', ValidationService.emailValidator],
 			rcDate: null,
 			ward: this.fb.group({
-				code: null, name: null,
+				wardzoneId: null,
+				wardzoneName: null
 			}),
 			commencementDate: null,
 			vatNo: null,
@@ -333,7 +334,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 						this.prcRegForm.get('rcDate').disable();
 						this.prcRegForm.get('prcNo').setValue(res.prcNo);
 
-						this.commonService.openAlert("PRC Registration Successful", "", "success", `Your Application Number is<br> <b>${res.uniqueId}</b>`, cb => {
+						this.commonService.openAlert("PRC Registration Successful", "", "success", `Your Application Number is<br> <b>${res.uniqueId}</b> <br> Your Application is valid for 3 working days only. Kindly visit respective ward office with all the valid documents for approval.`, cb => {
 							this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
 						});
 
@@ -749,7 +750,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	*/
 	getAllWardNos() {
 		this.profeService.getAllWardNos().subscribe(res => {
-			this.wardNoArray = res.WARD;
+			this.wardNoArray = res;
 		});
 	}
 

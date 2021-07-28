@@ -60,4 +60,8 @@ export class ApplicationTransferOwnershipService {
       { responseType: "arraybuffer" })
       .pipe(map((response: any) => response))
   }
+
+  getAttachmentList(serviceFormId) {
+    return this.http.get<Array<Object>>(`${Constants.baseApiWaterUrl}transferOfOwnership/attachments?serviceFormId=${serviceFormId}`);
+  }
 }

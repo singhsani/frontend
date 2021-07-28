@@ -8,9 +8,11 @@ import { TicketingsService } from "../ticketings/shared-ticketing/services/ticke
 import { SessionStorageService } from "angular-web-storage";
 import { FormsActionsService } from "src/app/core/services/citizen/data-services/forms-actions.service";
 import { ToastrService } from "ngx-toastr";
-// import { ToWords } from 'to-words';
+
+
 
 // const toWords = new ToWords();
+ let toWords = require('to-words');
 
 //let toWords ;
 
@@ -43,11 +45,17 @@ export class BTConstants {
     static MY_BOOKINGS_URL = 'citizen/bookings/my-bookings';
     static MY_TICKETINGS_URL = 'citizen/ticketings/my-ticketings';
     static INVALID_BOOKING_STATUS = 'INVALID_BOOKING_STATUS';
-    static WAITINGLIST = 'WAITINGLIST';   
+    static WAITINGLIST = 'WAITINGLIST';
     static RESERVED = 'RESERVED';
     static HOLIDAY = 'HOLIDAY';
     static FESTIVAL = 'FESTIVAL';
-    static ATITHIGURH_DEPOSIT = 'ATITHIGURH_DEPOSIT'   
+    static ATITHIGURH_DEPOSIT = 'ATITHIGURH_DEPOSIT';
+    static SCRUTINY = 'SCRUTINY';
+    static SHOOTING_PERMISSION = 'SHOOTING_PERMISSION';
+    static REFUND_REQUEST = 'REFUND_REQUEST';
+    static REFUND_APPROVED = 'REFUND_APPROVED';
+    static COMPLETED = 'COMPLETED';
+    static CHILDREN_THEATER = 'CHILDREN_THEATER'
 }
 
 export class BTConfig extends CitizenConfig {
@@ -55,7 +63,8 @@ export class BTConfig extends CitizenConfig {
     session: SessionStorageService = new SessionStorageService();
 
     constructor(public formService?: FormsActionsService,
-        public toastr?: ToastrService
+        public toastr?: ToastrService,
+        public commonService?: CommonService
     ) {
         super();
     }
@@ -73,9 +82,9 @@ export class BTConfig extends CitizenConfig {
         let redirectURLAfterPayment = (btService instanceof TicketingsService) ? BTConstants.MY_TICKETINGS_URL : BTConstants.MY_BOOKINGS_URL
 
         let payData = this.storePaymentInfo(err.error.data, redirectURLAfterPayment, btService.resourceType);
-       
-        let words = '';
-        //toWords.convert(payData.amount);
+
+
+        let words = this.commonService.getToWords(payData.amount);
         let html =
             `
                 <div class="text-center">
@@ -83,8 +92,7 @@ export class BTConfig extends CitizenConfig {
                     <div class="payAmount">
                         <i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
                     </div>
-                    <p>Rupees in words</p>
-                    <i class="fa fa-inr" aria-hidden="true">` + words + `</i>
+                    <p>Rupees in words</p>` + words + ` Rupees Only
                 </div>
                 `
         commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
@@ -123,14 +131,15 @@ export class BTConfig extends CitizenConfig {
         });
     }
 
-    redirectToCCAvenuePayment(err: any, commonService: CommonService, btService: BookingService | TicketingsService, paymentGateway, form?: FormGroup, router?: Router, applicationrouter?: any) {
-
+    redirectToCCAvenuePayment(err: any, commonService: CommonService, btService: BookingService | TicketingsService, paymentGateway, form?: FormGroup, router?: Router, applicationrouter?: any, extraParams?: any) {
+       
         let redirectURLAfterPayment = (btService instanceof TicketingsService) ? BTConstants.MY_TICKETINGS_URL : BTConstants.MY_BOOKINGS_URL
 
-        let payData = this.storePaymentInfo(err.error.data, redirectURLAfterPayment, btService.resourceType);
+        let payData = this.storePaymentInfo(err.error.data, redirectURLAfterPayment, btService.resourceType, extraParams);
 
-        let words = '';
-        //toWords.convert(payData.amount);
+
+
+        let words = commonService.getToWords(payData.amount);
         let html =
             `
                 <div class="text-center">
@@ -139,7 +148,7 @@ export class BTConfig extends CitizenConfig {
                         <i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
                     </div>
                     <p>Rupees in words</p>
-                    <i class="fa fa-inr" aria-hidden="true">` + words + `</i>
+                    ` + words + ` Rupees Only
                 </div>
                 `
         commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
@@ -157,6 +166,11 @@ export class BTConfig extends CitizenConfig {
             // })
 
         }, rj => {
+            
+            
+            if(payData.resourceType == "townhall"){
+                router.navigate([redirectURLAfterPayment]);
+            }
             // let errHtml = `
 			// 			<div class="alert alert-danger">
 			// 				Please Complete Payment, Otherwise the application will be considered as in-complete
@@ -189,7 +203,7 @@ export class BTConfig extends CitizenConfig {
      * Method is used to perform payment and after storing data to localhost redirects to payment gateway.
      * @param data - Object Data
      */
-    storePaymentInfo(data: any, redirectionURL: string, resourceType?: string): any {
+    storePaymentInfo(data: any, redirectionURL: string, resourceType?: string, extraParams?: any): any {
         let payData = {
             id: null,
             uniqueId: null,
@@ -212,6 +226,8 @@ export class BTConfig extends CitizenConfig {
             amount: data.amount
 
         };
+
+        payData = {...payData, ...extraParams};
 
 		/**
 		 * Storing Data to session.
@@ -246,5 +262,7 @@ export class BTConfig extends CitizenConfig {
 
         return !disableDateList.includes(day);
     }
+
+
 
 }

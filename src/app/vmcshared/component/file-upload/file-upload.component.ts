@@ -83,14 +83,21 @@ export class FileUploadComponentWaterTax implements OnInit {
 			let fileType = this.selectedFiles[0].type;
 			this.fileName = this.selectedFiles[0].name;
 			this.canUpload = true;
-			if (fileType === 'image/png' || fileType === 'image/jpg' || fileType === 'image/jpeg' || fileType === 'image/gif') {
+			if (fileType === 'image/png' || fileType === 'image/jpg' || fileType === 'image/jpeg' || fileType === 'image/gif' || fileType === 'application/pdf') {
 				let reader = new FileReader();
 				reader.onload = (e: any) => {
 					this.priviewImage = e.target.result;
 				}
 				reader.readAsDataURL(event.target.files[0]);
+				this.upload();
 			}
-			this.upload();
+			else {
+				this.canUpload = false;
+				this.fileName = '';
+				this.getFile = '';
+				this.priviewImage = '';
+				this.commonService.openAlert("Warning", "Uploaded file is not a valid format. Only JPG, PNG, GIF and PDF", "warning");
+			}
 		}
 
 	}
@@ -132,7 +139,6 @@ export class FileUploadComponentWaterTax implements OnInit {
 					this.uploadFileService.processFileToDMSServer(formData, setProgressBar => {
 						this.progress.percentage = setProgressBar;
 					}, successres => {
-						debugger
 						this.tostr.success(this.uploadModel.labelName ? this.uploadModel.labelName : this.uploadModel.documentLabelEn + " successfully uploaded", "File Uploaded");
 						this.canUpload = true;
 						this.isUploaded = false;

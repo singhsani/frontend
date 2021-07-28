@@ -21,6 +21,8 @@ export class ComponentConfig {
     public CONFIRM_UNSAVE_SAVE_MESSAGE = "Form Is not saved, Do you want to discard it?";
     public CONFIRM_UNSAVE_SAVE_TITLE = "Discard Changes";
     public DATE_HINT_MSG = "Hint: DD/MM/YYYY";
+    public currentTabIndex: number = 0;
+    public MONTH_HINT_MSG = "Hint: MM/YYYY";
 
     /**
      * User Defined Date Array

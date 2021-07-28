@@ -1,18 +1,20 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey">
-    <form class="searchBox">
-
-        <mat-form-field>
-            <input matInput autocomplete="off" class="capitalCase" trim="blur" appAlphaNumeric maxlength="12" #ecrcNoTextBox #searchInput="matInput" type="text"
-                placeholder="{{'pec_no' | translate: pecTranslateKey}}">
-            <button mat-button matSuffix mat-icon-button (click)="searchEmpRegByECRCNo($event,ecrcNoTextBox.value)">
-                <mat-icon>search</mat-icon>
-            </button>
-        </mat-form-field>
-
-        <!-- <button mat-raised-button type="button" class="editBtn" [hidden]="!prcRegForm.get('pecNo').value" color="primary" (click)="editPRCDetail()">
-            <mat-icon>edit</mat-icon>{{'edit' | translate:translateKey}}</button> -->
-    </form>
+    
 </app-title-bar>
+
+<form class="searchBox">
+
+    <mat-form-field>
+        <input matInput autocomplete="off" class="capitalCase" trim="blur" appAlphaNumeric maxlength="12" #ecrcNoTextBox #searchInput="matInput" type="text"
+            placeholder="{{'pec_no' | translate: pecTranslateKey}}">
+        <button mat-button matSuffix mat-icon-button (click)="searchEmpRegByECRCNo($event,ecrcNoTextBox.value)">
+            <mat-icon>search</mat-icon>
+        </button>
+    </mat-form-field>
+
+    <!-- <button mat-raised-button type="button" class="editBtn" [hidden]="!prcRegForm.get('pecNo').value" color="primary" (click)="editPRCDetail()">
+        <mat-icon>edit</mat-icon>{{'edit' | translate:translateKey}}</button> -->
+</form>
 
 <mat-card class="formClass cardBorder">
     <!--Start  form  -->
@@ -78,8 +80,8 @@
                     </mat-form-field>
 
                     <div class="col-md-4 ngSelect" formGroupName="ward">
-                        <ng-select placeholder="{{'ward_no' | translate: pecTranslateKey}}" formControlName="code">
-                            <ng-option *ngFor="let ward of wardNoArray" [value]="ward.code">{{ward.name}}</ng-option>
+                        <ng-select placeholder="{{'ward_no' | translate: pecTranslateKey}}" formControlName="wardzoneId">
+                            <ng-option *ngFor="let ward of wardNoArray" [value]="ward.wardzoneId">{{ward.wardzoneName}}</ng-option>
                         </ng-select>
                     </div>
 
@@ -151,7 +153,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th>S.No.</th>
                                     <th>YEAR</th>
                                     <th>MONTH</th>
                                     <th>TOTAL EMPLOYEES</th>
@@ -227,7 +229,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>S.No.</th>
                         <th>SUB ENTRY DESCRIPTION</th>
                         <th>NO. OF EMPLOYEE</th>
                     </tr>

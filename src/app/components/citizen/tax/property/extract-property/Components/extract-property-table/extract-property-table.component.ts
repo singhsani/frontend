@@ -117,7 +117,9 @@ export class ExtractPropertyTableComponent implements OnInit {
         }
       },
       (error) => {
-        this.commonService.callErrorResponse(error);
+        //this.commonService.callErrorResponse(error);
+        this.commonService.callInfoResponse(error);
+        this.serviceCharge = new ServiceCharge();
       });
   }
 
@@ -173,7 +175,26 @@ export class ExtractPropertyTableComponent implements OnInit {
             let retUrl: string = '/citizen/my-applications';
             let retAfterPayment: string = environment.returnUrl;
             if (err.status === 402) {
+              const resData = err.error.data;
               let payData = this.commonNascentService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
+              
+                if (this.commonNascentService.fromAdmin()) {
+							 	if(resData.isPaymentReceipt) {
+									const url = '/citizen/my-applications' + 
+									'?printPaymentReceipt=' + resData.isPaymentReceipt + 
+									'&apiCode=' + resData.serviceCode +
+									'&id=' + resData.serviceFormId;
+
+									this.router.navigateByUrl(url);
+								} else {		
+                //  this.openOfflinePaymentComponent(payData,retUrl,data.serviceCode,data.serviceFormId);
+                }
+							 }else{
+
+              const errData = err.error.data;
+              retUrl = retUrl + '?apiCode='+ errData.serviceCode + '&id=' + errData.serviceFormId;
+              // let payData = this.commonNascentService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
+              let words = this.commonService.getToWords(payData.amount);
               let html =
                 `
               <div class="text-center">
@@ -181,15 +202,17 @@ export class ExtractPropertyTableComponent implements OnInit {
                 <div class="payAmount">
                   <i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
                 </div>
-                <p>Rupees in words</p>
+                <p>Rupees in words</p>` + words + ` Rupees Only
               </div>
               `
-              this.commonNascentService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
-                this.paymentGateway.setPaymentDetailsFromActionBar(payData);
-                this.paymentGateway.openModel();
-              }, rj => {
-                return;
-              });
+                this.commonNascentService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
+                  this.paymentGateway.setPaymentDetailsFromActionBar(payData);
+                  this.paymentGateway.openModel();
+                }, rj => {
+                  return;
+                });
+
+              }
             } else {
               this.commonNascentService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
             }

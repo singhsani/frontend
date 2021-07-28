@@ -1,22 +1,26 @@
-<mat-card class="mt-4">
+<mat-card class="cardBorder">
     <form #formDetail="ngForm" (ngSubmit)="search(formDetail)">
         <div class="row">
             <div class="col-md-6">
                 <div class="ngSelect">
-                    <ng-select *ngIf="wardZoneLevel.length>=1" [items]="wardZoneLevel1List" bindLabel="wardzoneName"
-                        [placeholder]="!wardZoneLevel[0]?'': wardZoneLevel[0].levelName"
+                    <ng-select required *ngIf="wardZoneLevel.length>=1" [items]="wardZoneLevel1List" bindLabel="wardzoneName"
+                        [placeholder]="!wardZoneLevel[0]?'': wardZoneLevel[0].levelName + ' *'"
                         bindValue="parentWardzoneId" name="level1Id" (ngModelChange)="onChangedWardZone($event,2)"
                         #Level1Id="ngModel" [(ngModel)]="searchModel.level1Id">
                     </ng-select>
+                    <mat-error *ngIf="formDetail.form.get('level1Id') && formDetail.form.get('level1Id').invalid && formDetail.form.get('level1Id').touched">
+                      *Zone is required.</mat-error>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="ngSelect">
-                    <ng-select *ngIf="wardZoneLevel.length>=2" [items]="wardZoneLevel2List" bindLabel="wardzoneName"
-                        [placeholder]="!wardZoneLevel[1]?'': wardZoneLevel[1].levelName" bindValue="wardzoneId"
+                    <ng-select required *ngIf="wardZoneLevel.length>=2" [items]="wardZoneLevel2List" bindLabel="wardzoneName"
+                        [placeholder]="!wardZoneLevel[1]?'': wardZoneLevel[1].levelName + ' *'" bindValue="wardzoneId"
                         name="level2Id" (ngModelChange)="onChangedWardZone($event,3)" #Level2Id="ngModel"
                         [(ngModel)]="searchModel.level2Id">
                     </ng-select>
+                    <mat-error *ngIf="formDetail.form.get('level2Id') && formDetail.form.get('level2Id').invalid && formDetail.form.get('level2Id').touched">
+                      *Ward is required.</mat-error>
                 </div>
             </div>
         </div>
@@ -84,7 +88,10 @@
             Go
           </button>
         </div>
-        <div class="col-md-6 text-right mt-4">
+      </div>
+
+      <div class="fotButtonBar clearfix mt-0">
+        <div class="col-sm-12 col-md-12 text-right">
           <button mat-raised-button class="gray-btn ml-3" type="submit">
             <mat-icon>search</mat-icon> Search
           </button>
@@ -92,6 +99,7 @@
             <mat-icon>clear_all</mat-icon> Clear
           </button>
         </div>
-      </div>
+    </div>
+
     </form>
   </mat-card>

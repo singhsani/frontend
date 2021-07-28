@@ -55,14 +55,14 @@
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.contactNumberLength"
+						<input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" maxlength="10"
 						 formControlName="contactNo" required>
 						<control-messages [control]="finalFireNocForm.get('contactNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'office_contact_no' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.contactNumberLength"
+						<input matInput OnlyNumber placeholder="{{'office_contact_no' | translate:translateKey}}" type="tel" maxlength="10"
 						 formControlName="officeContactNo" required>
 						<control-messages [control]="finalFireNocForm.get('officeContactNo')"></control-messages>
 					</mat-form-field>
@@ -202,7 +202,7 @@
 				<div class="row">
 
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber [maxlength]="fireFacilityConfig.contactNumberLength" type="tel"
+						<input matInput required OnlyNumber type="tel" maxlength="10" minlength="10"
 						 formControlName="architectContactNo" placeholder="{{'architect_contact_number' | translate:translateKey }}">
 						<control-messages [control]="finalFireNocForm.get('architectContactNo')"></control-messages>
 					</mat-form-field>
@@ -305,12 +305,12 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="5" required OnlyNumber placeholder="{{'building_height' | translate:translateKey}}"
+						<input matInput maxlength="5" type="tel" required OnlyNumber placeholder="{{'building_height' | translate:translateKey}}"
 						 formControlName="buildingHeight">
 						<control-messages [control]="finalFireNocForm.get('buildingHeight')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="5" required appAlphaNumeric placeholder="{{'total_building_floor' | translate:translateKey}}"
+						<input matInput maxlength="5" type="tel" required OnlyNumber placeholder="{{'total_building_floor' | translate:translateKey}}"
 						 formControlName="totalBuildingFloor">
 						<control-messages [control]="finalFireNocForm.get('totalBuildingFloor')"></control-messages>
 					</mat-form-field>
@@ -397,8 +397,8 @@
 					</mat-form-field>
 					<!-- /gujarati -->
 
-					<mat-form-field class="col-md-4">
-						<textarea matInput  cols="50" required maxlength="200" placeholder="{{'other_information' | translate:translateKey}}"
+					<mat-form-field class="col-md-4 labelLonger twoLineDes">
+						<textarea matInput rows="2" cols="50" required maxlength="200" placeholder="{{'other_information' | translate:translateKey}}"
 						 formControlName="otherInformation"></textarea>
 						<control-messages [control]="finalFireNocForm.get('otherInformation')"></control-messages>
 					</mat-form-field>

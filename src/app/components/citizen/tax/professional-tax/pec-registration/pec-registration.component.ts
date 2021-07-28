@@ -51,15 +51,17 @@ export class PecRegistrationComponent implements OnInit {
 	apiCode: string = '';
 	showButtons: boolean = false;
 
-	dobMaxDate = moment(new Date()).subtract("18", "years").format("YYYY-MM-DD") ;
+	dobMaxDate = moment(new Date()).subtract("18", "years").format("YYYY-MM-DD");
 	maxDate: Date = new Date();
 	maxCommDate = moment().subtract(1, 'months').endOf('month').format('YYYY-MM-DD');// maxt Date for commencement
 	pecRegForm: FormGroup;
 	isDeleteBtnShow: boolean = true;
 	isQryParamExist: boolean = false;
 
-	isCensusNo : boolean = true;
-	selectedCensusNo : any = "CensusNo";
+	isCensusNo: boolean = true;
+	selectedCensusNo: any = "CensusNo";
+	isCensusSelected: boolean = true;
+	placeHolderMessage = null;
 
 	constructor(
 		private fb: FormBuilder,
@@ -68,7 +70,7 @@ export class PecRegistrationComponent implements OnInit {
 		private toastr: ToastrService,
 		private formService: FormsActionsService,
 		private profeService: ProfessionalTaxService,
-		private alertService : AlertService,
+		private alertService: AlertService,
 		private commonService: CommonService,
 		private dialog: MatDialog
 	) {
@@ -107,8 +109,8 @@ export class PecRegistrationComponent implements OnInit {
 		this.getBankNames();
 
 		/**
-		     * Update Permanent Address If 'officeResidentialAddressSame' is checked.
-		     */
+			 * Update Permanent Address If 'officeResidentialAddressSame' is checked.
+			 */
 		this.pecRegForm.controls.officeAddress.valueChanges.subscribe(data => {
 			if (this.pecRegForm.get('officeResidentialAddressSame').value) {
 				this.onSameAddressChange({ checked: true });
@@ -153,7 +155,8 @@ export class PecRegistrationComponent implements OnInit {
 			contactNo: null,
 			email: [null, ValidationService.emailValidator],
 			ward: this.fb.group({
-				code: [null, Validators.required], name: null,
+				wardzoneId: null,
+				wardzoneName: null
 			}),
 			applicantDob: null,
 			rcDate: [{ value: null, disabled: true }],
@@ -194,7 +197,7 @@ export class PecRegistrationComponent implements OnInit {
 				code: [null, Validators.required], name: null,
 			}),
 			applicableRate: [{ value: 0, disabled: true }],
-			otherProfession: null,
+			otherProfession: [null, ValidationService.alphaNumericValidation],
 			attachments: [],
 			formStatus: null,
 			officeResidentialAddressSame: null
@@ -255,8 +258,10 @@ export class PecRegistrationComponent implements OnInit {
 	selectCensusOrPropertyNo(value) {
 		if (value.value == 'CensusNo') {
 			this.isCensusNo = true;
+			this.isCensusSelected = true;
 		} else {
 			this.isCensusNo = false;
+			this.isCensusSelected = false;
 		}
 	}
 
@@ -265,6 +270,17 @@ export class PecRegistrationComponent implements OnInit {
 	 * @param propertyNo -entered property code
 	*/
 	isExistPropertyNo(propertyNo?: any, index?: any) {
+		var censusNoArray = this.pecRegForm.get('censusNo').value;
+		delete censusNoArray[censusNoArray.length - 1];
+		censusNoArray.forEach(element => {
+			if (censusNoArray.length > 1) {
+				if (element.census == propertyNo) {
+					this.commonService.openAlert("Error", "Property/Census Number Already Exists.", "warning");
+					this.removeCensus(index);
+					return false;
+				}
+			}
+		});
 		if (propertyNo)
 			this.profeService.isExistPropertyNoCheck(propertyNo).subscribe(res => {
 				if (res.list) {
@@ -289,13 +305,18 @@ export class PecRegistrationComponent implements OnInit {
 	addMoreCenus() {
 		this.isCensusNo = true;
 		let isValid = true;
-		if(this.pecRegForm.get('censusNo')['controls'].length == 5){
+		if (this.pecRegForm.get('censusNo')['controls'].length == 5) {
 			this.toastr.warning('maximum 5 census number allow');
-			return ;
+			return;
 		}
 		for (let i = 0; i < this.pecRegForm.get('censusNo')['controls'].length; i++) {
 			if (this.pecRegForm.get('censusNo')['controls'][i].invalid) {
 				isValid = false;
+				if(this.isCensusSelected){
+					this.placeHolderMessage = "Census No is Required";
+				}else{
+					this.placeHolderMessage = "Property No is Required";
+				}
 				this.config.getAllErrors(this.pecRegForm.get('censusNo')['controls'][i]);
 				break;
 			}
@@ -361,24 +382,8 @@ export class PecRegistrationComponent implements OnInit {
 	/**
 	 * This method use for set applicant details on submit
 	 */
-	getUserDetailsAndSubmit(){
-		if(this.pecRegForm.valid){
-			const dialogConfig = this.commonService.getApplicantDialogConfig();
-			const dialogRef = this.dialog.open(ApplicantDetailsComponent, dialogConfig);
-		    dialogRef.afterClosed().subscribe(details => {
-				if(details){
-					// this.pecRegForm.addControl('applicantName', new FormControl('', Validators.required));
-					this.pecRegForm.get('applicantFullName').setValue(details.applicantName);
-					this.pecRegForm.get('contactNo').setValue(details.cellNo);
-					this.pecRegForm.get('email').setValue(details.email)
-					this.onSubmit()
-				}
-			
-			})
-
-		}else{
-			this.onSubmit();
-		}
+	getUserDetailsAndSubmit() {
+		this.onSubmit();
 	}
 
 	/**
@@ -434,7 +439,7 @@ export class PecRegistrationComponent implements OnInit {
 						// 		this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
 						// 	});
 						// } else {
-						this.commonService.openAlert("PEC Registration Successful", "", "success", `Your Application Number is<br> <b>${res.uniqueId}</b> <br> Visit the department with original document`, cb => {
+						this.commonService.openAlert("PEC Registration Successful", "", "success", `Your Application Number is<br> <b>${res.uniqueId}</b> <br> Your Application is valid for 3 working days only. Kindly visit respective ward office with all the valid documents for approval.`, cb => {
 							this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
 						});
 						// }
@@ -673,7 +678,7 @@ export class PecRegistrationComponent implements OnInit {
 	*/
 	getAllWardNos() {
 		this.profeService.getAllWardNos().subscribe(res => {
-			this.wardNoArray = res.WARD;
+			this.wardNoArray = res;
 		});
 	}
 
@@ -726,11 +731,11 @@ export class PecRegistrationComponent implements OnInit {
 		this.pecRegForm.get('residentialAddress.id').setValue(id);
 	}
 
-	patchValue(){
+	patchValue() {
 		this.pecRegForm.patchValue(this.dummyJSON);
 	}
 
-	dummyJSON:any={
+	dummyJSON: any = {
 		"code": null,
 		"fieldView": null,
 		"fieldList": null,
@@ -745,69 +750,69 @@ export class PecRegistrationComponent implements OnInit {
 		"prcNo": null,
 		"registrationDate": "2019-12-09",
 		"applicantFullNameGuj": null,
-		"applicantFullName": "ggfgdfgdfgfdgfdg",
+		"applicantFullName": "Ram Bhai",
 		"gender": {
-		  "code": "MALE",
-		  "name": null
+			"code": "MALE",
+			"name": null
 		},
-		"establishmentName": "fdgfdgdfg",
-		"contactNo": "4353543543",
-		"email": null,
+		"establishmentName": "Tea Stall",
+		"contactNo": "8962749074",
+		"email": "chetan.porwal@nascentinfo.com",
 		"ward": {
-		  "code": "WARD_1",
-		  "name": null
+			"code": "WARD_1",
+			"name": null
 		},
 		"applicantDob": "1970-01-01",
 		"rcDate": null,
-		"commencementDate": "2019-12-01",
+		"commencementDate": "2019-04-01",
 		"vatNo": null,
 		"aadharNo": null,
 		"officeAddress": {
-		  "addressType": "PF_PEC_OFFICE_ADDRESS",
-		  "buildingName": "dfgdfgfdg",
-		  "streetName": null,
-		  "landmark": null,
-		  "area": "fdgdfgfdg",
-		  "state": "GUJARAT",
-		  "district": null,
-		  "city": "Vadodara",
-		  "country": "INDIA",
-		  "pincode": "435345",
-		  "buildingNameGuj": "દ્ફ્ગ્દ્ફ્ગ્ફ્દ્ગ",
-		  "streetNameGuj": null,
-		  "landmarkGuj": null,
-		  "areaGuj": "ફ્દ્ગ્દ્ફ્ગ્ફ્દ્ગ",
-		  "stateGuj": null,
-		  "districtGuj": null,
-		  "cityGuj": null,
-		  "countryGuj": null
+			"addressType": "PF_PEC_OFFICE_ADDRESS",
+			"buildingName": "44",
+			"streetName": null,
+			"landmark": null,
+			"area": "Akota",
+			"state": "GUJARAT",
+			"district": null,
+			"city": "Vadodara",
+			"country": "INDIA",
+			"pincode": "435345",
+			"buildingNameGuj": "દ્ફ્ગ્દ્ફ્ગ્ફ્દ્ગ",
+			"streetNameGuj": null,
+			"landmarkGuj": null,
+			"areaGuj": "ફ્દ્ગ્દ્ફ્ગ્ફ્દ્ગ",
+			"stateGuj": null,
+			"districtGuj": null,
+			"cityGuj": null,
+			"countryGuj": null
 		},
 		"residentialAddress": {
-		  "addressType": "PF_PEC_RESIDENTIAL_ADDRESS",
-		  "buildingName": "dfgdfgfdg",
-		  "streetName": null,
-		  "landmark": null,
-		  "area": "fdgdfgfdg",
-		  "state": "GUJARAT",
-		  "district": null,
-		  "city": "Vadodara",
-		  "country": "INDIA",
-		  "pincode": "435345",
-		  "buildingNameGuj": "દ્ફ્ગ્દ્ફ્ગ્ફ્દ્ગ",
-		  "streetNameGuj": null,
-		  "landmarkGuj": null,
-		  "areaGuj": "ફ્દ્ગ્દ્ફ્ગ્ફ્દ્ગ",
-		  "stateGuj": null,
-		  "districtGuj": null,
-		  "cityGuj": null,
-		  "countryGuj": null
+			"addressType": "PF_PEC_RESIDENTIAL_ADDRESS",
+			"buildingName": "44",
+			"streetName": null,
+			"landmark": null,
+			"area": "Akota",
+			"state": "GUJARAT",
+			"district": null,
+			"city": "Vadodara",
+			"country": "INDIA",
+			"pincode": "435345",
+			"buildingNameGuj": "દ્ફ્ગ્દ્ફ્ગ્ફ્દ્ગ",
+			"streetNameGuj": null,
+			"landmarkGuj": null,
+			"areaGuj": "ફ્દ્ગ્દ્ફ્ગ્ફ્દ્ગ",
+			"stateGuj": null,
+			"districtGuj": null,
+			"cityGuj": null,
+			"countryGuj": null
 		},
-		"bankAccountNo": "44353454354353454354",
+		"bankAccountNo": "443534543543534",
 		"bank": {
-		  "code": "ALLAHABAD_BANK",
-		  "name": null
+			"code": "ALLAHABAD_BANK",
+			"name": null
 		},
-		"branchName": "dfgfgfdgfdgfdgdg",
+		"branchName": "Teen Darwaza",
 		"pancardNo": "ABCDE1234F",
 		"centralSalesTax": null,
 		"shopAndLicenseNo": "sdfsdfsdfsdf",
@@ -816,31 +821,31 @@ export class PecRegistrationComponent implements OnInit {
 		"companyRegNo": "sdfsdfsdf",
 		"gstNo": "29ABCDE1234F2Z5",
 		"censusNo": [
-		  {
-			"census": "1111"
-		  }
+			{
+				"census": "1111"
+			}
 		],
 		"entry": {
-		  "code": "ENTRY_002",
-		  "name": null
+			"code": "ENTRY_002",
+			"name": null
 		},
 		"subEntry": {
-		  "code": "002_A",
-		  "name": null
+			"code": "002_A",
+			"name": null
 		},
 		"constitution": {
-		  "code": "INDIVIDUAL",
-		  "name": null
+			"code": "INDIVIDUAL",
+			"name": null
 		},
 		"professionConstitution": {
-		  "code": "INSURANCE_AGENT",
-		  "name": null
+			"code": "INSURANCE_AGENT",
+			"name": null
 		},
 		"applicableRate": 2000,
 		"otherProfession": null,
 		"attachments": [],
 		"formStatus": "SUBMITTED",
 		"officeResidentialAddressSame": true
-	  };
+	};
 
 }

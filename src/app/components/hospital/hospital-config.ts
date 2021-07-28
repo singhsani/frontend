@@ -15,6 +15,9 @@ export class HospitalConfig extends ComponentConfig {
     public Child_Weight_Error: string;
     public MIN_CHILD_WEIGHT: string;
     public ONLY_ONE_CHILD_REG_WITH_DELAYED : string;
+    public AGE_ERROR : string;
+    public ERROR: string;
+    public PRAGENCY_DURATION: string; 
 
     constructor(private certType?: string) {
         super();
@@ -22,13 +25,13 @@ export class HospitalConfig extends ComponentConfig {
             this.DELAYED_REGISTRATION_TITLE = `Delayed ${this.certType.charAt(0).toUpperCase() + this.certType.slice(1)} Registration`;
 
             this.LESS_30_AND_MORE_21_MESSAGE = `<p>It will considered as delayed ${this.certType} registration because
-             registration date is more than 21 days and there will be extra Fee of Rs. 20=00 plus departmental charges as delayed fee.`;
+             registration date is more than 21 days and there will be extra Fee of Rs. 2.00 plus departmental charges as delayed fee.`;
 
             this.LESS_YEAR_AND_MORE_30_MESSAGE = `<p>It will considered as delayed ${this.certType} registration because
-             registration date is more than 30 days so Rs. 5=00 plus departmental charges as delayed.`;
+             registration date is more than 30 days so Rs. 5.00 plus departmental charges as delayed.`;
 
              this.LESS_YEAR_AND_MORE_30_MESSAGE_BIRTH = `<p>It will considered as delayed ${this.certType} registration because
-             registration date is more than 30 days so Rs. 50=00 plus departmental charges as delayed fee and
+             registration date is more than 30 days so Rs. 5.00 plus departmental charges as delayed fee and
              extra attachment Affidavit Or health Order. 
              on Rs. 50/- Stamp paper. Registration needs to be approved by Registrar of Birth, VMC.`;
 
@@ -38,6 +41,9 @@ export class HospitalConfig extends ComponentConfig {
             this.Child_Weight_Error = "Child Weight Error";
             this.MIN_CHILD_WEIGHT = "Child weight should be in between 0.300 to 10 kg";
             this.ONLY_ONE_CHILD_REG_WITH_DELAYED = "At a time you can register only one child as delayed registration. (For more than 30 days delaye)"
+            this.AGE_ERROR = "Mother's delivery age should be greater than Mother's marriage age.";
+            this.ERROR = "Error";
+            this.PRAGENCY_DURATION = "Pregnancy duration is between 25 to 40"
 
         }
     }

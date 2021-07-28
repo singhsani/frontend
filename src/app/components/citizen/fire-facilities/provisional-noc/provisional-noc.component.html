@@ -1,7 +1,7 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey">
-	<button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
+	<!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
 		Patch Value
-	</button>
+	</button> -->
 </app-title-bar>
 
 <mat-card class="formClass cardBorder">
@@ -57,8 +57,8 @@
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'office_contact_no' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.contactNumberLength"
-						 formControlName="officeContactNo" required>
+						<input matInput OnlyNumber placeholder="{{'office_contact_no' | translate:translateKey}}"
+						 formControlName="officeContactNo" type="tel" required maxlength="10" minlength="10">
 						<control-messages [control]="provisionalNocForm.get('officeContactNo')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
@@ -113,7 +113,7 @@
 						<control-messages [control]="provisionalNocForm.get('appliedForId').get('code')"></control-messages>
 					</div>
 					<div class="col-md-4 ngSelect" formGroupName="usageTypeId">
-						<ng-select required placeholder="{{'usage_type' | translate:translateKey}} *" formControlName="code">
+						<ng-select required placeholder="{{'usage_type' | translate:translateKey}} *" formControlName="code" (change)="documentManage()">
 							<ng-option *ngFor="let type of FS_USAGE_TYPE" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="provisionalNocForm.get('usageTypeId').get('code')"></control-messages>
@@ -203,8 +203,8 @@
 				<div class="row">
 
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber [maxlength]="fireFacilityConfig.contactNumberLength" type="tel"
-						 formControlName="architectContactNo" placeholder="{{'architect_contact_number' | translate:translateKey }}">
+						<input matInput required OnlyNumber type="tel"
+						 formControlName="architectContactNo" placeholder="{{'architect_contact_number' | translate:translateKey }}" maxlength="10" minlength="10">
 						<control-messages [control]="provisionalNocForm.get('architectContactNo')"></control-messages>
 					</mat-form-field>
 
@@ -306,12 +306,12 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="5" required appNumeric placeholder="{{'building_height' | translate:translateKey}}"
+						<input matInput maxlength="5" required type="tel" appNumeric placeholder="{{'building_height' | translate:translateKey}}"
 						 formControlName="buildingHeight">
 						<control-messages [control]="provisionalNocForm.get('buildingHeight')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="5" required appAlphaNumeric placeholder="{{'total_building_floor' | translate:translateKey}}"
+						<input matInput maxlength="5" required OnlyNumber type="tel" placeholder="{{'total_building_floor' | translate:translateKey}}"
 						 formControlName="totalBuildingFloor">
 						<control-messages [control]="provisionalNocForm.get('totalBuildingFloor')"></control-messages>
 					</mat-form-field>
@@ -399,7 +399,7 @@
 					</mat-form-field>
 					<!-- /gujarati -->
 
-					<mat-form-field class="col-md-6">
+					<mat-form-field class="col-md-6 labelLonger">
 						<textarea matInput rows="2" cols="50" required maxlength="200" placeholder="{{'other_information' | translate:translateKey}}"
 						 formControlName="otherInformation"></textarea>
 						<control-messages [control]="provisionalNocForm.get('otherInformation')"></control-messages>

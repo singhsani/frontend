@@ -82,6 +82,14 @@ export class BookStadiumComponent implements OnInit {
 
     displayedColumns: Array<string> = ['id', 'shiftType', 'bookingDate', 'startTime', 'endTime', 'rent', 'electricCharges', 'administrationCharges', 'showTax', 'subTotal', 'gstAmount', 'total'];
 
+    displayedColumnsFeeDetails: string[] = ['sno', 'programmePurpose', 'bookingRent', 'administrativeCharge', 'gst', 'deposit'];
+    dataSource = [
+          {sno: 1, programmePurpose:"COMMERCIAL", bookingRent:"60,000.00", administrativeCharge: "5,000.00", gst:"11,700.00", deposit:"30,000.00"},
+          {sno: 2, programmePurpose:"NON COMMERCIAL", bookingRent:"15,000.00", administrativeCharge: "2,000.00", gst:"3,060.00", deposit:"10,000.00"},
+          {sno: 3, programmePurpose:"RELIGION BASE/ SEMINAR/ CULTURAL", bookingRent:" 7,500.00", administrativeCharge: "2,000.00", gst:"1,710.00", deposit:"5,000.00"},
+          {sno: 4, programmePurpose:"SCHOOL", bookingRent:"2,000.00", administrativeCharge: "1,000.00", gst:"540.00", deposit:"2,000.00"},
+      ];
+
     startMinDate: Date = moment(new Date()).add(1, 'day').toDate();
     endMinDate: Date = moment(new Date()).add(1, 'day').toDate();
     maxEndDate:any;
@@ -103,9 +111,9 @@ export class BookStadiumComponent implements OnInit {
              * Static headlines
              */
         this.head_lines = `Online Stadium Booking facility is the convenient and
-		easy way to book the Stadium of Vadodara Municpal Corporation. You can
+		easy way to book the Stadium of Vadodara Municipal Corporation. You can
     view the availiblity details of the stadium and select booking date.
-    The booking is confirmed on the successfull online payment of the rent amount
+    The booking is confirmed on the successfull online payment of the rent, administration charges, gst and deposit amount
     for selected date`;
 
         this.createStadiumAvailiblityForm();
@@ -124,7 +132,7 @@ export class BookStadiumComponent implements OnInit {
     }
 
     /**
-     * This method is used to set endDate 3 months after the selected start date 
+     * This method is used to set endDate 3 months after the selected start date
      * @param date - selected start date
      */
     onDateChange(date){
@@ -157,12 +165,15 @@ export class BookStadiumComponent implements OnInit {
             confirmMobile: null,
             applicantName: null,
             attachment: null,
+            panCard:[null, ValidationService.panValidator],
+            gstNo:[null, ValidationService.gstNoValidator],
             // bankName: this._fb.group({
             //     code: [null, [Validators.required]],
             //     name: null
             // }),
             bookingDate: null,
             bookingFrom: null,
+            eventDetails: [null, Validators.required],
             bookingPurposeMaster: this._fb.group({
                 code: [null, [Validators.required]],
                 name: null
@@ -184,6 +195,9 @@ export class BookStadiumComponent implements OnInit {
             version: 0,
             termsCondition: null,
             agree: null,
+            eventFromDate: null,
+            eventToDate: null,
+            programmePurpose: null,
         });
     }
 
@@ -204,6 +218,8 @@ export class BookStadiumComponent implements OnInit {
     getResourceList() {
         this.bookingService.getResourceList().subscribe(resp => {
             this.STADIUMS = resp.data;
+            this.stadiumSearchForm.get('code').setValue(resp.data[0].name);
+            this.stadiumSearchForm.get('code').disable();
         })
     }
 
@@ -217,7 +233,8 @@ export class BookStadiumComponent implements OnInit {
 		    * Filter Object to get list of available dates.
 		    */
             let filterData = {
-                resourceName: this.stadiumSearchForm.get('code').value,
+                //resourceName: this.stadiumSearchForm.get('code').value,
+                resourceName: this.STADIUMS[0].code,
                 startDate: moment(this.stadiumSearchForm.get('startDate').value).format("YYYY-MM-DD"),
                 endDate: moment(this.stadiumSearchForm.get('endDate').value).format("YYYY-MM-DD"),
             }
@@ -270,6 +287,8 @@ export class BookStadiumComponent implements OnInit {
                         this.bookingService.printAcknowledgementReceipt(resp.data.refNumber).subscribe(acknowledgementHTML => {
                             let sectionToPrint: any = document.getElementById('sectionToPrint');
                             sectionToPrint.innerHTML = acknowledgementHTML;
+                            let refNumber = this.stadiumApplicationForm.get('refNumber').value;
+                            this.sendSms(refNumber, "SUBMIT");
                             setTimeout(() => {
                                 window.print();
                                 this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
@@ -315,11 +334,18 @@ export class BookStadiumComponent implements OnInit {
                 appointments: this.selectedShift.map(shifts => shifts.uniqueId)
             }
             this.bookingService.shortListBookings(shortListData).subscribe(resp => {
+
+                this.stadiumApplicationForm.get('programmePurpose').setValue(resp.data.bookingPurposeMaster.name);
+                this.stadiumApplicationForm.get('programmePurpose').disable();
                 this.showStadiumSearchForm = false;
                 this.stadiumApplicationForm.patchValue(resp.data);
                 this.addressComp.getCountryLists();
                 if (resp.data.status == this.bookingConstants.DRAFT) {
                     this.bookingService.searchPayment(resp.data.refNumber).subscribe(payResp => {
+                        this.stadiumApplicationForm.get('eventFromDate').setValue(payResp.data.EVENT_DATE_FROM);
+                        this.stadiumApplicationForm.get('eventFromDate').disable();
+                        this.stadiumApplicationForm.get('eventToDate').setValue(payResp.data.EVENT_DATE_TO);
+                        this.stadiumApplicationForm.get('eventToDate').disable();
                         this.paymentObject = payResp.data;
                         this.showPaymentReciept = true;
                         this.confirmRef.hide();
@@ -360,4 +386,33 @@ export class BookStadiumComponent implements OnInit {
             return false;
         }
     }
+
+    sendSms(refNumber:any, eventType:any){
+        if(refNumber){
+            this.bookingService.sendSms(refNumber, eventType).subscribe(res =>{
+            },err => {
+                this.toastr.error("Something went wrong"); })
+        }else{
+            this.toastr.error("Invalid request");
+        }
+    }
+
+    /**
+       * Get user data
+       */
+      getUserProfile() {
+        this.bookingService.getUserProfile().subscribe(resp => {
+            this.stadiumApplicationForm.get('applicantName').setValue(resp.data.firstName + ' ' + resp.data.lastName);
+            this.stadiumApplicationForm.get('applicantMobile').setValue(resp.data.cellNo);
+            this.stadiumApplicationForm.get('confirmMobile').setValue(resp.data.cellNo);
+            this.stadiumApplicationForm.get('emailId').setValue(resp.data.email);
+            this.stadiumApplicationForm.get('confirmEmailId').setValue(resp.data.email);
+          },
+          err => {
+            this.toster.error("Server Error");
+          });
+        this.stadiumApplicationForm.get('applicantAddress').get('country').setValue('INDIA');
+        this.stadiumApplicationForm.get('applicantAddress').get('state').setValue('GUJARAT');
+        this.stadiumApplicationForm.get('applicantAddress').get('city').setValue('Vadodara');
+      }
 }

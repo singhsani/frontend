@@ -11,9 +11,9 @@
 			<mat-icon>edit</mat-icon>{{'edit' | translate :prcTranslateKey}}
 		</button>
 	</form> -->
-	<button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
+	<!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
 		Patch Value
-	</button>	
+	</button>    -->
 </app-title-bar>
 
 <mat-card class="formClass cardBorder">
@@ -35,48 +35,54 @@
 					</mat-form-field> -->
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" appDate formControlName="registrationDate" [max]="maxDate" [matDatepicker]="picker" (dateChange)="onDateChange('registrationDate', $event.value)"
-						 placeholder="{{'registration_date' | translate: translateKey}}">
+						<input matInput autocomplete="off" appDate formControlName="registrationDate" [max]="maxDate"
+							[matDatepicker]="picker" (dateChange)="onDateChange('registrationDate', $event.value)"
+							placeholder="{{'registration_date' | translate: translateKey}}">
 						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #picker></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" appValidationFields validationFieldsType="onlyNameWithSpace" maxlength="100" formControlName="applicantFullName"
-						 type="text" placeholder="{{'applicant_full_name' | translate: translateKey}}" required>
+						<input matInput autocomplete="off" appValidationFields validationFieldsType="onlyNameWithSpace"
+							maxlength="100" formControlName="applicantFullName" type="text"
+							placeholder="{{'applicant_full_name' | translate: translateKey}}" required>
 						<control-messages [control]="pecRegForm.get('applicantFullName')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 radioBtnError" formGroupName="gender">
 						<mat-label>{{'gender' | translate: translateKey}} *</mat-label>
 						<mat-radio-group class="example-radio-group" formControlName="code">
-							<mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name}}</mat-radio-button>
+							<mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name}}
+							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="pecRegForm.get('gender').get('code')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput  appValidationFields validationFieldsType="onlyNameWithSpace" autocomplete="off" maxlength="100" type="text"
-						 formControlName="establishmentName" placeholder="{{'establishment_name' | translate: translateKey}}" required>
+						<input matInput appValidationFields validationFieldsType="onlyNameWithSpace" autocomplete="off"
+							maxlength="100" type="text" formControlName="establishmentName"
+							placeholder="{{'establishment_name' | translate: translateKey}}" required>
 						<control-messages [control]="pecRegForm.get('establishmentName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<span matPrefix>+91 &nbsp;</span>
-						<input matInput OnlyNumber placeholder="{{'contact_no' | translate:translateKey}}" type="tel" maxlength="10" minlength="10"
-						 formControlName="contactNo" required>
+						<input matInput OnlyNumber placeholder="{{'contact_no' | translate:translateKey}}" type="tel"
+							maxlength="10" minlength="10" formControlName="contactNo" required>
 						<control-messages [control]="pecRegForm.get('contactNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" maxlength="50" placeholder="{{'email' | translate:translateKey}}" type="email" formControlName="email">
+						<input matInput autocomplete="off" maxlength="50"
+							placeholder="{{'email' | translate:translateKey}}" type="email" formControlName="email">
 						<control-messages [control]="pecRegForm.get('email')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" appDate [max]="maxDate" [matDatepicker]="rcpicker" formControlName="rcDate" (dateChange)="onDateChange('rcDate', $event.value)"
-						 placeholder="{{'rc_date' | translate: translateKey}}" required>
+						<input matInput autocomplete="off" appDate [max]="maxDate" [matDatepicker]="rcpicker"
+							formControlName="rcDate" (dateChange)="onDateChange('rcDate', $event.value)"
+							placeholder="{{'rc_date' | translate: translateKey}}" required>
 						<mat-datepicker-toggle matSuffix [for]="rcpicker"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #rcpicker></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
@@ -84,15 +90,18 @@
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="ward">
-						<ng-select placeholder="{{'ward_no' | translate: translateKey}} *" formControlName="code">
-							<ng-option *ngFor="let ward of wardNoArray" [value]="ward.code">{{ward.name}}</ng-option>
+						<ng-select placeholder="{{'ward_no' | translate: translateKey}} *" required
+							formControlName="wardzoneId">
+							<ng-option *ngFor="let ward of wardNoArray" [value]="ward.wardzoneId">{{ward.wardzoneName}}
+							</ng-option>
 						</ng-select>
-						<control-messages [control]="pecRegForm.get('ward').get('code')"></control-messages>
+						<control-messages [control]="pecRegForm.get('ward').get('wardzoneId')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" appDate formControlName="applicantDob" [max]="dobMaxDate" [matDatepicker]="dobpicker" (dateChange)="onDateChange('applicantDob', $event.value)"
-						 placeholder="{{'applicant_dob' | translate: translateKey}}" required>
+						<input matInput autocomplete="off" appDate formControlName="applicantDob" [max]="dobMaxDate"
+							[matDatepicker]="dobpicker" (dateChange)="onDateChange('applicantDob', $event.value)"
+							placeholder="{{'applicant_dob' | translate: translateKey}}" required>
 						<mat-datepicker-toggle matSuffix [for]="dobpicker"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #dobpicker></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
@@ -100,9 +109,9 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" appDate formControlName="commencementDate" [max]="maxDate" [matDatepicker]="docpicker"
-						 (dateChange)="onDateChange('commencementDate', $event.value)" placeholder="{{'date_of_commencement' | translate: translateKey}}"
-						 required>
+						<input matInput autocomplete="off" appDate formControlName="commencementDate" [max]="maxDate"
+							[matDatepicker]="docpicker" (dateChange)="onDateChange('commencementDate', $event.value)"
+							placeholder="{{'date_of_commencement' | translate: translateKey}}" required>
 						<mat-datepicker-toggle matSuffix [for]="docpicker"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #docpicker></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
@@ -110,28 +119,35 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput appAlphaNumeric autocomplete="off" type="text" maxlength="20" formControlName="vatNo" placeholder="{{'vat_no' | translate: translateKey}}">
+						<input matInput appAlphaNumeric autocomplete="off" type="text" maxlength="20"
+							formControlName="vatNo" placeholder="{{'vat_no' | translate: translateKey}}">
 						<control-messages [control]="pecRegForm.get('vatNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" type="tel" formControlName="aadharNo" OnlyNumber minlength="12" maxlength="12" placeholder="{{'aadhaar_no' | translate: translateKey}}">
+						<input matInput autocomplete="off" type="tel" formControlName="aadharNo" OnlyNumber
+							minlength="12" maxlength="12" placeholder="{{'aadhaar_no' | translate: translateKey}}">
 						<control-messages [control]="pecRegForm.get('aadharNo')"></control-messages>
 					</mat-form-field>
 
 
 					<h2>{{'office_address' | translate: translateKey}}</h2>
-					<app-address #officeAddr [requiredFeilds]="true" [formType]="'PFT'" [addressFormGroup]="pecRegForm.get('officeAddress')"></app-address>
+					<app-address #officeAddr [requiredFeilds]="true" [formType]="'PFT'"
+						[addressFormGroup]="pecRegForm.get('officeAddress')"></app-address>
 
-					<mat-checkbox class="col-md-12 mt-2" formControlName="officeResidentialAddressSame" (change)="onSameAddressChange($event)">{{'same_address' | translate: translateKey}}</mat-checkbox>
+					<mat-checkbox class="col-md-12 mt-2" formControlName="officeResidentialAddressSame"
+						(change)="onSameAddressChange($event)">{{'same_address' | translate: translateKey}}
+					</mat-checkbox>
 
 					<h2>{{'residential_address' | translate: translateKey}}</h2>
-					<app-address #resAddr [requiredFeilds]="true" [formType]="'PFT'" [addressFormGroup]="pecRegForm.get('residentialAddress')"></app-address>
+					<app-address #resAddr [requiredFeilds]="true" [formType]="'PFT'"
+						[addressFormGroup]="pecRegForm.get('residentialAddress')"></app-address>
 				</div>
 
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">
-						<button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 1">{{'next' | translate:actionBarKey}}</button>
+						<button class="pull-right" type="button" mat-raised-button color="primary"
+							(click)="tabIndex = 1">{{'next' | translate:actionBarKey}}</button>
 					</div>
 				</div>
 
@@ -142,8 +158,8 @@
 			<mat-tab [label]="stepLable2 | translate: translateKey">
 				<div class="row stepperMinHeight">
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" maxlength="20" OnlyNumber formControlName="bankAccountNo" type="tel" placeholder="{{'bank_account_no' | translate: translateKey}}"
-						 required>
+						<input matInput autocomplete="off" minlength="9" maxlength="18" OnlyNumber formControlName="bankAccountNo"
+							type="tel" placeholder="{{'bank_account_no' | translate: translateKey}}" required>
 						<control-messages [control]="pecRegForm.get('bankAccountNo')"></control-messages>
 					</mat-form-field>
 
@@ -155,8 +171,9 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields validationFieldsType="onlyNameWithSpace" autocomplete="off" maxlength="100" formControlName="branchName" type="text" placeholder="{{'branch_name' | translate: translateKey}}"
-						 required>
+						<input matInput appValidationFields validationFieldsType="onlyNameWithSpace" autocomplete="off"
+							maxlength="100" formControlName="branchName" type="text"
+							placeholder="{{'branch_name' | translate: translateKey}}" required>
 						<control-messages [control]="pecRegForm.get('branchName')"></control-messages>
 					</mat-form-field>
 
@@ -164,8 +181,10 @@
 
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">
-						<button class="liteBorder pull-left" type="button" mat-raised-button (click)="tabIndex = 0">{{'back' | translate:actionBarKey}}</button>
-						<button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 2">{{'next' | translate:actionBarKey}}</button>
+						<button class="liteBorder pull-left" type="button" mat-raised-button
+							(click)="tabIndex = 0">{{'back' | translate:actionBarKey}}</button>
+						<button class="pull-right" type="button" mat-raised-button color="primary"
+							(click)="tabIndex = 2">{{'next' | translate:actionBarKey}}</button>
 					</div>
 				</div>
 			</mat-tab>
@@ -175,19 +194,22 @@
 			<mat-tab [label]="stepLable3 | translate: translateKey">
 				<div class="row stepperMinHeight">
 					<mat-form-field class="col-md-6">
-						<input matInput autocomplete="off" maxlength="10" appAlphaNumeric formControlName="pancardNo" type="text" placeholder="{{'pan_card_no' | translate: translateKey}}"
-						 required class="capitalCase">
+						<input matInput autocomplete="off" maxlength="10" appAlphaNumeric formControlName="pancardNo"
+							type="text" placeholder="{{'pan_card_no' | translate: translateKey}}" required
+							class="capitalCase">
 						<control-messages [control]="pecRegForm.get('pancardNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput autocomplete="off" class="capitalCase" maxlength="15" appAlphaNumeric formControlName="gstNo" type="text" placeholder="{{'gst_no' | translate: translateKey}}">
+						<input matInput autocomplete="off" class="capitalCase" maxlength="15" appAlphaNumeric
+							formControlName="gstNo" type="text" placeholder="{{'gst_no' | translate: translateKey}}">
 						<control-messages [control]="pecRegForm.get('gstNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput autocomplete="off" maxlength="20" appAlphaNumeric formControlName="shopAndLicenseNo" type="text" placeholder="{{'shop_and_license_no' | translate: translateKey}}"
-						 required>
+						<input matInput autocomplete="off" maxlength="20" appAlphaNumeric
+							formControlName="shopAndLicenseNo" type="text"
+							placeholder="{{'shop_and_license_no' | translate: translateKey}}" required>
 						<control-messages [control]="pecRegForm.get('shopAndLicenseNo')"></control-messages>
 					</mat-form-field>
 
@@ -197,44 +219,53 @@
 						</mat-form-field> -->
 
 					<mat-form-field class="col-md-6">
-						<input matInput autocomplete="off" maxlength="50" appAlphaNumeric formControlName="companyRegNo" type="text" placeholder="{{'company_reg_no' | translate: translateKey}}">
+						<input matInput autocomplete="off" maxlength="50" appAlphaNumeric formControlName="companyRegNo"
+							type="text" placeholder="{{'company_reg_no' | translate: translateKey}}">
 						<control-messages [control]="pecRegForm.get('companyRegNo')"></control-messages>
 					</mat-form-field>
 
 
 					<!-- This section is for adding multiple census number-->
 					<div class="width100p" formArrayName="censusNo">
-						<div class="row" *ngFor="let item of pecRegForm.get('censusNo')['controls']; let i = index;" [formGroupName]="i">
-						<div class="col-md-3">
+						<div class="row" *ngFor="let item of pecRegForm.get('censusNo')['controls']; let i = index;"
+							[formGroupName]="i">
+							<div class="col-md-3">
 								<mat-form-field>
-									<mat-select (selectionChange)="selectCensusOrPropertyNo($event);"  placeholder="{{'census_no' | translate: translateKey}}">
-										<mat-option  value="CensusNo">Census No</mat-option>
+									<mat-select style="margin-top: 15px !important;"
+										(selectionChange)="selectCensusOrPropertyNo($event);"
+										placeholder="{{'census_no' | translate: translateKey}}">
+										<mat-option value="CensusNo">Census No</mat-option>
 										<mat-option value="PropertyNo">Property No</mat-option>
 									</mat-select>
 								</mat-form-field>
+							</div>
+							<mat-form-field class="col-md-3" *ngIf="isCensusNo">
+								<input style="margin-top: 15px !important;" matInput autocomplete="off"
+									appMaskCensusNumber maxlength="21" formControlName="census" type="text"
+									(focusout)="isExistPropertyNo($event.target.value,i)" required>
+								<button *ngIf="pecRegForm.get('censusNo')['controls'].length > 1 && isDeleteBtnShow"
+									title="Remove Census" class="deleteBtn pull-right text-right" type="button"
+									mat-icon-button color="warn" (click)="removeCensus(i)">
+									<i class="fa fa-times"></i>
+								</button>
+								<mat-error *ngIf="placeHolderMessage !== null">{{placeHolderMessage}}</mat-error>
+							</mat-form-field>
+							<mat-form-field class="col-md-3" *ngIf="!isCensusNo">
+								<input style="margin-top: 15px !important;" matInput autocomplete="off"
+									appMaskPropertNumber maxlength="21" formControlName="census" type="text"
+									(focusout)="isExistPropertyNo($event.target.value,i)" required>
+								<button *ngIf="pecRegForm.get('censusNo')['controls'].length > 1 && isDeleteBtnShow"
+									title="Remove Census" class="deleteBtn pull-right text-right" type="button"
+									mat-icon-button color="warn" (click)="removeCensus(i)">
+									<i class="fa fa-times"></i>
+								</button>
+								<mat-error *ngIf="placeHolderMessage !== null">{{placeHolderMessage}}</mat-error>
+							</mat-form-field>
 						</div>
-						<mat-form-field class="col-md-3" *ngIf="isCensusNo">
-							<input matInput autocomplete="off" appMaskCensusNumber maxlength="21" formControlName="census" type="text" (focusout)="isExistPropertyNo($event.target.value,i)"
-							 required>
-							<button *ngIf="pecRegForm.get('censusNo')['controls'].length > 1 && isDeleteBtnShow" title="Remove Census" class="deleteBtn pull-right text-right"
-							 type="button" mat-icon-button color="warn" (click)="removeCensus(i)">
-								<i class="fa fa-times"></i>
-							</button>
-							<control-messages [control]="pecRegForm.get('censusNo')['controls'][i].get('census')"></control-messages>
-						</mat-form-field>
-						<mat-form-field class="col-md-3" *ngIf="!isCensusNo">
-							<input matInput autocomplete="off" appMaskPropertNumber maxlength="21" formControlName="census" type="text" (focusout)="isExistPropertyNo($event.target.value,i)"
-							 required>
-							<button *ngIf="pecRegForm.get('censusNo')['controls'].length > 1 && isDeleteBtnShow" title="Remove Census" class="deleteBtn pull-right text-right"
-							 type="button" mat-icon-button color="warn" (click)="removeCensus(i)">
-								<i class="fa fa-times"></i>
-							</button>
-							<control-messages [control]="pecRegForm.get('censusNo')['controls'][i].get('census')"></control-messages>
-						</mat-form-field>
-					</div>
 
 						<div class="col-md-12 pt-3" *ngIf="isDeleteBtnShow">
-							<button type="button" mat-raised-button color="primary" (click)="addMoreCenus()" title="{{'add_more_census' | translate:'translateKey'}}">
+							<button type="button" mat-raised-button color="primary" (click)="addMoreCenus()"
+								title="{{'add_more_census' | translate:'translateKey'}}">
 								<mat-icon matPrefix>add</mat-icon>Add More Census
 							</button>
 						</div>
@@ -242,8 +273,10 @@
 				</div>
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">
-						<button class="liteBorder pull-left" type="button" mat-raised-button (click)="tabIndex = 1">{{'back' | translate:actionBarKey}}</button>
-						<button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 3">{{'next' | translate:actionBarKey}}</button>
+						<button class="liteBorder pull-left" type="button" mat-raised-button
+							(click)="tabIndex = 1">{{'back' | translate:actionBarKey}}</button>
+						<button class="pull-right" type="button" mat-raised-button color="primary"
+							(click)="tabIndex = 3">{{'next' | translate:actionBarKey}}</button>
 					</div>
 				</div>
 
@@ -254,15 +287,18 @@
 			<mat-tab [label]="stepLable4 | translate: translateKey">
 				<div class="row stepperMinHeight">
 					<div class="col-md-4 ngSelect" formGroupName="entry">
-						<ng-select placeholder="{{'entry_no' | translate: translateKey}} *" formControlName="code" (change)="onEntryChange($event)">
-							<ng-option *ngFor="let entry of entryNoArray" [value]="entry.code">{{entry.name}}</ng-option>
+						<ng-select placeholder="{{'entry_no' | translate: translateKey}} *" formControlName="code"
+							(change)="onEntryChange($event)">
+							<ng-option *ngFor="let entry of entryNoArray" [value]="entry.code">{{entry.name}}
+							</ng-option>
 						</ng-select>
 						<control-messages [control]="pecRegForm.get('entry').get('code')"></control-messages>
 					</div>
 
-					<div class="col-md-4 ngSelect" formGroupName="subEntry">
-						<ng-select placeholder="{{'sub_entry_no' | translate: translateKey}} *" [items]="subEntryNoArray" bindLabel="name" bindValue="code"
-						 formControlName="code" title="{{findSubEntryName()}}" (change)="onSubEntryChange($event)">
+					<div class="col-md-4 ngSelect selectCategoryDropdown" formGroupName="subEntry">
+						<ng-select placeholder="{{'sub_entry_no' | translate: translateKey}} *"
+							[items]="subEntryNoArray" bindLabel="name" bindValue="code" formControlName="code"
+							title="{{findSubEntryName()}}" (change)="onSubEntryChange($event)">
 							<ng-template ng-option-tmp let-item="item">
 								<div title="{{item.name}}">{{item.name}}</div>
 							</ng-template>
@@ -270,38 +306,45 @@
 						<control-messages [control]="pecRegForm.get('subEntry').get('code')"></control-messages>
 					</div>
 
-					<div class="col-md-4 ngSelect" formGroupName="professionConstitution">
-						<ng-select placeholder="{{'profession' | translate: translateKey}} *" [items]="professionArray" bindLabel="name" bindValue="code"
-						 formControlName="code" title="{{findProfConstitution()}}">
+					<div class="col-md-4 ngSelect selectCategoryDropdown" formGroupName="professionConstitution">
+						<ng-select placeholder="{{'profession' | translate: translateKey}} *" [items]="professionArray"
+							bindLabel="name" bindValue="code" formControlName="code" title="{{findProfConstitution()}}">
 							<ng-template ng-option-tmp let-item="item">
 								<div title="{{item.name}}">{{item.name}}</div>
 							</ng-template>
 						</ng-select>
-						<control-messages [control]="pecRegForm.get('professionConstitution').get('code')"></control-messages>
+						<control-messages [control]="pecRegForm.get('professionConstitution').get('code')">
+						</control-messages>
 					</div>
 
 					<div class="col-md-4 ngSelect" formGroupName="constitution">
 						<ng-select placeholder="{{'constitution' | translate: translateKey}} *" formControlName="code">
-							<ng-option *ngFor="let constitution of constitutionArray" [value]="constitution.code">{{constitution.name}}</ng-option>
+							<ng-option *ngFor="let constitution of constitutionArray" [value]="constitution.code">
+								{{constitution.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="pecRegForm.get('constitution').get('code')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" maxlength="10" formControlName="applicableRate" type="text" placeholder="{{'applicable_rate' | translate: translateKey}}">
+						<input matInput autocomplete="off" maxlength="10" formControlName="applicableRate" type="text"
+							placeholder="{{'applicable_rate' | translate: translateKey}}">
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4" *ngIf="pecRegForm.get('professionConstitution.code').value == 'OTHER'">
-						<input matInput autocomplete="off" maxlength="100" formControlName="otherProfession" type="text" placeholder="{{'other_profession' | translate: translateKey}}"
-						 required>
+					<mat-form-field class="col-md-4"
+						*ngIf="pecRegForm.get('professionConstitution.code').value == 'OTHER'">
+						<input matInput autocomplete="off" maxlength="100" formControlName="otherProfession" type="text"
+							appValidationFields validationFieldsType="appAlphanumericNumber"
+							placeholder="{{'other_profession' | translate: translateKey}}" required>
 						<control-messages [control]="pecRegForm.get('otherProfession')"></control-messages>
 					</mat-form-field>
 				</div>
 
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">
-						<button class="liteBorder pull-left" type="button" mat-raised-button (click)="tabIndex = 2">{{'back' | translate:actionBarKey}}</button>
-						<button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 4">{{'next' | translate:actionBarKey}}</button>
+						<button class="liteBorder pull-left" type="button" mat-raised-button
+							(click)="tabIndex = 2">{{'back' | translate:actionBarKey}}</button>
+						<button class="pull-right" type="button" mat-raised-button color="primary"
+							(click)="tabIndex = 4">{{'next' | translate:actionBarKey}}</button>
 					</div>
 				</div>
 
@@ -324,8 +367,10 @@
 
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">
-						<button class="liteBorder pull-left" type="button" mat-raised-button (click)="tabIndex = 3">{{'back' | translate:actionBarKey}}</button>
-						<button *ngIf="isDeleteBtnShow" class="pull-right" mat-raised-button color="success" (click)="getUserDetailsAndSubmit()">{{'submit' | translate:actionBarKey}}</button>
+						<button class="liteBorder pull-left" type="button" mat-raised-button
+							(click)="tabIndex = 3">{{'back' | translate:actionBarKey}}</button>
+						<button *ngIf="isDeleteBtnShow" class="pull-right" mat-raised-button color="success"
+							(click)="getUserDetailsAndSubmit()">{{'submit' | translate:actionBarKey}}</button>
 					</div>
 				</div>
 

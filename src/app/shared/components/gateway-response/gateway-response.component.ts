@@ -6,6 +6,9 @@ import * as _ from 'lodash';
 import { ManageRoutes } from './../../../config/routes-conf';
 import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
 import { SessionStorageService } from 'angular-web-storage';
+import { BookingConstants, BookingUtils } from 'src/app/components/citizen/facilities/bookings/config/booking-config';
+import { downloadFile } from 'src/app/vmcshared/downloadFile';
+
 
 @Component({
 	selector: 'app-gateway-response',
@@ -20,6 +23,13 @@ export class GatewayResponseComponent implements OnInit {
 	paymentStatus: any;
 	dispData: any;
 	isSearchanble: string = "";
+	resourceType: String;
+
+	/**
+	 * Common for all bookings
+	 */
+	bookingConstant = BookingConstants;
+	bookingUtils: BookingUtils = new BookingUtils();
 
 	constructor(
 		private formService: FormsActionsService,
@@ -33,12 +43,12 @@ export class GatewayResponseComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		
+
 		this.route.queryParams.subscribe(param => {
 			// if (param && param.rqst_token) {
 			if (param && param.order_id) {
-				
-				var token = param.order_id+'&order_status='+param.order_status;
+
+				var token = param.order_id + '&order_status=' + param.order_status;
 				this.gatewayResponse(token, param.searchable);
 			} else if (param && param.txtRefNo) {
 				this.getBillDeskTransactionDetails(param.txtRefNo);
@@ -53,20 +63,20 @@ export class GatewayResponseComponent implements OnInit {
 	 * @param txtRefNo - transaction reference number
 	 */
 	getBillDeskTransactionDetails(txtRefNo) {
+
 		if (txtRefNo != 'NA') {
 			this.formService.getBillDeskTransactionDetails(txtRefNo).subscribe(res => {
+				console.log(res);
 				this.responseObj = res.data;
-
+				 this.responseObj['getway']= "BILLDESK";
 				if (res.success) {
 
 					if (this.responseObj.authStatus == '0300') {
-
 						this.responseObj.mer_amount = this.responseObj.txnAmount;
 						this.responseObj.order_id = this.responseObj.customerID;
 						this.responseObj.bank_ref_no = this.responseObj.txnReferenceNo;
 						this.responseObj.trans_date = this.responseObj.txnDate
-
-						this.paymentStatus = _.upperCase(this.responseObj.authStatus);
+						this.paymentStatus = "SUCCESS";
 						this.postSessionData(this.dispData, 'BILLDESK', this.responseObj);
 					} else {
 						this.redirectToHome();
@@ -86,6 +96,7 @@ export class GatewayResponseComponent implements OnInit {
 	 * @param token - token from api
 	 */
 	gatewayResponse(token, isSearchanble) {
+
 		// this.formService.getPaymentResponse(token).subscribe(res => {
 		this.isSearchanble = isSearchanble;
 		if (isSearchanble == "true") {
@@ -96,9 +107,11 @@ export class GatewayResponseComponent implements OnInit {
 		}
 
 		this.formService.getCCAvenuePaymentResponse(token).subscribe(res => {
-			this.responseObj = res.data;
+			this.responseObj = res.data[0];
+			this.responseObj['getway']= "CCAVENUE";
+			console.log(res);
 			if (res.success) {
-				this.responseObj = this.responseObj[this.responseObj.length - 1];
+				//this.responseObj = this.responseObj[this.responseObj.length - 1];
 				if (this.responseObj.order_status == 'Success') {
 					this.paymentStatus = _.upperCase(this.responseObj.order_status);
 					this.postSessionData(this.dispData, 'CCAVENUE', this.responseObj);
@@ -116,12 +129,13 @@ export class GatewayResponseComponent implements OnInit {
 	}
 
 	/**
-	 * Post data for post payment 
+	 * Post data for post payment
 	 * @param data : json
 	 * @param payGateway: selected payment gateway
 	 * @param responseObj: transaction details
 	 */
 	postSessionData(data, payGateway, responseObj?) {
+		this.resourceType = data.resourceType;
 		let payData = {
 			id: null,
 			uniqueId: null,
@@ -141,30 +155,50 @@ export class GatewayResponseComponent implements OnInit {
 		}
 
 		if (payGateway == 'BILLDESK') {
-			payData.refNumber = data.txnReferenceNo;
-			payData.transactionId = data.txnReferenceNo;
+			//payData.refNumber = data.txnReferenceNo;
+			//payData.transactionId = data.txnReferenceNo;
 			payData.payableServiceType = data.additionalInfo2;
 			payData.amount = data.txnAmount;
 		}
 
 		if (data.payableServiceType == "PROFESSIONAL_TAX") {
+			payData.amount = Number(data.amount);
 			this.formService.saveTaxPaymentDetails(payData).subscribe(res => {
 				if (res && res.data) {
-					this.formService.printProfReceipt(res.data.refNumber).subscribe(data => {
 
-						let sectionToPrint: any = document.getElementById('sectionToPrint');
-						sectionToPrint.innerHTML = data;
+					setTimeout(() => {
+						this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS') + '?refNumber=' + res.data.responseData.refNumber);
+						//this.redirectToMyApplication(ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS'),res.data.responseData.refNumber );
+					}, 10000);
 
-						setTimeout(() => {
-							var onPrintFinished = (printed) => {
-								this.redirectToHome();
-							}
-							onPrintFinished(window.print()); //NOSONAR
-						}, 0);
+					this.interVal();
 
-					});
+
 				}
+				//this.redirectToHome();
 			});
+		} else if (data.payableServiceType == 'PAY-PRO-TAX') {
+			payData.amount = Number(data.amount);
+			this.formService.savePropertyTaxPaymentDetails(payData).subscribe(res => {
+				if (res) {
+
+					downloadFile(res, "collection-" + Date.now() + ".pdf", 'application/pdf');
+					setTimeout(() => {
+						this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS'));
+						//this.redirectToMyApplication(ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS'),res.data.responseData.refNumber );
+					}, 10000);
+					this.interVal();
+
+
+				}
+				//this.redirectToHome();
+			});
+
+		} else if (data.payableServiceType == 'PAY-WTR-TAX') {
+
+			this.waterPostPayment(payData,data);
+			
+
 		} else {
 			if (this.isSearchanble == "true") {
 				setTimeout(() => {
@@ -176,16 +210,32 @@ export class GatewayResponseComponent implements OnInit {
 				this.formService.createPayment(payData).subscribe(payResp => {
 					const payRespData = payResp.data.responseData;
 
+					//	This methods are used to send SMS and Email ater booking payment for Amphi Theater as
+					//  discussed with B A team.It can be applied for all module letter.
+					if (payRespData.payableServiceType == "AMPHI_FEES") {
+						// For SMS
+						this.sendSms(this.dispData.refNumber, this.bookingConstant.SUBMIT);
+						// For Email
+						this.sendMail(this.dispData.refNumber, this.bookingConstant.SUBMIT);
+					}
 					if (payRespData.fileStatus == "PAYMENT_RECEIVED") {
-
 						this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(payRespData.serviceDetail.code);
 						this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
 							if (res) {
-								setTimeout(() => {
-									this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
-								}, 10000);
+									if(this.formService.apiType == 'APLicense'){
+										setTimeout(() => {
+											const url = '/citizen/my-applications' +'?id=' +payRespData.serviceFormId+ '&apiCode=' +payRespData.serviceDetail.code
+											this.router.navigateByUrl(url);
+										}, 10000);
 
-								this.interVal();
+										this.interVal();
+									}else{
+										setTimeout(() => {
+											this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
+										}, 10000);
+
+										this.interVal();
+									}
 							}
 						});
 					}
@@ -205,6 +255,24 @@ export class GatewayResponseComponent implements OnInit {
 
 
 		}
+	}
+
+	waterPostPayment(payData,data) {
+		payData.amount = Number(data.amount);
+		this.formService.saveWaterTaxPaymentDetails(payData).subscribe(res => {
+			if (res) {
+
+				downloadFile(res, "collection-" + Date.now() + ".pdf", 'application/pdf');
+				setTimeout(() => {
+					this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS'));
+					//this.redirectToMyApplication(ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS'),res.data.responseData.refNumber );
+				}, 10000);
+				this.interVal();
+
+
+			}
+			//this.redirectToHome();
+		});
 	}
 
 
@@ -261,6 +329,34 @@ export class GatewayResponseComponent implements OnInit {
 		}, 1000)
 
 	}
+	/**
+	 * This method is used to send  sms after completion of booking payment
+	 * @param refNumber
+	 */
+	sendSms(refNumber: any, eventType: any) {
+		if (refNumber) {
+			this.formService.sendSms(refNumber, this.resourceType, eventType).subscribe(resp => {
+			}, err => {
+				this.toastr.error("Something went wrong");
+			})
+		} else {
+			this.toastr.error("Invalid request");
+		}
+	}
 
+	/**
+		   * Method is used to send mail on submit
+		   * @param refNumber
+		   */
+	sendMail(refNumber: any, eventType: any) {
+		if (refNumber) {
+			this.formService.sendMail(refNumber, this.resourceType, eventType).subscribe(resp => {
+			}, err => {
+				this.toastr.error("Something went wrong");
+			})
+		} else {
+			this.toastr.error("Invalid request");
+		}
+	}
 }
 

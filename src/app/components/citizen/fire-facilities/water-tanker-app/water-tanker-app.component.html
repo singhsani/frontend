@@ -39,7 +39,7 @@
 						<mat-form-field class="col-md-4">
 							<mat-label>{{'application_date'| translate: translateKey}} *</mat-label>
 							<input appDate matInput
-							[matDatepicker]="townHallBookingfromPicker" formControlName="applicationDate">
+							[matDatepicker]="townHallBookingfromPicker"  [min]="appDate" [max]="appDate"  formControlName="applicationDate">
 							<mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker"></mat-datepicker-toggle>
 							<mat-datepicker #townHallBookingfromPicker touchUi="true"></mat-datepicker>
 							<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}
@@ -145,7 +145,7 @@
 
           <mat-form-field class="col-md-4">
             <input matInput type="tel" OnlyNumber required formControlName="totalTankRequired" placeholder="{{'total_tank' | translate: translateKey }}"
-                   minlength="1" maxlength="1" (change)="calculateTotalAmount()">
+                   minlength="1" maxlength="1" autocomplete="off" (change)="calculateTotalAmount()">
             <control-messages [control]="waterTankerAppForm.get('totalTankRequired')"></control-messages>
           </mat-form-field>
 

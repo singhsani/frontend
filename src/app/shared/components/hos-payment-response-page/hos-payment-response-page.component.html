@@ -47,80 +47,139 @@
 </div>
 
 <!-- Payment failed-->
-<div class="conatiner text-center" *ngIf="(responseObj.order_status == 'Failure' || responseObj.order_status == 'Aborted')  || (responseObj.hasOwnProperty('authStatus') && responseObj.authStatus != '0300')">
-	<mat-icon class="failedIcon">error</mat-icon>
-	<h1 class="errorMessage">Your payment failed</h1>
-	<h4>Please try after some time</h4>
+<div *ngIf="responseObj.getway == 'BILLDESK'">
+	<div class="conatiner text-center"
+		*ngIf="(responseObj.order_status == 'Failure' || responseObj.order_status == 'Aborted')  || (responseObj.hasOwnProperty('authStatus') && responseObj.authStatus != '0300')">
+		<mat-icon class="failedIcon">error</mat-icon>
+		<h1 class="errorMessage">Your payment failed</h1>
+		<h4>Please try after some time</h4>
+	
+		<div>
+			<h5 class="payDetails">Payment Details</h5>
+			<mat-card class="cardDetail">
+				<div class="row">
+					<div class="col mb-2">
+						Amount Paid : &#8377; &nbsp;{{responseObj.txnAmount}}
+					</div>
+					<div class="col">
+						Transaction Number : &nbsp;{{responseObj.txnReferenceNo}}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col mb-2">
+						Balance Amount : &#8377; &nbsp;{{responseObj.txnAmount}}
+					</div>
+					<div class="col">
+						Transaction Date : &nbsp;{{responseObj.txnDate}}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col mb-3">
+						Reason : {{responseObj?.billDeskAuthStatus?.reason}}
+					</div>
+				</div>
+			</mat-card>
+		</div>
+		<div class="mt-4">
+			<p style="font-size: 14px;">You will be automatically redirect to home page after
+				<span style="color:#f00">{{dispTime}} second</span>.
+			</p>
+			<p>OR
+				<a style="font-size: 14px;" href="javascript:0;" (click)="redirectToMyApps()">Click here</a>
+			</p>
+		</div>
+	</div>
+	</div>
 
-	<div class="mt-4">
-		<p style="font-size: 14px;">You will be automatically redirect to home page after
-			<span style="color:#f00">{{dispTime}} second</span>.</p>
-		<p>OR
-			<a style="font-size: 14px;" href="javascript:0;" (click)="redirectToMyApps()">Click here</a>
-		</p>
+<div *ngIf="responseObj.getway == 'CCAVENUE'">
+	<div class="conatiner text-center"
+		*ngIf="(responseObj.order_status == 'Failure' || responseObj.order_status == 'Aborted');else elseCondition">
+		<mat-icon class="failedIcon">error</mat-icon>
+		<h1 class="errorMessage">Your payment failed</h1>
+		<h4>Please try after some time</h4>
+	
+		<div>
+			<h5 class="payDetails">Payment Details</h5>
+			<mat-card class="cardDetail">
+				<div class="row">
+					<div class="col mb-2">
+						Amount Paid : &#8377; &nbsp;{{responseObj.mer_amount}}
+					</div>
+					<div class="col">
+						Order Reference Number : &nbsp;{{responseObj.order_id}}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col mb-2">
+						Transaction ID : &nbsp;{{responseObj.tracking_id}}
+					</div>
+					<div class="col">
+						Transaction Date : &nbsp;{{responseObj.trans_date}}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col mb-3">
+						Reason : {{responseObj.failure_message}}
+					</div>
+				</div>
+			</mat-card>
+		</div>
+		<div class="mt-4">
+			<p style="font-size: 14px;">You will be automatically redirect to home page after
+				<span style="color:#f00">{{dispTime}} second</span>.
+			</p>
+			<p>OR
+				<a style="font-size: 14px;" href="javascript:0;" (click)="redirectToMyApps()">Click here</a>
+			</p>
+		</div>
+
+		
+
+	</div>
+	<ng-template #elseCondition>
+		<div *ngIf="responseObj.order_status != 'Success'">
+		<div class="conatiner text-center">
+			
+		<mat-icon class="failedIcon">error</mat-icon>
+		<h1 class="errorMessage">Your payment failed</h1>
+		<h4>Please try after some time</h4>
+	
+		<div>
+			<h5 class="payDetails">Payment Details</h5>
+			<mat-card class="cardDetail">
+				<div class="row">
+					<div class="col mb-2">
+						Amount Paid : &#8377; &nbsp;{{responseObj.mer_amount}}
+					</div>
+					<div class="col">
+						Order Reference Number : &nbsp;{{responseObj.order_id}}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col mb-2">
+						Transaction ID : &nbsp;{{responseObj.tracking_id}}
+					</div>
+					<div class="col">
+						Transaction Date : &nbsp;{{responseObj.trans_date}}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col mb-3">
+						Reason : {{responseObj.failure_message}}
+					</div>
+				</div>
+			</mat-card>	
+		</div>
+		<div class="mt-4">
+			<p style="font-size: 14px;">You will be automatically redirect to home page after
+				<span style="color:#f00">{{dispTime}} second</span>.
+			</p>
+			<p>OR
+				<a style="font-size: 14px;" href="javascript:0;" (click)="redirectToMyApps()">Click here</a>
+			</p>
+		</div>
+
 	</div>
 </div>
-
-
-<!-- 
-<div class="container text-center" *ngIf="responseObj.txn_msg == 'success'">
-	<div>
-		<h1>
-			<mat-icon class="checkIcon successicon">check_circle_outline</mat-icon>
-			&nbsp;
-			<span class="successmsg">Payment Sucessful ! </span>
-		</h1>
-		<h4 class="mt-4" style="font-weight: 600;">
-			Thank you! Your payment of Rs. {{responseObj.txn_amt}} has been received.
-		</h4>
-
-		<h6 class="mt-4">
-			Order ID: {{responseObj.tpsl_rfnd_id}} | Transaction ID: {{responseObj.tpsl_txn_id}}
-		</h6>
+	</ng-template>
 	</div>
-
-	<div>
-		<h5 class="payDetails">Payment Details</h5>
-		<mat-card class="cardDetail">
-			<div class="row">
-				<div class="col mb-2">
-					Amount Paid : &#8377; &nbsp;{{responseObj.txn_amt}}
-				</div>
-				<div class="col">
-					Reference Number : &nbsp;{{responseObj.clnt_txn_ref}}
-				</div>
-			</div>
-			<div class="row">
-				<div class="col mb-2">
-					Balance Amount : &#8377; &nbsp;{{responseObj.bal_amt}}
-				</div>
-				<div class="col">
-					Transaction Date : &nbsp;{{responseObj.tpsl_txn_time}}
-				</div>
-			</div>
-		</mat-card>
-	</div>
-
-	<div class="mt-4">
-		<p style="font-size: 14px;">You will be automatically redirect to home page after
-			<span style="color:#f00">{{dispTime}} second</span>.</p>
-		<p>OR
-			<a style="font-size: 14px;" href="javascript:0;" (click)="redirectToHome()">Click here</a>
-		</p>
-	</div>
-</div>
-
-
-<div class="conatiner text-center" *ngIf="responseObj.txn_msg == 'failure'">
-	<mat-icon class="failedIcon">error</mat-icon>
-	<h1 class="errorMessage">Your payment failed</h1>
-	<h4>Please try after some time</h4>
-
-	<div class="mt-4">
-		<p style="font-size: 14px;">You will be automatically redirect to home page after
-			<span style="color:#f00">{{dispTime}} second</span>.</p>
-		<p>OR
-			<a style="font-size: 14px;" href="javascript:0;" (click)="redirectToHome()">Click here</a>
-		</p>
-	</div>
-</div> -->

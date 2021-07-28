@@ -78,6 +78,9 @@ export class ProfessionalTaxService {
       return this.http.get(`api/professional/search/${num}`);
   }
 
+  getVerifyNumber(type,num){
+	  return this.http.get(`api/professional/verify/regNumber?type=${type}&regNo=${num}`);
+	}
 	/**
 	 * This method is use for get employee tax rate json
 	 */
@@ -118,7 +121,7 @@ export class ProfessionalTaxService {
 	 * This method use for get all ward numbers
 	 */
   getAllWardNos() {
-    return this.http.get('api/pecForm/data');
+    return this.http.get('api/pecForm/wardList');
   }
 
 	/**
@@ -135,4 +138,7 @@ export class ProfessionalTaxService {
     return this.http.get('api/pecForm/doc/list');
   }
 
+  saveReceiptDetails(formData) {
+		return this.http.post(`api/professional/receipt/save`, formData);
+	}
 }

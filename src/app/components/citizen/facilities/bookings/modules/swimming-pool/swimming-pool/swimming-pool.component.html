@@ -1,5 +1,21 @@
+<!-- *ngIf="searchObj.isDisplayRenewLicenceForm" -->
+<div *ngIf="searchObj.isDisplayRenewLicenceForm">
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-<mat-card class="formClass cardBorder" [hidden]="showDowlLoadFileTab">
+
+<mat-card class="mt-4 formClass">
+  <mat-form-field class="col-md-10">
+    <input matInput required placeholder="{{'search_by_membership_no' | translate:translateKey}}"
+      [(ngModel)]="searchObj.searchLicenceNumber">
+  </mat-form-field>
+  <button class="col-md-2" [disabled]="!searchObj.searchLicenceNumber" mat-raised-button color="primary"
+    (click)="getSwimmingPoolData()">{{'search'
+		| translate:translateKey}}</button>
+</mat-card>
+</div> 
+
+
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+<mat-card class="formClass cardBorder" [hidden]="showDowlLoadFileTab" *ngIf="!searchObj.isDisplayRenewLicenceForm">
 
 	<mat-card-header class="p-4">
 		<mat-card-title>
@@ -54,7 +70,7 @@
 			<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
 				<!-- Tab 1 Starts -->
-				<mat-tab>
+				<mat-tab #tab1 [disabled]='!tab1.isActive'>
 					<ng-template mat-tab-label>
 						<div>{{'general_details' | translate:translateKey}}</div>
 					</ng-template>
@@ -85,7 +101,8 @@
 
 						<div class="col-md-4 ngSelect" formGroupName="category">
 							<ng-select placeholder="{{'category' | translate:translateKey}} *" formControlName="code"
-								required (change)="swimmimgPoolBookingForm.get('batchFor').reset();changeBatchDuration($event)">
+								required (change)="filterAsperCategory($event);swimmimgPoolBookingForm.get('batchFor').reset();
+								swimmimgPoolBookingForm.get('batchDuration').reset()">
 								<ng-option *ngFor="let cat of CATEGORY" [value]="cat.code">{{cat.name}}</ng-option>
 							</ng-select>
 							<control-messages [control]="swimmimgPoolBookingForm.get('category').get('code')">
@@ -142,16 +159,17 @@
 				<!-- Tab 1 Ends -->
 
 				<!-- Tab 2 for applicant details -->
-				<mat-tab>
+				<mat-tab #tab2 [disabled]='!tab2.isActive'>
 
 					<ng-template mat-tab-label>
 						<div>{{'applicant_details' | translate:translateKey}}</div>
 					</ng-template>
 					<div class="row">
 
-						<mat-form-field class="col-md-8">
-							<input matInput type="text" formControlName="applicantName"
-								placeholder="{{'applicant_name' | translate: translateKey }}" maxlength="300">
+						<mat-form-field class="col-md-4">
+							<input matInput type="text" formControlName="applicantName" appValidationFields
+							[validationFieldsType]="'onlyNameWithSpace'"
+								placeholder="{{'applicant_name' | translate: translateKey }}" maxlength="50">
 							<control-messages [control]="swimmimgPoolBookingForm.get('applicantName')">
 							</control-messages>
 						</mat-form-field>
@@ -173,7 +191,7 @@
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput type="email" maxlength="50" formControlName="applicantEmail"
+							<input matInput type="text" maxlength="50" formControlName="applicantEmail"
 								placeholder="{{'email_id' | translate: translateKey}}" required>
 							<control-messages [control]="swimmimgPoolBookingForm.get('applicantEmail')">
 							</control-messages>
@@ -218,16 +236,38 @@
 						</mat-form-field>
 
 
-            <mat-form-field class="col-md-4" *ngIf="isPanCardVisibleIdNumber">
-							<input matInput maxlength="12" class="pancard" formControlName="applicantIDProofNumber"
-                     placeholder="{{'id_proof_no' | translate: translateKey}}" required >
+            			<mat-form-field class="col-md-4" *ngIf="isPanCardVisibleIdNumber">
+							<input matInput maxlength="10" class="pancard" formControlName="applicantIDProofNumber"
+                     			placeholder="{{'id_proof_no' | translate: translateKey}}" required >
 							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProofNumber')">
 							</control-messages>
 						</mat-form-field>
 
-            	<mat-form-field class="col-md-4" *ngIf="!isVisibleIdNumber && !isPanCardVisibleIdNumber">
-							<input matInput maxlength="12" class="others" formControlName="applicantIDProofNumber"
-                     placeholder="{{'id_proof_no' | translate: translateKey}}" required appAlphaNumeric>
+						<mat-form-field class="col-md-4" *ngIf="isLicenseVisibleIdNumber">
+							<input matInput maxlength="15" class="drivinglicense" formControlName="applicantIDProofNumber"
+                     			placeholder="{{'id_proof_no' | translate: translateKey}}" required >
+							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProofNumber')">
+							</control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-md-4" *ngIf="isElectionCardIdNumber">
+							<input matInput maxlength="10" class="electioncard" formControlName="applicantIDProofNumber"
+                     			placeholder="{{'id_proof_no' | translate: translateKey}}" required >
+							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProofNumber')">
+							</control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-md-4" *ngIf="isPassportIdNumber">
+							<input matInput maxlength="10" class="passport" formControlName="applicantIDProofNumber"
+                     			placeholder="{{'id_proof_no' | translate: translateKey}}" required >
+							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProofNumber')">
+							</control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-md-4" *ngIf="!isVisibleIdNumber && !isPanCardVisibleIdNumber && 
+								!isLicenseVisibleIdNumber && !isElectionCardIdNumber && !isPassportIdNumber">
+							<input matInput maxlength="10" class="others" formControlName="applicantIDProofNumber"
+                     			placeholder="{{'id_proof_no' | translate: translateKey}}" required appAlphaNumeric>
 							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProofNumber')">
 							</control-messages>
 						</mat-form-field>
@@ -243,6 +283,16 @@
 								[control]="swimmimgPoolBookingForm.get('applicantBloodGroup').get('code')">
 							</control-messages>
 						</div>
+
+						<div class="col-md-4">
+							<month-picker formControlName="applicantJoiningMonth" [min]="startMinMonth" (change)="chosenMonthHandler($event)"></month-picker>
+							<div align="end" class="default-show-hint mat-hint mat-right">
+								{{config.MONTH_HINT_MSG}}</div>
+							<control-messages [control]="swimmimgPoolBookingForm.get('applicantJoiningMonth')">
+							</control-messages>
+						</div>
+
+
 					</div>
 
 					<h2>
@@ -270,7 +320,7 @@
 
 
 				<!-- step Attachment Starts -->
-				<mat-tab>
+				<mat-tab #tab3 [disabled]='!tab3.isActive'>
 					<ng-template mat-tab-label>
 						<div>{{'attachment' | translate: translateKey}}</div>
 					</ng-template>
@@ -297,21 +347,21 @@
 						<ng-container>
 
 							<h2>
-								{{'attchaments' | translate:translateKey}}
+								{{'Attachments' | translate:translateKey}}
 							</h2>
 							<div class="col-md-4">
 								<label labelPosition="after">{{'photo' | translate:translateKey}} *
 								</label>
-								<booking-file-upload (uploaded)="isFileUploaded1 = $event"
-									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'1', labelName:'photo', formPart:'1.4', refNumber:
+								<booking-file-upload (uploaded)="isFileUploaded1 = $event" [attachments]="attachments" [deleteButtonIsDisabled]="isRenewalForm"
+									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'1', labelName:'Photo', formPart:'1.4', refNumber:
 								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'photo'}">
 								</booking-file-upload>
 							</div>
 							<div class="col-md-4">
 								<label labelPosition="after">{{'gazettate_officer_letter' | translate:translateKey}} *
 								</label>
-								<booking-file-upload (uploaded)="isFileUploaded2 = $event"
-									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'2', labelName:'gazettate_officer_letter', formPart:'1.1', refNumber:
+								<booking-file-upload (uploaded)="isFileUploaded2 = $event" [attachments]="attachments" [deleteButtonIsDisabled]="isRenewalForm"
+									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'2', labelName:'Gazettate Officer Letter', formPart:'1.1', refNumber:
 								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'gazettate_officer_letter'}">
 								</booking-file-upload>
 
@@ -320,8 +370,8 @@
 								<label
 									labelPosition="after">{{'parents_or_gauardians_permission_letter' | translate:translateKey}} *
 								</label>
-								<booking-file-upload (uploaded)="isFileUploaded3 = $event"
-									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'3', labelName:'gauardians_permission_letter', formPart:'1.2', refNumber:
+								<booking-file-upload (uploaded)="isFileUploaded3 = $event" [attachments]="attachments" [deleteButtonIsDisabled]="isRenewalForm"
+									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'3', labelName:'Parents or Guardians Permission Letter', formPart:'1.2', refNumber:
 								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'gauardians_permission_letter'}">
 								</booking-file-upload>
 							</div>
@@ -330,8 +380,8 @@
 								<label
 									labelPosition="after">{{'certified_doctors_certificate' | translate:translateKey}} *
 								</label>
-								<booking-file-upload (uploaded)="isFileUploaded4 = $event"
-									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'4', labelName:'certified_doctors_certificate', formPart:'1.3', refNumber:
+								<booking-file-upload (uploaded)="isFileUploaded4 = $event" [attachments]="attachments" [deleteButtonIsDisabled]="isRenewalForm"
+									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'4', labelName:'Certified Doctors Certificate', formPart:'1.3', refNumber:
 								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'certified_doctors_certificate'}">
 								</booking-file-upload>
 							</div>
@@ -360,7 +410,7 @@
 </span>
 <!-- {{ swimmimgPoolBookingForm.value | json }} -->
 <div id="sectionToPrint"></div>
-<select-payment-gateway #paymentGateway></select-payment-gateway>
+<select-payment-gateway #paymentGateway [applicationType]="'booking'"></select-payment-gateway>
 
 
 <!-- gujrati fields -->

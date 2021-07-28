@@ -17,6 +17,7 @@ import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 
 export class OwnerDetailComponent implements OnInit {
 
+  translateKey: string = 'newPropertyTaxScreen';
   subscription: Subscription;
   modelProperty: any = {};
   titleList = [];
@@ -235,4 +236,16 @@ export class OwnerDetailComponent implements OnInit {
     this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(0);
   }
 
+  keyPressAlphabetOnly(event) {
+
+    var inp = String.fromCharCode(event.keyCode);
+
+    if (/[a-zA-Z]/.test(inp)) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
+  }
 }
+

@@ -36,6 +36,7 @@ export class TempStructureNocComponent implements OnInit {
 	FS_WIRING_TYPE: Array<any> = [];
 
 	fromDate = moment(new Date()).format('YYYY-MM-DD');
+	
 
 	  maxDate = new Date();
 
@@ -129,6 +130,15 @@ export class TempStructureNocComponent implements OnInit {
 
 	}
 
+	updateRequiredField(isRequired) {
+		if(isRequired)
+			this.tempStructureNocForm.get('landOwnerConsentDescription').setValidators(Validators.required);
+		else 
+			this.tempStructureNocForm.get('landOwnerConsentDescription').setValidators(null);
+
+			this.tempStructureNocForm.get('landOwnerConsentDescription').updateValueAndValidity();
+	}
+
 
     /**
      * This method is change date formate.
@@ -192,9 +202,9 @@ export class TempStructureNocComponent implements OnInit {
 			email: [null, [Validators.required, Validators.email, Validators.maxLength(50)]],
 			oldReferenceNumber: [{ value: null, disabled: true }],
 			applicationDate: [{ value: null, disabled: true }],//not now
-			officeContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength)]],
+			officeContactNo: [null, [Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength),Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
-			officeEmailId: [null, [Validators.required, Validators.email, Validators.maxLength(50)]],
+			officeEmailId: [null, [ValidationService.emailValidator, Validators.maxLength(50)]],
 
 			/* Step 2 controls start */
 			fromDate: [null, [Validators.required, Validators.maxLength(10)]],
@@ -203,37 +213,34 @@ export class TempStructureNocComponent implements OnInit {
 			toTime: [null, [Validators.required, Validators.maxLength(10)]],
 			forProgram: [null, [Validators.required, Validators.maxLength(50)]],
 			forProgramGuj: [null, [Validators.required, Validators.maxLength(150)]],
-			venue: [null, [Validators.required, Validators.maxLength(150)]],
 			policeCommisionerLetterDate: [null],
-			policeCommisionerLetterNo: [null, [Validators.required, Validators.maxLength(10)]],
+			policeCommisionerLetterNo: [null, [Validators.required, Validators.maxLength(50)]],
 			landOwnerConsentIncluded: [false, [Validators.required]],//true/false
-			landOwnerConsentDescription: [null, [Validators.required, Validators.maxLength(200)]],
+			landOwnerConsentDescription: [null, [Validators.required, Validators.maxLength(255)]],
 			organizeName: [null, [Validators.required, Validators.maxLength(150)]],
 			organizeNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			organizerAddress: [null, [Validators.required, Validators.maxLength(200)]],
 			organizerAddressGuj: [null, [Validators.required, Validators.maxLength(400)]],
-			organizerContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
 			temporaryStructureAddress: [null, [Validators.required, Validators.maxLength(500)]],
 			temporaryStructureAddressGuj: [null, [Validators.required, Validators.maxLength(1500)]],
 
 			/* Step 3 controls start */
-			fpNo: [null, [Validators.required, Validators.maxLength(8)]],
-			rsNo: [null, [Validators.required, Validators.maxLength(8)]],
-			tikaNo: [null, [Validators.required, Validators.maxLength(8)]],
-			buildingLocation: [null, [Validators.required, Validators.maxLength(50)]],
-			tpNo: [null, [Validators.required, Validators.maxLength(8)]],
-			blockNo: [null, [Validators.required, Validators.maxLength(8)]],
-			structurePurpose: [null, [Validators.required, Validators.maxLength(200)]],
-			opNo: [null, [Validators.required, Validators.maxLength(5)]],
+			fpNo: [null, [Validators.maxLength(8)]],
+			rsNo: [null, [Validators.maxLength(8)]],
+			tikaNo: [null, [Validators.maxLength(8)]],
+			buildingLocation: [null, [Validators.maxLength(50)]],
+			tpNo: [null, [Validators.maxLength(8)]],
+			blockNo: [null, [Validators.maxLength(8)]],
+			opNo: [null, [Validators.maxLength(5)]],
 			noOfGatheringPersons: [null, [Validators.required, Validators.maxLength(10)]],
 			noOfExits: [null, [Validators.required, Validators.maxLength(3)]],
 			layoutPlanIncluded: [null, [Validators.required]],//true/false
-			requiredNOCForArea: [null, [Validators.required, Validators.maxLength(10)]],
 
 			/* Step 4 controls start */
 			hazardousPerformanceDetail: [null, [Validators.required, Validators.maxLength(200)]],
 			shamiyanaLength: [null, [Validators.required, Validators.maxLength(5)]],
 			shamiyanaWidth: [null, [Validators.required, Validators.maxLength(5)]],
+			shamiyanaHeight: [null, [Validators.required, Validators.maxLength(5)]],
 			archGateHeight: [null, [Validators.required, Validators.maxLength(5)]],
 			archGateWidth: [null, [Validators.required, Validators.maxLength(5)]],
 			approachedWayToVenue: [null, [Validators.required, Validators.maxLength(200)]],
@@ -242,6 +249,7 @@ export class TempStructureNocComponent implements OnInit {
 			refillingCertificateAttached: [null, [Validators.required]],//true/false
 			stageHeight: [null, [Validators.required, Validators.maxLength(3)]],
 			stageWidth: [null, [Validators.required, Validators.maxLength(3)]],
+			stageLength: [null, [Validators.required, Validators.maxLength(6)]],
 			usageOfInflammable: [null, [Validators.required, Validators.maxLength(500)]],
 			securityArrangement: [null, [Validators.required]],//true/false
 			parkingArrangement: [null, [Validators.required]],//true/false
@@ -250,7 +258,7 @@ export class TempStructureNocComponent implements OnInit {
 			lightningArresterArrangement: [null, [Validators.required]],//true/false
 			standbyFireEngineDemanded: [null, [Validators.required]],//true/false
 			sittingArrangement: this.fb.group({
-				code: [null, Validators.required]
+				code: [null]
 			}),
 			wiringType: this.fb.group({
 				code: [null, Validators.required]
@@ -277,6 +285,12 @@ export class TempStructureNocComponent implements OnInit {
 			this.commonService.openAlert("Warning","Please fill the field Email Id","warning");
 		}
 	}
+
+	getMaxToDate(fromDate: string) {
+		return moment(fromDate).add(28, 'days').format('YYYY-MM-DD');
+	}
+
+
 	/**
 	 * This method required for final form submition.
 	 * @param flag - flag of invalid control.
@@ -365,33 +379,23 @@ export class TempStructureNocComponent implements OnInit {
 		"toTime": "06:25:00",
 		"forProgram": "sfsdfsdfsdfsdffsdfsdf",
 		"forProgramGuj": "સ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્ફ્સ્દ્ફ્સ્દ્ફ",
-		"venue": "aaaaaaaaaaa",
 		"policeCommisionerLetterDate": "2019-12-01",
-		"policeCommisionerLetterNo": "2342342342",
+		"policeCommisionerLetterNo": "એફ/પરફ/વશી/૧૦૦/૨૦૨૧",
 		"landOwnerConsentIncluded": true,
-		"landOwnerConsentDescription": "sdfsdfsdfsdfsdf",
+		"landOwnerConsentDescription": "sdfsdfsdfsdfsdf  હેલો વર્લ્ડ",
 		"organizeName": "sdfsdfsdfsdf",
 		"organizeNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
 		"organizerAddress": "sdfsdfsdfsdf",
 		"organizerAddressGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
-		"organizerContactNo": "111111111111",
 		"temporaryStructureAddress": "sdfsdfsdfsdfsdsdfsdf",
 		"temporaryStructureAddressGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્સ્દ્ફ્સ્દ્ફ",
-		"fpNo": "23423423",
-		"rsNo": "23423423",
-		"tikaNo": "23432423",
-		"buildingLocation": "dgdfgdfgdfgfdg",
-		"tpNo": "234324",
-		"blockNo": "235423",
-		"structurePurpose": "fdgdfgfdg",
-		"opNo": "24323",
 		"noOfGatheringPersons": 234,
 		"noOfExits": 432,
 		"layoutPlanIncluded": true,
-		"requiredNOCForArea": "fdgdfg",
 		"hazardousPerformanceDetail": "sdfsdfsdfsdfsd",
 		"shamiyanaLength": "24",
 		"shamiyanaWidth": "43",
+		"shamiyanaHeight": "40",
 		"archGateHeight": "34",
 		"archGateWidth": "34",
 		"approachedWayToVenue": "fsdgfgdfg",
@@ -400,6 +404,7 @@ export class TempStructureNocComponent implements OnInit {
 		"refillingCertificateAttached": true,
 		"stageHeight": "234",
 		"stageWidth": "234",
+		"stageLength": "150",
 		"usageOfInflammable": "fsdgffg",
 		"securityArrangement": true,
 		"parkingArrangement": true,
@@ -435,6 +440,5 @@ export class TempStructureNocComponent implements OnInit {
 		  "appointmentRequired": false
 		}
 	  };
-
 }
 

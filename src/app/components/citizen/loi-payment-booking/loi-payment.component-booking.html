@@ -26,20 +26,20 @@
                             <tr>
                                 <th>Select</th>
                                 <th>Loi Number</th>
-                                <th>Amount</th>
+                                <th>Amount (Rs.)</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of loiRecords">
                                 <th>
-                                    <input type="radio" name="radAnswer" value='{{item.loiNumber}}'
+                                    <input type="radio" required name="radAnswer" value='{{item.loiNumber}}'
                                         (change)="onItemChange($event)">
                                 </th>
                                 <td>{{ item.loiNumber }}</td>
                                 <td>{{ item.totalAmount }}</td>
                                 <td>
-                                    <button mat-raised-button color="primary" (click)="makePayment(item.loiNumber)">Payment</button>
+                                    <button [disabled]="!showPayment" mat-raised-button color="primary" (click)="makePayment(item.loiNumber)">Payment</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -47,7 +47,7 @@
                 </div>
             </div>
 
-            
+
             <div class="p-15" *ngIf='ShowTable'>
                 <div class="pl-1 pr-1 mt-4">
                     <table class="table table-hover">
@@ -55,7 +55,7 @@
                             <tr>
                                 <th>Sr No.</th>
                                 <th>Charge Name</th>
-                                <th>Amount</th>
+                                <th>Amount (Rs.)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -76,7 +76,6 @@
         </mat-tab>
         <!-- step 1 Ends -->
     </mat-tab-group>
-
-    <select-payment-gateway #paymentGateway></select-payment-gateway>
+  <select-payment-gateway #paymentGateway  [applicationType]="facilityBooking"></select-payment-gateway>
 
 </mat-card>

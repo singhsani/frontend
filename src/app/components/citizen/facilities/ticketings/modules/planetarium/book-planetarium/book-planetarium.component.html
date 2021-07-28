@@ -14,6 +14,7 @@
     </div>
 </div> -->
 <!-- HTML for planetarium hall booking -->
+
 <div>
     <mat-card class="formClass cardBorder">
         <div class="pageTitle">{{'book_your_ticket' | translate: translateKey}}</div>
@@ -23,9 +24,9 @@
 
                     <div formGroupName="showCategory" class="col-md-4 ngSelect">
                         <ng-select placeholder="{{'show_category'| translate: translateKey}} *"
-                            (change)="setValidationForSpecialShow($event);savePlanetariumTickets()"
+                            (change)="setValidationForSpecialShow($event);savePlanetariumTickets();"
                             formControlName="code">
-                            <ng-option *ngFor="let cat of PLANETARIUM_SHOW_CATEGORY" [value]="cat.code">
+                            <ng-option *ngFor="let cat of FINAL_PLANETARIUM_SHOW_CATEGORY" [value]="cat.code">
                                 {{ cat.name }}
                             </ng-option>
                         </ng-select>
@@ -46,7 +47,7 @@
 
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'visiting_date'| translate: translateKey}}</mat-label>
-                        <input matInput [max]="maxDate" required [min]="minDate" [matDatepicker]="datePicker"
+                        <input matInput [max]="maxDate" required [min]="minDate" [matDatepicker]="datePicker" [matDatepickerFilter]="disableDates"
                             formControlName="visitingDate" placeholder="DD/MM/YYYY"
                             (dateChange)="changeDateFormat($event);getPlanetariumShowTimeSlot($event);savePlanetariumTickets()">
                         <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
@@ -74,7 +75,7 @@
                         [hidden]="ticketBookingForm.get('showCategory').get('code').value != 'PLANETARIUM_SPECIAL_SHOW'"
                         class="col-md-4 ngSelect">
                         <ng-select placeholder="{{'planetarium_shows_language'| translate: translateKey}} *"
-                            formControlName="code" (change)="setShiftType();getPlanetariumShowAvailability()">
+                            formControlName="code" (change)="setShiftType()">
                             <ng-option *ngFor="let cat of PLANETARIUM_SPECIAL_SHOWS_LAG" [value]="cat.code">
                                 {{ cat.name }}
                             </ng-option>
@@ -92,7 +93,7 @@
                             <div formGroupName="visitors" class="col-md-4 ngSelect"
                                 *ngIf="ticketBookingForm.get('showCategory').get('code').value != 'PLANETARIUM_SPECIAL_SHOW'">
                                 <ng-select OnlyNumber placeholder="{{'visitors'| translate: translateKey}} *" formControlName="code"
-                                    (change)="setVisitors();computeTotalAndVisitors()">
+                                    (change)="setVisitors();computeTotalAndVisitors(); getPlanetariumGeneralShowAvailability()">
                                     <ng-option *ngFor="let num of PLANETARIUM_VISITOR" [value]="num.code">
                                         {{ num.name }}
                                     </ng-option>
@@ -103,7 +104,8 @@
 
                             <mat-form-field class="col-md-4"
                                 *ngIf="ticketBookingForm.get('showCategory').get('code').value == 'PLANETARIUM_SPECIAL_SHOW'">
-                                <input matInput OnlyNumber formControlName="totalVisitor" maxlength="3" [max]="totalVisitorLimit"
+
+                              <input matInput OnlyNumber formControlName="totalVisitor" maxlength="3" [max]="totalVisitorLimit"
                                     placeholder="{{'selected_seats' | translate: translateKey}}"
                                     (change)="computeTotalAndVisitors()" required>
                                 <control-messages [control]="ticketBookingForm.get('totalVisitor')">
@@ -119,6 +121,11 @@
                                 <input matInput OnlyNumber
                                     placeholder="{{ 'total_amount'| translate:translateKey}}" formControlName="amount">
                             </mat-form-field>
+
+                            <!-- <mat-form-field class="col-md-4">
+                                <input matInput OnlyNumber
+                                    placeholder="{{ 'remain_seats'| translate:translateKey}}" formControlName="remainSeats">
+                            </mat-form-field> -->
 
                         </div>
                     </div>
@@ -171,7 +178,7 @@
                         </control-messages>
                     </div>
 
-                  <mat-form-field class="col-md-4" *ngIf="isVisibleIdNumber">
+                  <mat-form-field class="col-md-4 mb-5" *ngIf="isVisibleIdNumber">
                     <input matInput minlength="4" class="aadharcard"  OnlyNumber maxlength="4" formControlName="idNumber"
                            placeholder="{{'id_number' | translate: translateKey}} *">
                     <control-messages [control]="ticketBookingForm.get('idNumber')"></control-messages>
@@ -179,7 +186,7 @@
                       ({{'last_4_digit_of_ID'| translate: translateKey}})</mat-hint>
                   </mat-form-field>
 
-                  <mat-form-field class="col-md-4" *ngIf="!isVisibleIdNumber">
+                  <mat-form-field class="col-md-4 mb-5" *ngIf="!isVisibleIdNumber">
                         <input matInput minlength="4" appAlphaNumeric maxlength="4" formControlName="idNumber"
                             placeholder="{{'id_number' | translate: translateKey}} *">
                         <control-messages [control]="ticketBookingForm.get('idNumber')"></control-messages>
@@ -197,7 +204,7 @@
                 </div>
                 <!-- special Show fields -->
                 <div class="row pt-4"
-                    *ngIf="ticketBookingForm.get('showCategory').get('code').value == 'PLANETARIUM_SPECIAL_SHOW' && seatAvailable == true">
+                    *ngIf="ticketBookingForm.get('showCategory').get('code').value == 'PLANETARIUM_SPECIAL_SHOW'">
 
                     <div class="col-md-12">
                         <label>{{'school_details_or_group_details' | translate: translateKey}}</label>
@@ -206,20 +213,20 @@
                     <mat-form-field class="col-md-4">
                         <input matInput maxlength="25" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
                             type="text" formControlName="schoolName"
-                            placeholder="{{'school_name' | translate: translateKey}} *" required>
+                            placeholder="{{'school_name' | translate: translateKey}}" required>
                         <control-messages [control]="ticketBookingForm.get('schoolName')"></control-messages>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
                         <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="schoolMobileNumber"
-                            placeholder="{{'school_mobile_number' | translate: translateKey}}">
+                            placeholder="{{'school_mobile_number' | translate: translateKey}} *">
                         <control-messages [control]="ticketBookingForm.get('schoolMobileNumber')"></control-messages>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
                         <input matInput type="text" formControlName="schoolEmailId"
                             placeholder="{{'school_email_id' | translate: translateKey}}" required>
-                        <control-messages [control]="ticketBookingForm.get('schoolEmailId')"></control-messages>
+                        <control-messages [control]="ticketBookingForm.get('schoolEmailId')" ></control-messages>
                     </mat-form-field>
 
                     <!-- <h2>
@@ -228,8 +235,8 @@
                     <div class="col-md-6">
                         <label labelPosition="after">{{'permission_orders_if_applicable' | translate:translateKey}} *</label>
                         <ticketing-file-upload (uploaded)="isFileUploaded = $event" [form]="ticketBookingForm"
-                            [uploadModel]="{fieldIdentifier:'1', labelName:'previous_permission_orders_if_applicable', formPart:'1.1', refNumber:
-                            ticketBookingForm.get('refNumber').value, variableName: 'permission_orders'}">
+                            [uploadModel]="{dmsUpload:true, fieldIdentifier:'1', labelName:'Previous Permission Orders if Applicable', formPart:'1.1', refNumber:
+                            ticketBookingForm.get('refNumber').value, bookingFormId : ticketBookingForm.get('bookingFormId').value, variableName: 'permission_orders'}">
                         </ticketing-file-upload>
                     </div>
 
@@ -240,17 +247,16 @@
                         {{'terms_and_conditions' | translate:translateKey }}
                     </span>
                     <div class="pl-2">
-                        <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition">
+                        <mat-checkbox class="d-block checkBoxLabel" labelPosition="after" required formControlName="termsCondition" (click)="checkingSelectOrNot()" >
                             {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}}
-                            <terms-conditions
-                                [moduleNameParam]="{moduleName:ticketingService.moduleName,resourName: ticketingService.resourceType}">
-                            </terms-conditions>
+                            <a  class="stretchedLink" >
+                            </a>
                         </mat-checkbox>
                     </div>
                 </div>
 
                 <div class="row fotButtonBar">
-                    <div class="col-sm-12 col-md-12 text-right">
+                    <div class="col-sm-12 col-md-12 text-right" *ngIf="showFotButtonBar">
 
                         <button mat-raised-button color="primary" type="submit" (click)="redirecToPayment()"
                             *ngIf="ticketBookingForm.get('showCategory').get('code').value != 'PLANETARIUM_SPECIAL_SHOW'">
@@ -272,7 +278,7 @@
                 </div>
             </form>
         </div>
-        <select-payment-gateway #paymentGateway></select-payment-gateway>
+        <select-payment-gateway #paymentGateway [applicationType]="'ticketing'"></select-payment-gateway>
     </mat-card>
 </div>
 

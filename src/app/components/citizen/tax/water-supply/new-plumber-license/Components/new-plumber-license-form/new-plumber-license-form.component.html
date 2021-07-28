@@ -1,32 +1,34 @@
 <mat-horizontal-stepper #stepper class="stepperToTab">
     <mat-step>
-      <ng-template matStepLabel>Detail</ng-template>
+        <ng-template matStepLabel>Detail</ng-template>
 
-<form #formDetail="ngForm" (ngSubmit)="saveDetail(formDetail)">
-    <mat-card>
-        <div class="row">
-            <!-- <div class="col-md-6">
+        <form #formDetail="ngForm" (ngSubmit)="saveDetail(formDetail)">
+            <mat-card>
+                <div class="row">
+                    <!-- <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input readonly matInput name="applicationNumber" placeholder="Application No"
                         [(ngModel)]="applicationModel.applicationNumber">
                 </mat-form-field>
             </div> -->
 
-            <div class="col-md-6">
-                <mat-form-field class="full-width-input" hidden>
-                <input matInput trim="blur"  placeholder="Application No" maxlength="20" #ApplicationNo="ngModel" name="applicationNumber" [(ngModel)]="applicationModel.applicationNumber">
-                <mat-error *ngIf="ApplicationNo.invalid">*Application No is required.</mat-error>
-                </mat-form-field>
-            </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="full-width-input" hidden>
+                            <input matInput trim="blur" placeholder="Application No" maxlength="20"
+                                #ApplicationNo="ngModel" name="applicationNumber"
+                                [(ngModel)]="applicationModel.applicationNumber">
+                            <mat-error *ngIf="ApplicationNo.invalid">*Application No is required.</mat-error>
+                        </mat-form-field>
+                    </div>
 
-            <!-- <div class="col-md-6">
+                    <!-- <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input readonly matInput placeholder="Applicant Name" name="applicantName"
                         [(ngModel)]="applicationModel.applicantName">
                 </mat-form-field>
             </div> -->
-        </div>
-        <!-- <div class="row">
+                </div>
+                <!-- <div class="row">
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input readonly matInput placeholder="Applicant's Mobile Number" name="mobileNumber"
@@ -52,179 +54,197 @@
                 </mat-checkbox>
             </div>
         </div> -->
-    </mat-card>
-    <mat-card class="col-md-12 mt-3">
-        <div class="row">
-            <div class="col-md-6">
-                <mat-form-field class="full-width-input">
-                    <input matInput disabled name="licenseNo" [(ngModel)]="model.licenseNo" placeholder="License No">
-                </mat-form-field>
-            </div>
-            <div class="col-md-6">
-                <div class="ngSelect">
-                    <ng-select required placeholder="License For *" [items]="licenseForList" bindValue="itemId"
-                        bindLabel="itemName" name="licenseForId" [(ngModel)]="model.licenseForId"
-                        #LicenseForId="ngModel"
-                        [ngClass]="{'ng-invalid ng-touched':  formDetail.submitted && LicenseForId.invalid}">
-                    </ng-select>
-                    <div
-                        *ngIf="(formDetail.submitted && LicenseForId.invalid)  || (LicenseForId.invalid && LicenseForId.touched)">
-                        <mat-error *ngIf="LicenseForId.errors.required">*License For is required.</mat-error>
+            </mat-card>
+            <mat-card class="col-md-12 mt-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="full-width-input">
+                            <input matInput disabled name="licenseNo" [(ngModel)]="model.licenseNo"
+                                placeholder="License No">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="ngSelect">
+                            <ng-select required placeholder="License For *" [items]="licenseForList" bindValue="itemId"
+                                bindLabel="itemName" name="licenseForId" [(ngModel)]="model.licenseForId"
+                                #LicenseForId="ngModel"
+                                [ngClass]="{'ng-invalid ng-touched':  formDetail.submitted && LicenseForId.invalid}">
+                            </ng-select>
+                            <div
+                                *ngIf="(formDetail.submitted && LicenseForId.invalid)  || (LicenseForId.invalid && LicenseForId.touched)">
+                                <mat-error *ngIf="LicenseForId.errors.required">*License For is required.</mat-error>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <mat-form-field class="full-width-input">
-                    <input trim="blur" required matInput placeholder="Name of Applicant" name="nameOfApplicant"
-                        #NameOfApplicant="ngModel" [(ngModel)]="model.nameOfApplicant" maxlength="100">
-                    <mat-error *ngIf="NameOfApplicant.invalid">*Name of Applicant is required.</mat-error>
-                </mat-form-field>
-            </div>
-            <div class="col-md-6">
-                <mat-form-field class="full-width-input">
-                    <input matInput number-only [allowDecimals]="false" maxlength="12" minlength="12"
-                        placeholder="Aadhaar No" name="aadharNo" #AadharNo="ngModel" [(ngModel)]="model.aadharNo">
-                    <mat-error *ngIf="AadharNo.invalid">*Aadhaar No is invalid.</mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <mat-form-field class="full-width-input">
-                    <textarea required matInput placeholder="Residential Address" name="residentialAddress"
-                        maxlength="250" #ResidentialAddress="ngModel" [(ngModel)]="model.residentialAddress"></textarea>
-                    <mat-error *ngIf="ResidentialAddress.invalid">*Residential Address is required.</mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <mat-form-field class="full-width-input">
-                    <textarea required matInput placeholder="Business Address" name="businessAddress" maxlength="250"
-                        #BusinessAddress="ngModel" [(ngModel)]="model.businessAddress"></textarea>
-                    <mat-error *ngIf="BusinessAddress.invalid">*Business Address is required.</mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <mat-form-field class="full-width-input">
-                    <input [max]="maxDate" required matInput [matDatepicker]="DateOfBirth" placeholder="Date Of Birth"
-                        (dateChange)="onDOBChange($event,DOB)" name="birthdate" #DOB="ngModel"
-                        [(ngModel)]="model.birthdate" mask-date>
-                    <mat-datepicker-toggle matSuffix [for]="DateOfBirth"></mat-datepicker-toggle>
-                    <mat-datepicker #DateOfBirth disabled="false"></mat-datepicker>
-                    <mat-error *ngIf="DOB.invalid && isValidationMinMaxAge">{{errorMessage.dateFormateErrorMsg}}
-                    </mat-error>
-                    <mat-error *ngIf="!isValidationMinMaxAge">Minimum age should be 18 years and maximum age should be
-                        80 years.</mat-error>
-                    <div class="default-show-hint mat-hint mat-right" align="end">{{errorMessage.dateFormateHint}}</div>
-                </mat-form-field>
-            </div>
-            <div class="col-md-6">
-                <div class="ngSelect">
-                    <ng-select required placeholder="Educational Qualification *" [items]="educationalQualificationList"
-                        bindValue="itemId" bindLabel="itemName" name="educationQualificationId"
-                        [(ngModel)]="model.educationQualificationId" #EducationQualificationId="ngModel"
-                        [ngClass]="{'ng-invalid ng-touched':  formDetail.submitted && EducationQualificationId.invalid}">
-                    </ng-select>
-                    <div
-                        *ngIf="(formDetail.submitted && EducationQualificationId.invalid)  || (EducationQualificationId.invalid && EducationQualificationId.touched)">
-                        <mat-error *ngIf="EducationQualificationId.errors.required">*Educational Qualification is
-                            required.</mat-error>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="full-width-input">
+                            <input trim="blur" required matInput placeholder="Name of Applicant" name="nameOfApplicant"
+                                #NameOfApplicant="ngModel" [(ngModel)]="model.nameOfApplicant" maxlength="100">
+                            <mat-error *ngIf="NameOfApplicant.invalid">*Name of Applicant is required.</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="full-width-input">
+                            <input matInput number-only [allowDecimals]="false" maxlength="12" minlength="12"
+                                placeholder="Aadhaar No" name="aadharNo" #AadharNo="ngModel"
+                                [(ngModel)]="model.aadharNo">
+                            <mat-error *ngIf="AadharNo.invalid">*Aadhaar No is invalid.</mat-error>
+                        </mat-form-field>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <mat-form-field class="full-width-input">
-                    <input required matInput number-only maxlength="10" minlength="10" [allowDecimals]="false"
-                        placeholder="Mobile No 1" name="mobileNo1" #MobileNo1="ngModel" [(ngModel)]="model.mobileNo1">
-                    <mat-error *ngIf="MobileNo1.invalid">*Mobile No 1 is invalid.</mat-error>
-                </mat-form-field>
-            </div>
-            <div class="col-md-6">
-                <mat-form-field class="full-width-input">
-                    <input matInput number-only maxlength="10" minlength="10" [allowDecimals]="false"
-                        placeholder="Mobile No 2" name="mobileNo2" [(ngModel)]="model.mobileNo2" #MobileNo2="ngModel">
-                    <mat-error *ngIf="MobileNo2.invalid">*Mobile No 2 is invalid.</mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <mat-form-field class="full-width-input">
-                    <input matInput number-only maxlength="10" minlength="10" [allowDecimals]="false"
-                        placeholder="Mobile No 3" name="mobileNo3" [(ngModel)]="model.mobileNo3" #MobileNo3="ngModel">
-                    <mat-error *ngIf="MobileNo3.invalid">*Mobile No 3 is invalid.</mat-error>
-                </mat-form-field>
-            </div>
-            <div class="col-md-6">
-                <mat-form-field class="full-width-input">
-                    <input required email matInput placeholder="Email" name="emailId" #EmailId="ngModel" maxlength="50"
-                        [(ngModel)]="model.emailId">
-                    <mat-error *ngIf="EmailId.invalid && EmailId.errors.required">*Email is required.</mat-error>
-                    <mat-error *ngIf="EmailId.invalid && EmailId.errors.email">*Email is not valid.</mat-error>
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-form-field class="full-width-input">
+                            <textarea required matInput placeholder="Residential Address" name="residentialAddress"
+                                maxlength="250" #ResidentialAddress="ngModel"
+                                [(ngModel)]="model.residentialAddress"></textarea>
+                            <mat-error *ngIf="ResidentialAddress.invalid">*Residential Address is required.</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-form-field class="full-width-input">
+                            <textarea required matInput placeholder="Business Address" name="businessAddress"
+                                maxlength="250" #BusinessAddress="ngModel"
+                                [(ngModel)]="model.businessAddress"></textarea>
+                            <mat-error *ngIf="BusinessAddress.invalid">*Business Address is required.</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="full-width-input">
+                            <input [max]="maxDate" required matInput [matDatepicker]="DateOfBirth"
+                                placeholder="Date Of Birth" (dateChange)="onDOBChange($event,DOB)" name="birthdate"
+                                #DOB="ngModel" [(ngModel)]="model.birthdate" mask-date>
+                            <mat-datepicker-toggle matSuffix [for]="DateOfBirth"></mat-datepicker-toggle>
+                            <mat-datepicker #DateOfBirth disabled="false"></mat-datepicker>
+                            <mat-error *ngIf="DOB.invalid && isValidationMinMaxAge">{{errorMessage.dateFormateErrorMsg}}
+                            </mat-error>
+                            <mat-error *ngIf="!isValidationMinMaxAge">Minimum age should be 18 years and maximum age
+                                should be
+                                80 years.</mat-error>
+                            <div class="default-show-hint mat-hint mat-right" align="end">
+                                {{errorMessage.dateFormateHint}}</div>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="ngSelect">
+                            <ng-select required placeholder="Educational Qualification *"
+                                [items]="educationalQualificationList" bindValue="itemId" bindLabel="itemName"
+                                name="educationQualificationId" [(ngModel)]="model.educationQualificationId"
+                                #EducationQualificationId="ngModel"
+                                [ngClass]="{'ng-invalid ng-touched':  formDetail.submitted && EducationQualificationId.invalid}">
+                            </ng-select>
+                            <div
+                                *ngIf="(formDetail.submitted && EducationQualificationId.invalid)  || (EducationQualificationId.invalid && EducationQualificationId.touched)">
+                                <mat-error *ngIf="EducationQualificationId.errors.required">*Educational Qualification
+                                    is
+                                    required.</mat-error>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="full-width-input">
+                            <input required matInput number-only maxlength="10" minlength="10" [allowDecimals]="false"
+                                placeholder="Mobile No 1" name="mobileNo1" #MobileNo1="ngModel"
+                                [(ngModel)]="model.mobileNo1">
+                            <mat-error *ngIf="MobileNo1.invalid">*Mobile No 1 is invalid.</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="full-width-input">
+                            <input matInput number-only maxlength="10" minlength="10" [allowDecimals]="false"
+                                placeholder="Mobile No 2" name="mobileNo2" [(ngModel)]="model.mobileNo2"
+                                #MobileNo2="ngModel">
+                            <mat-error *ngIf="MobileNo2.invalid">*Mobile No 2 is invalid.</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="full-width-input">
+                            <input matInput number-only maxlength="10" minlength="10" [allowDecimals]="false"
+                                placeholder="Mobile No 3" name="mobileNo3" [(ngModel)]="model.mobileNo3"
+                                #MobileNo3="ngModel">
+                            <mat-error *ngIf="MobileNo3.invalid">*Mobile No 3 is invalid.</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="full-width-input">
+                            <input email matInput placeholder="Email" name="emailId" #EmailId="ngModel" maxlength="50"
+                                [(ngModel)]="model.emailId">
+                            <mat-error *ngIf="EmailId.invalid && EmailId.errors.required">*Email is required.
+                            </mat-error>
+                            <mat-error *ngIf="EmailId.invalid && EmailId.errors.email">*Email is not valid.</mat-error>
 
-                </mat-form-field>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-form-field class="full-width-input">
+                            <textarea required matInput placeholder="Work Experience Detail" name="workExperienceDetail"
+                                maxlength="250" #WorkExperienceDetail="ngModel"
+                                [(ngModel)]="model.workExperienceDetail"></textarea>
+                            <mat-error *ngIf="WorkExperienceDetail.invalid">*Work Experience Detail is required.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="full-width-input">
+                            <input [min]="minDate" matInput [matDatepicker]="LicenseValidTill"
+                                placeholder="License Valid Till" name="licenseValidTill"
+                                [(ngModel)]="model.licenseValidTill" disabled mask-date>
+                            <mat-datepicker-toggle matSuffix [for]="LicenseValidTill"></mat-datepicker-toggle>
+                            <mat-datepicker #LicenseValidTill disabled="true"></mat-datepicker>
+                            <mat-hint align="end">{{errorMessage.dateFormateHint}}</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="button-row text-right p-4">
+                    <button mat-raised-button color="primary" type="submit">
+                        <mat-icon>save</mat-icon> Save & Next
+                    </button>
+                    <button mat-raised-button class="ml-3" type="button" color="warn" (click)="clear()">
+                        <mat-icon>clear_all</mat-icon> Clear
+                    </button>
+                </div>
+            </mat-card>
+        </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Attachment</ng-template>
+        <mat-card>
+            <div class="row">
+                <ng-container *ngFor="let doc of plumberLicenseDocumentUploadDocs">
+                    <div class="col-md-4">
+                        <label>{{doc.documentLabelEn}}<span *ngIf="doc.mandatory">*</span></label>
+                        <file-upload-water-tax [form]="plumberLicenseDocumentUploadDocs" [uploadModel]="doc">
+                        </file-upload-water-tax>
+                    </div>
+                </ng-container>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <mat-form-field class="full-width-input">
-                    <textarea required matInput placeholder="Work Experience Detail" name="workExperienceDetail"
-                        maxlength="250" #WorkExperienceDetail="ngModel"
-                        [(ngModel)]="model.workExperienceDetail"></textarea>
-                    <mat-error *ngIf="WorkExperienceDetail.invalid">*Work Experience Detail is required.</mat-error>
-                </mat-form-field>
+
+
+            <div class="button-row text-right mt-3">
+                <button mat-raised-button class="ml-3" color="primary" type="button" (click)="onBackClick()">
+                    <mat-icon>skip_previous</mat-icon>Back
+                </button>
+                <button mat-raised-button class="ml-3" color="primary" (click)="onSubmitApproved()" type="button">
+                    <mat-icon>save</mat-icon>Submit
+                </button>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <mat-form-field class="full-width-input">
-                    <input [min]="minDate" matInput [matDatepicker]="LicenseValidTill" placeholder="License Valid Till"
-                        name="licenseValidTill" [(ngModel)]="model.licenseValidTill" disabled mask-date>
-                    <mat-datepicker-toggle matSuffix [for]="LicenseValidTill"></mat-datepicker-toggle>
-                    <mat-datepicker #LicenseValidTill disabled="true"></mat-datepicker>
-                    <mat-hint align="end">{{errorMessage.dateFormateHint}}</mat-hint>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="button-row text-right p-4">
-            <button mat-raised-button color="primary" type="submit">
-                <mat-icon>save</mat-icon> Save & Next
-            </button>
-            <button mat-raised-button class="ml-3" type="button" color="warn" (click)="clear()">
-                <mat-icon>clear_all</mat-icon> Clear
-            </button>
-        </div>
-    </mat-card>
-</form>
-</mat-step>
-<mat-step>
-  <ng-template matStepLabel>Attachment</ng-template>
-  <mat-card>
-    <div class="row">
-    <ng-container *ngFor="let doc of plumberLicenseDocumentUploadDocs">
-      <div class="col-md-4">
-        <label>{{doc.documentLabelEn}}<span *ngIf="doc.mandatory">*</span></label>
-        <file-upload-water-tax [form]="plumberLicenseDocumentUploadDocs" [uploadModel]="doc"></file-upload-water-tax>
-      </div>
-      </ng-container>
-    </div>
-    
-      
-      <div class="button-row text-right mt-3">
-          <button mat-raised-button class="ml-3" color="primary" (click)="onSubmitApproved()" type="button">
-              <mat-icon>save</mat-icon>Submit
-          </button>
-      </div>
-  
-  </mat-card> 
-</mat-step>
-      
-    
-  </mat-horizontal-stepper>
+
+        </mat-card>
+    </mat-step>
+
+
+</mat-horizontal-stepper>

@@ -1,8 +1,62 @@
-.fotButtonBar{
-    background: #f2f2f2;
-    padding: 25px 0 10px;
-    margin-top: 0px !important;
+
+.imageSize{
+    width: 100px;
+    height: 100px;
 }
+table { width: 100%; }
+
+.customthead{
+    background-color: #673ab7;
+    color: white;
+}
+
+.mat-error{
+    margin-top: -10px;
+    font-size: 11px
+}
+
+.mat-paginator-sticky {
+  bottom: 0px;
+  position: sticky;
+  z-index: 10;
+}
+
+.scrollModel{
+    overflow-y:auto;
+    max-height: 500px;
+}
+
+.fsLarge{
+    font-size: large;
+}
+
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    border: none;
+    display: inline-block;
+    padding: 0;
+    cursor: pointer;
+    float: left;
+    margin-bottom: 20px;
+    a {
+        color: #0000ee;
+    }
+
+    a:hover {
+        color: #0000ee;
+        text-decoration: underline;
+    }
+}
+
+i {
+    font-size: 20px;
+}
+
 .modal-md {
     max-width: 400;
 }
+
+::ng-deep .mat-progress-bar-fill::after { background-color: #6ff05a;}
+::ng-deep .mat-progress-bar-buffer { background: #eaeaff; }

@@ -42,7 +42,7 @@ export class TicketingsService {
   }
 
   /**
-	 * This method is used to get form data 
+	 * This method is used to get form data
 	*/
   getListData() {
     // api/ticketing/planetarium/list
@@ -76,8 +76,8 @@ export class TicketingsService {
   /**
     * This method is used to check seats
     */
-   getPlanetariumShowAvailability(resourceCode:any,showLangulage:any,visitingDate:any,totalVisitor:any) {
-    this.requestURL = `api/${this.moduleName}/${this.resourceType}/checkAvailableSeats?resourceCode=${resourceCode}&showLangulage=${showLangulage}&visitingDate=${visitingDate}&totalVisitor=${totalVisitor}`;
+   getPlanetariumShowAvailability(resourceCode:any,showLangulage:any,visitingDate:any,totalVisitor:any, showCategory : any) {
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/checkAvailableSeats?resourceCode=${resourceCode}&showLangulage=${showLangulage}&visitingDate=${visitingDate}&totalVisitor=${totalVisitor}&showCategory=${showCategory}`;
     return this.http.get(this.requestURL);
   }
   // api/${this.moduleName}/planetarium/checkAvailableSeats-
@@ -148,7 +148,7 @@ export class TicketingsService {
   }
 
   sendMailAndSMS(refNumber: string, serviceType: string) {
-    this.requestURL = `api/${this.moduleName}/zoo/sendMailAndSendSMS/${refNumber}/${serviceType}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/sendMailAndSendSMS/${refNumber}/${serviceType}`;
     return this.http.get(this.requestURL, 'printReceipt');
   }
 
@@ -183,7 +183,7 @@ export class TicketingsService {
 
   	/**
 	 * This methos for display json on myBooking list
-	 * @param refNumber 
+	 * @param refNumber
 	 */
   displayJson(refNumber: any) {
     this.requestURL = `api/${this.moduleName}/${this.resourceType}/json/${refNumber}`;
@@ -216,5 +216,5 @@ export class TicketingsService {
 		return this.http.post(requestURL, paymentData);
 
   }
-  
+
 }

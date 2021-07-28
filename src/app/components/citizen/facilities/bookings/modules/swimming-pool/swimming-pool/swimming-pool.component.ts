@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { ValidationService } from 'src/app/shared/services/validation.service';
@@ -11,6 +11,9 @@ import { TranslateService } from 'src/app/shared/modules/translate/translate.ser
 import { BookingService } from '../../../shared-booking/services/booking-service.service';
 import { BookingConstants, BookingUtils } from '../../../config/booking-config';
 import { ComponentConfig } from 'src/app/components/component-config';
+import { AppSwimmingPoolService } from '../swimming-pool.service';
+import { count } from 'rxjs-compat/operator/count';
+
 
 @Component({
   selector: 'app-swimming-pool',
@@ -31,6 +34,9 @@ export class SwimmingPoolComponent implements OnInit {
 
   isVisibleIdNumber = false;
   isPanCardVisibleIdNumber = false;
+  isLicenseVisibleIdNumber = false;
+  isElectionCardIdNumber = false;
+  isPassportIdNumber = false;
 
   formId: number;
   apiCode: string;
@@ -46,6 +52,7 @@ export class SwimmingPoolComponent implements OnInit {
   stateListArray: any = [];
   cityListArray: any = [];
   isBuildinAreaReq: boolean = false;
+  attachments = [];
   /**
   * Loading Booking Configuration
   */
@@ -67,6 +74,7 @@ export class SwimmingPoolComponent implements OnInit {
   // BANK: Array<any> = [];
   session: any;
   durationisReadOnly:boolean= false;
+  swimmingPoolRenewal:boolean = false;
   /**
    * @param fb - Declare FormBuilder property.
    * @param validationError - Declare validation service property
@@ -75,6 +83,13 @@ export class SwimmingPoolComponent implements OnInit {
    * @param commonService - Declare sweet alert.
    * @param toastrService - Show massage with timer.
    */
+
+  searchObj = {
+    isDisplayRenewLicenceForm: <boolean>false,
+    searchLicenceNumber:""
+  }
+  isRenewalForm = false;
+
   constructor(
     private fb: FormBuilder,
     public validationError: ValidationService,
@@ -84,9 +99,19 @@ export class SwimmingPoolComponent implements OnInit {
     private toastr: ToastrService,
     public translateService: TranslateService,
     private router: Router,
+    private swimmingPoolService: AppSwimmingPoolService,
+    private route: ActivatedRoute
   ) { 
     this.bookingUtils = new BookingUtils(formService, toastr);
     this.bookingService.resourceType = 'swimming'; }
+
+    /**
+	 * Min month should be current month.
+	 */ 
+  startMinMonth: Date = new Date(this.disableDate.getFullYear(), this.disableDate.getMonth(), 1);
+  // moment(new Date(this.disableDate.getFullYear(), this.disableDate.getMonth(), )).subtract(1, 'month').toDate();
+  maxEndMonth:any;
+  
 
 	/**
 	 * This method call initially required methods.
@@ -98,9 +123,15 @@ export class SwimmingPoolComponent implements OnInit {
     // this.getCountryLists();
     this.getUserProfile();
     this.defaultAsperPool();
-  }
 
-	/**
+    console.log(this.router.url);
+    if(this.router.url.indexOf('swimmingPoolRenewal') > -1){ 
+      this.searchObj.isDisplayRenewLicenceForm = true;
+      // this.swimmingPoolRenewal = true;
+    }
+    this.chosenMonthHandler(this.startMinMonth.setMonth(this.startMinMonth.getMonth() + 1));
+  }
+  /**
 	* Method is used to get lookup data
 	*/
   getLookupData() {
@@ -128,6 +159,24 @@ export class SwimmingPoolComponent implements OnInit {
       err => {
         this.toastr.error("Server Error");
       })
+  }
+
+  /**
+  * Filter details as per category selection
+  */
+  filterAsperCategory(event: any) {
+    let poolName = this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value;
+    if (event) {
+      this.bookingService.filterBatchDuration(event, poolName).subscribe(rep => {
+        this.BATCH_DURATION = rep;
+      },
+        err => {
+          this.toastr.error("Server Error");
+        })
+    }
+    else {
+      this.toastr.error("Server Error");
+    }
   }
   defaultAsperPool() {
     this.bookingService.filterPoolCode(this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value).subscribe(rep => {
@@ -159,9 +208,9 @@ export class SwimmingPoolComponent implements OnInit {
           this.toastr.error("Server Error");
         })
     }
-    else {
-      this.toastr.error("Server Error");
-    }
+    // else {
+    //   this.toastr.error("Server Error");
+    // }
 
   }
 
@@ -169,12 +218,12 @@ export class SwimmingPoolComponent implements OnInit {
    * Method for hide duration field
    */
   changeBatchDuration(event){
-    // if(event == 'LEARNER'){
-    //   this.swimmimgPoolBookingForm.get('batchDuration').get('code').setValue('MONTHLY');
-    //   this.durationisReadOnly = true;
-    // }else{
-    //   this.durationisReadOnly = false;
-    // }
+    if(event == 'LEARNER'){
+      this.swimmimgPoolBookingForm.get('batchDuration').get('code').setValue('MONTHLY');
+      this.durationisReadOnly = true;
+    }else{
+      this.durationisReadOnly = false;
+    }
 
   }
 
@@ -205,6 +254,12 @@ export class SwimmingPoolComponent implements OnInit {
     this.swimmimgPoolBookingForm.get('applicantAddress').get('country').setValue('INDIA');
     this.swimmimgPoolBookingForm.get('applicantAddress').get('state').setValue('GUJARAT');
     this.swimmimgPoolBookingForm.get('applicantAddress').get('city').setValue('Vadodara');
+    this.swimmimgPoolBookingForm.get('applicantAddress').get('country').disable();
+    this.swimmimgPoolBookingForm.get('applicantAddress').get('state').disable();
+    this.swimmimgPoolBookingForm.get('applicantAddress').get('city').disable();
+    this.swimmimgPoolBookingForm.get('applicantJoiningMonth').disable();
+
+
   }
 
   /**
@@ -296,6 +351,7 @@ export class SwimmingPoolComponent implements OnInit {
       applicantMobileNumber: [null, Validators.required],
       applicantEmergencyNumber: null,
       applicantBirthDate: [null, Validators.required],
+      applicantJoiningMonth: [null, Validators.required],
       applicantAge: null,
       applicantIDProof: this.fb.group({
         code: null,
@@ -303,7 +359,7 @@ export class SwimmingPoolComponent implements OnInit {
         gujName: null
       }),
       applicantIDProofNumber: null,
-      applicantEmail: null,
+      applicantEmail: [null, ValidationService.emailValidator],
       applicantBloodGroup: this.fb.group({
         code: null,
         name: null,
@@ -325,9 +381,10 @@ export class SwimmingPoolComponent implements OnInit {
       pid: null,
       remarks: null,
       family: false,
-      staffMember: false
+      staffMember: false,
+      isRenewalForm: false,
+      memberNumber: null
     });
-
   }
 
   /**
@@ -355,30 +412,28 @@ export class SwimmingPoolComponent implements OnInit {
    * This method required for final form submition.
    * @param count - flag of invalid control.
    */
-  handleErrorsOnSubmit(count) {
+  handleErrorsonSubmit(count) {
     let step1 = 15;
-    let step2 = 26;
-    let step3 = 27;
+    let step2 = 27;
+    let step3 = 40;
     if (count <= step1) {
-      this.tabIndex = 0;
-      return false;
+        this.tabIndex = 0;
+        return false;
     } else if (count <= step2) {
-      this.tabIndex = 1;
-      return false;
+        this.tabIndex = 1;
+        return false;
     } else if (count <= step3) {
-      this.tabIndex = 2;
-      return false;
+        this.tabIndex = 2;
+        return false;
     }
-  }
-
-
+}
   /**
    * Save form data
    */
   saveFormData() {
     // if (this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value) {
     // this.swimmimgPoolBookingForm.get('swimmingPoolName').setValue(this.swimmimgPoolBookingForm.get('resourceCodeLK').get('code').value);
-    this.bookingService.saveDraftform(this.swimmimgPoolBookingForm.value, this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value).subscribe(
+    this.bookingService.saveDraftform(this.swimmimgPoolBookingForm.getRawValue(), this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value).subscribe(
       res => {
         this.swimmimgPoolBookingForm.get('refNumber').setValue(res.refNumber);
         this.swimmimgPoolBookingForm.patchValue(res);
@@ -393,76 +448,54 @@ export class SwimmingPoolComponent implements OnInit {
    * Submit form data
    */
   submitApplication(): void {
-
     let errCount = this.bookingUtils.getAllErrors(this.swimmimgPoolBookingForm);
-    if (this.swimmimgPoolBookingForm.invalid) {
-      this.handleErrorsOnSubmit(errCount);
-      this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
-      return;
-    }
-    // else if (!this.bookingUtils.matcher(this.swimmimgPoolBookingForm, 'emailId', 'confirmEmailId') || !this.bookingUtils.matcher(this.swimmimgPoolBookingForm, 'applicantMobile', 'confirmMobile')) {
-    //   this.commonService.openAlert("Field Error", !this.bookingUtils.matcher(this.swimmimgPoolBookingForm, 'emailId', 'confirmEmailId') ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning');
-    //   this.handleErrorsOnSubmit(7);
-    //   return;}
-    else if (!this.isFileUploaded1 || !this.isFileUploaded2 || !this.isFileUploaded3 || !this.isFileUploaded4) {
-      this.handleErrorsOnSubmit(33);
-      this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
-      return;
-    }
-    else {
-      // save call
-      this.bookingService.saveDraftform(this.swimmimgPoolBookingForm.value, this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value).subscribe(
-        res => {
-          this.swimmimgPoolBookingForm.get('refNumber').setValue(res.refNumber);
-          this.swimmimgPoolBookingForm.patchValue(res);
-          // payment call
-          this.bookingService.getTransactionDetails(this.swimmimgPoolBookingForm.get('refNumber').value).subscribe(rep => {
-
-          }, (err) => {
-            if (err.status == 402) {
-              // this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService, this.swimmimgPoolBookingForm, this.router, 'citizen/bookings/swimming-pool/swimmingPool');
-              this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway ,this.swimmimgPoolBookingForm, this.router);
+          if (this.swimmimgPoolBookingForm.invalid) {
+              this.handleErrorsonSubmit(errCount);
+              this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
               return;
+          }
+          else if (!this.isRenewalForm && (!this.isFileUploaded1 || !this.isFileUploaded2 || !this.isFileUploaded3 || !this.isFileUploaded4)) {
+              this.handleErrorsonSubmit(errCount);
+              this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
+              return;
+          }
+          else {
+      // save call
+      this.swimmingPoolService.submitData(this.swimmimgPoolBookingForm.getRawValue(), this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value).subscribe(
+        res => {
+          let refNumber = this.swimmimgPoolBookingForm.get("refNumber").value;
+          this.sendSms(refNumber, "SUBMIT");
+          this.sendMail(refNumber, "SUBMIT");
+          this.swimmingPoolService.printAcknowledgeReceipt(res.refNumber).subscribe(data => {
+            let sectionToPrint: any = document.getElementById('sectionToPrint');
+            sectionToPrint.innerHTML = data;
+            setTimeout(() => {
+              window.print();
+              if(!this.isRenewalForm){
+              this.paymentRequest(res);
+              }else{
+                   this.router.navigate(['../../my-bookings'], {relativeTo: this.route});
+              }
+            });
+          });
+          // this.swimmimgPoolBookingForm.get('refNumber').setValue(res.refNumber);
+          // this.swimmimgPoolBookingForm.patchValue(res);
+          // // payment call
+          // this.bookingService.getTransactionDetails(this.swimmimgPoolBookingForm.get('refNumber').value).subscribe(rep => {
 
-              // submit and print call
-              // this.bookingService.submitFormData(this.swimmimgPoolBookingForm.value).subscribe(resp => {
-
-              //   if (resp.data.status == this.bookingConstants.SUBMITTED) {
-              //     this.commonService.commonAlert("Swimming Pool", "Booked Successfully", "success", "Print Receipt", false, '', pA => {
-              //       this.bookingService.printReceipt(resp.data.refNumber, 'SWIMMING_POOL_FEES').subscribe(printHTML => {
-              //         let sectionToPrint: any = document.getElementById('sectionToPrint');
-              //         sectionToPrint.innerHTML = printHTML;
-              //         setTimeout(() => {
-              //           window.print();
-              //           this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
-              //         });
-              //       }, err => {
-              //         this.commonService.openAlert("Error", err.error[0].message, "warning")
-              //       })
-              //     }, rA => {
-              //       this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
-              //     })
-              //   }
-
-              // }, (err) => {
-              //   if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {
-              //     this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "", cb => {
-              //       this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL])
-              //     })
-              //   } else {
-              //     this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
-              //   }
-              // })
-
-            } else if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {
-              this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "", cb => {
-                this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
-              })
-            } else {
-              this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
-            }
-          })
-
+          // }, (err) => {
+          //   if (err.status == 402) {
+          //     this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway ,this.swimmimgPoolBookingForm, this.router);
+          //     return;
+          //   } else if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {
+          //     this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "", cb => {
+          //       this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
+          //     })
+          //   } else {
+          //     this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+          //   }
+          // })
+          this.toastr.success('Application Saved Successfully.')
         },
         err => {
           this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
@@ -473,6 +506,23 @@ export class SwimmingPoolComponent implements OnInit {
 
   }
 
+  paymentRequest(element) {
+		this.bookingService.getTransactionDetails(element.refNumber).subscribe(transactionData => {
+		}, err => {
+			if (err.status == 402) {
+							// if (err.status == 402) {
+				// this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService);
+        this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway, null, null, null, {gatewayCustomerId: err.error.data.id, txtadditionalInfo1: element.resourceType, payableServiceType: element.payableServiceType});
+        this.router.navigate(['../../my-bookings'], {relativeTo: this.route});
+				// }
+			} else if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {
+				this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "")
+			} else {
+				this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+			}
+		})
+	}
+
   CheckType(idCode){
 
     this.isVisibleIdNumber = false;
@@ -480,17 +530,55 @@ export class SwimmingPoolComponent implements OnInit {
     if(idCode === 'AADHAAR_CARD'){
       this.isVisibleIdNumber = true;
       this.isPanCardVisibleIdNumber = false;
+      this.isLicenseVisibleIdNumber = false;
+      this.isElectionCardIdNumber = false;
+      this.isPassportIdNumber = false;
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValue('');
-      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required]);
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.aadharValidation]);
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
-    }else if(idCode === 'PAN_CARD'){
+    }
+    else if(idCode === 'PAN_CARD'){
       this.isPanCardVisibleIdNumber = true;
       this.isVisibleIdNumber = false;
+      this.isLicenseVisibleIdNumber = false;
+      this.isPassportIdNumber = false;
+      this.isElectionCardIdNumber = false;
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.panValidator]);
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
-    }else {
+    }
+    else if(idCode === 'DRIVING_LICENSE'){
       this.isVisibleIdNumber = false;
       this.isPanCardVisibleIdNumber = false;
+      this.isElectionCardIdNumber = false;
+      this.isPassportIdNumber = false;
+      this.isLicenseVisibleIdNumber = true;
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.drivingLicenseValidator])
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
+    } 
+    else if(idCode === 'ELECTION_CARD'){
+      this.isVisibleIdNumber = false;
+      this.isPanCardVisibleIdNumber = false;
+      this.isLicenseVisibleIdNumber = false;
+      this.isPassportIdNumber = false;
+      this.isElectionCardIdNumber = true;
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.electionCardValidator])
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
+    }
+    else if(idCode === 'PASSPORT'){
+      this.isVisibleIdNumber = false;
+      this.isPanCardVisibleIdNumber = false;
+      this.isLicenseVisibleIdNumber = false;
+      this.isElectionCardIdNumber = false;
+      this.isPassportIdNumber = true;
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.passportValidator])
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
+    }
+    else {
+      this.isVisibleIdNumber = false;
+      this.isPanCardVisibleIdNumber = false;
+      this.isLicenseVisibleIdNumber = false;
+      this.isElectionCardIdNumber = false;
+      this.isPassportIdNumber = false;
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValue('');
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required]);
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
@@ -498,4 +586,60 @@ export class SwimmingPoolComponent implements OnInit {
 
   }
 
+  /** this method is used for send msn on submit
+   * @param refNumber
+   * @param eventType
+   */
+    sendSms(refNumber:any,eventType:any){
+
+      if(refNumber){
+          this.bookingService.sendSmsForSwimming(refNumber,eventType).subscribe(resp=>{
+          },err => {
+              this.toastr.error("Something went wrong");            })
+      }else{
+          this.toastr.error("Invalid request");
+      }
+  }
+
+  /**
+          * Method is used to send mail on submit
+          * @param refNumber 
+          * @param eventType 
+          * 
+          */
+  sendMail(refNumber: any, eventType: any) {
+    if (refNumber) {
+      this.bookingService.sendMailForSwimming(refNumber, eventType).subscribe(resp => {
+      }, err => {
+        this.toastr.error("Something went wrong");
+      })
+    } else {
+      this.toastr.error("Invalid request");
+    }
+  }
+
+  chosenMonthHandler(event) {
+    console.log(event);
+    this.dateFormat(event,'applicantJoiningMonth');
+  }
+
+  getSwimmingPoolData() {
+    this.bookingService.searchRenewSwimmingPool(this.searchObj.searchLicenceNumber).subscribe(
+      (res: any) => {
+      res = res.data;
+      if (res && res.bookingFormId) 
+      this.swimmimgPoolBookingForm.patchValue({'serviceFormId': res.bookingFormId});
+      this.attachments = res.attachments;
+      this.swimmimgPoolBookingForm.patchValue(res);
+      // this.attachments = res.data;
+      this.swimmimgPoolBookingForm.disable();
+      this.searchObj.isDisplayRenewLicenceForm = false;
+      this.showDowlLoadFileTab = false;
+      this.showSwimmingPoolForm = true;
+      this.isRenewalForm = true;
+      this.swimmimgPoolBookingForm.get('isRenewalForm').setValue(true);
+      // this.swimmimgPoolBookingForm.get('remarks').enable();
+      // this.filterAsperBatchName(this.swimmimgPoolBookingForm.get('category').get('code').value);
+    })
+  }  
 }

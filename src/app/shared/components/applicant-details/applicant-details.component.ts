@@ -23,7 +23,6 @@ export class ApplicantDetailsComponent implements OnInit, OnChanges {
 
 	constructor(
 		private session: SessionStorageService,
-		private commonService: CommonService,
 		private fb: FormBuilder,
 		private dialogRef: MatDialogRef<ApplicantDetailsComponent>) {
 	}

@@ -176,4 +176,8 @@ export class RevaluationService {
       { observe: 'response' })
       .pipe(map((response: any) => response))
   }
+
+  getAttachmentList(serviceFormId) {
+    return this.http.get<Array<Object>>(`${Constants.assessmentModuleApiUrl}revaluation/attachments?serviceFormId=${serviceFormId}`);
+  }
 }

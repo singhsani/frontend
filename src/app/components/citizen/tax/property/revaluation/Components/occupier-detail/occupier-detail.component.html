@@ -69,7 +69,8 @@
   </div>
   <div class="row mt-4" *ngIf="isShowTable">
     <div class="col-md-12">
-      <table mat-table [dataSource]="dataSource" matSort class="width100">
+      <div class="table-responsive">
+      <table mat-table [dataSource]="dataSource" matSort class="w-100">
         <ng-container matColumnDef="occupierCode">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Code</th>
           <td mat-cell *matCellDef="let element"> {{element.occupierCode}} </td>
@@ -99,15 +100,15 @@
           <td mat-cell *matCellDef="let element"> {{element.mobileNo}} </td>
         </ng-container>
         <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef>Action</th>
-          <td mat-cell *matCellDef="let element">
+          <th mat-header-cell *matHeaderCellDef class="pr-0 text-center">Action</th>
+          <td mat-cell *matCellDef="let element" class="pr-0 text-center" style="min-width: 130px;">
             <button mat-icon-button type="button" color="primary" title="Edit" (click)='eidt(element)'>
               <mat-icon>edit</mat-icon>
             </button>
             <button mat-icon-button type="button" color="primary" title="Unit Detail" (click)="moveStepper(element)">
               <mat-icon>dashboard</mat-icon>
             </button>
-            <button mat-button title="Delete" class="btn-width-auto" color="warn" (click)="delete(element)">
+            <button mat-icon-button title="Delete" color="warn" (click)="delete(element)">
               <mat-icon>delete_forever</mat-icon>
             </button>
           </td>
@@ -115,6 +116,7 @@
         <tr mat-header-row *matHeaderRowDef="columns"></tr>
         <tr mat-row *matRowDef="let row; columns: columns;"></tr>
       </table>
+      </div>
     </div>
   </div>
   <div class="row mt-3" *ngIf="!isUnitDetailEntered && isOccupierExist">

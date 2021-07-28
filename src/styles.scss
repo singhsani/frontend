@@ -119,6 +119,10 @@ h1 { font-size: 30px; margin-bottom: 10px; }
 
 }
 
+.userName {border-radius: 0 !important; 
+    img {border-radius: 50% !important; position: relative; top: -3px; object-fit: cover;} 
+}
+
 // Footer
 .footer {text-align: center; color: $colorWhite; font-size: 11px; padding-top: 15px;}
 
@@ -245,6 +249,7 @@ h1 { font-size: 30px; margin-bottom: 10px; }
 .mat-step-header:nth-child(odd) {flex: 1fr;}
 .mat-step-label {width: 100% !important;}
 .mat-horizontal-stepper-header-container { background-color: #fafafa; border-bottom: 1px solid #ebebeb; margin-bottom: 15px; }
+
 .mat-horizontal-stepper-header { height: 60px !important; flex-direction: column; justify-content: center; align-items: center; padding: 0 10px !important;}
 .mat-step-label-active.mat-step-label-selected::after { content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: $primaryGradient; }
 .mat-step-icon-not-touched {margin-right: 0 !important;}
@@ -312,10 +317,7 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
     }
 }
 
-::-webkit-scrollbar {width: 4px; height: 4px;}
-::-webkit-scrollbar-track {background: #D1C4E9; border-radius:2px;}
-::-webkit-scrollbar-thumb {background: #7E57C2; border-radius:2px;}
-::-webkit-scrollbar-thumb:hover {background: #5E35B1;}
+
 
 .ng-select {padding-bottom: 3px; margin-bottom: 1.25em;
     .ng-select-container {min-height: 43px;}
@@ -332,6 +334,7 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
 // .ng-select .ng-input, .ng-select .ng-clear-wrapper {display: none;}
 
 .ng-select .ng-select-container .ng-value-container .ng-input {bottom: 1px;}
+.ng-select .ng-select-container .ng-value-container .ng-input>input {padding-left: 0;}
 
 // Custom Button
 .width150 {width: 150px;}
@@ -427,8 +430,8 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
         .deleteIcon {width: 70px;}
         .swal2-title {font-size: 26px; color: #000; font-weight: 400; margin:0 0 0.2em;}
         .swal2-content {font-size: 17px; color: #333; font-weight: 300; padding: 0 15px;}
-        .swal2-actions {border-top:1px solid #ccc; margin: 0;padding: 13px 15px; display: block !important; margin-top: 25px; text-align: right;
-            button {background: $colorBlue; box-shadow: none; font-weight: 400;
+         .swal2-actions {border-top:1px solid #ccc; margin: 0;padding: 10px 15px; display: block !important; margin-top: 25px; text-align: center;
+            button {background: $colorBlue; box-shadow: none; font-weight: 400; margin: 10px 5px; 
                 &:hover { box-shadow: $buttonShadowHover !important;}
             }
         }
@@ -453,6 +456,8 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
     top: initial !important;
 }
 
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {background: rgba(0,0,0,0.08);}
+
 /* Start - CSS for IE Message to not-supported browser for application */
 #ie-toolbar { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 999999; background-color: #f3f3f3; }
 #ie-toolbar div { position: absolute; top: 50%; left: 50%; width: 700px; margin-left: -350px; text-align: center; height: 120px; margin-top: -60px; color: #616161; font-size: 30px; }
@@ -464,6 +469,8 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
 .ngSelect .mat-error { position: relative !important; top: 0 !important; left: 0; font-size: 11px;
     bottom: auto; margin-top: -18px !important; min-height: 18px;}
 .radioBtnError .mat-error { position: relative !important; top: -4px !important; left: 0;font-size: 11px;}
+
+.matErrorTwoLine .mat-error {bottom: auto; top:27px; word-break: break-word;}
 
 .mat-horizontal-content-container{
     min-height: 300px;
@@ -548,7 +555,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 
     .mat-tab-label .mat-tab-label-content { display: block !important; }
     .moduleName {font-size: 15px; color: #333; font-weight: 500; min-height: 36px; line-height: normal;width: 184px;
-            white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;}
+            white-space: normal !important; overflow: hidden !important; text-overflow: ellipsis !important;}
     .count {color: #b3b3b3; font-size: 13px; font-weight: 400; display: inline-block; padding-top: 5px;}
     .mat-tab-label-active {background-color: $colorBlue; border: 1px solid #673ab7;
         .moduleName {color: #fff;}
@@ -564,7 +571,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     // .row {}
     // .col-md-3, .col-sm-4 {padding-bottom: 18px;}
     .colBtn {padding:9px 15px;} /* width: 25%; float: left;*/
-    .mat-primary {color: #423c51; font-size: 15px; font-weight: 400; border-radius: 3px; border:1px solid #b2b2b2; display: block; width: 100%; text-overflow: ellipsis;
+    .mat-primary {color: #423c51; font-size: 15px; font-weight: 400; border-radius: 3px; border:1px solid #b2b2b2; display: block; width: 100%; text-overflow: ellipsis; text-decoration: none; white-space: normal; line-height: 1.4; padding:6px 8px; height: 100%;
         overflow: hidden;
         &:hover {background: $colorBlue; border-color: $colorBlue; color: #fff;}
     }
@@ -611,7 +618,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     //     .mat-form-field-wrapper {margin-left: 30px; left: 0 !important;}
     //     }
 
-    .updateProfileBtn {position: absolute; top: 20px; right: 30px;}
+    .updateProfileBtn {position: absolute; top: 20px; right: 30px; background: #673ab7; color: #fff !important;}
     h2 {margin:20px 0 8px;}
     }
 
@@ -657,7 +664,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     &>.mat-tab-header {border: 0;
         .mat-tab-label-container {background: #f1f1f1;}
     }
-    .mat-tab-label {font-size: 15px; color: #666; opacity: 1; font-weight: normal;}
+    .mat-tab-label {font-size: 14px; color: #666; opacity: 1; font-weight: normal;}
     // .mat-icon {font-size: 22px; float: left; margin-right: 13px;}
     .mat-tab-label-active {color:$colorBlue; font-weight: 500;}
    // .mat-tab-label-content {white-space: normal; padding: 0 10px;}
@@ -666,6 +673,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 }
 
 .fotButtonBar {background: #f2f2f2; padding: 25px 0 10px; margin-top: 140px !important;}
+.fotButtonBar.mt-0 {margin-top: 0 !important;}
 
 .mat-tab-header-pagination-before, .mat-tab-header-pagination-after {background: $colorLite; }
 
@@ -688,10 +696,22 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 
 .cardBox {border: 1px solid $colorLite; padding: 0 !important;}
 .pageTitle {padding: 10px 20px; font-size: 20px; margin-bottom: 20px; background-color: #f1f1f1;}
+.pageTitle .mb-0 {margin-bottom: 0 !important;}
 
-.dateBox {
-    strong {background-color: #f1f1f1; padding: 5px; display: block; text-align: center;}
-    .dateCon {padding: 10px;}
+.dateBox {height: 100%;
+    strong {
+        background-color: #f1f1f1;
+        padding: 5px;
+        display: block;
+        text-align: center;
+    }
+    .dateCon {
+        padding: 10px;
+    }
+    .mat-checkbox-layout {
+    white-space: normal; word-break: break-all;
+    }
+
 }
 
 
@@ -711,8 +731,54 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 .mat-table td.mat-cell, .mat-table td.mat-footer-cell, .mat-table th.mat-header-cell {font-size: 13px;}
 
 
+.tableLayout {table-layout: fixed;}
+.tableLayout .ngSelect {min-width: inherit !important;}
+.tableLayout td, .tableLayout th {word-break: break-all;}
+
+.selectSort .ng-dropdown-panel {max-width: 150px !important;}
+
+.wMatCell80 {max-width: 80px;}
+.wMatCell120 {max-width: 120px;}
+.wMatCell150 {max-width: 150px;}
+.cellLast {padding-right: 0 !important;}
+
+.borderInputNone .mat-form-field-underline { background-color: transparent;}
+
+.labelLonger .mat-form-field-label-wrapper {overflow: visible !important;
+    label.mat-form-field-label {width: 100% !important; overflow: visible !important;  white-space: normal !important; text-overflow: initial !important;}
+}
 
 
+.minWidth1000px {min-width: 1000px;}
+
+.marBot100 {margin-bottom: 100px !important;}
+
+.checkBoxLabel .mat-checkbox-label {white-space: normal; line-height: normal !important;}
+
+.paddLeftRight5 .mat-table .mat-cell, 
+.paddLeftRight5 td.mat-cell, td.mat-footer-cell, .paddLeftRight5 th.mat-header-cell {padding: 0 6px;}
+
+.ng-select.ng-select-multiple .ng-select-container.ng-has-value .ng-value-container {padding-top: 4px;}
+
+.mat-menu-panel {max-width: 300px !important;}
+
+.example-container.borderOne {max-height: inherit;}
+
+::-webkit-scrollbar {width: 5px; height: 5px;}
+::-webkit-scrollbar-track {background: #D1C4E9; border-radius:3px;}
+::-webkit-scrollbar-thumb {background: #7E57C2; border-radius:3px;}
+::-webkit-scrollbar-thumb:hover {background: #5E35B1;}
+* { scrollbar-color: #7E57C2 #D1C4E9 !important; scrollbar-width: thin !important;}
+
+@media (min-width: 992px) {
+::-webkit-scrollbar {width: 10px; height: 10px;}
+::-webkit-scrollbar-track {background: #D1C4E9; border-radius:5px;}
+::-webkit-scrollbar-thumb {background: #7E57C2; border-radius:5px;}
+.twoLineDes .mat-form-field-label-wrapper {
+    label.mat-form-field-label {top: 5px !important;}
+}
+
+}
 // Responsive CSS Part 1 ------------------------------------------------
 @media (max-width: 991px) {
     .container {margin-top: 65px;}
@@ -729,8 +795,8 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     }
 
     .moduleList {
-        .mat-tab-label-container {overflow-x: auto; padding-bottom: 5px;}
-        .mat-tab-header-pagination {display: none !important;}
+        // .mat-tab-label-container {overflow-x: scroll; padding-bottom: 10px;}
+        // .mat-tab-header-pagination {display: none !important;}
     }
     .servicesList {margin-right: -8px; margin-left: -8px;
         .colBtn {padding: 8px;}
@@ -744,6 +810,14 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
         }
     }
 
+    .mat-error {letter-spacing: -1px;}
+
+    .labelLonger .mat-form-field-label-wrapper {
+        label.mat-form-field-label {top: 0 !important;}
+    }
+
+    .mat-step-label {white-space: normal !important; overflow: visible !important; text-overflow: inherit !important; font-size: 11px; word-break: break-word;}
+    
 }
 
 // *********  shop-lic-new  **********
@@ -763,7 +837,9 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 
     .profilePage .updateProfileBtn {position: static; width: 100%;}
     .stepperNav .mat-raised-button {padding: 0 20px !important; min-width: initial; line-height: 30px !important;}
-
+    .stepperNav .mat-tab-label .mat-tab-label-content {line-height: 1.15; font-size: 80%;
+        .ng-star-inserted {padding-top: 5px;}
+    }
     .mainMenu {
         .linkName {display: none;}
         .mat-icon {
@@ -789,6 +865,13 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     .pageTitle {font-size: 17px; padding: 7px 20px;}
     .olList {padding-left: 15px;}
 
+    .cdk-overlay-pane.mat-datepicker-dialog {max-width: 90vw !important;}
+
+    .ngSelect.mat-horizontal-content-container {min-height: 120px;}
+
+    .mat-horizontal-stepper-header-container {position: relative; overflow-x: auto;
+        .mat-step-header {min-width: 70px;}
+    }
 }
 
 /*** for reduce the width and height of datepicker ***/
@@ -842,7 +925,7 @@ textarea.gujInputCls {margin-bottom: 0;}
 
 @media print {
 @page {margin: 0 !important; padding:0 !important;}
-.example-container.borderOne, .mainMenu, .mat-toolbar, .titleBar, mat-card, .mat-elevation-z8.borderOne, .hideOnPrint, .overlay-container,.mat-menu-panel {display: none !important;}
+.example-container.borderOne, .mainMenu, .mat-toolbar, .titleBar, mat-card, .mat-elevation-z8.borderOne, .hideOnPrint, .overlay-container,.mat-menu-panel, .loadingDiv {display: none !important;}
 #matSidenav {display: none !important; visibility: hidden !important;}
 .mat-drawer-content {margin-left: 0 !important;}
 #sectionToPrint, #sectionToPrint {visibility: visible;}
@@ -874,7 +957,7 @@ textarea.gujInputCls {margin-bottom: 0;}
        .fa-times:before { content: "×" !important; }
   }
 
-  .searchBox {position: absolute; top: -5px; right: 50px;
+  .searchBox {position: static; top: -5px; right: 50px;
     .mat-form-field  {width: 200px;}
     .mat-form-field-suffix .mat-icon-button {font-size: 18px !important; width: 2em; height: 2em;}
     .ng-select {margin-bottom: 8px; width: 200px;}
@@ -943,10 +1026,10 @@ textarea.gujInputCls {margin-bottom: 0;}
     .ngSelect {max-width: inherit;}
      tbody tr > td {width: 100% !important; display: block; clear: both;
          .d-md-none {display: inline-block;  width: 100px; padding-right: 10px; float: left; position: relative; font-weight: bold;}
-         .d-md-none::before { content: ": "; position: absolute; top: 0; right: 5px;}
+         .d-md-none::before { content: ": "; position: absolute; top: 0; right: 5px; display: none;}
      }
      .mo-d-none {display: none;}
-      p {/*display: inline-block;*/ display: flex;}
+      p {display:block !important; /*display: flex;*/}
     // .ngSelect {width: 100%; max-width: inherit;}
     .ng-select.ng-select-single .ng-select-container .ng-value-container, .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-value {white-space: inherit !important;}
     .preview-mode-add-class{
@@ -958,6 +1041,8 @@ textarea.gujInputCls {margin-bottom: 0;}
   .tdPaddMob > tbody > tr > td {padding: 10px 0.75rem !important;}
 
   .twoLineMsg control-messages mat-error.mat-error {bottom: -15px;}
+
+  .mobLableWidthFull .d-md-none {width: 100% !important;}
 }
 
 // Part 2 End ------------------------------------------------
@@ -975,54 +1060,81 @@ textarea.gujInputCls {margin-bottom: 0;}
 // Start Icons ----------------------------------
 .moduleList .moduleIcon { background-repeat: no-repeat !important; background-position: center !important; border: 1px solid #673ab7;}
 .moduleListcancellationAlertFormcancellationAlertForm .mat-tab-label-active .moduleIcon.ng-star-inserted {background-repeat: no-repeat !important; background-position: center !important; border-color:#fff;}
+
 .BOOKINGMODULE  {background:url('assets/icons/booking-facilities.svg') !important;}
-.moduleList .mat-tab-label-active .BOOKINGMODULE  {background:url('assets/icons/booking-facilities-h.svg') !important;}
+.moduleList .mat-tab-label-active .BOOKINGMODULE,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .BOOKINGMODULE {background:url('assets/icons/booking-facilities-h.svg') !important;}
 
 .TICKETINGSMODULE  {background:url('assets/icons/ticketing-facilities.svg') !important;}
-.moduleList .mat-tab-label-active .TICKETINGSMODULE {background:url('assets/icons/ticketing-facilities-h.svg') !important;}
+.moduleList .mat-tab-label-active .TICKETINGSMODULE,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .TICKETINGSMODULE {background:url('assets/icons/ticketing-facilities-h.svg') !important;}
 
 
 
 .SHOP-ESTAB  {background:url('assets/icons/shop-and-establishment-license.svg') !important;}
-.moduleList .mat-tab-label-active .SHOP-ESTAB {background:url('assets/icons/shop-and-establishment-license-h.svg') !important;}
+.moduleList .mat-tab-label-active .SHOP-ESTAB,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .SHOP-ESTAB {background:url('assets/icons/shop-and-establishment-license-h.svg') !important;}
 
 .WATER-TAX  {background:url('assets/icons/water-tax.svg') !important;}
-.moduleList .mat-tab-label-active .WATER-TAX {background:url('assets/icons/water-tax-h.svg') !important;}
+.moduleList .mat-tab-label-active .WATER-TAX,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .WATER-TAX {background:url('assets/icons/water-tax-h.svg') !important;}
 
 .AFFORD-HOUSE{background:url('assets/icons/affordable-housing.svg') !important;}
-.moduleList .mat-tab-label-active .AFFORD-HOUSE {background:url('assets/icons/affordable-housing-h.svg') !important;}
+.moduleList .mat-tab-label-active .AFFORD-HOUSE,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .AFFORD-HOUSE {background:url('assets/icons/affordable-housing-h.svg') !important;}
 
 
 .FIRE {background:url('assets/icons/fire-services.svg') !important;}
-.moduleList .mat-tab-label-active .FIRE {background:url('assets/icons/fire-services-h.svg') !important;}
+.moduleList .mat-tab-label-active .FIRE,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .FIRE {background:url('assets/icons/fire-services-h.svg') !important;}
 
 .FOOD-LIC  {background:url('assets/icons/food-licensing-registration.png') !important;}
-.moduleList .mat-tab-label-active .FOOD-LIC {background:url('assets/icons/food-licensing-registration-h.png') !important;}
+.moduleList .mat-tab-label-active .FOOD-LIC,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .FOOD-LIC {background:url('assets/icons/food-licensing-registration-h.png') !important;
+    background-repeat: no-repeat !important;  background-position: center center !important;}
 
 .ANIMAL-POND  {background:url('assets/icons/animal-pond-license.svg') !important;}
-.moduleList .mat-tab-label-active .ANIMAL-POND {background:url('assets/icons/animal-pond-license-h.svg') !important;}
+.moduleList .mat-tab-label-active .ANIMAL-POND,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .ANIMAL-POND {background:url('assets/icons/animal-pond-license-h.svg') !important;}
 
 .PROFESSIONAL  {background:url('assets/icons/professional-tax.svg') !important;}
-.moduleList .mat-tab-label-active .PROFESSIONAL {background:url('assets/icons/professional-tax-h.svg') !important;}
+.moduleList .mat-tab-label-active .PROFESSIONAL,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .PROFESSIONAL{background:url('assets/icons/professional-tax-h.svg') !important;}
 
 
 .MARRIAGE {background:url('assets/icons/marriage-registration.svg') !important;}
-.moduleList .mat-tab-label-active .MARRIAGE {background:url('assets/icons/marriage-registration-h.svg') !important;}
+.moduleList .mat-tab-label-active .MARRIAGE,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .MARRIAGE {background:url('assets/icons/marriage-registration-h.svg') !important;}
 
 .VEHICLE   {background:url('assets/icons/vehicle-tax.png') !important;}
-.moduleList .mat-tab-label-active .VEHICLE  {background:url('assets/icons/vehicle-tax-h.png') !important;}
+.moduleList .mat-tab-label-active .VEHICLE,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .VEHICLE {background:url('assets/icons/vehicle-tax-h.png') !important;
+    background-repeat: no-repeat !important;  background-position: center center !important;}
 
 .PROPERTY-TAX  {background:url('assets/icons/property-tax.svg') !important;}
-.moduleList .mat-tab-label-active .PROPERTY-TAX {background:url('assets/icons/property-tax-h.svg') !important;}
+.moduleList .mat-tab-label-active .PROPERTY-TAX,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .PROPERTY-TAX {background:url('assets/icons/property-tax-h.svg') !important;}
 
 .MUTTON-FISH  {background:url('assets/icons/meat-and-fish-license.svg') !important;}
-.moduleList .mat-tab-label-active .MUTTON-FISH {background:url('assets/icons/meat-and-fish-license-h.svg') !important;}
+.moduleList .mat-tab-label-active .MUTTON-FISH, 
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .MUTTON-FISH {background:url('assets/icons/meat-and-fish-license-h.svg') !important;}
 
 .BIRTH-DEATH  {background:url('assets/icons/birth-and-death.png') !important;}
-.moduleList .mat-tab-label-active .BIRTH-DEATH {background:url('assets/icons/birth-and-death-h.png') !important;}
+.moduleList .mat-tab-label-active .BIRTH-DEATH, 
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .BIRTH-DEATH {background:url('assets/icons/birth-and-death-h.png') !important;
+    background-repeat: no-repeat !important; background-position: center center !important;}
 
 .affordableHousing  {background:url('assets/icons/affordable-housing.svg') !important;}
-.moduleList .mat-tab-label-active .affordableHousing {background:url('assets/icons/affordable-housing-h.svg') !important;}
+.moduleList .mat-tab-label-active .affordableHousing, 
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .affordableHousing {background:url('assets/icons/affordable-housing-h.svg') !important;}
+
+.VENDOR_REG  {background:url('assets/icons/professional-tax.svg') !important;}
+.moduleList .mat-tab-label-active .VENDOR_REG,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .VENDOR_REG{background:url('assets/icons/professional-tax-h.svg') !important;}
+
+
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .moduleName {color: #fff;}
+
 // End Icons ----------------------------------
 
 .capitalCase {
@@ -1050,10 +1162,17 @@ textarea.gujInputCls {margin-bottom: 0;}
 }
 @media print {
     .zooServicesList{ display: none;}
+
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
    }
 
  .createMarriageReg .mat-tab-label{
     width: 200px;
+
+    
 }
 
 @-moz-document url-prefix() {
@@ -1129,9 +1248,28 @@ textarea.gujInputCls {margin-bottom: 0;}
 
 
 .timeBut {position: absolute !important;  top: 15px;  right: 25px; background: #fff; width: 30px !important; height: 30px !important; line-height: 30px !important;}
+.pr-0.mr-0 .timeBut {right: 10px;}
 
 .lineHeight20 {line-height: 18px !important; margin-top: 2px !important; line-height: 18px !important; margin-top: 0px !important;  padding-top: 3px !important;}
 
 
 .SHOP-ESTAB-NEW {background:url('assets/icons/shop-and-establishment-license.svg') !important;}
-.moduleList .mat-tab-label-active .SHOP-ESTAB-NEW {background:url('assets/icons/shop-and-establishment-license-h.svg') !important;}
+.moduleList .mat-tab-label-active .SHOP-ESTAB-NEW, .moduleList .mat-tab-label:not(.mat-tab-disabled):focus .SHOP-ESTAB-NEW {background:url('assets/icons/shop-and-establishment-license-h.svg') !important;}
+
+// selectTwoLine
+.selectCategoryDropdown  .ng-option, .selectTwoLine  .ng-option {
+    line-height: normal !important;
+    min-height: auto !important;
+     padding: 8px 16px !important;
+    white-space: normal !important;
+}
+
+
+// Start material selection dropdown
+.cdk-overlay-pane { -webkit-transform: translateX(0) translateY(21px) !important; 
+    transform: translateX(0) translateY(21px) !important;
+.ng-trigger-transformPanel {min-width: 100% !important;}
+}
+// End material selection dropdown
+
+.mb140 {margin-bottom: 140px;}

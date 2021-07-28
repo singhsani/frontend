@@ -6,7 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../shared/shared.module';
 import { CoreModule } from '../../../core/core.module';
 import { WaterPipelineConnection } from './water-pipeline/water-pipeline-connection';
-import { FilterAttachmentMRPipe } from '../certificates/marriage/filter-attachment-MR.pipe';
 import { DrainagePipelineConnectionComponent } from './drainage-pipeline-connection/drainage-pipeline-connection.component';
 import { TaxRebateApplicationService } from '../tax/property/tax-rebate-application/Services/tax-rebate-application.service';
 import { WaterPipelineWorkCompletionComponent } from './water-pipeline-work-completion/water-pipeline-work-completion.component';
@@ -51,7 +50,6 @@ const routes: Routes = [
   ],
   declarations: [
     WaterPipelineConnection,
-    FilterAttachmentMRPipe,
     DrainagePipelineConnectionComponent,
     WaterPipelineWorkCompletionComponent,
     DrainagePipelineWorkCompletionComponent,

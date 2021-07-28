@@ -6,14 +6,15 @@ import { ManageRoutes } from '../../../../config/routes-conf';
 import { CommonService } from '../../../../shared/services/common.service';
 import { FormsActionsService } from '../../../../core/services/citizen/data-services/forms-actions.service';
 import { FireFacilitiesService } from '../common/services/fire-facilities.service';
-import { Location } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 import * as _ from 'lodash';
 import { TranslateService } from '../../../../shared/modules/translate/translate.service';
 
 @Component({
 	selector: 'app-fire-renewal-noc',
 	templateUrl: './fire-renewal-noc.component.html',
-	styleUrls: ['./fire-renewal-noc.component.scss']
+	styleUrls: ['./fire-renewal-noc.component.scss'],
+	providers: [DatePipe]
 })
 export class FireRenewalNocComponent implements OnInit {
 
@@ -70,7 +71,8 @@ export class FireRenewalNocComponent implements OnInit {
 		private commonService: CommonService,
 		private FireFacilitiesService: FireFacilitiesService,
 		private location: Location,
-		public TranslateService: TranslateService
+		public TranslateService: TranslateService,
+		private datePipe: DatePipe
 	) { }
 
 	/**
@@ -141,6 +143,16 @@ export class FireRenewalNocComponent implements OnInit {
 
 	}
 
+	transformDate(){
+		const finalNOCIssueDate = this.renewalFireNocForm.get('finalNOCIssueDate').value;
+		const finalNOCIssueDateTransform = this.datePipe.transform(finalNOCIssueDate, 'dd/MM/yyyy');
+		this.renewalFireNocForm.get('finalNOCIssueDate').setValue(finalNOCIssueDateTransform);
+
+		const nextRenewalDate = this.renewalFireNocForm.get('nextRenewalDate').value;
+		const nextRenewalDateTransform = this.datePipe.transform(nextRenewalDate, 'dd/MM/yyyy');
+		this.renewalFireNocForm.get('nextRenewalDate').setValue(nextRenewalDateTransform);
+	}
+
 	/**
 	 * Method is used to get form data
 	 */
@@ -149,6 +161,8 @@ export class FireRenewalNocComponent implements OnInit {
 			try {
 				this.renewalFireNocForm.patchValue(res);
 				this.fireFacilityConfig.isAttachmentButtonsVisible = true;
+
+				this.transformDate();
 
 				this.renewalFireNocForm.disable();
 				this.renewalFireNocForm.get('apiType').enable();
@@ -225,7 +239,7 @@ export class FireRenewalNocComponent implements OnInit {
 			});
 
 			this.fireFacilityConfig.isAttachmentButtonsVisible = true;
-
+			this.transformDate();
 
 
 			this.renewalFireNocForm.disable();

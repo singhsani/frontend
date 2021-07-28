@@ -6,7 +6,7 @@ import { SwimmingPoolRenewalComponent } from './swimming-pool-renewal/swimming-p
 const routes: Routes = [
 	{ path: '', redirectTo: 'swimmingPool', pathMatch: 'full' },
 	{ path: 'swimmingPool', component: SwimmingPoolComponent },
-	{ path: 'swimmingPoolRenewal', component: SwimmingPoolRenewalComponent }
+	{ path: 'swimmingPoolRenewal', component: SwimmingPoolComponent }
 ];
 
 @NgModule({

@@ -257,7 +257,7 @@ export class ZooBookingComponent implements OnInit {
         code: [null, Validators.required]
       }),
       idNumber: [null, [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
-      visitingDate: [moment().format('YYYY-MM-DD'), Validators.required],
+      visitingDate: [, Validators.required],
       totalChild: [0, Validators.max(100)],
       totalAdult: [0, Validators.max(100)],
       totalCamera: [0, Validators.max(100)],
@@ -312,14 +312,14 @@ export class ZooBookingComponent implements OnInit {
     },
       err => {
         if (err.status === 402) {
-
+          this.resetForm();
           this.ticketBookingForm.get('refNumber').setValue(err.error.data.refNumber);
           // this.ticketingService.getTotalAmount(err.error.data.refNumber).subscribe(data => {
           // console.log(data);
           // this.ticketBookingForm.get('totalAmount').setValue(err.error.data.TOTAL);
           // this.ticketingUtils.redirectToPayment(err, this.commonService, this.ticketingService, this.ticketBookingForm, this.router);
              this.ticketingUtils.redirectToCCAvenuePayment(err, this.commonService, this.ticketingService, this.paymentGateway ,this.ticketBookingForm, this.router);
-         
+             
           // return;
           // });
         }

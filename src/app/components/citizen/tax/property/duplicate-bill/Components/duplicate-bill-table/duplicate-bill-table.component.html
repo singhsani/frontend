@@ -1,4 +1,4 @@
-<div class="mt-4">
+<mat-card class="cardBorder mt-2">
   <div class="example-container mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 width100">
       <ng-container matColumnDef="select">
@@ -30,13 +30,16 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-</div>
-<div class="row margin-top-20">
-  <div class="col-md-2">
-    <mat-card>Total Count : <b>{{totalCount}}</b></mat-card>
+
+  <div class="row margin-top-20">
+    <div class="col-md-2">
+      Total Count : <b>{{totalCount}}</b>
+    </div>
   </div>
-</div>
-<mat-card class="col-md-12 mt-3" *ngIf="isShowPayMode">
+
+</mat-card>
+
+<mat-card class="cardBorder mt-2" *ngIf="isShowPayMode">
   <form #formDetail="ngForm" (ngSubmit)="onEnterClick(formDetail)">
     <div class="row margin-top-20">
       <div class="col-md-2">
@@ -84,6 +87,7 @@
         </button>
       </div>
     </div>
+    <select-payment-gateway-property #paymentGateway></select-payment-gateway-property>
   </form>
   <mat-card *ngIf="isShowOutstandingDetail">
     <div class="row">

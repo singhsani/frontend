@@ -2,16 +2,16 @@
     <div class="row">
         <div class="col-md-12">
             <div class="section-title">
-                <h4> Property Owner</h4>
+                <h4>{{'property_owner' | translate:translateKey }}</h4>
                 <mat-divider></mat-divider>
             </div>
         </div>
     </div>
     <form #formOwner="ngForm" (ngSubmit)="saveOwner(formOwner)">
         <div class="row">
-            <div class="col-md-1">
+            <div class="col-md-3">
                 <div class="ngSelect" style="min-width: 100%;">
-                    <ng-select required placeholder="Title *" [items]="titleList" bindValue="itemId"
+                    <ng-select required placeholder="{{'title' | translate:translateKey }} *" [items]="titleList" bindValue="itemId"
                         bindLabel="itemName" name="titleId" [(ngModel)]="ownerModel.titleId" #TitleId="ngModel"
                         [ngClass]="{'ng-invalid ng-touched':  formOwner.submitted && TitleId.invalid}">
                     </ng-select>
@@ -20,51 +20,67 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <mat-form-field class="full-width-input">
-                    <input trim="blur" matInput required maxlength="50" placeholder="First Name" name="firstName"
-                        #FirstName="ngModel" [(ngModel)]="ownerModel.firstName">
+                    <input trim="blur" matInput required maxlength="50" placeholder="{{'first_name' | translate:translateKey }}" name="firstName"
+                        #FirstName="ngModel" [(ngModel)]="ownerModel.firstName" (keypress)="keyPressAlphabetOnly($event)">
                     <mat-error *ngIf="FirstName.invalid">*First Name is required.</mat-error>
                 </mat-form-field>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <mat-form-field class="full-width-input">
-                    <input trim="blur" matInput maxlength="50" placeholder="Middle Name" name="middleName"
-                        [(ngModel)]="ownerModel.middleName">
+                    <input trim="blur" matInput maxlength="50" placeholder="{{'middle_name' | translate:translateKey }}" name="middleName"
+                        [(ngModel)]="ownerModel.middleName" (keypress)="keyPressAlphabetOnly($event)">
                 </mat-form-field>
             </div>
             <div class="col-md-2">
                 <mat-form-field class="full-width-input">
-                    <input trim="blur" matInput required maxlength="50" placeholder="Last Name" name="lastName"
-                        #LastName="ngModel" [(ngModel)]="ownerModel.lastName">
+                    <input trim="blur" matInput required maxlength="50" placeholder="{{'last_name' | translate:translateKey }}" name="lastName"
+                        #LastName="ngModel" [(ngModel)]="ownerModel.lastName" (keypress)="keyPressAlphabetOnly($event)">
                     <mat-error *ngIf="LastName.invalid">*Last Name is required.</mat-error>
                 </mat-form-field>
             </div>
-            <div class="col-md-2">
+        </div>
+        <div class="row">
+            <div class="col-md-3">
                 <mat-form-field class="full-width-input">
-                    <input matInput number-only maxlength="12" minlength="12" placeholder="Aadhaar No" name="aadharNo"
+                    <input matInput number-only maxlength="12" minlength="12" placeholder="{{'aadhar_no' | translate:translateKey }}" name="aadharNo"
                         #AadhaarNo="ngModel" [(ngModel)]="ownerModel.aadharNo">
                     <mat-error *ngIf="AadhaarNo.invalid">*Aadhaar No is invalid.</mat-error>
                 </mat-form-field>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-3">
                 <mat-form-field class="full-width-input">
-                    <input matInput number-only maxlength="10" minlength="10" placeholder="Mobile No" name="mobileNo"
+                    <input matInput number-only maxlength="10" minlength="10" placeholder="{{'mobile_no' | translate:translateKey }}" name="mobileNo"
                         #MobileNo="ngModel" [(ngModel)]="ownerModel.mobileNo">
                     <mat-error *ngIf="MobileNo.invalid">*Mobile No is invalid.</mat-error>
                 </mat-form-field>
 
             </div>
-            <div class="col-md-1">
+            <div class="col-md-3">
                 <mat-form-field class="full-width-input">
-                    <input matInput email placeholder="Email" name="emailAddress" maxlength="255"
-                    #EmailAddress="ngModel"   [(ngModel)]="ownerModel.emailAddress">
-                     <mat-error *ngIf="EmailAddress.invalid && EmailAddress.errors.email">*Email is not valid.</mat-error>
+                    <input matInput email placeholder="{{'email' | translate:translateKey }}" name="emailAddress" maxlength="255"
+                        #EmailAddress="ngModel" [(ngModel)]="ownerModel.emailAddress">
+                    <mat-error *ngIf="EmailAddress.invalid && EmailAddress.errors.email">*Email is not valid.
+                    </mat-error>
                 </mat-form-field>
             </div>
+            <div class="col-md-2">
+                <div class="ngSelect">
+                    <ng-select [(ngModel)]="ownerModel.isPrimaryOwner" name="isPrimaryOwner" required
+                        placeholder="{{'is_primary_owner' | translate:translateKey }}*" #PrimaryOwner="ngModel">
+                        <ng-option [value]="true">Yes</ng-option>
+                        <ng-option [value]="false">No</ng-option>
+                    </ng-select>
+                    <div
+                        *ngIf="(formOwner.submitted && PrimaryOwner.invalid)  || (PrimaryOwner.invalid && PrimaryOwner.touched)">
+                        <mat-error *ngIf="PrimaryOwner.invalid">*Selcet owner type.</mat-error>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-1">
-                <button mat-mini-fab type="submit" color="primary" title="Save">
-                    <mat-icon>save</mat-icon>
+                <button mat-mini-fab type="submit" color="primary" title="Add">
+                    <mat-icon>add</mat-icon>
                 </button>
             </div>
         </div>
@@ -77,7 +93,8 @@
     </div>
     <div class="row mt-4" *ngIf="isShowOwnerTable">
         <div class="col-md-12">
-            <table mat-table [dataSource]="dataSource" matSort class="width100">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource" matSort class="width100 w-100">
                 <ng-container matColumnDef="titleName">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
                     <td mat-cell *matCellDef="let element"> {{element.titleName}} </td>
@@ -121,7 +138,8 @@
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="columns"></tr>
                 <tr mat-row *matRowDef="let row; columns: columns;"></tr>
-            </table>
+                </table>
+            </div>
         </div>
     </div>
 </mat-card>
@@ -130,7 +148,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="section-title">
-                    <h4> Property Detail</h4>
+                    <h4>{{'property_detail' | translate:translateKey }}</h4>
                     <mat-divider></mat-divider>
                 </div>
             </div>
@@ -138,7 +156,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="ngSelect">
-                    <ng-select required placeholder="Property Type *" [items]="propertyTypeList"
+                    <ng-select required placeholder="{{'property_type' | translate:translateKey }} *" [items]="propertyTypeList"
                         bindValue="propertyTypeId" bindLabel="propertyType" name="propertyTypeMstId"
                         [(ngModel)]="propertyModel.propertyTypeMstId" #PropertyTypeMstId="ngModel"
                         (ngModelChange)="onChangedPropertyType($event)"
@@ -153,7 +171,7 @@
             </div>
             <div class="col-md-6">
                 <div class="ngSelect">
-                    <ng-select required placeholder="Property Sub-Type *" [items]="propertySubTypeList"
+                    <ng-select required placeholder="{{'property_sub_type' | translate:translateKey }}*" [items]="propertySubTypeList"
                         bindValue="subPropertyTypeId" bindLabel="subPropertyType" name="subPropertyTypeMstId"
                         [(ngModel)]="propertyModel.subPropertyTypeMstId" #PropertySubType="ngModel"
                         [ngClass]="{'ng-invalid ng-touched':  form.submitted && PropertySubType.invalid}">
@@ -169,7 +187,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="ngSelect">
-                    <ng-select required placeholder="With in Water Zone *" [items]="waterZoneList" bindValue="itemId"
+                    <ng-select required placeholder="{{'with_in_water_zone' | translate:translateKey }}*" [items]="waterZoneList" bindValue="itemId"
                         bindLabel="itemName" name="waterZoneLookupId" [(ngModel)]="propertyModel.waterZoneLookupId"
                         #WaterZone="ngModel"
                         [ngClass]="{'ng-invalid ng-touched':  form.submitted && WaterZone.invalid}">
@@ -182,7 +200,7 @@
             </div>
             <div class="col-md-3">
                 <div class="ngSelect">
-                    <ng-select required placeholder="Is Building High Rise? *" [items]="highLowRiseList"
+                    <ng-select required placeholder="{{'is_building_high_rise?' | translate:translateKey }}*" [items]="highLowRiseList"
                         bindValue="itemId" bindLabel="itemName" name="highRiseLowRiseLookupId"
                         [(ngModel)]="propertyModel.highRiseLowRiseLookupId" #BuildingHighRises="ngModel"
                         [ngClass]="{'ng-invalid ng-touched':  form.submitted && BuildingHighRises.invalid}">
@@ -198,19 +216,20 @@
                 <div class="row">
                     <div class="col-md-10">
                         <div class="ngSelect mat-horizontal-content-container">
-                            <ng-select required placeholder="Class of Location *" [items]="landClassList" bindValue="locationFactorId"
-                                bindLabel="locationName" name="locationFactorMstId"
+                            <ng-select required placeholder="{{'class_of_location' | translate:translateKey }}*" [items]="landClassList"
+                                bindValue="locationFactorId" bindLabel="locationName" name="locationFactorMstId"
                                 [(ngModel)]="propertyModel.locationFactorMstId" #LandClass="ngModel"
                                 [ngClass]="{'ng-invalid ng-touched':  form.submitted && LandClass.invalid}">
                             </ng-select>
-                            <div *ngIf="(form.submitted && LandClass.invalid)  || (LandClass.invalid && LandClass.touched)">
+                            <div
+                                *ngIf="(form.submitted && LandClass.invalid)  || (LandClass.invalid && LandClass.touched)">
                                 <mat-error *ngIf="LandClass.errors.required">*Class of Location is required.</mat-error>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-2" style="padding-top: 15px;">
                         <a title="help" href="assets/files/Wardwise_Area_Details.pdf" target="_blank">
-                                <i class="material-icons">help</i>
+                            <i class="material-icons">help</i>
                         </a>
                     </div>
                 </div>
@@ -220,10 +239,10 @@
     <div class="row text-right mt-3">
         <div class="col-md-12">
             <button mat-raised-button class="ml-3" color="primary" type="button" (click)="onBackClick()">
-                <mat-icon>skip_previous</mat-icon>Back
+                <mat-icon>skip_previous</mat-icon>{{'back' | translate:translateKey }}
             </button>
             <button mat-raised-button class="ml-3" color="primary" type="submit">
-                Next<mat-icon>skip_next</mat-icon>
+                {{'next' | translate:translateKey }}<mat-icon>skip_next</mat-icon>
             </button>
         </div>
     </div>

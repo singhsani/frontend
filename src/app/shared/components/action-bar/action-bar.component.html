@@ -9,6 +9,12 @@
 
 		<div class="pull-right">
 
+			<ng-container *ngIf="(commonService.fromAdmin() && (form.get('serviceDetail').get('code').value) == 'SHOP-ESTAB-LIC-NEW'  && stepInfo.step == 'final')" > 
+			 <button type="button" mat-raised-button color="primary" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value"
+			(click)="printView(form.get('serviceDetail').get('code').value, form.get('serviceDetail').get('name').value, form.get('serviceFormId').value)">
+				{{'print_preview' | translate:translateKey}}</button>
+			</ng-container>
+
 			<button type="button" mat-raised-button color="primary" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value"
 			 (click)="saveAsDraft()">{{(stepInfo.step == 'final' ? 'save' : 'save_and_next') | translate:translateKey}}</button>
 
@@ -32,6 +38,7 @@
 			<button type="button" mat-raised-button (click)="cancelForm()">Cancel</button>
 		</div> -->
 		<div class="pull-right">
+
 			<button type="button" mat-raised-button color="primary" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value"
 			 (click)="saveAsDraft()">{{(stepInfo.step == 'final' ? 'save' : 'save_and_next') | translate:translateKey}}</button>
 

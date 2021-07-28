@@ -184,8 +184,8 @@ export class BookPermissionComponent implements OnInit {
   }
 
   /**
-   * 
-   * @param date 
+   *
+   * @param date
    */
   onDateChange(date){
     let futureMonth = new Date(date.getFullYear()+"-12-31");
@@ -325,8 +325,8 @@ export class BookPermissionComponent implements OnInit {
       confirmMobile: [null],
       applicantName: [null],
       applicantMobile: [null],
-      emailId: [null],
-      confirmEmailId: [null],
+      emailId: [null, [Validators.required, ValidationService.emailValidator]],
+      confirmEmailId: [null, [Validators.required, ValidationService.emailValidator]],
       relationshipWithOrg: [null],
       presidentName: [null],
       shootingPurpose: [null],
@@ -339,7 +339,8 @@ export class BookPermissionComponent implements OnInit {
       //   name: null
       // }),
       // ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
-      attachment: [null]
+      attachment: [null],
+      bookingFormId : null
     });
   }
 
@@ -380,7 +381,7 @@ export class BookPermissionComponent implements OnInit {
                   this.commonService.openAlert("Error", err.error[0].message, "warning")
               })
           }, rA => {
-              this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
+             // this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
           })
       }
       }, (err) => {

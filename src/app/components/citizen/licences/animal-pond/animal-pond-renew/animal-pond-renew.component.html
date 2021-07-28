@@ -33,7 +33,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput  disabled readonly autocomplete="off" appDate
 							[matDatepicker]="DateOflicenseIssueDate" formControlName="licenseIssueDate"
-							(dateChange)="dateFormat($event.value,'licenseIssueDate')"
+							
 							placeholder="{{ 'issue_date' | translate:translateKey }}">
 						<mat-datepicker-toggle matSuffix [for]="DateOflicenseIssueDate"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #DateOflicenseIssueDate></mat-datepicker>
@@ -61,7 +61,7 @@
 						<control-messages [control]="animalPondRenewForm.get('holderFirstName')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="30" appValidationFields
+						<input matInput type="text"  maxlength="30" appValidationFields
 							validationFieldsType='onlyNameWithOutSpace'
 							placeholder="{{'holder_middlename' | translate:translateKey}}"
 							formControlName="holderMiddleName" appGujInputSource targetElement="holderMiddleNameGuj"
@@ -76,6 +76,8 @@
 							[form]="animalPondRenewForm">
 						<control-messages [control]="animalPondRenewForm.get('holderLastName')"></control-messages>
 					</mat-form-field>
+
+					
 				</div>
 
 				<!-- gujarati -->
@@ -87,7 +89,7 @@
 						<control-messages [control]="animalPondRenewForm.get('holderFirstNameGuj')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="90"
+						<input matInput type="text"  maxlength="90"
 							placeholder="{{'holder_middlename' | translate:translateKey:'gu'}}"
 							formControlName="holderMiddleNameGuj" appGujInputTarget [form]="animalPondRenewForm">
 						<control-messages [control]="animalPondRenewForm.get('holderMiddleNameGuj')"></control-messages>
@@ -101,12 +103,24 @@
 				</div>
 				<!-- /gujarati -->
 
+				<div class="col-md-4 ngSelect" formGroupName="businessType">
+					<ng-select placeholder="{{'business_type' | translate:translateKey}} *" formControlName="code" (change)="onChangeStatusOfBusiness()">
+						<ng-option *ngFor="let type of ANIMAL_POND_STATUS_OF_BUSINESS" [value]="type.code">{{type.name}}</ng-option>
+					</ng-select>
+					 <control-messages [control]="animalPondRenewForm.get('businessType').get('code')"></control-messages> 
+				</div>
+
 				<div class="row">
 					<h2>{{'permanat_address' | translate:translateKey}}</h2>
 					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment
 						[requiredFeilds]="true"
 						[addressFormGroup]="animalPondRenewForm.get('permanantAddress')"></app-address>
 				</div>
+
+				<div class="col-md-4" >
+					<mat-checkbox class="col-md-12 mt-2" (change)="onSameAddressChange($event)">{{'Temporary Address Is Same As Permanant Address ?' | translate: translateKey}}</mat-checkbox>
+				</div>
+
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
 					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment
@@ -115,7 +129,7 @@
 				</div>
 
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="10" formControlName="holderTelephoneNo"
+					<input matInput OnlyNumber maxlength="11" minlength="11" formControlName="holderTelephoneNo"
 						placeholder="{{'holder_telephone_no' | translate:translateKey}}">
 					<control-messages [control]="animalPondRenewForm.get('holderTelephoneNo')"></control-messages>
 				</mat-form-field>
@@ -140,7 +154,7 @@
 					<control-messages [control]="animalPondRenewForm.get('holderPanNo')"></control-messages>
 				</mat-form-field>
 
-				<app-action-bar [form]="animalPondRenewForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="animalPondRenewForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="onChangeStatusOfBusiness()"
 					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 1 Ends -->
@@ -213,14 +227,15 @@
 				<!-- table -->
 				<div class="row">
 					<div class="col-md-10">
-						<h2 *ngIf="animalPondRenewForm.get('relationshipId').value.code != 'PROPRIETOR'">{{ 'if_apl_is_in_properitership'|
+						<h2 *ngIf="animalPondRenewForm.get('relationshipId').value.code === 'PROPRIETOR'">{{ 'if_apl_is_in_properitership'|
 							translate:translateKey}}</h2>
-						<h2 *ngIf="animalPondRenewForm.get('relationshipId').value.code === 'PROPRIETOR'">{{ 'if_apl_is_in_partnership' |
+						<h2 *ngIf="animalPondRenewForm.get('relationshipId').value.code === 'PARTNER'">{{ 'if_apl_is_in_partnership' |
 							translate:translateKey}}</h2>
 					</div>
 					<div class="col-md-2 pt-3 text-right">
 						<button type="button"
 							[disabled]="animalPondRenewForm.get('relationshipId').value.code ? animalPondRenewForm.get('relationshipId').value.code=='PROPRIETOR' ? !(animalPondRenewForm.get('relationshipList')['controls'].length < 1) : !(animalPondRenewForm.get('relationshipList')['controls'].length < 10) : true"
+							[hidden] ="animalPondRenewForm.get('relationshipId').value.code === 'DIRECTOR' || animalPondRenewForm.get('relationshipId').value.code === 'AUTHORIZEDSIGNATORY'"
 							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
 							(click)="addMorePerson('APL_PERSON')">{{'add'|
 							translate:translateKey}}</button>
@@ -229,7 +244,8 @@
 
 				<div *ngIf="animalPondRenewForm.get('relationshipList')['controls'].length">
 					<div>
-						<table class="table table-striped mb-0 responsiveTableRow">
+						<table class="table table-striped mb-0 responsiveTableRow"
+						[hidden] ="animalPondRenewForm.get('relationshipId').value.code === 'DIRECTOR' || animalPondRenewForm.get('relationshipId').value.code === 'AUTHORIZEDSIGNATORY'">
 							<thead>
 								<tr class="mo-d-none">
 									<th *ngIf="animalPondRenewForm.get('canEdit').value">SR No.</th>
@@ -307,7 +323,7 @@
 					</div>
 				</div>
 				<!-- end table -->
-				<app-action-bar [form]="animalPondRenewForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="animalPondRenewForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="onChangeStatusOfBusiness()"
 					[stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 2 Ends -->
@@ -418,7 +434,7 @@
 						</div>
 					</div> -->
 				<!-- end table -->
-				<app-action-bar [form]="animalPondRenewForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="animalPondRenewForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="onChangeStatusOfBusiness()"
 					[stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
 			</mat-tab>
 			<!-- step 3 end -->
@@ -434,13 +450,13 @@
 						*ngFor="let doc of animalPondRenewForm.get('serviceDetail').get('serviceUploadDocuments').value">
 						<div *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
 							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
-								<span *ngIf="doc.mandatory">*</span></label>
+								<span *ngIf="doc.mandatory" class="mandatory">*</span></label>
 							<file-upload [form]="animalPondRenewForm" [uploadModel]="doc"></file-upload>
 						</div>
 					</div>
 				</div>
 
-				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" [form]="animalPondRenewForm"
+				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" [form]="animalPondRenewForm" (handleOnSaveAndNext)="onChangeStatusOfBusiness()"
 					(handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onTabChange($event) "
 					[stepInfo]="{step: 'final', next:4, back:2} "></app-action-bar>
 

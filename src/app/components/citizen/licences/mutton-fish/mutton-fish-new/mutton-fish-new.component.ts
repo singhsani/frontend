@@ -19,7 +19,7 @@ import { LicenseConfiguration } from '../../license-configuration';
 export class MuttonFishNewComponent implements OnInit {
 
 	@ViewChild('permanantAddressEstablishment') permanantAddressEstablishment: any;
-
+	
 	muttonFishNewForm: FormGroup;
 	translateKey: string = 'muttonFishNewScreen';
 	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
@@ -101,6 +101,9 @@ export class MuttonFishNewComponent implements OnInit {
 					this.onChangeStatusOfBusiness(this.muttonFishNewForm.get('statusOfBusinessId').value.code)
 				} else {
 					this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
+					this.uploadFileArray.sort((a, b) => 
+							a.orderSequence - b.orderSequence);
+					
 				}
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
@@ -121,7 +124,7 @@ export class MuttonFishNewComponent implements OnInit {
 
 				//this.serverUploadFilesArray = res.serviceDetail.serviceUploadDocuments;
 				this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
-				
+				this.uploadFileArrayOnBusinessType(res);
 				//this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishNewForm);
 				this.muttonFishNewForm.get('personTypeGuj').setValue(res.personType.gujName);
 				this.muttonFishNewForm.controls.permanantAddress.valueChanges.subscribe(data => {
@@ -160,6 +163,11 @@ export class MuttonFishNewComponent implements OnInit {
 		this.WARD = [];
 		if (event && this.LOOKUP && this.LOOKUP.hasOwnProperty(event)) {
 			this.WARD = this.LOOKUP[event];
+			this.WARD = this.WARD.sort((a, b) => {			
+			var itemA = a.name.split("-");
+			var itemB = b.name.split("-");
+				return itemA[1] - itemB[1];
+			  });
 		}
 	}
 
@@ -169,47 +177,54 @@ export class MuttonFishNewComponent implements OnInit {
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
 		this.uploadFileArray = [];
 		this.mandatoryUploadFileArray = [];
-
+		
 		if (event == 'PROPRIETORSHIPFIRM') {
 			for (let file of localUploadArray) {
 				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') || (file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
-					file['mandatory'] = false;
+						file['mandatory'] = false;
+				}else{
+					this.uploadFileArray.push(file);
 				}
 
 				if (file['mandatory'] == true) {
 					this.mandatoryUploadFileArray.push(file);
 				}
-
-				this.uploadFileArray.push(file);
 			}
 		} else if (event == 'PARTNERSHIPFIRM') {
 			for (let file of localUploadArray) {
-				if ((file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
-					file['mandatory'] = false;
+				if ((file['documentIdentifier'] == 'POLICE_VERIFICATION') || (file['documentIdentifier'] == 'LAND_TERMS_CONDITION')) {
+						file['mandatory'] = false;
+				}else{
+					this.uploadFileArray.push(file);
 				}
 
 				if (file['mandatory'] == true) {
 					this.mandatoryUploadFileArray.push(file);
 				}
-
-				this.uploadFileArray.push(file);
 			}
 		} else if (event == 'TENANT') {
 			for (let file of localUploadArray) {
-				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED')) {
+				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') ||  (file['documentIdentifier'] == 'LAND_TERMS_CONDITION')) {
 					file['mandatory'] = false;
+				}else if(file['documentIdentifier'] == 'RENT_AGREEMENT'){
+					file['mandatory'] = true;
+					this.uploadFileArray.push(file);
+				}
+				else{
+					this.uploadFileArray.push(file);
 				}
 
 				if (file['mandatory'] == true) {
 					this.mandatoryUploadFileArray.push(file);
 				}
-
-				this.uploadFileArray.push(file);
-			}
+		}
 		} else {
 			return this.uploadFileArray;
 		}
+			this.removeAddressDetail();
 	}
+
+	
 
 	/**
 	 * Method is used for get block as per zone selection
@@ -244,16 +259,18 @@ export class MuttonFishNewComponent implements OnInit {
 			}),
 			personTypeGuj: [null, [Validators.required]],
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30), ValidationService.nameValidator]],
-			holderMiddleName: [null, [Validators.required, Validators.maxLength(30), ValidationService.nameValidator]],
+
+			holderMiddleName: [null, [ Validators.maxLength(30), ValidationService.nameValidator]],
 			holderLastName: [null, [Validators.required, Validators.maxLength(30), ValidationService.nameValidator]],
 			holderFirstNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
-			holderMiddleNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
+			holderMiddleNameGuj: [null, [Validators.maxLength(90)]],
+
 			holderLastNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
 
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			temporaryAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 
-			holderTelephoneNo: [null, [Validators.maxLength(12), Validators.minLength(10)]],
+			holderTelephoneNo: [null, [Validators.maxLength(11), Validators.minLength(11)]],
 			holderMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
 			holderAadharNo: [null, [Validators.required, ValidationService.aadharValidation, Validators.maxLength(12)]],
@@ -266,9 +283,9 @@ export class MuttonFishNewComponent implements OnInit {
 			//businessAddressType: this.fb.group({ code: [null, Validators.required] }),
 			businessAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			// extraDetailsOfBusiness: [null, [Validators.maxLength(500)]],
-			relationshipId: this.fb.group({
-				code: [null, Validators.required]
-			}),
+			// relationshipId: this.fb.group({
+			// 	code: [null, Validators.required]
+			// }),
 			statusOfBusinessId: this.fb.group({
 				code: [null, Validators.required]
 			}),
@@ -315,7 +332,9 @@ export class MuttonFishNewComponent implements OnInit {
 			this.muttonFishNewForm.get('temporaryAddress').patchValue(this.muttonFishNewForm.get('permanantAddress').value);
 			this.muttonFishNewForm.get('temporaryAddress.addressType').setValue('MF_TEMPORARY_ADDRESS');
 			this.muttonFishNewForm.get('isSameAsPermanantAddress').get('code').setValue("YES");
+			this.muttonFishNewForm.get('temporaryAddress').disable();
 		} else {
+			this.muttonFishNewForm.get('temporaryAddress').enable();
 			this.muttonFishNewForm.get('temporaryAddress').reset();
 			this.muttonFishNewForm.get('isSameAsPermanantAddress').get('code').setValue("NO");
 		}
@@ -327,7 +346,8 @@ export class MuttonFishNewComponent implements OnInit {
 	 * Method is used when user click for add person
 	 */
 	addMorePerson() {
-		let relationshipIdValue = this.muttonFishNewForm.get('relationshipId').value.code;
+		// let relationshipIdValue = this.muttonFishNewForm.get('relationshipId').value.code;
+		let relationshipIdValue = this.muttonFishNewForm.get('statusOfBusinessId').value.code;
 
 		if (!relationshipIdValue) {
 			this.toastrService.warning("Please select relationship of applicant first.");
@@ -361,7 +381,7 @@ export class MuttonFishNewComponent implements OnInit {
 	/**
 	 * Method is use for reset relationship 
 	 */
-	onChangeRelationWithOrg() {
+	 onChangeRelationWithOrg() {
 		try {
 			(<FormArray>this.muttonFishNewForm.get('relationshipList')).controls = [];
 			this.muttonFishNewForm.get('relationshipList').setValue([]);
@@ -378,6 +398,8 @@ export class MuttonFishNewComponent implements OnInit {
 			console.log(error.message);
 		}
 	}
+
+	
 
 	/**
 	 * Method is use for change dynamic file attachment 
@@ -508,6 +530,75 @@ export class MuttonFishNewComponent implements OnInit {
 		}
 	}
 
+	uploadFileArrayOnBusinessType(res: any) {
+		const localUploadDocument = res.serviceDetail.serviceUploadDocuments;
+		this.uploadFileArray = [];
+		if (res.statusOfBusinessId.code == "PROPRIETORSHIPFIRM") {
+			for (let file of localUploadDocument) {
+				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') || (file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
+					file['mandatory'] = false;
+				} else {
+					this.uploadFileArray.push(file);
+				}
+
+				if (file['mandatory'] == true) {
+					this.mandatoryUploadFileArray.push(file);
+				}
+			}
+		} else if (res.statusOfBusinessId.code == 'PARTNERSHIPFIRM') {
+			for (let file of localUploadDocument) {
+				if ((file['documentIdentifier'] == 'POLICE_VERIFICATION') || (file['documentIdentifier'] == 'LAND_TERMS_CONDITION')) {
+					file['mandatory'] = false;
+				} else {
+					this.uploadFileArray.push(file);
+					console.log(this.uploadFileArray);
+				}
+
+				if (file['mandatory'] == true) {
+					this.mandatoryUploadFileArray.push(file);
+				}
+			}
+		} else if (res.statusOfBusinessId.code == 'TENANT') {
+			for (let file of localUploadDocument) {
+				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') || (file['documentIdentifier'] == 'LAND_TERMS_CONDITION')) {
+					file['mandatory'] = false;
+				} else {
+					this.uploadFileArray.push(file);
+
+				}
+
+				if (file['mandatory'] == true) {
+					this.mandatoryUploadFileArray.push(file);
+				}
+			}
+		} else {
+			return this.uploadFileArray;
+		}
+	}
+
+	removeAddressDetail(){
+		this.muttonFishNewForm.get('businessAddress').patchValue({
+			"buildingName": null,
+			"buildingNameGuj": null,
+			"streetName": null,
+			"streetNameGuj": null,
+			"landmark": null,
+			"landmarkGuj": null,
+			"area": null,
+			"areaGuj": null,
+			"state": "GUJARAT",
+			"stateGuj": "ગુજરાત",
+			"district": null,
+			"districtGuj": null,
+			"city": "Vadodara",
+			"cityGuj": "વડોદરા",
+			"pincode": null,
+			"country": "INDIA",
+			"countryGuj": "ભારત"
+		  });
+		this.muttonFishNewForm.controls['relationshipList'] = this.fb.array([]);
+	}
+
 	patchValue() {
 		this.muttonFishNewForm.patchValue(this.dummyJSON);
 	}
@@ -632,5 +723,6 @@ export class MuttonFishNewComponent implements OnInit {
 			"appointmentRequired": false
 		}
 	};
-}
+
+	}
 

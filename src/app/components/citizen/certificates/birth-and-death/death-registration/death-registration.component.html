@@ -1,8 +1,8 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey">
-	<button class="pull-right" mat-stroked-button type="button"
+	<!-- <button class="pull-right" mat-stroked-button type="button"
 		(click)="deathCertificateForm.patchValue(config.getDeathDummyJSON())">
 		Patch Value
-	</button>
+	</button> -->
 </app-title-bar>
 
 <!-- <div *ngIf="isGuideLineActive">
@@ -103,7 +103,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput  [form]="deathCertificateForm" appGujInputSource targetElement="deathDateGuj"   appDate [max]="maxDeathDate"
+						<input matInput [required]="requiredFeild"  [form]="deathCertificateForm" appGujInputSource targetElement="deathDateGuj"   appDate [max]="maxDeathDate"
 							[min]="deathCertificateForm.get('birthDate').value" [matDatepicker]="pickerBirth"
 							(dateChange)="deathFormatChanger($event);delayCalculator($event)"
 							placeholder="{{'date_of_death' | translate:translateKey}}" formControlName="deathDate">
@@ -113,8 +113,8 @@
 					</mat-form-field>
 
 
-					<div class="col-md-4 pl-0 ml-0">
-						<mat-form-field class="col-md-10">
+					<div class="col-md-4 pl-0 ml-0 pr-0 mr-0">
+						<mat-form-field class="col-md-12">
 							<mat-label>{{'time_of_death' | translate:translateKey}}</mat-label>
 							<input class="clock-input" [form]="deathCertificateForm" appGujInputSource targetElement="deathTimeGuj" (blur)="changeTimeFormat($event.target.value, 'deathTime')"
 							placeholder="{{'death_time' | translate:translateKey : 'gu'}}" matInput type="time" atp-time-picker theme="dark"
@@ -122,7 +122,7 @@
 								 required />
 							<control-messages [control]="deathCertificateForm.get('deathTime')"></control-messages>
 						</mat-form-field>
-						<button class="clock-button" [disabled]="!deathCertificateForm?.get('canEdit')?.value"
+						<button class="clock-button ml-0 pl-0 timeBut" [disabled]="!deathCertificateForm?.get('canEdit')?.value"
 							mat-icon-button type="button" (click)="openTimePicker('deathTime')">
 							<mat-icon matTooltip="Select Time" color="primary">alarm</mat-icon>
 						</button>
@@ -769,7 +769,7 @@
 
 				<app-action-bar [paymentGateway]="paymentGateway" [stepInfo]="{step: 'final', next: 5, back: 3}"
 					(saveEvent)="isFormSaved = $event?.isSaved" (tabIndex)="onTabChange($event)"
-					[uploadFiles]="uploadFileArray" [form]="deathCertificateForm" [step]="'final'"
+					[uploadFiles]="mandatoryFileArray" [form]="deathCertificateForm" [step]="'final'"
 					(handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 				<select-payment-gateway [applicationType]="'HOSPITAL'" #paymentGateway></select-payment-gateway>
 			</mat-tab>

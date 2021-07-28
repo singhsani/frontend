@@ -125,10 +125,6 @@ export class MyTicketingsComponent implements OnInit {
         setTimeout(() => {
           this.location.go(this.router.url.split('?')[0]);
         }, 3000);
-        setTimeout(() => {
-          this.sendMailAndSMS({ refNumber: d.refNumber }, d.serviceType);
-        }, 1000);
-
       }
     })
   }
@@ -136,19 +132,9 @@ export class MyTicketingsComponent implements OnInit {
 	/**
 	 * This method is use for open modal.
 	 */
-  openModal(template: TemplateRef<any>, scheduleList, refNumber) {
-    this.CancelRequestList = [];
-    this.refNumber = refNumber;
-    this.cancellationType = null;
-    // this.CancelSlotList = scheduleList.sort((a, b) => {
-    //   if ((new Date(a.bookingDate).getTime()) <= (new Date(b.bookingDate).getTime())) {
-    //     return 1;
-    //   } else {
-    //     return -1;
-    //   }
-    // });
-    this.rejectedMessage = scheduleList.rejectMessage;
-    this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
+  openModal(template: TemplateRef<any>, responseData, refNumber) {
+    this.rejectedMessage = responseData.newgenRemarks;
+    this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-mg' }));
   }
 
 	/**
@@ -371,7 +357,6 @@ export class MyTicketingsComponent implements OnInit {
       setTimeout(() => {
         window.print();
       });
-
     }, err => {
       this.commonService.openAlert('Error', err.message, 'warning');
     });
@@ -414,7 +399,7 @@ export class MyTicketingsComponent implements OnInit {
         if (err.status == 402) {
           // this.ticketingUtils.redirectToPayment(err, this.commonService, this.ticketingService);
           this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.ticketingService, this.paymentGateway);
-       
+
         }
       } else if (err.error[0].code === this.ticketingConstants.INVALID_BOOKING_STATUS) {
         this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "")
@@ -450,7 +435,21 @@ export class MyTicketingsComponent implements OnInit {
   }
 
   loiPayments(row){
-		this.router.navigate(['/citizen/loi-payments-booking', row.refNumber, row.id, row.resourceCode]);
+		this.router.navigate(['/citizen/loi-payments-booking', row.refNumber, row.resourceType, row.resourceCode]);
   }
-  
+
+  // this method is used to show receipt button
+  showRecieptReprint(element){
+    if(element.status=== this.ticketingConstants.PAYMENT_REQUIRED||
+      element.status=== this.ticketingConstants.REJECTED||
+      element.status=== this.ticketingConstants.SCRUTINY)
+      {
+      return false;
+    }else{
+      return true;
+    }
+
+  }
+
+
 }

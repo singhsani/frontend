@@ -11,7 +11,8 @@ import { MatStepper } from '@angular/material';
 
 @Component({
     selector: 'app-renewal-plumber-license-form',
-    templateUrl: './renewal-plumber-license-form.component.html'
+    templateUrl: './renewal-plumber-license-form.component.html',
+    styleUrls: ['./renewal-plumber-license-form.component.scss']
 })
 
 export class RenewalPlumberLicenseFormComponent implements OnInit {
@@ -114,9 +115,9 @@ export class RenewalPlumberLicenseFormComponent implements OnInit {
                         this.getFormDataDocuments(this.plumberLicenseModel.plumberLicenseId);
                         this.renewalPlumberLicenseDataSharingService.setApprovalModel(this.plumberLicenseModel);
 
-                        this.plumberLicenseModel = new PlumberLicenseModel();
-                        this.licenseNo = null;
-                        this.isShowSaveButton = false;
+                        // this.plumberLicenseModel = new PlumberLicenseModel();
+                        // this.licenseNo = null;
+                        // this.isShowSaveButton = false;
                         //this.renewalPlumberLicenseDataSharingService.setIsShowForm(false);
                         //this.renewalPlumberLicenseDataSharingService.setIsShowApproval(true);
                     }
@@ -135,4 +136,7 @@ export class RenewalPlumberLicenseFormComponent implements OnInit {
                 });
         }
     }
+    onBackClick(){
+        this.stepper.selectedIndex = 0;
+      }
 }

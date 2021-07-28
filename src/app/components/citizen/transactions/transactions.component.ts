@@ -5,6 +5,9 @@ import { FormControl } from '@angular/forms';
 import { Observable, merge, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { PaginationService } from '../../../core/services/citizen/data-services/pagination.service';
+import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
 	selector: 'app-transactions',
@@ -17,7 +20,7 @@ export class TransactionsComponent implements OnInit {
 
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
-	
+
 	displayedColumns: string[] = ['id', 'chalanNumber', 'amount', 'paymentDate', 'payableServices', 'transactionId', 'paymentStatus', 'detailsButton'];
 	myControl: FormControl = new FormControl();
 	resultsLength: number = 0;
@@ -28,14 +31,47 @@ export class TransactionsComponent implements OnInit {
 	filteredOptions: Observable<any[]>;
 
 	constructor(private dialog: MatDialog,
-		private paginationService: PaginationService) {
+		private paginationService: PaginationService,
+		private formService: FormsActionsService,
+		private route: ActivatedRoute,
+		private router: Router,
+		private location: Location) {
 	}
 
 	ngOnInit() {
+
+		this.route.queryParams.subscribe(d => {
+
+			if (d.refNumber) {
+				this.print(d.refNumber);
+				setTimeout(() => {
+
+					this.router.navigateByUrl(this.router.url.split('?')[0]);
+					let sectionToPrint: any = document.getElementById('sectionToPrint1');
+					sectionToPrint.innerHTML = '';
+				}, 3000);
+
+			}
+		})
 		// If the user changes the sort order, reset back to the first page.
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 		this.getAllPaymentsList();
 
+	}
+
+	print(apicode: any) {
+		this.formService.printProfReceipt(apicode).subscribe(data => {
+			let sectionToPrint: any = document.getElementById('sectionToPrint1');
+			sectionToPrint.innerHTML = data;
+
+			setTimeout(() => {
+				window.print();
+			});
+
+			this.router.navigateByUrl(this.router.url.split('?')[0]);
+			//sectionToPrint.innerHTML = '';
+
+		});
 	}
 
 	/**
@@ -96,6 +132,7 @@ export class TransactionsComponent implements OnInit {
  */
 @Component({
 	template: `
+	<div *ngIf="tData.serviceType !== 'PROPERTY_TAX'">
   <ol>
   <li>
     Id: {{tData.id}}
@@ -113,7 +150,17 @@ export class TransactionsComponent implements OnInit {
     Status: {{tData.paymentStatus}}
   </li>
 </ol>
-
+</div>
+<div *ngIf="tData.serviceType === 'PROPERTY_TAX'">
+<ol>
+  <li>
+    Property No.: {{tData.refNumber}}
+  </li>
+  <li>
+    Amount: {{tData.amount}}
+  </li>
+</ol>
+</div>
 	<div mat-dialog-actions align="center">
 		<button mat-raised-button color="primary" (click)="onNoClick()" cdkFocusInitial>Ok</button>
 	</div>

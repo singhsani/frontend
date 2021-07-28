@@ -50,4 +50,8 @@ export class NewPlumberLicenseService {
       .pipe(map((response: any) => response))
   }
 
+  getAttachmentList(serviceFormId) {
+    return this.http.get<Array<Object>>(`${Constants.baseApiWaterUrl}version/plumber/attachments?serviceFormId=${serviceFormId}`);
+  }
+
 }

@@ -39,7 +39,7 @@ export class VehicleService {
 	 * This method is used to get lookup data for ward dropdown
 	 */
     getWardLookup() {
-        this.requestURL = `api/vehicle/data`;
+        this.requestURL = `api/vehicle/wardList`;
         return this.http.get(this.requestURL);
     }
 

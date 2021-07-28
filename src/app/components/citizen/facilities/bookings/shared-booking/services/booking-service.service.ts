@@ -267,6 +267,11 @@ export class BookingService {
     this.requestURL = `api/${this.moduleName}/${this.resourceType}/filter/batchName/${batchCode}/${poolName}`;
     return this.http.get(this.requestURL);
   }
+
+  filterBatchDuration(categotyCode: any,poolName:any) {
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/filter/batchDuration/${categotyCode}/${poolName}`;
+    return this.http.get(this.requestURL);
+  }
   // api/booking/swimming/submit
 
   /**
@@ -303,7 +308,7 @@ export class BookingService {
 
   searchRenewSwimmingPool(poolNumber:any){
     // {{HOST}}/api/booking/swimmingrenewal/searchBySwimmnerNumber/{{REF_NUM}}
-    this.requestURL = `api/${this.moduleName}/swimmingrenewal/searchBySwimmnerNumber/${poolNumber}`;
+    this.requestURL = `api/${this.moduleName}/swimming/searchBySwimmnerNumber/${poolNumber}`;
     return this.http.get(this.requestURL);
 
   }
@@ -351,4 +356,61 @@ export class BookingService {
     return this.http.get(this.requestURL);
   }
 
+  /**
+     * This method is used to send sms after completion of  payment
+     * @param refNumber
+     * @param eventType
+     */
+    sendSms(refNumber:any,eventType:any){
+      this.requestURL = `api/booking/${this.resourceType}/sendSms?refNumber=${refNumber}&eventType=${eventType}`;
+      return this.http.get(this.requestURL);
+    }
+
+/**
+     * This method is used to send Mail after completion of payment to user
+     * @param refNumber
+     * @param eventType
+     */
+    sendMail(refNumber: any,eventType: any){
+      this.requestURL = `api/booking/${this.resourceType}/sendMail?refNumber=${refNumber}&eventType=${eventType}`;
+      return this.http.get(this.requestURL);
+
+    }
+
+    // this method is uded to print swimming LOI receipt
+  printReceiptSwimming(refNumber: any) {
+    this.requestURL = `api/booking/swimming/printReceiptLOI?refNumber=${refNumber}`;
+    return this.http.get(this.requestURL, 'printReceipt')
+   }
+  /**
+     * This method is used to send sms on submit
+     * @param refNumber
+     * @param eventType
+     */
+  sendSmsForSwimming(refNumber:any,eventType:any){
+    this.requestURL = `api/booking/${this.resourceType}/sendSms?refNumber=${refNumber}&eventType=${eventType}`;
+    return this.http.get(this.requestURL);
+  }
+
+  /**
+     * This method is used to send Mail on submit
+     * @param refNumber
+     * @param eventType
+     */
+    sendMailForSwimming(refNumber: any,eventType: any){
+      this.requestURL = `api/booking/${this.resourceType}/sendMail?refNumber=${refNumber}&eventType=${eventType}`;
+      return this.http.get(this.requestURL);
+
+    }
+
+    /* This is used for deposit Refund Request */
+    depositRefundRequest(refNumber: any){
+      this.requestURL = `api/booking/${this.resourceType}/depositRefundRequest?refNumber=${refNumber}`;
+      return this.http.post(this.requestURL,'');
+    }
+
+    cancellationApproveReport(refNumber: any) {
+      this.requestURL = `api/booking/${this.resourceType}/cancellationApproveReport?refNumber=${refNumber}`;
+      return this.http.get(this.requestURL,'printReceipt');
+    }
 }

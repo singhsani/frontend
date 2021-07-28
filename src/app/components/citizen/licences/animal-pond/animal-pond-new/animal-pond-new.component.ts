@@ -10,6 +10,8 @@ import { ToastrService } from 'ngx-toastr';
 import * as _ from 'lodash';
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
 import { LicenseConfiguration } from '../../license-configuration';
+import { FileDetector } from 'selenium-webdriver';
+import { AnimalPondService } from '../common/services/animal-pond.service';
 
 @Component({
 	selector: 'app-animal-pond-new',
@@ -35,6 +37,7 @@ export class AnimalPondNewComponent implements OnInit {
 
 	//Lookups Array
 	MF_RELATIONSHIP_OF_APPLICANT: Array<any> = [];
+	ANIMAL_POND_STATUS_OF_BUSINESS: Array<any> = [];
 	MF_STATUS_OF_BUSINESS: Array<any> = [];
 	PERSON_TYPE: Array<any> = [];
 	FIRM_ZONE: Array<any> = [];
@@ -64,7 +67,8 @@ export class AnimalPondNewComponent implements OnInit {
 		private formService: FormsActionsService,
 		private commonService: CommonService,
 		private toastrService: ToastrService,
-		public TranslateService: TranslateService
+		public TranslateService: TranslateService,
+		public animalPondService: AnimalPondService
 	) { }
 
 	/**
@@ -91,6 +95,7 @@ export class AnimalPondNewComponent implements OnInit {
     * Method is add required document  
     */
 	requiredDocumentList() {
+		this.uploadFilesArray = [];
 		_.forEach(this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
 				this.uploadFilesArray.push({
@@ -121,7 +126,8 @@ export class AnimalPondNewComponent implements OnInit {
 			maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
 			requiredOnAdminPortal: [data.requiredOnAdminPortal],
 			requiredOnCitizenPortal: [data.requiredOnCitizenPortal],
-			dmsEnabled:[data.dmsEnabled]
+			dmsEnabled:[data.dmsEnabled],
+			orderSequence:[data.orderSequence ? data.orderSequence : null]
 			// version: [data.version ? data.version : null]
 		});
 	}
@@ -133,7 +139,9 @@ export class AnimalPondNewComponent implements OnInit {
 			this.animalPondNewForm.get('temporaryAddress').patchValue(this.animalPondNewForm.get('permanantAddress').value);
 			this.animalPondNewForm.get('temporaryAddress.addressType').setValue('APL_TEMPORARY_ADDRESS');
 			this.animalPondNewForm.get('isSameAsPermanantAddress').get('code').setValue("YES");
+			this.animalPondNewForm.get('temporaryAddress').disable();
 		} else {
+			this.animalPondNewForm.get('temporaryAddress').enable();
 			this.animalPondNewForm.get('temporaryAddress').reset();
 			this.animalPondNewForm.get('isSameAsPermanantAddress').get('code').setValue("NO");
 		}
@@ -145,6 +153,7 @@ export class AnimalPondNewComponent implements OnInit {
 	 */
 	getAnimalPondLicNewData() {
 		this.formService.getFormData(this.formId).subscribe(res => {
+
 			try {
 				this.animalPondNewForm.patchValue(res);
 				this.showButtons = true;
@@ -180,8 +189,11 @@ export class AnimalPondNewComponent implements OnInit {
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
 				});
-				this.requiredDocumentList();
+				this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments').value.sort(
+					(a,b) => a.orderSequence - b.orderSequence);
+				// this.requiredDocumentList();
 				// selected animal filter
+				this.onChangeStatusOfBusiness();
 				this.getSelectedAnimal();
 				
 				this.animalPondNewForm.get('personTypeGuj').setValue(res.personType.gujName);
@@ -202,6 +214,7 @@ export class AnimalPondNewComponent implements OnInit {
 	getLookupData() {
 		this.formService.getDataFromLookups().subscribe(res => {
 			this.LOOKUP = res;
+			this.ANIMAL_POND_STATUS_OF_BUSINESS = res.ANIMAL_POND_STATUS_OF_BUSINESS
 			this.MF_RELATIONSHIP_OF_APPLICANT = res.MF_RELATIONSHIP_OF_APPLICANT;
 			this.MF_STATUS_OF_BUSINESS = res.MF_STATUS_OF_BUSINESS;
 			this.PERSON_TYPE = res.PERSON_TYPE;
@@ -311,18 +324,21 @@ export class AnimalPondNewComponent implements OnInit {
 			personType: this.fb.group({
 				code: [null, Validators.required]
 			}),
+			businessType:this.fb.group({
+				code: [null, Validators.required]
+			}),
 			personTypeGuj : [null, [Validators.required]],
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30)]],
-			holderMiddleName: [null, [Validators.required, Validators.maxLength(30)]],
+			holderMiddleName: [null,[Validators.maxLength(30)]],
 			holderLastName: [null, [Validators.required, Validators.maxLength(30)]],
 			holderFirstNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
-			holderMiddleNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
+			holderMiddleNameGuj: [null,[Validators.maxLength(30)]],
 			holderLastNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
 
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			temporaryAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 
-			holderTelephoneNo: [null, [Validators.maxLength(10), Validators.minLength(10)]],
+			holderTelephoneNo: [null, [Validators.maxLength(11), Validators.minLength(11)]],
 			holderMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
 			holderAadharNo: [null, [Validators.required, Validators.maxLength(12), Validators.minLength(12)]],
@@ -466,7 +482,7 @@ export class AnimalPondNewComponent implements OnInit {
 			}
 		}
 		else {
-			this.commonService.openAlert("Warning", "You can add new recode after save existing recode.", "warning");
+			this.commonService.openAlert("Warning", "You can add new record after saving existing record", "warning");
 		}
 	}
 
@@ -475,11 +491,10 @@ export class AnimalPondNewComponent implements OnInit {
 	 */
 	onChangeRelationWithOrg() {
 		try {
+			(<FormArray>this.animalPondNewForm.get('relationshipList')).controls = [];
+				this.animalPondNewForm.get('relationshipList').setValue([]);
 			let relationshipId = this.animalPondNewForm.get('relationshipId').value.code;
 			if (relationshipId == 'PROPRIETOR') {
-				(<FormArray>this.animalPondNewForm.get('relationshipList')).controls = [];
-				this.animalPondNewForm.get('relationshipList').setValue([]);
-
 				if ((<FormArray>this.animalPondNewForm.get('relationshipList')).length == 0) {
 					this.addItem('relationshipList').push(this.createArray());
 					let newlyadded = this.addItem('relationshipList').controls;
@@ -516,7 +531,7 @@ export class AnimalPondNewComponent implements OnInit {
 			}
 		}
 		else {
-			this.commonService.openAlert("Warning", "You can add new recode after save existing recode.", "warning");
+			this.commonService.openAlert("Warning", "You can add new record after saving existing record", "warning");
 		}
 	}
 
@@ -693,6 +708,20 @@ export class AnimalPondNewComponent implements OnInit {
 			this.animalPondNewForm.get(cardName).setValue(null);
 		}
 	}
+
+	onChangeStatusOfBusiness(){
+		const subject = this.animalPondNewForm.get('businessType').get('code').value
+		const documents = this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments').value;
+		const formName =  this.animalPondNewForm;
+		this.animalPondService.changeStatusOfBusinessAccordingAtatchment(subject,documents,formName);
+		this.requiredDocumentList();
+	}
+
+	handleOnSaveAndNext(res) {
+        this.onChangeStatusOfBusiness();
+	}
+
+
 
 	dummyJSON:any= {
 

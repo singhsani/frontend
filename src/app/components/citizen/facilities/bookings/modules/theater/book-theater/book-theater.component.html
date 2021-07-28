@@ -17,7 +17,7 @@
       <h2>{{'અગત્યની સુચનાઓ'| translate: translateKey}}</h2>
       <ol class="olList">
         <li>
-          <h4>એમ્ફિ થિયેટર જે આકારમાં ગોળાકાર છે, જેની સીપની ક્ષમતા 500 ની છે.</h4>
+          <h4>એમ્ફિ થિયેટર જે આકારમાં ગોળાકાર છે, જેની બેઠકની ક્ષમતા 500 ની છે.</h4>
         </li>
         <li>
           <h4>ક્લાસિકલ ડાન્સ અથવા વોકલ કોન્સર્ટ, સ્ટ્રીટ પ્લે લેક્ચર્સ, વગેરે જેવી નાની સાંસ્કૃતિક પ્રવૃત્તિઓનું આયોજન કરવા માટેનું આ એક આદર્શ સ્થળ છે.</h4>
@@ -32,26 +32,22 @@
         <table class="table table-bordered" style="width:100%">
           <thead class="thead-light">
           <tr>
-            <th scope="col">પ્રકાર</th>
+            <th scope="col"> &nbsp; &nbsp;પ્રકાર</th>
             <th scope="col">ભાડુ</th>
-            <th scope="col">થાપણ</th>
           </tr>
           </thead>
           <tbody>
           <tr>
             <td> &nbsp; </td>
             <td> &nbsp; </td>
-            <td> &nbsp; </td>
           </tr>
           <tr>
-            <td scope="row">શાળા માટે</td>
+            <td scope="row"> &nbsp; &nbsp;શાળા માટે</td>
             <td>દરરોજ રૂ .600 / -</td>
-            <td>દિવસ દીઠ રૂ .1500 / - (પ્રોગ્રામની તારીખે સાંજે 5:30 વાગ્યે સ્થાન પર રજૂ કરવા)</td>
           </tr>
           <tr>
-            <td>સંસ્થા માટે</td>
+            <td> &nbsp; &nbsp;સંસ્થા માટે</td>
             <td>દરરોજ રૂ .1500 / -</td>
-            <td>દિવસ દીઠ રૂ .1500 / - (પ્રોગ્રામની તારીખે સાંજે 5:30 વાગ્યે સ્થાન પર રજૂ કરવા)</td>
           </tr>
           </tbody>
         </table>
@@ -77,26 +73,22 @@
         <table class="table table-bordered" style="width:100%">
           <thead class="thead-light">
           <tr>
-            <th scope="col">Type</th>
+            <th scope="col"> &nbsp; &nbsp;Type</th>
             <th scope="col">Rent</th>
-            <th scope="col">Deposit</th>
           </tr>
           </thead>
           <tbody>
           <tr>
             <td> &nbsp; </td>
             <td> &nbsp; </td>
-            <td> &nbsp; </td>
           </tr>
           <tr>
-            <td scope="row">For School</td>
+            <td scope="row"> &nbsp; &nbsp;For School</td>
             <td>Rs.600/- per day</td>
-            <td>Rs.1500/- per day (To be Submitted at Location by 5:30 PM on the program date)</td>
           </tr>
           <tr>
-            <td>For Organization</td>
+            <td>&nbsp; &nbsp;For Organization</td>
             <td>Rs.1500/-per day</td>
-            <td>Rs.1500/-per day (To be Submitted at Location by 5:30 PM on the program date)</td>
           </tr>
           </tbody>
         </table>
@@ -107,7 +99,7 @@
       <div class="col-sm-12 col-md-12 text-right">
         <button mat-raised-button (click)="guideLineFlag = false; showTheaterSearchForm = true; " color="primary">
           <mat-icon>thumb_up_alt</mat-icon>
-          {{'proceed'| translate: translateKey}}
+          {{'proceed_for_application'| translate: translateKey}}
         </button>
       </div>
     </div>
@@ -353,7 +345,7 @@
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
-                            <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="organizationNumber" placeholder="{{'organization_number' | translate: translateKey}}"
+                            <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="organizationNumber" placeholder="{{'mobile_number' | translate: translateKey}}"
                                 required>
                             <control-messages [control]="theaterBookingForm.get('organizationNumber')"></control-messages>
                         </mat-form-field>
@@ -361,7 +353,7 @@
                       <div class="col-md-4">
                         <mat-form-field>
                           <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile"
-                                 placeholder="{{'Confirm Mobile' | translate: translateKey}}" required>
+                                 placeholder="{{'Confirm Mobile Number' | translate: translateKey}}" required>
                           <control-messages [control]="theaterBookingForm.get('organizationNumber')"></control-messages>
                         </mat-form-field>
                         <mat-error
@@ -421,9 +413,7 @@
                         {{'bank_details' | translate:translateKey}}
                     </h2>
 
-                    <!-- <bank-details [form]="theaterBookingForm"></bank-details> -->
-                    <app-bank-details-booking [form]="theaterBookingForm"></app-bank-details-booking>
-
+                    <bank-details [form]="theaterBookingForm"></bank-details>
 
                     <div class="row">
                         <h2>
@@ -455,4 +445,4 @@
         </form>
     </mat-card>
 </div>
-<select-payment-gateway #paymentGateway></select-payment-gateway>
+<select-payment-gateway #paymentGateway [applicationType]="'booking'"></select-payment-gateway>

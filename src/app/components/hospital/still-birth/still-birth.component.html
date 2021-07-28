@@ -1,7 +1,7 @@
 <app-hos-title-bar class="titleBarUpdate" [title]="'screen_title' | translate: translateKey">
-    <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
+    <!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
         Patch Value
-    </button>
+    </button> -->
 </app-hos-title-bar>
 
 <div *ngIf="isGuideLineActive">
@@ -515,7 +515,7 @@
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
-                        <input required matInput maxlength="4" OnlyNumber
+                        <input  matInput maxlength="4" OnlyNumber
                             placeholder="{{'e_Mamta_RegNumber' | translate:translateKey}}"
                             formControlName="mamtaRegNumber">
                         <control-messages [control]="stillBirthCertificateForm.get('mamtaRegNumber')">
@@ -683,7 +683,7 @@
                     <div class="col-md-4 radioBtnError" formGroupName="withinCityLimits">
                         <mat-label>{{'Within_City_Limits' | translate:translateKey}} *</mat-label>
                         <mat-radio-group formControlName="code"
-                            (change)="stillBirthCertificateForm.get('wardNo').get('code').reset()">
+                            (change)="stillBirthCertificateForm.get('wardNo').get('code').reset();validationWord($event)">
                             <mat-radio-button class="example-radio-button" *ngFor="let opt of ISYESNO"
                                 [value]="opt.code">
                                 {{opt.name}}
@@ -696,7 +696,7 @@
                     <div formGroupName="wardNo" class="col-md-4 ngSelect"
                         *ngIf="stillBirthCertificateForm.get('withinCityLimits').get('code').value=='YES'">
                         <ng-select placeholder="{{'ward_No' | translate:translateKey}} *" formControlName="code"
-                            required>
+                        required="{{stillBirthCertificateForm.get('withinCityLimits').get('code').value=='YES'}}">
                             <ng-option *ngFor="let wardObj of wardNoData" [value]="wardObj.code">
                                 {{wardObj.name}}
                             </ng-option>

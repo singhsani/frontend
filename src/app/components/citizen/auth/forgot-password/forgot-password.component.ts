@@ -64,7 +64,7 @@ export class ForgotPasswordComponent implements OnInit {
 				 * Redirect to reset password
 				 */
 				this.commonService.successAlert("Success", "For OTP and reset link update you can check your registered mail ID and Mobile number. Thank you.", "success");
-				this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHRESETPASS')], { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp } });
+				this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHRESETPASS')], { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp,email : this.forgotPassForm.get('email').value } });
 			}, err => {
 				this.loading = false;
 				this.issingupbtn = false;

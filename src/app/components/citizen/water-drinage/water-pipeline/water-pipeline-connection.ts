@@ -12,6 +12,8 @@ import { TranslateService } from 'src/app/shared/modules/translate/translate.ser
 import { PropertySearchService } from '../../../../vmcshared/component/property-search/property-search.service';
 import { TaxRebateApplicationService } from '../../tax/property/tax-rebate-application/Services/tax-rebate-application.service';
 import { Constants } from '../../../../vmcshared/Constants';
+import { BookingUtils } from '../../facilities/bookings/config/booking-config';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'water-pipeline-connection',
@@ -57,6 +59,12 @@ export class WaterPipelineConnection implements OnInit {
   wardZoneLevel3List = [];
   wardZoneLevel4List = [];
 
+  	// Map for the formcontrol to tabIndex id;
+
+	public formControlNameToTabIndex = new Map();
+
+  bookingUtils: BookingUtils;
+
   /**
    * @param fb - Declare FormBuilder property.
    * @param validationError - Declare validation service property
@@ -71,7 +79,10 @@ export class WaterPipelineConnection implements OnInit {
     private route: ActivatedRoute,
     private formService: FormsActionsService,
     private taxRebateApplicationService: TaxRebateApplicationService,
-  ) { }
+    private toaster: ToastrService,
+  ) { 
+    this.bookingUtils = new BookingUtils(formService, toaster);
+  }
 
 	/**
 	 * This method call initially required methods.
@@ -82,6 +93,8 @@ export class WaterPipelineConnection implements OnInit {
       this.apiCode = param.get('apiCode');
       this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
     });
+    this.setFormControlToTabIndexMap();
+
     if (!this.formId) {
       this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
     }
@@ -92,6 +105,7 @@ export class WaterPipelineConnection implements OnInit {
       this.waterPipeliConnectionFormControls();
       this.getFormData(this.formId);
     }
+    
   }
 
 	/**
@@ -205,10 +219,10 @@ export class WaterPipelineConnection implements OnInit {
       /* Step 1 controls start */
       fieldView: [null],
       fieldList: [null],
-      schemeName: [null, [Validators.required, Validators.maxLength(200)]],
-      landmark: [null],
-      societyName: [null, [Validators.required, Validators.maxLength(150)]],
-      propertyAddress: [null, [Validators.required, Validators.maxLength(200)]],
+      schemeName: [null, [Validators.required, Validators.maxLength(250)]],
+      landmark: [null,Validators.maxLength(250)],
+      societyName: [null, [Validators.required, Validators.maxLength(250)]],
+      propertyAddress: [null, [Validators.required, Validators.maxLength(250)]],
       contractorAddress: [null, [Validators.required, Validators.maxLength(200)]],
       mobileNo: [null, [Validators.maxLength(10)]],
       // waterPipelineZone: this.fb.group({
@@ -227,15 +241,14 @@ export class WaterPipelineConnection implements OnInit {
       citySurveyNo: [null],
       buildingPermissionNo: [null],
       buildingPermissionDate: [null],
-      developerFullName: [null, [Validators.required, Validators.maxLength(200)]],
+      developerFullName: [null, [Validators.required, Validators.maxLength(250)]],
       developerAddress: [null, [Validators.required, Validators.maxLength(200)]],
       developerMobileNo: [null, [Validators.maxLength(10)]],
-      developerEmailId: [null],
+      developerEmailId: [null,[ValidationService.emailValidator]],
       reraRegNo: [null, [Validators.required]],
-
-      contractorFullName: [null, [Validators.required, Validators.maxLength(200)]],
+       contractorFullName: [null, [Validators.required, Validators.maxLength(250)]],
       contractorMobileNo: [null, [Validators.maxLength(10)]],
-      contractorEmailId: [null],
+      contractorEmailId: [null,[ValidationService.emailValidator]],
       registrationNumber: [null, [Validators.required]],
       registrationDate: [null, Validators.required],
       registrationClass: [null, Validators.required],
@@ -349,32 +362,39 @@ export class WaterPipelineConnection implements OnInit {
    * @param flag - flag of invalid control.
    */
   handleErrorsOnSubmit(flag) {
-    console.log("flag", flag);
-    let step0 = 12;
-    let step1 = 18;
-    let step2 = 28;
 
-    if (flag != null) {
-      //Check validation for step by step
-      let count = flag;
+    const key = this.bookingUtils.getInvalidFormControlKey(this.waterPipeliConnectionForm);
+		const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 1;
+		if (index) {
+			this.tabIndex = index - 1;
+			return false;
+		}
+    // console.log("flag", flag);
+    // let step0 = 12;
+    // let step1 = 18;
+    // let step2 = 28;
 
-      if (count <= step0) {
-        this.tabIndex = 0;
-        return false;
-      } else if (count <= step1) {
-        this.tabIndex = 1;
-        return false;
-      }
-      else if (count <= step2) {
-        this.tabIndex = 2;
-        //	this.checkReligion();
-        return false;
-      }
-      else {
-        console.log("else condition");
-      }
+    // if (flag != null) {
+    //   //Check validation for step by step
+    //   let count = flag;
 
-    }
+    //   if (count <= step0) {
+    //     this.tabIndex = 0;
+    //     return false;
+    //   } else if (count <= step1) {
+    //     this.tabIndex = 1;
+    //     return false;
+    //   }
+    //   else if (count <= step2) {
+    //     this.tabIndex = 2;
+    //     //	this.checkReligion();
+    //     return false;
+    //   }
+    //   else {
+    //     console.log("else condition");
+    //   }
+
+    // }
   }
 
 	/**
@@ -528,5 +548,34 @@ export class WaterPipelineConnection implements OnInit {
         console.log('error', error);
       })
   }
+
+  setFormControlToTabIndexMap() {
+    // tab 1
+    this.formControlNameToTabIndex.set('schemeName', 1)
+    this.formControlNameToTabIndex.set('societyName', 1)
+    this.formControlNameToTabIndex.set('propertyAddress', 1)
+    this.formControlNameToTabIndex.set('waterPipelineZoneId', 1)
+    this.formControlNameToTabIndex.set('waterPipelineWardId', 1)
+    this.formControlNameToTabIndex.set('pinCode', 1)
+    
+    // tab 2
+    this.formControlNameToTabIndex.set('developerFullName', 2)
+    this.formControlNameToTabIndex.set('developerAddress', 2)
+    this.formControlNameToTabIndex.set('developerMobileNo', 2)
+    this.formControlNameToTabIndex.set('reraRegNo', 2)
+    this.formControlNameToTabIndex.set('reraRegistrationDate', 2)
+
+    // tab 3
+    this.formControlNameToTabIndex.set('contractorFullName', 3)
+    this.formControlNameToTabIndex.set('contractorMobileNo', 3)
+    this.formControlNameToTabIndex.set('contractorAddress', 3)
+    this.formControlNameToTabIndex.set('registrationNumber', 3)
+    this.formControlNameToTabIndex.set('registrationDate', 3)
+    this.formControlNameToTabIndex.set('registrationClass', 3)
+    this.formControlNameToTabIndex.set('workExecutionFromAmount', 3)
+    this.formControlNameToTabIndex.set('workExecutionToAmount', 3)
+
+  }
+
 
 }

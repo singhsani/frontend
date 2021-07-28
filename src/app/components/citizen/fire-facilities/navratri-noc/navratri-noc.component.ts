@@ -33,6 +33,7 @@ export class NavratriNocComponent implements OnInit {
 	//	startMinDate = moment(new Date()).format('YYYY-MM-DD');
 	endMinDate = moment(new Date()).format('YYYY-MM-DD');
 	endLetterDate = moment(new Date()).format('YYYY-MM-DD');
+	toMinDate :any = new Date;
 	/**
      * @param fb - Declare FormBuilder property.
      * @param validationError - Declare validation service property
@@ -66,6 +67,17 @@ export class NavratriNocComponent implements OnInit {
 			this.getnavratriNocLicNewData();
 			this.navaratriNocFormControls();
 		}
+
+
+		/**
+		 * Subscribe start date changes
+		 */
+		this.navaratriNocForm.controls.fromDate.valueChanges.subscribe(data => {
+			this.navaratriNocForm.controls.toDate.reset();
+			this.toMinDate = data;
+			//this.toStartDate = data;
+		  return;
+	  });     
 	}
 
 	/**
@@ -261,7 +273,8 @@ export class NavratriNocComponent implements OnInit {
 			organizeNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			organizerAddress: [null, [Validators.required, Validators.maxLength(200)]],
 			organizerAddressGuj: [null, [Validators.required, Validators.maxLength(600)]],
-			organizerMobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
+			organizerMobileNo: [null, [Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
+			responsiblePersonMobileName: [null, [Validators.required, Validators.maxLength(100)]],
 			responsiblePersonMobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 
 			/* Step 3 controls start */
@@ -269,6 +282,9 @@ export class NavratriNocComponent implements OnInit {
 			garbaPlaceAddressGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			fromDate: [null, [Validators.required]],
 			toDate: [null, [Validators.required]],
+			tpNo: [null, [Validators.required, Validators.maxLength(10)]],
+			fpNo: [null, [Validators.required, Validators.maxLength(10)]],
+			plotNo: [null, [Validators.required, Validators.maxLength(10)]],
 			landOwnerConsentIncluded: [null, [Validators.maxLength(10)]],
 			garbaInVMCRange: [null, [Validators.required, Validators.maxLength(10)]],
 			landOwnerIsVMC: [null, [Validators.required, Validators.maxLength(10)]],
@@ -353,18 +369,22 @@ export class NavratriNocComponent implements OnInit {
 	dummyJSON:any={
 
 		"applicationThroughPolice": true,
-		"policeCommisionerLetterNo": "42342342342342342343",
+		"policeCommisionerLetterNo": "એફ/પરફ/વશી/૧૦૦/૨૦૨૧",
 		"policeCommisionerLetterDate": moment(new Date()).format("YYYY-MM-DD"),
 		"organizeName": "gdfgfdgfdgdf",
 		"organizeNameGuj": "ગ્દ્ફ્ગ્ફ્દ્ગ્ફ્દ્ગ્દ્ફ",
 		"organizerAddress": "gfdgfdfdggfdgfdg",
 		"organizerAddressGuj": "ગ્ફ્દ્ગ્ફ્દ્ફ્દ્ગ્ગ્ફ્દ્ગ્ફ્દ્ગ",
 		"organizerMobileNo": "2435435435",
+		"responsiblePersonMobileName": "Test",
 		"responsiblePersonMobileNo": "4354354354",
 		"garbaPlaceAddress": "sdfsdfsdffsdsdfsdf",
 		"garbaPlaceAddressGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્ફ્સ્દ્સ્દ્ફ્સ્દ્ફ",
 		"fromDate": moment(new Date()).format("YYYY-MM-DD"),
 		"toDate": moment(new Date()).format("YYYY-MM-DD"),
+		"tpNo" : "5656hfgj",
+		"fpNo" : "1212jsjs",
+		"plotNo" : "1212jsjs",
 		"landOwnerConsentIncluded": true,
 		"garbaInVMCRange": true,
 		"landOwnerIsVMC": true,

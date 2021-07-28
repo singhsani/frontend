@@ -46,6 +46,7 @@ const routes: Routes = [
 			{ path: 'appointmant', loadChildren: './appointment/appointment.module#AppointmentModule', canLoad: [AuthGuard] },
 			{ path: 'gujPOC', component: GujPocComponent, canActivate: [AuthGuard] },
 			{ path: 'affordable-housing', loadChildren: './affordable-housing/affordable-housing.module#AffordableHousingModule', canLoad: [AuthGuard] },
+			{ path: 'engineering', loadChildren: './engineering/engineering.module#EngineeringModule', canLoad: [AuthGuard] }
 		]
 	},
 	{ path: 'auth', loadChildren: './auth/auth.module#AuthModule' }

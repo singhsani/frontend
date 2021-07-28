@@ -18,7 +18,7 @@
   </label>
 
   <!-- delete button -->
-  <button title="Delete File" [hidden]="!canUpload || currentFileUpload"
+  <button title="Delete File" [hidden]="!canUpload || currentFileUpload" [disabled]="deleteButtonIsDisabled"
     type="button" mat-icon-button color="warn" (click)="deleteFile()" class="closeAttachFile">
     <mat-icon>delete</mat-icon>
   </button>

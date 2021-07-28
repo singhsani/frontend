@@ -27,6 +27,8 @@ export class SelectPaymentGatewayComponent implements OnInit {
 
   paymentGatewayForm: FormGroup;
 
+  isLoading : boolean = false;
+
   paymentGatewayArr: any = [
     { name: 'CC Avenue', code: 'CC_AVENUE' },
     { name: 'BillDesk', code: 'BILLDESK' },
@@ -53,6 +55,7 @@ export class SelectPaymentGatewayComponent implements OnInit {
    * This method is used to open model from different different modules
    */
   openModel() {
+    this.isLoading = false;
     this.confirmRef = this.modalService.show(this.confirmationModel, Object.assign({ keyboard: false }, { backdrop: 'static' }, { ignoreBackdropClick: false }, { class: 'gray .modal-md' }));
   }
 
@@ -79,9 +82,18 @@ export class SelectPaymentGatewayComponent implements OnInit {
    * This method is used to hide the modal and redirect to my application page
    */
   onCancel() {
+    this.isLoading = false;
     this.confirmRef.hide();
     if (this.applicationType == 'HOSPITAL') {
       this.router.navigate(['hospital/my-applications']);
+    } else if (this.applicationType == 'FACILITYBOOKING') {
+      this.router.navigate(['citizen/bookings/my-bookings']);
+    }else if (this.applicationType == 'booking') {
+      this.router.navigate(['citizen/bookings/my-bookings']);
+    }else if (this.applicationType == 'ticketing') {
+      this.router.navigate(['citizen/ticketings/my-ticketings']);
+    } else if (this.applicationType == 'Zooticketing') {
+      this.confirmRef.hide();
     } else {
       this.router.navigate(['citizen/my-applications']);
     }
@@ -91,6 +103,8 @@ export class SelectPaymentGatewayComponent implements OnInit {
    * This method is used to make payment according to user payment gateway selection
    */
   makePayment() {
+    this.isLoading = true;
+    
     let option = this.paymentGatewayForm.get('paymentGateway').value;
     if (option == 'CC_AVENUE') {
       this.ccAvenueMakePayment();
@@ -117,11 +131,16 @@ export class SelectPaymentGatewayComponent implements OnInit {
 
   getBillDeskPage() {
 
+    /**
+     * This condition is added as there are two transactions in swimming pool and each time bill desk needs different customerId so
+     * instead of reference number of Gateway transaction Id is passed.
+     */
     let obj = {
       frontRedirectURL: this.payData.returnUrl,
-      customerID: this.payData.refNumber,
-      txtadditionalInfo2: this.payData.payableServiceType,
+      customerID: this.payData.gatewayCustomerId ? this.payData.gatewayCustomerId : this.payData.refNumber,
+      txtadditionalInfo2: this.payData.gatewayAccountKey,
       txtAmount: this.payData.amount,
+      txtadditionalInfo1: this.payData.txtadditionalInfo1
     };
 
     if (this.applicationType == 'HOSPITAL') {
@@ -138,8 +157,8 @@ export class SelectPaymentGatewayComponent implements OnInit {
   }
 
   /**
-   * This method is used to get the cc avenue page url and redirect to there page 
-   * @param data 
+   * This method is used to get the cc avenue page url and redirect to there page
+   * @param data
    */
   getTransactionDetail(data) {
 

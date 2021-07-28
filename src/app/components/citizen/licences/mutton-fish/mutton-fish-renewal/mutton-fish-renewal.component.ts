@@ -182,10 +182,10 @@ export class MuttonFishRenewalComponent implements OnInit {
 			/* searchData.employeeList.forEach(app => {
 				(<FormArray>this.muttonFishRenewalForm.get('employeeList')).push(this.createArray(app));
 			}); */
-			if (this.muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR') {
-				this.muttonFishRenewalForm.get('relationshipList').disable();
-			}
-			this.muttonFishRenewalForm.disable();
+			// if (this.muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR') {
+			// 	this.muttonFishRenewalForm.get('relationshipList').disable();
+			// }
+			// this.muttonFishRenewalForm.disable();
 			this.enableFielList();
 			let currentUrl = this.location.path().replace('false', this.formId.toString());
 			this.location.go(currentUrl);
@@ -215,6 +215,9 @@ export class MuttonFishRenewalComponent implements OnInit {
 					this.onChangeStatusOfBusiness(this.muttonFishRenewalForm.get('statusOfBusinessId').value.code)
 				} else {
 					this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
+					this.uploadFileArray.sort((a, b) => 
+					a.orderSequence - b.orderSequence);
+				
 				}
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
@@ -229,7 +232,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 				res.relationshipList.forEach(app => {
 					(<FormArray>this.muttonFishRenewalForm.get('relationshipList')).push(this.createArray(app));
 				});
-				this.muttonFishRenewalForm.disable();
+				// this.muttonFishRenewalForm.disable();
 				this.enableFielList();
 
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
@@ -294,31 +297,41 @@ export class MuttonFishRenewalComponent implements OnInit {
 			for (let file of localUploadArray) {
 				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') || (file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
 					file['mandatory'] = false;
+				}else{
+					this.uploadFileArray.push(file);
 				}
 				if (file['mandatory'] == true) {
 					this.mandatoryUploadFileArray.push(file);
 				}
-				this.uploadFileArray.push(file);
+				
 			}
 		} else if (event == 'PARTNERSHIPFIRM') {
 			for (let file of localUploadArray) {
-				if ((file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
+				if ((file['documentIdentifier'] == 'POLICE_VERIFICATION' || (file['documentIdentifier'] == 'LAND_TERMS_CONDITION'))) {
 					file['mandatory'] = false;
+				}else{
+					this.uploadFileArray.push(file);
 				}
 				if (file['mandatory'] == true) {
 					this.mandatoryUploadFileArray.push(file);
 				}
-				this.uploadFileArray.push(file);
+			
 			}
 		} else if (event == 'TENANT') {
 			for (let file of localUploadArray) {
-				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED')) {
+				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED' || (file['documentIdentifier'] == 'LAND_TERMS_CONDITION'))) {
 					file['mandatory'] = false;
+				}else if(file['documentIdentifier'] == 'RENT_AGREEMENT'){
+					file['mandatory'] = true;
+					this.uploadFileArray.push(file);
+				}
+				else{
+					this.uploadFileArray.push(file);
 				}
 				if (file['mandatory'] == true) {
 					this.mandatoryUploadFileArray.push(file);
 				}
-				this.uploadFileArray.push(file);
+				
 			}
 		} else {
 			return this.uploadFileArray;
@@ -342,17 +355,17 @@ export class MuttonFishRenewalComponent implements OnInit {
 				code: [null, [Validators.required]]
 			}),
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30)]],
-			holderMiddleName: [null, [Validators.required, Validators.maxLength(30)]],
+			holderMiddleName: [null, [ Validators.maxLength(30)]],
 			holderLastName: [null, [Validators.required, Validators.maxLength(30)]],
 			holderFirstNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
-			holderMiddleNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
+			holderMiddleNameGuj: [null, [ Validators.maxLength(90)]],
 			holderLastNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
 
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			temporaryAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 
-			holderTelephoneNo: [null, [Validators.maxLength(12), Validators.minLength(10)]],
-			holderMobileNo: [null, [Validators.required, Validators.maxLength(11), Validators.minLength(10)]],
+			holderTelephoneNo: [null, [Validators.maxLength(11), Validators.minLength(11)]],
+			holderMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
 			holderAadharNo: [null, [Validators.required, Validators.maxLength(12)]],
 			holderPanNo: [null, [Validators.required, Validators.maxLength(10)]],
@@ -364,9 +377,9 @@ export class MuttonFishRenewalComponent implements OnInit {
 			//blockNo: this.fb.group({ code: [null, Validators.required] }),
 			businessAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			//extraDetailsOfBusiness: [null, [Validators.maxLength(500)]],
-			relationshipId: this.fb.group({
-				code: [null, Validators.required]
-			}),
+			// relationshipId: this.fb.group({
+			// 	code: [null, Validators.required]
+			// }),
 			statusOfBusinessId: this.fb.group({
 				code: [null, Validators.required]
 			}),
@@ -417,8 +430,8 @@ export class MuttonFishRenewalComponent implements OnInit {
 	 * Method is used when user click for add person
 	 */
 	addMorePerson() {
-		let relationshipIdValue = this.muttonFishRenewalForm.get('relationshipId').value.code;
-
+		// let relationshipIdValue = this.muttonFishRenewalForm.get('relationshipId').value.code;
+		let relationshipIdValue = this.muttonFishRenewalForm.get('statusOfBusinessId').value.code;
 		if (!relationshipIdValue) {
 			this.toastrService.warning("Please select relationship of applicant first.");
 			return false;
@@ -563,5 +576,15 @@ export class MuttonFishRenewalComponent implements OnInit {
 	 */
 	dateFormat(date, controlType: string) {
 		this.muttonFishRenewalForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+	}
+
+	onSameAddressChange(event){
+		if(event.checked){
+			this.muttonFishRenewalForm.get('temporaryAddress').patchValue(this.muttonFishRenewalForm.get('permanantAddress').value);
+			this.muttonFishRenewalForm.get('temporaryAddress').disable();
+		}else{
+			this.muttonFishRenewalForm.get('temporaryAddress').enable();
+			this.muttonFishRenewalForm.get('temporaryAddress').reset();
+		}
 	}
 }

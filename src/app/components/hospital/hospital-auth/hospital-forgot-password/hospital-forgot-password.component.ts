@@ -6,6 +6,7 @@ import { SessionStorageService } from 'angular-web-storage';
 
 import { ValidationService } from './../../../../shared/services/validation.service';
 import { AppService } from '../../../../core/services/citizen/app-services/app.service';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
   selector: 'app-hospital-forgot-password',
@@ -28,7 +29,9 @@ export class HospitalForgotPasswordComponent implements OnInit {
 		private toaster: ToastrService,
 		private route: ActivatedRoute,
 		private router: Router, 
-		private appService: AppService
+		private appService: AppService,
+		private commonService: CommonService,
+
 	) {
 
 	}
@@ -58,7 +61,8 @@ export class HospitalForgotPasswordComponent implements OnInit {
 				 */
 				this.loading = false;
 				this.issingupbtn = false;
-				this.router.navigate(['/hospital/auth/reset-password'], { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp } });
+				this.commonService.successAlert("Success", "For OTP and reset link update you can check your registered mail ID and Mobile number. Thank you.", "success");
+				this.router.navigate(['/hospital/auth/reset-password'], { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp ,email : this.forgotPassForm.get('email').value } });
 			}, err => {
 				this.loading = false;
 				this.issingupbtn = false;

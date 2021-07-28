@@ -5,113 +5,8 @@
         <h4>Existing Owner</h4>
         <mat-divider></mat-divider>
       </div>
-      <table mat-table [dataSource]="dataSourceExistingOwner" matSort class="width100 table-width">
-        <ng-container matColumnDef="titleName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
-          <td mat-cell *matCellDef="let element"> {{element.titleName}} </td>
-        </ng-container>
-        <ng-container matColumnDef="firstName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
-        </ng-container>
-        <ng-container matColumnDef="middleName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Middle Name</th>
-          <td mat-cell *matCellDef="let element"> {{element.middleName}} </td>
-        </ng-container>
-        <ng-container matColumnDef="lastName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</th>
-          <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
-        </ng-container>
-        <ng-container matColumnDef="aadharNo">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Aadhaar No</th>
-          <td mat-cell *matCellDef="let element"> {{element.aadharNo}} </td>
-        </ng-container>
-        <ng-container matColumnDef="mobileNo">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Mobile No</th>
-          <td mat-cell *matCellDef="let element"> {{element.mobileNo}} </td>
-        </ng-container>
-        <ng-container matColumnDef="emailAddress">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-          <td mat-cell *matCellDef="let element"> {{element.emailAddress}} </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="columnsExistingOwner"></tr>
-        <tr mat-row *matRowDef="let row; columns: columnsExistingOwner;"></tr>
-      </table>
-    </div>
-  </div>
-</mat-card>
-
-<mat-card class="margin-top-10">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="section-title">
-        <h4>New Owner</h4>
-        <mat-divider></mat-divider>
-      </div>
-      <form #formDetail="ngForm" (ngSubmit)="save(formDetail)">
-        <div class="row">
-          <div class="col-md-1">
-            <div class="ngSelect" style="min-width: 100%;">
-                <ng-select required placeholder="Title *" [items]="titleList" bindValue="itemId"
-                    bindLabel="itemName" name="titleId" [(ngModel)]="ownerModel.titleId" #TitleId="ngModel"
-                    [ngClass]="{'ng-invalid ng-touched':  formDetail.submitted && TitleId.invalid}">
-                </ng-select>
-                <div *ngIf="(formDetail.submitted && TitleId.invalid)  || (TitleId.invalid && TitleId.touched)">
-                    <mat-error *ngIf="TitleId.errors.required">*Title is required.</mat-error>
-                </div>
-            </div>
-
-          </div>
-          <div class="col-md-2">
-            <mat-form-field class="full-width-input">
-              <input trim="blur" matInput required maxlength="50" placeholder="First Name" name="firstName" #FirstName="ngModel"
-                [(ngModel)]="ownerModel.firstName">
-              <mat-error *ngIf="FirstName.invalid">*First Name is required.</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="col-md-2">
-            <mat-form-field class="full-width-input">
-              <input trim="blur" matInput maxlength="50" placeholder="Middle Name" name="middleName" #MiddleName="ngModel"
-                [(ngModel)]="ownerModel.middleName">
-            </mat-form-field>
-          </div>
-          <div class="col-md-2">
-            <mat-form-field class="full-width-input">
-              <input trim="blur" matInput required maxlength="50" placeholder="Last Name" name="lastName" #LastName="ngModel"
-                [(ngModel)]="ownerModel.lastName">
-              <mat-error *ngIf="LastName.invalid">*Last Name is required.</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="col-md-2">
-            <mat-form-field class="full-width-input">
-              <input  matInput  number-only maxlength="12" minlength="12" placeholder="Aadhaar No" name="aadharNo" 
-                #AadhaarNo="ngModel" [(ngModel)]="ownerModel.aadharNo">
-                <mat-error *ngIf="AadhaarNo.invalid">*Aadhaar No is invalid.</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="col-md-1">
-            <mat-form-field class="full-width-input">
-              <input matInput  number-only maxlength="10" minlength="10" placeholder="Mobile No" name="mobileNo" 
-                #MobileNo="ngModel" [(ngModel)]="ownerModel.mobileNo">
-                <mat-error *ngIf="MobileNo.invalid">*Mobile No is invalid.</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="col-md-1">
-            <mat-form-field class="full-width-input">
-                <input matInput email placeholder="Email" name="emailAddress" maxlength="255"
-                #EmailAddress="ngModel"   [(ngModel)]="ownerModel.emailAddress">
-                 <mat-error *ngIf="EmailAddress.invalid && EmailAddress.errors.email">*Email is not valid.</mat-error>
-            </mat-form-field>
-        </div>
-          <div class="col-md-1">
-            <button mat-mini-fab type="submit" color="primary" title="Save">
-              <mat-icon>save</mat-icon>
-            </button>
-          </div>
-        </div>
-      </form>
-      <div *ngIf="isNewOwnerExist">
-        <table mat-table [dataSource]="dataSourceNewOwner" matSort class="width100 table-width">
+      <div class="table-responsive paddLeftRight5">
+        <table mat-table [dataSource]="dataSourceExistingOwner" matSort class="width100 table-width">
           <ng-container matColumnDef="titleName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
             <td mat-cell *matCellDef="let element"> {{element.titleName}} </td>
@@ -140,18 +35,135 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
             <td mat-cell *matCellDef="let element"> {{element.emailAddress}} </td>
           </ng-container>
-          <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef>Action</th>
-            <td mat-cell *matCellDef="let element">
-              <button mat-button title="Delete" class="btn-width-auto" color="warn" (click)="deleteOwner(element)">
-                <mat-icon>delete_forever</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="columnsNewOwner"></tr>
-          <tr mat-row *matRowDef="let row; columns: columnsNewOwner;"></tr>
+          <tr mat-header-row *matHeaderRowDef="columnsExistingOwner"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnsExistingOwner;"></tr>
         </table>
       </div>
+    </div>
+  </div>
+</mat-card>
+
+<mat-card class="margin-top-10">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="section-title">
+        <h4>New Owner</h4>
+        <mat-divider></mat-divider>
+      </div>
+
+
+      <form #formDetail="ngForm" (ngSubmit)="save(formDetail)">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="ngSelect" style="min-width: 100%;">
+              <ng-select required placeholder="Title *" [items]="titleList" bindValue="itemId" bindLabel="itemName"
+                name="titleId" [(ngModel)]="ownerModel.titleId" #TitleId="ngModel"
+                [ngClass]="{'ng-invalid ng-touched':  formDetail.submitted && TitleId.invalid}">
+              </ng-select>
+              <div *ngIf="(formDetail.submitted && TitleId.invalid)  || (TitleId.invalid && TitleId.touched)">
+                <mat-error *ngIf="TitleId.errors.required">*Title is required.</mat-error>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-md-3">
+            <mat-form-field class="full-width-input">
+              <input trim="blur" matInput required maxlength="50" placeholder="First Name" name="firstName"
+                #FirstName="ngModel" [(ngModel)]="ownerModel.firstName">
+              <mat-error *ngIf="FirstName.invalid">*First Name is required.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field class="full-width-input">
+              <input trim="blur" matInput maxlength="50" placeholder="Middle Name" name="middleName"
+                #MiddleName="ngModel" [(ngModel)]="ownerModel.middleName">
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field class="full-width-input">
+              <input trim="blur" matInput required maxlength="50" placeholder="Last Name" name="lastName"
+                #LastName="ngModel" [(ngModel)]="ownerModel.lastName">
+              <mat-error *ngIf="LastName.invalid">*Last Name is required.</mat-error>
+            </mat-form-field>
+          </div>
+
+         </div>
+
+         <div class="row">
+          <div class="col-md-3">
+            <mat-form-field class="full-width-input">
+              <input matInput number-only maxlength="12" minlength="12" placeholder="Aadhaar No" name="aadharNo"
+                #AadhaarNo="ngModel" [(ngModel)]="ownerModel.aadharNo">
+              <mat-error *ngIf="AadhaarNo.invalid">*Aadhaar No is invalid.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field class="full-width-input">
+              <input matInput number-only maxlength="10" minlength="10" placeholder="Mobile No" name="mobileNo"
+                #MobileNo="ngModel" [(ngModel)]="ownerModel.mobileNo">
+              <mat-error *ngIf="MobileNo.invalid">*Mobile No is invalid.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field class="full-width-input">
+              <input matInput email placeholder="Email" name="emailAddress" maxlength="255" #EmailAddress="ngModel"
+                [(ngModel)]="ownerModel.emailAddress">
+              <mat-error *ngIf="EmailAddress.invalid && EmailAddress.errors.email">*Email is not valid.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-2">
+            <button mat-mini-fab type="submit" color="primary" title="Save">
+              <mat-icon>save</mat-icon>
+            </button>
+          </div>
+        </div>
+      </form>
+      <div *ngIf="isNewOwnerExist">
+        <div class="table-responsive paddLeftRight5">
+          <table mat-table [dataSource]="dataSourceNewOwner" matSort class="width100 table-width">
+            <ng-container matColumnDef="titleName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+              <td mat-cell *matCellDef="let element"> {{element.titleName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="firstName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="middleName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Middle Name</th>
+              <td mat-cell *matCellDef="let element"> {{element.middleName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="lastName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</th>
+              <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="aadharNo">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Aadhaar No</th>
+              <td mat-cell *matCellDef="let element"> {{element.aadharNo}} </td>
+            </ng-container>
+            <ng-container matColumnDef="mobileNo">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Mobile No</th>
+              <td mat-cell *matCellDef="let element"> {{element.mobileNo}} </td>
+            </ng-container>
+            <ng-container matColumnDef="emailAddress">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+              <td mat-cell *matCellDef="let element"> {{element.emailAddress}} </td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef>Action</th>
+              <td mat-cell *matCellDef="let element">
+                <button mat-button title="Delete" class="btn-width-auto" color="warn" (click)="deleteOwner(element)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="columnsNewOwner"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnsNewOwner;"></tr>
+          </table>
+        </div>
+      </div>
+
+
     </div>
   </div>
 </mat-card>

@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable()
 export class TaxRebateApplicationDataSharingService {
   
+  applicationNumber :any;
   isShowForm: boolean = false;
   dataSourceIsShowForm = new BehaviorSubject<boolean>(this.isShowForm);
   observableIsShowForm = this.dataSourceIsShowForm.asObservable();

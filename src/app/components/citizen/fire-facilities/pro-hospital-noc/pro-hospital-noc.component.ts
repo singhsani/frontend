@@ -185,7 +185,7 @@ export class ProHospitalNocComponent implements OnInit {
 			serviceCode: 'FS-PROVI-HOSPITAL',
 			/* Step 1 controls start */
 			provisionalNocNumber: [null],
-			applicationDate: [null, [Validators.required]],
+			applicationDate: [{ value: null, disabled: true }],
 			oldReferenceNumber: [null],
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
@@ -253,7 +253,7 @@ export class ProHospitalNocComponent implements OnInit {
 			architectFirmName: [null, [Validators.required, Validators.maxLength(50)]],
 			architectFirmNameGuj: [null, [Validators.required, Validators.maxLength(150)]],
 			architectFirmNumber: [null, [Validators.required, Validators.maxLength(20)]],
-			architectContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
+			architectContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 
 			noOfHospitalStaff: [null, [Validators.required, Validators.maxLength(4)]],
 			noOfSecurityStaff: [null, [Validators.required, Validators.maxLength(4)]],

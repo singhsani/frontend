@@ -110,6 +110,9 @@ export class VacancyPremiseCertificateSearchComponent implements OnInit {
       this.vacancyPremiseCertificateDataSharingService.updatedSearchModel(this.searchModel);
       this.vacancyPremiseCertificateDataSharingService.updatedIsShowForm(false);
       this.vacancyPremiseCertificateDataSharingService.updatedIsShowTable(true);
+    } else {
+      formDetails.form.get('level1Id').markAsTouched();
+      formDetails.form.get('Level2Id').markAsTouched();
     }
   }
 

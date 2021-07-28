@@ -11,6 +11,7 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import { TranslateService } from '../../../../shared/modules/translate/translate.service';
 import { FireFacilitiesService } from '../common/services/fire-facilities.service';
+import { constants } from 'os';
 
 @Component({
 	selector: 'app-ele-connection-noc',
@@ -64,6 +65,7 @@ export class EleConnectionNocComponent implements OnInit {
 	getElectricConnectionData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.electricConnectionForm.patchValue(res);
+
 			this.fireFacilityConfig.isAttachmentButtonsVisible = true;
 
 			//convert applicant name and set in applicantNameGuj filds 
@@ -76,7 +78,8 @@ export class EleConnectionNocComponent implements OnInit {
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
 				(<FormArray>this.electricConnectionForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
 			});
-			this.requiredDocumentList();
+
+			this.documentManage();
 		});
 	}
 
@@ -102,8 +105,8 @@ export class EleConnectionNocComponent implements OnInit {
 			oldReferenceNumber: [null],
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
-			applicationDate: [null, Validators.required],
-			contactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
+			applicationDate: [{ value: null, disabled: true }],
+			contactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			mobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			email: [null, [Validators.required, Validators.maxLength(50)]],
 
@@ -114,7 +117,7 @@ export class EleConnectionNocComponent implements OnInit {
 			connectionHolderAddress: [null, [Validators.required, Validators.maxLength(500)]],
 			connectionHolderAddressGuj: [null, [Validators.required, Validators.maxLength(1500)]],
 			incidentDate: [null, Validators.required],
-			propertyNo: [null, [Validators.required, Validators.maxLength(15)]],
+			propertyNo: [null, [Validators.maxLength(15)]],
 			firePlaceAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			
 			subject: this.fb.group({
@@ -123,7 +126,7 @@ export class EleConnectionNocComponent implements OnInit {
 			firePlaceType: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			fireLossAmount: [null, [Validators.required, Validators.maxLength(10)]],
+			fireLossAmount: [null, [Validators.maxLength(10)]],
 
 			/* Step 3 controls start */
 			attachments: []
@@ -216,25 +219,51 @@ export class EleConnectionNocComponent implements OnInit {
 		}
 	}
 
+	documentManage(){
+		const subject = this.electricConnectionForm.get('subject').value;
+		const firePlaceType = this.electricConnectionForm.get('firePlaceType').value;
+		let buildingCollapseMandatory = false;
+		let samatiLetterMandatory = false;
+		if(subject && subject.code && subject.code == 'BUILDING_COLLAPSE'){
+			buildingCollapseMandatory = true;
+			samatiLetterMandatory = false;
+		}
+
+		if(firePlaceType && firePlaceType.code && firePlaceType.code == 'COMMERCIAL'){
+			samatiLetterMandatory = true;
+			// buildingCollapseMandatory = false;
+		} 
+
+		const documents = this.electricConnectionForm.get('serviceDetail').get('serviceUploadDocuments').value;
+
+		for(const document of documents){
+			if(document.documentIdentifier == 'BUILDING_NIRBHAYATA_CERTIFICATE')
+				document.mandatory = buildingCollapseMandatory;
+
+			if (document.documentIdentifier == 'FIRE_NOC_OR_SAMATI_LETTER') 
+				document.mandatory = samatiLetterMandatory;
+		}
+				this.electricConnectionForm.get('serviceDetail').patchValue({'serviceUploadDocuments': documents});
+						this.requiredDocumentList();
+	}
+	
 	patchValue(){
 		this.electricConnectionForm.patchValue(this.dummyJSON);
 	}
 
 	dummyJSON:any = {
  
-		"electricityConnectionNo": "1111111111111",
+		"electricityConnectionNo": "111111ABC",
 		"connectionHolderName": "zxfdsafsdfsdfsd",
 		"connectionHolderNameGuj": "ઝ્ક્ષ્ફ્દ્સફ્સ્દ્ફ્સ્દ્ફ્સ્દ",
 		"connectionHolderAddress": "fsdfsdfsdfsdf",
 		"connectionHolderAddressGuj": "ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
 		"incidentDate": moment(new Date()).format("YYYY-MM-DD"),
-		"propertyNo": "234234234234",
 		"firePlaceAddress": "sdffsdfsdf",
 		"subject": "sdfsdf",
 		"firePlaceType": {
 		  "code": "RESIDENTIAL"
 		},
-		"fireLossAmount": "34234234",
 		"fileStatus": "DRAFT",
 		"serviceName": null,
 		"fileNumber": null,
