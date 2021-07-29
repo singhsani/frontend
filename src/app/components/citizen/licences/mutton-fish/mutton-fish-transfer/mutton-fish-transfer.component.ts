@@ -47,6 +47,7 @@ export class MuttonFishTransferComponent implements OnInit {
 		isDisplayRenewLicenceForm: <boolean>false,
 		searchLicenceNumber:""
 	}
+	checkboxValue:boolean = false;
 
 	/**
 	 * This method for serach licence using licence number.
@@ -112,6 +113,8 @@ export class MuttonFishTransferComponent implements OnInit {
 			this.muttonFishTransferForm.get('licenseType').get('code').disable();
 
 		}
+
+		this.disableField();
 	}
 
 
@@ -592,12 +595,25 @@ export class MuttonFishTransferComponent implements OnInit {
 
 	onSameAddressChange(event){
 		if(event.checked){
-		
 			this.muttonFishTransferForm.get('temporaryAddress').patchValue(this.muttonFishTransferForm.get('permanantAddress').value);
 			this.muttonFishTransferForm.get('temporaryAddress').disable();
+			this.checkboxValue = true;
 		}else{
+			this.checkboxValue = false;
 			this.muttonFishTransferForm.get('temporaryAddress').enable();
 			this.muttonFishTransferForm.get('temporaryAddress').reset();
 		}
 	}
+
+	valueChangeOnPermantAddress(){
+		if(this.checkboxValue){
+			this.muttonFishTransferForm.get('temporaryAddress').patchValue(this.muttonFishTransferForm.get('permanantAddress').value);
+		}
+	}
+
+	disableField(){
+		this.muttonFishTransferForm.get('refNumber').disable();
+		this.muttonFishTransferForm.get('licenseIssueDate').disable();
+	}
+
 }
