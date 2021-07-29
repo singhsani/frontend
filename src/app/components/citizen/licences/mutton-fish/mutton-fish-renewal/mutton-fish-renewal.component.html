@@ -24,7 +24,7 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput readonly required placeholder="{{'license_no' | translate:translateKey}}"
-							formControlName="refNumber">
+							formControlName="refNumber" >
 						<control-messages [control]="muttonFishRenewalForm.get('refNumber')"></control-messages>
 					</mat-form-field>
 					<!--<mat-form-field class="col-md-4">-->
@@ -121,7 +121,7 @@
 				<div class="row">
 					<h2>{{'permanat_address' | translate:translateKey}}</h2>
 					<app-address #permanantAddressEstablishment [requiredNotPincode]="true"
-						[addressFormGroup]="muttonFishRenewalForm.get('permanantAddress')"></app-address>
+						[addressFormGroup]="muttonFishRenewalForm.get('permanantAddress')" (change)="valueChangeOnPermantAddress()"></app-address>
 				</div>
 
 				<div class="col-md-4" >
@@ -348,7 +348,7 @@
 					<ng-container
 						*ngFor="let doc of uploadFileArray ">
 						<div class="col-md-4"
-							*ngIf="doc.requiredOnCitizenPortal && doc.isActive && licenseConfiguration.isAttachmentButtonsVisible">
+							*ngIf="doc.requiredOnCitizenPortal && doc.isActive">
 							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
 								<span *ngIf="doc.mandatory" class="mandatory">*</span></label>
 							<file-upload [form]="muttonFishRenewalForm" [uploadModel]="doc"></file-upload>

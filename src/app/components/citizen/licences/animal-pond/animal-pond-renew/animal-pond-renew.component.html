@@ -114,11 +114,12 @@
 					<h2>{{'permanat_address' | translate:translateKey}}</h2>
 					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment
 						[requiredFeilds]="true"
-						[addressFormGroup]="animalPondRenewForm.get('permanantAddress')"></app-address>
+						[addressFormGroup]="animalPondRenewForm.get('permanantAddress')"
+						(change)=valueChangeOnPermantAddress()></app-address>
 				</div>
 
 				<div class="col-md-4" >
-					<mat-checkbox class="col-md-12 mt-2" (change)="onSameAddressChange($event)">{{'Temporary Address Is Same As Permanant Address ?' | translate: translateKey}}</mat-checkbox>
+					<mat-checkbox class="col-md-12 mt-2" (change)="onSameAddressChange($event)">{{'Temporary Address Is Same As Permanent Address ?' | translate: translateKey}}</mat-checkbox>
 				</div>
 
 				<div class="row">

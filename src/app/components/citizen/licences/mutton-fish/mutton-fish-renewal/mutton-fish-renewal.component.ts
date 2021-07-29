@@ -51,6 +51,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 		isDisplayRenewLicenceForm: <boolean>false,
 		searchLicenceNumber: ""
 	}
+	checkboxValue : boolean = false;
 
 	/**
 	 * This method for serach licence using licence number.
@@ -105,7 +106,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 			this.apiCode = param.get('apiCode');
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
-
+		
 		this.getLookupData();
 		this.muttonFishRenewalFormControls();
 
@@ -117,6 +118,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 			this.serachLicenceObj.isDisplayRenewLicenceForm = true;
 			this.getMuttonFishLicNewData();
 		}
+		this.disableField();
 	}
 
 	/**
@@ -213,12 +215,11 @@ export class MuttonFishRenewalComponent implements OnInit {
 				//	this.onChangeWard(this.muttonFishRenewalForm.get('wardNo').value.code);
 				if (this.muttonFishRenewalForm.get('statusOfBusinessId').value.code) {
 					this.onChangeStatusOfBusiness(this.muttonFishRenewalForm.get('statusOfBusinessId').value.code)
-				} else {
-					this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
+				}
+
+				this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
 					this.uploadFileArray.sort((a, b) => 
 					a.orderSequence - b.orderSequence);
-				
-				}
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
 					this.addItem().push(this.createArray());
@@ -582,9 +583,22 @@ export class MuttonFishRenewalComponent implements OnInit {
 		if(event.checked){
 			this.muttonFishRenewalForm.get('temporaryAddress').patchValue(this.muttonFishRenewalForm.get('permanantAddress').value);
 			this.muttonFishRenewalForm.get('temporaryAddress').disable();
+			this.checkboxValue = true;
 		}else{
 			this.muttonFishRenewalForm.get('temporaryAddress').enable();
 			this.muttonFishRenewalForm.get('temporaryAddress').reset();
+			this.checkboxValue = false;
+		}
+	}
+
+	disableField(){
+		this.muttonFishRenewalForm.get('refNumber').disable();
+		this.muttonFishRenewalForm.get('licenseIssueDate').disable();
+	}
+
+	valueChangeOnPermantAddress(){
+		if(this.checkboxValue){
+			this.muttonFishRenewalForm.get('temporaryAddress').patchValue(this.muttonFishRenewalForm.get('permanantAddress').value);
 		}
 	}
 }

@@ -639,10 +639,9 @@ export class AnimalPondNewComponent implements OnInit {
 	 * @param flag - flag of invalid control.
 	 */
 	handleErrorsOnSubmit(flag) {
-
-		let step0 = 16;
-		let step1 = 24;
-		let step2 = 26;
+		let step0 = 18;
+		let step1 = 27;
+		let step2 = 28;
 		let step3 = 30;
 		let step4 = 31;
 
