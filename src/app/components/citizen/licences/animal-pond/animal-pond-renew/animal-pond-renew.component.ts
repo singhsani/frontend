@@ -721,7 +721,6 @@ export class AnimalPondRenewComponent implements OnInit {
 	}
 
 	onChangeStatusOfBusiness(){
-		debugger
 		const subject = this.animalPondRenewForm.get('businessType').get('code').value
 		const documents = this.animalPondRenewForm.get('serviceDetail').get('serviceUploadDocuments').value;
 		const renewalFormName =  this.animalPondRenewForm;
@@ -730,7 +729,6 @@ export class AnimalPondRenewComponent implements OnInit {
 	}
 
 	onSameAddressChange(event){
-		debugger
 		if(event.checked){
 			this.animalPondRenewForm.get('temporaryAddress').patchValue(this.animalPondRenewForm.get('permanantAddress').value);
 			this.animalPondRenewForm.get('temporaryAddress').disable();
