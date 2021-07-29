@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { PropertyOccupierSearchSharingService } from './property-occupier-search-sharing.service';
 import { PropertySearchService } from '../property-search/property-search.service';
@@ -6,13 +6,14 @@ import { AlertService } from '../../Services/alert.service';
 import { Constants } from '../../Constants';
 import { NgForm } from '@angular/forms';
 import { CommonService } from '../../Services/common-service';
-
 @Component({
   selector: 'app-property-occupier-search',
   templateUrl: './property-occupier-search.component.html',
   styleUrls: ['./property-occupier-search.component.scss']
 })
 export class PropertyOccupierSearchComponent implements OnInit {
+
+  @Output() showPayable = new EventEmitter();
 
   searchModel: any = {};
   wardZoneLevel = [];
@@ -175,10 +176,12 @@ export class PropertyOccupierSearchComponent implements OnInit {
   onSelect(item) {
     this.propertyOccupierSearchSharingService.setPropertyModel(item);
     this.propertyOccupierSearchSharingService.setIsOpenSearchForm(false);
+    this.showPayable.emit(true);
   }
 
   onBackFromSearch() {
     this.propertyOccupierSearchSharingService.setIsOpenSearchForm(false);
+    this.showPayable.emit(true);
   }
 
 }

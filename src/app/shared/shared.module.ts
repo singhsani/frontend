@@ -66,6 +66,7 @@ import { BankDetailsBookingComponent } from './components/bank-details-booking/b
 import { AppMonthPicker } from './components/month-picker/month-picker.component';
 import { CollectionService } from '../components/citizen/tax/water-supply/tax-transaction-history/Services/collection.service';
 import { MaskRegistrationNumVtDirective } from './directives/mask-registration-num-vt.directive';
+import { PropertyOccupierSearchComponent } from '../vmcshared/component/property-occupier-search/property-occupier-search.component';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -114,7 +115,8 @@ const COMPONENTS = [
 	declarations: [
 		...COMPONENTS,
 		BankDetailsBookingComponent,
-		MaskRegistrationNumVtDirective
+		MaskRegistrationNumVtDirective,
+		PropertyOccupierSearchComponent
 	],
 	imports: [
 		CommonModule,
@@ -138,6 +140,7 @@ const COMPONENTS = [
 		ModalModule,
 		ChartsModule,
 		NgxUpperCaseDirectiveModule,
+		PropertyOccupierSearchComponent,
 		...COMPONENTS
 	],
 	providers: [

@@ -15,6 +15,8 @@ import { ManageRoutes } from 'src/app/config/routes-conf';
 import { ProfessionalTaxService } from 'src/app/core/services/citizen/data-services/professional-tax.service';
 import { CollectionService } from '../tax/water-supply/tax-transaction-history/Services/collection.service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
+import { PropertyOccupierSearchSharingService } from 'src/app/vmcshared/component/property-occupier-search/property-occupier-search-sharing.service';
+import { Subscription } from 'rxjs';
 
 declare var $: any;
 
@@ -67,6 +69,9 @@ export class CommonPaybleComponent implements OnInit {
   isShowWaterTaxDetailTable: boolean = false;
   waterTaxDetailData = [];
 
+  isShowPropertySearchForm:boolean = false;
+  propertyModelSub: Subscription;
+
   constructor(
     private formService: FormsActionsService,
     private fb: FormBuilder,
@@ -78,7 +83,8 @@ export class CommonPaybleComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private router: Router,
-    private alertService:AlertService
+    private alertService:AlertService,
+    private propertyOccupierSearchSharingService:PropertyOccupierSearchSharingService,
   ) {
     this.getPayableServicesList();
     this.createPayementControls();
@@ -100,8 +106,18 @@ export class CommonPaybleComponent implements OnInit {
 
     this.getAllServices();
 
-  }
+    this.propertyOccupierSearchSharingService.getIsOpenSearchForm().subscribe(data => {
+      this.isShowPropertySearchForm = data;
+    });
 
+    this.propertyModelSub = this.propertyOccupierSearchSharingService.getPropertyModel().subscribe(data => {
+      if (data) {
+        this.fetchOccupierCollectionDetails(data.propertyNo);
+        this.propertyOccupierSearchSharingService.setPropertyModel(null);
+      }
+    });
+
+  }
   showHidePaybleScreen(event: boolean){
     this.isShowPayableScreen = event;
   }
@@ -323,20 +339,27 @@ export class CommonPaybleComponent implements OnInit {
 
   }
   getAmountDataProperty() {
-    this.isPropertyTax = true;
     if (this.paymentsForm.invalid) {
       this.markFormGroupTouched(this.paymentsForm);
       this.commonService.openAlert("Warning", "Enter all the required information", "warning");
       return;
     }
   else{
-    this.collectionService.getoccupierOutstandingAmount({ propertyNo: this.paymentsForm.get('refNumber').value }).subscribe(
+    this.fetchOccupierCollectionDetails(this.paymentsForm.get('refNumber').value);
+  }
+
+  }
+
+  fetchOccupierCollectionDetails(propertyNo: string){
+    this.isPropertyTax = true;
+    this.collectionService.getoccupierOutstandingAmount({ propertyNo: propertyNo }).subscribe(
       (data) => {
         if (data.status === 200) {
           this.isPropertyRecordExists = true;
           this.collectionModel = data.body;
           this.model = this.collectionModel.payableAmount;
           this.paymentsForm.get('amount').setValue(this.model);
+          this.paymentsForm.get('refNumber').setValue(propertyNo);
           console.log("model: "+this.model)
         }
       },
@@ -346,8 +369,6 @@ export class CommonPaybleComponent implements OnInit {
         this.isPropertyRecordExists = false
       });
 }
-
-  }
 
   getAmountDataWater() {
     this.isWaterTax = true;
@@ -581,7 +602,6 @@ export class CommonPaybleComponent implements OnInit {
   }
 
   onWaterDetailClick(item){
-    debugger
     if (item.taxWiseOutstandings && item.taxWiseOutstandings.length > 0){
       this.waterTaxDetailData = item.taxWiseOutstandings;
       this.isShowPayableScreen = false;
@@ -589,6 +609,19 @@ export class CommonPaybleComponent implements OnInit {
     }else {
       this.alertService.info('No detail found!');
     }
+  }
+
+  isShowSearchButton(form : any){
+    if((form.get('module').get('code').value == 'PROPERTY-TAX') && form.get('payableServices').get('code').value == 'PAY-PRO-TAX' ){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  onSearchProperty() {
+    this.isShowPayableScreen = false;
+    this.propertyOccupierSearchSharingService.setIsOpenSearchForm(true);
   }
 
 }

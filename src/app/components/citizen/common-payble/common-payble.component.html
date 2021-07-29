@@ -37,11 +37,18 @@
         <!-- <control-messages [control]="paymentsForm.get('refNumber')"></control-messages> -->
       </mat-form-field>
 
-      <div class="col-md-4 pt-2">
+      <div class="col-md-8 text-left">
         <button mat-raised-button color="accent" 
           (click)="getServices()">
           <mat-icon>search</mat-icon>
           Search
+        </button>
+      <!-- </div>
+      <div class="col-md-8 text-right"> -->
+        <button mat-raised-button color="accent" *ngIf="isShowSearchButton(paymentsForm)"
+          (click)="onSearchProperty()">
+          <mat-icon>search</mat-icon>
+          Search Property
         </button>
       </div>
     </div>
@@ -371,3 +378,5 @@
 <app-property-tax-detail *ngIf = "isShowTaxDetailTable" [taxDetailData]="propertyTaxDetailData" (showPayable)=showHidePaybleScreen($event) (showTaxDetail)=showHideTaxDetailScreen($event)></app-property-tax-detail>
 
 <app-water-tax-detail *ngIf = "isShowWaterTaxDetailTable" [taxDetailData]="waterTaxDetailData" (showPayable)=showHidePaybleScreen($event) (showTaxDetail)=showHideWaterTaxDetailScreen($event)></app-water-tax-detail>
+
+<app-property-occupier-search *ngIf = "isShowPropertySearchForm" (showPayable)=showHidePaybleScreen($event)></app-property-occupier-search>
