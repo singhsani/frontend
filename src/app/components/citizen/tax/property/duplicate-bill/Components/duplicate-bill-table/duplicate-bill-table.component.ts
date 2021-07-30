@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 import { ManageRoutes } from 'src/app/config/routes-conf';
 import { environment } from 'src/environments/environment';
 import { SelectPaymentGatewayPropertyComponent } from 'src/app/vmcshared/component/select-payment-gateway-property/select-payment-gateway-property.component';
-
+import {CommonService as CommonNascentService} from '../../../../../../../shared/services/common.service';
 
 @Component({
   selector: 'app-duplicate-bill-table',
@@ -51,7 +51,8 @@ export class DuplicateBillTableComponent implements OnInit {
     private cService: CommonServiceTwo,
     private formService: FormsActionsService,
     private paymentService : PaymentNewService,
-    private router: Router) {
+    private router: Router,
+    private commonNascentService: CommonNascentService) {
   }
 
   ngOnInit() {
@@ -198,8 +199,22 @@ export class DuplicateBillTableComponent implements OnInit {
               let retAfterPayment: string = environment.returnUrl;
               if(err.status === 402){
                 const errData = err.error.data;
-                retUrl = retUrl + '?apiCode='+ errData.serviceCode +'?id='+ errData.serviceFormId;
+                const resData = err.error.data;
                 let payData = this.cService.storePaymentInfo(errData, retUrl, retAfterPayment);
+                
+                 if (this.commonNascentService.fromAdmin()) {
+                if (resData.isPaymentReceipt) {
+                  const url = '/citizen/my-applications' +
+                    '?printPaymentReceipt=' + resData.isPaymentReceipt +
+                    '&apiCode=' + resData.serviceCode +
+                    '&id=' + resData.serviceFormId;
+
+                  this.router.navigateByUrl(url);
+                } else {
+                  //  this.openOfflinePaymentComponent(payData,retUrl,data.serviceCode,data.serviceFormId);
+                }
+              }else{
+                retUrl = retUrl + '?apiCode='+ errData.serviceCode +'?id='+ errData.serviceFormId;
                 let words = this.commonService.getToWords(payData.amount);
                 let html = 
                 `
@@ -211,13 +226,14 @@ export class DuplicateBillTableComponent implements OnInit {
                 <p>Rupees in words</p>` + words + ` Rupees Only
               </div>
                 `
-
                 this.cService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
                   this.paymentGateway.setPaymentDetailsFromActionBar(payData);
                   this.paymentGateway.openModel();
                 }, rj => {
                   return;
                 });
+              }
+                
               } else{
                 this.cService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning");
               }

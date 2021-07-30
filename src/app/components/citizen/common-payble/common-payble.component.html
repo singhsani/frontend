@@ -37,11 +37,18 @@
         <!-- <control-messages [control]="paymentsForm.get('refNumber')"></control-messages> -->
       </mat-form-field>
 
-      <div class="col-md-4 pt-2">
+      <div class="col-md-8 text-left">
         <button mat-raised-button color="accent" 
           (click)="getServices()">
           <mat-icon>search</mat-icon>
           Search
+        </button>
+      <!-- </div>
+      <div class="col-md-8 text-right"> -->
+        <button mat-raised-button color="accent" *ngIf="isShowSearchButton(paymentsForm)"
+          (click)="onSearchProperty()">
+          <mat-icon>search</mat-icon>
+          Search Property
         </button>
       </div>
     </div>
@@ -274,6 +281,7 @@
   </div>
 </div>
 
+<div *ngIf="isWaterRecordExists">
   <div *ngIf="isWaterTax">
     <div class="row" style="margin-left: -30px;">
     
@@ -291,32 +299,51 @@
         <label class="col-md-2 font16 font-weight-bold">Address :</label>
         <span class="font16">{{collectionWaterModel?.address}}</span>
       </div>
-
     </div>
 
-    <!-- <div class="row mt-4" >
+    <div class="row mt-4" >
       <ng-container >
         <div class="table-responsive">
           <table class="table" style="border: 1px solid #dee2e6;">
             <thead>
               <tr>
                 <th class="pl-4">S.No.</th>
+                <th>Financial Year</th>
+                <th>Bill No</th>
+                <th>Bill Date </th>
+                <th>Collected Amount</th>
+                <th>Interest/Penalty Amount	</th>
+                <th>Payable Amount</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngIf="collectionWaterModel?.billWiseDetails?.length == 0">
+              <tr *ngIf="collectionWaterModel?.billWiseOutstandings?.length == 0">
                 <td colspan="12" class="noRecord">
                   <h5 class="text-center">No record found !</h5>
                 </td>
               </tr>
-              <ng-container *ngFor="let dues of collectionWaterModel?.billWiseDetails;let i=index">
+              <ng-container *ngFor="let dues of collectionWaterModel?.billWiseOutstandings;let i=index">
                 <tr>
                   <td width="50" [class.pl-4]="!dues.children">
                     <mat-icon class="pull-left arrowCls" (click)="toggleRow(dues)" *ngIf="dues.children && dues.children.length > 0">
                       <span *ngIf="!dues.hidden">chevron_right</span>
                       <span *ngIf="dues.hidden">expand_more</span>
                     </mat-icon>{{i+1}}
-                  </td>  
+                  </td>
+                  <td>{{dues.financialYear}}</td>
+                  <td>{{dues.billNo}}</td>
+                  <td>{{dues.billDate}}</td>
+                  <td>{{dues.billPaidAmount}}</td>
+                  <td>{{dues.intrestOrPenaltyAmount}}</td>
+                  <td>{{collectionWaterModel.outstandingAmount}}</td>
+                  <!-- <td OnlyNumber [textContent]="model" (input)="model=$event.target.textContent" contentEditable>{{collectionWaterModel?.outstandingAmount}}</td>  -->
+
+                  <td>
+                    <button mat-button title="Detail" class="btn-width-auto" color="accent" type="button" (click)="onDetailClick(dues)">
+                      <mat-icon>details</mat-icon>
+                    </button>
+                  </td>
                 </tr>
                 
               </ng-container>
@@ -337,8 +364,10 @@
         </div>
       </div>
       
-      </div> -->
+      </div>
+
   </div>
+</div>
 
   </form>
   <select-payment-gateway #paymentGateway></select-payment-gateway>
@@ -347,3 +376,7 @@
 <app-my-applications [inputData]="inputData" [fromOtherModule]=true></app-my-applications>
 
 <app-property-tax-detail *ngIf = "isShowTaxDetailTable" [taxDetailData]="propertyTaxDetailData" (showPayable)=showHidePaybleScreen($event) (showTaxDetail)=showHideTaxDetailScreen($event)></app-property-tax-detail>
+
+<app-water-tax-detail *ngIf = "isShowWaterTaxDetailTable" [taxDetailData]="waterTaxDetailData" (showPayable)=showHidePaybleScreen($event) (showTaxDetail)=showHideWaterTaxDetailScreen($event)></app-water-tax-detail>
+
+<app-property-occupier-search *ngIf = "isShowPropertySearchForm" (showPayable)=showHidePaybleScreen($event)></app-property-occupier-search>

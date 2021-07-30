@@ -23,6 +23,7 @@ import { LoiPaymentComponent } from './loi-payment/loi-payment.component';
 import { LoiPaymentComponentBooking } from './loi-payment-booking/loi-payment.component-booking';
 import { SharedTicketingModule } from './facilities/ticketings/shared-ticketing/shared-ticketing.module';
 import { PropertyTaxDetailComponent } from './common-payble/property-tax-detail/property-tax-detail.component';
+import { WaterTaxDetailComponent } from './common-payble/water-tax-detail/water-tax-detail.component';
 
 /* Import citizen components end */
 
@@ -54,7 +55,8 @@ import { PropertyTaxDetailComponent } from './common-payble/property-tax-detail/
 		CommonPaybleComponent,
 		LoiPaymentComponent,
 		LoiPaymentComponentBooking,
-		PropertyTaxDetailComponent
+		PropertyTaxDetailComponent,
+		WaterTaxDetailComponent
 	]
 })
 export class CitizenModule { }
