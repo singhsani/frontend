@@ -278,7 +278,7 @@ export class BirthCorrectionComponent implements OnInit {
 	 * call API to get registration data and status.
 	 */
 	getRegistrationNumberStatus() {
-		debugger
+		
 		this.formService.getRegistrationStatus(this.regStatusForm.value).subscribe(resp => {
 			if (resp.success) {
 				this.createBirthCorrectionData(resp.data);
