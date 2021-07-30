@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="section-title">
-                    <h2>Detail {{'detail' | translate:translateKey }} </h2>
+                    <h2>{{'detail' | translate:translateKey }} </h2>
                     <!-- <mat-divider></mat-divider> -->
                 </div>
             </div>
@@ -11,10 +11,10 @@
         <div class="row">
             <div class="col-md-6">
                 <mat-form-field class="full-width-input" hidden>
-                    <mat-label>Application No</mat-label>
+                    <mat-label>Application Number</mat-label>
                     <input trim="blur" matInput  name="applicationNumber" 
                         #ApplicationNumber="ngModel" [(ngModel)]="addressModel.applicationNumber">
-                    <mat-error *ngIf="ApplicationNumber.invalid">*Application No is required.</mat-error>
+                    <mat-error *ngIf="ApplicationNumber.invalid">*Application No. is required.</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -132,7 +132,7 @@
         </div>
         <div class="row" *ngIf="!isValidForm">
             <div class="col-md-12">
-                <div class="alert alert-danger">*Please fill at least one of the fields of Property Address.<br>
+                <div class="alert alert-danger">*Please fill atleast one of the fields of Property Address.<br>
                     i.e. House No. or Building Name or Society Name or Street Name or Landmark or Area Name.</div>
             </div>
         </div>
@@ -268,7 +268,7 @@
                         rows="5"></textarea>
                     <mat-error
                         *ngIf="addressModel.propertyAddressDTO.postalAddress!=null && addressModel.propertyAddressDTO.postalAddress.length>500">
-                        Property Address max 500 characters allowed.</mat-error>
+                        For Property Address maximum 500 characters are allowed.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
@@ -282,7 +282,7 @@
                         Postal Address is required.</mat-error>
                     <mat-error
                         *ngIf="addressModel.propertyAddressDTO.postalAddress!=null && addressModel.propertyAddressDTO.postalAddress.length>500">
-                        Postal Address max 500 characters allowed.</mat-error>
+                        For Postal Address maximum 500 characters are allowed.</mat-error>
                 </mat-form-field>
             </div>
         </div>

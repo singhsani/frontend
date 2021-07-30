@@ -4,7 +4,7 @@
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input matInput disabled name="propertyNo" [(ngModel)]="selectedDataModel.propertyNo"
-                        placeholder="Property No">
+                        placeholder="Property Number">
                 </mat-form-field>
             </div>
             <div class="col-md-6">
@@ -55,27 +55,27 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="ngSelect">
-                    <ng-select required placeholder="With in Water Zone *" [items]="waterZoneList" bindValue="itemId"
+                    <ng-select required placeholder="Within Water Zone *" [items]="waterZoneList" bindValue="itemId"
                         bindLabel="itemName" name="waterZoneLookupId" [(ngModel)]="model.waterZoneLookupId"
                         #WaterZone="ngModel"
                         [ngClass]="{'ng-invalid ng-touched':  propertyInfoForm.submitted && WaterZone.invalid}">
                     </ng-select>
                     <div
                         *ngIf="(propertyInfoForm.submitted && WaterZone.invalid)  || (WaterZone.invalid && WaterZone.touched)">
-                        <mat-error *ngIf="WaterZone.errors.required">*With in Water Zone is required.</mat-error>
+                        <mat-error *ngIf="WaterZone.errors.required">*Within Water Zone is required.</mat-error>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="ngSelect">
-                    <ng-select required placeholder="Is Building High Rise? *" [items]="highLowRiseList"
+                    <ng-select required placeholder="Is Building High-rise? *" [items]="highLowRiseList"
                         bindValue="itemId" bindLabel="itemName" name="highRiseLowRiseLookupId"
                         [(ngModel)]="model.highRiseLowRiseLookupId" #BuildingHighRises="ngModel"
                         [ngClass]="{'ng-invalid ng-touched':  propertyInfoForm.submitted && BuildingHighRises.invalid}">
                     </ng-select>
                     <div
                         *ngIf="(propertyInfoForm.submitted && BuildingHighRises.invalid)  || (BuildingHighRises.invalid && BuildingHighRises.touched)">
-                        <mat-error *ngIf="BuildingHighRises.errors.required">*Is Building High Rise? is required.
+                        <mat-error *ngIf="BuildingHighRises.errors.required">*'Is Building High-rise?' is required.
                         </mat-error>
                     </div>
                 </div>

@@ -54,6 +54,8 @@ export class AnimalPondRenewComponent implements OnInit {
 		searchLicenceNumber: ""
 	}
 
+	checkBox:boolean = false;
+
 	/**
 	 * This method for serach licence using licence number.
 	 */
@@ -122,6 +124,7 @@ export class AnimalPondRenewComponent implements OnInit {
 			this.enableFielList();
 		
 		}
+		this.disableField();
 	}
 	/**
  * Method is add required document  
@@ -181,9 +184,6 @@ export class AnimalPondRenewComponent implements OnInit {
 		this.getLookupData();
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		this.formService.createFormData().subscribe(res => {
-			console.log("res", res)
-			console.log("licenseIssueDate", res.licenseIssueDate)
-
 			this.formId = res.serviceFormId;
 			this.animalPondRenewForm.patchValue(searchData);
 
@@ -203,7 +203,7 @@ export class AnimalPondRenewComponent implements OnInit {
 				pid: res.pid,
 				outwardNo: res.outwardNo,
 				agree: res.agree,
-	
+				
 				paymentStatus: res.paymentStatus,
 				canEdit: res.canEdit,
 				canDelete: res.canDelete,
@@ -259,10 +259,10 @@ export class AnimalPondRenewComponent implements OnInit {
 	 * Method is used to get form data
 	 */
 	getAnimalPondLicNewData() {
+		
 		this.formService.getFormData(this.formId).subscribe(res => {
-			console.log(res);
 			try {
-				this.animalPondRenewForm.patchValue(res);
+				this.animalPondRenewForm.patchValue(res); 
 				
 				this.showButtons = true;
 				this.onChangeZone(this.animalPondRenewForm.get('zoneNo').value.code);
@@ -726,18 +726,28 @@ export class AnimalPondRenewComponent implements OnInit {
 		const renewalFormName =  this.animalPondRenewForm;
 		this.animalPondService.changeStatusOfBusinessAccordingAtatchment(subject,documents,renewalFormName);
 		this.requiredDocumentList();
-
-
 	}
 
 	onSameAddressChange(event){
 		if(event.checked){
 			this.animalPondRenewForm.get('temporaryAddress').patchValue(this.animalPondRenewForm.get('permanantAddress').value);
-			// this.animalPondRenewForm.get('temporaryAddress.addressType').setValue('APL_TEMPORARY_ADDRESS');
 			this.animalPondRenewForm.get('temporaryAddress').disable();
+			this.checkBox = true;
 		}else{
 			this.animalPondRenewForm.get('temporaryAddress').enable();
 			this.animalPondRenewForm.get('temporaryAddress').reset();
+			this.checkBox = false;
 		}
+	}
+
+	valueChangeOnPermantAddress(){
+		if(this.checkBox){
+			this.animalPondRenewForm.get('temporaryAddress').patchValue(this.animalPondRenewForm.get('permanantAddress').value);	
+		}
+	}
+
+	disableField(){
+		this.animalPondRenewForm.get('refNumber').disable();
+		this.animalPondRenewForm.get('licenseIssueDate').disable();
 	}
 }

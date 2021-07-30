@@ -53,7 +53,7 @@ import { TranslateModule } from '../shared/modules/translate/translate.module';
     CreateFormulaComponent,
     PropertySearchComponent,
     VmcTitleBarComponent,
-    PropertyOccupierSearchComponent,
+    // PropertyOccupierSearchComponent,
     FileUploadComponentWaterTax,
     SelectPaymentGatewayPropertyComponent
   ],
@@ -65,7 +65,7 @@ import { TranslateModule } from '../shared/modules/translate/translate.module';
     CreateFormulaComponent,
     PropertySearchComponent,
     VmcTitleBarComponent,
-    PropertyOccupierSearchComponent,
+    // PropertyOccupierSearchComponent,
     FileUploadComponentWaterTax,
     SelectPaymentGatewayPropertyComponent,
     CommonModule,

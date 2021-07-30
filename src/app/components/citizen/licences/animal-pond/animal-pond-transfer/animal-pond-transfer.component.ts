@@ -53,6 +53,9 @@ export class AnimalPondTransferComponent implements OnInit {
 		searchLicenceNumber: ""
 	}
 
+	checkBox =  false;
+	
+
 	/**
 	 * This method for serach licence using licence number.
 	 */
@@ -122,6 +125,8 @@ export class AnimalPondTransferComponent implements OnInit {
 			// this.animalPondTransferForm.disable();
 			this.enableFielList();
 		}
+		this.disableField();
+		
 	}
 
 	/**
@@ -719,6 +724,7 @@ export class AnimalPondTransferComponent implements OnInit {
 	}
 
 	onChangeStatusOfBusiness(){
+
 		const subject = this.animalPondTransferForm.get('businessType').get('code').value
 		const documents = this.animalPondTransferForm.get('serviceDetail').get('serviceUploadDocuments').value;
 		const transferFormValue =  this.animalPondTransferForm;
@@ -729,11 +735,24 @@ export class AnimalPondTransferComponent implements OnInit {
 	onSameAddressChange(event){
 		if(event.checked){
 			this.animalPondTransferForm.get('temporaryAddress').patchValue(this.animalPondTransferForm.get('permanantAddress').value);
-			// this.animalPondRenewForm.get('temporaryAddress.addressType').setValue('APL_TEMPORARY_ADDRESS');
 			this.animalPondTransferForm.get('temporaryAddress').disable();
+			this.checkBox = true;
 		}else{
 			this.animalPondTransferForm.get('temporaryAddress').enable();
 			this.animalPondTransferForm.get('temporaryAddress').reset();
+			this.checkBox = false;
 		}
+	}
+
+	
+	valueChangeOnPermantAddress(){
+		if(this.checkBox){
+			this.animalPondTransferForm.get('temporaryAddress').patchValue(this.animalPondTransferForm.get('permanantAddress').value);
+		}
+	}
+
+	disableField(){
+		this.animalPondTransferForm.get('refNumber').disable();
+		this.animalPondTransferForm.get('licenseIssueDate').disable();
 	}
 }
