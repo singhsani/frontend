@@ -1,6 +1,6 @@
 <app-title-bar [title]="'Application Form (MGY / PMAY)'"></app-title-bar>
 
-<!-- <button (click)="patchValue()">patch</button> -->
+ <button (click)="patchValue()">patch</button> 
 <mat-card class="formClass cardBorder">
 
 	<form [formGroup]="affordableHousingForm">
@@ -164,7 +164,7 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="100"
-							placeholder="{{'applicant_Occupation' | translate:translateKey}}"
+							placeholder="{{'Applicant Occupation' | translate:translateKey}}"
 							formControlName="firstAppOccupation">
 						<control-messages [control]="affordableHousingForm.get('firstAppOccupation')">
 						</control-messages>
@@ -218,7 +218,7 @@
 						</control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" appAlphaNumeric maxlength="50"
+						<input matInput type="text" appAlphaNumeric maxlength="20"
 							placeholder="{{'rationCardNo' | translate:translateKey}}"
 							formControlName="firstAppRationCardNumber">
 						<control-messages [control]="affordableHousingForm.get('firstAppRationCardNumber')">
@@ -359,7 +359,7 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="100"
-							placeholder="{{'applicant_Occupation' | translate:translateKey}}"
+							placeholder="{{'Applicant Occupation' | translate:translateKey}}"
 							formControlName="secondAppOccupation">
 						<control-messages [control]="affordableHousingForm.get('secondAppOccupation')">
 						</control-messages>
@@ -413,7 +413,7 @@
 						</control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" appAlphaNumeric maxlength="50"
+						<input matInput type="text" appAlphaNumeric maxlength="20"
 							placeholder="{{'rationCardNo' | translate:translateKey}}"
 							formControlName="secondAppRationCardNumber">
 						<control-messages [control]="affordableHousingForm.get('secondAppRationCardNumber')">
@@ -1013,23 +1013,6 @@
 						[addressFormGroup]="affordableHousingForm.get('nomineeAddress')"></app-address>
 				</div>
 
-
-
-				<!-- <div class="fotButtonBar clearfix">
-					<div class="col-sm-12 col-md-12">
-						<button type="button" class="liteBorder pull-left" mat-raised-button (click)="tabIndex = 5">{{'back'
-							|
-							translate: actionBarKey}}</button>
-						<div class="float-right">
-							<button mat-raised-button color="success" (click)="onSubmit()">{{'submit'
-								| translate:
-								actionBarKey}}</button>
-							<button mat-raised-button color="success" (click)="onSubmit()">{{'accept' | translate:actionBarKey}}</button>
-							<button type="button" color="warn" mat-raised-button (click)="onRejectApp()">{{'reject' |
-								translate:actionBarKey}}</button>
-						</div>
-					</div>
-				</div> -->
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">
 						<button type="button" class="liteBorder pull-left" mat-raised-button
@@ -1069,7 +1052,7 @@
 						read and agree with <u style="color: rebeccapurple;">Terms and conditions</u> </a>
 				</div>
 
-				<app-action-bar [uploadFiles]="serverUploadFilesArray" [form]="affordableHousingForm"
+				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="affordableHousingForm"
 					(tabIndex)="onTabChange($event)" [paymentGateway]="paymentGateway"
 					(handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next:7, back:6} ">
 				</app-action-bar>
