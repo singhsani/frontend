@@ -9,7 +9,7 @@
             (ngModelChange)="onChangedWardZone($event,2)">
           </ng-select>
           <mat-error *ngIf="formDetail.form.get('level1Id') && formDetail.form.get('level1Id').invalid && formDetail.form.get('level1Id').touched">
-            *Zone is required.</mat-error>
+            *Zone No. is required.</mat-error>
         </div>
       </div>
       <div class="col-md-6">
@@ -19,7 +19,7 @@
             (ngModelChange)="onChangedWardZone($event,3)">
           </ng-select>
           <mat-error *ngIf="formDetail.form.get('Level2Id') && formDetail.form.get('Level2Id').invalid && formDetail.form.get('Level2Id').touched">
-            *Ward is required.</mat-error>
+            *Ward No. is required.</mat-error>
         </div>
       </div>
    
@@ -41,13 +41,13 @@
  
       <div class="col-md-6">
         <mat-form-field class="full-width-input">
-          <input matInput number-only maxlength="10" name="mobileNo" placeholder="Mobile No"
+          <input matInput number-only maxlength="10" name="mobileNo" placeholder="Mobile Number"
             [(ngModel)]="searchModel.mobileNo">
         </mat-form-field>
       </div>
       <div class="col-md-6">
         <mat-form-field class="full-width-input">
-          <input trim="blur" mask-census-no maxlength="17" matInput name="censusNo" placeholder="Census No" [(ngModel)]="searchModel.censusNo">
+          <input trim="blur" mask-census-no maxlength="17" matInput name="censusNo" placeholder="Census Number" [(ngModel)]="searchModel.censusNo">
         </mat-form-field>
       </div>
  
@@ -73,7 +73,7 @@
    
       <div class="col-md-4">
         <mat-form-field class="full-width-input">
-          <input trim="blur" mask-property-no-with-occuiper-code maxlength="16" matInput name="propertyNo" placeholder="Property No" [(ngModel)]="propertyNo">
+          <input trim="blur" mask-property-no-with-occuiper-code maxlength="16" matInput name="propertyNo" placeholder="Property Number" [(ngModel)]="propertyNo">
         </mat-form-field>
       </div>
       <div class="col-md-2">

@@ -9,7 +9,7 @@
                         #Level1Id="ngModel" [(ngModel)]="searchModel.level1Id">
                     </ng-select>
                     <mat-error *ngIf="formDetail.form.get('level1Id') && formDetail.form.get('level1Id').invalid && formDetail.form.get('level1Id').touched">
-                      *Zone is required.</mat-error>
+                      *Zone No. is required.</mat-error>
                 </div>
             </div>
             <div class="col-md-6">
@@ -20,7 +20,7 @@
                         [(ngModel)]="searchModel.level2Id">
                     </ng-select>
                     <mat-error *ngIf="formDetail.form.get('level2Id') && formDetail.form.get('level2Id').invalid && formDetail.form.get('level2Id').touched">
-                      *Ward is required.</mat-error>
+                      *Ward No. is required.</mat-error>
                 </div>
             </div>
         </div>
@@ -46,12 +46,12 @@
       <div class="row">
         <div class="col-md-6">
           <mat-form-field class="full-width-input">
-            <input trim="blur" matInput number-only maxlength="10" name="mobileNo" placeholder="Mobile No" [(ngModel)]="searchModel.mobileNo">
+            <input trim="blur" matInput number-only maxlength="10" name="mobileNo" placeholder="Mobile Number" [(ngModel)]="searchModel.mobileNo">
           </mat-form-field>
         </div>
         <div class="col-md-6">
           <mat-form-field class="full-width-input">
-            <input trim="blur" mask-census-no maxlength="17" matInput name="censusNo" placeholder="Census No" [(ngModel)]="searchModel.censusNo">
+            <input trim="blur" mask-census-no maxlength="17" matInput name="censusNo" placeholder="Census Number" [(ngModel)]="searchModel.censusNo">
           </mat-form-field>
         </div>
       </div>
@@ -80,7 +80,7 @@
       <div class="row">
         <div class="col-md-4">
           <mat-form-field class="full-width-input">
-            <input mask-property-no maxlength="12" trim="blur" matInput name="propertyNo" placeholder="Property No" [(ngModel)]="propertyNo">
+            <input mask-property-no maxlength="12" trim="blur" matInput name="propertyNo" placeholder="Property Number" [(ngModel)]="propertyNo">
           </mat-form-field>
         </div>
         <div class="col-md-2">

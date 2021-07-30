@@ -10,7 +10,7 @@
         </td>
       </ng-container>
       <ng-container matColumnDef="propertyNo">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Property No </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Property Number </th>
         <td mat-cell *matCellDef="let element"> {{element.propertyNo}} </td>
       </ng-container>
       <ng-container matColumnDef="propertyAddress">
@@ -57,13 +57,13 @@
       </div>
       <div class="col-md-2">
         <mat-form-field class="full-width-input">
-          <input matInput number-only name="noofCopies" placeholder="No of Copies" (blur)="onBlurNoofCopies($event)"
+          <input matInput number-only name="noofCopies" placeholder="Number of Copies" (blur)="onBlurNoofCopies($event)"
             [(ngModel)]="serviceCharge.noofCopies" maxlength="5">
         </mat-form-field>
       </div>
       <div class="col-md-2">
         <mat-form-field class="full-width-input">
-          <input matInput disabled name="totalAmount" placeholder="Fees Applicable"
+          <input matInput disabled name="totalAmount" placeholder="Applicable Fees"
             [(ngModel)]="serviceCharge.totalAmount">
         </mat-form-field>
       </div>
@@ -76,8 +76,8 @@
 
       <div class="col-md-2">
         <mat-form-field class="full-width-input" hidden>
-          <input matInput trim="blur" placeholder="Application No" maxlength="20" #ApplicationNo="ngModel" name="applicationNo" [(ngModel)]="serviceCharge.applicationNo">
-          <mat-error *ngIf="ApplicationNo.invalid">*Application No is required.</mat-error>
+          <input matInput trim="blur" placeholder="Application Number" maxlength="20" #ApplicationNo="ngModel" name="applicationNo" [(ngModel)]="serviceCharge.applicationNo">
+          <mat-error *ngIf="ApplicationNo.invalid">*Application No. is required.</mat-error>
         </mat-form-field>
       </div>
 
@@ -93,7 +93,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="section-title">
-          <h4>Outstanding Detail</h4>
+          <h4>Outstanding Details</h4>
           <mat-divider></mat-divider>
         </div>
       </div>
@@ -107,7 +107,7 @@
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Amount</th>
+                  <th>Amount (In Rs.)</th>
                 </tr>
               </thead>
               <tbody>
@@ -135,7 +135,7 @@
           <thead>
             <tr>
               <th>Charge Name</th>
-              <th>Charge Amount</th>
+              <th>Charge Amount (In Rs.)</th>
             </tr>
           </thead>
           <tbody>
