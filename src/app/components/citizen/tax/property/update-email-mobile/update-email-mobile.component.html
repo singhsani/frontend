@@ -1,14 +1,14 @@
 <!-- *ngIf="showSearchForm"   -->
 <div class=''>
     <mat-card class="formClass cardBorder">
-        <div class="pageTitle">Update Email and Mobile</div>
+        <div class="pageTitle">Update Email Id and Mobile Number</div>
         <div class="p-15">
             <form [formGroup]="updateEmailMobileForm" autocomplete="off" ngNativeValidate>
                 <div class="row">
                     <div class="col-md-4">
                         <mat-form-field>
                             <input matInput appMaskPropertNumber maxlength="16" type="text" appValidationFields
-                                formControlName="propertyNo" placeholder="Property number" required>
+                                formControlName="propertyNo" placeholder="Property Number" required>
                         </mat-form-field>
                     </div>
 
@@ -26,14 +26,14 @@
                     <div class="col-md-2">
                         <button class="ml-3" mat-raised-button color="primary" type="button"
                             (click)="showForEditEmail()">
-                            Update Email
+                            Update Email Id
                         </button>
                     </div>
 
                     <div class="col-md-2">
                         <button class="ml-3" mat-raised-button color="primary" type="button"
                             (click)="showForEditMobile()">
-                            Update Mobile
+                            Update Mobile Number
                         </button>
                     </div>
 
@@ -54,7 +54,7 @@
                             <div class="col-md-4">
                                 <mat-form-field>
                                     <input matInput maxlength="30" type="text" appValidationFields
-                                        formControlName="email" placeholder="Email" required>
+                                        formControlName="email" placeholder="Email Id" required>
                                 </mat-form-field>
                             </div>
                             <div class="col-md-2">
@@ -75,7 +75,7 @@
                                     <div class="col-md-2">
                                         <button class="ml-3" mat-raised-button color="primary" type="button"
                                             (click)="verifyEmail()">
-                                            Verify and save
+                                            Verify and Save
                                         </button>
                                     </div>
                                 </div>
@@ -89,7 +89,7 @@
                             <div class="col-md-4">
                                 <mat-form-field>
                                     <input matInput maxlength="10" type="text" appValidationFields
-                                        formControlName="mobile" placeholder="Mobile" required>
+                                        formControlName="mobile" placeholder="Mobile Number" required>
                                 </mat-form-field>
                             </div>
 
@@ -111,7 +111,7 @@
                                     <div class="col-md-2">
                                         <button class="ml-3" mat-raised-button color="primary" type="button"
                                             (click)="verifyMobile()">
-                                            Verify and save
+                                            Verify and Save
                                         </button>
                                     </div>
                                 </div>

@@ -64,14 +64,14 @@
                 <mat-form-field class="full-width-input">
                     <input matInput number-only maxlength="12" minlength="12" placeholder="{{'aadhar_no' | translate:translateKey }}" name="aadharNo"
                         #AadhaarNo="ngModel" [(ngModel)]="model.aadharNo">
-                    <mat-error *ngIf="AadhaarNo.invalid">*Aadhaar No is invalid.</mat-error>
+                    <mat-error *ngIf="AadhaarNo.invalid">*Aadhaar No. is invalid.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-3">
                 <mat-form-field class="full-width-input">
                     <input matInput number-only maxlength="10" minlength="10" placeholder="{{'mobile_no' | translate:translateKey }}" name="mobileNo"
                         #MobileNo="ngModel" [(ngModel)]="model.mobileNo">
-                    <mat-error *ngIf="MobileNo.invalid">*Mobile No is invalid.</mat-error>
+                    <mat-error *ngIf="MobileNo.invalid">*Mobile No. is invalid.</mat-error>
                 </mat-form-field>
 
             </div>
@@ -79,7 +79,7 @@
                 <mat-form-field class="full-width-input">
                     <input matInput email placeholder="{{'email' | translate:translateKey }}" name="emailAddress" maxlength="255"
                         #EmailAddress="ngModel" [(ngModel)]="model.emailAddress">
-                    <mat-error *ngIf="EmailAddress.invalid && EmailAddress.errors.email">*Email is not valid.
+                    <mat-error *ngIf="EmailAddress.invalid && EmailAddress.errors.email">*Email Id is invalid.
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -92,7 +92,7 @@
     </form>
     <div class="row mt-4" *ngIf="!isOccupierExist">
         <div class="col-md-12">
-            <div class="alert alert-danger">*Please enter at least one occupier detail.</div>
+            <div class="alert alert-danger">*Please enter atleast one Occupier Detail.</div>
         </div>
     </div>
 
@@ -171,8 +171,8 @@
 </div>
 <div *ngIf="show==1">
     <div class="setBg">
-        <h1> Occupier Code For Residential Owner - 020 </h1>
-        <h1> Occupier Code For Commercial Owner - 021 </h1>
-        <h1> Occupier Code For Tenant & Others - 101 </h1>
+        <h1> Occupier Code for Residential Owner - 020 </h1>
+        <h1> Occupier Code for Commercial Owner - 021 </h1>
+        <h1> Occupier Code for Tenant & Others - 101 </h1>
     </div>
 </div>

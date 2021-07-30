@@ -8,11 +8,11 @@
           <mat-error *ngIf="OccupierCode.invalid && !(model.occupierCode)">*Code is required.</mat-error>
           <mat-error *ngIf="OccupierCode.invalid && (model.occupierCode)">*Code is invalid.</mat-error>
         </mat-form-field>
-        <mat-error *ngIf="isDuplicateCode">*Code is already exist.</mat-error>
+        <mat-error *ngIf="isDuplicateCode">*Code already exists.</mat-error>
       </div>
       <div class="col-md-1">
              <div class="ngSelect" style="min-width: 100%;">
-            <ng-select required placeholder="Title *" [items]="titleList" bindValue="itemId"
+            <ng-select required placeholder="Title" [items]="titleList" bindValue="itemId"
                 bindLabel="itemName" name="titleId" [(ngModel)]="model.titleId" #TitleId="ngModel"
                 [ngClass]="{'ng-invalid ng-touched':  formDetail.submitted && TitleId.invalid}">
             </ng-select>
@@ -42,16 +42,16 @@
       </div>
       <div class="col-md-2">
         <mat-form-field class="full-width-input">
-          <input trim="blur" matInput number-only placeholder="Aadhaar No" name="aadharNo" maxlength="12" minlength="12"  #AadharNo="ngModel"
+          <input trim="blur" matInput number-only placeholder="Aadhaar Number" name="aadharNo" maxlength="12" minlength="12"  #AadharNo="ngModel"
             [(ngModel)]="model.aadharNo">
-            <mat-error *ngIf="AadharNo.invalid">*Aadhaar No is invalid.</mat-error>
+            <mat-error *ngIf="AadharNo.invalid">*Aadhaar No. is invalid.</mat-error>
         </mat-form-field>
       </div>
       <div class="col-md-2">
         <mat-form-field class="full-width-input">
-          <input matInput number-only maxlength="10" minlength="10" placeholder="Mobile No" name="mobileNo"  #MobileNo="ngModel"
+          <input matInput number-only maxlength="10" minlength="10" placeholder="Mobile Number" name="mobileNo"  #MobileNo="ngModel"
             [(ngModel)]="model.mobileNo">
-            <mat-error *ngIf="MobileNo.invalid">*Mobile No is invalid.</mat-error>
+            <mat-error *ngIf="MobileNo.invalid">*Mobile No. is invalid.</mat-error>
         </mat-form-field>
 
       </div>
@@ -64,7 +64,7 @@
   </form>
   <div class="row mt-4" *ngIf="!isOccupierExist">
     <div class="col-md-12">
-      <div class="alert alert-danger">*Please enter at least one occupier detail.</div>
+      <div class="alert alert-danger">*Please enter atleast one Occupier Details.</div>
     </div>
   </div>
   <div class="row mt-4" *ngIf="isShowTable">
@@ -80,11 +80,11 @@
           <td mat-cell *matCellDef="let element"> {{element.titleName}} </td>
         </ng-container>
         <ng-container matColumnDef="firstName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>First Name </th>
           <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
         </ng-container>
         <ng-container matColumnDef="middleName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Middle Name</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Middle Name</th>
           <td mat-cell *matCellDef="let element"> {{element.middleName}} </td>
         </ng-container>
         <ng-container matColumnDef="lastName">
@@ -92,11 +92,11 @@
           <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
         </ng-container>
         <ng-container matColumnDef="aadharNo">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Aadhaar No</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Aadhaar Number</th>
           <td mat-cell *matCellDef="let element"> {{element.aadharNo}} </td>
         </ng-container>
         <ng-container matColumnDef="mobileNo">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Mobile No</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Mobile Number</th>
           <td mat-cell *matCellDef="let element"> {{element.mobileNo}} </td>
         </ng-container>
         <ng-container matColumnDef="action">
@@ -105,7 +105,7 @@
             <button mat-icon-button type="button" color="primary" title="Edit" (click)='eidt(element)'>
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button type="button" color="primary" title="Unit Detail" (click)="moveStepper(element)">
+            <button mat-icon-button type="button" color="primary" title="Unit Details" (click)="moveStepper(element)">
               <mat-icon>dashboard</mat-icon>
             </button>
             <button mat-icon-button title="Delete" color="warn" (click)="delete(element)">

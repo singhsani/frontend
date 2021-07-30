@@ -6,9 +6,9 @@
         <div class="row">
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <input matInput trim="blur" required maxlength="30" placeholder="Property No" name="propertyNo"
+                    <input matInput trim="blur" required maxlength="30" placeholder="Property Number" name="propertyNo"
                         [(ngModel)]="propertyNo" #PropertyNo="ngModel" mask-property-no-with-occuiper-code>
-                    <mat-error *ngIf="PropertyNo.invalid">*Property No is required.</mat-error>
+                    <mat-error *ngIf="PropertyNo.invalid">*Property No. is required.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
@@ -19,7 +19,7 @@
     <div class="row">
         <div class="col-md-6">
             <mat-form-field class="full-width-input">
-                <input disabled matInput placeholder="Census No" name="censusNo" [(ngModel)]="occupierModel.censusNo">
+                <input disabled matInput placeholder="Census Number" name="censusNo" [(ngModel)]="occupierModel.censusNo">
             </mat-form-field>
         </div>
         <div class="col-md-6">
@@ -42,7 +42,7 @@
                     <input matInput number-only trim="blur" required maxlength="30" placeholder="Vacancy Application Number" name="vacancyCertificateNo"
                         [(ngModel)]="vacancyCertificateNo" #VacancyCertificateNo="ngModel" (change)="onChangeVacancyCertificateNo()"
                         pattern="[0-9]*">
-                    <mat-error *ngIf="VacancyCertificateNo.invalid">*Vacancy Application Number is required.</mat-error>
+                    <mat-error *ngIf="VacancyCertificateNo.invalid">*Vacancy Application No. is required.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
@@ -69,8 +69,8 @@
         <div class="row">
             <div class="col-md-6"> 
                     <mat-form-field class="full-width-input" hidden>
-                            <input matInput trim="blur"  placeholder="Application No" maxlength="20" #ApplicationNo="ngModel" name="applicationNo" [(ngModel)]="applicationNo">
-                            <mat-error *ngIf="ApplicationNo.invalid">*Application No is required.</mat-error>
+                            <input matInput trim="blur"  placeholder="Application Number" maxlength="20" #ApplicationNo="ngModel" name="applicationNo" [(ngModel)]="applicationNo">
+                            <mat-error *ngIf="ApplicationNo.invalid">*Application No. is required.</mat-error>
                     </mat-form-field>
             </div>
         </div>
