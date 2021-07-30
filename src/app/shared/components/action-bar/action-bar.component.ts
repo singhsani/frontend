@@ -208,8 +208,6 @@ export class ActionBarComponent implements OnInit, OnChanges {
 			// 	return;
 			// }
 
-			
-			
 
 			this.mandatoryFileCheck().then(data => {
 				if (data.status) {
@@ -242,7 +240,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 					}
 
 					if(this.form.get('apiType').value == 'shop' || 
-					this.form.get('apiType').value == 'shop-transfer' ) {
+					this.form.get('apiType').value == 'shop-transfer' || this.form.get('apiType').value == 'afhForm') {
 						this.handleErrors.emit(key);
 						break;
 					}

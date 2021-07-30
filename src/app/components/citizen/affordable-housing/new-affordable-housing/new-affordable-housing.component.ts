@@ -37,6 +37,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	minDate = moment().subtract(2, 'months').format('YYYY-MM-DD');
 
 	attachmentList: any = [];
+	uploadFilesArray: Array<any> = [];
 	modalJsonRef: BsModalRef;
 
 	appliedForData = [];
@@ -66,6 +67,10 @@ export class NewAffordableHousingComponent implements OnInit {
 	relationArray: Array<any> = ["Father", "Mother", "Husband", "Wife", "Brother", "Son ", "Sister", "Daughter"];
 
 	LOOKUP: any;
+
+	// Map for the formcontrol to tabIndex id;
+
+	public formControlNameToTabIndex = new Map();
 
 	constructor(
 		private route: ActivatedRoute,
@@ -104,10 +109,81 @@ export class NewAffordableHousingComponent implements OnInit {
 		else {
 			this.getMuttonFishLicNewData();
 			this.affordableHousingFormControls();
-			// create default one place of choice
-			//this.addRecordFormArray('placeOfChoice')
-
 		}
+
+		this.setFormControlToTabIndexMap();
+
+	}
+
+	setFormControlToTabIndexMap(){
+
+		this.formControlNameToTabIndex.set('schemeId',0)
+		this.formControlNameToTabIndex.set('projectId',0)
+		this.formControlNameToTabIndex.set('category',0)
+		this.formControlNameToTabIndex.set('firstApplicantFirstName',0)
+		this.formControlNameToTabIndex.set('firstApplicantLastName',0)
+		this.formControlNameToTabIndex.set('firstAppHusWifeFirstName',0)
+		this.formControlNameToTabIndex.set('firstAppHusWifeLastName',0)
+		this.formControlNameToTabIndex.set('firstAppDateOfBirth',0)
+		this.formControlNameToTabIndex.set('firstAppTelephoneNumber',0)
+		this.formControlNameToTabIndex.set('firstAppMobileNumOne',0)
+		this.formControlNameToTabIndex.set('firstAppMobileNumTwo',0)
+		this.formControlNameToTabIndex.set('firstAppEmail',0)
+		this.formControlNameToTabIndex.set('firstAppOccupation',0)
+		this.formControlNameToTabIndex.set('firstAppOrganizationName',0)
+		this.formControlNameToTabIndex.set('firstAppOccupationDesignation',0)
+		this.formControlNameToTabIndex.set('firstAppDrivingLicenseNumber',0)
+		this.formControlNameToTabIndex.set('firstAppVoterIdNumber',0)
+		this.formControlNameToTabIndex.set('firstAppAadharCardNumber',0)
+		this.formControlNameToTabIndex.set('firstAppPanCardNumber',0)
+		this.formControlNameToTabIndex.set('firstAppRationCardNumber',0)
+		this.formControlNameToTabIndex.set('firstAppCorrespondenceAddress',0)
+		this.formControlNameToTabIndex.set('firstAppOccupationAddress',0)
+		
+		this.formControlNameToTabIndex.set('secondApplicantFirstName',1)
+		this.formControlNameToTabIndex.set('secondApplicantMiddleName',1)
+		this.formControlNameToTabIndex.set('secondApplicantLastName',1)
+		this.formControlNameToTabIndex.set('secondAppHusWifeFirstName',1)
+		this.formControlNameToTabIndex.set('secondAppHusWifeMiddleName',1)
+		this.formControlNameToTabIndex.set('secondAppHusWifeLastName',1)
+		this.formControlNameToTabIndex.set('secondAppDateOfBirth',1)
+		this.formControlNameToTabIndex.set('secondAppTelephoneNumber',1)
+		this.formControlNameToTabIndex.set('secondAppMobileNumOne',1)
+		this.formControlNameToTabIndex.set('secondAppMobileNumTwo',1)
+		this.formControlNameToTabIndex.set('secondAppEmail',1)
+		this.formControlNameToTabIndex.set('secondAppOrganizationName',1)
+		this.formControlNameToTabIndex.set('secondAppOccupation',1)
+		this.formControlNameToTabIndex.set('secondAppOccupationDesignation',1)
+		this.formControlNameToTabIndex.set('secondAppDrivingLicenseNumber',1)
+		this.formControlNameToTabIndex.set('secondAppVoterIdNumber',1)
+		this.formControlNameToTabIndex.set('secondAppAadharCardNumber',1)
+		this.formControlNameToTabIndex.set('secondAppPanCardNumber',1)
+		this.formControlNameToTabIndex.set('secondAppRationCardNumber',1)
+		this.formControlNameToTabIndex.set('secondAppCorrespondenceAddress',1)
+		this.formControlNameToTabIndex.set('secondAppOccupationAddress',1)
+			
+
+		this.formControlNameToTabIndex.set('bankAccountNumber',2)
+		this.formControlNameToTabIndex.set('bank',2)
+		this.formControlNameToTabIndex.set('bankBranch',2)
+		this.formControlNameToTabIndex.set('bankIFSC',2)
+		this.formControlNameToTabIndex.set('bankMicrCode',2)
+		this.formControlNameToTabIndex.set('ddBank',2)
+		this.formControlNameToTabIndex.set('ddBankBranch',2)
+		this.formControlNameToTabIndex.set('ddNumber',2)
+		this.formControlNameToTabIndex.set('ddAmount',2)
+		this.formControlNameToTabIndex.set('ddIssuingDate',2)
+
+		this.formControlNameToTabIndex.set('aggregateAnnualIncomeAmount',3)
+		this.formControlNameToTabIndex.set('aggregateAnnualIncomeAmountInWords',3)
+
+		this.formControlNameToTabIndex.set('familyMembers',3)
+		this.formControlNameToTabIndex.set('ownHouseDetail',4)
+		this.formControlNameToTabIndex.set('ownLandPlotDetail',5)
+
+		this.formControlNameToTabIndex.set('nomineeName',6)
+		this.formControlNameToTabIndex.set('nomineeApplicantRelationShip',6)
+		this.formControlNameToTabIndex.set('nomineeAddress',6)
 
 	}
 
@@ -234,7 +310,7 @@ export class NewAffordableHousingComponent implements OnInit {
 			firstAppVoterIdNumber: [null, [ValidationService.electionCardValidator]],
 			firstAppAadharCardNumber: [null, [Validators.required, Validators.maxLength(12)]],
 			firstAppPanCardNumber: [null, [Validators.required, ValidationService.panValidator]],
-			firstAppRationCardNumber: [null, [Validators.maxLength(50)]],
+			firstAppRationCardNumber: [null, [Validators.maxLength(20)]],
 
 			firstAppCorrespondenceAddress: this.fb.group(this.firstAppCorrespondenceAddressComponent.addressControls()),
 			firstAppOccupationAddress: this.fb.group(this.firstAppOccupationAddressComponent.addressControls()),
@@ -259,7 +335,7 @@ export class NewAffordableHousingComponent implements OnInit {
 			secondAppVoterIdNumber: [null, [ValidationService.electionCardValidator]],
 			secondAppAadharCardNumber: [null, [Validators.required, Validators.maxLength(12)]],
 			secondAppPanCardNumber: [null, [Validators.required, ValidationService.panValidator]],
-			secondAppRationCardNumber: [null, [Validators.maxLength(50)]],
+			secondAppRationCardNumber: [null, [Validators.maxLength(20)]],
 
 			secondAppCorrespondenceAddress: this.fb.group(this.secondAppCorrespondenceAddressComponent.addressControls()),
 			secondAppOccupationAddress: this.fb.group(this.secondAppOccupationAddressComponent.addressControls()),
@@ -357,20 +433,20 @@ export class NewAffordableHousingComponent implements OnInit {
 	}
 
 	/**
-	 * This method required for final form submition.
-	 * @param flag - flag of invalid control.
-	*/
-	handleErrorsOnSubmit(flag) {
-		let step0 = 16;
-		if (flag != null) {
-			if (flag <= step0) {
-				this.tabIndex = 0;
-				return false;
-			} else {
-				console.log("else condition");
-			}
-		}
+     * This method required for final form submition.
+     * @param flag - flag of invalid control.
+     */
+	 handleErrorsOnSubmit(key) {
+		
+		const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 0;
+		
+		this.tabIndex = index;
+		return false;
+		
+
 	}
+
+	
 
 
 
@@ -425,6 +501,19 @@ export class NewAffordableHousingComponent implements OnInit {
 	getAllDocumentLists() {
 		this.affodableService.getAllDocuments().subscribe(res => {
 			this.attachmentList = _.cloneDeep(res);
+
+
+		this.uploadFilesArray = [];
+		_.forEach(this.attachmentList, (value) => {
+			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+				this.uploadFilesArray.push({
+					'labelName': value.documentLabelEn,
+					'fieldIdentifier': value.fieldIdentifier,
+					'documentIdentifier': value.documentIdentifier
+				})
+			}
+		});
+
 		});
 	}
 
