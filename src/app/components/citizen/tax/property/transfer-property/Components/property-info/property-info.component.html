@@ -4,7 +4,7 @@
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input matInput disabled name="applicatioNo" [(ngModel)]="applicationModel.applicationNo"
-                        placeholder="Applicatio No">
+                        placeholder="Applicatio Number">
                 </mat-form-field>
             </div>
             <div class="col-md-6">
@@ -14,13 +14,13 @@
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input matInput disabled name="propertyNo" [(ngModel)]="applicationModel.propertyNo"
-                        placeholder="Property No">
+                        placeholder="Property Number">
                 </mat-form-field>
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input matInput disabled name="oldPropertyNo" [(ngModel)]="applicationModel.oldPropertyNo"
-                        placeholder="Old Property No">
+                        placeholder="Old Property Number">
                 </mat-form-field>
             </div>
         </div>
@@ -89,7 +89,7 @@
                             {{item.itemName}}
                         </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="FloorNoLookupIds.invalid">*Floor No is required.</mat-error>
+                    <mat-error *ngIf="FloorNoLookupIds.invalid">*Transfer Floor is required.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">

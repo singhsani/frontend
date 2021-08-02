@@ -10,7 +10,7 @@
     </mat-form-field>
     
     <mat-form-field class="col-md-4">
-        <input maxlength="50" matInput   placeholder="{{'last_name' | translate:translateKey}}" formControlName="lastName" required>
+        <input maxlength="50" matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'last_name' | translate:translateKey}}" formControlName="lastName" required>
         <control-messages [control]="basicFormGroup.get('lastName')"></control-messages>
     </mat-form-field>
 

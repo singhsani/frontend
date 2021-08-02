@@ -75,7 +75,7 @@
             <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        <div class="panel-title">Unit Detail {{isEditMode ? '- Unit No : '+ unitDetailModel.unitNo : ''
+                        <div class="panel-title">Unit Details {{isEditMode ? '- Unit No. : '+ unitDetailModel.unitNo : ''
                             }}
                         </div>
                     </mat-panel-title>
@@ -87,9 +87,9 @@
                                 <input maxlength="10" matInput [disabled]="isEditMode" name="unitNo"
                                     [(ngModel)]="unitDetailModel.unitNo" #UnitNo="ngModel" placeholder="{{'unit_no' | translate:translateKey }}"
                                     (ngModelChange)="checkDuplicateUnitNo($event);" required>
-                                <mat-error *ngIf="UnitNo.invalid">*Unit No is required.</mat-error>
+                                <mat-error *ngIf="UnitNo.invalid">*Unit No. is required.</mat-error>
                             </mat-form-field>
-                            <mat-error *ngIf="isDuplicateUnitNo">*Unit No is already exist.</mat-error>
+                            <mat-error *ngIf="isDuplicateUnitNo">*Unit No. already exists.</mat-error>
                         </div>
                         <div class="col-md-6">
                             <div class="ngSelect">
@@ -101,7 +101,7 @@
                                 </ng-select>
                                 <div
                                     *ngIf="(form.submitted && FloorNoLookupId.invalid)  || (FloorNoLookupId.invalid && FloorNoLookupId.touched)">
-                                    <mat-error *ngIf="FloorNoLookupId.errors.required">*Floor No is required.
+                                    <mat-error *ngIf="FloorNoLookupId.errors.required">*Floor No. is required.
                                     </mat-error>
                                 </div>
                             </div>
@@ -154,8 +154,8 @@
                                     placeholder="{{'effective_to_date' | translate:translateKey }}" name="effectiveToDate" mask-date>
                                 <mat-datepicker-toggle matSuffix [for]="EffectiveToDate"></mat-datepicker-toggle>
                                 <mat-datepicker #EffectiveToDate disabled="false"></mat-datepicker>
-                                <mat-error *ngIf="ETD.invalid">*Effective to Date must be greater than effective from
-                                    date.</mat-error>
+                                <mat-error *ngIf="ETD.invalid">*Effective to Date must be greater than Effective from
+                                    Date.</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -227,8 +227,8 @@
                                     name="tikaDate" mask-date>
                                 <mat-datepicker-toggle matSuffix [for]="TikaDate"></mat-datepicker-toggle>
                                 <mat-datepicker #TikaDate disabled="false"></mat-datepicker>
-                                <mat-error *ngIf="TD.invalid">*TiKka Date must be less than or equal to effective
-                                    from date.</mat-error>
+                                <mat-error *ngIf="TD.invalid">*TiKka Date must be less than or equal to Effective
+                                    from Date.</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -248,8 +248,8 @@
                                     placeholder="{{'building_permission_date' | translate:translateKey }}" name="buildingPermissionDate" mask-date>
                                 <mat-datepicker-toggle matSuffix [for]="BuildingPermissionDate"></mat-datepicker-toggle>
                                 <mat-datepicker #BuildingPermissionDate disabled="false"></mat-datepicker>
-                                <mat-error *ngIf="BPD.invalid">*Permission Date must be less than or equal to effective
-                                    from date.</mat-error>
+                                <mat-error *ngIf="BPD.invalid">*Permission Date must be less than or equal to Effective
+                                    from Date.</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -271,7 +271,7 @@
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #OccupancyCertificateDate disabled="false"></mat-datepicker>
                                 <mat-error *ngIf="OCD.invalid">*Certificate Date must be less than or equal to
-                                    effective from date.</mat-error>
+                                    Effective from Date.</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -327,7 +327,7 @@
             <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" *ngIf="isEditMode">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        <div class="panel-title">Measurement Detail {{isEditMode ? '- Unit No :
+                        <div class="panel-title">Measurement Details {{isEditMode ? '- Unit No. :
                             '+unitDetailModel.unitNo:'' }}</div>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
@@ -343,7 +343,7 @@
                             <div class="col-md-3">
                                 <button mat-raised-button [disabled]="!measurementModel.manualArea"
                                     (click)="onChnageManualArea()" type="button" color="primary" type="button">
-                                    Enter Room wise Measurement
+                                    Enter Roomwise Measurement
                                 </button>
                             </div>
                         </div>
@@ -356,7 +356,7 @@
                                             placeholder="{{'built_up_area' | translate:translateKey }} (Sq.Meter)" maxlength="10"
                                             [required]="measurementModel.manualArea">
                                         <mat-error *ngIf="formMeasurement.builtUpArea.errors">
-                                            <div *ngIf="formMeasurement.builtUpArea.errors.required">*Built-­Up Area is
+                                            <div *ngIf="formMeasurement.builtUpArea.errors.required">*Built-up Area is
                                                 required.</div>
                                         </mat-error>
 
@@ -373,7 +373,7 @@
                                             <div *ngIf="formMeasurement.carpetArea.errors.required">*Carpet Area is
                                                 required.</div>
                                             <div *ngIf="formMeasurement.carpetArea.errors.isValidArea">*Carpet
-                                                Area must be less than Built-­Up Area.</div>
+                                                Area must be less than Built-­up Area.</div>
                                         </mat-error>
                                     </mat-form-field>
                                 </div>
