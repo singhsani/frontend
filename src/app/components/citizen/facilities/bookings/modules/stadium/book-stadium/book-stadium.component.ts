@@ -84,10 +84,10 @@ export class BookStadiumComponent implements OnInit {
 
     displayedColumnsFeeDetails: string[] = ['sno', 'programmePurpose', 'bookingRent', 'administrativeCharge', 'gst', 'deposit'];
     dataSource = [
-          {sno: 1, programmePurpose:"COMMERCIAL", bookingRent:"60,000.00", administrativeCharge: "5,000.00", gst:"11,700.00", deposit:"30,000.00"},
-          {sno: 2, programmePurpose:"NON COMMERCIAL", bookingRent:"15,000.00", administrativeCharge: "2,000.00", gst:"3,060.00", deposit:"10,000.00"},
-          {sno: 3, programmePurpose:"RELIGION BASE/ SEMINAR/ CULTURAL", bookingRent:" 7,500.00", administrativeCharge: "2,000.00", gst:"1,710.00", deposit:"5,000.00"},
-          {sno: 4, programmePurpose:"SCHOOL", bookingRent:"2,000.00", administrativeCharge: "1,000.00", gst:"540.00", deposit:"2,000.00"},
+          {sno: 1, programmePurpose:"COMMERCIAL", bookingRent:"60,000", administrativeCharge: "5,000", gst:"11,700", deposit:"30,000"},
+          {sno: 2, programmePurpose:"NON COMMERCIAL", bookingRent:"15,000", administrativeCharge: "2,000", gst:"3,060", deposit:"10,000"},
+          {sno: 3, programmePurpose:"RELIGION BASE/ SEMINAR/ CULTURAL", bookingRent:" 7,500", administrativeCharge: "2,000", gst:"1,710", deposit:"5,000"},
+          {sno: 4, programmePurpose:"SCHOOL", bookingRent:"2,000", administrativeCharge: "1,000", gst:"540", deposit:"2,000"},
       ];
 
     startMinDate: Date = moment(new Date()).add(1, 'day').toDate();

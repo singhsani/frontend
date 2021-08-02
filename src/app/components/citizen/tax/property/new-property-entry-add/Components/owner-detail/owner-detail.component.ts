@@ -214,7 +214,7 @@ export class OwnerDetailComponent implements OnInit {
         (data) => {
           if (data.status === 200) {
             this.propertyModel.propertyTypeId = data.body.data;
-            this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(2);
+            this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(3);
           }
         },
         (error) => {
@@ -233,7 +233,7 @@ export class OwnerDetailComponent implements OnInit {
   }
 
   onBackClick() {
-    this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(0);
+    this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(1);
   }
 
   keyPressAlphabetOnly(event) {

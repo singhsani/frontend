@@ -446,7 +446,7 @@ export class UnitDetailComponent implements OnInit {
   }
 
   onBackClick() {
-    this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(2);
+    this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(3);
   }
 
 

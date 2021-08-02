@@ -25,7 +25,7 @@
                         <thead>
                             <tr>
                                 <th>Select</th>
-                                <th>Loi Number</th>
+                                <th>LOI Number</th>
                                 <th>Amount (Rs.)</th>
                                 <th>Action</th>
                             </tr>
@@ -54,18 +54,18 @@
                         <thead>
                             <tr>
                                 <th>Sr No.</th>
-                                <th>Charge Name</th>
+                                <th style="text-align: right !important;">Charge Name</th>
                                 <th>Amount (Rs.)</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of filterData; let i = index">
                                 <th>{{i+1}}</th>
-                                <td>{{ item.feeName }}</td>
+                                <td style="text-align: right !important;">{{ item.feeName }}</td>
                                 <td>{{ item.amount }}</td>
                             </tr>
                             <td></td>
-                            <th>Total</th>
+                            <th style="text-align: right !important;">Total</th>
                             <th>{{ sum }}</th>
                             <tr>
                             </tr>

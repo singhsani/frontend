@@ -13,6 +13,10 @@
 </mat-card> -->
 <mat-horizontal-stepper #stepper (selectionChange)="stepChanged($event, stepper);" class="stepperToTab">
   <mat-step>
+    <ng-template matStepLabel>Applicant Details</ng-template>
+    <app-applicant-detail-propertywater (stepChange)="stepChangedEvent($event)"   [serviceType]="'PRO-ASS'"></app-applicant-detail-propertywater>
+  </mat-step>
+  <mat-step>
     <ng-template matStepLabel>Address Details</ng-template>
     <app-address-detail></app-address-detail>
   </mat-step>

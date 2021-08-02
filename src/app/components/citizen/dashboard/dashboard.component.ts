@@ -211,15 +211,16 @@ export class DashboardComponent implements OnInit {
 		this.paginationService.apiType = 'myApps';
 		this.paginationService.pageIndex = 1;
 		this.paginationService.pageSize = 2;
-		this.paginationService.getAllData().subscribe(data => {
-			if (data.totalRecords > 0) {
-				this.isRecentApp = true;
-				this.recentApp = data.data;
-			} else {
-				this.isRecentApp = false;
-				this.recentApp = [];
-			}
-		});
+		this.isRecentApp = true;
+		// this.paginationService.getAllData().subscribe(data => {
+		// 	if (data.totalRecords > 0) {
+		// 		this.isRecentApp = true;
+		// 		this.recentApp = data.data;
+		// 	} else {
+		// 		this.isRecentApp = false;
+		// 		this.recentApp = [];
+		// 	}
+		// });
 
 	}
 

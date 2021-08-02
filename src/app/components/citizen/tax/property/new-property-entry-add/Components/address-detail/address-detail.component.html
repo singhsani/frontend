@@ -287,9 +287,12 @@
             </div>
         </div>
     </mat-card>
-    <div class="fotButtonBar clearfix mt-0">
-        <div class="col-sm-12 col-md-12">
-            <button mat-raised-button color="primary" class="pull-right" type="submit">
+    <div class="row text-right mt-3">
+        <div class="col-md-12">
+            <button mat-raised-button class="ml-3" color="primary" type="button" (click)="onBackClick()">
+                <mat-icon>skip_previous</mat-icon>{{'back' | translate:translateKey }}
+            </button>
+            <button mat-raised-button class="ml-3" color="primary" type="submit">
                 {{'next' | translate:translateKey }}<mat-icon>skip_next</mat-icon>
             </button>
         </div>
