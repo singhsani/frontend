@@ -182,8 +182,7 @@ export class AssessmentCertificateTableComponent implements OnInit {
               const resData = err.error.data;
               let payData = this.commonNascentService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
 
-              // if (this.commonNascentService.fromAdmin()) {
-              if (resData.isPaymentReceipt) {
+              if (this.commonNascentService.fromAdmin()) {
                 if (resData.isPaymentReceipt) {
                   const url = '/citizen/my-applications' +
                     '?printPaymentReceipt=' + resData.isPaymentReceipt +
