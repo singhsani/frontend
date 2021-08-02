@@ -101,7 +101,7 @@ export class PropertyDocumentUploadAddComponent implements OnInit {
   }
 
   onBackClick() {
-    this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(2);
+    this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(3);
   }
 
   mandatoryFileCheck() {

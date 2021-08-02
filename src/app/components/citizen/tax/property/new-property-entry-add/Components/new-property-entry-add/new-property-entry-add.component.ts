@@ -48,4 +48,8 @@ export class NewPropertyEntryAddComponent implements AfterViewInit {
   stepChanged(event, stepper){
     stepper.selected.interacted = false;
   }
+
+  stepChangedEvent(event){
+    this.moveStepper(event);
+  }
 }

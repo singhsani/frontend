@@ -1,0 +1,93 @@
+<form #form="ngForm" (ngSubmit)="saveApplicantDetails(form)">
+  <mat-card>
+    <div class="row">
+      <mat-form-field class="full-width-input col-md-4">
+        <input matInput required placeholder="Name" name="firstName" maxlength="255" #firstName="ngModel"
+          [(ngModel)]="model.firstName">
+        <mat-error *ngIf="firstName.invalid">*Name is invalid.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input col-md-4">
+        <input matInput required number-only maxlength="10" minlength="10" placeholder="Mobile Number" name="mobileNo"
+          #mobileNo="ngModel" [(ngModel)]="model.mobileNo">
+        <mat-error *ngIf="mobileNo.invalid">*Mobile No. is invalid.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input col-md-4">
+        <input matInput email placeholder="Email ID" name="email" maxlength="255" #email="ngModel"
+          [(ngModel)]="model.email">
+      </mat-form-field>
+    </div><br><br>
+
+    <h2>Applicant Address</h2>
+
+    <div class="row">
+      <mat-form-field class="full-width-input col-md-4">
+        <input matInput required placeholder="Block/Flat/House Number" name="buildingName" #buildingName="ngModel"
+          [(ngModel)]="model.citizenAddressDTO.buildingName">
+        <mat-error *ngIf="buildingName.invalid">Building Name is invalid.</mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input col-md-4">
+        <input matInput placeholder="Name of Society/Building" name="streetName" #streetName="ngModel"
+          [(ngModel)]="model.citizenAddressDTO.streetName">
+        <mat-error *ngIf="streetName.invalid">Building Name is invalid.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input col-md-4">
+        <input matInput placeholder="Address Line 1/Street Name/Landmark" name="landmark" #landmark="ngModel"
+          [(ngModel)]="model.citizenAddressDTO.landmark">
+        <mat-error *ngIf="landmark.invalid">Landmark is invalid.</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="full-width-input col-md-4">
+        <input matInput required placeholder="Area" name="area" #area="ngModel" [(ngModel)]="model.citizenAddressDTO.area">
+        <mat-error *ngIf="area.invalid">Area is invalid.</mat-error>
+      </mat-form-field>
+
+      <div class="col-md-4 ngSelect">
+        <ng-select required placeholder="Country*" name="country" #country="ngModel"
+          [(ngModel)]="model.citizenAddressDTO.country" [items]="countryListArray" bindValue="code" bindLabel="name"
+          (change)="onCountryChange($event)">
+        </ng-select>
+        <div *ngIf="(form.submitted && country.invalid)  || (country.invalid && country.touched)">
+          <mat-error *ngIf="country.invalid">Country is invalid.</mat-error>
+      </div>
+      </div>
+
+      <div class="col-md-4 ngSelect">
+        <ng-select required placeholder="State*" name="state" #state="ngModel" [(ngModel)]="model.citizenAddressDTO.state"
+          [items]="stateListArray" bindValue="code" bindLabel="name" (change)="onStateChange($event)">
+        </ng-select>
+        <div *ngIf="(form.submitted && state.invalid)  || (state.invalid && state.touched)">
+          <mat-error *ngIf="state.invalid">State is invalid.</mat-error>
+      </div>
+      </div>
+
+      <div class="col-md-6 ngSelect">
+        <ng-select required placeholder="City*" name="city" #city="ngModel" [(ngModel)]="model.citizenAddressDTO.city"
+          [items]="cityListArray" bindValue="code" bindLabel="name">
+        </ng-select>
+        <div *ngIf="(form.submitted && city.invalid)  || (city.invalid && city.touched)">
+          <mat-error *ngIf="city.invalid">City is invalid.</mat-error>
+      </div>
+      </div>
+
+      <mat-form-field class="full-width-input col-md-6">
+        <input matInput required placeholder="pincode" name="pincode" #pincode="ngModel"
+          [(ngModel)]="model.citizenAddressDTO.pincode">
+        <mat-error *ngIf="pincode.invalid">PinCode is invalid.</mat-error>
+      </mat-form-field>
+
+    </div>
+  </mat-card>
+  <div class="fotButtonBar clearfix mt-0">
+    <div class="col-sm-12 col-md-12">
+      <button mat-raised-button color="primary" class="pull-right" type="submit">
+        Next<mat-icon>skip_next</mat-icon>
+      </button>
+    </div>
+  </div>
+</form>
