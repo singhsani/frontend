@@ -32,6 +32,8 @@ export class AddressDetailComponent implements OnInit, OnDestroy {
   isPostalAddressEmpty: boolean = false;
   propertyModel: any = {};
   propertyModelSub: Subscription;
+  modelProperty: any = {};
+
   constructor(private newNewPropertyEntryAddDataSharingService: NewPropertyEntryAddDataSharingService,
     private propertySearchSharingService: PropertySearchSharingService,
     private newNewPropertyEntryAddService: NewPropertyEntryAddService,
@@ -208,11 +210,12 @@ export class AddressDetailComponent implements OnInit, OnDestroy {
     if (form.form.valid && this.isValidForm) {
       this.addressModel.entryModeLookupCode = Constants.ItemCodes.Application;
       this.addressModel.reasonForCreationItemCode = Constants.ItemCodes.New;
+      this.addressModel.applicationNumber = this.commonService.applicationNo;
       this.newNewPropertyEntryAddService.saveBasic(this.addressModel).subscribe(
         (data) => {
           this.addressModel.propertyBasicId = data.body.data;
           this.newNewPropertyEntryAddDataSharingService.updateDataSourceProperty(this.addressModel);
-          this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(1);
+          this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(2);
         },
         (error) => {
           this.commonService.callErrorResponse(error);
@@ -252,5 +255,9 @@ export class AddressDetailComponent implements OnInit, OnDestroy {
     } else {
       this.addressModel.propertyAddressDTO.postalAddress = this.addressModel.propertyAddressDTO.propertyAddress;
     }
+  }
+
+  onBackClick() {
+    this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(0);
   }
 }
