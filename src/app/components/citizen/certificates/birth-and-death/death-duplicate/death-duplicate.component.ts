@@ -217,8 +217,16 @@ export class DeathDuplicateComponent implements OnInit {
         this.deathDuplicateForm = this.fb.group({
             deathRegNumber: [null],
             deathRegYear: [null],
-            deathDate: [null],
+            deathdate: [null],
             deathRegDate: [null],
+			deceasedfirstname: [null],
+			gender:[null],
+			fatherorhusbandname:[null],
+			mothername:[null],
+			deathplace_name:[null],
+			deathtime:[null],
+			address:[null],
+			regdate:[null],
             duplicateCopies: this.fb.group({
                 code: [null, [Validators.required]],
                 id: null,
