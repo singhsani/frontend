@@ -238,7 +238,7 @@
 					<div class="col-md-2 pt-3 text-right">
 					
 							<button type="button" *ngIf="muttonFishNewForm.get('canEdit').value"
-							[disabled]="muttonFishNewForm.get('statusOfBusinessId').value.code ? muttonFishNewForm.get('statusOfBusinessId').value.code =='PROPRIETORSHIPFIRM' ? !(muttonFishNewForm.get('relationshipList').length < 1) : !(muttonFishNewForm.get('relationshipList').length < 10) : true"
+							[disabled]="(muttonFishNewForm.get('statusOfBusinessId').value.code == 'TENANT') || (muttonFishNewForm.get('statusOfBusinessId').value.code ? muttonFishNewForm.get('statusOfBusinessId').value.code =='PROPRIETORSHIPFIRM' ? !(muttonFishNewForm.get('relationshipList').length < 1) : !(muttonFishNewForm.get('relationshipList').length < 10) : true) "
 							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
 							(click)="addMorePerson('MF_PERSON')">{{'add'| translate:translateKey}}</button>
 					</div>
