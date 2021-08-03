@@ -37,6 +37,7 @@ export class MyBookingComponent implements OnInit {
 	isAmphiCancellation: boolean = false;
 	element: any;
 	isBookingNoSlotNo = false;
+	rejectedMessage : any;
 
 	/**
 	 * Common for all bookings
@@ -740,5 +741,9 @@ export class MyBookingComponent implements OnInit {
           this.commonService.openAlert('Error', err.message, 'warning');
         });
       }
-
+	  
+	  openRejectedModel(template: TemplateRef<any>, responseData, refNumber) {
+		this.rejectedMessage = responseData.newgenRemarks;
+		this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-mg' }));
+	  }
 }
