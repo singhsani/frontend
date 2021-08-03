@@ -15,6 +15,8 @@ export class ApplicantDetailDTO {
 
     citizenServiceType: String;
 
+    uniqueId: String;
+
     citizenAddressDTO: CitizenAddressDTO;
 
 }

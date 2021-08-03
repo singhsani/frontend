@@ -80,7 +80,7 @@ export class TransferDocumentUploadComponent implements OnInit {
   }
 
   onBack() {
-    this.transferPropertyDataSharingService.updateDataSourceMoveStepper(1);
+    this.transferPropertyDataSharingService.updateDataSourceMoveStepper(2);
   }
 
   ngOnDestroy() {
