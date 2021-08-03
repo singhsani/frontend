@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { SearchModel, ServiceCharge } from '../../Models/duplicate-bill.model';
 import { NgForm } from '@angular/forms';
 import { PaymentDataSharingService } from 'src/app/vmcshared/component/payment/payment-data-sharing.service';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatSort, MatTableDataSource,MatPaginator } from '@angular/material';
 import { Constants } from 'src/app/vmcshared/Constants';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
 import { CommonService as CommonServiceTwo} from 'src/app/shared/services/common.service';
@@ -17,6 +17,8 @@ import { ManageRoutes } from 'src/app/config/routes-conf';
 import { environment } from 'src/environments/environment';
 import { SelectPaymentGatewayPropertyComponent } from 'src/app/vmcshared/component/select-payment-gateway-property/select-payment-gateway-property.component';
 import {CommonService as CommonNascentService} from '../../../../../../../shared/services/common.service';
+import { merge, of } from 'rxjs';
+import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-duplicate-bill-table',
@@ -41,7 +43,10 @@ export class DuplicateBillTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   totalCount: any = 0;
   @ViewChild('paymentGateway') public paymentGateway: SelectPaymentGatewayPropertyComponent;
-
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+	pageRecord = Constants.pageRecord; 
+  resultsLength: number = 0;	
+  
   constructor(
     private duplicateBillDataSharingService: DuplicateBillDataSharingService,
     private duplicateBillService: DuplicateBillService,
@@ -56,6 +61,7 @@ export class DuplicateBillTableComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.paginator.pageSize=Constants.pageSize;
     this.formService.apiType = 'duplicateBill';
     this.getLookups();
     this.duplicateBillDataSharingService.observableIsSearchByPropertyNo.subscribe((data) => {
@@ -92,7 +98,7 @@ export class DuplicateBillTableComponent implements OnInit {
   }
 
   search() {
-    this.duplicateBillService.search(this.searchModel).subscribe(
+   /* this.duplicateBillService.search(this.searchModel).subscribe(
       (data) => {
         if (data.status === 200) {
           if (data.body.length == 0) {
@@ -109,9 +115,46 @@ export class DuplicateBillTableComponent implements OnInit {
       },
       (error) => {
         this.alertService.error(error.error.message);
-      });
+      });*/
+      this.paginator.pageIndex=0;
+      this.searchList();
   }
-
+  searchList() {
+    merge(this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          if(this.searchModel.pageNo!=this.paginator.pageIndex){
+          this.searchModel.pageNo=this.paginator.pageIndex;
+          this.searchModel.pageSize=this.paginator.pageSize;
+          return this.duplicateBillService.search(this.searchModel);
+          }
+        }),
+        map(data => {				
+          return data;
+        }),
+        catchError(() => {
+          return of([]);
+        })
+      ).subscribe((data) => {
+        if (data.status === 200) {
+          if (data.body.data.length == 0) {
+            this.alertService.info('No Data Found!');
+            this.duplicateBillDataSharingService.updatedIsShowTable(false);
+            this.dataSource = [];
+            this.resultsLength=0;
+          } else {
+            this.dataSource = new MatTableDataSource(data.body.data);                   
+            this.totalCount = data.body.totalRecords;
+            this.resultsLength= data.body.totalRecords;
+          }
+        }               
+      },
+      (error) => {
+        this.alertService.error(error.error.message);
+      }
+      );
+  }
   onChangeSelect(event) {
     this.serviceCharge.billTypeLookupId = null;
     this.isShowPayMode = true;

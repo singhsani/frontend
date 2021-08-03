@@ -4,11 +4,12 @@ import { RevaluationService } from '../../Services/revaluation.service';
 import { Subscription } from 'rxjs';
 import { SearchModel } from '../../Models/revaluation.model';
 import { NgForm } from '@angular/forms';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort,MatPaginator } from '@angular/material';
 import { Constants } from 'src/app/vmcshared/Constants';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
-
+import { merge, of } from 'rxjs';
+import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-revaluation-table',
@@ -29,12 +30,16 @@ export class RevaluationTableComponent implements OnInit {
   reasonofReassessmentId: number;
   @ViewChild(MatSort) sort: MatSort;
   totalCount: any = 0;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+	pageRecord = Constants.pageRecord; 
+	resultsLength: number = 0;	
   constructor(private revaluationDataSharingService: RevaluationDataSharingService,
     private revaluationService: RevaluationService,
     private commonService: CommonService,
     private alertService: AlertService) { }
 
   ngOnInit() {
+    this.paginator.pageSize=Constants.pageSize;
     this.getLookups();
     this.revaluationDataSharingService.observableIsSearchByPropertyNo.subscribe((data) => {
       this.isSearchByPropertyNo = data;
@@ -70,7 +75,7 @@ export class RevaluationTableComponent implements OnInit {
 
   search() {
     if(this.searchModel) {
-      this.revaluationService.search(this.searchModel).subscribe(
+     /* this.revaluationService.search(this.searchModel).subscribe(
         (data) => {
           if (data.status === 200) {
             if (data.body.length == 0) {
@@ -88,10 +93,48 @@ export class RevaluationTableComponent implements OnInit {
         },
         (error) => {
           this.commonService.callErrorResponse(error);
-        });
+        });*/
+        this.paginator.pageIndex=0;
+        this.searchList();
     }
   }
-
+  searchList() {
+    merge(this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          if(this.searchModel.pageNo!=this.paginator.pageIndex){
+          this.searchModel.pageNo=this.paginator.pageIndex;
+          this.searchModel.pageSize=this.paginator.pageSize;
+          return this.revaluationService.search(this.searchModel);
+          }
+        }),
+        map(data => {				
+          return data;
+        }),
+        catchError(() => {
+          return of([]);
+        })
+      ).subscribe((data) => {
+        if (data.status === 200) {
+          if (data.body.data.length == 0) {
+            this.alertService.info('No Data Found!');
+            if (!this.isSearchByPropertyNo || (this.isSearchByPropertyNo && this.dataSource.length == 0)) {
+              this.revaluationDataSharingService.updatedIsShowTable(false);
+            }
+            this.resultsLength=0;
+          } else {
+            this.dataSource = new MatTableDataSource(data.body.data);                   
+            this.totalCount = data.body.totalRecords;
+            this.resultsLength= data.body.totalRecords;
+          }   
+        }          
+      },
+      (error) => {
+        this.commonService.callErrorResponse(error);
+      }
+      );
+  }
   onChangeSelect(event) {
     this.reasonofReassessmentId = null;
     this.isShowDetail = true;

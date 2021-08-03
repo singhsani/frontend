@@ -28,7 +28,7 @@ export class RevaluationService {
   }
 
   search(data: any) {
-    return this.http.post(`${Constants.assessmentModuleApiUrl}active/searchProperties`, data,
+    return this.http.post(`${Constants.assessmentModuleApiUrl}active/searchPropertiesByPage`, data,
       { observe: 'response' })
       .pipe(map((response: any) => response))
   }

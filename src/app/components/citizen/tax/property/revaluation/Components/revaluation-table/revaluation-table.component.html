@@ -25,14 +25,12 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Occupier Name </th>
         <td mat-cell *matCellDef="let element"> {{element.occupierName}} </td>
       </ng-container>
-
-
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-
-
+  <mat-paginator [length]="resultsLength" [hidden]="resultsLength==0" [pageSizeOptions]="pageRecord" showFirstLastButtons></mat-paginator> 
+	
 <div class="row margin-top-20">
   <div class="col-md-2">
       Total Count : <b>{{totalCount}}</b>

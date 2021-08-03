@@ -10,6 +10,8 @@ export class SearchModel {
     address: string;
     mobileNo: string;
     duplicateBill:boolean;
+    pageNo: number;
+	pageSize: number;
 }
 
 
