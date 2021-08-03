@@ -21,7 +21,10 @@
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Applicant Details</ng-template>
-      <app-applicant-detail-propertywater (stepChange)="stepChangedEvent($event)"   [serviceType]="'PRO-TRAN'"></app-applicant-detail-propertywater>
+      <app-applicant-detail-propertywater (stepChange)="stepChangedEvent($event)" 
+        (applicantDetails)="saveApplicantDetails($event)"  
+        [serviceType]="'PRO-TRAN'" [showSkipButton]="true"
+        ></app-applicant-detail-propertywater>
     </mat-step>
     <!-- <mat-step>
       <ng-template matStepLabel>Document Reference</ng-template>

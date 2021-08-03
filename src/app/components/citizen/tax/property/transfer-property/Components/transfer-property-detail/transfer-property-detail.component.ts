@@ -7,6 +7,8 @@ import { Constants } from 'src/app/vmcshared/Constants';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
 import { Subscription } from 'rxjs';
 import { MatStepper } from '@angular/material';
+import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
+import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
 
 @Component({
   selector: 'app-transfer-property-detail',
@@ -22,7 +24,8 @@ export class TransferPropertyDetailComponent implements OnInit {
   constructor(
     private commonService: CommonService,
     private transferPropertyDataSharingService: TransferPropertyDataSharingService,
-    private transferPropertyService: TransferPropertyService) { }
+    private transferPropertyService: TransferPropertyService,
+    private addressService: ApplicantAddressService) { }
 
   ngOnInit() {
     this.subscription = this.transferPropertyDataSharingService.observableMoveStepper.subscribe((data) => {
@@ -53,5 +56,17 @@ export class TransferPropertyDetailComponent implements OnInit {
 
   stepChangedEvent(event){
     this.moveStepper(event);
+  }
+
+  saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
+   applicantDetailsDTO.uniqueId = this.transferPropertyDataSharingService.applicationNo;
+   this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
+				(data) => {
+					this.commonService.applicationNo = data.body.applicationNo;
+          this.transferPropertyDataSharingService.updateDataSourceMoveStepper(3);
+				},
+				(error) => {
+					this.commonService.callErrorResponse(error);
+				});
   }
 }
