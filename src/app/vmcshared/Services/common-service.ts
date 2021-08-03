@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 
 export class CommonService {
 
+    applicationNo :string ;
+
     /* Lookup API Url */
     getLookupValuesUrl = Constants.baseApiUrl + 'lookup/gets';
     getLookupValuesAccordingToScreenUrl = Constants.baseApiUrl + 'lookup/get';

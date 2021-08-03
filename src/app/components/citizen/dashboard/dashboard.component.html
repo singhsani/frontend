@@ -80,13 +80,31 @@
     <mat-icon>description</mat-icon>Recent Application
 </h2>
 
-<ul  class="recentList" *ngIf="isRecentApp && !commonService.isGuestUser()">
+<!-- <ul  class="recentList" *ngIf="isRecentApp && !commonService.isGuestUser()">
     <li *ngFor="let application of recentApp">
         <div>{{ application.applicantName?application.applicantName:'N/A' }}</div>
         <div class="recenText">{{ application.serviceDetail.name }} | Application / Registration Number : {{
             application.fileNumber ? application.fileNumber : application.uniqueId }}</div>
         <span class="badge draft">{{ application.fileStatusName }}</span>
     </li>
+</ul> -->
+
+<ul  class="recentList" *ngIf="isRecentApp && !commonService.isGuestUser()">
+    <li>
+        <div>Citizen Services :</div>
+        <div class="recenText">Please refer your applied application for Citizen Services at <b>'My Applications'</b> section</div>
+    </li>
+
+    <li>
+        <div>Booking facilities:</div>
+        <div class="recenText">Please refer your applied application for Booking  facilities at <b>'My Bookings'</b> section</div>
+    </li>
+
+    <li>
+        <div>Ticketing facilities:</div>
+        <div class="recenText">Please refer your applied application for Ticketing facilities at <b>'My Ticketing'</b> section</div>
+    </li>
+
 </ul>
 
 <div class="noApplication" *ngIf="!isRecentApp  && !commonService.isGuestUser()">

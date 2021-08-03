@@ -152,13 +152,13 @@ export class OccupierDetailComponent implements OnInit {
   moveStepper(item) {
 
     this.newNewPropertyEntryAddDataSharingService.updateDataSourceOccupier(item);
-    this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(3);
+    this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(4);
   }
 
   moveToDocumentsTab() {
     this.checkOccupierExist();
     if (this.isOccupierExist && this.isUnitDetailEntered) {
-      this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(4);
+      this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(5);
     }
   }
 
@@ -270,7 +270,7 @@ export class OccupierDetailComponent implements OnInit {
   }
 
   onBackClick() {
-    this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(1);
+    this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(2);
   }
 
   onEnter(value: string) {
