@@ -743,7 +743,6 @@ export class MyBookingComponent implements OnInit {
       }
 	  
 	  openRejectedModel(template: TemplateRef<any>, responseData, refNumber) {
-		  debugger
 		this.rejectedMessage = responseData.newgenRemarks;
 		this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-mg' }));
 	  }
