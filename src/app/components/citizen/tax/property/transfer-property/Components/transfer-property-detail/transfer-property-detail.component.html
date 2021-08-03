@@ -19,6 +19,10 @@
       <ng-template matStepLabel>Owner Details</ng-template>
       <app-property-owner></app-property-owner>
     </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Applicant Details</ng-template>
+      <app-applicant-detail-propertywater (stepChange)="stepChangedEvent($event)"   [serviceType]="'PRO-TRAN'"></app-applicant-detail-propertywater>
+    </mat-step>
     <!-- <mat-step>
       <ng-template matStepLabel>Document Reference</ng-template>
       <app-document-reference></app-document-reference>
