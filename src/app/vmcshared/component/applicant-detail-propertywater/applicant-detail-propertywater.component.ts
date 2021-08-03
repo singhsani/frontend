@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import { NgForm } from '@angular/forms';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
 import { ApplicantAddressService } from '../../Services/applicant-address.service';
-import { NewPropertyEntryAddService } from 'src/app/components/citizen/tax/property/new-property-entry-add/Services/new-property-entry-add.service';
+import { TransferPropertyDataSharingService } from 'src/app/components/citizen/tax/property/transfer-property/Services/transfer-property-data-sharing.service';
 
 
 
@@ -32,6 +32,7 @@ export class ApplicantDetailPropertywaterComponent implements OnInit {
 	  private countryService: CountryService,
 	  private commonService: CommonService,
 	  private addressService: ApplicantAddressService,
+	  private transferPropertyDataSharingService: TransferPropertyDataSharingService
 ) { }
 
   ngOnInit() {
@@ -113,15 +114,24 @@ export class ApplicantDetailPropertywaterComponent implements OnInit {
 	saveApplicantDetails(form: NgForm) {
 		if (form.form.valid) {
 			this.model.citizenServiceType = this.serviceType;
+			this.model.uniqueId = this.transferPropertyDataSharingService.applicationNo;
 			this.addressService.saveApplicantDetail(this.model).subscribe(
 				(data) => {
 					this.commonService.applicationNo = data.body.applicationNo;
-					this.stepChange.emit(1);
+					if(this.serviceType === 'PRO-TRAN'){
+						this.stepChange.emit(3);
+					}else{
+						this.stepChange.emit(1);
+					}
 				},
 				(error) => {
 					this.commonService.callErrorResponse(error);
 				});
 		}
+	}
+
+	onBack(){
+		this.stepChange.emit(1);
 	}
 
 }

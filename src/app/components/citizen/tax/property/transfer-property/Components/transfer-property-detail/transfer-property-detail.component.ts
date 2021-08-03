@@ -50,4 +50,8 @@ export class TransferPropertyDetailComponent implements OnInit {
   cancelForm() {
     this.transferPropertyDataSharingService.updatedIsShowForm(false);
   }
+
+  stepChangedEvent(event){
+    this.moveStepper(event);
+  }
 }

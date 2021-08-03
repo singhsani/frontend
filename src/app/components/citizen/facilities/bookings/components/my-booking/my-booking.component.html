@@ -177,6 +177,11 @@
               <mat-icon title="Print Receipt" color="primary">print</mat-icon>
               {{'approved_receipt_reprint' | translate:translateKey}}
             </button>
+
+            <button mat-menu-item *ngIf="element.status == 'REJECTED' && element.resourceType === 'STADIUM'" data-toggle="modal" color="primary" (click)="openRejectedModel(templateRejectModel, element, element.refNumber);">
+              <mat-icon title="View Booking Details" color="primary">details</mat-icon>
+              {{'details' | translate:translateKey}}
+          </button>
           </div>
 
           <button *ngIf="(element.status == bookingConstant.SUBMITTED && (element.resourceType == 'STADIUM' || element.resourceType == 'CHILDREN_THEATER'))" mat-menu-item color="primary" (click)="printAcknowledge(element.refNumber)">
@@ -434,4 +439,22 @@
 <select-payment-gateway #paymentGateway [applicationType]="'booking'"></select-payment-gateway>
 <!-- this div is used for printing the receipt -->
 <!-- changes  -->
+
+
+
+<!-- The Cancel Request Modal -->
+<ng-template #templateRejectModel>
+  <div class="modal-header customthead">
+      <h4 class="modal-title pull-left">Reason For Rejecting Application</h4>
+      <div>
+          <button title="Close" class=" mat-icon-button" aria-label="Close" (click)="modalReqRef.hide()">
+              <mat-icon>close</mat-icon>
+          </button>
+      </div>
+  </div>
+  <div class="modal-body scrollModel">
+      <h5><b> {{rejectedMessage}} </b></h5>
+  </div>
+</ng-template>
+
 <div id="sectionToPrint"></div>

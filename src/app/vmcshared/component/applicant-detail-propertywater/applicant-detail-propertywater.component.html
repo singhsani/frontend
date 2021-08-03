@@ -83,11 +83,19 @@
 
     </div>
   </mat-card>
-  <div class="fotButtonBar clearfix mt-0">
+  <div class="fotButtonBar clearfix mt-0" *ngIf="serviceType !== 'PRO-TRAN'">
     <div class="col-sm-12 col-md-12">
       <button mat-raised-button color="primary" class="pull-right" type="submit">
         Next<mat-icon>skip_next</mat-icon>
       </button>
     </div>
+  </div>
+  <div class="button-row text-right mt-3" *ngIf="serviceType === 'PRO-TRAN'">
+    <button mat-raised-button class="ml-3" color="primary" type="button" (click)="onBack()">
+      <mat-icon>skip_previous</mat-icon>Back
+    </button>
+    <button mat-raised-button class="ml-3" color="primary" type="submit">
+      Next<mat-icon>skip_next</mat-icon>
+    </button>
   </div>
 </form>
