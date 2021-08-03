@@ -255,11 +255,11 @@ export class BirthDuplicateComponent implements OnInit {
 			mothername: [null],
 			fathername: [null],
 			address:[null],
-			duplicateCopies: this.fb.group({
-				code: [null, [Validators.required]],
-				id: null,
-				name: null,
-			}),
+			// duplicateCopies: this.fb.group({
+			// 	code: [null, [Validators.required]],
+			// 	id: null,
+			// 	name: null,
+			// }),
 			duplicateCopyMode: this.fb.group({
 				code: [null, [Validators.required]],
 				gujName: null,

@@ -1,82 +1,87 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
-<record-search *ngIf="showSearchForm" [apiType]="manageRoutes.getApiTypeFromApiCode(this.apiCode)" (searchResult)="showDuplicateForm($event)">
+<record-search *ngIf="showSearchForm" [apiType]="manageRoutes.getApiTypeFromApiCode(this.apiCode)"
+    (searchResult)="showDuplicateForm($event)">
 </record-search>
 
 <div class="container" [hidden]="isVisibeDuplicateForm">
     <mat-card class="cardBorder">
         <form [formGroup]="birthDuplicateForm" autocomplete="off" ngNativeValidate>
             <div class="row">
-                <div class="col-md-4" formGroupName="duplicateCopies">
+                <!-- <div class="col-md-4" formGroupName="duplicateCopies">
                     <mat-label>{{'duplicate_copies' | translate:translateKey}}</mat-label>
                     <mat-radio-group formControlName="code">
                         <mat-radio-button *ngFor="let yesNo of ISYESNO" [value]="yesNo.code">
                             {{yesNo.name}}
                         </mat-radio-button>
-                        <control-messages [control]="birthDuplicateForm.get('duplicateCopies').get('code')"></control-messages>
+                        <control-messages [control]="birthDuplicateForm.get('duplicateCopies').get('code')">
+                        </control-messages>
                     </mat-radio-group>
-                </div>
-                <mat-form-field formGroupName="duplicateCopyMode" class="col-md-4">
-                    <mat-select placeholder="{{'duplicate_copy_mode' | translate:translateKey}} *" formControlName="code">
+                </div> -->
+                <mat-form-field formGroupName="duplicateCopyMode" class="col-md-6">
+                    <mat-select placeholder="{{'duplicate_copy_mode' | translate:translateKey}} *"
+                        formControlName="code">
                         <mat-option *ngFor="let duplicatemode of DuplicateCopyMode" [value]="duplicatemode.code">
                             {{duplicatemode.name}}
                         </mat-option>
                     </mat-select>
-                    <control-messages [control]="birthDuplicateForm.get('duplicateCopyMode').get('code')"></control-messages>
+                    <control-messages [control]="birthDuplicateForm.get('duplicateCopyMode').get('code')">
+                    </control-messages>
                 </mat-form-field>
-                <mat-form-field class="col-md-4">
-                    <input matInput maxlength="2" type="number" [min]="0" OnlyNumber placeholder="{{'total_copies' | translate:translateKey}} *"
-                        formControlName="totalCopies">
+                <mat-form-field class="col-md-6">
+                    <input matInput maxlength="2" type="number" [min]="0" OnlyNumber
+                        placeholder="{{'total_copies' | translate:translateKey}} *" formControlName="totalCopies">
                     <control-messages [control]="birthDuplicateForm.get('totalCopies')"></control-messages>
                 </mat-form-field>
 
                 <mat-form-field class="col-md-4">
-					<input matInput trim type="text" formControlName="childName"
-						placeholder="{{'child_name' | translate: translateKey}}" readonly>
-				</mat-form-field>
+                    <input matInput trim type="text" formControlName="childName"
+                        placeholder="{{'child_name' | translate: translateKey}}" readonly>
+                </mat-form-field>
 
                 <mat-form-field class="col-md-4">
-					<input matInput trim type="text" formControlName="gender"
-						placeholder="{{'gender' | translate: translateKey}}" readonly>
-				</mat-form-field>
+                    <input matInput trim type="text" formControlName="gender"
+                        placeholder="{{'gender' | translate: translateKey}}" readonly>
+                </mat-form-field>
 
                 <mat-form-field class="col-md-4">
-					<input matInput trim type="text" formControlName="birthDate"
-						placeholder="{{'birth_date' | translate: translateKey}}" readonly>
-				</mat-form-field>
+                    <input matInput trim type="text" formControlName="birthDate"
+                        placeholder="{{'birth_date' | translate: translateKey}}" readonly>
+                </mat-form-field>
 
                 <mat-form-field class="col-md-4">
-					<input matInput trim type="text" formControlName="birthtime"
-						placeholder="{{'birth_time' | translate: translateKey}}" readonly>
-				</mat-form-field>
+                    <input matInput trim type="text" formControlName="birthtime"
+                        placeholder="{{'birth_time' | translate: translateKey}}" readonly>
+                </mat-form-field>
 
                 <mat-form-field class="col-md-4">
-					<input matInput trim type="text" formControlName="birthplace"
-						placeholder="{{'birth_place' | translate: translateKey}}" readonly>
-				</mat-form-field>
+                    <input matInput trim type="text" formControlName="birthplace"
+                        placeholder="{{'birth_place' | translate: translateKey}}" readonly>
+                </mat-form-field>
 
                 <mat-form-field class="col-md-4">
-					<input matInput trim type="text" formControlName="mothername"
-						placeholder="{{'mother_name' | translate: translateKey}}" readonly>
-				</mat-form-field>
+                    <input matInput trim type="text" formControlName="mothername"
+                        placeholder="{{'mother_name' | translate: translateKey}}" readonly>
+                </mat-form-field>
 
                 <mat-form-field class="col-md-4">
-					<input matInput trim type="text" formControlName="fathername"
-						placeholder="{{'father_name' | translate: translateKey}}" readonly>
-				</mat-form-field>
+                    <input matInput trim type="text" formControlName="fathername"
+                        placeholder="{{'father_name' | translate: translateKey}}" readonly>
+                </mat-form-field>
 
                 <mat-form-field class="col-md-8">
-					<input matInput trim type="text" formControlName="address"
-						placeholder="{{'address' | translate: translateKey}}" readonly>
-				</mat-form-field>
+                    <input matInput trim type="text" formControlName="address"
+                        placeholder="{{'address' | translate: translateKey}}" readonly>
+                </mat-form-field>
 
                 <mat-form-field class="col-md-4">
-					<input matInput trim type="text" formControlName="regdate"
-						placeholder="{{'reg_date' | translate: translateKey}}" readonly>
-				</mat-form-field>
+                    <input matInput trim type="text" formControlName="regdate"
+                        placeholder="{{'reg_date' | translate: translateKey}}" readonly>
+                </mat-form-field>
             </div>
-    
-            <app-action-bar [isstepper]="false" [form]="birthDuplicateForm" [paymentGateway]="paymentGateway" [stepInfo]="{step: 'final', next: 0, back: 0}"></app-action-bar>
+
+            <app-action-bar [isstepper]="false" [form]="birthDuplicateForm" [paymentGateway]="paymentGateway"
+                [stepInfo]="{step: 'final', next: 0, back: 0}"></app-action-bar>
         </form>
         <select-payment-gateway #paymentGateway></select-payment-gateway>
     </mat-card>

@@ -226,12 +226,12 @@ export class DeathDuplicateComponent implements OnInit {
 			deathplace_name:[null],
 			deathtime:[null],
 			address:[null],
-			regdate:[null],
-            duplicateCopies: this.fb.group({
-                code: [null, [Validators.required]],
-                id: null,
-                name: null,
-            }),
+			regdate: [null],
+            // duplicateCopies: this.fb.group({
+            //     code: [null, [Validators.required]],
+            //     id: null,
+            //     name: null,
+            // }),
             duplicateCopyMode: this.fb.group({
                 code: [null, [Validators.required]],
                 gujName: null,
