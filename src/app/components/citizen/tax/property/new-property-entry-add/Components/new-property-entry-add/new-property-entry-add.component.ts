@@ -3,6 +3,9 @@ import { MatStepper } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { NewPropertyEntryAddDataSharingService } from '../../Services/new-property-entry-add-data-sharing.service';
 import { PropertySearchSharingService } from 'src/app/vmcshared/component/property-search/property-search-sharing.service';
+import { CommonService } from 'src/app/vmcshared/Services/common-service';
+import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
+import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
 
 @Component({
   selector: 'app-new-property-entry-add',
@@ -16,7 +19,9 @@ export class NewPropertyEntryAddComponent implements AfterViewInit {
   isShowForm: boolean = false;
   constructor(
     private newNewPropertyEntryAddDataSharingService: NewPropertyEntryAddDataSharingService,
-    private propertySearchSharingService: PropertySearchSharingService ) {
+    private propertySearchSharingService: PropertySearchSharingService,
+    private commonService: CommonService,
+    private addressService: ApplicantAddressService ) {
   }
   ngOnInit() {
 
@@ -52,4 +57,16 @@ export class NewPropertyEntryAddComponent implements AfterViewInit {
   stepChangedEvent(event){
     this.moveStepper(event);
   }
+
+  saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
+    debugger
+    this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
+         (data) => {
+           this.commonService.applicationNo = data.body.applicationNo;
+           this.moveStepper(1);
+         },
+         (error) => {
+           this.commonService.callErrorResponse(error);
+         });
+   }
 }

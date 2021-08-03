@@ -76,21 +76,21 @@
       </div>
 
       <mat-form-field class="full-width-input col-md-6">
-        <input matInput required placeholder="pincode" name="pincode" #pincode="ngModel"
+        <input matInput required maxlength="6" minlength="6" placeholder="pincode" name="pincode" #pincode="ngModel"
           [(ngModel)]="model.citizenAddressDTO.pincode">
         <mat-error *ngIf="pincode.invalid">PinCode is invalid.</mat-error>
       </mat-form-field>
 
     </div>
   </mat-card>
-  <div class="fotButtonBar clearfix mt-0" *ngIf="serviceType !== 'PRO-TRAN'">
+  <div class="fotButtonBar clearfix mt-0" *ngIf="!showSkipButton">
     <div class="col-sm-12 col-md-12">
       <button mat-raised-button color="primary" class="pull-right" type="submit">
         Next<mat-icon>skip_next</mat-icon>
       </button>
     </div>
   </div>
-  <div class="button-row text-right mt-3" *ngIf="serviceType === 'PRO-TRAN'">
+  <div class="button-row text-right mt-3" *ngIf="showSkipButton">
     <button mat-raised-button class="ml-3" color="primary" type="button" (click)="onBack()">
       <mat-icon>skip_previous</mat-icon>Back
     </button>
