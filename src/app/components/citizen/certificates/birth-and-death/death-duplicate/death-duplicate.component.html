@@ -13,7 +13,7 @@
                 <mat-tab [label]="'screen_title' | translate: translateKey">
 
                     <div class="row">
-                        <div class="col-md-4 p-5" formGroupName="duplicateCopies">
+                        <!-- <div class="col-md-4 p-5" formGroupName="duplicateCopies">
                             <mat-label>{{'duplicate_copies' | translate:translateKey}}</mat-label>
                             <mat-radio-group formControlName="code">
                                 <mat-radio-button *ngFor="let yesNo of ISYESNO" [value]="yesNo.code">
@@ -22,9 +22,9 @@
                                 <control-messages [control]="deathDuplicateForm.get('duplicateCopies').get('code')">
                                 </control-messages>
                             </mat-radio-group>
-                        </div>
+                        </div> -->
 
-                        <div class="col-md-4 p-5" formGroupName="duplicateCopyMode">
+                        <div class="col-md-6" formGroupName="duplicateCopyMode">
                             <ng-select formControlName="code"
                                 placeholder="{{ 'duplicate_copy_mode' | translate:translateKey }}*">
                                 <ng-option *ngFor="let duplicatemode of DuplicateCopyMode" [value]="duplicatemode.code">
@@ -35,12 +35,56 @@
                             </control-messages>
                         </div>
 
-                        <mat-form-field class="col-md-4 p-5">
+                        <mat-form-field class="col-md-6">
                             <input matInput maxlength="2" type="number" [min]="0" OnlyNumber
                                 placeholder="{{'total_copies' | translate:translateKey}}" formControlName="totalCopies">
                             <control-messages [control]="deathDuplicateForm.get('totalCopies')"></control-messages>
                         </mat-form-field>
 
+                        <mat-form-field class="col-md-4">
+                            <input matInput trim type="text" formControlName="deceasedfirstname"
+                                placeholder="{{'deceased_first_name' | translate: translateKey}}" readonly>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-4">
+                            <input matInput trim type="text" formControlName="gender"
+                                placeholder="{{'gender' | translate: translateKey}}" readonly>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-4">
+                            <input matInput trim type="text" formControlName="deathdate"
+                                placeholder="{{'death_date' | translate: translateKey}}" readonly>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-4">
+                            <input matInput trim type="text" formControlName="fatherorhusbandname"
+                                placeholder="{{'father_or_husband_name' | translate: translateKey}}" readonly>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-4">
+                            <input matInput trim type="text" formControlName="mothername"
+                                placeholder="{{'mother_name' | translate: translateKey}}" readonly>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-4">
+                            <input matInput trim type="text" formControlName="deathplace_name"
+                                placeholder="{{'death_place_name' | translate: translateKey}}" readonly>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-4">
+                            <input matInput trim type="text" formControlName="deathtime"
+                                placeholder="{{'death_time' | translate: translateKey}}" readonly>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-8">
+                            <input matInput trim type="text" formControlName="address"
+                                placeholder="{{'address' | translate: translateKey}}" readonly>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-4">
+                            <input matInput trim type="text" formControlName="regdate"
+                                placeholder="{{'reg_date' | translate: translateKey}}" readonly>
+                        </mat-form-field>
                     </div>
                     <app-action-bar [paymentGateway]="paymentGateway" [isstepper]="false" [form]="deathDuplicateForm"
                         [stepInfo]="{step: 'final', next: 0, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)">
