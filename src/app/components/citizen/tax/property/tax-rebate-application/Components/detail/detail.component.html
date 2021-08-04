@@ -77,6 +77,14 @@
     </div>
   </div>
 </mat-step>
+
+<mat-step>
+  <ng-template matStepLabel>Applicant Details</ng-template>
+  <app-applicant-detail-propertywater (stepChange)="stepChangedEvent($event)" 
+  (applicantDetails)="saveApplicantDetails($event)"
+    [serviceType]="'PRO-TAX-REBATE'" [showSkipButton]="true"></app-applicant-detail-propertywater>
+</mat-step>
+
 <mat-step>
   <ng-template matStepLabel>Attachment</ng-template>
   <mat-card>

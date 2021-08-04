@@ -7,6 +7,9 @@ import { downloadFile } from 'src/app/vmcshared/downloadFile';
 import { MatStepper } from '@angular/material';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { FormsActionsService} from 'src/app/core/services/citizen/data-services/forms-actions.service';
+import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
+import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
+import { CommonService as CommonService2 } from 'src/app/vmcshared/Services/common-service';
 
 @Component({
   selector: 'app-detail',
@@ -30,7 +33,9 @@ export class DetailComponent implements OnInit {
     private taxRebateApplicationService: TaxRebateApplicationService,
     private alertService: AlertService,
     private commonService: CommonService,
-    private fromActionsService: FormsActionsService) {
+    private fromActionsService: FormsActionsService,
+    private addressService: ApplicantAddressService,
+    private commonService2: CommonService2) {
 
   }
 
@@ -260,5 +265,21 @@ export class DetailComponent implements OnInit {
       })
 
   }
+
+  stepChangedEvent(event){
+    this.stepper.selectedIndex = event;
+  }
+  
+  saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
+    applicantDetailsDTO.uniqueId = this.taxRebateApplicationDataSharingService.applicationNumber;
+    this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
+         (data) => {
+           this.commonService2.applicationNo = data.body.applicationNo;
+           this.stepper.selectedIndex = 2;
+         },
+         (error) => {
+           this.commonService2.callErrorResponse(error);
+         });
+   }
 
 }

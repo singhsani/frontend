@@ -116,7 +116,7 @@ export class ApplicantDetailPropertywaterComponent implements OnInit {
 	}
 
 	onBack(){
-		if (this.serviceType === 'PRO-VAC'){
+		if (this.serviceType === 'PRO-VAC' || this.serviceType === 'PRO-TAX-REBATE'){
 			this.stepChange.emit(0);
 		}else{
 			this.stepChange.emit(1);
