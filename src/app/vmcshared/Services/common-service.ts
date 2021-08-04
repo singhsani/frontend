@@ -15,6 +15,8 @@ export class CommonService {
 
     applicationNo :string ;
 
+    serviceFormId ;
+
     /* Lookup API Url */
     getLookupValuesUrl = Constants.baseApiUrl + 'lookup/gets';
     getLookupValuesAccordingToScreenUrl = Constants.baseApiUrl + 'lookup/get';
