@@ -5,7 +5,7 @@ import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { Subscription } from 'rxjs';
 import { SearchModel, ServiceCharge, OutstandingDetailModel, TaxRateWiseOutstandingDetails, OccupierOutstandingDetails } from '../../Models/no-due-certificate.model';
 import { NgForm } from '@angular/forms';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatSort, MatTableDataSource,MatPaginator } from '@angular/material';
 import { PaymentDataSharingService } from 'src/app/vmcshared/component/payment/payment-data-sharing.service';
 import { Constants } from 'src/app/vmcshared/Constants';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
@@ -17,8 +17,8 @@ import { PaymentNewService } from 'src/app/shared/services/paymentNew.service';
 import { SelectPaymentGatewayPropertyComponent } from 'src/app/vmcshared/component/select-payment-gateway-property/select-payment-gateway-property.component';
 import { environment } from 'src/environments/environment';
 import {CommonService as CommonNascentService} from '../../../../../../../shared/services/common.service';
-
-
+import { merge, of } from 'rxjs';
+import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-no-due-certificate-table',
@@ -45,7 +45,9 @@ export class NoDueCertificateTableComponent implements OnInit {
   modelFileDownload = [];
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('paymentGateway') public paymentGateway: SelectPaymentGatewayPropertyComponent;
-
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+	pageRecord = Constants.pageRecord; 
+	resultsLength: number = 0;	
 
   constructor(
     private noDueCertificateDataSharingService: NoDueCertificateDataSharingService,
@@ -60,6 +62,7 @@ export class NoDueCertificateTableComponent implements OnInit {
     private commonNascentService: CommonNascentService) { }
 
   ngOnInit() {
+    this.paginator.pageSize=Constants.pageSize;
     this.formService.apiType = 'noDueCertificate';
     this.outstandingDetailModel.occupierOutstandingDetails = new OccupierOutstandingDetails();
     this.outstandingDetailModel.occupierOutstandingDetails.taxRateWiseOutstandingDetails = new TaxRateWiseOutstandingDetails();
@@ -104,7 +107,7 @@ export class NoDueCertificateTableComponent implements OnInit {
   }
 
   search() {
-    this.noDueCertificateService.search(this.searchModel).subscribe(
+   /* this.noDueCertificateService.search(this.searchModel).subscribe(
       (data) => {
         if (data.status === 200) {
           if (data.body.length == 0) {
@@ -122,9 +125,47 @@ export class NoDueCertificateTableComponent implements OnInit {
       },
       (error) => {
         this.alertService.error(error.error.message);
-      });
+      });*/
+      this.paginator.pageIndex=0;
+      this.searchList();
   }
-
+  searchList() {
+    merge(this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          if(this.searchModel.pageNo!=this.paginator.pageIndex){
+          this.searchModel.pageNo=this.paginator.pageIndex;
+          this.searchModel.pageSize=this.paginator.pageSize;
+          return this.noDueCertificateService.search(this.searchModel);
+          }
+        }),
+        map(data => {				
+          return data;
+        }),
+        catchError(() => {
+          return of([]);
+        })
+      ).subscribe((data) => {
+        if (data.status === 200) {
+          if (data.body.data.length == 0) {
+            this.alertService.info('No Data Found!');
+            if (!this.isSearchByPropertyNo || (this.isSearchByPropertyNo && this.dataSource.length == 0)) {
+              this.noDueCertificateDataSharingService.updatedIsShowTable(false);
+            }
+            this.resultsLength=0;
+          } else {
+            this.dataSource = new MatTableDataSource(data.body.data);                   
+            this.totalCount = data.body.totalRecords;
+            this.resultsLength= data.body.totalRecords;
+          }    
+        }          
+      },
+      (error) => {
+        this.alertService.error(error.error.message);
+      }
+      );
+  }
   onChangeSelect(event) {
     this.noDueCertificateService.calculateFee({ propertyBasicId: this.selectedItem.propertyBasicId }).subscribe(
       (data) => {

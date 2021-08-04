@@ -31,6 +31,8 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </div>
+    <mat-paginator [length]="resultsLength" [hidden]="resultsLength==0" [pageSizeOptions]="pageRecord" showFirstLastButtons></mat-paginator> 
+	
   </div>
   <div class="row margin-top-20">
     <div class="col-md-2">

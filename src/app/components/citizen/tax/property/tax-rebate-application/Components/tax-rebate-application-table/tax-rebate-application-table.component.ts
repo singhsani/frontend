@@ -4,10 +4,11 @@ import { TaxRebateApplicationService } from '../../Services/tax-rebate-applicati
 import { Subscription } from 'rxjs';
 import { SearchModel, DataModel } from '../../Models/tax-rebate-application.model';
 import { NgForm } from '@angular/forms';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort,MatPaginator } from '@angular/material';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
-
-
+import { merge, of } from 'rxjs';
+import { startWith, switchMap, map, catchError } from 'rxjs/operators';
+import { Constants } from 'src/app/vmcshared/Constants';
 @Component({
   selector: 'app-tax-rebate-application-table',
   templateUrl: './tax-rebate-application-table.component.html',
@@ -27,12 +28,15 @@ export class TaxRebateApplicationTableComponent implements OnInit {
   isSearchByPropertyNo: boolean = false;
   totalCount: any = 0;
   @ViewChild(MatSort) sort: MatSort;
-
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+	pageRecord = Constants.pageRecord; 
+	resultsLength: number = 0;	
   constructor(private taxRebateApplicationDataSharingService: TaxRebateApplicationDataSharingService,
     private taxRebateApplicationService: TaxRebateApplicationService,
     private alertService: AlertService) { }
 
   ngOnInit() {
+    this.paginator.pageSize=Constants.pageSize;
     this.taxRebateApplicationDataSharingService.observableIsSearchByPropertyNo.subscribe((data) => {
       this.isSearchByPropertyNo = data;
     })
@@ -58,7 +62,7 @@ export class TaxRebateApplicationTableComponent implements OnInit {
   }
 
   search() {
-    this.taxRebateApplicationService.search(this.searchModel).subscribe(
+   /* this.taxRebateApplicationService.search(this.searchModel).subscribe(
       (data) => {
         if (data.status === 200) {
           if (data.body.length == 0) {
@@ -76,9 +80,47 @@ export class TaxRebateApplicationTableComponent implements OnInit {
       },
       (error) => {
         this.alertService.error(error.error.message);
-      });
+      });*/
+      this.paginator.pageIndex=0;
+      this.searchList();
   }
-
+  searchList() {
+    merge(this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          if(this.searchModel.pageNo!=this.paginator.pageIndex){
+          this.searchModel.pageNo=this.paginator.pageIndex;
+          this.searchModel.pageSize=this.paginator.pageSize;
+          return this.taxRebateApplicationService.search(this.searchModel);
+          }
+        }),
+        map(data => {				
+          return data;
+        }),
+        catchError(() => {
+          return of([]);
+        })
+      ).subscribe((data) => {
+        if (data.status === 200) {
+          if (data.body.data.length == 0) {
+            this.alertService.info('No Data Found!');
+            if (!this.isSearchByPropertyNo || (this.isSearchByPropertyNo && this.dataSource.length == 0)) {
+              this.taxRebateApplicationDataSharingService.updatedIsShowTable(false);
+            }
+            this.resultsLength=0;
+          } else {
+            this.dataSource = new MatTableDataSource(data.body.data);                   
+            this.totalCount = data.body.totalRecords;
+            this.resultsLength= data.body.totalRecords;
+          }  
+        }             
+      },
+      (error) => {
+        this.alertService.error(error.error.message);
+      }
+      );
+  }
   onChangeSelect(event) {
     this.isShowPayMode = true;
   }

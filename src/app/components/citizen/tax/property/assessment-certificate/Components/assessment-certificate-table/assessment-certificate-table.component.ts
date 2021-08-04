@@ -5,7 +5,7 @@ import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { Subscription } from 'rxjs';
 import { SearchModel, ServiceCharge } from '../../Models/assessment-certificate.model';
 import { NgForm } from '@angular/forms';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
 import { PaymentDataSharingService } from 'src/app/vmcshared/component/payment/payment-data-sharing.service';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
 import { DatePipe } from '@angular/common';
@@ -16,7 +16,9 @@ import {CommonService as CommonNascentService} from '../../../../../../../shared
 import { ManageRoutes } from 'src/app/config/routes-conf';
 import { environment } from 'src/environments/environment';
 import { PaymentNewService } from 'src/app/shared/services/paymentNew.service';
-
+import { merge, of } from 'rxjs';
+import { startWith, switchMap, map, catchError } from 'rxjs/operators';
+import { Constants } from 'src/app/vmcshared/Constants';
 
 @Component({
   selector: 'app-assessment-certificate-table',
@@ -27,7 +29,9 @@ import { PaymentNewService } from 'src/app/shared/services/paymentNew.service';
 })
 export class AssessmentCertificateTableComponent implements OnInit {
 
-  
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  pageRecord = Constants.pageRecord; 
+	resultsLength: number = 0;	
   subscription: Subscription;
   displayedColumns: string[] = ['select', 'propertyNo', 'propertyAddress', 'ownerName', 'occupierName'];
   dataSource: any = [];
@@ -57,6 +61,7 @@ export class AssessmentCertificateTableComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.paginator.pageSize=Constants.pageSize;
     this.formService.apiType = 'assessmentCertificate';
     this.assessmentCertificateDataSharingService.observableIsSearchByPropertyNo.subscribe((data) => {
       this.isSearchByPropertyNo = data;
@@ -83,7 +88,7 @@ export class AssessmentCertificateTableComponent implements OnInit {
   }
 
   search() {
-    this.assessmentCertificateService.search(this.searchModel).subscribe(
+  /*  this.assessmentCertificateService.search(this.searchModel).subscribe(
       (data) => {
         if (data.status === 200) {
           if (data.body.length == 0) {
@@ -101,9 +106,48 @@ export class AssessmentCertificateTableComponent implements OnInit {
       },
       (error) => {
         this.commonService.callErrorResponse(error);
-      });
-  }
+      });*/
 
+      this.paginator.pageIndex=0;
+      this.searchList();
+  }
+  searchList() {
+    merge(this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          if(this.searchModel.pageNo!=this.paginator.pageIndex){
+          this.searchModel.pageNo=this.paginator.pageIndex;
+          this.searchModel.pageSize=this.paginator.pageSize;
+          return this.assessmentCertificateService.search(this.searchModel);
+          }
+        }),
+        map(data => {				
+          return data;
+        }),
+        catchError(() => {
+          return of([]);
+        })
+      ).subscribe((data) => {
+        if (data.status === 200) {
+          if (data.body.data.length == 0) {
+            this.alertService.info('No Data Found!');
+            if (!this.isSearchByPropertyNo || (this.isSearchByPropertyNo && this.dataSource.length == 0)) {
+              this.assessmentCertificateDataSharingService.updatedIsShowTable(false);
+            }
+            this.resultsLength=0;
+          } else {
+            this.dataSource = new MatTableDataSource(data.body.data);                   
+            this.totalCount = data.body.totalRecords;
+            this.resultsLength= data.body.totalRecords;
+          }              
+        }
+      },
+      (error) => {
+        this.alertService.error(error.error.message);
+      }
+      );
+  }
   onChangeSelect(event) {
     this.assessmentCertificateService.calculateFee({propertyBasicId: this.selectedItem.propertyBasicId , occupierId: this.selectedItem.propertyOccupierId }).subscribe(
       (data) => {

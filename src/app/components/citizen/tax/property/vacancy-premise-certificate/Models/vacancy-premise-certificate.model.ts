@@ -10,6 +10,8 @@ export class SearchModel {
     ownerName: string;
     address: string;
     mobileNo: string;
+    pageNo: number;
+	pageSize: number;
 }
 
 export class DataModel {

@@ -4,10 +4,12 @@ import { VacancyPremiseCertificateService } from '../../Services/vacancy-premise
 import { Subscription, ObjectUnsubscribedError } from 'rxjs';
 import { SearchModel, DataModel } from '../../Models/vacancy-premise-certificate.model';
 import { NgForm } from '@angular/forms';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort,MatPaginator } from '@angular/material';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
-
+import { merge, of } from 'rxjs';
+import { startWith, switchMap, map, catchError } from 'rxjs/operators';
+import { Constants } from 'src/app/vmcshared/Constants';
 
 @Component({
   selector: 'app-vacancy-premise-certificate-table',
@@ -30,13 +32,17 @@ export class VacancyPremiseCertificateTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   detailOutstandingButtonText = "Show Detail";
   isShowOutstandingDetail: boolean = false;
-
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+	pageRecord = Constants.pageRecord; 
+  resultsLength: number = 0;	
+  
   constructor(private vacancyPremiseCertificateDataSharingService: VacancyPremiseCertificateDataSharingService,
     private vacancyPremiseCertificateService: VacancyPremiseCertificateService,
     private alertService: AlertService,
     private commonService:CommonService) { }
 
   ngOnInit() {
+    this.paginator.pageSize=Constants.pageSize;
     this.vacancyPremiseCertificateDataSharingService.observableIsSearchByPropertyNo.subscribe((data) => {
       this.isSearchByPropertyNo = data;
     })
@@ -62,7 +68,7 @@ export class VacancyPremiseCertificateTableComponent implements OnInit {
   }
 
   search() {
-    this.vacancyPremiseCertificateService.search(this.searchModel).subscribe(
+   /* this.vacancyPremiseCertificateService.search(this.searchModel).subscribe(
       (data) => {
         if (data.status === 200) {
           if (data.body.length == 0) {
@@ -79,9 +85,46 @@ export class VacancyPremiseCertificateTableComponent implements OnInit {
       },
       (error) => {
         this.commonService.callErrorResponse(error);
-      });
+      });*/
+      this.paginator.pageIndex=0;
+      this.searchList();
   }
-
+  searchList() {
+    merge(this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+        if(this.searchModel.pageNo!=this.paginator.pageIndex){
+          this.searchModel.pageNo=this.paginator.pageIndex;
+          this.searchModel.pageSize=this.paginator.pageSize;
+          return this.vacancyPremiseCertificateService.search(this.searchModel);
+        }          
+        }),
+        map(data => {				
+          return data;
+        }),
+        catchError(() => {
+          return of([]);
+        })
+      ).subscribe((data) => {
+        if (data.status === 200) {
+          if (data.body.data.length == 0) {
+            this.alertService.info('No Data Found!');
+            this.vacancyPremiseCertificateDataSharingService.updatedIsShowTable(false);
+              this.dataSource = [];
+            this.resultsLength=0;
+          } else {
+            this.dataSource = new MatTableDataSource(data.body.data);                   
+            this.totalCount = data.body.totalRecords;
+            this.resultsLength= data.body.totalRecords;
+          }
+        }
+      },
+      (error) => {
+        this.commonService.callErrorResponse(error);
+      }
+      );
+  }
   onChangeSelect(event) {
     this.getOutstandingDetails(this.selectedItem.propertyOccupierId);
     this.isShowPayMode = true;

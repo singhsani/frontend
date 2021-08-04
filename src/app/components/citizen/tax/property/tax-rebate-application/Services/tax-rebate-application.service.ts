@@ -29,7 +29,7 @@ export class TaxRebateApplicationService {
   }
 
   search(data: any) {
-    return this.http.post(`${Constants.assessmentModuleApiUrl}active/search`, data,
+    return this.http.post(`${Constants.assessmentModuleApiUrl}active/searchBySearch`, data,
       { observe: 'response' })
       .pipe(map((response: any) => response))
   }

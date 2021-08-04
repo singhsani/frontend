@@ -5,7 +5,7 @@ import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { Subscription } from 'rxjs';
 import { SearchModel, ServiceCharge, TaxRateWiseOutstandingDetails } from '../../Models/extract-property.model';
 import { NgForm } from '@angular/forms';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort,MatPaginator } from '@angular/material';
 import { PaymentDataSharingService } from 'src/app/vmcshared/component/payment/payment-data-sharing.service';
 import { Constants } from 'src/app/vmcshared/Constants';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
@@ -16,6 +16,8 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { SelectPaymentGatewayPropertyComponent } from 'src/app/vmcshared/component/select-payment-gateway-property/select-payment-gateway-property.component';
 import { DatePipe } from '@angular/common';
+import { merge, of } from 'rxjs';
+import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-extract-property-table',
@@ -40,7 +42,9 @@ export class ExtractPropertyTableComponent implements OnInit {
   detailOutstandingButtonText = "Show Detail";
   isShowOutstandingDetail: boolean = false;
   @ViewChild('paymentGateway') public paymentGateway: SelectPaymentGatewayPropertyComponent;
-
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+	pageRecord = Constants.pageRecord; 
+	resultsLength: number = 0;	
   constructor(private extractPropertyDataSharingService: ExtractPropertyDataSharingService,
     private extractPropertyService: ExtractPropertyService,
     private paymentDataSharingService: PaymentDataSharingService,
@@ -53,6 +57,7 @@ export class ExtractPropertyTableComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.paginator.pageSize=Constants.pageSize;
     this.formService.apiType = 'extractOfProperty';
     this.extractPropertyDataSharingService.observableIsSearchByPropertyNo.subscribe((data) => {
       this.isSearchByPropertyNo = data;
@@ -79,7 +84,7 @@ export class ExtractPropertyTableComponent implements OnInit {
   }
 
   search() {
-    this.extractPropertyService.search(this.searchModel).subscribe(
+   /* this.extractPropertyService.search(this.searchModel).subscribe(
       (data) => {
         if (data.status === 200) {
           if (data.body.length == 0) {
@@ -97,9 +102,48 @@ export class ExtractPropertyTableComponent implements OnInit {
       },
       (error) => {
         this.alertService.error(error.error.message);
-      });
+      });*/
+      this.paginator.pageIndex=0;
+      this.searchList();
   }
-
+  searchList() {
+    merge(this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+        if(this.searchModel.pageNo!=this.paginator.pageIndex){
+          this.searchModel.pageNo=this.paginator.pageIndex;
+          this.searchModel.pageSize=this.paginator.pageSize;
+          return this.extractPropertyService.search(this.searchModel);
+        }
+        }),
+        map(data => {				
+          return data;
+        }),
+        catchError(() => {
+          return of([]);
+        })
+      ).subscribe((data) => {
+        if (data.status === 200) {
+          if (data.body.data.length == 0) {
+            this.alertService.info('No Data Found!');
+            if (!this.isSearchByPropertyNo || (this.isSearchByPropertyNo && this.dataSource.length == 0)) {
+              this.extractPropertyDataSharingService.updatedIsShowTable(false);
+            }
+            this.resultsLength=0;
+          } else {
+            this.dataSource = new MatTableDataSource(data.body.data);                   
+            this.totalCount = data.body.totalRecords;
+            this.resultsLength= data.body.totalRecords;
+          }   
+        }           
+      },
+      (error) => {
+        this.alertService.error(error.error.message);
+      }
+      );
+  }
+  
   onChangeSelect(event) {
     this.extractPropertyService.calculateFee({ occupierId: this.selectedItem.propertyOccupierId }).subscribe(
       (data) => {

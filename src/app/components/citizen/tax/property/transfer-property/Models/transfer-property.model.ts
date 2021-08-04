@@ -11,6 +11,8 @@ export class SearchModel {
     address: string;
     mobileNo: string;
     transferOfproperty: boolean;
+    pageNo: number;
+	pageSize: number;
 }
 
 export class DocumentReferenceModel {

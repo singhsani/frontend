@@ -5,9 +5,11 @@ import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { Subscription } from 'rxjs';
 import { SearchModel, OutstandingDetailModel, OccupierOutstandingDetails, TaxRateWiseOutstandingDetails } from '../../Models/transfer-property.model';
 import { NgForm } from '@angular/forms';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort,MatPaginator } from '@angular/material';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
-
+import { merge, of } from 'rxjs';
+import { startWith, switchMap, map, catchError } from 'rxjs/operators';
+import { Constants } from 'src/app/vmcshared/Constants';
 
 @Component({
   selector: 'app-transfer-property-table',
@@ -29,12 +31,17 @@ export class TransferPropertyTableComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
   totalCount: any = 0;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+	pageRecord = Constants.pageRecord; 
+  resultsLength: number = 0;	
+  
   constructor(private transferPropertyDataSharingService: TransferPropertyDataSharingService,
     private transferPropertyService: TransferPropertyService,
     private alertService: AlertService,
     private commonService: CommonService) { }
 
   ngOnInit() {
+    this.paginator.pageSize=Constants.pageSize;
     this.transferPropertyDataSharingService.observableIsSearchByPropertyNo.subscribe((data) => {
       this.isSearchByPropertyNo = data;
     })
@@ -59,7 +66,7 @@ export class TransferPropertyTableComponent implements OnInit {
     this.subscription.unsubscribe();
   }
   search() {
-    this.transferPropertyService.search(this.searchModel).subscribe(
+    /*this.transferPropertyService.search(this.searchModel).subscribe(
       (data) => {
         if (data.status === 200) {
           if (data.body.length == 0) {
@@ -77,8 +84,49 @@ export class TransferPropertyTableComponent implements OnInit {
       },
       (error) => {
         this.alertService.error(error.error.message);
-      });
+      });*/
+      this.paginator.pageIndex=0;
+      this.searchList();
+    
   }
+  searchList() {
+    merge(this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          if(this.searchModel.pageNo!=this.paginator.pageIndex){
+          this.searchModel.pageNo=this.paginator.pageIndex;
+          this.searchModel.pageSize=this.paginator.pageSize;
+          return this.transferPropertyService.search(this.searchModel);
+          }
+        }),
+        map(data => {				
+          return data;
+        }),
+        catchError(() => {
+          return of([]);
+        })
+      ).subscribe((data) => {
+        if (data.status === 200) {
+          if (data.body.data.length == 0) {
+            this.alertService.info('No Data Found!');
+            if (!this.isSearchByPropertyNo || (this.isSearchByPropertyNo && this.dataSource.length == 0)) {
+              this.transferPropertyDataSharingService.updatedIsShowTable(false);
+            }
+            this.resultsLength=0;
+          } else {
+            this.dataSource = new MatTableDataSource(data.body.data);                   
+            this.totalCount = data.body.totalRecords;
+            this.resultsLength= data.body.totalRecords;
+          }    
+        }          
+      },
+      (error) => {
+        this.alertService.error(error.error.message);
+      }
+      );
+  }
+  
 
   onChangeSelect(event) {
     this.isShowDetail = true;
