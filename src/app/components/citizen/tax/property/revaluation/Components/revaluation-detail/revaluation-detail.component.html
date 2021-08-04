@@ -27,6 +27,12 @@
       <app-unit-detail></app-unit-detail>
     </mat-step>
     <mat-step>
+      <ng-template matStepLabel>Applicant Details</ng-template>
+      <app-applicant-detail-propertywater (stepChange)="stepChangedEvent($event)" 
+      (applicantDetails)="saveApplicantDetails($event)"
+        [serviceType]="'PRO-REVALUATION'" [showSkipButton]="true"></app-applicant-detail-propertywater>
+    </mat-step>
+    <mat-step>
       <ng-template matStepLabel>Attachment</ng-template>
       <app-revaluation-document-upload></app-revaluation-document-upload>
     </mat-step>

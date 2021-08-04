@@ -6,6 +6,8 @@ import { Constants } from 'src/app/vmcshared/Constants';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
 import { Subscription } from 'rxjs';
 import { MatStepper } from '@angular/material';
+import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
+import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
 
 @Component({
   selector: 'app-revaluation-detail',
@@ -21,7 +23,8 @@ export class RevaluationDetailComponent implements OnInit {
   constructor(
     private commonService: CommonService,
     private revaluationDataSharingService: RevaluationDataSharingService,
-    private revaluationService: RevaluationService) { }
+    private revaluationService: RevaluationService,
+    private addressService: ApplicantAddressService) { }
 
   ngOnInit() {
     this.subscription = this.revaluationDataSharingService.observableMoveStepper.subscribe((data) => {
@@ -49,4 +52,20 @@ export class RevaluationDetailComponent implements OnInit {
   cancelForm() {
     this.revaluationDataSharingService.updatedIsShowForm(false);
   }
+
+  stepChangedEvent(event){
+    this.stepper.selectedIndex = 1;
+  }
+  
+  saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
+    applicantDetailsDTO.uniqueId = this.revaluationDataSharingService.applicationNumber;
+    this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
+         (data) => {
+           this.commonService.applicationNo = data.body.applicationNo;
+           this.revaluationDataSharingService.updateDataSourceMoveStepper(4); 
+         },
+         (error) => {
+           this.commonService.callErrorResponse(error);
+         });
+   }
 }
