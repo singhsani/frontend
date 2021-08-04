@@ -13,6 +13,8 @@ import { MatStepper } from '@angular/material';
 import { Router } from '@angular/router';
 import { CommonService as CommonService2 } from 'src/app/shared/services/common.service';
 import { FormsActionsService} from 'src/app/core/services/citizen/data-services/forms-actions.service';
+import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
+import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
 
 
 @Component({
@@ -46,7 +48,8 @@ export class BankDetailComponent implements OnInit, OnDestroy {
     private router: Router,
     private vacancyPremiseCertificateService: VacancyPremiseCertificateService,
     private alertService: AlertService,
-    private fromActionsService: FormsActionsService) {
+    private fromActionsService: FormsActionsService,
+    private addressService: ApplicantAddressService) {
 
   }
 
@@ -293,5 +296,21 @@ submit(){
       this.commonService.callErrorResponse(error);
     });
 }
+
+stepChangedEvent(event){
+  this.stepper.selectedIndex = event;
+}
+
+saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
+  applicantDetailsDTO.uniqueId = this.vacancyPremiseCertificateDataSharingService.applicationNumber;
+  this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
+       (data) => {
+         this.commonService.applicationNo = data.body.applicationNo;
+         this.stepper.selectedIndex = 2;
+       },
+       (error) => {
+         this.commonService.callErrorResponse(error);
+       });
+ }
 
 }
