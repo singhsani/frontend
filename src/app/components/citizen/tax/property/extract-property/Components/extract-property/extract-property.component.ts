@@ -1,10 +1,13 @@
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, ViewChild } from '@angular/core';
 import { ExtractPropertyDataSharingService } from '../../Services/extract-property-data-sharing.service';
 import { PaymentDataSharingService } from 'src/app/vmcshared/component/payment/payment-data-sharing.service';
 import { ExtractPropertyService } from '../../Services/extract-property.service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { Subscription } from 'rxjs';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
+import { MatStepper } from '@angular/material';
+import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
+import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
 
 @Component({
     selector: 'app-extract-property',
@@ -13,6 +16,9 @@ import { CommonService } from 'src/app/vmcshared/Services/common-service';
 })
 
 export class ExtractPropertyComponent implements OnInit {
+   
+    @ViewChild('stepper') stepper: MatStepper;
+   
     isShowForm: boolean = false;
     isShowTable: boolean = false;
     serviceCharge: any = {};
@@ -24,7 +30,8 @@ export class ExtractPropertyComponent implements OnInit {
         private paymentDataSharingService: PaymentDataSharingService,
         private extractPropertyService: ExtractPropertyService,
         private alertService: AlertService,
-        private commonService:CommonService) {
+        private commonService:CommonService,
+        private addressService: ApplicantAddressService) {
     }
 
     ngOnInit() {
@@ -85,4 +92,34 @@ export class ExtractPropertyComponent implements OnInit {
                 }
             })
     }
+
+    stepChanged(event, stepper){
+        stepper.selected.interacted = false;
+    }
+
+    stepChangedEvent(event){
+        this.moveStepper(1);
+    }
+
+    moveStepper(index: number) {
+        this.stepper.selectedIndex = index;
+    }
+    
+    ngAfterViewInit() {
+        setTimeout(() => {
+         this.moveStepper(0);
+        });
+    }
+
+    saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
+        this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
+             (data) => {
+               this.commonService.applicationNo = data.body.applicationNo;
+               this.commonService.serviceFormId = data.body.id;
+               this.moveStepper(1);
+             },
+             (error) => {
+               this.commonService.callErrorResponse(error);
+             });
+       }
 }

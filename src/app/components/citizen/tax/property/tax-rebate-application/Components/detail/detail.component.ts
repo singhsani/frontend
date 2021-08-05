@@ -128,30 +128,32 @@ export class DetailComponent implements OnInit {
   onSubmitApproved() {
     this.mandatoryFileCheck().then(data => {
       if (data.status) {
-        this.commonService.openDetailDialogBox().subscribe(details => {
-          if (details) {
-            var applicationNumber = this.taxRebateApplicationDataSharingService.applicationNumber
-            this.fromActionsService.setUserData(details, applicationNumber).subscribe(
-              (data) => {
-                if (data) {
-                  this.submit();
-                }
-              },
-              (error) => {
-                if (error.status === 400) {
-                  var errorMessage = '';
-                  error.error[0].propertyList.forEach(element => {
-                    errorMessage = errorMessage + element + "</br>";
-                  });
-                  this.alertService.error(errorMessage);
-                }
-                else {
-                  this.alertService.error(error.error.message);
-                }
-              });
-          }
+        // this.commonService.openDetailDialogBox().subscribe(details => {
+        //   if (details) {
+        //     var applicationNumber = this.taxRebateApplicationDataSharingService.applicationNumber
+        //     this.fromActionsService.setUserData(details, applicationNumber).subscribe(
+        //       (data) => {
+        //         if (data) {
+        //           this.submit();
+        //         }
+        //       },
+        //       (error) => {
+        //         if (error.status === 400) {
+        //           var errorMessage = '';
+        //           error.error[0].propertyList.forEach(element => {
+        //             errorMessage = errorMessage + element + "</br>";
+        //           });
+        //           this.alertService.error(errorMessage);
+        //         }
+        //         else {
+        //           this.alertService.error(error.error.message);
+        //         }
+        //       });
+        //   }
 
-        })
+        // })
+
+        this.submit();
 
       } else {
         this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
@@ -224,8 +226,7 @@ export class DetailComponent implements OnInit {
   }
 
   submit() {
-
-    this.taxRebateApplicationService.approveDept({ taxRebateApplicationId: this.model.taxRebateApplicationId }).subscribe(
+    this.taxRebateApplicationService.approveDept({ taxRebateApplicationId: this.model.taxRebateApplicationId, applicationNo :  this.commonService2.applicationNo }).subscribe(
       (data) => {
         this.alertService.success(data.body.message);
       },
@@ -275,6 +276,7 @@ export class DetailComponent implements OnInit {
     this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
          (data) => {
            this.commonService2.applicationNo = data.body.applicationNo;
+           this.commonService2.serviceFormId = data.body.id;
            this.stepper.selectedIndex = 2;
          },
          (error) => {

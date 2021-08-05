@@ -15,6 +15,8 @@ export class CommonService {
 
     applicationNo :string ;
 
+    serviceFormId ;
+
     /* Lookup API Url */
     getLookupValuesUrl = Constants.baseApiUrl + 'lookup/gets';
     getLookupValuesAccordingToScreenUrl = Constants.baseApiUrl + 'lookup/get';
@@ -242,4 +244,11 @@ export class CommonService {
             }
           }
     }
+
+    /**
+	 * This method is used to get user profile data
+	 */
+  getUserProfile() {
+    return this.http.get(`${Constants.serverApiIp}/api/user/profile`);
+  }
 }

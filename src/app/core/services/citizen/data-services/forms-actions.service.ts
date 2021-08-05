@@ -456,13 +456,13 @@ export class FormsActionsService {
 		this.requestURL = `api/user/${this.apiType}`;
 		return this.http.post(this.requestURL, reqData);
 	}
-	saveCustomCallApi(apiName: any, noofCopies: any, asonDate: any, occupierId: any) {
-		this.requestURL = `api/form/${this.apiType}/${apiName}?noofCopies=${noofCopies}&asonDate=${asonDate}&occupierId=${occupierId}`;
+	saveCustomCallApi(apiName: any, noofCopies: any, asonDate: any, occupierId: any,serviceApplicationId : any) {
+		this.requestURL = `api/form/${this.apiType}/${apiName}?noofCopies=${noofCopies}&asonDate=${asonDate}&occupierId=${occupierId}&propertyServiceApplicationId=${serviceApplicationId}`;
 		return this.http.post(this.requestURL, {});
 	}
 
-	saveNoDueCertificate(apiName: any, noofCopies: any, asonDate: any, occupierId: any, propertyBasicId: any) {
-		this.requestURL = `api/form/${this.apiType}/${apiName}?noofCopies=${noofCopies}&asonDate=${asonDate}&occupierId=${occupierId}&propertyBasicId=${propertyBasicId}`;
+	saveNoDueCertificate(apiName: any, noofCopies: any, asonDate: any, occupierId: any, propertyBasicId: any, serviceFormId : any) {
+		this.requestURL = `api/form/${this.apiType}/${apiName}?noofCopies=${noofCopies}&asonDate=${asonDate}&occupierId=${occupierId}&propertyBasicId=${propertyBasicId}&propertyServiceApplicationId=${serviceFormId}`;
 		return this.http.post(this.requestURL, {});
 	}
 

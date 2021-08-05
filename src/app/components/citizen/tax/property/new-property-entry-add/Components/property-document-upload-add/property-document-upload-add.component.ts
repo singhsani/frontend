@@ -67,30 +67,32 @@ export class PropertyDocumentUploadAddComponent implements OnInit {
 
       if (data.status) {
 
-        this.commonService.openDetailDialogBox().subscribe(details => {
-          if (details) {
-            var applicationNumber = this.newNewPropertyEntryAddDataSharingService.applicationNo;
-            this.fromActionsService.setUserData(details, applicationNumber).subscribe(
-              (data) => {
-                if (data) {
-                  this.submit();
-                }
-              },
-              (error) => {
-                if (error.status === 400) {
-                  var errorMessage = '';
-                  error.error[0].propertyList.forEach(element => {
-                    errorMessage = errorMessage + element + "</br>";
-                  });
-                  this.alertService.error(errorMessage);
-                }
-                else {
-                  this.alertService.error(error.error.message);
-                }
-              });
-          }
+        this.submit();
 
-        })
+        // this.commonService.openDetailDialogBox().subscribe(details => {
+        //   if (details) {
+        //     var applicationNumber = this.newNewPropertyEntryAddDataSharingService.applicationNo;
+        //     this.fromActionsService.setUserData(details, applicationNumber).subscribe(
+        //       (data) => {
+        //         if (data) {
+        //           this.submit();
+        //         }
+        //       },
+        //       (error) => {
+        //         if (error.status === 400) {
+        //           var errorMessage = '';
+        //           error.error[0].propertyList.forEach(element => {
+        //             errorMessage = errorMessage + element + "</br>";
+        //           });
+        //           this.alertService.error(errorMessage);
+        //         }
+        //         else {
+        //           this.alertService.error(error.error.message);
+        //         }
+        //       });
+        //   }
+
+        // })
 
       } else {
         this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");

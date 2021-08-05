@@ -2,7 +2,38 @@
     <!-- <mat-card class="cardH1">
         <h1>Application for Duplicate Bill</h1>
     </mat-card> -->
-<div>
+
+    <mat-horizontal-stepper #stepper (selectionChange)="stepChanged($event, stepper);" class="stepperToTab">
+        <mat-step>
+            <ng-template matStepLabel>Applicant Details</ng-template>
+            <app-applicant-detail-propertywater (stepChange)="stepChangedEvent($event)"
+                (applicantDetails)="saveApplicantDetails($event)" [serviceType]="'PRO-DUP'">
+            </app-applicant-detail-propertywater>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Duplicate Bill Details</ng-template>
+            <!-- Search Component Start -->
+            <div *ngIf="!isShowForm">
+                <app-duplicate-bill-search></app-duplicate-bill-search>
+            </div>
+            <!-- Form Component Start -->
+            <div *ngIf="isShowForm">
+                <app-payment></app-payment>
+            </div>
+            <!-- Form Component End -->
+            <!-- Table Component Start -->
+            <div [hidden]="!isShowTable">
+                <app-duplicate-bill-table></app-duplicate-bill-table>
+            </div>
+            <!-- Table Component End -->
+        </mat-step>
+    </mat-horizontal-stepper>
+
+
+<!-- ===========================Old Component============================ -->
+
+
+<div *ngIf="false">
     <!-- Search Component Start -->
     <div *ngIf="!isShowForm">
         <app-duplicate-bill-search></app-duplicate-bill-search>

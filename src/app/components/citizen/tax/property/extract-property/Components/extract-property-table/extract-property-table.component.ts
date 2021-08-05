@@ -203,7 +203,9 @@ export class ExtractPropertyTableComponent implements OnInit {
         let formdata = formDetail.form.value;
         let date = this.datePipe.transform(formdata.asonDate, 'yyyy-MM-dd')
         //call save api befor submit
-        this.formService.saveCustomCallApi('saveExtractOfProperty',formdata.noofCopies, date, this.serviceCharge.occupierId).subscribe(res=> {
+        this.formService.saveCustomCallApi('saveExtractOfProperty',
+        formdata.noofCopies, date, this.serviceCharge.occupierId,
+        this.commonService.serviceFormId).subscribe(res=> {
           console.log('res in save is');
           console.log(res);
           let data = res;

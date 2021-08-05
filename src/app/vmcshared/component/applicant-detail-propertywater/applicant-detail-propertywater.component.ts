@@ -3,7 +3,8 @@ import { ApplicantDetailDTO, CitizenAddressDTO } from 'src/app/components/citize
 import { CountryService } from 'src/app/shared/services/country.service';
 import * as _ from 'lodash';
 import { NgForm } from '@angular/forms';
-
+import { CommonService } from '../../Services/common-service';
+import { CommonService as CommonServiceTwo} from 'src/app/shared/services/common.service';
 
 
 @Component({
@@ -30,12 +31,15 @@ export class ApplicantDetailPropertywaterComponent implements OnInit {
   
   constructor(
 	  private countryService: CountryService,
+	  private commonService:CommonService,
+	  private commonServcie2 : CommonServiceTwo
 ) { }
 
   ngOnInit() {
     this.model.citizenAddressDTO = new CitizenAddressDTO();
     this.editMode = true;
-    this.getCountryLists();
+	this.getCountryLists();
+	this.getUserProfile();
   }
 
   /**
@@ -121,6 +125,23 @@ export class ApplicantDetailPropertywaterComponent implements OnInit {
 		}else{
 			this.stepChange.emit(1);
 		}
+		
+	}
+
+	getUserProfile(){
+		
+		if(!this.commonServcie2.fromAdmin()) {
+			this.commonService.getUserProfile().subscribe(res => {
+				const userData = res['data'];
+				if(userData){
+					this.model.firstName = userData.firstName;
+					this.model.mobileNo = userData.cellNo;
+					this.model.email = userData.email	
+				}
+				
+			})
+		}
+
 		
 	}
 
