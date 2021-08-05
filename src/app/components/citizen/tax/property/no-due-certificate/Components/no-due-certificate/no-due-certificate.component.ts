@@ -1,10 +1,14 @@
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, ViewChild } from '@angular/core';
 import { NoDueCertificateDataSharingService } from '../../Services/no-due-certificate-data-sharing.service';
 import { Subscription } from 'rxjs';
 import { PaymentDataSharingService } from 'src/app/vmcshared/component/payment/payment-data-sharing.service';
 import { NoDueCertificateService } from '../../Services/no-due-certificate.service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { downloadFile } from 'src/app/vmcshared/downloadFile';
+import { MatStepper } from '@angular/material';
+import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
+import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
+import { CommonService } from 'src/app/vmcshared/Services/common-service';
 
 @Component({
     selector: 'app-no-due-certificate',
@@ -13,6 +17,9 @@ import { downloadFile } from 'src/app/vmcshared/downloadFile';
 })
 
 export class NoDueCertificateComponent implements OnInit {
+
+    @ViewChild('stepper') stepper: MatStepper;
+
     isShowForm: boolean = false;
     isShowTable: boolean = false;
     serviceCharge: any = {};
@@ -22,7 +29,9 @@ export class NoDueCertificateComponent implements OnInit {
         private noDueCertificateDataSharingService: NoDueCertificateDataSharingService,
         private paymentDataSharingService: PaymentDataSharingService,
         private noDueCertificateService: NoDueCertificateService,
-        private alertService: AlertService) { }
+        private alertService: AlertService,
+        private commonService : CommonService,
+        private addressService : ApplicantAddressService) { }
 
     ngOnInit() {
         this.noDueCertificateDataSharingService.observableIsShowForm.subscribe(data => {
@@ -83,4 +92,35 @@ export class NoDueCertificateComponent implements OnInit {
                 }
             });
     }
+
+
+    stepChanged(event, stepper){
+        stepper.selected.interacted = false;
+    }
+
+    stepChangedEvent(event){
+        this.moveStepper(1);
+    }
+
+    moveStepper(index: number) {
+        this.stepper.selectedIndex = index;
+    }
+    
+    ngAfterViewInit() {
+        setTimeout(() => {
+         this.moveStepper(0);
+        });
+    }
+
+    saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
+        this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
+             (data) => {
+               this.commonService.applicationNo = data.body.applicationNo;
+               this.commonService.serviceFormId = data.body.id;
+               this.moveStepper(1);
+             },
+             (error) => {
+               this.commonService.callErrorResponse(error);
+             });
+       }
 }
