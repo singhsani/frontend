@@ -152,6 +152,7 @@ export class RevaluationTableComponent implements OnInit {
             this.revaluationDataSharingService.updatedIsShowForm(true);
             this.revaluationDataSharingService.updateDataSourceOccupier(null);
             this.revaluationDataSharingService.updatedDataModel(this.selectedItem);
+            this.revaluationDataSharingService.applicationNumber = data.body.applicationNumber;
           }
         },
         (error) => {
