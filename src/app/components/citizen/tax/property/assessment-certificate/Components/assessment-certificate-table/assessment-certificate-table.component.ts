@@ -116,7 +116,7 @@ export class AssessmentCertificateTableComponent implements OnInit {
       .pipe(
         startWith({}),
         switchMap(() => {
-          if(this.searchModel.pageNo!=this.paginator.pageIndex){
+          if(this.searchModel.pageNo!=this.paginator.pageIndex || this.searchModel.pageSize!=this.paginator.pageSize){
           this.searchModel.pageNo=this.paginator.pageIndex;
           this.searchModel.pageSize=this.paginator.pageSize;
           return this.assessmentCertificateService.search(this.searchModel);

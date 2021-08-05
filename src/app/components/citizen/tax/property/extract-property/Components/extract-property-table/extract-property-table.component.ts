@@ -111,11 +111,11 @@ export class ExtractPropertyTableComponent implements OnInit {
       .pipe(
         startWith({}),
         switchMap(() => {
-        if(this.searchModel.pageNo!=this.paginator.pageIndex){
+        if(this.searchModel.pageNo!=this.paginator.pageIndex || this.searchModel.pageSize!=this.paginator.pageSize){
           this.searchModel.pageNo=this.paginator.pageIndex;
           this.searchModel.pageSize=this.paginator.pageSize;
           return this.extractPropertyService.search(this.searchModel);
-        }
+        }        
         }),
         map(data => {				
           return data;
