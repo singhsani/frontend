@@ -82,6 +82,16 @@
                             formControlName="deceasedLastNameGuj">
                         <control-messages [control]="deathCorrectionForm.get('deceasedLastNameGuj')"></control-messages>
                     </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput trim type="text" formControlName="motherName"
+                            placeholder="{{'mother_name' | translate: translateKey}}" readonly>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput trim type="text" appGujInputTarget [form]="deathCorrectionForm" formControlName="motherNameGuj"
+                            placeholder="{{'mother_name' | translate: translateKey: 'gu'}}" readonly>
+                    </mat-form-field>
                 </div>
 
                 <app-action-bar [uploadFiles]="uploadFileArray" [form]="deathCorrectionForm"

@@ -177,9 +177,9 @@ export class BirthDuplicateComponent implements OnInit {
 	newgnDateconvert(controlName: any, date) {
 		let dateString = date;
 		let dateParts = dateString.split("-");
-		let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
-
-		this.birthDuplicateForm.get(controlName).setValue(moment(dateObject).format("YYYY-MM-DD"));
+		// let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+		let dateObject = new Date(+dateParts[0], dateParts[1] - 1,+dateParts[2]);
+		this.birthDuplicateForm.get(controlName).setValue(moment(dateObject).format("DD-MM-YYYY"));
 	}
 
 	/**
@@ -245,16 +245,21 @@ export class BirthDuplicateComponent implements OnInit {
 		this.birthDuplicateForm = this.fb.group({
 			birthRegNumber: [null],
 			birthRegYear: [null],
-			birthDate: [moment(new Date()).format("YYYY-MM-DD")],
+			birthDate: [moment(new Date()).format("DD-MM-YYYY")],
 			birthRegDate: [null],
 			regdate:[null],
 			childName: [null],
 			gender: [null],
 			birthtime:[null],
-			birthplace: [null],
+			placeofbirth: [null],
 			mothername: [null],
 			fathername: [null],
-			address:[null],
+			birthaddress:[null],
+			birthaddressguj:[null],
+			genderguj:[null],
+			placeofbirthguj:[null],
+			permanentadd:[null],
+			permanentaddguj:[null],
 			// duplicateCopies: this.fb.group({
 			// 	code: [null, [Validators.required]],
 			// 	id: null,

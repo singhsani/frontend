@@ -404,20 +404,34 @@ export class BirthCorrectionComponent implements OnInit {
 			childName: null,
 			childNameGuj: null,
 			fatherFirstName: null,
-			fatherMiddleName: null,
-			fatherLastName: null,
+			// fatherMiddleName: null,
+			// fatherLastName: null,
 
 			fatherFirstNameGuj: null,
-			fatherMiddleNameGuj: null,
-			fatherLastNameGuj: null,
+			// fatherMiddleNameGuj: null,
+			// fatherLastNameGuj: null,
 
 			motherFirstName: null,
-			motherMiddleName: null,
-			motherLastName: null,
+			// motherMiddleName: null,
+			// motherLastName: null,
 
 			motherFirstNameGuj: null,
-			motherMiddleNameGuj: null,
-			motherLastNameGuj: null,
+			// motherMiddleNameGuj: null,
+			// motherLastNameGuj: null,
+
+			birthtime: null,
+
+			gender: null,
+			genderguj: null,
+
+			placeofbirth: null,
+			placeofbirthguj: null,
+
+			birthaddress:null,
+			birthaddressguj: null,
+
+			permanentadd: null,
+			permanentaddguj: null,
 
 			refNumber: null,
 

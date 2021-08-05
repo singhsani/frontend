@@ -184,9 +184,9 @@ export class DeathDuplicateComponent implements OnInit {
 	newgnDateconvert(controlName: any, date) {
 		let dateString = date;
 		let dateParts = dateString.split("-");
-		let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
-
-		this.deathDuplicateForm.get(controlName).setValue(moment(dateObject).format("YYYY-MM-DD"));
+		// let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+		let dateObject = new Date(+dateParts[0], dateParts[1] - 1, +dateParts[2]);
+		this.deathDuplicateForm.get(controlName).setValue(moment(dateObject).format("DD-MM-YYYY"));
 	}
 
 	/**
