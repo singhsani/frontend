@@ -62,9 +62,31 @@
                             </mat-form-field>
 
                             <mat-form-field class="col-md-4">
+                                <input matInput trim type="text" formControlName="gender" appGujInputSource targetElement="genderguj"
+                                    placeholder="{{'gender' | translate: translateKey}}" readonly>
+                            </mat-form-field>
+
+                            <mat-form-field class="col-md-4">
+                                <input matInput trim type="text" formControlName="placeofbirth" appGujInputSource targetElement="placeofbirthguj"
+                                    placeholder="{{'place_of_birth' | translate: translateKey}}" readonly>
+                            </mat-form-field>
+
+                            <mat-form-field class="col-md-4">
                                 <input required matInput maxlength="150" appPreventSpace appGujInputTarget [form]="birthCorrectionForm" placeholder="{{'child_name' | translate:translateKey:'gu'}}"
                                     formControlName="childNameGuj">
                                 <control-messages [control]="birthCorrectionForm.get('childNameGuj')"></control-messages>
+                            </mat-form-field>
+
+                            <mat-form-field class="col-md-4">
+                                <input matInput maxlength="150" appPreventSpace appGujInputTarget [form]="birthCorrectionForm" 
+                                placeholder="{{'gender' | translate:translateKey:'gu'}}" formControlName="genderguj" readonly>
+                            </mat-form-field>
+
+                            
+
+                            <mat-form-field class="col-md-4">
+                                <input matInput maxlength="150" appPreventSpace appGujInputTarget [form]="birthCorrectionForm" 
+                                placeholder="{{'place_of_birth' | translate:translateKey:'gu'}}" formControlName="placeofbirthguj" readonly>
                             </mat-form-field>
                         </div>
 
@@ -72,14 +94,14 @@
 
                         <div class="row">
 
-                            <mat-form-field class="col-md-4">
+                            <mat-form-field class="col-md-6">
                                 <input matInput maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" [form]="birthCorrectionForm"
                                     appGujInputSource targetElement="fatherFirstNameGuj" placeholder="{{'first_name' | translate:translateKey}}"
                                     formControlName="fatherFirstName" required>
                                 <control-messages [control]="birthCorrectionForm.get('fatherFirstName')"></control-messages>
                             </mat-form-field>
 
-                            <mat-form-field class="col-md-4">
+                            <!-- <mat-form-field class="col-md-4">
                                 <input matInput maxlength="20" appValidationFields [form]="birthCorrectionForm" appGujInputSource targetElement="fatherMiddleNameGuj"
                                     [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'middle_name' | translate:translateKey}}"
                                     formControlName="fatherMiddleName">
@@ -91,15 +113,15 @@
                                     [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'last_name' | translate:translateKey}}"
                                     formControlName="fatherLastName" required>
                                 <control-messages [control]="birthCorrectionForm.get('fatherLastName')"></control-messages>
-                            </mat-form-field>
+                            </mat-form-field> -->
 
-                            <mat-form-field class="col-md-4">
+                            <mat-form-field class="col-md-6">
                                 <input matInput maxlength="40" appPreventSpace appGujInputTarget [form]="birthCorrectionForm" placeholder="{{'first_name' | translate:translateKey:'gu'}}"
                                     formControlName="fatherFirstNameGuj" required>
                                 <control-messages [control]="birthCorrectionForm.get('fatherFirstNameGuj')"></control-messages>
                             </mat-form-field>
 
-                            <mat-form-field class="col-md-4">
+                            <!-- <mat-form-field class="col-md-4">
                                 <input matInput maxlength="40" appPreventSpace appGujInputTarget [form]="birthCorrectionForm" placeholder="{{'middle_name' | translate:translateKey:'gu'}}"
                                     formControlName="fatherMiddleNameGuj">
                                 <control-messages [control]="birthCorrectionForm.get('fatherMiddleNameGuj')"></control-messages>
@@ -109,20 +131,20 @@
                                 <input matInput maxlength="40" appPreventSpace appGujInputTarget [form]="birthCorrectionForm" placeholder="{{'last_name' | translate:translateKey:'gu'}}"
                                     formControlName="fatherLastNameGuj" required>
                                 <control-messages [control]="birthCorrectionForm.get('fatherLastNameGuj')"></control-messages>
-                            </mat-form-field>
+                            </mat-form-field> -->
                         </div>
 
                         <h2>{{'mother_details' | translate:translateKey}}</h2>
 
                         <div class="row">
-                            <mat-form-field class="col-md-4">
+                            <mat-form-field class="col-md-6">
                                 <input matInput maxlength="20" appValidationFields [form]="birthCorrectionForm" appGujInputSource targetElement="motherFirstNameGuj"
                                     [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'first_name' | translate:translateKey}}"
                                     formControlName="motherFirstName" required>
                                 <control-messages [control]="birthCorrectionForm.get('motherFirstName')"></control-messages>
                             </mat-form-field>
 
-                            <mat-form-field class="col-md-4">
+                            <!-- <mat-form-field class="col-md-4">
                                 <input matInput maxlength="20" appValidationFields [form]="birthCorrectionForm" appGujInputSource targetElement="motherMiddleNameGuj"
                                     [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'middle_name' | translate:translateKey}}"
                                     formControlName="motherMiddleName">
@@ -134,15 +156,15 @@
                                     [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'last_name' | translate:translateKey}}"
                                     formControlName="motherLastName" required>
                                 <control-messages [control]="birthCorrectionForm.get('motherLastName')"></control-messages>
-                            </mat-form-field>
+                            </mat-form-field> -->
 
-                            <mat-form-field class="col-md-4">
+                            <mat-form-field class="col-md-6">
                                 <input matInput maxlength="40" appPreventSpace appGujInputTarget [form]="birthCorrectionForm" placeholder="{{'first_name'| translate:translateKey:'gu'}}"
                                     formControlName="motherFirstNameGuj" required>
                                 <control-messages [control]="birthCorrectionForm.get('motherFirstNameGuj')"></control-messages>
                             </mat-form-field>
 
-                            <mat-form-field class="col-md-4">
+                            <!-- <mat-form-field class="col-md-4">
                                 <input matInput maxlength="40" appPreventSpace appGujInputTarget [form]="birthCorrectionForm" placeholder="{{'middle_name' | translate:translateKey:'gu'}}"
                                     formControlName="motherMiddleNameGuj">
                                 <control-messages [control]="birthCorrectionForm.get('motherMiddleNameGuj')"></control-messages>
@@ -152,6 +174,46 @@
                                 <input matInput maxlength="40" appPreventSpace appGujInputTarget [form]="birthCorrectionForm" placeholder="{{'last_name' | translate:translateKey:'gu'}}"
                                     formControlName="motherLastNameGuj" required>
                                 <control-messages [control]="birthCorrectionForm.get('motherLastNameGuj')"></control-messages>
+                            </mat-form-field> -->
+                        </div>
+
+                        <h2>{{'other_details' | translate:translateKey}}</h2>
+
+                        <div class="row">
+
+                            <mat-form-field class="col-md-12">
+                                <input matInput trim type="text" formControlName="birthaddress" appGujInputSource targetElement="birthaddressguj"
+                                    placeholder="{{'birth_address' | translate: translateKey}}" readonly>
+                            </mat-form-field>
+
+                            <mat-form-field class="col-md-12">
+                                <input matInput maxlength="150" appPreventSpace appGujInputTarget [form]="birthCorrectionForm" 
+                                placeholder="{{'birth_address' | translate:translateKey:'gu'}}" formControlName="birthaddressguj" readonly>
+                            </mat-form-field>
+
+                            <mat-form-field class="col-md-12">
+                                <input matInput trim type="text" formControlName="permanentadd" appGujInputSource targetElement="permanentaddguj"
+                                    placeholder="{{'permanent_add' | translate: translateKey}}" readonly>
+                            </mat-form-field>
+
+                            <mat-form-field class="col-md-12">
+                                <input matInput maxlength="150" appPreventSpace appGujInputTarget [form]="birthCorrectionForm" 
+                                placeholder="{{'permanent_add' | translate:translateKey:'gu'}}" formControlName="permanentaddguj" readonly>
+                            </mat-form-field>
+
+                            <mat-form-field class="col-md-4">
+                                <input matInput trim type="text" formControlName="birthDate"
+                                    placeholder="{{'birth_date' | translate: translateKey}}" readonly>
+                            </mat-form-field>
+
+                            <mat-form-field class="col-md-4">
+                                <input matInput trim type="text" formControlName="birthtime"
+                                    placeholder="{{'birth_time' | translate: translateKey}}" readonly>
+                            </mat-form-field>
+
+                            <mat-form-field class="col-md-4">
+                                <input matInput trim type="text" formControlName="registrationDate"
+                                    placeholder="{{'registration_date' | translate: translateKey}}" readonly>
                             </mat-form-field>
 
                         </div>
