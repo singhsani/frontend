@@ -5,6 +5,8 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class RevaluationDataSharingService {
+
+  applicationNumber = '';
   
   isShowForm: boolean = false;
   dataSourceIsShowForm = new BehaviorSubject<boolean>(this.isShowForm);
