@@ -226,7 +226,6 @@ export class DetailComponent implements OnInit {
   }
 
   submit() {
-debugger
     this.taxRebateApplicationService.approveDept({ taxRebateApplicationId: this.model.taxRebateApplicationId, applicationNo :  this.commonService2.applicationNo }).subscribe(
       (data) => {
         this.alertService.success(data.body.message);
