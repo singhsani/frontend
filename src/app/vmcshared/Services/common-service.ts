@@ -249,7 +249,6 @@ export class CommonService {
 	 * This method is used to get user profile data
 	 */
   getUserProfile() {
-      debugger
     return this.http.get(`${Constants.serverApiIp}/api/user/profile`);
   }
 }

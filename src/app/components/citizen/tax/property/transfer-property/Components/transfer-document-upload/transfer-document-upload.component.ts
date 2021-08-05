@@ -44,31 +44,32 @@ export class TransferDocumentUploadComponent implements OnInit {
     this.mandatoryFileCheck().then(data => {
       if (data.status) {
 
-        this.commonService.openDetailDialogBox().subscribe(details => {
-          if (details) {
-            var applicationNumber = this.transferPropertyDataSharingService.applicationNo;
-            this.fromActionsService.setUserData(details, applicationNumber).subscribe(
-              (data) => {
-                if (data) {
-                  this.submit(formDetail);
-                }
-              },
-              (error) => {
-                if (error.status === 400) {
-                  var errorMessage = '';
-                  error.error[0].propertyList.forEach(element => {
-                    errorMessage = errorMessage + element + "</br>";
-                  });
-                  this.alertService.error(errorMessage);
-                }
-                else {
-                  this.alertService.error(error.error.message);
-                }
-              });
-          }
+        // this.commonService.openDetailDialogBox().subscribe(details => {
+        //   if (details) {
+        //     var applicationNumber = this.transferPropertyDataSharingService.applicationNo;
+        //     this.fromActionsService.setUserData(details, applicationNumber).subscribe(
+        //       (data) => {
+        //         if (data) {
+        //           this.submit(formDetail);
+        //         }
+        //       },
+        //       (error) => {
+        //         if (error.status === 400) {
+        //           var errorMessage = '';
+        //           error.error[0].propertyList.forEach(element => {
+        //             errorMessage = errorMessage + element + "</br>";
+        //           });
+        //           this.alertService.error(errorMessage);
+        //         }
+        //         else {
+        //           this.alertService.error(error.error.message);
+        //         }
+        //       });
+        //   }
 
-        })
+        // })
 
+        this.submit(formDetail);
 
       } else {
         this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");

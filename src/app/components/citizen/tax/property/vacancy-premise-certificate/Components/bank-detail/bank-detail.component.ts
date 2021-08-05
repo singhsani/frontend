@@ -197,31 +197,32 @@ export class BankDetailComponent implements OnInit, OnDestroy {
 
     this.mandatoryFileCheck().then(data => {
       if (data.status) {
-        this.commonservice2.openDetailDialogBox().subscribe(details => {
-          if (details) {
-            var applicationNumber = this.vacancyPremiseCertificateDataSharingService.applicationNumber;
-            this.fromActionsService.setUserData(details, applicationNumber).subscribe(
-              (data) => {
-                if (data) {
-                  this.submit();
-                }
-              },
-              (error) => {
-                if (error.status === 400) {
-                  var errorMessage = '';
-                  error.error[0].propertyList.forEach(element => {
-                    errorMessage = errorMessage + element + "</br>";
-                  });
-                  this.alertService.error(errorMessage);
-                }
-                else {
-                  this.alertService.error(error.error.message);
-                }
-              });
-          }
+        // this.commonservice2.openDetailDialogBox().subscribe(details => {
+        //   if (details) {
+        //     var applicationNumber = this.vacancyPremiseCertificateDataSharingService.applicationNumber;
+        //     this.fromActionsService.setUserData(details, applicationNumber).subscribe(
+        //       (data) => {
+        //         if (data) {
+        //           this.submit();
+        //         }
+        //       },
+        //       (error) => {
+        //         if (error.status === 400) {
+        //           var errorMessage = '';
+        //           error.error[0].propertyList.forEach(element => {
+        //             errorMessage = errorMessage + element + "</br>";
+        //           });
+        //           this.alertService.error(errorMessage);
+        //         }
+        //         else {
+        //           this.alertService.error(error.error.message);
+        //         }
+        //       });
+        //   }
 
-        })
+        // })
 
+        this.submit();
       } else {
         this.commonservice2.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
         return

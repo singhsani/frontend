@@ -4,7 +4,7 @@ import { CountryService } from 'src/app/shared/services/country.service';
 import * as _ from 'lodash';
 import { NgForm } from '@angular/forms';
 import { CommonService } from '../../Services/common-service';
-
+import { CommonService as CommonServiceTwo} from 'src/app/shared/services/common.service';
 
 
 @Component({
@@ -31,7 +31,8 @@ export class ApplicantDetailPropertywaterComponent implements OnInit {
   
   constructor(
 	  private countryService: CountryService,
-	  private commonService:CommonService
+	  private commonService:CommonService,
+	  private commonServcie2 : CommonServiceTwo
 ) { }
 
   ngOnInit() {
@@ -128,16 +129,20 @@ export class ApplicantDetailPropertywaterComponent implements OnInit {
 	}
 
 	getUserProfile(){
-		debugger
-		this.commonService.getUserProfile().subscribe(res => {
-			const userData = res['data'];
-			if(userData){
-				this.model.firstName = userData.firstName;
-				this.model.mobileNo = userData.cellNo;
-				this.model.email = userData.email	
-			}
-			
-		})
+		
+		if(!this.commonServcie2.fromAdmin()) {
+			this.commonService.getUserProfile().subscribe(res => {
+				const userData = res['data'];
+				if(userData){
+					this.model.firstName = userData.firstName;
+					this.model.mobileNo = userData.cellNo;
+					this.model.email = userData.email	
+				}
+				
+			})
+		}
+
+		
 	}
 
 }
