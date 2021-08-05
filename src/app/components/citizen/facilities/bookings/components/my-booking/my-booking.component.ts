@@ -746,4 +746,12 @@ export class MyBookingComponent implements OnInit {
 		this.rejectedMessage = responseData.newgenRemarks;
 		this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-mg' }));
 	  }
+
+	  acknowledgmentReceipt(element){
+		  if((element.status == this.bookingConstant.SUBMITTED && (element.resourceType == 'STADIUM' || element.resourceType == 'CHILDREN_THEATER'))){
+			  return true;
+		  }else if(element.status == this.bookingConstant.CANCELLED && element.resourceType == 'STADIUM'){
+			  return true;
+		  }
+	  }
 }
