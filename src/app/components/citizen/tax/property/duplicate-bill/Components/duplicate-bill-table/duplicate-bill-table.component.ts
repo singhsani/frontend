@@ -226,7 +226,8 @@ export class DuplicateBillTableComponent implements OnInit {
             occupierId: this.serviceCharge.occupierId, 
             propertyBasicId: this.serviceCharge.propertyBasicId,  
             numberOfCopies: this.serviceCharge.noofCopies,
-            billTypeLookupId: this.serviceCharge.billTypeLookupId
+            billTypeLookupId: this.serviceCharge.billTypeLookupId,
+            propertyServiceApplicationId: this.commonService.serviceFormId
           }
           this.formService.saveDuplicateBill('saveDuplicate', data).subscribe
           (res=> {

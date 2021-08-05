@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, ViewChild } from '@angular/core';
 import { DuplicateBillDataSharingService } from '../../Services/duplicate-bill-data-sharing.service';
 import { Subscription } from 'rxjs';
 import { DuplicateBillService } from '../../Services/duplicate-bill.service';
@@ -6,6 +6,10 @@ import { PaymentDataSharingService } from 'src/app/vmcshared/component/payment/p
 import swal from 'sweetalert2';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { downloadFile } from 'src/app/vmcshared/downloadFile';
+import { MatStepper } from '@angular/material';
+import { CommonService } from 'src/app/vmcshared/Services/common-service';
+import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
+import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
 
 @Component({
     selector: 'app-duplicate-bill',
@@ -19,11 +23,14 @@ export class DuplicateBillComponent implements OnInit {
     serviceCharge: any = {};
     paymentModel: any = {};
     subscription: Subscription;
+    @ViewChild('stepper') stepper: MatStepper;
     constructor(
         private duplicateBillDataSharingService: DuplicateBillDataSharingService,
         private paymentDataSharingService: PaymentDataSharingService,
         private duplicateBillService: DuplicateBillService,
-        private alertService: AlertService) { }
+        private alertService: AlertService,
+        private commonService:CommonService,
+        private addressService: ApplicantAddressService) { }
 
     ngOnInit() {
         this.duplicateBillDataSharingService.observableIsShowForm.subscribe(data => {
@@ -84,4 +91,36 @@ export class DuplicateBillComponent implements OnInit {
                 }
             });
     }
+
+    stepChanged(event, stepper){
+        stepper.selected.interacted = false;
+    }
+
+    stepChangedEvent(event){
+        this.moveStepper(1);
+    }
+
+    moveStepper(index: number) {
+        this.stepper.selectedIndex = index;
+    }
+    
+    ngAfterViewInit() {
+        setTimeout(() => {
+         this.moveStepper(0);
+        });
+    }
+
+    saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
+        this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
+             (data) => {
+               this.commonService.applicationNo = data.body.applicationNo;
+               this.commonService.serviceFormId = data.body.id;
+               debugger
+               this.moveStepper(1);
+             },
+             (error) => {
+               this.commonService.callErrorResponse(error);
+             });
+       }
+
 }
