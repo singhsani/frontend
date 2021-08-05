@@ -184,7 +184,7 @@
           </button>
           </div>
 
-          <button *ngIf="(element.status == bookingConstant.SUBMITTED && (element.resourceType == 'STADIUM' || element.resourceType == 'CHILDREN_THEATER'))" mat-menu-item color="primary" (click)="printAcknowledge(element.refNumber)">
+          <button *ngIf="acknowledgmentReceipt(element)" mat-menu-item color="primary" (click)="printAcknowledge(element.refNumber)">
             <mat-icon title="Print Receipt" color="primary">print</mat-icon>
             {{'acknowledgement_reprint' | translate:translateKey}}
           </button>

@@ -171,6 +171,11 @@
                     <div class="row">
                         <div *ngFor="let date of bookingUtils.filterAcc(month.id, Dates)" class="col-6 col-md-3 col-lg-2 mb-1 p-1">
                             <div class="dateBox rounded border">
+                                <div class="dateBox rounded border availableDate" *ngFor="let shift of date.slotList; let i = index"
+                                [ngClass]="{'bookDate': shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED,
+                               'checkDate': shift.slotStatus != bookingConstants.AVAILABLE,
+                               'blockDate': shift.slotStatus == 'TEMPORARY_BLOCKED',
+                               'holiyDay': shift.slotStatus == bookingConstants.RESERVED || shift.slotStatus == bookingConstants.HOLIDAY || shift.slotStatus == bookingConstants.FESTIVAL}">
                                 <strong>
                                     {{bookingUtils.returnProperDate(date.key)}}
                                 </strong>
@@ -180,6 +185,7 @@
                                         [checked]="shift.slotStatus != bookingConstants.AVAILABLE">
                                         &nbsp;{{shift.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : shift.slotStatus }}
                                     </mat-checkbox>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -361,13 +367,13 @@
 
 
                         <mat-form-field class="col-md-4">
-                            <input matInput type="email" formControlName="emailId" placeholder="{{'applicant_email' | translate: translateKey}}" required>
+                            <input matInput type="email" maxlength="50" formControlName="emailId" placeholder="{{'applicant_email' | translate: translateKey}}" required>
                             <control-messages [control]="stadiumApplicationForm.get('emailId')"></control-messages>
                         </mat-form-field>
 
                         <div class="col-md-4">
                             <mat-form-field>
-                                <input matInput type="email" formControlName="confirmEmailId" placeholder="{{'confirm_email' | translate: translateKey}}"
+                                <input matInput type="email" maxlength="50" formControlName="confirmEmailId" placeholder="{{'confirm_email' | translate: translateKey}}"
                                     required>
                                 <control-messages [control]="stadiumApplicationForm.get('confirmEmailId')"></control-messages>
                             </mat-form-field>
@@ -385,7 +391,7 @@
 
                         <div class="col-md-4">
                             <mat-form-field>
-                                <input matInput type="text" formControlName="gstNo" placeholder="{{'gstno' | translate : translateKey}}">
+                                <input matInput type="text" maxlength="15" formControlName="gstNo" placeholder="{{'gstno' | translate : translateKey}}">
                                 <control-messages [control]="stadiumApplicationForm.get('gstNo')"></control-messages>
                             </mat-form-field>
                         </div>
