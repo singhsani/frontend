@@ -461,8 +461,8 @@ export class FormsActionsService {
 		return this.http.post(this.requestURL, {});
 	}
 
-	saveNoDueCertificate(apiName: any, noofCopies: any, asonDate: any, occupierId: any, propertyBasicId: any) {
-		this.requestURL = `api/form/${this.apiType}/${apiName}?noofCopies=${noofCopies}&asonDate=${asonDate}&occupierId=${occupierId}&propertyBasicId=${propertyBasicId}`;
+	saveNoDueCertificate(apiName: any, noofCopies: any, asonDate: any, occupierId: any, propertyBasicId: any, serviceFormId : any) {
+		this.requestURL = `api/form/${this.apiType}/${apiName}?noofCopies=${noofCopies}&asonDate=${asonDate}&occupierId=${occupierId}&propertyBasicId=${propertyBasicId}&propertyServiceApplicationId=${serviceFormId}`;
 		return this.http.post(this.requestURL, {});
 	}
 

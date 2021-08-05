@@ -255,7 +255,11 @@ export class NoDueCertificateTableComponent implements OnInit {
         //call save api befor submit
         console.log("selected item", this.selectedItem);
         
-        this.formService.saveNoDueCertificate('saveNoDueCertificate',formdata.noofCopies, date, this.outstandingDetailModel.occupierOutstandingDetails[0].occupierId,this.selectedItem.propertyBasicId).subscribe(res=> {
+        this.formService.saveNoDueCertificate('saveNoDueCertificate',formdata.noofCopies,
+         date, 
+         this.outstandingDetailModel.occupierOutstandingDetails[0].occupierId,
+         this.selectedItem.propertyBasicId,
+         this.commonService.serviceFormId).subscribe(res=> {
           console.log('res in save is');
           console.log(res);
           let data = res;
