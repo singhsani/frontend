@@ -8,6 +8,12 @@ export class TaxRebateApplicationDataSharingService {
   
   applicationNumber :any;
   isShowForm: boolean = false;
+  propertyTaxRebateId : any;
+  serviceCode : any;
+  serviceId : any;
+  isPaymentReceipt : boolean;
+  
+
   dataSourceIsShowForm = new BehaviorSubject<boolean>(this.isShowForm);
   observableIsShowForm = this.dataSourceIsShowForm.asObservable();
   updatedIsShowForm(data: boolean) {

@@ -82,7 +82,9 @@ export class TaxRebateApplicationService {
   }
 
   getApplicationNo(taxRebateApplicationId) {
-      return this.http.get(`${Constants.serverApiIp}/property/taxrebate/application/getApplicationNo?taxRebateApplicationId=${taxRebateApplicationId}`);
+      return this.http.get(`${Constants.serverApiIp}/property/taxrebate/application/getApplicationNo?taxRebateApplicationId=${taxRebateApplicationId}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
   }
 
 }

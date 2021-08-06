@@ -103,6 +103,9 @@ export class PropertyInfoComponent implements OnInit {
           this.applicationModel = data.body;
           this.applicationModel.carpetArea = this.carpetArea;
           this.transferPropertyDataSharingService.applicationNo = this.applicationModel.applicationNo;
+          this.transferPropertyDataSharingService.propertyTransferId = this.applicationModel.propertyTransferId;
+          this.transferPropertyDataSharingService.isPaymentReceipt = data.body.paymentReceipt;
+          this.transferPropertyDataSharingService.propertyServiceCode = data.body.serviceCode;
         }
       },
       (error) => {
