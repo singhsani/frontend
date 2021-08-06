@@ -10,6 +10,7 @@ import { FormsActionsService} from 'src/app/core/services/citizen/data-services/
 import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
 import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
 import { CommonService as CommonService2 } from 'src/app/vmcshared/Services/common-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-detail',
@@ -35,7 +36,8 @@ export class DetailComponent implements OnInit {
     private commonService: CommonService,
     private fromActionsService: FormsActionsService,
     private addressService: ApplicantAddressService,
-    private commonService2: CommonService2) {
+    private commonService2: CommonService2,
+    private router: Router) {
 
   }
 
@@ -88,6 +90,7 @@ export class DetailComponent implements OnInit {
         (data) => {
           this.isShaved = true;
           this.model.taxRebateApplicationId = data.body.data;
+          this.taxRebateApplicationDataSharingService.propertyTaxRebateId  = data.body.data;
           //this.alertService.success(data.body.message);
           this.stepper.selectedIndex = 1;
           this.getFormDataDocuments(this.model.taxRebateApplicationId);
@@ -228,6 +231,20 @@ export class DetailComponent implements OnInit {
     this.taxRebateApplicationService.approveDept({ taxRebateApplicationId: this.model.taxRebateApplicationId }).subscribe(
       (data) => {
         this.alertService.success(data.body.message);
+
+        if(this.commonService.fromAdmin()){
+
+          const url = '/citizen/my-applications' + 
+									'?printPaymentReceipt=' + this.taxRebateApplicationDataSharingService.isPaymentReceipt + 
+									'&apiCode=' + this.taxRebateApplicationDataSharingService.serviceCode +
+									'&id=' + this.taxRebateApplicationDataSharingService.serviceId;
+
+									this.router.navigateByUrl(url);
+
+        }else{
+          this.router.navigateByUrl('/citizen/my-applications');
+        }
+
       },
       (error) => {
         if (error.status === 400) {
@@ -249,7 +266,11 @@ export class DetailComponent implements OnInit {
 
     this.taxRebateApplicationService.getApplicationNo(taxRebateApplicationId).subscribe(
       (data) => {
-       this.taxRebateApplicationDataSharingService.applicationNumber = data;    
+        console.log('data 253 - >',data);
+       this.taxRebateApplicationDataSharingService.applicationNumber = data.body.data.applicationNo;  
+       this.taxRebateApplicationDataSharingService.serviceCode  = data.body.data.serviceCode;
+       this.taxRebateApplicationDataSharingService.serviceId   = data.body.data.serviceId;
+       this.taxRebateApplicationDataSharingService.isPaymentReceipt   = data.body.data.paymentReceipt;
       },
       (error) => {
         if (error.status === 400) {

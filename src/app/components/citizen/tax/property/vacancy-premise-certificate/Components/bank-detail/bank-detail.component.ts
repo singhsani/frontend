@@ -148,6 +148,7 @@ export class BankDetailComponent implements OnInit, OnDestroy {
           this.model.vacancyPremiseCertficateId =  data.body.data.vacancyPremiseCertficateId;
           this.stepper.selectedIndex = 1;
           this.vacancyPremiseCertificateDataSharingService.applicationNumber = data.body.data.applicationNo ;
+          this.vacancyPremiseCertificateDataSharingService.vacancyPremisesCetiId = data.body.data.vacancyPremiseCertficateId;
           //this.alertService.success(data.body.message);
           this.getFormDataDocuments(this.model.vacancyPremiseCertficateId);
           //this.paymentDataSharingService.updatedDataModelFileDownload(data.body.data.responseDTOList);
@@ -291,6 +292,9 @@ submit(){
      this.alertService.success(data.message);
      this.router.navigateByUrl('/citizen/my-applications');
      this.paymentDataSharingService.updatedDataModelFileDownload(data.body.data);
+     if(this.commonservice2.fromAdmin()){
+//
+           }
     },
     (error) => {
       this.commonService.callErrorResponse(error);
