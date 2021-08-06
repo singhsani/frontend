@@ -135,7 +135,21 @@ export class TransferDocumentUploadComponent implements OnInit {
           this.alertService.success(data.body.message);
           this.transferPropertyDataSharingService.updateDataSourceMoveStepper(0);
           // this.router.navigate(['/citizen/dashboard']);
-          this.router.navigateByUrl('/citizen/my-applications');
+          // this.router.navigateByUrl('/citizen/my-applications');
+          if (this.commonService.fromAdmin()) {
+           
+            const url = '/citizen/my-applications' + 
+            '?printPaymentReceipt=' + this.transferPropertyDataSharingService.isPaymentReceipt + 
+            '&apiCode=' + this.transferPropertyDataSharingService.propertyServiceCode  +
+            '&id=' + this.transferPropertyDataSharingService.serviceId;
+
+            this.router.navigateByUrl(url);
+       
+          }else{
+            this.router.navigateByUrl('/citizen/my-applications');
+          }
+
+
         },
         (error) => {
           if (error.status === 400) {
