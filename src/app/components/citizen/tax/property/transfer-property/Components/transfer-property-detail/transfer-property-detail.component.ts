@@ -64,6 +64,7 @@ export class TransferPropertyDetailComponent implements OnInit {
 				(data) => {
 					this.commonService.applicationNo = data.body.applicationNo;
           this.transferPropertyDataSharingService.updateDataSourceMoveStepper(3);
+          this.transferPropertyDataSharingService.serviceId = data.body.id;
 				},
 				(error) => {
 					this.commonService.callErrorResponse(error);

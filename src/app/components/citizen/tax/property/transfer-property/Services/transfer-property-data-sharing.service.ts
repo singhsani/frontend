@@ -8,6 +8,11 @@ export class TransferPropertyDataSharingService {
   
   applicationNo :any;
   isShowForm: boolean = false;
+  propertyBasicId :any;
+  propertyTransferId : any;
+  propertyServiceCode :any;
+  isPaymentReceipt :boolean;
+  serviceId :any;
   dataSourceIsShowForm = new BehaviorSubject<boolean>(this.isShowForm);
   observableIsShowForm = this.dataSourceIsShowForm.asObservable();
   updatedIsShowForm(data: boolean) {
