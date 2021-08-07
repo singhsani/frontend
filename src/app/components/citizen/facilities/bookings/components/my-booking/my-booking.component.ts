@@ -756,7 +756,7 @@ export class MyBookingComponent implements OnInit {
 	  }
 	printLOIReceipt(refNumber:string){
     this.bookingService.getBase64StringURL(refNumber).subscribe(res => {
-          if(res.success){
+          if(res.success && res.displayForm){
             this.viewBase64File(res.data);
           }else{
             this.toster.error("You will get LOI after department process will be complete");
