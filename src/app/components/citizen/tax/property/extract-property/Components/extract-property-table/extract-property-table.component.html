@@ -1,5 +1,5 @@
 <mat-card class="cardBox mt-2">
-  <div class="mt-4">
+  <!-- <div class="mt-4"> -->
     <div class="example-container mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 width100">
         <ng-container matColumnDef="select">
@@ -11,7 +11,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="propertyNo">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Property No </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Property Number</th>
           <td mat-cell *matCellDef="let element"> {{element.propertyNo}} </td>
         </ng-container>
         <ng-container matColumnDef="propertyAddress">
@@ -33,7 +33,7 @@
     </div>
     <mat-paginator [length]="resultsLength" [hidden]="resultsLength==0" [pageSizeOptions]="pageRecord" showFirstLastButtons></mat-paginator> 
 	
-  </div>
+  <!-- </div> -->
   <div class="row margin-top-20">
     <div class="col-md-2">
       <mat-card>Total Count : <b>{{totalCount}}</b></mat-card>
