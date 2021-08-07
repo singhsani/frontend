@@ -18,6 +18,7 @@ import { SelectPaymentGatewayPropertyComponent } from 'src/app/vmcshared/compone
 import { DatePipe } from '@angular/common';
 import { merge, of } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
+import { Console } from 'console';
 
 @Component({
   selector: 'app-extract-property-table',
@@ -45,6 +46,10 @@ export class ExtractPropertyTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 	pageRecord = Constants.pageRecord; 
 	resultsLength: number = 0;	
+  feesDetails = [];
+  serviceFeesDetails: Array<any> = [];
+  NumberOfCopies :number = 1;
+
   constructor(private extractPropertyDataSharingService: ExtractPropertyDataSharingService,
     private extractPropertyService: ExtractPropertyService,
     private paymentDataSharingService: PaymentDataSharingService,
@@ -155,6 +160,8 @@ export class ExtractPropertyTableComponent implements OnInit {
           this.serviceCharge.asonDate = new Date();
           this.isShowPayMode = true;
           this.getOutstandingDetails(this.selectedItem.propertyOccupierId);
+          this.serviceFeesDetails = data.body.data.serviceChargeDetail; 
+          this.setOrUpdateFeesDetails(this.serviceFeesDetails,this.NumberOfCopies);
         }
         else {
           this.isShowPayMode = false;
@@ -184,6 +191,8 @@ export class ExtractPropertyTableComponent implements OnInit {
 
   onBlurNoofCopies(event) {
     this.serviceCharge.totalAmount = this.serviceCharge.totalAmountOriginal * event.target.value;
+    this.NumberOfCopies = event.target.value;
+    this.setOrUpdateFeesDetails(this.serviceFeesDetails,this.NumberOfCopies);
   }
   onDetailCLick() {
     this.isShowDetail = !this.isShowDetail;
@@ -279,4 +288,15 @@ export class ExtractPropertyTableComponent implements OnInit {
       this.detailOutstandingButtonText = "Hide Detail";
     }
   }
+
+  setOrUpdateFeesDetails(serviceFeesDetails,NumberOfCopies){
+      this.feesDetails = [];
+      serviceFeesDetails.forEach((value) => {
+      let chargeName = value.chargeName;
+      let chargeAmount = value.chargeAmount *NumberOfCopies;
+      let obj = {'chargeName' : chargeName,'chargeAmount':chargeAmount}
+      this.feesDetails.push(obj);
+    });
+  }
+
 }

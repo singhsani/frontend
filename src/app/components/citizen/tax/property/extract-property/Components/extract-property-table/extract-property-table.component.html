@@ -121,13 +121,13 @@
                 <th>Charge Name</th>
                 <th>Charge Amount (In Rs.)</th>
               </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of serviceCharge.serviceChargeDetail">
-                <td>{{item.chargeName}}</td>
-                <td>{{item.chargeAmount}}</td>
-              </tr>
-            </tbody>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of feesDetails">
+                  <td>{{item.chargeName}}</td>
+                  <td>{{item.chargeAmount}}</td>
+                </tr>
+              </tbody>
           </table>
         </div>
       </div>
