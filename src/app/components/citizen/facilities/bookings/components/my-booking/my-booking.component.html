@@ -189,6 +189,11 @@
             {{'acknowledgement_reprint' | translate:translateKey}}
           </button>
 
+          <button *ngIf="element.resourceType == 'STADIUM' && element.status == bookingConstant.SCRUTINY" mat-menu-item color="primary" (click)="printLOIReceipt(element.refNumber)">
+            <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+            {{'loi_download' | translate:translateKey}}
+          </button>
+
           <!-- <button mat-menu-item color="primary" (click)="openJSONModal(template);jsonDisplay(element)">
             <mat-icon class="m-1" title="{{'application_json' | translate:translateKey}}">center_focus_weak</mat-icon>
             {{'application_json' | translate:translateKey}}

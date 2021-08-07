@@ -741,7 +741,7 @@ export class MyBookingComponent implements OnInit {
           this.commonService.openAlert('Error', err.message, 'warning');
         });
       }
-	  
+
 	  openRejectedModel(template: TemplateRef<any>, responseData, refNumber) {
 		this.rejectedMessage = responseData.newgenRemarks;
 		this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-mg' }));
@@ -754,4 +754,25 @@ export class MyBookingComponent implements OnInit {
 			  return true;
 		  }
 	  }
+	printLOIReceipt(refNumber:string){
+    this.bookingService.getBase64StringURL(refNumber).subscribe(res => {
+          if(res.success && res.displayForm){
+            this.viewBase64File(res.data);
+          }else{
+            this.toster.error("You will get LOI after department process will be complete");
+          }
+    });
+  }
+
+  viewBase64File(url) {
+      var iframe = "<iframe allowfullscreen border='0' style='margin:-8px' width='100%' height='100%' src='" + url + "'></iframe>"
+      var x = window.open();
+      if (!x || x.closed || typeof x.closed == 'undefined') {
+          this.commonService.openAlert('Pop-up!', 'Please disable your Pop-up blocker and try again.', 'warning');
+          return false;
+      }
+      x.document.open();
+      x.document.write(iframe);
+      x.document.close();
+  }
 }

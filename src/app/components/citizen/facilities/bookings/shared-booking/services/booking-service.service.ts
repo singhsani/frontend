@@ -413,4 +413,9 @@ export class BookingService {
       this.requestURL = `api/booking/${this.resourceType}/cancellationApproveReport?refNumber=${refNumber}`;
       return this.http.get(this.requestURL,'printReceipt');
     }
+
+    getBase64StringURL(refNumber: string) {
+        this.requestURL = `api/booking/${this.resourceType}/getLoiDocument/${refNumber}`;
+        return this.http.get(this.requestURL);
+    }
 }
