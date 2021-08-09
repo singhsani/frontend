@@ -46,6 +46,9 @@ export class DuplicateBillTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 	pageRecord = Constants.pageRecord; 
   resultsLength: number = 0;	
+  feesDetails = [];
+  serviceFeesDetails: Array<any> = [];
+  NumberOfCopies :number = 1;
   
   constructor(
     private duplicateBillDataSharingService: DuplicateBillDataSharingService,
@@ -176,6 +179,8 @@ export class DuplicateBillTableComponent implements OnInit {
           this.serviceCharge.occupierId = this.selectedItem.propertyOccupierId;
           this.serviceCharge.propertyBasicId = this.selectedItem.propertyBasicId;
           this.serviceCharge.billTypeLookupId = event;
+          this.serviceFeesDetails = data.body.data.serviceChargeDetail;
+          this.setOrUpdateFeesDetails(this.serviceFeesDetails,this.NumberOfCopies);
         }
       },
       (error) => {
@@ -196,6 +201,8 @@ export class DuplicateBillTableComponent implements OnInit {
 
   onBlurNoofCopies(event) {
     this.serviceCharge.totalAmount = this.serviceCharge.totalAmountOriginal * event.target.value;
+    this.NumberOfCopies = event.target.value;
+    this.setOrUpdateFeesDetails(this.serviceFeesDetails,this.NumberOfCopies);
   }
 
   onDetailCLick() {
@@ -292,4 +299,14 @@ export class DuplicateBillTableComponent implements OnInit {
       }
     }
   }
+
+  setOrUpdateFeesDetails(serviceFeesDetails,NumberOfCopies){
+    this.feesDetails = [];
+    serviceFeesDetails.forEach((value) => {
+    let chargeName = value.chargeName;
+    let chargeAmount = value.chargeAmount *NumberOfCopies;
+    let obj = {'chargeName' : chargeName,'chargeAmount':chargeAmount}
+    this.feesDetails.push(obj);
+  });
+}
 }
