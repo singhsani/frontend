@@ -386,6 +386,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		if (row.serviceType === 'PEC_REG' && row.serviceType === 'PRC_REG' || row.serviceType ===
 			'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE')
 			return false;
+		else if (row.serviceType == "AFFORD_HOUSE"){
+			return false;
+		}	
 		else if (row.canEdit || row.fileStatus === 'QUERIED' || row.fileStatus === 'QUERY_RAISED')
 			return true;
 	}
@@ -409,6 +412,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		if((row.serviceType === 'SHOP_ESTAB_APPLICATION' && row.fileStatus === 'APPROVED') || (row.serviceType === 'SHOP_ESTAB_APPLICATION' && row.fileStatus === 'REJECTED')
 			|| (row.serviceType === 'SHOP_ESTAB_TRANSFER' && row.fileStatus === 'APPROVED') || (row.serviceType === 'SHOP_ESTAB_TRANSFER' && row.fileStatus === 'REJECTED')){
 			return true;
+		}
+		else if (row.serviceType == "AFFORD_HOUSE"){
+			return false;
 		}
 		else if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG' || row.serviceType ===
 			'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.fileStatus == 'APPROVED' ){
@@ -528,6 +534,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	}
 	isPrintReceiptPayment(row) {
 		if(row.fileStatus == 'PAYMENT' && row.serviceType == 'MARRIAGE_REGISTRATION'){
+			return false;
+		}
+		else if (row.serviceType == "AFFORD_HOUSE"){
 			return false;
 		}
 		else if(row.fileStatus == 'PAYMENT' && row.serviceType == 'MEAT_FISH_DUPLICATE'){
