@@ -35,23 +35,87 @@
                 </mat-form-field>
 
                 <mat-form-field class="col-md-4">
-                    <input matInput trim type="text" formControlName="childName"
+                    <input matInput trim type="text" formControlName="childName" appGujInputSource targetElement="childNameGuj"
                         placeholder="{{'child_name' | translate: translateKey}}" readonly>
                 </mat-form-field>
 
                 <mat-form-field class="col-md-4">
-                    <input matInput trim type="text" formControlName="birthDate"
+                    <input matInput trim type="text" formControlName="birthDate" appGujInputSource targetElement="birthdateguj"
                         placeholder="{{'birth_date' | translate: translateKey}}" readonly>
                 </mat-form-field>
 
                 <mat-form-field class="col-md-4">
-                    <input matInput trim type="text" formControlName="birthtime"
+                    <input matInput trim type="text" formControlName="birthtime" appGujInputSource targetElement="birthtimeguj"
                         placeholder="{{'birth_time' | translate: translateKey}}" readonly>
                 </mat-form-field>
 
+                <mat-form-field class="col-md-4">
+                    <input matInput  appGujInputTarget  
+                    placeholder="{{'child_name' | translate:translateKey:'gu'}}" formControlName="childNameGuj" readonly>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-4">
+                    <input matInput  appGujInputTarget  
+                    placeholder="{{'birth_date' | translate:translateKey:'gu'}}" formControlName="birthdateguj" readonly>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-4">
+                    <input matInput  appGujInputTarget  
+                    placeholder="{{'birth_time' | translate:translateKey:'gu'}}" formControlName="birthtimeguj" readonly>
+                </mat-form-field>
+
+                
+
+            </div>
+
+            <h2>{{'mother_details' | translate:translateKey}}</h2>
+
+            <div class="row">
+
                 <mat-form-field class="col-md-6">
+                    <input matInput trim type="text" formControlName="motherFirstName" appGujInputSource targetElement="motherFirstNameGuj"
+                        placeholder="{{'mother_name' | translate: translateKey}}" readonly>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-6">
+                    <input matInput  appGujInputTarget  
+                    placeholder="{{'mother_name' | translate:translateKey:'gu'}}" formControlName="motherFirstNameGuj" readonly>
+                </mat-form-field>
+
+            </div>
+
+            <h2>{{'father_details' | translate:translateKey}}</h2>
+
+            <div class="row">
+
+                <mat-form-field class="col-md-6">
+                    <input matInput trim type="text" formControlName="fatherFirstName" appGujInputSource targetElement="fatherFirstNameGuj"
+                        placeholder="{{'father_name' | translate: translateKey}}" readonly>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-6">
+                    <input matInput trim appGujInputTarget  
+                    placeholder="{{'father_name' | translate:translateKey:'gu'}}" formControlName="fatherFirstNameGuj" readonly>
+                </mat-form-field>
+
+            </div>
+
+            <h2>{{'other_details' | translate:translateKey}}</h2>
+
+            <div>
+                <mat-form-field class="col-md-4">
+                    <input matInput trim type="text" formControlName="registrationDate"
+                        placeholder="{{'reg_date' | translate: translateKey}}" readonly>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-4">
                     <input matInput trim type="text" formControlName="gender" appGujInputSource targetElement="genderguj"
                         placeholder="{{'gender' | translate: translateKey}}" readonly>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-4">
+                    <input matInput trim appGujInputTarget  
+                    placeholder="{{'gender' | translate:translateKey:'gu'}}" formControlName="genderguj" readonly>
                 </mat-form-field>
 
                 <mat-form-field class="col-md-6">
@@ -60,28 +124,8 @@
                 </mat-form-field>
 
                 <mat-form-field class="col-md-6">
-                    <input matInput appPreventSpace appGujInputTarget  
-                    placeholder="{{'gender' | translate:translateKey:'gu'}}" formControlName="genderguj" readonly>
-                </mat-form-field>
-
-                <mat-form-field class="col-md-6">
-                    <input matInput appPreventSpace appGujInputTarget  
+                    <input matInput trim appGujInputTarget  
                     placeholder="{{'birth_place' | translate:translateKey:'gu'}}" formControlName="placeofbirthguj" readonly>
-                </mat-form-field>
-
-                <mat-form-field class="col-md-4">
-                    <input matInput trim type="text" formControlName="mothername"
-                        placeholder="{{'mother_name' | translate: translateKey}}" readonly>
-                </mat-form-field>
-
-                <mat-form-field class="col-md-4">
-                    <input matInput trim type="text" formControlName="fathername"
-                        placeholder="{{'father_name' | translate: translateKey}}" readonly>
-                </mat-form-field>
-
-                <mat-form-field class="col-md-4">
-                    <input matInput trim type="text" formControlName="regdate"
-                        placeholder="{{'reg_date' | translate: translateKey}}" readonly>
                 </mat-form-field>
 
                 <mat-form-field class="col-md-12">
@@ -90,7 +134,7 @@
                 </mat-form-field>
 
                 <mat-form-field class="col-md-12">
-                    <input matInput appPreventSpace appGujInputTarget  
+                    <input matInput trim appGujInputTarget  
                     placeholder="{{'address' | translate:translateKey:'gu'}}" formControlName="birthaddressguj" readonly>
                 </mat-form-field>
 
@@ -100,12 +144,10 @@
                 </mat-form-field>
 
                 <mat-form-field class="col-md-12">
-                    <input matInput appPreventSpace appGujInputTarget  
+                    <input matInput trim appGujInputTarget  
                     placeholder="{{'permanent_add' | translate:translateKey:'gu'}}" formControlName="permanentaddguj" readonly>
                 </mat-form-field>
 
-
-                
             </div>
 
             <app-action-bar [isstepper]="false" [form]="birthDuplicateForm" [paymentGateway]="paymentGateway"

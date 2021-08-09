@@ -31,7 +31,7 @@
 				</mat-form-field>
 
 				<mat-form-field class="col-md-4">
-					<input matInput type="text" formControlName="fatherName" appValidationFields
+					<input matInput type="text" formControlName="fatherFirstName" appValidationFields
 						validationFieldsType="onlyNameWithOutSpace"
 						placeholder="{{'father_name' | translate: translateKey}}">
 				</mat-form-field>
@@ -126,7 +126,7 @@
 
 			<ng-container matColumnDef="certificateno">
 				<th mat-header-cell *matHeaderCellDef>Certificate no</th>
-				<td mat-cell *matCellDef="let row">{{row.certificateno}}</td>
+				<td mat-cell *matCellDef="let row">{{deathFromName? row.certificateno : row.birthRegNumber}}</td>
 			</ng-container>
 
 			<ng-container matColumnDef="name">
@@ -141,12 +141,12 @@
 
 			<ng-container  matColumnDef="fathersName"> 
 				<th mat-header-cell *matHeaderCellDef>Father Name</th>
-				<td mat-cell *matCellDef="let row">{{deathFromName ? row.fatherorhusbandname : row.fathername}}</td>
+				<td mat-cell *matCellDef="let row">{{deathFromName ? row.fatherorhusbandname : row.fatherFirstName}}</td>
 			</ng-container>
 
 			<ng-container  matColumnDef="mothersName">
 				<th mat-header-cell *matHeaderCellDef>Mother Name</th>
-				<td mat-cell *matCellDef="let row">{{deathFromName ? row.mothername : row.mothername}}</td>
+				<td mat-cell *matCellDef="let row">{{deathFromName ? row.mothername : row.motherFirstName}}</td>
 			</ng-container>
 
 			<ng-container matColumnDef="action">
