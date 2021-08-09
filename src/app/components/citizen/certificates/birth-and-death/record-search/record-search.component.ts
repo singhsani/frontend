@@ -168,7 +168,7 @@ export class RecordSearchComponent implements OnInit {
 			birthRegYear: null,
 			birthDate: null,
 			childName: null,
-			fatherName: null,
+			fatherFirstName: null,
 			motherName: null
 			// regNumber: null,
 			// regYear: this.fb.group({
