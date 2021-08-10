@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
@@ -14,6 +14,7 @@ import { SearchModel } from '../../Models/duplicate-bill.model';
 })
 export class DuplicateBillSearchComponent implements OnInit {
 
+  @ViewChild('formDetail') mytemplateForm : NgForm;
   searchModel = new SearchModel();
   wardZoneLevel = [];
   wardZoneLevel1List = [];
@@ -137,6 +138,7 @@ export class DuplicateBillSearchComponent implements OnInit {
     }
   }
   clear() {
+    this.mytemplateForm.reset();
     this.propertyNo = null;
     this.wardZoneLevel2List = [];
     this.wardZoneLevel3List = [];

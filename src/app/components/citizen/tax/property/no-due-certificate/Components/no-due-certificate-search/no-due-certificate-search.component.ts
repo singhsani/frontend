@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { NoDueCertificateDataSharingService } from '../../Services/no-due-certificate-data-sharing.service';
@@ -13,6 +13,7 @@ import { SearchModel } from '../../Models/no-due-certificate.model';
 })
 export class NoDueCertificateSearchComponent implements OnInit {
 
+  @ViewChild('formDetail') mytemplateForm : NgForm;
   searchModel = new SearchModel();
   wardZoneLevel = [];
   wardZoneLevel1List = [];
@@ -136,6 +137,7 @@ export class NoDueCertificateSearchComponent implements OnInit {
     }
   }
   clear() {
+    this.mytemplateForm.reset();
     this.propertyNo = null;
     this.wardZoneLevel2List = [];
     this.wardZoneLevel3List = [];
