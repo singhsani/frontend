@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { TaxRebateApplicationDataSharingService } from '../../Services/tax-rebate-application-data-sharing.service';
@@ -13,6 +13,7 @@ import { SearchModel } from '../../Models/tax-rebate-application.model';
 })
 export class TaxRebateApplicationSearchComponent implements OnInit {
 
+  @ViewChild('formDetail') mytemplateForm : NgForm;
   searchModel = new SearchModel();
   wardZoneLevel = [];
   wardZoneLevel1List = [];
@@ -135,6 +136,7 @@ export class TaxRebateApplicationSearchComponent implements OnInit {
     }
 }
   clear() {
+    this.mytemplateForm.reset();
     this.propertyNo=null;
     this.wardZoneLevel2List = [];
     this.wardZoneLevel3List = [];

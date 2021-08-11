@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { AssessmentCertificateDataSharingService } from '../../Services/assessment-certificate-data-sharing.service';
@@ -12,6 +12,7 @@ import { SearchModel } from '../../Models/assessment-certificate.model';
   styleUrls: ['./assessment-certificate-search.component.scss']
 })
 export class AssessmentCertificateSearchComponent implements OnInit {
+  @ViewChild('formDetail') mytemplateForm : NgForm;
   searchModel = new SearchModel();
   wardZoneLevel = [];
   wardZoneLevel1List = [];
@@ -135,6 +136,7 @@ export class AssessmentCertificateSearchComponent implements OnInit {
     }
   }
   clear() {
+    this.mytemplateForm.reset();
     this.propertyNo = null;
     this.wardZoneLevel2List = [];
     this.wardZoneLevel3List = [];
