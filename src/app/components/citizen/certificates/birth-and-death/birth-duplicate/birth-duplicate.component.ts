@@ -177,8 +177,8 @@ export class BirthDuplicateComponent implements OnInit {
 	newgnDateconvert(controlName: any, date) {
 		let dateString = date;
 		let dateParts = dateString.split("-");
-		// let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
-		let dateObject = new Date(+dateParts[0], dateParts[1] - 1,+dateParts[2]);
+		let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+		// let dateObject = new Date(+dateParts[0], dateParts[1] - 1,+dateParts[2]);
 		this.birthDuplicateForm.get(controlName).setValue(moment(dateObject).format("DD-MM-YYYY"));
 	}
 
