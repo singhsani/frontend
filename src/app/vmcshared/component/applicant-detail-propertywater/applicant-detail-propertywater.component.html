@@ -2,9 +2,23 @@
   <mat-card>
     <div class="row">
       <mat-form-field class="full-width-input col-md-4">
-        <input matInput required placeholder="Name" name="firstName" maxlength="255" #firstName="ngModel"
+        <input matInput required placeholder="First Name" name="firstName" maxlength="255" #firstName="ngModel"
           [(ngModel)]="model.firstName">
-        <mat-error *ngIf="firstName.invalid">*Name is invalid.
+        <mat-error *ngIf="firstName.invalid">*First Name is invalid.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input col-md-4">
+        <input matInput placeholder="Middle Name" name="middleName" maxlength="255" #middleName="ngModel"
+          [(ngModel)]="model.middleName">
+        <mat-error *ngIf="middleName.invalid">*Middle Name is invalid.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input col-md-4">
+        <input matInput required placeholder="Last Name" name="lastName" maxlength="255" #lastName="ngModel"
+          [(ngModel)]="model.lastName">
+        <mat-error *ngIf="lastName.invalid">*Last Name is invalid.
         </mat-error>
       </mat-form-field>
 
@@ -31,7 +45,7 @@
       <mat-form-field class="full-width-input col-md-4">
         <input matInput placeholder="Name of Society/Building" name="streetName" #streetName="ngModel"
           [(ngModel)]="model.citizenAddressDTO.streetName">
-        <mat-error *ngIf="streetName.invalid">Building Name is invalid.</mat-error>
+        <mat-error *ngIf="streetName.invalid">Street Name is invalid.</mat-error>
       </mat-form-field>
 
       <mat-form-field class="full-width-input col-md-4">
