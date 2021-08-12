@@ -59,7 +59,6 @@ export class NewPropertyEntryAddComponent implements AfterViewInit {
   }
 
   saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
-    debugger
     this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
          (data) => {
            this.commonService.applicationNo = data.body.applicationNo;

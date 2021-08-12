@@ -135,8 +135,13 @@ export class ApplicantDetailPropertywaterComponent implements OnInit {
 				const userData = res['data'];
 				if(userData){
 					this.model.firstName = userData.firstName;
+					this.model.lastName = userData.lastName;
+					this.model.middleName = userData.middleName;
 					this.model.mobileNo = userData.cellNo;
-					this.model.email = userData.email	
+					this.model.email = userData.email;	
+					this.model.citizenAddressDTO.buildingName = userData.buildingName;
+					this.model.citizenAddressDTO.streetName = userData.streetName;
+					this.model.citizenAddressDTO.landmark = userData.landmark;
 				}
 				
 			})
