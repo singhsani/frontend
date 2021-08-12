@@ -200,7 +200,7 @@
             </div>
             <div class="col-md-3">
                 <div class="ngSelect">
-                    <ng-select required placeholder="{{'is_building_high_rise?' | translate:translateKey }}*" [items]="highLowRiseList"
+                    <ng-select required placeholder="{{'is_building_high_rise' | translate:translateKey }}?*" [items]="highLowRiseList"
                         bindValue="itemId" bindLabel="itemName" name="highRiseLowRiseLookupId"
                         [(ngModel)]="propertyModel.highRiseLowRiseLookupId" #BuildingHighRises="ngModel"
                         [ngClass]="{'ng-invalid ng-touched':  form.submitted && BuildingHighRises.invalid}">

@@ -54,6 +54,8 @@ export class PropertyDocumentUploadAddComponent implements OnInit {
         }
         data.forEach(app => {
           this.PropertyDocumentUploadDocs.push(app);
+          this.PropertyDocumentUploadDocs.sort((a, b) => 
+					a.fieldIdentifier - b.fieldIdentifier);
         });
 
       },
