@@ -120,13 +120,23 @@
                         </mat-form-field>
 
                         <mat-form-field class="col-md-12">
-                            <input matInput trim type="text" formControlName="deathaddress"
+                            <input matInput trim type="text" formControlName="deathaddress" appGujInputSource targetElement="deathaddressguj"
                                 placeholder="{{'address' | translate: translateKey}}" readonly>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-12">
-                            <input matInput trim type="text" formControlName="permanentaddress"
+                            <input matInput  appGujInputTarget  
+                            placeholder="{{'address' | translate:translateKey:'gu'}}" formControlName="deathaddressguj" readonly>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-12">
+                            <input matInput trim type="text" formControlName="permanentaddress" appGujInputSource targetElement="permanentaddressguj"
                                 placeholder="{{'permanent_address' | translate: translateKey}}" readonly>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-12">
+                            <input matInput  appGujInputTarget  
+                            placeholder="{{'permanent_address' | translate:translateKey:'gu'}}" formControlName="permanentaddressguj" readonly>
                         </mat-form-field>
    
                     </div>

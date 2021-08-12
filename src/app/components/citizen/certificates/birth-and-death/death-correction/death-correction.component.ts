@@ -297,20 +297,35 @@ export class DeathCorrectionComponent implements OnInit {
 		this.deathCorrectionForm = this.fb.group({
 
 			//step 1(deceased deatails - 6)
-			deceasedFirstName: null,
-			deceasedMiddleName: null,
-			deceasedLastName: null,
-			deceasedFirstNameGuj: null,
-			deceasedMiddleNameGuj: null,
-			deceasedLastNameGuj: null,
+			deceasedname: null,
+			// deceasedMiddleName: null,
+			// deceasedLastName: null,
+			deceasednameguj: null,
+			gender: null,
+			genderguj: null,
+			dateofdeath: null,
+			
+			// deceasedMiddleNameGuj: null,
+			// deceasedLastNameGuj: null,
 
 			//step 2(family details - 2)
-			motherName: null,
-			motherNameGuj:null,
+			fathername: null,
+			fathernameguj: null,
+			mothername: null,
+			mothernameguj:null,
 			// fatherOrHusbandName: null,
 
 			refNumber: null,
 			registrationNumber: null,
+
+			//step 3(other details)
+			placeofdeath: null,
+			placeofdeathguj: null,
+			regdate: null,
+			deathaddress: null,
+			deathaddressguj: null,
+			permanentaddress: null,
+			permanentaddressguj: null,
 
 			typeOfCorrection: this.fb.group({
 				code: [null]
