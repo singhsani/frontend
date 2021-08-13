@@ -127,6 +127,8 @@ export class NoDueCertificateTableComponent implements OnInit {
         this.alertService.error(error.error.message);
       });*/
       this.paginator.pageIndex=0;
+      this.searchModel.pageNo=null;
+	    this.searchModel.pageSize=null;
       this.searchList();
   }
   searchList() {
