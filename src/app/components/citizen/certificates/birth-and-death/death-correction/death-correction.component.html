@@ -41,58 +41,138 @@
             <mat-tab [label]="'deceased_details' | translate: translateKey">
 
                 <div class="row">
-                    <mat-form-field class="col-md-4">
+                    <mat-form-field class="col-md-6">
                         <input matInput appValidationFields [form]="deathCorrectionForm" appGujInputSource
-                            targetElement="deceasedFirstNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
-                            maxlength="20" placeholder="{{'first_name' | translate:translateKey}}"
-                            formControlName="deceasedFirstName" required>
-                        <control-messages [control]="deathCorrectionForm.get('deceasedFirstName')"></control-messages>
+                            targetElement="deceasednameguj" [validationFieldsType]="'onlyNameWithSpace'"
+                            maxlength="150" placeholder="{{'deceased_name' | translate:translateKey}}"
+                            formControlName="deceasedname" required>
+                        <control-messages [control]="deathCorrectionForm.get('deceasedname')"></control-messages>
                     </mat-form-field>
-                    <mat-form-field class="col-md-4">
+
+                    <!-- <mat-form-field class="col-md-4">
                         <input matInput appValidationFields [form]="deathCorrectionForm" appGujInputSource
                             targetElement="deceasedMiddleNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
                             maxlength="20" placeholder="{{'middle_name' | translate:translateKey}}"
                             formControlName="deceasedMiddleName">
                         <control-messages [control]="deathCorrectionForm.get('deceasedMiddleName')"></control-messages>
-                    </mat-form-field>
-                    <mat-form-field class="col-md-4">
+                    </mat-form-field> -->
+
+                    <!-- <mat-form-field class="col-md-4">
                         <input matInput appValidationFields [form]="deathCorrectionForm" appGujInputSource
                             targetElement="deceasedLastNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
                             maxlength="20" placeholder="{{'last_name' | translate:translateKey}}"
                             formControlName="deceasedLastName" required>
                         <control-messages [control]="deathCorrectionForm.get('deceasedLastName')"></control-messages>
-                    </mat-form-field>
-                    <mat-form-field class="col-md-4">
-                        <input required matInput maxlength="20" appGujInputTarget [form]="deathCorrectionForm"
-                            placeholder="{{'first_name' | translate:translateKey:'gu'}}"
-                            formControlName="deceasedFirstNameGuj">
-                        <control-messages [control]="deathCorrectionForm.get('deceasedFirstNameGuj')">
+                    </mat-form-field> -->
+
+                    <mat-form-field class="col-md-6">
+                        <input required matInput maxlength="300" appGujInputTarget [form]="deathCorrectionForm"
+                            placeholder="{{'deceased_name' | translate:translateKey:'gu'}}"
+                            formControlName="deceasednameguj">
+                        <control-messages [control]="deathCorrectionForm.get('deceasednameguj')">
                         </control-messages>
                     </mat-form-field>
+
                     <mat-form-field class="col-md-4">
+                        <input matInput trim type="text" formControlName="gender" appGujInputSource targetElement="genderguj"
+                            placeholder="{{'gender' | translate: translateKey}}" readonly>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput  appGujInputTarget  
+                        placeholder="{{'gender' | translate:translateKey:'gu'}}" formControlName="genderguj" readonly>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput trim type="text" formControlName="dateofdeath"
+                            placeholder="{{'death_date' | translate: translateKey}}" readonly>
+                    </mat-form-field>
+                </div>
+
+                <h2>{{'father_details' | translate:translateKey}}</h2>
+
+                    <div class="row">
+                        <mat-form-field class="col-md-6">
+                            <input matInput trim type="text" formControlName="fathername" appGujInputSource targetElement="fathernameguj"
+                                placeholder="{{'father_name' | translate: translateKey}}" readonly>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-6">
+                            <input matInput  appGujInputTarget  
+                            placeholder="{{'father_name' | translate:translateKey:'gu'}}" formControlName="fathernameguj" readonly>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- <mat-form-field class="col-md-4">
                         <input matInput type="text" appGujInputTarget [form]="deathCorrectionForm" maxlength="20"
                             placeholder="{{'middle_name' | translate:translateKey:'gu'}}"
                             formControlName="deceasedMiddleNameGuj">
                         <control-messages [control]="deathCorrectionForm.get('deceasedMiddleNameGuj')">
                         </control-messages>
-                    </mat-form-field>
-                    <mat-form-field class="col-md-4">
+                    </mat-form-field> -->
+
+                    <!-- <mat-form-field class="col-md-4">
                         <input required matInput type="text" appGujInputTarget [form]="deathCorrectionForm"
                             maxlength="20" placeholder="{{'last_name' | translate:translateKey:'gu'}}"
                             formControlName="deceasedLastNameGuj">
                         <control-messages [control]="deathCorrectionForm.get('deceasedLastNameGuj')"></control-messages>
-                    </mat-form-field>
+                    </mat-form-field> -->
 
-                    <mat-form-field class="col-md-4">
-                        <input matInput trim type="text" formControlName="motherName"
+                    <h2>{{'mother_details' | translate:translateKey}}</h2>
+
+                <div class="row">
+
+                    <mat-form-field class="col-md-6">
+                        <input matInput trim type="text" formControlName="mothername" appGujInputSource targetElement="mothernameguj"
                             placeholder="{{'mother_name' | translate: translateKey}}" readonly>
                     </mat-form-field>
 
-                    <mat-form-field class="col-md-4">
-                        <input matInput trim type="text" appGujInputTarget [form]="deathCorrectionForm" formControlName="motherNameGuj"
+                    <mat-form-field class="col-md-6">
+                        <input matInput trim type="text" appGujInputTarget [form]="deathCorrectionForm" formControlName="mothernameguj"
                             placeholder="{{'mother_name' | translate: translateKey: 'gu'}}" readonly>
                     </mat-form-field>
+
                 </div>
+
+                <h2>{{'other_details' | translate:translateKey}}</h2>
+
+                    <div class="row">
+                        <mat-form-field class="col-md-4">
+                            <input matInput trim type="text" formControlName="placeofdeath" appGujInputSource targetElement="placeofdeathguj"
+                                placeholder="{{'death_place_name' | translate: translateKey}}" readonly>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-4">
+                            <input matInput  appGujInputTarget  
+                            placeholder="{{'death_place_name' | translate:translateKey:'gu'}}" formControlName="placeofdeathguj" readonly>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-4">
+                            <input matInput trim type="text" formControlName="regdate"
+                                placeholder="{{'reg_date' | translate: translateKey}}" readonly>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-12">
+                            <input matInput trim type="text" formControlName="deathaddress" appGujInputSource targetElement="deathaddressguj"
+                                placeholder="{{'address' | translate: translateKey}}" readonly>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-12">
+                            <input matInput  appGujInputTarget  
+                            placeholder="{{'address' | translate:translateKey:'gu'}}" formControlName="deathaddressguj" readonly>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-12">
+                            <input matInput trim type="text" formControlName="permanentaddress" appGujInputSource targetElement="permanentaddressguj"
+                                placeholder="{{'permanent_address' | translate: translateKey}}" readonly>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-12">
+                            <input matInput  appGujInputTarget  
+                            placeholder="{{'permanent_address' | translate:translateKey:'gu'}}" formControlName="permanentaddressguj" readonly>
+                        </mat-form-field>
+   
+                    </div>
 
                 <app-action-bar [uploadFiles]="uploadFileArray" [form]="deathCorrectionForm"
                     [stepInfo]="{step: 'step0', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"
