@@ -5,6 +5,8 @@ import { NgForm } from '@angular/forms';
 import { ApplicationReconnectionDataSharingService } from '../../Services/application-reconnection-data-sharing.service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { MatStepper } from '@angular/material';
+import { Constants } from 'src/app/vmcshared/Constants';
+import { NewWaterConnectionEntryService } from '../../../new-water-connection-entry/Services/new-water-connection-entry.service';
 
 @Component({
     selector: 'app-application-reconnection-form',
@@ -23,10 +25,12 @@ export class ApplicationReconnectionFormComponent implements OnInit {
     applicationModel: ApplicationModel;
     isShowSaveButton: boolean = false;
     outstandingDetail: any = {};
-   
+    plumberList: any = [];
+
     constructor(private applicationReconnectionService: ApplicationReconnectionService,
         private alertService:AlertService,
-        private applicationReconnectionDataSharingService: ApplicationReconnectionDataSharingService) { }
+        private applicationReconnectionDataSharingService: ApplicationReconnectionDataSharingService,
+         private newNewWaterConnectionEntryService: NewWaterConnectionEntryService) { }
 
     ngOnInit() {
         this.dataModel = new DataModel();
@@ -40,9 +44,8 @@ export class ApplicationReconnectionFormComponent implements OnInit {
         this.applicationModel.mobileNumber = 123456;
         this.applicationModel.aadharNumber = 123456;
         this.applicationModel.emailID = "test@test.com";
-
+        this.getPlumberList();
     }
-    
 
     searchByConnectionNo() {
         if (!this.connectioNo || (this.connectioNo && this.connectioNo.toString().trim() == '')) {
@@ -91,7 +94,6 @@ export class ApplicationReconnectionFormComponent implements OnInit {
             data.forEach(app => {
               this.reconnectionDocumentUploadDocs.push(app);
             });
-            
           },
           (error) => {
             
@@ -99,21 +101,17 @@ export class ApplicationReconnectionFormComponent implements OnInit {
       }
       }
       onSubmitApproved() {
-
         this.applicationReconnectionService.submitNewgen(this.reconnectionId).subscribe(
             (data) => {
-
                 this.alertService.success(data.message);
                 this.applicationReconnectionDataSharingService.setIsShowApproval(true);
-
             },
             (error) => {
                 this.alertService.error(error.error.message);
             });
-
     }
     save(formDetail: NgForm) {
-        if (formDetail.form.valid) {
+        if (formDetail.form.valid && this.dataModel.plumberId) {
             this.dataModel.applicationNumber = this.applicationModel.applicationNumber;
             this.dataModel.connectionDtlId = this.connectionsModel.connectionDetail.connectionDtlId;
             this.applicationReconnectionService.save(this.dataModel).subscribe(
@@ -146,8 +144,6 @@ export class ApplicationReconnectionFormComponent implements OnInit {
                         this.alertService.error(errorMessage);
                 });
         }
-
-        
     }
     
     onWaterDetailClick() {
@@ -163,6 +159,17 @@ export class ApplicationReconnectionFormComponent implements OnInit {
     onBackClick(){
         this.stepper.selectedIndex = 0;
     }
+    getPlumberList() {
+        this.newNewWaterConnectionEntryService.getPlumberList({ licenseFor: Constants.ItemCodes.License_Water,activeOnly:true }).subscribe(
+          (data) => {
+            if (data.status === 200 && data.body.length) {
+              this.plumberList = data.body;
+            }
+          },
+          (error) => {
+            this.alertService.error(error.error.message);
+          })
+      }
 }
 
 

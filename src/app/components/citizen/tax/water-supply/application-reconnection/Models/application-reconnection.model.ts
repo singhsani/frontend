@@ -2,6 +2,7 @@ export class DataModel{
     applicationNumber: string;
     connectionDtlId: number;
     reconnectionId:number;
+    plumberId: number;
   }
 
   export class ConnectionsModel{

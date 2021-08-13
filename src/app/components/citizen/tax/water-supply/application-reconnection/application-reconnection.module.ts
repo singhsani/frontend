@@ -13,6 +13,7 @@ import { WaterTaxDetailComponent } from './Components/water-tax-detail/water-tax
 import { WaterBillDetailComponent } from './Components/water-bill-detail/water-bill-detail.component';
 import { ApplicationReconnectionFormComponent } from './Components/application-reconnection-Form/application-reconnection-form.component';
 import { ApprovalComponent } from './Components/approval/approval.component';
+import { NewWaterConnectionEntryService } from '../new-water-connection-entry/Services/new-water-connection-entry.service';
 
 
 const routes: Routes = [
@@ -40,7 +41,8 @@ const routes: Routes = [
   ],
   providers: [
     ApplicationReconnectionService,
-    ApplicationReconnectionDataSharingService
+    ApplicationReconnectionDataSharingService,
+    NewWaterConnectionEntryService
   ]
 })
 export class ApplicationReconnectionModule { }
