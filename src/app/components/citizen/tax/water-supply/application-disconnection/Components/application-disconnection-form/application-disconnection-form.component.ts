@@ -3,11 +3,10 @@ import { ApplicationDisconnectionService } from '../../Services/application-disc
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
 import { ConnectionsModel, DataModel, ConnectionDetail, MeterDetail, ApplicationModel } from '../../Models/application-disconnection.model';
 import { Constants } from 'src/app/vmcshared/Constants';
-import { NgForm } from '@angular/forms';
+import { NgForm} from '@angular/forms';
 import { ApplicationDisconnectionDataSharingService } from '../../Services/application-disconnection-data-sharing.service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { MatStepper } from '@angular/material';
-import { NewWaterConnectionEntryDataSharingService } from '../../../new-water-connection-entry/Services/new-water-connection-entry-data-sharing.service';
 import { NewWaterConnectionEntryService } from '../../../new-water-connection-entry/Services/new-water-connection-entry.service';
 
 @Component({
@@ -29,12 +28,13 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
     outstandingDetail: any = {};
     disconncetionId : any ;
     serviceFormId : String;
+    plumberList: any = [];    
 
     constructor(private commonService: CommonService,
         private alertService: AlertService,
         private applicationDisconnectionService: ApplicationDisconnectionService,
         private applicationDisconnectionDataSharingService: ApplicationDisconnectionDataSharingService,
-        private newWaterConnectionEntryService : NewWaterConnectionEntryService
+        private newWaterConnectionEntryService : NewWaterConnectionEntryService, private newNewWaterConnectionEntryService: NewWaterConnectionEntryService,
     ) { }
 
     ngOnInit() {
@@ -53,6 +53,7 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
         this.applicationModel.emailID = "test@test.com";
 
         this.getLookups();
+        this.getPlumberList();
 
     }
 
@@ -124,34 +125,21 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
       }
 
     onSubmitApproved() {
-
         this.mandatoryFileCheck().then( data => {
-
-            if(data.status) { 
-
+            if(data.status) {
                 this.applicationDisconnectionService.submitNewgen(this.disconncetionId).subscribe(
                     (data) => {
-        
                         this.alertService.success(data.message);
                         this.applicationDisconnectionDataSharingService.setIsShowApproval(true);
-        
                     },
                     (error) => {
                         this.alertService.error(error.error.message);
                     });
-        
-    
-
             } else {
                 this.alertService.warning("", `Please upload file for "${data.fileName}"`);
 				  return
             }
-
-
-            
         });
-
-        
     }  
     save(formDetail: NgForm) {
         if (formDetail.form.valid) {
@@ -227,4 +215,16 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
     onBackClick(){
         this.stepper.selectedIndex = 0;
     }
+
+    getPlumberList() {
+        this.newNewWaterConnectionEntryService.getPlumberList({ licenseFor: Constants.ItemCodes.License_Water,activeOnly:true }).subscribe(
+          (data) => {
+            if (data.status === 200 && data.body.length) {
+              this.plumberList = data.body;
+            }
+          },
+          (error) => {
+            this.alertService.error(error.error.message);
+          })
+      }
 }
