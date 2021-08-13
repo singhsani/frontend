@@ -401,47 +401,47 @@ export class BirthCorrectionComponent implements OnInit {
 		this.birthCorrectionForm = this.fb.group({
 
 			//step - 1 (13)
-			childName: null,
-			childNameGuj: null,
-			fatherFirstName: null,
+			childName: [null, Validators.required],
+			childNameGuj: [null, Validators.required],
+			fatherFirstName:  [null, Validators.required],
 			// fatherMiddleName: null,
 			// fatherLastName: null,
 
-			fatherFirstNameGuj: null,
+			fatherFirstNameGuj: [null, Validators.required],
 			// fatherMiddleNameGuj: null,
 			// fatherLastNameGuj: null,
 
-			motherFirstName: null,
+			motherFirstName: [null, Validators.required],
 			// motherMiddleName: null,
 			// motherLastName: null,
 
-			motherFirstNameGuj: null,
+			motherFirstNameGuj: [null, Validators.required],
 			// motherMiddleNameGuj: null,
 			// motherLastNameGuj: null,
 
-			birthtime: null,
-			birthtimeguj: null,
+			birthtime: [null, Validators.required],
+			birthtimeguj: [null, Validators.required],
 
-			gender: null,
-			genderguj: null,
+			gender: [null, Validators.required],
+			genderguj: [null, Validators.required],
 
-			placeofbirth: null,
-			placeofbirthguj: null,
+			placeofbirth: [null, Validators.required],
+			placeofbirthguj: [null, Validators.required],
 
-			birthaddress:null,
-			birthaddressguj: null,
+			birthaddress:[null, Validators.required],
+			birthaddressguj: [null, Validators.required],
 
-			permanentadd: null,
-			permanentaddguj: null,
+			permanentadd: [null, Validators.required],
+			permanentaddguj: [null, Validators.required],
 
 			refNumber: null,
 
 			typeOfCorrection: this.fb.group({
 				code: [null]
 			}),
-			birthDate: null,
-			birthdateguj: null,
-			registrationDate: null,
+			birthDate: [null, Validators.required],
+			birthdateguj: [null, Validators.required],
+			registrationDate: [null, Validators.required],
 
 			// fieldView: "ALL",
 			// fieldList: null,

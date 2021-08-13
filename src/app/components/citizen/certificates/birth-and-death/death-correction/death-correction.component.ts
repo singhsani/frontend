@@ -297,35 +297,35 @@ export class DeathCorrectionComponent implements OnInit {
 		this.deathCorrectionForm = this.fb.group({
 
 			//step 1(deceased deatails - 6)
-			deceasedname: null,
+			deceasedname: [null, Validators.required],
 			// deceasedMiddleName: null,
 			// deceasedLastName: null,
-			deceasednameguj: null,
-			gender: null,
-			genderguj: null,
-			dateofdeath: null,
+			deceasednameguj: [null, Validators.required],
+			gender: [null, Validators.required],
+			genderguj: [null, Validators.required],
+			dateofdeath: [null, Validators.required],
 			
 			// deceasedMiddleNameGuj: null,
 			// deceasedLastNameGuj: null,
 
 			//step 2(family details - 2)
-			fathername: null,
-			fathernameguj: null,
-			mothername: null,
-			mothernameguj:null,
+			fathername: [null, Validators.required],
+			fathernameguj: [null, Validators.required],
+			mothername: [null, Validators.required],
+			mothernameguj:[null, Validators.required],
 			// fatherOrHusbandName: null,
 
 			refNumber: null,
 			registrationNumber: null,
 
 			//step 3(other details)
-			placeofdeath: null,
-			placeofdeathguj: null,
-			regdate: null,
-			deathaddress: null,
-			deathaddressguj: null,
-			permanentaddress: null,
-			permanentaddressguj: null,
+			placeofdeath: [null, Validators.required],
+			placeofdeathguj: [null, Validators.required],
+			regdate: [null, Validators.required],
+			deathaddress: [null, Validators.required],
+			deathaddressguj: [null, Validators.required],
+			permanentaddress: [null, Validators.required],
+			permanentaddressguj: [null, Validators.required],
 
 			typeOfCorrection: this.fb.group({
 				code: [null]
