@@ -42,7 +42,7 @@
             </div>
         </div> -->
     </mat-card>
-    <mat-card class="mt-3">
+    <mat-card class=" details  mt-3">
         <div class="row">
             <div class="col-md-4">
                 <mat-form-field class="full-width-input">
@@ -81,10 +81,24 @@
                     <input disabled matInput placeholder="Water Dues" name="waterDues" [(ngModel)]="connectionsModel.waterDues">
                 </mat-form-field>
             </div>
+            
             <div class="col-md-2">
                 <button  *ngIf="isShowSaveButton" class="ml-3" mat-raised-button color="accent" type="button" (click)="onWaterDetailClick()">
                     <mat-icon>details</mat-icon> Detail
                 </button>
+            </div>
+            <div class="col-md-4">
+                <div class="ngSelect">
+                    <ng-select required placeholder="Plumber Name *" [items]="plumberList"
+                        bindValue="plumberLicenseId" bindLabel="nameOfApplicant" name="plumberId" [(ngModel)]="dataModel.plumberId"
+                        #PlumberId="ngModel"
+                        [ngClass]="{'ng-invalid ng-touched':  form.submitted && PlumberId.invalid}"
+                       >
+                    </ng-select>
+                    <div *ngIf="(form.submitted && PlumberId.invalid)  || (PlumberId.invalid && PlumberId.touched)">
+                        <mat-error *ngIf="PlumberId.errors.required">*Plumber Name is required.</mat-error>
+                    </div>                   
+                </div> 
             </div>
         </div>
         <form #form="ngForm" (ngSubmit)="save(form)">

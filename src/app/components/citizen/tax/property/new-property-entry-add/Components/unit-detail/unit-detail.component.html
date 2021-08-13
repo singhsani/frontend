@@ -186,7 +186,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="ngSelect">
-                                <ng-select required placeholder="{{'has_khalkuva_connection' | translate:translateKey }}*"
+                                <ng-select required placeholder="{{'has_khalkuva_connection' | translate:translateKey }}?*"
                                     [items]="khalkuvaConnectionList" bindValue="itemId" bindLabel="itemName"
                                     name="hasKhalkuvaConnection" [(ngModel)]="unitDetailModel.hasKhalkuvaConnection"
                                     #HasKhalkuvaConnection="ngModel"
@@ -223,7 +223,7 @@
                         <div class="col-md-6">
                             <mat-form-field class="full-width-input">
                                 <input matInput [matDatepicker]="TikaDate" [max]="unitDetailModel.effectiveFromDate"
-                                    #TD="ngModel" [(ngModel)]="unitDetailModel.tikaDate" placeholder="{{'tikka_date' | translate:translateKey }}"
+                                    #TD="ngModel" [(ngModel)]="unitDetailModel.tikaDate" placeholder="{{'tikKa_date' | translate:translateKey }}"
                                     name="tikaDate" mask-date>
                                 <mat-datepicker-toggle matSuffix [for]="TikaDate"></mat-datepicker-toggle>
                                 <mat-datepicker #TikaDate disabled="false"></mat-datepicker>
@@ -235,35 +235,39 @@
                     <div class="row">
                         <div class="col-md-6">
                             <mat-form-field class="full-width-input">
-                                <input trim="blur" matInput name="buildingPermissionNo"
-                                    [(ngModel)]="unitDetailModel.buildingPermissionNo"
+                                <input trim="blur" (change)="updateValidation(myForm.form.get('buildingPermissionNo'),myForm.form.get('buildingPermissionDate'))" matInput name="buildingPermissionNo" #BPN="ngModel"
+                                [(ngModel)]="unitDetailModel.buildingPermissionNo" #BPN="ngModel"
                                     placeholder="{{'building_permission_no' | translate:translateKey }}" maxlength="50">
+                                    <mat-error *ngIf="BPN.invalid">*Building Permission No is Required.</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="col-md-6">
                             <mat-form-field class="full-width-input">
-                                <input matInput [max]="unitDetailModel.effectiveFromDate"
+                                <input matInput (dateChange)="updateValidation(myForm.form.get('buildingPermissionDate'),myForm.form.get('buildingPermissionNo'))" [max]="unitDetailModel.effectiveFromDate"
                                     [matDatepicker]="BuildingPermissionDate" #BPD="ngModel"
                                     [(ngModel)]="unitDetailModel.buildingPermissionDate"
                                     placeholder="{{'building_permission_date' | translate:translateKey }}" name="buildingPermissionDate" mask-date>
                                 <mat-datepicker-toggle matSuffix [for]="BuildingPermissionDate"></mat-datepicker-toggle>
                                 <mat-datepicker #BuildingPermissionDate disabled="false"></mat-datepicker>
                                 <mat-error *ngIf="BPD.invalid">*Permission Date must be less than or equal to Effective
-                                    from Date.</mat-error>
+                                    from Date.
+                                </mat-error>
+                                <mat-error *ngIf="BPD.invalid">*Building Permission Date is Required.</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <mat-form-field class="full-width-input">
-                                <input trim="blur" matInput name="occupancyCertificateNo"
-                                    [(ngModel)]="unitDetailModel.occupancyCertificateNo"
+                                <input trim="blur" (change)="updateValidation(myForm.form.get('occupancyCertificateNo'),myForm.form.get('occupancyCertificateDate'))" matInput name="occupancyCertificateNo"
+                                    [(ngModel)]="unitDetailModel.occupancyCertificateNo" #OCN = "ngModel"
                                     placeholder="{{'occupancy_certificate_no' | translate:translateKey }}" maxlength="50">
+                                    <mat-error *ngIf="OCN.invalid">*Occupancy Certificate No is Required</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="col-md-6">
                             <mat-form-field class="full-width-input">
-                                <input matInput [max]="unitDetailModel.effectiveFromDate"
+                                <input matInput (dateChange)="updateValidation(myForm.form.get('occupancyCertificateDate'),myForm.form.get('occupancyCertificateNo'))" [max]="unitDetailModel.effectiveFromDate"
                                     [matDatepicker]="OccupancyCertificateDate" #OCD="ngModel"
                                     [(ngModel)]="unitDetailModel.occupancyCertificateDate"
                                     placeholder="{{'occupancy_certificate_date' | translate:translateKey }}" name="occupancyCertificateDate" mask-date>
@@ -272,24 +276,27 @@
                                 <mat-datepicker #OccupancyCertificateDate disabled="false"></mat-datepicker>
                                 <mat-error *ngIf="OCD.invalid">*Certificate Date must be less than or equal to
                                     Effective from Date.</mat-error>
+                                    <mat-error *ngIf="OCD.invalid">*Occupancy Certificate No is Required</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <mat-form-field class="full-width-input">
-                                <input trim="blur" matInput name="completionNo"
-                                    [(ngModel)]="unitDetailModel.completionNo" placeholder="{{'completion_no' | translate:translateKey }}"
+                                <input trim="blur" (change)="updateValidation(myForm.form.get('completionNo'),myForm.form.get('completionDate'))" matInput name="completionNo"
+                                    [(ngModel)]="unitDetailModel.completionNo" #CompNo="ngModel" placeholder="{{'completion_no' | translate:translateKey }}"
                                     maxlength="50">
+                                    <mat-error *ngIf="CompNo.invalid">*Completion No is Required</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="col-md-6">
                             <mat-form-field class="full-width-input">
-                                <input matInput [matDatepicker]="CompletionDate" #CompDate="ngModel"
+                                <input matInput  (dateChange)="updateValidation(myForm.form.get('completionDate'),myForm.form.get('completionNo'))" [matDatepicker]="CompletionDate" #CompDate="ngModel"
                                     [(ngModel)]="unitDetailModel.completionDate" placeholder="{{'completion_date' | translate:translateKey }}"
                                     name="completionDate" mask-date>
                                 <mat-datepicker-toggle matSuffix [for]="CompletionDate"></mat-datepicker-toggle>
                                 <mat-datepicker #CompletionDate disabled="false"></mat-datepicker>
+                                <mat-error *ngIf="CompDate.invalid">*Completion Date id Required</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -318,7 +325,7 @@
                                 <mat-icon>save</mat-icon> {{isEditMode ? 'Update Unit':'Save Unit' }}
                             </button>
                             <button mat-raised-button class="ml-3" type="button" color="warn" (click)="clearUnitData()">
-                                <mat-icon>clear_all</mat-icon> Clear{{'clear' | translate:translateKey }}
+                                <mat-icon>clear_all</mat-icon>{{'clear' | translate:translateKey }}
                             </button>
                         </div>
                     </div>

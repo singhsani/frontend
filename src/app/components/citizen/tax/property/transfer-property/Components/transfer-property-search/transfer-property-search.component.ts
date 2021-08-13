@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { TransferPropertyDataSharingService } from '../../Services/transfer-property-data-sharing.service';
@@ -20,6 +20,7 @@ export class TransferPropertySearchComponent implements OnInit {
   wardZoneLevel3List = [];
   wardZoneLevel4List = [];
   propertyNo: string;
+  @ViewChild('formDetail') mytemplateForm : NgForm;
   constructor(
     private transferPropertyDataSharingService: TransferPropertyDataSharingService,
     private transferPropertyService: TransferPropertyService,
@@ -138,6 +139,7 @@ export class TransferPropertySearchComponent implements OnInit {
     }
   }
   clear() {
+    this.mytemplateForm.reset();
     this.propertyNo = null;
     this.wardZoneLevel2List=[]
     this.wardZoneLevel3List=[]

@@ -2,9 +2,23 @@
   <mat-card>
     <div class="row">
       <mat-form-field class="full-width-input col-md-4">
-        <input matInput required placeholder="Name" name="firstName" maxlength="255" #firstName="ngModel"
+        <input matInput required placeholder="First Name" name="firstName" maxlength="255" #firstName="ngModel"
           [(ngModel)]="model.firstName">
-        <mat-error *ngIf="firstName.invalid">*Name is invalid.
+        <mat-error *ngIf="firstName.invalid">*First Name is invalid.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input col-md-4">
+        <input matInput placeholder="Middle Name" name="middleName" maxlength="255" #middleName="ngModel"
+          [(ngModel)]="model.middleName">
+        <mat-error *ngIf="middleName.invalid">*Middle Name is invalid.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input col-md-4">
+        <input matInput required placeholder="Last Name" name="lastName" maxlength="255" #lastName="ngModel"
+          [(ngModel)]="model.lastName">
+        <mat-error *ngIf="lastName.invalid">*Last Name is invalid.
         </mat-error>
       </mat-form-field>
 
@@ -31,7 +45,7 @@
       <mat-form-field class="full-width-input col-md-4">
         <input matInput placeholder="Name of Society/Building" name="streetName" #streetName="ngModel"
           [(ngModel)]="model.citizenAddressDTO.streetName">
-        <mat-error *ngIf="streetName.invalid">Building Name is invalid.</mat-error>
+        <mat-error *ngIf="streetName.invalid">Street Name is invalid.</mat-error>
       </mat-form-field>
 
       <mat-form-field class="full-width-input col-md-4">
@@ -49,7 +63,7 @@
 
       <div class="col-md-4 ngSelect">
         <ng-select required placeholder="Country*" name="country" #country="ngModel"
-          [(ngModel)]="model.citizenAddressDTO.country" [items]="countryListArray" bindValue="code" bindLabel="name"
+          [(ngModel)]="model.citizenAddressDTO.country" [items]="countryListArray" bindValue="name" bindLabel="name"
           (change)="onCountryChange($event)">
         </ng-select>
         <div *ngIf="(form.submitted && country.invalid)  || (country.invalid && country.touched)">
@@ -59,7 +73,7 @@
 
       <div class="col-md-4 ngSelect">
         <ng-select required placeholder="State*" name="state" #state="ngModel" [(ngModel)]="model.citizenAddressDTO.state"
-          [items]="stateListArray" bindValue="code" bindLabel="name" (change)="onStateChange($event)">
+          [items]="stateListArray" bindValue="name" bindLabel="name" (change)="onStateChange($event)">
         </ng-select>
         <div *ngIf="(form.submitted && state.invalid)  || (state.invalid && state.touched)">
           <mat-error *ngIf="state.invalid">State is invalid.</mat-error>
@@ -68,7 +82,7 @@
 
       <div class="col-md-6 ngSelect">
         <ng-select required placeholder="City*" name="city" #city="ngModel" [(ngModel)]="model.citizenAddressDTO.city"
-          [items]="cityListArray" bindValue="code" bindLabel="name">
+          [items]="cityListArray" bindValue="name" bindLabel="name">
         </ng-select>
         <div *ngIf="(form.submitted && city.invalid)  || (city.invalid && city.touched)">
           <mat-error *ngIf="city.invalid">City is invalid.</mat-error>
@@ -76,7 +90,7 @@
       </div>
 
       <mat-form-field class="full-width-input col-md-6">
-        <input matInput required maxlength="6" minlength="6" placeholder="Pincode" name="pincode" #pincode="ngModel"
+        <input matInput required maxlength="6" minlength="6" placeholder="Pincode" name="pincode" #pincode="ngModel" number-only
           [(ngModel)]="model.citizenAddressDTO.pincode">
         <mat-error *ngIf="pincode.invalid">PinCode is invalid.</mat-error>
       </mat-form-field>

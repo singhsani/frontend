@@ -18,6 +18,8 @@ import * as moment from 'moment';
 
 export class UnitDetailComponent implements OnInit {
 
+  @ViewChild('form') myForm: NgForm;
+
   translateKey: string = 'newPropertyTaxScreen';
   subscription: Subscription;
   modelOccupier: any = {};
@@ -591,5 +593,14 @@ export class UnitDetailComponent implements OnInit {
       (error) => {
         this.commonService.callErrorResponse(error);
       });
+  }
+
+  updateValidation(event1, event2) {
+    if(event1.value){
+      event2.setValidators([Validators.required]); 
+    }else{
+     event2.clearValidators();
+    }
+    event2.updateValueAndValidity();
   }
 }

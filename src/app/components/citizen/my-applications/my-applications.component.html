@@ -293,7 +293,7 @@
                         <ng-container *ngSwitchCase="'case2'">
                             <div class="mobile-label1">:</div>
                             <button class="actionBtn" *ngIf="((row.serviceType === 'NO_DUE_CERTIFICATE' || row.serviceType === 'EXTRACT_OF_PROPERTY' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.serviceType === 'DUPLICATE_BILL') && row.fileStatus === 'SUBMITTED') || 
-                            row.fileStatus === 'PAYMENT_RECEIVED' || row.fileStatus === 'APPROVED' ||
+                            row.fileStatus === 'PAYMENT_RECEIVED' || ((row.fileStatus === 'APPROVED') && row.serviceType != 'PROPERTY_ASSESSMENT') ||
                             row.fileStatus === 'PAYMENT' || row.fileStatus === 'SCRUTINY' || (row.serviceType === 'WTR_NEW_WATER_CONNECTION' && row.fileStatus === 'SUBMITTED' && row.newgenStatus === 'SUBMIT_AFTER_SCRUTINY')" mat-button [matMenuTriggerFor]="menuTax">
                                 <!-- *ngIf="isMoreBtnVisibleProperty(row)" -->
                                 <mat-icon >more_vert</mat-icon>

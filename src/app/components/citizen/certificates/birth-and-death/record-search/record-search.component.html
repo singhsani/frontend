@@ -125,23 +125,23 @@
 			</ng-container> -->
 
 			<ng-container matColumnDef="certificateno">
-				<th mat-header-cell *matHeaderCellDef>Certificate no</th>
-				<td mat-cell *matCellDef="let row">{{deathFromName? row.certificateno : row.birthRegNumber}}</td>
+				<th mat-header-cell *matHeaderCellDef>Certificate No.</th>
+				<td mat-cell *matCellDef="let row">{{deathFromName? row.certificateno : row.certificateno}}</td>
 			</ng-container>
 
 			<ng-container matColumnDef="name">
-				<th mat-header-cell *matHeaderCellDef>{{deathFromName ? 'Deceased Name' : 'Child name'}}</th>
-				<td mat-cell *matCellDef="let row">{{deathFromName?row.deceasedfirstname : row.childName }}</td>
+				<th mat-header-cell *matHeaderCellDef>{{deathFromName ? 'Deceased Name' : 'Child Name'}}</th>
+				<td mat-cell *matCellDef="let row">{{deathFromName?row.deceasedname : row.childName }}</td>
 			</ng-container>
 
 			<ng-container matColumnDef="date">
 				<th mat-header-cell *matHeaderCellDef>{{deathFromName ? 'Death Date' : 'Birth Date'}}</th>
-				<td mat-cell *matCellDef="let row">{{deathFromName ? row.deathdate : row.birthDate}}</td>
+				<td mat-cell *matCellDef="let row">{{deathFromName ? row.dateofdeath : row.birthDate}}</td>
 			</ng-container>
 
 			<ng-container  matColumnDef="fathersName"> 
 				<th mat-header-cell *matHeaderCellDef>Father Name</th>
-				<td mat-cell *matCellDef="let row">{{deathFromName ? row.fatherorhusbandname : row.fatherFirstName}}</td>
+				<td mat-cell *matCellDef="let row">{{deathFromName ? row.fathername : row.fatherFirstName}}</td>
 			</ng-container>
 
 			<ng-container  matColumnDef="mothersName">

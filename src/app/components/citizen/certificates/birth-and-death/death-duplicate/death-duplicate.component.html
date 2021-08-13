@@ -41,50 +41,104 @@
                             <control-messages [control]="deathDuplicateForm.get('totalCopies')"></control-messages>
                         </mat-form-field>
 
-                        <mat-form-field class="col-md-4">
-                            <input matInput trim type="text" formControlName="deceasedfirstname"
+                        <mat-form-field class="col-md-6">
+                            <input matInput trim type="text" formControlName="deceasedname" appGujInputSource targetElement="deceasednameguj"
                                 placeholder="{{'deceased_first_name' | translate: translateKey}}" readonly>
                         </mat-form-field>
 
+                        <mat-form-field class="col-md-6">
+                            <input matInput  appGujInputTarget  
+                            placeholder="{{'deceased_first_name' | translate:translateKey:'gu'}}" formControlName="deceasednameguj" readonly>
+                        </mat-form-field>
+
                         <mat-form-field class="col-md-4">
-                            <input matInput trim type="text" formControlName="gender"
+                            <input matInput trim type="text" formControlName="gender" appGujInputSource targetElement="genderguj"
                                 placeholder="{{'gender' | translate: translateKey}}" readonly>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
-                            <input matInput trim type="text" formControlName="deathdate"
+                            <input matInput  appGujInputTarget  
+                            placeholder="{{'gender' | translate:translateKey:'gu'}}" formControlName="genderguj" readonly>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-4">
+                            <input matInput trim type="text" formControlName="dateofdeath"
                                 placeholder="{{'death_date' | translate: translateKey}}" readonly>
                         </mat-form-field>
 
-                        <mat-form-field class="col-md-4">
-                            <input matInput trim type="text" formControlName="fatherorhusbandname"
+                    </div>
+
+                    <h2>{{'father_details' | translate:translateKey}}</h2>
+
+                    <div class="row">
+                        <mat-form-field class="col-md-6">
+                            <input matInput trim type="text" formControlName="fathername" appGujInputSource targetElement="fathernameguj"
                                 placeholder="{{'father_or_husband_name' | translate: translateKey}}" readonly>
                         </mat-form-field>
 
-                        <mat-form-field class="col-md-4">
-                            <input matInput trim type="text" formControlName="mothername"
+                        <mat-form-field class="col-md-6">
+                            <input matInput  appGujInputTarget  
+                            placeholder="{{'father_or_husband_name' | translate:translateKey:'gu'}}" formControlName="fathernameguj" readonly>
+                        </mat-form-field>
+                    </div>
+
+                    <h2>{{'mother_details' | translate:translateKey}}</h2>
+
+                    <div class="row">
+                        <mat-form-field class="col-md-6">
+                            <input matInput trim type="text" formControlName="mothername" appGujInputSource targetElement="mothernameguj"
                                 placeholder="{{'mother_name' | translate: translateKey}}" readonly>
                         </mat-form-field>
 
+                        <mat-form-field class="col-md-6">
+                            <input matInput  appGujInputTarget  
+                            placeholder="{{'mother_name' | translate:translateKey:'gu'}}" formControlName="mothernameguj" readonly>
+                        </mat-form-field>
+                    </div>
+
+                    <h2>{{'other_details' | translate:translateKey}}</h2>
+
+                    <div class="row">
                         <mat-form-field class="col-md-4">
-                            <input matInput trim type="text" formControlName="deathplace_name"
+                            <input matInput trim type="text" formControlName="placeofdeath" appGujInputSource targetElement="placeofdeathguj"
                                 placeholder="{{'death_place_name' | translate: translateKey}}" readonly>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
-                            <input matInput trim type="text" formControlName="deathtime"
-                                placeholder="{{'death_time' | translate: translateKey}}" readonly>
+                            <input matInput  appGujInputTarget  
+                            placeholder="{{'death_place_name' | translate:translateKey:'gu'}}" formControlName="placeofdeathguj" readonly>
                         </mat-form-field>
 
-                        <mat-form-field class="col-md-8">
-                            <input matInput trim type="text" formControlName="address"
-                                placeholder="{{'address' | translate: translateKey}}" readonly>
-                        </mat-form-field>
+                        <!-- <mat-form-field class="col-md-4">
+                            <input matInput trim type="text" formControlName="deathtime"
+                                placeholder="{{'death_time' | translate: translateKey}}" readonly>
+                        </mat-form-field> -->
 
                         <mat-form-field class="col-md-4">
                             <input matInput trim type="text" formControlName="regdate"
                                 placeholder="{{'reg_date' | translate: translateKey}}" readonly>
                         </mat-form-field>
+
+                        <mat-form-field class="col-md-12">
+                            <input matInput trim type="text" formControlName="deathaddress" appGujInputSource targetElement="deathaddressguj"
+                                placeholder="{{'address' | translate: translateKey}}" readonly>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-12">
+                            <input matInput  appGujInputTarget  
+                            placeholder="{{'address' | translate:translateKey:'gu'}}" formControlName="deathaddressguj" readonly>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-12">
+                            <input matInput trim type="text" formControlName="permanentaddress" appGujInputSource targetElement="permanentaddressguj"
+                                placeholder="{{'permanent_address' | translate: translateKey}}" readonly>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-12">
+                            <input matInput  appGujInputTarget  
+                            placeholder="{{'permanent_address' | translate:translateKey:'gu'}}" formControlName="permanentaddressguj" readonly>
+                        </mat-form-field>
+   
                     </div>
                     <app-action-bar [paymentGateway]="paymentGateway" [isstepper]="false" [form]="deathDuplicateForm"
                         [stepInfo]="{step: 'final', next: 0, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)">

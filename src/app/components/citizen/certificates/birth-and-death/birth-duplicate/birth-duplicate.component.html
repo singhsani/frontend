@@ -89,7 +89,7 @@
             <div class="row">
 
                 <mat-form-field class="col-md-6">
-                    <input matInput trim type="text" formControlName="fatherFirstName" appGujInputSource targetElement="fatherFirstNameGuj"
+                    <input matInput trim formControlName="fatherFirstName" appGujInputSource targetElement="fatherFirstNameGuj"
                         placeholder="{{'father_name' | translate: translateKey}}" readonly>
                 </mat-form-field>
 
@@ -102,7 +102,7 @@
 
             <h2>{{'other_details' | translate:translateKey}}</h2>
 
-            <div>
+            <div class="row">
                 <mat-form-field class="col-md-4">
                     <input matInput trim type="text" formControlName="registrationDate"
                         placeholder="{{'reg_date' | translate: translateKey}}" readonly>

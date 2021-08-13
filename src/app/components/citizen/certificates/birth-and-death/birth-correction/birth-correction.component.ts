@@ -420,6 +420,7 @@ export class BirthCorrectionComponent implements OnInit {
 			// motherLastNameGuj: null,
 
 			birthtime: null,
+			birthtimeguj: null,
 
 			gender: null,
 			genderguj: null,
@@ -439,6 +440,7 @@ export class BirthCorrectionComponent implements OnInit {
 				code: [null]
 			}),
 			birthDate: null,
+			birthdateguj: null,
 			registrationDate: null,
 
 			// fieldView: "ALL",
