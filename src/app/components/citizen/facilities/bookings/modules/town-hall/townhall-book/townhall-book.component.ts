@@ -510,4 +510,15 @@ export class TownHallBookComponent implements OnInit {
     this.townHallApplicationForm.get('applicantAddress').get('state').setValue('GUJARAT');
     this.townHallApplicationForm.get('applicantAddress').get('city').setValue('Vadodara');
   }
+
+  getClass(shift) {
+    // debugger;
+    let shiftCount = shift.length;
+    let availableCount = shift.filter(s => s.slotStatus === "AVAILABLE").length;
+    let reservedCount = shift.filter(s => s.slotStatus === "RESERVED").length;
+    let temporaryBlockCount = shift.filter(s => s.slotStatus === "TEMPORARY_BLOCKED").length;
+    return shiftCount === reservedCount || shiftCount === temporaryBlockCount  ? 'bookDate'  : '' ;  
+  }
+
+
 }
