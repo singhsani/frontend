@@ -95,6 +95,8 @@ export class RevaluationTableComponent implements OnInit {
           this.commonService.callErrorResponse(error);
         });*/
         this.paginator.pageIndex=0;
+        this.searchModel.pageNo=null;
+	      this.searchModel.pageSize=null;
         this.searchList();
     }
   }

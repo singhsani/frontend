@@ -43,27 +43,32 @@
 
                         <mat-form-field class="col-md-6">
                             <input matInput trim type="text" formControlName="deceasedname" appGujInputSource targetElement="deceasednameguj"
-                                placeholder="{{'deceased_first_name' | translate: translateKey}}" readonly>
+                                placeholder="{{'deceased_first_name' | translate: translateKey}}" required readonly>
+                            <mat-error *ngIf="deathDuplicateForm.get('deceasedname').invalid">Deceased Name is Required.</mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-6">
                             <input matInput  appGujInputTarget  
-                            placeholder="{{'deceased_first_name' | translate:translateKey:'gu'}}" formControlName="deceasednameguj" readonly>
+                            placeholder="{{'deceased_first_name' | translate:translateKey:'gu'}}" formControlName="deceasednameguj" required readonly>
+                            <mat-error *ngIf="deathDuplicateForm.get('deceasednameguj').invalid">Deceased Gujarati Name is Required.</mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
                             <input matInput trim type="text" formControlName="gender" appGujInputSource targetElement="genderguj"
-                                placeholder="{{'gender' | translate: translateKey}}" readonly>
+                                placeholder="{{'gender' | translate: translateKey}}" required readonly>
+                            <mat-error *ngIf="deathDuplicateForm.get('gender').invalid">Gender is Required.</mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
                             <input matInput  appGujInputTarget  
-                            placeholder="{{'gender' | translate:translateKey:'gu'}}" formControlName="genderguj" readonly>
+                            placeholder="{{'gender' | translate:translateKey:'gu'}}" formControlName="genderguj" required readonly>
+                            <mat-error *ngIf="deathDuplicateForm.get('genderguj').invalid">Gender Gujarati is Required.</mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
                             <input matInput trim type="text" formControlName="dateofdeath"
-                                placeholder="{{'death_date' | translate: translateKey}}" readonly>
+                                placeholder="{{'death_date' | translate: translateKey}}" required readonly>
+                            <mat-error *ngIf="deathDuplicateForm.get('dateofdeath').invalid">Date of Death is Required.</mat-error>
                         </mat-form-field>
 
                     </div>
@@ -73,12 +78,14 @@
                     <div class="row">
                         <mat-form-field class="col-md-6">
                             <input matInput trim type="text" formControlName="fathername" appGujInputSource targetElement="fathernameguj"
-                                placeholder="{{'father_or_husband_name' | translate: translateKey}}" readonly>
+                                placeholder="{{'father_or_husband_name' | translate: translateKey}}" required readonly>
+                            <mat-error *ngIf="deathDuplicateForm.get('fathername').invalid">Father Name is Required.</mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-6">
                             <input matInput  appGujInputTarget  
-                            placeholder="{{'father_or_husband_name' | translate:translateKey:'gu'}}" formControlName="fathernameguj" readonly>
+                            placeholder="{{'father_or_husband_name' | translate:translateKey:'gu'}}" formControlName="fathernameguj" required readonly>
+                            <mat-error *ngIf="deathDuplicateForm.get('fathernameguj').invalid">Father Gujarati Name is Required.</mat-error>
                         </mat-form-field>
                     </div>
 
@@ -87,12 +94,14 @@
                     <div class="row">
                         <mat-form-field class="col-md-6">
                             <input matInput trim type="text" formControlName="mothername" appGujInputSource targetElement="mothernameguj"
-                                placeholder="{{'mother_name' | translate: translateKey}}" readonly>
+                                placeholder="{{'mother_name' | translate: translateKey}}" required readonly>
+                                <mat-error *ngIf="deathDuplicateForm.get('mothername').invalid">Mother Name is Required.</mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-6">
                             <input matInput  appGujInputTarget  
-                            placeholder="{{'mother_name' | translate:translateKey:'gu'}}" formControlName="mothernameguj" readonly>
+                            placeholder="{{'mother_name' | translate:translateKey:'gu'}}" formControlName="mothernameguj" required readonly>
+                            <mat-error *ngIf="deathDuplicateForm.get('mothernameguj').invalid">Mother Gujarati Name is Required.</mat-error>
                         </mat-form-field>
                     </div>
 
@@ -101,12 +110,14 @@
                     <div class="row">
                         <mat-form-field class="col-md-4">
                             <input matInput trim type="text" formControlName="placeofdeath" appGujInputSource targetElement="placeofdeathguj"
-                                placeholder="{{'death_place_name' | translate: translateKey}}" readonly>
+                                placeholder="{{'death_place_name' | translate: translateKey}}" required readonly>
+                                <mat-error *ngIf="deathDuplicateForm.get('placeofdeath').invalid">Place of Death is Required.</mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
                             <input matInput  appGujInputTarget  
-                            placeholder="{{'death_place_name' | translate:translateKey:'gu'}}" formControlName="placeofdeathguj" readonly>
+                            placeholder="{{'death_place_name' | translate:translateKey:'gu'}}" formControlName="placeofdeathguj" required readonly>
+                            <mat-error *ngIf="deathDuplicateForm.get('placeofdeathguj').invalid">Place of Death Gujarati is Required.</mat-error>
                         </mat-form-field>
 
                         <!-- <mat-form-field class="col-md-4">
@@ -116,27 +127,32 @@
 
                         <mat-form-field class="col-md-4">
                             <input matInput trim type="text" formControlName="regdate"
-                                placeholder="{{'reg_date' | translate: translateKey}}" readonly>
+                                placeholder="{{'reg_date' | translate: translateKey}}" required readonly>
+                                <mat-error *ngIf="deathDuplicateForm.get('regdate').invalid">Registration Date is Required.</mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-12">
                             <input matInput trim type="text" formControlName="deathaddress" appGujInputSource targetElement="deathaddressguj"
-                                placeholder="{{'address' | translate: translateKey}}" readonly>
+                                placeholder="{{'address' | translate: translateKey}}" required readonly>
+                                <mat-error *ngIf="deathDuplicateForm.get('deathaddress').invalid">Death Address is Required.</mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-12">
                             <input matInput  appGujInputTarget  
-                            placeholder="{{'address' | translate:translateKey:'gu'}}" formControlName="deathaddressguj" readonly>
+                            placeholder="{{'address' | translate:translateKey:'gu'}}" formControlName="deathaddressguj" required readonly>
+                            <mat-error *ngIf="deathDuplicateForm.get('deathaddressguj').invalid">Death Address Gujarati is Required.</mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-12">
                             <input matInput trim type="text" formControlName="permanentaddress" appGujInputSource targetElement="permanentaddressguj"
-                                placeholder="{{'permanent_address' | translate: translateKey}}" readonly>
+                                placeholder="{{'permanent_address' | translate: translateKey}}" required readonly>
+                                <mat-error *ngIf="deathDuplicateForm.get('permanentaddress').invalid">Permanent Address is Required.</mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-12">
                             <input matInput  appGujInputTarget  
-                            placeholder="{{'permanent_address' | translate:translateKey:'gu'}}" formControlName="permanentaddressguj" readonly>
+                            placeholder="{{'permanent_address' | translate:translateKey:'gu'}}" formControlName="permanentaddressguj" required readonly>
+                            <mat-error *ngIf="deathDuplicateForm.get('permanentaddressguj').invalid">Permanent Address Gujarati is Required.</mat-error>
                         </mat-form-field>
    
                     </div>
