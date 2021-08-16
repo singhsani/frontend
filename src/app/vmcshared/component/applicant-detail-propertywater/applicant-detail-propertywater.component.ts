@@ -7,6 +7,7 @@ import { CommonService } from '../../Services/common-service';
 import { CommonService as CommonServiceTwo} from 'src/app/shared/services/common.service';
 
 
+
 @Component({
   selector: 'app-applicant-detail-propertywater',
   templateUrl: './applicant-detail-propertywater.component.html',
@@ -20,7 +21,6 @@ export class ApplicantDetailPropertywaterComponent implements OnInit {
   stateListArray:any = [];
   cityListArray: any = [];
   editMode: boolean = false;
-
 
   @Input() serviceType : string;
   @Output() stepChange = new EventEmitter();
@@ -97,9 +97,12 @@ export class ApplicantDetailPropertywaterComponent implements OnInit {
 	getStateLists(country) {
 		this.stateListArray = this.countryListArray.find(con => con.name === country.name).states;
 		this.stateListArray = _.orderBy(this.stateListArray, ['name'],['asc']);
-		if (this.editMode && this.model.citizenAddressDTO.state) {
-			this.getCityLists(this.model.citizenAddressDTO.state);
-		}
+		setTimeout(() => {
+			if (this.editMode && this.model.citizenAddressDTO.state) {
+				this.getCityLists(this.model.citizenAddressDTO.state);
+			}	
+		}, 1000);
+		
 
 	}
 
@@ -142,12 +145,35 @@ export class ApplicantDetailPropertywaterComponent implements OnInit {
 					this.model.citizenAddressDTO.buildingName = userData.buildingName;
 					this.model.citizenAddressDTO.streetName = userData.streetName;
 					this.model.citizenAddressDTO.landmark = userData.landmark;
+					this.model.citizenAddressDTO.area = userData.area;
+					this.model.citizenAddressDTO.pincode = userData.pincode;
+					this.model.citizenAddressDTO.city = userData.city;
+					this.model.citizenAddressDTO.state = userData.state.toUpperCase();
+					this.model.citizenAddressDTO.country = userData.country.toUpperCase();
+					this.getStateListsForDefaltCountry(this.model.citizenAddressDTO.country);
+			
 				}
 				
 			})
 		}
-
 		
+	}
+
+	getStateListsForDefaltCountry(country:any) {
+		this.stateListArray = this.countryListArray.find(con => con.name.toUpperCase() === country).states;
+		this.stateListArray = _.orderBy(this.stateListArray, ['name'],['asc']);
+		setTimeout(() => {
+			if (this.editMode && this.model.citizenAddressDTO.state) {
+				this.getCityListsForDefaultState(this.model.citizenAddressDTO.state);
+			}
+		}, 1000);
+		
+	}
+
+	getCityListsForDefaultState(state :any) {
+		this.cityListArray = this.stateListArray.find(obj => obj.name.toUpperCase() === state).cities;
+		this.stateListArray.find(obj => obj.name === state).cities
+		this.cityListArray = _.orderBy(this.cityListArray, ['name'],['asc']);
 	}
 
 }
