@@ -515,9 +515,11 @@ export class TownHallBookComponent implements OnInit {
     // debugger;
     let shiftCount = shift.length;
     let availableCount = shift.filter(s => s.slotStatus === "AVAILABLE").length;
+    let bookedCount = shift.filter(s => s.slotStatus === "BOOKED").length;   
     let reservedCount = shift.filter(s => s.slotStatus === "RESERVED").length;
     let temporaryBlockCount = shift.filter(s => s.slotStatus === "TEMPORARY_BLOCKED").length;
-    return shiftCount === reservedCount || shiftCount === temporaryBlockCount  ? 'bookDate'  : '' ;  
+
+    return shiftCount === reservedCount || shiftCount === temporaryBlockCount || shiftCount === bookedCount  ? 'bookDate'  : '';   
   }
 
 
