@@ -1,7 +1,7 @@
 <mat-card>
   <form #formDetail="ngForm" (ngSubmit)="save(formDetail)">
     <div class="row">
-      <div class="col-md-1">
+      <div class="col-md-2">
         <mat-form-field class="full-width-input">
           <input matInput required number-only minlength="3" maxlength="3" (input)="checkDuplicateCode($event);"
             placeholder="Code" name="OccupierCode" #OccupierCode="ngModel" [(ngModel)]="model.occupierCode">
@@ -10,7 +10,7 @@
         </mat-form-field>
         <mat-error *ngIf="isDuplicateCode">*Code already exists.</mat-error>
       </div>
-      <div class="col-md-1">
+      <div class="col-md-2">
              <div class="ngSelect" style="min-width: 100%;">
             <ng-select required placeholder="Title" [items]="titleList" bindValue="itemId"
                 bindLabel="itemName" name="titleId" [(ngModel)]="model.titleId" #TitleId="ngModel"
@@ -21,33 +21,33 @@
             </div>
         </div>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-4">
         <mat-form-field class="full-width-input">
           <input trim="blur" matInput required maxlength="50" placeholder="First Name" name="firstName" #FirstName="ngModel"
             [(ngModel)]="model.firstName">
           <mat-error *ngIf="FirstName.invalid">*First Name is required.</mat-error>
         </mat-form-field>
       </div>
-      <div class="col-md-1">
+      <div class="col-md-4">
         <mat-form-field class="full-width-input">
           <input trim="blur" matInput maxlength="50" placeholder="Middle Name" name="middleName" #MiddleName="ngModel" [(ngModel)]="model.middleName">
         </mat-form-field>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-4">
         <mat-form-field class="full-width-input">
           <input trim="blur" matInput required maxlength="50" placeholder="Last Name" name="lastName" #LastName="ngModel"
             [(ngModel)]="model.lastName">
           <mat-error *ngIf="LastName.invalid">*Last Name is required.</mat-error>
         </mat-form-field>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-4">
         <mat-form-field class="full-width-input">
           <input trim="blur" matInput number-only placeholder="Aadhaar Number" name="aadharNo" maxlength="12" minlength="12"  #AadharNo="ngModel"
             [(ngModel)]="model.aadharNo">
             <mat-error *ngIf="AadharNo.invalid">*Aadhaar No. is invalid.</mat-error>
         </mat-form-field>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-3">
         <mat-form-field class="full-width-input">
           <input matInput number-only maxlength="10" minlength="10" placeholder="Mobile Number" name="mobileNo"  #MobileNo="ngModel"
             [(ngModel)]="model.mobileNo">
