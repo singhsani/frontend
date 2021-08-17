@@ -270,6 +270,7 @@ export class DeathCorrectionComponent implements OnInit {
 				code: [null, Validators.required]
 			}),
 			registrationNumber: [null, [Validators.required]],
+			dateofdeath: [null, [Validators.required]],
 		});
 	}
 
