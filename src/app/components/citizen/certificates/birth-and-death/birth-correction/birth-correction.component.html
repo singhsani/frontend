@@ -6,13 +6,22 @@
 
             <div class="row">
 
-                <mat-form-field class="col-md-4">
+                <mat-form-field class="col-md-6">
                     <input matInput maxlength="50" placeholder="{{'registration_number' | translate:translateKey}}" formControlName="registrationNumber"
                         required>
                     <control-messages [control]="regStatusForm.get('registrationNumber')"></control-messages>
                 </mat-form-field>
 
-                <div formGroupName="typeOfCorrection" class="col-md-6 ngSelect">
+                <mat-form-field class="col-md-6">
+                    <input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="birthDate"
+                        placeholder="{{'birth_date' | translate: translateKey}}"
+                        (focus)="picker.open()" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi="true" #picker></mat-datepicker>
+                    <mat-error *ngIf="regStatusForm.get('birthDate').invalid">Birth Date is Required.</mat-error>
+                </mat-form-field>
+
+                <div formGroupName="typeOfCorrection" class="col-md-12 ngSelect">
                     <ng-select placeholder="{{'type_of_correction' | translate:translateKey}}*" formControlName="code" >
                         <ng-option *ngFor="let type of TypeOfCorrection" [value]="type.code">
                             {{type.name}}
@@ -21,7 +30,7 @@
                     <control-messages [control]="regStatusForm.get('typeOfCorrection').get('code')"></control-messages>
                 </div>
 
-                <div class="col-md-2 text-right">
+                <div class="col-md-12 text-right">
                     <button [disabled]="!regStatusForm.valid" mat-raised-button color="primary" type="submit">
                         {{'search'| translate: translateKey}}</button>
                 </div>

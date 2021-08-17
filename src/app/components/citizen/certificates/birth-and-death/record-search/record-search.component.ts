@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator, MatSort, MatTableDataSource, PageEvent } from '@angular/material';
 import { merge, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
@@ -149,6 +149,7 @@ export class RecordSearchComponent implements OnInit {
 		this.dataSource.paginator = this.paginator;
 		this.dataSource.sort = this.sort;
 
+
 	}
 
 	/**
@@ -166,7 +167,7 @@ export class RecordSearchComponent implements OnInit {
 		this.searchForm = this.fb.group({
 			birthRegNumber: null,
 			birthRegYear: null,
-			birthDate: null,
+			birthDate: [null, Validators.required],
 			childName: null,
 			fatherFirstName: null,
 			motherName: null
@@ -189,7 +190,7 @@ export class RecordSearchComponent implements OnInit {
 		this.searchForm = this.fb.group({
 			deathRegNumber: null,
 			deathRegYear: null,
-			deathDate: null,
+			deathDate: [null, Validators.required],
 			deceasedName: null,
 			fatherName: null,
 			motherName: null
@@ -209,7 +210,9 @@ export class RecordSearchComponent implements OnInit {
 	 * @param formsVal - Search form value
 	 */
 	getDetails(formsVal) {
-		this.getAllData();
+		if(this.searchForm.valid){
+			this.getAllData();
+		}
 	}
 
 	/**
@@ -272,11 +275,11 @@ export class RecordSearchComponent implements OnInit {
 			type = this.apiType;
 		}
 
-		this.commonService.confirmAlert('No record found!', `Do you want to create ${type} certificate`, 'warning', '', confirm => {
-			// this.searchResult.emit(false);
-			//redirect to new resigstration form
-			this.redirectToNRCForm(false);
-		});
+		// this.commonService.confirmAlert('No record found!', `Do you want to create ${type} certificate`, 'warning', '', confirm => {
+		// 	// this.searchResult.emit(false);
+		// 	//redirect to new resigstration form
+		// 	this.redirectToNRCForm(false);
+		// });
 	}
 
 	/**
