@@ -387,7 +387,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE')
 			return false;
 		else if (row.serviceType == "AFFORD_HOUSE"){
-			return false;
+			return true;
 		}	
 		else if (row.canEdit || row.fileStatus === 'QUERIED' || row.fileStatus === 'QUERY_RAISED')
 			return true;

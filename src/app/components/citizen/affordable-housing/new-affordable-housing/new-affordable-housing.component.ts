@@ -107,7 +107,7 @@ export class NewAffordableHousingComponent implements OnInit {
 			this.createFormData();
 		}
 		else {
-			this.getMuttonFishLicNewData();
+			this.getAhfData();
 			this.affordableHousingFormControls();
 		}
 
@@ -222,11 +222,25 @@ export class NewAffordableHousingComponent implements OnInit {
 	/**
 	 * Method is used to get form data
 	 */
-	getMuttonFishLicNewData() {
+	getAhfData() {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
+
+				this.schemeChange(res.schemeId);
+
 				this.affordableHousingForm.patchValue(res);
 
+				res.familyMembers.forEach(app => {
+					(<FormArray>this.affordableHousingForm.get('familyMembers')).push(this.createFormGroup('familyMembers',app));
+				});
+	
+				res.ownHouseDetail.forEach(app => {
+					(<FormArray>this.affordableHousingForm.get('ownHouseDetail')).push(this.createFormGroup('ownHouseDetail',app));
+				});
+	
+				res.ownLandPlotDetail.forEach(app => {
+					(<FormArray>this.affordableHousingForm.get('ownLandPlotDetail')).push(this.createFormGroup('ownLandPlotDetail',app));
+				});
 
 
 				// res.serviceDetail.serviceUploadDocuments.forEach(app => {
@@ -299,7 +313,7 @@ export class NewAffordableHousingComponent implements OnInit {
 			firstAppHusWifeMiddleName: [null, [Validators.maxLength(100)]],
 			firstAppHusWifeLastName: [null, [Validators.required, Validators.maxLength(100)]],
 			firstAppDateOfBirth: [null, [Validators.required]],
-			firstAppTelephoneNumber: [null, [Validators.maxLength(15)]],
+			firstAppTelephoneNumber: [null, [Validators.maxLength(11)]],
 			firstAppMobileNumOne: [null, [Validators.required, Validators.maxLength(10)]],
 			firstAppMobileNumTwo: [null, [Validators.maxLength(10)]],
 			firstAppEmail: [null, [ValidationService.emailValidator, Validators.maxLength(50)]],
@@ -324,7 +338,7 @@ export class NewAffordableHousingComponent implements OnInit {
 			secondAppHusWifeMiddleName: [null, [Validators.maxLength(100)]],
 			secondAppHusWifeLastName: [null, [Validators.required, Validators.maxLength(100)]],
 			secondAppDateOfBirth: [null, [Validators.required]],
-			secondAppTelephoneNumber: [null, [Validators.maxLength(15)]],
+			secondAppTelephoneNumber: [null, [Validators.maxLength(11)]],
 			secondAppMobileNumOne: [null, [Validators.required, Validators.maxLength(10)]],
 			secondAppMobileNumTwo: [null, [Validators.maxLength(10)]],
 			secondAppEmail: [null, [ValidationService.emailValidator, Validators.maxLength(50)]],
@@ -542,12 +556,12 @@ export class NewAffordableHousingComponent implements OnInit {
 			case 'ownHouseDetail':
 			case 'ownLandPlotDetail':
 				formGroupData = this.fb.group({
-					name: [null, [Validators.required, Validators.maxLength(200)]],
-					flatNo: [null, [Validators.required, Validators.maxLength(200)]],
-					street: [null, [Validators.required, Validators.maxLength(200)]],
-					city: [null, [Validators.required, Validators.maxLength(200)]],
-					district: [null, [Validators.required, Validators.maxLength(200)]],
-					pincode: [null, [Validators.required, Validators.maxLength(200)]]
+					name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(200)]],
+					flatNo: [data.flatNo ? data.flatNo : null, [Validators.required, Validators.maxLength(200)]],
+					street: [data.street ? data.street : null, [Validators.required, Validators.maxLength(200)]],
+					city: [data.city ? data.city : null, [Validators.required, Validators.maxLength(200)]],
+					district: [data.district ? data.district : null, [Validators.required, Validators.maxLength(200)]],
+					pincode: [data.pincode ? data.pincode : null, [Validators.required, Validators.maxLength(6)]]
 				})
 				break;
 			// case 'ownLandPlotDetail':
