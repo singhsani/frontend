@@ -92,13 +92,11 @@ export class NewAffordableHousingComponent implements OnInit {
 			this.apiCode = param.get('apiCode');
 
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
-			// if (this.formId) {
-			// 	this.getAffordableHousingData(this.formId);
-			// }
 		},
 			err => {
 				this.toster.error(err.error.error_description);
 			});
+			this.affordableHousingFormControls();
 		this.getLookupData();
 		this.getLookupDataApplyFor();
 		this.getAllDocumentLists();
@@ -108,7 +106,6 @@ export class NewAffordableHousingComponent implements OnInit {
 		}
 		else {
 			this.getAhfData();
-			this.affordableHousingFormControls();
 		}
 
 		this.setFormControlToTabIndexMap();
@@ -199,18 +196,9 @@ export class NewAffordableHousingComponent implements OnInit {
 		});
 	}
 
-	getAffordableHousingData(id: number) {
-		this.formService.getFormData(id).subscribe(res => {
-			console.log("tresr", res)
-			this.affordableHousingForm.patchValue(res);
-			this.showButtons = true;
-			this.affordableHousingForm.disable();
-			this.setServiceDetailsOnInit(res);
-			//	this.sortedList.push(res);
-		});
-	}
 
 	setServiceDetailsOnInit(res) {
+		this.attachmentList = [];
 		this.serverUploadFilesArray = res.serviceDetail.serviceUploadDocuments;
 		const localUploadArray = [...this.serverUploadFilesArray];
 
@@ -225,11 +213,12 @@ export class NewAffordableHousingComponent implements OnInit {
 	getAhfData() {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
-
-				this.schemeChange(res.schemeId);
+				if(res.schemeId){
+					this.schemeChange(res.schemeId);
+				}
 
 				this.affordableHousingForm.patchValue(res);
-
+				
 				res.familyMembers.forEach(app => {
 					(<FormArray>this.affordableHousingForm.get('familyMembers')).push(this.createFormGroup('familyMembers',app));
 				});
@@ -242,11 +231,15 @@ export class NewAffordableHousingComponent implements OnInit {
 					(<FormArray>this.affordableHousingForm.get('ownLandPlotDetail')).push(this.createFormGroup('ownLandPlotDetail',app));
 				});
 
-
-				// res.serviceDetail.serviceUploadDocuments.forEach(app => {
-				// 	(<FormArray>this.affordableHousingForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
-				// });
-				//this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishNewForm);
+				this.setServiceDetailsOnInit(res);
+				this.showButtons = true;
+				
+				this.affordableHousingForm.get('ddBank').get('code').setValue(res.paymentAcceptance[0].ddBank.code);
+				this.affordableHousingForm.get('ddBankBranch').setValue(res.paymentAcceptance[0].ddBankBranch);
+				this.affordableHousingForm.get('ddNumber').setValue(res.paymentAcceptance[0].ddNumber);
+				this.affordableHousingForm.get('ddAmount').setValue(res.paymentAcceptance[0].ddAmount);
+				this.affordableHousingForm.get('ddIssuingDate').setValue(res.paymentAcceptance[0].ddIssuingDate);
+				
 
 			} catch (error) {
 				console.log(error.message)
@@ -279,7 +272,8 @@ export class NewAffordableHousingComponent implements OnInit {
 	 * This method for serach project by shcmeid .
 	 */
 	schemeChange(shcmeid) {
-
+		this.projectData = [];
+		if(shcmeid)
 		this.affodableService.getProject(shcmeid).subscribe(
 			(res: any) => {
 				this.projectData = res;
