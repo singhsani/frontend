@@ -67,8 +67,8 @@
                             </mat-form-field>
 
                             <mat-form-field class="col-md-4">
-                                <input required matInput maxlength="150" appPreventSpace appGujInputTarget [form]="birthCorrectionForm" placeholder="{{'child_name' | translate:translateKey:'gu'}}"
-                                    formControlName="childNameGuj" required>
+                                <input required matInput maxlength="150" appValidationFields appGujInputTarget [form]="birthCorrectionForm" placeholder="{{'child_name' | translate:translateKey:'gu'}}"
+                                [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="childNameGuj" required>
                                     <mat-error *ngIf="birthCorrectionForm.get('childNameGuj').invalid">Child Name Gujarati is Required.</mat-error>
                                 <!-- <control-messages [control]="birthCorrectionForm.get('childNameGuj')"></control-messages> -->
                             </mat-form-field>
@@ -221,8 +221,8 @@
                             </mat-form-field>
 
                             <mat-form-field class="col-md-4">
-                                <input required matInput maxlength="150" appPreventSpace appGujInputTarget [form]="birthCorrectionForm" placeholder="{{'child_name' | translate:translateKey:'gu'}}"
-                                    formControlName="childNameGuj" required>
+                                <input required matInput maxlength="150" appValidationFields appGujInputTarget [form]="birthCorrectionForm" placeholder="{{'child_name' | translate:translateKey:'gu'}}"
+                                [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="childNameGuj" required>
                                     <mat-error *ngIf="birthCorrectionForm.get('childNameGuj').invalid">Child Name Gujarati is Required.</mat-error>
                                 <!-- <control-messages [control]="birthCorrectionForm.get('childNameGuj')"></control-messages> -->
                             </mat-form-field>

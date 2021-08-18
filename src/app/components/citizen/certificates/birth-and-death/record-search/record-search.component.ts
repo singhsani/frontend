@@ -165,7 +165,7 @@ export class RecordSearchComponent implements OnInit {
 	 */
 	searchFormBirthControls() {
 		this.searchForm = this.fb.group({
-			birthRegNumber: null,
+			birthRegNumber: [null, Validators.required],
 			birthRegYear: null,
 			birthDate: [null, Validators.required],
 			childName: null,
@@ -188,7 +188,7 @@ export class RecordSearchComponent implements OnInit {
  */
 	searchFormDeathControls() {
 		this.searchForm = this.fb.group({
-			deathRegNumber: null,
+			deathRegNumber: [null, Validators.required],
 			deathRegYear: null,
 			deathDate: [null, Validators.required],
 			deceasedName: null,
