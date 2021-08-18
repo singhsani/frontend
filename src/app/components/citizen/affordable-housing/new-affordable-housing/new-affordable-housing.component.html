@@ -21,6 +21,7 @@
 								<ng-option *ngIf="applied.isAppliedFor == 'ACTIVE'" [value]="applied.id">
 									{{applied.schemeName}}</ng-option>
 							</ng-container>
+
 						</ng-select>
 						<control-messages [control]="affordableHousingForm.get('schemeId')">
 						</control-messages>
@@ -28,8 +29,10 @@
 
 					<div class="col-md-4 ngSelect">
 						<ng-select placeholder="{{'project' | translate: translateKey}} *" formControlName="projectId">
-							<ng-option *ngFor="let project of projectData" [value]="project.id">
-								{{project.projectName}}</ng-option>
+								<ng-container *ngFor="let project of projectData">
+									<ng-option *ngIf="project?.isAppliedFor == 'ACTIVE'" [value]="project.id">
+										{{project.projectName}}</ng-option>
+								</ng-container>
 						</ng-select>
 						<control-messages [control]="affordableHousingForm.get('projectId')">
 						</control-messages>
@@ -114,7 +117,7 @@
 					<mat-form-field class="col-md-4">
 						<span matPrefix>+91 &nbsp;</span>
 						<input matInput OnlyNumber placeholder="{{'contact_no' | translate:translateKey}}" type="tel"
-							maxlength="10" minlength="10" formControlName="firstAppTelephoneNumber">
+							maxlength="11" minlength="10" formControlName="firstAppTelephoneNumber">
 						<control-messages [control]="affordableHousingForm.get('firstAppTelephoneNumber')">
 						</control-messages>
 					</mat-form-field>
