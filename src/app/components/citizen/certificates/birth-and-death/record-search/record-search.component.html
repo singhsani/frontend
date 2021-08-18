@@ -6,7 +6,8 @@
 			<div class="row" *ngIf="!deathFromName">
 				<mat-form-field class="col-md-4">
 					<input matInput trim type="text" formControlName="birthRegNumber"
-						placeholder="{{'reg_number' | translate: translateKey}}">
+						placeholder="{{'reg_number' | translate: translateKey}}" required>
+						<mat-error *ngIf="searchForm.get('birthRegNumber').invalid">Registration Number is Required.</mat-error>
 				</mat-form-field>
 
 				<div class="col-md-4 ngSelect">
@@ -53,7 +54,8 @@
 			<div class="row" *ngIf="deathFromName">
 				<mat-form-field class="col-md-4">
 					<input matInput trim type="text" formControlName="deathRegNumber"
-						placeholder="{{'reg_number' | translate: translateKey}}">
+						placeholder="{{'reg_number' | translate: translateKey}}" required>
+					<mat-error *ngIf="searchForm.get('deathRegNumber').invalid">Registration Number is Required.</mat-error>
 				</mat-form-field>
 
 				<div class="col-md-4 ngSelect">
