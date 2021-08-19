@@ -413,6 +413,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			|| (row.serviceType === 'SHOP_ESTAB_TRANSFER' && row.fileStatus === 'APPROVED') || (row.serviceType === 'SHOP_ESTAB_TRANSFER' && row.fileStatus === 'REJECTED')){
 			return true;
 		}
+
+		else if(row.serviceType === 'DUPLICATE_BIRTH_REGISTRATION' || 'DUPLICATE_DEATH_REGISTRATION' || 'BIRTH_CORRECTION_REGISTRATION' || 'DEATH_CORRECTION_REGISTRATION' && row.fileStatus === 'APPROVED' || 'REJECTED'){
+			return true;
+		}
 		else if (row.serviceType == "AFFORD_HOUSE"){
 			return false;
 		}
@@ -493,6 +497,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}
 
 		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'MARRIAGE_REGISTRATION') {
+			return true;
+		}
+		
+		if(row.serviceType === 'DUPLICATE_BIRTH_REGISTRATION' || 'DUPLICATE_DEATH_REGISTRATION' || 'BIRTH_CORRECTION_REGISTRATION' || 'DEATH_CORRECTION_REGISTRATION' && row.fileStatus === 'SUBMITTED'){
 			return true;
 		}
 
