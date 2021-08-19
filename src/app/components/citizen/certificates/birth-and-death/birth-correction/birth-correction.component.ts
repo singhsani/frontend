@@ -377,6 +377,7 @@ export class BirthCorrectionComponent implements OnInit {
 				code: [null, [Validators.required]]
 			}),
 			registrationNumber: [null, [Validators.required]],
+			birthDate: [null, [Validators.required]],
 		});
 	}
 
@@ -451,6 +452,19 @@ export class BirthCorrectionComponent implements OnInit {
 			attachments: [],
 		});
 	}
+
+	/**
+	 * This method use for covert date format
+	 * @param date - Selected date
+	 */
+	 onDateChange(date) {
+		this.birthCorrectionForm.get('date').setValue(moment(date).format("YYYY-MM-DD"));
+	}
+
+	/**
+	 * maximum date validation.
+	 */
+	 maxDate: Date = new Date();
 
 	/**
 	 * This method use to get output event of tab change
