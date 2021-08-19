@@ -334,12 +334,14 @@
 					</ng-container>
 				</div>
 				<app-action-bar [uploadFiles]="uploadFilesArray"
-					[form]="drainagePipeliConnectionForm" (tabIndex)="onTabChange($event)"
+					[form]="drainagePipeliConnectionForm" (tabIndex)="onTabChange($event)"[paymentGateway]="paymentGateway"
 					[stepInfo]="{step: 'final', next: 4, back: 4}" (handleErrors)="handleErrorsOnSubmit($event)">
 				</app-action-bar>
+					<!-- Tab 4 End -->
+				<select-payment-gateway #paymentGateway></select-payment-gateway>
 			</mat-tab>
-			<!-- Tab 4 End -->
-			<!-- <select-payment-gateway #paymentGateway></select-payment-gateway> -->
+		
+			
 		</mat-tab-group>
 	</form>
 

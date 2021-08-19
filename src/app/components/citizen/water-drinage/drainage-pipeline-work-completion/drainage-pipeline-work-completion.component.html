@@ -5,10 +5,10 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey">
 </app-title-bar>
 
-<h4>{{'search-view' | translate:translateKey}}</h4>
+<h4 class="ml-4">{{'search-view' | translate:translateKey}}</h4>
 
 <form [formGroup]="drainagePipelineWorkCompletionSearchForm">
-  <div class="row">
+  <div class="row ml-3">
     <mat-form-field class="col-lg-3">
       <input matInput formControlName="workCompletionWorkOrderNo" placeholder="{{'work-order-no' | translate:translateKey}}">
     </mat-form-field>
@@ -99,12 +99,11 @@
           </ng-select>
           <control-messages [control]="drainagePipelineWorkCompletionForm.get('connectionApplyFor')"></control-messages>
         </div>
-
-        <div class="row">
+        <div class="col ml-3">
           <ng-template mat-tab-label>
             <div>upload</div>
           </ng-template>
-
+  
           <div class="row" *ngIf="!isFromShow">
             <ng-container
               *ngFor="let doc of drainagePipelineWorkCompletionForm.get('serviceDetail').get('serviceUploadDocuments').value">
@@ -114,9 +113,7 @@
               </div>
             </ng-container>
           </div>
-          
         </div>
-
       </div>
       <app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" [isstepper]="false" [stepInfo]="{step: 'final', next: 0, back: 0}" [form]="drainagePipelineWorkCompletionForm" ></app-action-bar>
       <select-payment-gateway #paymentGateway></select-payment-gateway>
