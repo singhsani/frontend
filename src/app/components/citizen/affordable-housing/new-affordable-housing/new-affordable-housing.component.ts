@@ -355,7 +355,7 @@ export class NewAffordableHousingComponent implements OnInit {
 				code: [null, [Validators.required]],
 				name: null,
 			}),
-			bankBranch: [null, [Validators.required, Validators.maxLength(200)]],
+			bankBranch: [null, [Validators.required, Validators.maxLength(40)]],
 			bankIFSC: [null, [Validators.required, ValidationService.ifscCodeValidator]],
 			bankMicrCode: [null, [Validators.maxLength(25)]],
 			ddBank: this.fb.group({
