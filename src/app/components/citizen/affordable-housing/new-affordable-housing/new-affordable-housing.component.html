@@ -21,6 +21,7 @@
 								<ng-option *ngIf="applied.isAppliedFor == 'ACTIVE'" [value]="applied.id">
 									{{applied.schemeName}}</ng-option>
 							</ng-container>
+
 						</ng-select>
 						<control-messages [control]="affordableHousingForm.get('schemeId')">
 						</control-messages>
@@ -28,8 +29,10 @@
 
 					<div class="col-md-4 ngSelect">
 						<ng-select placeholder="{{'project' | translate: translateKey}} *" formControlName="projectId">
-							<ng-option *ngFor="let project of projectData" [value]="project.id">
-								{{project.projectName}}</ng-option>
+								<ng-container *ngFor="let project of projectData">
+									<ng-option *ngIf="project?.isAppliedFor == 'ACTIVE'" [value]="project.id">
+										{{project.projectName}}</ng-option>
+								</ng-container>
 						</ng-select>
 						<control-messages [control]="affordableHousingForm.get('projectId')">
 						</control-messages>
@@ -114,7 +117,7 @@
 					<mat-form-field class="col-md-4">
 						<span matPrefix>+91 &nbsp;</span>
 						<input matInput OnlyNumber placeholder="{{'contact_no' | translate:translateKey}}" type="tel"
-							maxlength="10" minlength="10" formControlName="firstAppTelephoneNumber">
+							maxlength="11" minlength="11" formControlName="firstAppTelephoneNumber">
 						<control-messages [control]="affordableHousingForm.get('firstAppTelephoneNumber')">
 						</control-messages>
 					</mat-form-field>
@@ -129,7 +132,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber placeholder="{{'Mobile No 2' | translate:translateKey}}" type="tel"
-							formControlName="firstAppMobileNumTwo" minlength="10" maxlength="10">
+							formControlName="firstAppMobileNumTwo" minlength="10" maxlength="11">
 						<control-messages [control]="affordableHousingForm.get('firstAppMobileNumTwo')">
 						</control-messages>
 					</mat-form-field>
@@ -163,7 +166,7 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="100"
+						<input matInput type="text" required maxlength="100" appValidationFields validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'Applicant Occupation' | translate:translateKey}}"
 							formControlName="firstAppOccupation">
 						<control-messages [control]="affordableHousingForm.get('firstAppOccupation')">
@@ -171,7 +174,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="100"
+						<input matInput type="text" required maxlength="100" appValidationFields validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'organisation_Name' | translate:translateKey}}"
 							formControlName="firstAppOrganizationName">
 						<control-messages [control]="affordableHousingForm.get('firstAppOrganizationName')">
@@ -179,7 +182,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="100"
+						<input matInput type="text" required maxlength="100" appValidationFields validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'designation_Held' | translate:translateKey}}"
 							formControlName="firstAppOccupationDesignation">
 						<control-messages [control]="affordableHousingForm.get('firstAppOccupationDesignation')">
@@ -315,7 +318,7 @@
 					<mat-form-field class="col-md-4">
 						<span matPrefix>+91 &nbsp;</span>
 						<input matInput OnlyNumber placeholder="{{'contact_no' | translate:translateKey}}" type="tel"
-							maxlength="10" minlength="10" formControlName="secondAppTelephoneNumber">
+							maxlength="11" minlength="11" formControlName="secondAppTelephoneNumber">
 						<control-messages [control]="affordableHousingForm.get('secondAppTelephoneNumber')">
 						</control-messages>
 					</mat-form-field>
@@ -358,7 +361,7 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="100"
+						<input matInput type="text" required maxlength="100" appValidationFields validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'Applicant Occupation' | translate:translateKey}}"
 							formControlName="secondAppOccupation">
 						<control-messages [control]="affordableHousingForm.get('secondAppOccupation')">
@@ -366,7 +369,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="100"
+						<input matInput type="text" required maxlength="100" appValidationFields validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'organisation_Name' | translate:translateKey}}"
 							formControlName="secondAppOrganizationName">
 						<control-messages [control]="affordableHousingForm.get('secondAppOrganizationName')">
@@ -374,7 +377,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="100"
+						<input matInput type="text" required maxlength="100" appValidationFields validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'designation_Held' | translate:translateKey}}"
 							formControlName="secondAppOccupationDesignation">
 						<control-messages [control]="affordableHousingForm.get('secondAppOccupationDesignation')">
@@ -474,8 +477,8 @@
 
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" maxlength="200" formControlName="bankBranch" type="text"
-							placeholder="{{'branch_name' | translate: translateKey}}" required>
+						<input matInput autocomplete="off"  formControlName="bankBranch" type="text"
+						appValidationFields validationFieldsType='onlyNameWithSpace' maxlength="40" placeholder="{{'branch_name' | translate: translateKey}}" required>
 						<control-messages [control]="affordableHousingForm.get('bankBranch')"></control-messages>
 					</mat-form-field>
 

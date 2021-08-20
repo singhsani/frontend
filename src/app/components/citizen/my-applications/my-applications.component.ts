@@ -387,7 +387,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE')
 			return false;
 		else if (row.serviceType == "AFFORD_HOUSE"){
-			return false;
+			return true;
 		}	
 		else if (row.canEdit || row.fileStatus === 'QUERIED' || row.fileStatus === 'QUERY_RAISED')
 			return true;
@@ -411,6 +411,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	
 		if((row.serviceType === 'SHOP_ESTAB_APPLICATION' && row.fileStatus === 'APPROVED') || (row.serviceType === 'SHOP_ESTAB_APPLICATION' && row.fileStatus === 'REJECTED')
 			|| (row.serviceType === 'SHOP_ESTAB_TRANSFER' && row.fileStatus === 'APPROVED') || (row.serviceType === 'SHOP_ESTAB_TRANSFER' && row.fileStatus === 'REJECTED')){
+			return true;
+		}
+
+		else if(row.serviceType === 'DUPLICATE_BIRTH_REGISTRATION' || 'DUPLICATE_DEATH_REGISTRATION' || 'BIRTH_CORRECTION_REGISTRATION' || 'DEATH_CORRECTION_REGISTRATION' && row.fileStatus === 'APPROVED' || 'REJECTED'){
 			return true;
 		}
 		else if (row.serviceType == "AFFORD_HOUSE"){
@@ -493,6 +497,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}
 
 		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'MARRIAGE_REGISTRATION') {
+			return true;
+		}
+		
+		if(row.serviceType === 'DUPLICATE_BIRTH_REGISTRATION' || 'DUPLICATE_DEATH_REGISTRATION' || 'BIRTH_CORRECTION_REGISTRATION' || 'DEATH_CORRECTION_REGISTRATION' && row.fileStatus === 'SUBMITTED'){
 			return true;
 		}
 
