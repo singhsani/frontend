@@ -9,6 +9,7 @@ import { TranslateService } from '../../../../../shared/modules/translate/transl
 import * as _ from 'lodash';
 import { CertificateConfig } from '../../certificate-config';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-birth-correction',
@@ -119,7 +120,8 @@ export class BirthCorrectionComponent implements OnInit {
 		private location: Location,
 		private commonService: CommonService,
 		private formService: FormsActionsService,
-		public TranslateService: TranslateService
+		public TranslateService: TranslateService,
+		private toster: ToastrService
 	) { }
 
 	/**
@@ -314,6 +316,10 @@ export class BirthCorrectionComponent implements OnInit {
 			prod_array.push(newgnData[i]);
 		}
 
+		// this.birthCorrectionForm.get('date').setValue(moment(date).format("YYYY-MM-DD"));
+		console.log(moment(this.regStatusForm.get('birthDate').value).format("YYYY-MM-DD") );
+		console.log(moment(prod_array[0].birthDate,'DD-MM-YYYY').format("YYYY-MM-DD"));
+		if(moment(this.regStatusForm.get('birthDate').value).format("YYYY-MM-DD") == moment(prod_array[0].birthDate,'DD-MM-YYYY').format("YYYY-MM-DD")){
 		this.birthCorrectionForm.patchValue(prod_array[0]);
 		// this.birthCorrectionForm.get('fieldView').setValue(data.fieldView);
 		// this.birthCorrectionForm.get('fieldList').setValue(data.fieldList);
@@ -335,28 +341,44 @@ export class BirthCorrectionComponent implements OnInit {
 		this.birthCorrectionForm.get('typeOfCorrection').get('code').setValue(this.regStatusForm.get('typeOfCorrection').get('code').value);
 		this.newgnDateconvert('birthDate', this.birthCorrectionForm.get('birthDate').value);
 		this.newgnDateconvert('registrationDate', this.birthCorrectionForm.get('registrationDate').value);
+		
 
+		//let tempdate = new Date(this.birthCorrectionForm.get('birthDate').value);
 		/**
 		 * save data
 		 */
 
 		this.formService.saveFormData(this.birthCorrectionForm.value).subscribe(res => {
 			this.birthCorrectionForm.patchValue(res);
+			debugger
 		})
+	}
+	else{
+		this.toster.error('Wrong Date');
+	}
+
 	}
 
 	/**
 		* This method for convert newgn response date to yyyy-mm-dd formate
 		*/
+	// newgnDateconvert(controlName: any, date) {
+	//  if(date) {
+	// 	let dateString = date;
+	// 	let dateParts = dateString.split(" ");
+	// 	let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+	// 	this.birthCorrectionForm.get(controlName).setValue(moment(dateParts[0]).format("DD-MM-YYYY"));
+	//  } else {
+	// 	 console.log('control name is undefined', controlName)
+	//  }
+	// }
+
 	newgnDateconvert(controlName: any, date) {
-	 if(date) {
 		let dateString = date;
-		let dateParts = dateString.split(" ");
+		let dateParts = dateString.split("-");
 		let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
-		this.birthCorrectionForm.get(controlName).setValue(moment(dateParts[0]).format("YYYY-MM-DD"));
-	 } else {
-		 console.log('control name is undefined', controlName)
-	 }
+		// let dateObject = new Date(+dateParts[0], dateParts[1] - 1,+dateParts[2]);
+		this.birthCorrectionForm.get(controlName).setValue(moment(dateObject).format("YYYY-MM-DD"));
 	}
 
 	/**
@@ -459,6 +481,7 @@ export class BirthCorrectionComponent implements OnInit {
 	 */
 	 onDateChange(date) {
 		this.birthCorrectionForm.get('date').setValue(moment(date).format("YYYY-MM-DD"));
+		
 	}
 
 	/**
