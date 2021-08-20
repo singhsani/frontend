@@ -513,4 +513,9 @@ export class FormsActionsService {
 		return this.http.post(this.requestURL, data);
 
 	}
+
+	printPaymentAckReceipt(appId,url){
+		this.requestURL = `${url}?id=${appId}`;
+		return this.http.get(this.requestURL,'printReceipt');
+	}
 }

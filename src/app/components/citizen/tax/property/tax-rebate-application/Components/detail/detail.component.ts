@@ -231,21 +231,30 @@ export class DetailComponent implements OnInit {
   submit() {
     this.taxRebateApplicationService.approveDept({ taxRebateApplicationId: this.model.taxRebateApplicationId, applicationNo :  this.commonService2.applicationNo }).subscribe(
       (data) => {
-        this.alertService.success(data.body.message);
+        //  this.alertService.success(data.body.message);
+        if (this.commonService.fromAdmin()) {
+          this.alertService.propertyConfirm(data.body.message);
+          var subConfirm = this.alertService.getConfirm().subscribe(isConfirm => {
+            if (isConfirm) {
 
-        if(this.commonService.fromAdmin()){
+              const url = '/citizen/my-applications' +
+                '?printPaymentReceipt=' + this.taxRebateApplicationDataSharingService.isPaymentReceipt +
+                '&apiCode=' + this.taxRebateApplicationDataSharingService.serviceCode +
+                '&id=' + this.taxRebateApplicationDataSharingService.serviceId;
 
-          const url = '/citizen/my-applications' + 
-									'?printPaymentReceipt=' + this.taxRebateApplicationDataSharingService.isPaymentReceipt + 
-									'&apiCode=' + this.taxRebateApplicationDataSharingService.serviceCode +
-									'&id=' + this.taxRebateApplicationDataSharingService.serviceId;
+              this.router.navigateByUrl(url);
 
-									this.router.navigateByUrl(url);
+            }else{
+              this.router.navigateByUrl('/citizen/my-applications');
+            }
 
-        }else{
-          this.router.navigateByUrl('/citizen/my-applications');
+            subConfirm.unsubscribe();
+          });
+
+        } else {
+            this.alertService.success(data.body.message);
+             this.router.navigateByUrl('/citizen/my-applications');
         }
-
       },
       (error) => {
         if (error.status === 400) {
