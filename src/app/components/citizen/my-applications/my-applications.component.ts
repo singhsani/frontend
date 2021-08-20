@@ -408,15 +408,19 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 
 		const preViewDisplayServiceTypeArr = ['FS_REVISED_FIRE_NOC', 'FS_RENEWAL_NOC', 'FS_TEMP_STRUCT_NOC', 'FS_TEMP_FIREWORKSHOP_NOC', 'FS_FINAL_FIRE_NOC','FS_PROVISIONAL_HOSPITAL_NOC','FS_PROVISIONAL_NOC',
 			'FS_FIRE_CERTIFICATE', 'FS_WATER_TANKER', 'FS_FINAL_HOSPITAL_NOC', 'FS_ELECTRIC_CONNECTION_NOC', 'FS_NAVARATRI_NOC', 'FS_GAS_CONNECTION_NOC', 'CREMATION_REGISTRATION']
-	
+		
+			
 		if((row.serviceType === 'SHOP_ESTAB_APPLICATION' && row.fileStatus === 'APPROVED') || (row.serviceType === 'SHOP_ESTAB_APPLICATION' && row.fileStatus === 'REJECTED')
 			|| (row.serviceType === 'SHOP_ESTAB_TRANSFER' && row.fileStatus === 'APPROVED') || (row.serviceType === 'SHOP_ESTAB_TRANSFER' && row.fileStatus === 'REJECTED')){
 			return true;
 		}
 
-		else if(row.serviceType === 'DUPLICATE_BIRTH_REGISTRATION' || 'DUPLICATE_DEATH_REGISTRATION' || 'BIRTH_CORRECTION_REGISTRATION' || 'DEATH_CORRECTION_REGISTRATION' && row.fileStatus === 'APPROVED' || 'REJECTED'){
+		else if((row.serviceType === 'DUPLICATE_BIRTH_REGISTRATION' && row.fileStatus === 'APPROVED' || row.fileStatus === 'REJECTED') || (row.serviceType ==='DUPLICATE_DEATH_REGISTRATION' && row.fileStatus === 'APPROVED' || row.fileStatus === 'REJECTED') 
+		|| (row.serviceType ==='BIRTH_CORRECTION_REGISTRATION' && row.fileStatus === 'APPROVED' || row.fileStatus === 'REJECTED') || (row.serviceType === 'DEATH_CORRECTION_REGISTRATION' && row.fileStatus === 'APPROVED' || row.fileStatus === 'REJECTED')){
+		//  || (row.serviceType === 'DUPLICATE_BIRTH_REGISTRATION' && row.fileStatus === 'REJECTED') || (row.serviceType === 'DUPLICATE_DEATH_REGISTRATION' && row.fileStatus === 'REJECTED') || (row.serviceType === 'BIRTH_CORRECTION_REGISTRATION' && row.fileStatus === 'REJECTED') || (row.serviceType === 'BIRTH_CORRECTION_REGISTRATION' && row.fileStatus === 'REJECTED')){
 			return true;
 		}
+
 		else if (row.serviceType == "AFFORD_HOUSE"){
 			return false;
 		}
@@ -500,7 +504,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return true;
 		}
 		
-		if(row.serviceType === 'DUPLICATE_BIRTH_REGISTRATION' || 'DUPLICATE_DEATH_REGISTRATION' || 'BIRTH_CORRECTION_REGISTRATION' || 'DEATH_CORRECTION_REGISTRATION' && row.fileStatus === 'SUBMITTED'){
+		else if((row.serviceType === 'DUPLICATE_BIRTH_REGISTRATION' && row.fileStatus === 'SUBMITTED' ) || (row.serviceType ==='DUPLICATE_DEATH_REGISTRATION' && row.fileStatus === 'SUBMITTED' ) || (row.serviceType ==='BIRTH_CORRECTION_REGISTRATION' && row.fileStatus === 'SUBMITTED') || (row.serviceType === 'DEATH_CORRECTION_REGISTRATION' && row.fileStatus === 'SUBMITTED')){
 			return true;
 		}
 
