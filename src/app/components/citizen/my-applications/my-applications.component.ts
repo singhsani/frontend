@@ -417,7 +417,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 
 		else if((row.serviceType === 'DUPLICATE_BIRTH_REGISTRATION' && row.fileStatus === 'APPROVED' || row.fileStatus === 'REJECTED') || (row.serviceType ==='DUPLICATE_DEATH_REGISTRATION' && row.fileStatus === 'APPROVED' || row.fileStatus === 'REJECTED') 
 		|| (row.serviceType ==='BIRTH_CORRECTION_REGISTRATION' && row.fileStatus === 'APPROVED' || row.fileStatus === 'REJECTED') || (row.serviceType === 'DEATH_CORRECTION_REGISTRATION' && row.fileStatus === 'APPROVED' || row.fileStatus === 'REJECTED')){
-		//  || (row.serviceType === 'DUPLICATE_BIRTH_REGISTRATION' && row.fileStatus === 'REJECTED') || (row.serviceType === 'DUPLICATE_DEATH_REGISTRATION' && row.fileStatus === 'REJECTED') || (row.serviceType === 'BIRTH_CORRECTION_REGISTRATION' && row.fileStatus === 'REJECTED') || (row.serviceType === 'BIRTH_CORRECTION_REGISTRATION' && row.fileStatus === 'REJECTED')){
 			return true;
 		}
 
