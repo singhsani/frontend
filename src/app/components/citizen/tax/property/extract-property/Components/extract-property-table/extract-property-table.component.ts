@@ -121,7 +121,12 @@ export class ExtractPropertyTableComponent implements OnInit {
         startWith({}),
         switchMap(() => {
         if(this.searchModel.pageNo!=this.paginator.pageIndex || this.searchModel.pageSize!=this.paginator.pageSize){
-          this.searchModel.pageNo=this.paginator.pageIndex;
+          if(this.searchModel.pageSize==this.paginator.pageSize){
+            this.searchModel.pageNo=this.paginator.pageIndex;
+          }else{
+            this.searchModel.pageNo=0;
+            this.paginator.pageIndex=0;
+          }
           this.searchModel.pageSize=this.paginator.pageSize;
           return this.extractPropertyService.search(this.searchModel);
         }        
