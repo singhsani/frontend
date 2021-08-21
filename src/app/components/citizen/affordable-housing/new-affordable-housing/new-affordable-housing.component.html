@@ -117,7 +117,7 @@
 					<mat-form-field class="col-md-4">
 						<span matPrefix>+91 &nbsp;</span>
 						<input matInput OnlyNumber placeholder="{{'contact_no' | translate:translateKey}}" type="tel"
-							maxlength="11" minlength="10" formControlName="firstAppTelephoneNumber">
+							maxlength="11" minlength="11" formControlName="firstAppTelephoneNumber">
 						<control-messages [control]="affordableHousingForm.get('firstAppTelephoneNumber')">
 						</control-messages>
 					</mat-form-field>
@@ -318,7 +318,7 @@
 					<mat-form-field class="col-md-4">
 						<span matPrefix>+91 &nbsp;</span>
 						<input matInput OnlyNumber placeholder="{{'contact_no' | translate:translateKey}}" type="tel"
-							maxlength="11" minlength="10" formControlName="secondAppTelephoneNumber">
+							maxlength="11" minlength="11" formControlName="secondAppTelephoneNumber">
 						<control-messages [control]="affordableHousingForm.get('secondAppTelephoneNumber')">
 						</control-messages>
 					</mat-form-field>
@@ -477,8 +477,8 @@
 
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" maxlength="200" formControlName="bankBranch" type="text"
-							placeholder="{{'branch_name' | translate: translateKey}}" required>
+						<input matInput autocomplete="off"  formControlName="bankBranch" type="text"
+						appValidationFields validationFieldsType='onlyNameWithSpace' maxlength="40" placeholder="{{'branch_name' | translate: translateKey}}" required>
 						<control-messages [control]="affordableHousingForm.get('bankBranch')"></control-messages>
 					</mat-form-field>
 

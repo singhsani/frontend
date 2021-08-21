@@ -51,7 +51,8 @@ export class ValidationService {
             invalidDrivingLicense: 'Enter valid License number e.g. GJ0620210012122',
             invalidElectionCard: 'Enter valid Election Card Number e.g. ABC1234567',
             invalidPassport: 'Enter valid Passport number e,g, A1234567 or AB1234567',
-            invalidPropertyNo:'Please enter valid property no. with occupier code'
+            invalidPropertyNo:'Please enter valid property no. with occupier code',
+            invalidMemberNo: 'Please enter valid member no.'
         }
 
         return config[validatorName];
@@ -73,6 +74,13 @@ export class ValidationService {
             return matches ? null : { 'invalidName': true };
         } else {
             return null;
+        }
+    }
+
+    static swimmingPoolMemberValidator(control:FormControl) {
+        if (control.value) {
+            const matches = control.value.match(/^[A-Za-z]{2}[0-9]{4}[-][0-9]{2}[A-Za-z]{2}[0-9]{5}$/);
+            return matches ? null : { 'invalidMemberNo': true}
         }
     }
 

@@ -86,8 +86,9 @@ export class SwimmingPoolComponent implements OnInit {
 
   searchObj = {
     isDisplayRenewLicenceForm: <boolean>false,
-    searchLicenceNumber:""
+    searchLicenceNumber: null
   }
+  memberNumber: FormControl;
   isRenewalForm = false;
 
   constructor(
@@ -103,7 +104,9 @@ export class SwimmingPoolComponent implements OnInit {
     private route: ActivatedRoute
   ) { 
     this.bookingUtils = new BookingUtils(formService, toastr);
-    this.bookingService.resourceType = 'swimming'; }
+    this.bookingService.resourceType = 'swimming'; 
+    this.memberNumber = new FormControl('', ValidationService.swimmingPoolMemberValidator);
+  }
 
     /**
 	 * Min month should be current month.
@@ -624,7 +627,10 @@ export class SwimmingPoolComponent implements OnInit {
   }
 
   getSwimmingPoolData() {
-    this.bookingService.searchRenewSwimmingPool(this.searchObj.searchLicenceNumber).subscribe(
+    if (this.memberNumber.invalid)
+      return;
+      
+    this.bookingService.searchRenewSwimmingPool(this.memberNumber.value).subscribe(
       (res: any) => {
       res = res.data;
       if (res && res.bookingFormId) 

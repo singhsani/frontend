@@ -59,6 +59,12 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	config: CitizenConfig = new CitizenConfig();
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
+    
+	urlMap = new Map([
+        ["PRO-TAX-REBATE", "property/taxrebate/application/printReceiptForPayment"],
+        ["PRO-VAC", "property/taxrebate/application/printReceiptForPayment"]
+    ]);
+
 	constructor(
 		private formService: FormsActionsService,
 		private paginationService: PaginationService,
@@ -408,11 +414,18 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 
 		const preViewDisplayServiceTypeArr = ['FS_REVISED_FIRE_NOC', 'FS_RENEWAL_NOC', 'FS_TEMP_STRUCT_NOC', 'FS_TEMP_FIREWORKSHOP_NOC', 'FS_FINAL_FIRE_NOC','FS_PROVISIONAL_HOSPITAL_NOC','FS_PROVISIONAL_NOC',
 			'FS_FIRE_CERTIFICATE', 'FS_WATER_TANKER', 'FS_FINAL_HOSPITAL_NOC', 'FS_ELECTRIC_CONNECTION_NOC', 'FS_NAVARATRI_NOC', 'FS_GAS_CONNECTION_NOC', 'CREMATION_REGISTRATION']
-	
+		
+			
 		if((row.serviceType === 'SHOP_ESTAB_APPLICATION' && row.fileStatus === 'APPROVED') || (row.serviceType === 'SHOP_ESTAB_APPLICATION' && row.fileStatus === 'REJECTED')
 			|| (row.serviceType === 'SHOP_ESTAB_TRANSFER' && row.fileStatus === 'APPROVED') || (row.serviceType === 'SHOP_ESTAB_TRANSFER' && row.fileStatus === 'REJECTED')){
 			return true;
 		}
+
+		else if((row.serviceType === 'DUPLICATE_BIRTH_REGISTRATION' && row.fileStatus === 'APPROVED' || row.fileStatus === 'REJECTED') || (row.serviceType ==='DUPLICATE_DEATH_REGISTRATION' && row.fileStatus === 'APPROVED' || row.fileStatus === 'REJECTED') 
+		|| (row.serviceType ==='BIRTH_CORRECTION_REGISTRATION' && row.fileStatus === 'APPROVED' || row.fileStatus === 'REJECTED') || (row.serviceType === 'DEATH_CORRECTION_REGISTRATION' && row.fileStatus === 'APPROVED' || row.fileStatus === 'REJECTED')){
+			return true;
+		}
+
 		else if (row.serviceType == "AFFORD_HOUSE"){
 			return false;
 		}
@@ -493,6 +506,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}
 
 		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'MARRIAGE_REGISTRATION') {
+			return true;
+		}
+		
+		else if((row.serviceType === 'DUPLICATE_BIRTH_REGISTRATION' && row.fileStatus === 'SUBMITTED' ) || (row.serviceType ==='DUPLICATE_DEATH_REGISTRATION' && row.fileStatus === 'SUBMITTED' ) || (row.serviceType ==='BIRTH_CORRECTION_REGISTRATION' && row.fileStatus === 'SUBMITTED') || (row.serviceType === 'DEATH_CORRECTION_REGISTRATION' && row.fileStatus === 'SUBMITTED')){
 			return true;
 		}
 
@@ -694,6 +711,11 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}
 	}
 	printPaymentReceipt(apiCode: string, id: number) {
+
+		if (this.urlMap.has(apiCode)) {
+        this.printPropertyACKReceiptAdmin(apiCode,id);
+	   }else{
+
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 		this.formService.printPaymentReceipt(id).subscribe(
 			receiptResponse => {
@@ -707,6 +729,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 				this.commonService.openAlert('Error!', err.error[0].message, 'error');
 			}
 		)
+		
+	   }
+		
 	}
 	applicantName(row) {
 		if (row.fileStatusName == "Draft") {
@@ -733,5 +758,25 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			(error) => {
 				console.error(error.error.message);
 		})
+	}
+
+	printPropertyACKReceiptAdmin(apiCode,id){
+		
+		let url = this.urlMap.get(apiCode);
+		console.log('url - > ', url);
+		this.formService.printPaymentAckReceipt(id,url).subscribe(
+			receiptResponse => {
+				let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
+				sectionToPrintReceipt.innerHTML = receiptResponse;
+				setTimeout(() => {
+					window.print();
+				}, 300);
+			},
+			err => {
+				this.commonService.openAlert('Error!', err.error[0].message, 'error');
+			}
+		)
+
+
 	}
 }
