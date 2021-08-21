@@ -589,7 +589,7 @@ export class MyBookingComponent implements OnInit {
 		}else if(element.resourceType === "CHILDREN_THEATER" && currentDate >= minDate){
 		  return false;
 		}else if(element.status === this.bookingConstant.SCRUTINY){
-         if(element.resourceType === "STADIUM" || element.resourceType === "CHILDREN_THEATER"){
+         if((element.resourceType === "STADIUM" && element.payableServiceType !== 'STADIUM_DEPOSIT') || element.resourceType === "CHILDREN_THEATER"){
              return true;
          }else{
              return false;
@@ -774,5 +774,16 @@ export class MyBookingComponent implements OnInit {
       x.document.open();
       x.document.write(iframe);
       x.document.close();
+  }
+
+  showStadiumDepositReceiptBtn(element){
+      if(element.resourceType == 'STADIUM' && (element.status == this.bookingConstant.BOOKED || element.status == this.bookingConstant.COMPLETED
+      || element.status == this.bookingConstant.REFUND_APPROVED || element.status == this.bookingConstant.CANCELLATION_REQUEST
+      || element.status == this.bookingConstant.REFUND_REQUEST))
+       {
+           return true;
+       }else{
+           return false;
+       }
   }
 }

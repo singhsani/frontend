@@ -141,11 +141,11 @@ export class LoiPaymentComponentBooking implements OnInit {
 		this.bookingService.getTransactionDetails(element).subscribe(transactionData => {
 		}, err => {
 			if (err.status == 402) {
-
-				// if (err.status == 402) {
-					// this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService);
-					this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway);
-				// }
+				  if(err.error.data.payableServiceType == "STADIUM_FEES" || err.error.data.payableServiceType == "STADIUM_DEPOSIT"){
+				    this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway, null, null, null, {gatewayCustomerId: err.error.data.id, txtadditionalInfo1: err.error.resourceType, payableServiceType: err.error.data.payableServiceType});
+				  }else{
+				    this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway);
+				  }
 			} else if (err.error[0].code == this.bookingConstant.INVALID_BOOKING_STATUS) {
 				this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "")
 			} else {
