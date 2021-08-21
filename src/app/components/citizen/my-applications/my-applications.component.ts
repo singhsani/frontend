@@ -59,6 +59,12 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	config: CitizenConfig = new CitizenConfig();
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
+    
+	urlMap = new Map([
+        ["PRO-TAX-REBATE", "property/taxrebate/application/printReceiptForPayment"],
+        ["PRO-VAC", "property/taxrebate/application/printReceiptForPayment"]
+    ]);
+
 	constructor(
 		private formService: FormsActionsService,
 		private paginationService: PaginationService,
@@ -705,6 +711,11 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}
 	}
 	printPaymentReceipt(apiCode: string, id: number) {
+
+		if (this.urlMap.has(apiCode)) {
+        this.printPropertyACKReceiptAdmin(apiCode,id);
+	   }else{
+
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 		this.formService.printPaymentReceipt(id).subscribe(
 			receiptResponse => {
@@ -718,6 +729,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 				this.commonService.openAlert('Error!', err.error[0].message, 'error');
 			}
 		)
+		
+	   }
+		
 	}
 	applicantName(row) {
 		if (row.fileStatusName == "Draft") {
@@ -744,5 +758,25 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			(error) => {
 				console.error(error.error.message);
 		})
+	}
+
+	printPropertyACKReceiptAdmin(apiCode,id){
+		
+		let url = this.urlMap.get(apiCode);
+		console.log('url - > ', url);
+		this.formService.printPaymentAckReceipt(id,url).subscribe(
+			receiptResponse => {
+				let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
+				sectionToPrintReceipt.innerHTML = receiptResponse;
+				setTimeout(() => {
+					window.print();
+				}, 300);
+			},
+			err => {
+				this.commonService.openAlert('Error!', err.error[0].message, 'error');
+			}
+		)
+
+
 	}
 }
