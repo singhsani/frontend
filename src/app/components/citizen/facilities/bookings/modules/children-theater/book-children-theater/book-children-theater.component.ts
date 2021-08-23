@@ -61,6 +61,12 @@ export class BookChildrenTheaterComponent implements OnInit {
     availableStots: Array<any> = []
     tabIndex: number = 0;
 
+    displayedColumnsFeeDetails: string[] = ['sno', 'programmePurpose', 'bookingRent', 'gst'];
+    dataSource = [
+          {sno: 1, programmePurpose:"Other", bookingRent:"1000" ,gst:"180"},
+          {sno: 2, programmePurpose:"School", bookingRent:"1000" ,gst:"180"}
+      ];
+
     /**
      * Date validations
      */
