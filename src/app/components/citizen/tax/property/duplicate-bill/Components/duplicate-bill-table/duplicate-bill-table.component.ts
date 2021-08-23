@@ -130,7 +130,12 @@ export class DuplicateBillTableComponent implements OnInit {
         startWith({}),
         switchMap(() => {
           if(this.searchModel.pageNo!=this.paginator.pageIndex || this.searchModel.pageSize!=this.paginator.pageSize){
-          this.searchModel.pageNo=this.paginator.pageIndex;
+            if(this.searchModel.pageSize==this.paginator.pageSize){
+              this.searchModel.pageNo=this.paginator.pageIndex;
+            }else{
+              this.searchModel.pageNo=0;
+              this.paginator.pageIndex=0;
+            }
           this.searchModel.pageSize=this.paginator.pageSize;
           return this.duplicateBillService.search(this.searchModel);
           }
@@ -226,11 +231,11 @@ export class DuplicateBillTableComponent implements OnInit {
   onEnterClick(formDetail: NgForm) {
     if (formDetail.form.valid) {
       if (this.serviceCharge.noofCopies > 0) {
-        this.paymentDataSharingService.updatedPamentFromOption(Constants.Payment_From_Option.Duplicate_Bill);
-        this.paymentDataSharingService.updatedDataModel(this.serviceCharge);
-        if(this.cService.fromAdmin()){
-          this.duplicateBillDataSharingService.updatedIsShowForm(true);
-        }else{
+        // this.paymentDataSharingService.updatedPamentFromOption(Constants.Payment_From_Option.Duplicate_Bill);
+        // this.paymentDataSharingService.updatedDataModel(this.serviceCharge);
+        // if(this.cService.fromAdmin()){
+        //   this.duplicateBillDataSharingService.updatedIsShowForm(true);
+        // }else{
           var data = {
             occupierId: this.serviceCharge.occupierId, 
             propertyBasicId: this.serviceCharge.propertyBasicId,  
@@ -285,17 +290,18 @@ export class DuplicateBillTableComponent implements OnInit {
                 }, rj => {
                   return;
                 });
-              }
-                
-              } else{
+                }
+
+              } else {
                 this.cService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning");
               }
             });
           }, error => {
             this.alertService.error(error);
           }
-        )};
-      }
+          )
+        // }; // from Admin else
+      } // no of copies
       else {
         this.alertService.error('No. of Copies should be greater than zero');
       }

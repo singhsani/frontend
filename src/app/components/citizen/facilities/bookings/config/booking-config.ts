@@ -20,7 +20,10 @@ export class BookingConstants extends BTConstants {
     static BOOKINGS_FILE_UPLOAD_URL = 'api/attachment/booking/upload';
     static SUBMIT ="SUBMIT";
     static CANCEL ="CANCEL";
-
+    static COMPLETED='COMPLETED';
+    static REFUND_REQUEST='REFUND_REQUEST';
+    static REFUND_APPROVED='REFUND_APPROVED';
+    static STADIUM_DEPOSIT = 'STADIUM_DEPOSIT';
 }
 
 /**
@@ -29,7 +32,7 @@ export class BookingConstants extends BTConstants {
 export class BookingUtils extends BTConfig {
 
     bookingConstants  = BookingConstants;
-    
+
     constructor(public formService?: FormsActionsService,
         public toastr?: ToastrService
      ) {
@@ -159,7 +162,7 @@ export class BookingUtils extends BTConfig {
             }
         }
     }
-       
+
 
 
 }

@@ -206,6 +206,10 @@ export class DeathCorrectionComponent implements OnInit {
 				prod_array.push(newgnData[i]);
 			}
 
+			(moment(prod_array[0].dateofdeath,'DD-MM-YYYY').format("YYYY-MM-DD"));
+		if(moment(this.regStatusForm.get('dateofdeath').value).format("YYYY-MM-DD") == moment(prod_array[0].dateofdeath,'DD-MM-YYYY').format("YYYY-MM-DD")){
+		
+
 			this.deathCorrectionForm.patchValue(prod_array[0]);
 
 		// this.deathCorrectionForm.get('fieldView').setValue(data.fieldView);
@@ -222,7 +226,7 @@ export class DeathCorrectionComponent implements OnInit {
 		this.deathCorrectionForm.get('refNumber').setValue(this.regStatusForm.get('registrationNumber').value);
 		this.deathCorrectionForm.get('typeOfCorrection').get('code').setValue(this.regStatusForm.get('typeOfCorrection').get('code').value);
 	}
-
+	}
 	/**
      * call API to get registration data and status.
      */
@@ -270,6 +274,7 @@ export class DeathCorrectionComponent implements OnInit {
 				code: [null, Validators.required]
 			}),
 			registrationNumber: [null, [Validators.required]],
+			dateofdeath: [null, [Validators.required]],
 		});
 	}
 

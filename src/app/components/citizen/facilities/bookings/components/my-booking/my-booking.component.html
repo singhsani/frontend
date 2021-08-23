@@ -109,11 +109,17 @@
               {{'make_payment' | translate:translateKey}}
             </button>
 
-            <button mat-menu-item *ngIf="(element.status === 'SCRUTINY')" color="primary"
+            <button mat-menu-item *ngIf="(element.status === 'SCRUTINY' && element.payableServiceType !== 'STADIUM_DEPOSIT')" color="primary"
                         (click)="loiPayments(element)">
                         <mat-icon title="Make Payment" color="primary">print</mat-icon>
 							{{'make_payment' | translate:translateKey}}
                     	</button>
+
+            <!-- Deposit Payment Call -->
+            <button *ngIf="element.status == bookingConstant.DEPOSIT_REQUIRED || (element.payableServiceType== 'STADIUM_DEPOSIT' && element.status === 'SCRUTINY')" mat-menu-item color="primary" (click)="loiPayments(element)">
+              <mat-icon title="Deposit Payment" color="primary">payment</mat-icon>
+              {{'deposit_payment' | translate:translateKey}}
+            </button>
 
             <button *ngIf="showRecieptReprint(element)" mat-menu-item color="primary"
                     (click)="printReceipt(element, element.payableServiceType)">
@@ -130,6 +136,14 @@
               <mat-icon title="Print Receipt" color="primary">print</mat-icon>
               {{'deposit_receipt' | translate:translateKey}}
             </button>
+            </div>
+
+            <div *ngIf="showStadiumDepositReceiptBtn(element)">
+              <button  mat-menu-item color="primary"
+                       (click)="printReceipt(element, bookingConstant.STADIUM_DEPOSIT)">
+                <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+                {{'deposit_receipt' | translate:translateKey}}
+              </button>
             </div>
 
             <div *ngIf="element.resourceType == 'SWIMMING_POOL'">
