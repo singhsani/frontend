@@ -130,19 +130,22 @@ export class TransactionsComponent implements OnInit {
 /**
  * TransactionDataDialog Component to dispaly dailog as details of payments.
  */
-@Component({
+@Component({ 
 	template: `
 	<div *ngIf="tData.serviceType !== 'PROPERTY_TAX'">
   <ol>
-  <li>
+  <!--  <li>
     Id: {{tData.id}}
-  </li>
+  </li> -->
+  <li>
+     Connection Number: {{tData.refNumber}}
+   </li>
   <li>
     Amount: {{tData.amount}}
   </li>
-  <li>
-    Chalan Number: {{tData.chalanNumber}}
-  </li>
+<!--   <li>
+     Chalan Number: {{tData.chalanNumber}}
+   </li> -->
   <li>
     Payment Date: {{tData.paymentDate | date:'dd/MM/yyyy hh:mm:ss a'}}
   </li>
