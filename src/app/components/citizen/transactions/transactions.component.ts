@@ -134,7 +134,7 @@ export class TransactionsComponent implements OnInit {
 	template: `
 	<div *ngIf="tData.serviceType !== 'PROPERTY_TAX'">
   <ol>
-  <!--  <li>
+  <!--<li>
     Id: {{tData.id}}
   </li> -->
   <li>
@@ -143,7 +143,7 @@ export class TransactionsComponent implements OnInit {
   <li>
     Amount: {{tData.amount}}
   </li>
-<!--   <li>
+<!--<li>
      Chalan Number: {{tData.chalanNumber}}
    </li> -->
   <li>
