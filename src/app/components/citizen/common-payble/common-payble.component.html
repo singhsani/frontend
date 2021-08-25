@@ -223,7 +223,7 @@
                 <th>Bill No</th>
                 <th>Bill Date </th>
                 <th>Due Amount</th>
-                <th>Rebate</th>
+                <!-- <th>Rebate</th> -->
                 <th>Interest/Penalty Amount	</th>
                 <th>Payable Amount</th>
                 <th>Action</th>
@@ -246,11 +246,13 @@
                   <td>{{dues?.financialYear}}</td>
                   <td>{{dues?.billNo}}</td>
                   <td>{{dues?.billDate}}</td>
-                  <td>{{collectionModel?.dueAmount}}</td>
-                  <td>{{collectionModel?.rebateAmount}}</td>
+                  <td>{{dues?.billAmount}}</td>
+                
+                  <!-- <td>{{collectionModel?.rebateAmount}}</td> -->
                   <td>{{dues.intrestOrPenaltyAmount}}</td>
                   <!-- <td OnlyNumber [textContent]="model" (input)="model=$event.target.textContent" contentEditable>{{collectionModel?.payableAmount}}</td>  -->
-                  <td>{{collectionModel?.payableAmount}}</td>
+                  <!-- <td>{{collectionModel?.payableAmount}} </td> -->
+                  <td>{{dues?.totalTaxWiseBillAmount}} </td>
                   <td>
                     <button mat-button title="Detail" class="btn-width-auto" color="accent" type="button" (click)="onDetailClick(dues)">
                       <mat-icon>details</mat-icon>
@@ -263,7 +265,13 @@
           </table>
         </div>
       </ng-container>
-
+    </div>
+      <div class="row">
+        <div class="col-md-4">
+          <strong class="font20"> Rebate Amount :</strong> <span class="greenBox">{{collectionModel?.rebateAmount}}</span>
+        </div>     
+        </div>
+      
       <div class="row m-0">
         <div class="col-mg-4">
           <strong class="font20"> Amount Payable :</strong> <span class="redBox">{{model}}</span> <strong class="font20"> Rs. Only</strong>
@@ -276,7 +284,7 @@
         </div>
       </div>
       
-      </div>
+      
 
   </div>
 </div>
@@ -336,7 +344,7 @@
                   <td>{{dues.billDate}}</td>
                   <td>{{dues.billPaidAmount}}</td>
                   <td>{{dues.intrestOrPenaltyAmount}}</td>
-                  <td>{{collectionWaterModel.outstandingAmount}}</td>
+                  <td>{{dues.totalTaxWiseBillAmount}}</td>
                   <!-- <td OnlyNumber [textContent]="model" (input)="model=$event.target.textContent" contentEditable>{{collectionWaterModel?.outstandingAmount}}</td>  -->
 
                   <td>
