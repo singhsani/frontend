@@ -97,7 +97,7 @@
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
-                        <input matInput trim type="text" formControlName="dateofdeath"
+                        <input matInput trim type="text" [max]="maxDate" formControlName="dateofdeath"
                             placeholder="{{'death_date' | translate: translateKey}}" required readonly>
                             <mat-error *ngIf="deathCorrectionForm.get('dateofdeath').invalid">Date of Death is Required.</mat-error>
                     </mat-form-field>

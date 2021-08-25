@@ -148,6 +148,12 @@ export class DeathCorrectionComponent implements OnInit {
 	}
 
 	/**
+	 * maximum date validation.
+	 */
+	 maxDate: Date = new Date();
+
+
+	/**
 	 * Get Death Correction data from API.
 	 */
 	getDeathCorrectionData() {
