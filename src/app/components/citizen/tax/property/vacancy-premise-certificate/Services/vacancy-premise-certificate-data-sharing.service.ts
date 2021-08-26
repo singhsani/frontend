@@ -9,6 +9,9 @@ export class VacancyPremiseCertificateDataSharingService {
   applicationNumber :any;
   isShowForm: boolean = false;
   vacancyPremisesCetiId :any;
+  serviceId : any;
+  serviceCode : any;
+  isPaymentReceipt :boolean ;
   dataSourceIsShowForm = new BehaviorSubject<boolean>(this.isShowForm);
   observableIsShowForm = this.dataSourceIsShowForm.asObservable();
   updatedIsShowForm(data: boolean) {
