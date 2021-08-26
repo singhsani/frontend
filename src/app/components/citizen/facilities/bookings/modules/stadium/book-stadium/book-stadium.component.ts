@@ -413,7 +413,6 @@ export class BookStadiumComponent implements OnInit {
       }
 
       getAllFees(){
-          debugger
         this.bookingService.getStadiumRateData().subscribe(res =>{
           this.dataSource = res.data
         })
