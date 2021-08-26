@@ -77,7 +77,7 @@
 		
 		<div class="col-md-6 ngSelect">
 			<ng-select (change)="getGujNameFromLookup($event,'cityGuj',cityListArray)"
-				placeholder="{{'city' | translate: translateKey }} / {{'district' | translate: translateKey }} {{requiredFeilds?'*':''}}"
+				placeholder="{{'city' | translate: translateKey }}/{{'district' | translate: translateKey }} {{requiredFeilds?'*':''}}"
 				formControlName="city" [required]="requiredFeilds">
 				<ng-option *ngFor="let city of cityListArray" [value]="city.name">{{city.name}}</ng-option>
 			</ng-select>

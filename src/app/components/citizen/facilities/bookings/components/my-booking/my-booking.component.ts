@@ -753,6 +753,9 @@ export class MyBookingComponent implements OnInit {
 		  }else if(element.status == this.bookingConstant.CANCELLED && element.resourceType == 'STADIUM'){
 			  return true;
 		  }
+		  else if(element.status == this.bookingConstant.SUBMITTED && element.resourceType == 'ATITHIGRUH'){
+				return true;
+		  }
 	  }
 	printLOIReceipt(refNumber:string){
     this.bookingService.getBase64StringURL(refNumber).subscribe(res => {
