@@ -290,12 +290,33 @@ submit(){
       this.isApprovedorDecline = true;
       // this.onClear();
      //downloadFile(data, "approve-" + Date.now() + ".pdf", 'application/pdf');
-     this.alertService.success(data.message);
-     this.router.navigateByUrl('/citizen/my-applications');
-     this.paymentDataSharingService.updatedDataModelFileDownload(data.body.data);
-     if(this.commonservice2.fromAdmin()){
-//
-           }
+     this.paymentDataSharingService.updatedDataModelFileDownload(data);
+
+      if (this.commonservice2.fromAdmin()) {
+      
+        this.alertService.propertyConfirm(data.message);
+        var subConfirm = this.alertService.getConfirm().subscribe(isConfirm => {
+          if (isConfirm) {
+
+            const url = '/citizen/my-applications' +
+              '?printPaymentReceipt=' + this.vacancyPremiseCertificateDataSharingService.isPaymentReceipt +
+              '&apiCode=' + this.vacancyPremiseCertificateDataSharingService.serviceCode +
+              '&id=' + this.vacancyPremiseCertificateDataSharingService.serviceId;
+
+            this.router.navigateByUrl(url);
+
+          }else{
+            this.router.navigateByUrl('/citizen/my-applications');
+          }
+
+          subConfirm.unsubscribe();
+        });
+
+      } else {
+        this.alertService.success(data.message);
+        this.router.navigateByUrl('/citizen/my-applications');
+      }
+
     },
     (error) => {
       this.commonService.callErrorResponse(error);
@@ -311,11 +332,36 @@ saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
   this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
        (data) => {
          this.commonService.applicationNo = data.body.applicationNo;
+         this.vacancyPremiseCertificateDataSharingService.serviceId = data.body.id
+         this.getApplicationDetails(data.body.id);
+         console.log(' data.body.id - > ', data.body.id);
          this.stepper.selectedIndex = 2;
        },
        (error) => {
          this.commonService.callErrorResponse(error);
        });
  }
+
+ getApplicationDetails(serviceId:any){
+
+  this.vacancyPremiseCertificateService.getApplicationDetails(serviceId).subscribe(
+    (data) => {
+     this.vacancyPremiseCertificateDataSharingService.serviceCode  = data.body.data.serviceCode;
+     this.vacancyPremiseCertificateDataSharingService.isPaymentReceipt   = data.body.data.paymentReceipt;
+    },
+    (error) => {
+      if (error.status === 400) {
+        var errorMessage = '';
+        error.error[0].propertyList.forEach(element => {
+          errorMessage = errorMessage + element + "</br>";
+        });
+        this.alertService.error(errorMessage);
+      }
+      else {
+        this.alertService.error(error.error.message);
+      }
+    })
+
+}
 
 }
