@@ -49,7 +49,7 @@ export class MyBookingComponent implements OnInit {
 	 * Display Column
 	 * 'start', 'end',
 	 */
-	displayedColumns: Array<string> = ['id', 'refNumber', 'bookingDate', 'status', 'action'];
+	displayedColumns: Array<string> = ['id', 'applicantName','refNumber', 'bookingDate', 'status', 'action'];
 
 
 	/**
