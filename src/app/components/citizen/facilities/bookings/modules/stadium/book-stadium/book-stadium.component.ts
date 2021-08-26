@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BookingService } from '../../../shared-booking/services/booking-service.service';
 import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
 import { ValidationService } from 'src/app/shared/services/validation.service';
+import * as _ from 'lodash';
 
 @Component({
     selector: 'app-book-stadium',
@@ -83,13 +84,8 @@ export class BookStadiumComponent implements OnInit {
     displayedColumns: Array<string> = ['id', 'shiftType', 'bookingDate', 'startTime', 'endTime', 'rent', 'electricCharges', 'administrationCharges', 'showTax', 'subTotal', 'gstAmount', 'total'];
 
     displayedColumnsFeeDetails: string[] = ['sno', 'programmePurpose', 'bookingRent', 'administrativeCharge', 'gst', 'deposit'];
-    dataSource = [
-          {sno: 1, programmePurpose:"COMMERCIAL", bookingRent:"60,000", administrativeCharge: "5,000", gst:"11,700", deposit:"30,000"},
-          {sno: 2, programmePurpose:"NON COMMERCIAL", bookingRent:"15,000", administrativeCharge: "2,000", gst:"3,060", deposit:"10,000"},
-          {sno: 3, programmePurpose:"RELIGION BASE/ SEMINAR/ CULTURAL", bookingRent:" 7,500", administrativeCharge: "2,000", gst:"1,710", deposit:"5,000"},
-          {sno: 4, programmePurpose:"SCHOOL", bookingRent:"2,000", administrativeCharge: "1,000", gst:"540", deposit:"2,000"},
-      ];
-
+    dataSource: Array<any> = [];
+   
     startMinDate: Date = moment(new Date()).add(1, 'day').toDate();
     endMinDate: Date = moment(new Date()).add(1, 'day').toDate();
     maxEndDate:any;
@@ -120,7 +116,7 @@ export class BookStadiumComponent implements OnInit {
         this.createStadiumApplicationForm();
         this.getLookUpData();
         this.getResourceList();
-
+        this.getAllFees();
         /**
          * Subscribe changes of start date.
          */
@@ -415,4 +411,17 @@ export class BookStadiumComponent implements OnInit {
         this.stadiumApplicationForm.get('applicantAddress').get('state').setValue('GUJARAT');
         this.stadiumApplicationForm.get('applicantAddress').get('city').setValue('Vadodara');
       }
+
+      getAllFees(){
+          debugger
+        this.bookingService.getStadiumRateData().subscribe(res =>{
+          this.dataSource = res.data
+        })
+      }  
+
+      covertReadableString(headerName: string) {
+        var  str = _.startCase(headerName);
+       return (headerName == "RELIGION_BASE_SEMINAR_CULTURAL") ? "RELIGION BASE/SEMINAR/CULTURAL" : str;
+     }
+
 }

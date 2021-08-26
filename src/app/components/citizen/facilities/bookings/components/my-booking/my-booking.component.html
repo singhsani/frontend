@@ -58,6 +58,16 @@
       </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="applicantName">
+      <mat-header-cell class="wMatCell200"  *matHeaderCellDef>
+          {{'applicant_name' | translate:translateKey}}
+      </mat-header-cell>
+      <mat-cell class="wMatCell200"  *matCellDef="let element;">
+          {{element.applicantName}}
+      </mat-cell>
+    </ng-container>
+
+
     <ng-container matColumnDef="refNumber">
       <mat-header-cell *matHeaderCellDef> {{'booking_number' | translate:translateKey}}</mat-header-cell>
       <mat-cell *matCellDef="let element;">
@@ -80,8 +90,8 @@
     </ng-container>
 
     <ng-container matColumnDef="status">
-      <mat-header-cell class="wMatCell150" *matHeaderCellDef> {{'booking_status' | translate:translateKey}}</mat-header-cell>
-      <mat-cell class="wMatCell150" *matCellDef="let element;">
+      <mat-header-cell  *matHeaderCellDef> {{'booking_status' | translate:translateKey}}</mat-header-cell>
+      <mat-cell  *matCellDef="let element;">
         <div class="mobile-label">{{'booking_status' | translate:translateKey}}</div>
         <div class="mobile-label1">:</div>
         <div class="row-inside">
@@ -91,8 +101,8 @@
     </ng-container>
 
     <ng-container matColumnDef="action">
-      <mat-header-cell class="wMatCell120 cellLast" *matHeaderCellDef> {{'actions' | translate:translateKey}}</mat-header-cell>
-      <mat-cell class="wMatCell120 cellLast" *matCellDef="let element;">
+      <mat-header-cell class="wMatCell180 cellLast" *matHeaderCellDef> {{'actions' | translate:translateKey}}</mat-header-cell>
+      <mat-cell class="wMatCell185 cellLast" *matCellDef="let element;">
         <div class="mobile-label">{{'actions' | translate:translateKey}}</div>
         <div class="mobile-label1">:</div>
         <button *ngIf="enableMoreAction(element)"
