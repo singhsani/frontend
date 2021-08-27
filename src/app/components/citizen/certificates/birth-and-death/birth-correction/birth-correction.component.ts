@@ -409,7 +409,7 @@ export class BirthCorrectionComponent implements OnInit {
 	 * @param count - count of invalid control.
 	 */
 	handleErrorsOnSubmit(count) {
-		let step1 = 6;
+		let step1 = 19;
 
 		if (count <= step1) {
 			this.tabIndex = 0;
