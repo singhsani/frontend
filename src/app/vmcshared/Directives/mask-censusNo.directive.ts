@@ -6,7 +6,7 @@ import * as textMask from 'vanilla-text-mask/dist/vanillaTextMask.js';
 })
 export class MaskCensusNoDirective implements OnDestroy {
   
-  mask = [/\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, /\d/,  '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]; // ##-##-###-###-###
+  mask = [/\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, /\d/,  '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]; // ##-##-###-###-###-### // after discussion with QA 3 more digits added for occupier code
   maskedInputController;
   
   private specialKeys: Array<string> = ['Backspace', 'Tab', 'End', 'Home'];
@@ -34,7 +34,7 @@ export class MaskCensusNoDirective implements OnDestroy {
     }
     let current: string = this.element.nativeElement.value;
     let next: string = current.concat(event.key);
-    if (next && String(next).length > 17 ) {
+    if (next && String(next).length > 21 ) {
       event.preventDefault(); 
     }
   }
