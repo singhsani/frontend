@@ -10,6 +10,8 @@ import { MatStepper } from '@angular/material';
 import { ManageRoutes } from 'src/app/config/routes-conf';
 import { Router } from '@angular/router';
 import { CommonService as Commonservice2} from 'src/app/shared/services/common.service';
+import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
+import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
 
 @Component({
     selector: 'app-refund-application-form',
@@ -39,7 +41,8 @@ export class RefundApplicationFormComponent implements OnInit {
         private commonService : CommonService,
         private router: Router,
         private refundApplicationDataSharingService: RefundApplicationDataSharingService,
-        private commoservice2 : Commonservice2) { }
+        private commoservice2 : Commonservice2,
+        private addressService: ApplicantAddressService) { }
 
     ngOnInit() {
         this.vacancyPremiseCertficateModel = new VacancyPremiseCertficateModel();
@@ -108,6 +111,7 @@ export class RefundApplicationFormComponent implements OnInit {
                         this.refundAgainstVacancyId = data.body.data.refundAgainstVacancyId;
                         dataToPost.responseDTOList = data.body.data.responseDTOList;
                         this.refundApplicationDataSharingService.setRefundModel(dataToPost);
+                        this.refundApplicationDataSharingService.applicationNo = data.body.data.applicationNo ;
                         //this.generateRefundReceipt(data.body.data.fileUrl);
                        // this.refundApplicationDataSharingService.setIsShowForm(false);
                        // this.refundApplicationDataSharingService.setIsShowApproval(true);
@@ -219,4 +223,19 @@ export class RefundApplicationFormComponent implements OnInit {
         })
       }
 
+      stepChangedEvent(event){
+        this.stepper.selectedIndex = event;
+      }
+
+      saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
+        applicantDetailsDTO.uniqueId = this.refundApplicationDataSharingService.applicationNo;
+        debugger
+        this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
+             (data) => {
+               this.commonService.applicationNo = data.body.applicationNo;
+               this.stepper.selectedIndex = 2;             },
+             (error) => {
+               this.commonService.callErrorResponse(error);
+             });
+       }
 }

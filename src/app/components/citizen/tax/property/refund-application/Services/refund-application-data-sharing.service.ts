@@ -5,6 +5,8 @@ import { RefundApplicationModule } from '../refund-application.module';
 
 @Injectable()
 export class RefundApplicationDataSharingService {
+
+  applicationNo: any;
  
   private isShowForm = new BehaviorSubject(null);
   setIsShowForm(data: any) {
