@@ -90,7 +90,7 @@
           </mat-form-field>
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" required placeholder="{{'Fax Number'}}" maxlength="15"
+            <input matInput type="text" required onlyNumber placeholder="{{'Fax Number'}}" maxlength="10"
               formControlName="officeFaxNumber">
             <control-messages [control]="vendorRegistrationForm.get('officeFaxNumber')">
             </control-messages>
@@ -118,7 +118,7 @@
           </mat-form-field>
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" required placeholder="{{'Fax Number'}}" maxlength="15"
+            <input matInput type="text" required onlyNumber placeholder="{{'Fax Number'}}" maxlength="10"
               formControlName="resFaxNumber">
             <control-messages [control]="vendorRegistrationForm.get('resFaxNumber')">
             </control-messages>
@@ -955,15 +955,15 @@
             </div>
           </div>
 
-        
-          <div class="checkboxHref">
-              <mat-checkbox class="col accept-terms" required formControlName="acceptAndCondition">
 
-              </mat-checkbox>
-            
+          <div class="checkboxHref">
+            <mat-checkbox class="col accept-terms" required formControlName="acceptAndCondition">
+
+            </mat-checkbox>
+
             <a (click)="openTermModel(termCondition);"> I have
               read and agree with <u style="color: rebeccapurple;">Terms and conditions</u> </a>
-            </div>
+          </div>
 
           <div class="fotButtonBar clearfix">
             <div class="col-sm-12 col-md-12">
@@ -972,9 +972,9 @@
               </span>
               <button class="pull-right" type="button" mat-raised-button color="primary"
                 (click)="onSubmit();">{{'Submit'}}</button>
-                <button class="pull-right" type="button" mat-raised-button color="primary"
+              <button class="pull-right" type="button" mat-raised-button color="primary"
                 (click)="openTermModel(templateViewDetails);">{{'Review
-                '}}</button> 
+                '}}</button>
             </div>
           </div>
 
@@ -991,10 +991,10 @@
 
   <div class="modal-body">
     <p>Terms and Condition <br>
-    * If, Registration is not recommended / rejected, registration fee paid is not Refundable.
+      * If, Registration is not recommended / rejected, registration fee paid is not Refundable.
     </p>
   </div>
-  
+
   <div class="modal-footer customthead">
     <button color="white" mat-stroked-button (click)="hideModel()">
       {{'Ok' | translate: translateKey}}
@@ -1265,9 +1265,9 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-            <button class="pull-right" type="button" mat-raised-button color="primary"
-              (click)="hideModel();">{{'Ok'}}</button>
-            </div>     
+              <button class="pull-right" type="button" mat-raised-button color="primary"
+                (click)="hideModel();">{{'Ok'}}</button>
+            </div>
           </div>
         </form>
       </div>
