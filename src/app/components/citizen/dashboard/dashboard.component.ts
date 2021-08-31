@@ -283,6 +283,9 @@ export class DashboardComponent implements OnInit {
 			case 'PAY-WTR-TAX':
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode)], { queryParams: { code: 'WATER-TAX' } });
 				break;
+			case 'PRO-BILL-PRINTING':
+				this.router.navigate([ManageRoutes.getFullRoute(apiCode)], { queryParams: { code: 'PROPERTY-TAX' } });
+				break;
 			case 'PRC_REG':
 			case 'PRO-ASS':
 			case 'PRO-EXT':

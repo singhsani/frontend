@@ -1,0 +1,19 @@
+<app-title-bar [title]="'Bill Printing'"></app-title-bar>
+<mat-card class="formClass cardBorder">
+  <mat-card class="cardH1 mat-card">
+    <h1>Bill Printing</h1>
+  </mat-card>
+  <div>
+    <!-- Form Component Start -->
+    <div>
+      <app-bill-printing-form></app-bill-printing-form>
+    </div>
+    <!-- Form Component End -->
+    <!-- Table Component Start -->
+    <div *ngIf="isShowTable">
+      <app-bill-printing-table></app-bill-printing-table>
+    </div>
+    <!-- Table Component End -->
+  </div>
+</mat-card>
+<br>
