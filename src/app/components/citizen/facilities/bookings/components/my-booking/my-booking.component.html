@@ -157,7 +157,7 @@
             </div>
 
             <div *ngIf="element.resourceType == 'SWIMMING_POOL'">
-              <button *ngIf="element.resourceType == 'SWIMMING_POOL' && element.status == bookingConstant.PAYMENT_REQUIRED"
+              <button *ngIf="element.resourceType == 'SWIMMING_POOL' && element.status == bookingConstant.PAYMENT_REQUIRED && element.showDownloadLOI"
               mat-menu-item color="primary" (click)="printReceiptSwimming(element)">
               <mat-icon title="Print Receipt" color="primary">print</mat-icon>Download LOI
             </button>
