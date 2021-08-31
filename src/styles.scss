@@ -129,8 +129,11 @@ h1 { font-size: 30px; margin-bottom: 10px; }
 // Layouts - Dashboard
 .logo { padding: 0 10px 0 0 !important;}
 .logo img { padding-right: 5px; }
-.logo:hover {color: $colorWhite; text-decoration: none;}
-.cardH1.mat-card { padding: 15px 24px; margin: 20px 0; }
+.logo:hover {color: $colorWhite; text-decoration: none; }
+.cardH1.mat-card { padding: 15px 24px; margin: 20px 0;background-color: #f1f1f1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
 .cardH1.mat-card h1 { font-size: 15px; text-transform: uppercase; position: relative; }
 .cardH1.mat-card h1::after { content: ''; background: $primaryGradient; position: absolute; left: -24px; top: 0; width: 5px; height: 100%; }
 .cardH2.mat-card { padding: 1px 24px; margin: 4px 0; }
