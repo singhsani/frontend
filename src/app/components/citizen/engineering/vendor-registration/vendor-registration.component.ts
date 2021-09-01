@@ -153,7 +153,7 @@ export class VendorRegistrationComponent implements OnInit {
       vendorNameDetails: this.vendorNameArray,
 
       registrationBank: this.fb.group({
-        code: null,
+        code: [null, [Validators.required]],
         name: null
       }),
       registrationDDNumber: null,
@@ -357,7 +357,7 @@ export class VendorRegistrationComponent implements OnInit {
         this.engineer.vendorSaveFormData(this.vendorRegistrationForm.getRawValue()).subscribe(res => {
           if (Object.keys(res).length) {
             this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
-            this.commonService.openAlert(" Successful", "", "success", `</b>`);
+            this.commonService.openAlert("Application Submitted Successful", "", "success", `</b>`);
             this.resetForm();
           } else {
             this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
@@ -399,12 +399,12 @@ export class VendorRegistrationComponent implements OnInit {
       "tanNo": "ABCDE1223F",
 
       "officeContactNumber": "8962749074",
-      "officeFaxNumber": "74148529633",
-      "officeEmailId": "A@nascntinfo.com",
+      "officeFaxNumber": "7414852963",
+      "officeEmailId": "chetan.porwal@nascentinfo.com",
 
       "resContactNumber": "8962749074",
-      "resFaxNumber": "74148529633",
-      "resEmailId": "A@nascntinfo.com",
+      "resFaxNumber": "7414852963",
+      "resEmailId": "chetan.porwal@nascentinfo.com",
 
       "manufacturingOwnedDetails": "true",
 
