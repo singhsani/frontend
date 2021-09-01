@@ -50,6 +50,7 @@ export class UnitDetailComponent implements OnInit {
   step = 0;
   measurementForm: FormGroup;
   roomForm: FormGroup;
+  showCarpetAreaError:  boolean = false; 
   constructor(private formBuilder: FormBuilder,
     private newNewPropertyEntryAddDataSharingService: NewPropertyEntryAddDataSharingService,
     private commonService: CommonService,
@@ -467,6 +468,15 @@ export class UnitDetailComponent implements OnInit {
     if (this.roomModel.length && this.roomModel.breadth) {
       this.roomModel.carpetArea = parseFloat((this.roomModel.length * this.roomModel.breadth).toFixed(2));
     }
+
+    if(this.roomModel.assessableArea!=null){
+      this.roomModel.assessableArea = parseFloat((this.roomModel.carpetArea - this.roomModel.exemptedArea).toFixed(2));
+    }
+
+    if(this.roomModel.builtUpArea<this.roomModel.carpetArea){
+      this.showCarpetAreaError = true;
+    }
+
   }
 
   setStep(index: number) {

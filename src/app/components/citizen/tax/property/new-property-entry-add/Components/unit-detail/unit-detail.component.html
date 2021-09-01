@@ -580,7 +580,7 @@
                                         <mat-form-field class="full-width-input">
                                             <input matInput formControlName="length" number-only name="length"
                                                 maxlength="10" [(ngModel)]="roomModel.length"
-                                                placeholder="{{'length' | translate:translateKey }} (Meter)" (input)="setRoomCarpetArea()" required>
+                                                placeholder="{{'length' | translate:translateKey }} (Sq.Meter)" (input)="setRoomCarpetArea()" required>
                                             <mat-error *ngIf="formRoom.length.errors">
                                                 <div *ngIf="formRoom.length.errors.required">*Length is
                                                     required.</div>
@@ -593,7 +593,7 @@
                                         <mat-form-field class="full-width-input">
                                             <input matInput formControlName="breadth" number-only name="breadth"
                                                 maxlength="10" [(ngModel)]="roomModel.breadth"
-                                                placeholder="{{'branch' | translate:translateKey }} (Meter)" (input)="setRoomCarpetArea()" required>
+                                                placeholder="{{'breadth' | translate:translateKey }} (Sq.Meter)" (input)="setRoomCarpetArea()" required>
                                             <mat-error *ngIf="formRoom.breadth.errors">
                                                 <div *ngIf="formRoom.breadth.errors.required">*Breadth is
                                                     required.</div>
@@ -607,7 +607,11 @@
                                             <input matInput disabled formControlName="carpetAreaRoom" number-only
                                                 name="carpetAreaRoom" [(ngModel)]="roomModel.carpetArea"
                                                 placeholder="Carpet Area (Sq.Meter)">
-
+                                                <mat-error *ngIf="showCarpetAreaError">
+                                                    <div *ngIf="showCarpetAreaError">
+                                                        *Carpet Area
+                                                        must be smaller than Built-­Up Area.</div>
+                                                </mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="col-md-6">
