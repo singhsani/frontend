@@ -58,6 +58,16 @@
       </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="applicantName">
+      <mat-header-cell class="wMatCell200"  *matHeaderCellDef>
+          {{'applicant_name' | translate:translateKey}}
+      </mat-header-cell>
+      <mat-cell class="wMatCell200"  *matCellDef="let element;">
+          {{element.applicantName}}
+      </mat-cell>
+    </ng-container>
+
+
     <ng-container matColumnDef="refNumber">
       <mat-header-cell *matHeaderCellDef> {{'booking_number' | translate:translateKey}}</mat-header-cell>
       <mat-cell *matCellDef="let element;">
@@ -80,8 +90,8 @@
     </ng-container>
 
     <ng-container matColumnDef="status">
-      <mat-header-cell class="wMatCell150" *matHeaderCellDef> {{'booking_status' | translate:translateKey}}</mat-header-cell>
-      <mat-cell class="wMatCell150" *matCellDef="let element;">
+      <mat-header-cell  *matHeaderCellDef> {{'booking_status' | translate:translateKey}}</mat-header-cell>
+      <mat-cell  *matCellDef="let element;">
         <div class="mobile-label">{{'booking_status' | translate:translateKey}}</div>
         <div class="mobile-label1">:</div>
         <div class="row-inside">
@@ -91,8 +101,8 @@
     </ng-container>
 
     <ng-container matColumnDef="action">
-      <mat-header-cell class="wMatCell120 cellLast" *matHeaderCellDef> {{'actions' | translate:translateKey}}</mat-header-cell>
-      <mat-cell class="wMatCell120 cellLast" *matCellDef="let element;">
+      <mat-header-cell class="wMatCell180 cellLast" *matHeaderCellDef> {{'actions' | translate:translateKey}}</mat-header-cell>
+      <mat-cell class="wMatCell185 cellLast" *matCellDef="let element;">
         <div class="mobile-label">{{'actions' | translate:translateKey}}</div>
         <div class="mobile-label1">:</div>
         <button *ngIf="enableMoreAction(element)"
@@ -147,7 +157,7 @@
             </div>
 
             <div *ngIf="element.resourceType == 'SWIMMING_POOL'">
-              <button *ngIf="element.resourceType == 'SWIMMING_POOL' && element.status == bookingConstant.PAYMENT_REQUIRED"
+              <button *ngIf="element.resourceType == 'SWIMMING_POOL' && element.status == bookingConstant.PAYMENT_REQUIRED && element.showDownloadLOI"
               mat-menu-item color="primary" (click)="printReceiptSwimming(element)">
               <mat-icon title="Print Receipt" color="primary">print</mat-icon>Download LOI
             </button>
@@ -203,12 +213,19 @@
             {{'acknowledgement_reprint' | translate:translateKey}}
           </button>
 
-          <button *ngIf="element.resourceType == 'STADIUM' && element.status == bookingConstant.SCRUTINY" mat-menu-item color="primary" (click)="printLOIReceipt(element.refNumber)">
+          <button *ngIf="element.status == bookingConstant.SCRUTINY && (element.resourceType == 'STADIUM' || element.resourceType == 'CHILDREN_THEATER')" mat-menu-item color="primary" (click)="printLOIReceipt(element.refNumber)">
             <mat-icon title="Print Receipt" color="primary">print</mat-icon>
             {{'loi_download' | translate:translateKey}}
           </button>
 
-          <!-- <button mat-menu-item color="primary" (click)="openJSONModal(template);jsonDisplay(element)">
+          <button
+            *ngIf="element.resourceType == 'STADIUM' && element.status == 'REFUND_APPROVED'"
+              mat-menu-item color="primary" (click)="refundAcknowledgemnt(element.refNumber)">
+              <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+              {{'refund_acknowledgment' | translate:translateKey}}
+            </button>
+        
+            <!-- <button mat-menu-item color="primary" (click)="openJSONModal(template);jsonDisplay(element)">
             <mat-icon class="m-1" title="{{'application_json' | translate:translateKey}}">center_focus_weak</mat-icon>
             {{'application_json' | translate:translateKey}}
           </button> -->

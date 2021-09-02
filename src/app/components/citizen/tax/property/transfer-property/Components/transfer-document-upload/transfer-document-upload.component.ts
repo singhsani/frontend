@@ -133,20 +133,27 @@ export class TransferDocumentUploadComponent implements OnInit {
     if (formDetail.form.valid) {
       this.transferPropertyService.submitProperty(this.propertyDetailModel.propertyTransferId).subscribe(
         (data) => {
-          this.alertService.success(data.body.message);
-          this.transferPropertyDataSharingService.updateDataSourceMoveStepper(0);
-          // this.router.navigate(['/citizen/dashboard']);
-          // this.router.navigateByUrl('/citizen/my-applications');
+          this.transferPropertyDataSharingService.updateDataSourceMoveStepper(0); 
           if (this.commonService.fromAdmin()) {
-           
-            const url = '/citizen/my-applications' + 
-            '?printPaymentReceipt=' + this.transferPropertyDataSharingService.isPaymentReceipt + 
-            '&apiCode=' + this.transferPropertyDataSharingService.propertyServiceCode  +
-            '&id=' + this.transferPropertyDataSharingService.serviceId;
+            this.alertService.propertyConfirm(data.body.message);
+            var subConfirm = this.alertService.getConfirm().subscribe(isConfirm => {
 
-            this.router.navigateByUrl(url);
-       
-          }else{
+              if (isConfirm) {
+
+                const url = '/citizen/my-applications' +
+                  '?printPaymentReceipt=' + this.transferPropertyDataSharingService.isPaymentReceipt +
+                  '&apiCode=' + this.transferPropertyDataSharingService.propertyServiceCode +
+                  '&id=' + this.transferPropertyDataSharingService.serviceId;
+
+                this.router.navigateByUrl(url);
+
+              } else {
+                this.router.navigateByUrl('/citizen/my-applications');
+              }
+              subConfirm.unsubscribe();
+            });
+
+          } else {
             this.router.navigateByUrl('/citizen/my-applications');
           }
 

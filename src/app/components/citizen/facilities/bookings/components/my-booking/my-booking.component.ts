@@ -49,7 +49,7 @@ export class MyBookingComponent implements OnInit {
 	 * Display Column
 	 * 'start', 'end',
 	 */
-	displayedColumns: Array<string> = ['id', 'refNumber', 'bookingDate', 'status', 'action'];
+	displayedColumns: Array<string> = ['id', 'applicantName','refNumber', 'bookingDate', 'status', 'action'];
 
 
 	/**
@@ -144,10 +144,27 @@ export class MyBookingComponent implements OnInit {
 		})
 	}
 
+	checkedBookingCancelorNot(scheduleList, element){
+	  if(element.resourceType === "CHILDREN_THEATER"){
+        if(element.scheduleList.length > 0){
+          var eventDate = element.scheduleList[0].bookingDate
+          var minDate= moment(eventDate).subtract(10, 'days').format('YYYY-MM-DD');
+          var currentDate = moment(new Date()).format('YYYY-MM-DD');
+          if(currentDate >= minDate){
+            return true;
+          }
+        }
+      }
+	}
+
 	/**
 	 * This method is use for open modal.
 	 */
 	openModal(template: TemplateRef<any>, scheduleList, refNumber, element) {
+	  if(this.checkedBookingCancelorNot(scheduleList, element)){
+	     this.toster.error("Applicant can cancel booking before 10 days of event");
+	    return;
+	  }
 	  if(element.status === this.bookingConstant.SCRUTINY){
 	    this.commonService.confirmAlert('Are you sure to cancel?', "You won't be able to revert this!", 'warning', '', performDelete => {
                      let object = {
@@ -566,11 +583,13 @@ export class MyBookingComponent implements OnInit {
 	}
 
 	showCancelBtn(element) {
-	  if(element.resourceType === "CHILDREN_THEATER"){
-      var eventDate = element.scheduleList[0].bookingDate
-      var minDate= moment(eventDate).subtract(10, 'days').format('YYYY-MM-DD');
-      var currentDate = moment(new Date()).format('YYYY-MM-DD');
-	  }
+// 	  if(element.resourceType === "CHILDREN_THEATER"){
+//       if(element.scheduleList.length > 0){
+//         var eventDate = element.scheduleList[0].bookingDate
+//         var minDate= moment(eventDate).subtract(10, 'days').format('YYYY-MM-DD');
+//         var currentDate = moment(new Date()).format('YYYY-MM-DD');
+//       }
+// 	  }
 		this.slotBookingList.pop();
 		if (element.status === this.bookingConstant.PAYMENT_REQUIRED
 			|| element.status === this.bookingConstant.CANCELLED
@@ -584,10 +603,9 @@ export class MyBookingComponent implements OnInit {
 			|| element.status === this.bookingConstant.REFUND_APPROVED
 			|| element.status === this.bookingConstant.COMPLETED
 			|| (element.resourceType === 'ATITHIGRUH' && element.status === this.bookingConstant.CANCELLATION_APPROVED)
+			//|| (element.resourceType === "CHILDREN_THEATER" && currentDate >= minDate)
 			) {
 			return false;
-		}else if(element.resourceType === "CHILDREN_THEATER" && currentDate >= minDate){
-		  return false;
 		}else if(element.status === this.bookingConstant.SCRUTINY){
          if((element.resourceType === "STADIUM" && element.payableServiceType !== 'STADIUM_DEPOSIT') || element.resourceType === "CHILDREN_THEATER"){
              return true;
@@ -748,11 +766,15 @@ export class MyBookingComponent implements OnInit {
 	  }
 
 	  acknowledgmentReceipt(element){
-		  if((element.status == this.bookingConstant.SUBMITTED && (element.resourceType == 'STADIUM' || element.resourceType == 'CHILDREN_THEATER'))){
-			  return true;
-		  }else if(element.status == this.bookingConstant.CANCELLED && element.resourceType == 'STADIUM'){
+		  if((element.status == this.bookingConstant.SUBMITTED || element.status == this.bookingConstant.CANCELLED && (element.resourceType == 'STADIUM' || element.resourceType == 'CHILDREN_THEATER'))){
 			  return true;
 		  }
+		  else if(element.status == this.bookingConstant.SUBMITTED && element.resourceType == 'ATITHIGRUH'){
+				return true;
+		  }
+// 		  else if(element.status == this.bookingConstant.CANCELLED && element.resourceType == 'STADIUM'){
+// 			  return true;
+// 		  }
 	  }
 	printLOIReceipt(refNumber:string){
     this.bookingService.getBase64StringURL(refNumber).subscribe(res => {
@@ -785,5 +807,19 @@ export class MyBookingComponent implements OnInit {
        }else{
            return false;
        }
+	}
+
+  refundAcknowledgemnt(refNumber: string){
+	  this.bookingService.cancelAcknowledgement(refNumber).subscribe(response => {
+		let sectionToPrint: any = document.getElementById('sectionToPrint');
+		sectionToPrint.innerHTML = response;
+		setTimeout(() => {
+		  window.print();
+		});
+
+	  }, err => {
+		this.commonService.openAlert('Error', err.message, 'warning');
+	  });
+
   }
 }

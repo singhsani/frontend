@@ -418,4 +418,14 @@ export class BookingService {
         this.requestURL = `api/booking/${this.resourceType}/getLoiDocument/${refNumber}`;
         return this.http.get(this.requestURL);
     }
+
+    getStadiumRateData(){
+      this.requestURL = `api/booking/stadium/getFeesDetail`;
+      return this.http.get(this.requestURL);
+    }
+
+    cancelAcknowledgement(refNumber: string){
+      this.requestURL = `api/booking/stadium/refundRequest?refNumber=${refNumber}`;
+      return this.http.get(this.requestURL,'printReceipt');
+    }
 }

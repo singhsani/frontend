@@ -10,6 +10,7 @@ import * as _ from 'lodash';
 import { CertificateConfig } from '../../certificate-config';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
+import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 
 @Component({
 	selector: 'app-birth-correction',
@@ -121,7 +122,8 @@ export class BirthCorrectionComponent implements OnInit {
 		private commonService: CommonService,
 		private formService: FormsActionsService,
 		public TranslateService: TranslateService,
-		private toster: ToastrService
+		private toster: ToastrService,
+		private alertService: AlertService,
 	) { }
 
 	/**
@@ -225,8 +227,8 @@ export class BirthCorrectionComponent implements OnInit {
 			this.location.go(cururl);
 			this.getLookupData();
 			this.setValue(data);
-			this.showcorrectionForm = true;
-			this.showApplicationSearch = false;
+			// this.showcorrectionForm = true;
+			// this.showApplicationSearch = false;
 			this.showButtons = true;
 			this.changeCorrection(this.regStatusForm.get('typeOfCorrection').get('code').value);
 			// this.birthCorrectionForm.get('refNumber').setValue(this.regStatusForm.get('registrationNumber').value)
@@ -350,11 +352,17 @@ export class BirthCorrectionComponent implements OnInit {
 
 		this.formService.saveFormData(this.birthCorrectionForm.value).subscribe(res => {
 			this.birthCorrectionForm.patchValue(res);
-			debugger
+		
 		})
+
+		this.showcorrectionForm = true;
+		this.showApplicationSearch = false;
 	}
 	else{
-		this.toster.error('Wrong Date');
+		// this.toster.error('Wrong Date');
+		// this.alertService.error("Invalide Data!!!");
+		// this.commonService.openAlert("Error");
+		this.commonService.openAlert("Invalid Data", "Data is not Valid!!!", "warning");
 	}
 
 	}
@@ -362,23 +370,15 @@ export class BirthCorrectionComponent implements OnInit {
 	/**
 		* This method for convert newgn response date to yyyy-mm-dd formate
 		*/
-	// newgnDateconvert(controlName: any, date) {
-	//  if(date) {
-	// 	let dateString = date;
-	// 	let dateParts = dateString.split(" ");
-	// 	let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
-	// 	this.birthCorrectionForm.get(controlName).setValue(moment(dateParts[0]).format("DD-MM-YYYY"));
-	//  } else {
-	// 	 console.log('control name is undefined', controlName)
-	//  }
-	// }
-
 	newgnDateconvert(controlName: any, date) {
+	 if(date) {
 		let dateString = date;
-		let dateParts = dateString.split("-");
+		let dateParts = dateString.split(" ");
 		let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
-		// let dateObject = new Date(+dateParts[0], dateParts[1] - 1,+dateParts[2]);
-		this.birthCorrectionForm.get(controlName).setValue(moment(dateObject).format("YYYY-MM-DD"));
+		this.birthCorrectionForm.get(controlName).setValue(moment(dateParts[0]).format("YYYY-MM-DD"));
+	 } else {
+		 console.log('control name is undefined', controlName)
+	 }
 	}
 
 	/**
@@ -409,7 +409,7 @@ export class BirthCorrectionComponent implements OnInit {
 	 * @param count - count of invalid control.
 	 */
 	handleErrorsOnSubmit(count) {
-		let step1 = 6;
+		let step1 = 19;
 
 		if (count <= step1) {
 			this.tabIndex = 0;

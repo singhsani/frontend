@@ -148,6 +148,12 @@ export class DeathCorrectionComponent implements OnInit {
 	}
 
 	/**
+	 * maximum date validation.
+	 */
+	maxDate: Date = new Date();
+
+
+	/**
 	 * Get Death Correction data from API.
 	 */
 	getDeathCorrectionData() {
@@ -187,8 +193,8 @@ export class DeathCorrectionComponent implements OnInit {
 			this.location.go(cururl);
 			this.getLookupData();
 			this.setValue(data);
-			this.showcorrectionForm = true;
-			this.showApplicationSearch = false;
+			// this.showcorrectionForm = true;
+			// this.showApplicationSearch = false;
 			this.showButtons = true;
 
 		})
@@ -201,35 +207,40 @@ export class DeathCorrectionComponent implements OnInit {
 	setValue(data) {
 
 		let newgnData = JSON.parse(data);
-			let prod_array = [];
-			for (let i = 0; i < newgnData.length; i += 1) {
-				prod_array.push(newgnData[i]);
-			}
+		let prod_array = [];
+		for (let i = 0; i < newgnData.length; i += 1) {
+			prod_array.push(newgnData[i]);
+		}
 
-			(moment(prod_array[0].dateofdeath,'DD-MM-YYYY').format("YYYY-MM-DD"));
-		if(moment(this.regStatusForm.get('dateofdeath').value).format("YYYY-MM-DD") == moment(prod_array[0].dateofdeath,'DD-MM-YYYY').format("YYYY-MM-DD")){
-		
+		(moment(prod_array[0].dateofdeath, 'DD-MM-YYYY').format("YYYY-MM-DD"));
+		if (moment(this.regStatusForm.get('dateofdeath').value).format("YYYY-MM-DD") == moment(prod_array[0].dateofdeath, 'DD-MM-YYYY').format("YYYY-MM-DD")) {
 
+			this.showcorrectionForm = true;
+			this.showApplicationSearch = false;
 			this.deathCorrectionForm.patchValue(prod_array[0]);
 
-		// this.deathCorrectionForm.get('fieldView').setValue(data.fieldView);
-		// this.deathCorrectionForm.get('fieldList').setValue(data.fieldList);
-		// this.deathCorrectionForm.get('deceasedMiddleName').setValue(data[0].deceasedMiddleName);
-		// this.deathCorrectionForm.get('deceasedLastName').setValue(data.deceasedLastName);
-		// this.deathCorrectionForm.get('deceasedFirstName').setValue(data.deceasedFirstName);
-		// this.deathCorrectionForm.get('deceasedFirstNameGuj').setValue(data.deceasedFirstNameGuj);
-		// this.deathCorrectionForm.get('deceasedLastNameGuj').setValue(data.deceasedLastNameGuj);
-		// this.deathCorrectionForm.get('deceasedMiddleNameGuj').setValue(data.deceasedMiddleNameGuj);
-		// // this.deathCorrectionForm.get('fatherOrHusbandName').setValue(data.fatherOrHusbandName);
-		// this.deathCorrectionForm.get('motherName').setValue(data.motherName);
-		// this.deathCorrectionForm.get('motherNameGuj').setValue(data.motherNameGuj);
-		this.deathCorrectionForm.get('refNumber').setValue(this.regStatusForm.get('registrationNumber').value);
-		this.deathCorrectionForm.get('typeOfCorrection').get('code').setValue(this.regStatusForm.get('typeOfCorrection').get('code').value);
-	}
+			// this.deathCorrectionForm.get('fieldView').setValue(data.fieldView);
+			// this.deathCorrectionForm.get('fieldList').setValue(data.fieldList);
+			// this.deathCorrectionForm.get('deceasedMiddleName').setValue(data[0].deceasedMiddleName);
+			// this.deathCorrectionForm.get('deceasedLastName').setValue(data.deceasedLastName);
+			// this.deathCorrectionForm.get('deceasedFirstName').setValue(data.deceasedFirstName);
+			// this.deathCorrectionForm.get('deceasedFirstNameGuj').setValue(data.deceasedFirstNameGuj);
+			// this.deathCorrectionForm.get('deceasedLastNameGuj').setValue(data.deceasedLastNameGuj);
+			// this.deathCorrectionForm.get('deceasedMiddleNameGuj').setValue(data.deceasedMiddleNameGuj);
+			// // this.deathCorrectionForm.get('fatherOrHusbandName').setValue(data.fatherOrHusbandName);
+			// this.deathCorrectionForm.get('motherName').setValue(data.motherName);
+			// this.deathCorrectionForm.get('motherNameGuj').setValue(data.motherNameGuj);
+			this.deathCorrectionForm.get('refNumber').setValue(this.regStatusForm.get('registrationNumber').value);
+			this.deathCorrectionForm.get('typeOfCorrection').get('code').setValue(this.regStatusForm.get('typeOfCorrection').get('code').value);
+		}
+
+		else{
+			this.commonService.openAlert("Invalid Data", "Data is not Valid!!!", "warning");	
+		}
 	}
 	/**
-     * call API to get registration data and status.
-     */
+	 * call API to get registration data and status.
+	 */
 	getRegistrationNumberStatus() {
 		this.formService.getRegistrationStatus(this.regStatusForm.value).subscribe(resp => {
 			if (resp.success) {
@@ -266,8 +277,8 @@ export class DeathCorrectionComponent implements OnInit {
 
 
 	/**
- 	 * method is used to create registration status form.
- 	 */
+	   * method is used to create registration status form.
+	   */
 	registrationNumberStatusForm() {
 		this.regStatusForm = this.fb.group({
 			typeOfCorrection: this.fb.group({
@@ -283,8 +294,8 @@ export class DeathCorrectionComponent implements OnInit {
 	 * @param count - count of invalid control.
 	 */
 	handleErrorsOnSubmit(count) {
-		let step0 = 6;
-		let step1 = 8;
+		let step0 = 15;
+		let step1 = 20;
 
 		if (count <= step1) {
 			this.tabIndex = 0;
@@ -309,7 +320,7 @@ export class DeathCorrectionComponent implements OnInit {
 			gender: [null, Validators.required],
 			genderguj: [null, Validators.required],
 			dateofdeath: [null, Validators.required],
-			
+
 			// deceasedMiddleNameGuj: null,
 			// deceasedLastNameGuj: null,
 
@@ -317,7 +328,7 @@ export class DeathCorrectionComponent implements OnInit {
 			fathername: [null, Validators.required],
 			fathernameguj: [null, Validators.required],
 			mothername: [null, Validators.required],
-			mothernameguj:[null, Validators.required],
+			mothernameguj: [null, Validators.required],
 			// fatherOrHusbandName: null,
 
 			refNumber: null,
@@ -401,7 +412,7 @@ export class DeathCorrectionComponent implements OnInit {
 	}
 
 
-    /**
+	/**
 	 * Method is create required document array
 	 */
 	// public documentList(res, uploadFilesArray: Array<any>) {

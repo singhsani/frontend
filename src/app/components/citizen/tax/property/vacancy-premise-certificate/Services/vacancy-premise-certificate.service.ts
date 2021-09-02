@@ -85,4 +85,10 @@ export class VacancyPremiseCertificateService {
     return this.http.get<Array<Object>>(`${Constants.serverApiIp}/property/vacancypremisecertificate/attachments?serviceFormId=${serviceFormId}`);
   }
 
+  getApplicationDetails(serviceId) {
+    return this.http.get(`${Constants.serverApiIp}/api/form/vacantPremisesCertificate/getApplicationDetails?serviceId=${serviceId}`,
+    { observe: 'response' })
+    .pipe(map((response: any) => response))
+}
+
 }

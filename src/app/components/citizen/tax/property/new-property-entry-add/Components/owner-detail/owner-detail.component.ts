@@ -21,7 +21,7 @@ export class OwnerDetailComponent implements OnInit {
   subscription: Subscription;
   modelProperty: any = {};
   titleList = [];
-  columns: string[] = ['titleName', 'firstName', 'middleName', 'lastName', 'aadharNo', 'mobileNo', 'emailAddress', 'action'];
+  columns: string[] = ['titleName', 'firstName', 'middleName', 'lastName', 'aadharNo', 'mobileNo', 'emailAddress', 'isPrimaryOwner', 'action'];
   dataSource: any = [];
   ownerModel: OwnerModel;
   propertyModel: PropertyModel;

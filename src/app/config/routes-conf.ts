@@ -201,6 +201,10 @@ const ROUTEMAIN = {
         'main': 'vacantPremisesCertificate',
         'type': 'vacantPremisesCertificate'
     },
+    'PRO-BILL-PRINTING': {
+        'main': 'bill-printing',
+        'type': 'bill-printing'
+    },
     /*Property routes end */
 
     /*Affordable Housing end */
@@ -798,6 +802,9 @@ const ROUTESLIST = {
     },
     'PAY-PRO-TAX': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEMAIN.CITIZENPAYABLESERVICES.main
+    },
+    'PRO-BILL-PRINTING': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-BILL-PRINTING"].main
     },
     /*Property routes end */
 
