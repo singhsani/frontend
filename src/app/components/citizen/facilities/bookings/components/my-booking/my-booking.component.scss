@@ -29,7 +29,7 @@
     overflow: auto;
     max-height: 500px;
   }
-  
+
   .mobile-label, .mobile-label1 {
     display: none;
   }
@@ -85,8 +85,14 @@
 
 }
 
+.wMatCell200 {
+    max-width: 220px;
+}
+.wMatCell80 {
+    max-width: 60px !important;
+}
 .wMatCell180 {
-    max-width: 180px;
+    max-width: 220px;
 }
 
 .mat-header-cell {padding: 0 10px;}
