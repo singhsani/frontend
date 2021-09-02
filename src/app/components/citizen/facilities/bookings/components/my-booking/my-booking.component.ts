@@ -807,5 +807,19 @@ export class MyBookingComponent implements OnInit {
        }else{
            return false;
        }
+	}
+
+  refundAcknowledgemnt(refNumber: string){
+	  this.bookingService.cancelAcknowledgement(refNumber).subscribe(response => {
+		let sectionToPrint: any = document.getElementById('sectionToPrint');
+		sectionToPrint.innerHTML = response;
+		setTimeout(() => {
+		  window.print();
+		});
+
+	  }, err => {
+		this.commonService.openAlert('Error', err.message, 'warning');
+	  });
+
   }
 }
