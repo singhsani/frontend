@@ -240,7 +240,7 @@ export class FileUploadComponentWaterTax implements OnInit {
 				this.uploadFileService.deleteFile(this.uploadModel.id.toString(), this.id).subscribe(
 					(respData: any) => {
 						if (respData.body) {
-							this.tostr.success(this.uploadModel.labelName + " successfully deleted", "File Deleted");
+							this.tostr.success(this.uploadModel.documentLabelEn + " successfully deleted", "File Deleted");
 							this.canUpload = false;
 							this.fileName = '';
 							this.getFile = '';
