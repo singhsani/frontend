@@ -132,12 +132,15 @@ export class PropertyDocumentUploadAddComponent implements OnInit {
   submit() {
 
     this.newNewPropertyEntryAddService.submit(this.modelProperty.propertyBasicId).subscribe(
+    
       (data) => {
         if (data.status === 200) {
-          this.alertService.success(data.body.message);
-          //this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(4);
-          this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
-        }
+          const lServFormId = this.serviceFormId;
+          const url = `/citizen/my-applications?printPaymentReceipt=false&apiCode=PRO-ASS&id=${lServFormId}`;
+          this.router.navigateByUrl(url);
+          
+         // this.alertService.success(data.body.message);
+                }
       },
       (error) => {
         if (error.status === 400) {
