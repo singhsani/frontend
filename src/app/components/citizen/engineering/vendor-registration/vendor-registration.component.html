@@ -30,7 +30,7 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput type="text" onlyNumber maxlength="4" placeholder="{{'Year of Establishment'}}"
+              <input matInput type="text" OnlyNumber maxlength="4" placeholder="{{'Year of Establishment'}}"
                 formControlName="yearOfEstablishment">
               <control-messages [control]="vendorRegistrationForm.get('yearOfEstablishment')">
               </control-messages>
@@ -83,14 +83,14 @@
           </div>
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" onlyNumber required maxlength="10" placeholder="{{'Telephone Number'}}"
+            <input matInput type="text" OnlyNumber required maxlength="10" placeholder="{{'Telephone Number'}}"
               formControlName="officeContactNumber">
             <control-messages [control]="vendorRegistrationForm.get('officeContactNumber')">
             </control-messages>
           </mat-form-field>
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" required onlyNumber placeholder="{{'Fax Number'}}" maxlength="10"
+            <input matInput type="text" required OnlyNumber placeholder="{{'Fax Number'}}" maxlength="10"
               formControlName="officeFaxNumber">
             <control-messages [control]="vendorRegistrationForm.get('officeFaxNumber')">
             </control-messages>
@@ -111,14 +111,14 @@
           </div>
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" onlyNumber required maxlength="10" placeholder="{{'Telephone Number'}}"
+            <input matInput type="text" OnlyNumber required maxlength="10" placeholder="{{'Telephone Number'}}"
               formControlName="resContactNumber">
             <control-messages [control]="vendorRegistrationForm.get('resContactNumber')">
             </control-messages>
           </mat-form-field>
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" required onlyNumber placeholder="{{'Fax Number'}}" maxlength="10"
+            <input matInput type="text" required OnlyNumber placeholder="{{'Fax Number'}}" maxlength="10"
               formControlName="resFaxNumber">
             <control-messages [control]="vendorRegistrationForm.get('resFaxNumber')">
             </control-messages>
@@ -264,7 +264,7 @@
 
                       <td>
                         <mat-form-field>
-                          <input matInput type="text" appValidationFields maxlength="100"
+                          <input matInput type="text" appValidationFields maxlength="225"
                             [formControl]="row.get('description')">
                           <control-messages [control]="row.get('description')">
                           </control-messages>
@@ -273,7 +273,7 @@
 
                       <td>
                         <mat-form-field>
-                          <input matInput type="text" appValidationFields OnlyNumber maxlength="100"
+                          <input matInput type="text" appValidationFields OnlyNumber maxlength="10"
                             [formControl]="row.get('isNumber')">
                           <control-messages [control]="row.get('isNumber')">
                           </control-messages>
@@ -374,7 +374,7 @@
             </div>
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="100" validationFieldsType='onlyNameWithSpace'
+              <input matInput type="text" maxlength="255" validationFieldsType='onlyNameWithSpace'
                 placeholder="{{'Total turnover for the last three years of regd. charted accountant'}}"
                 formControlName="totalTurnoverLastThreeYears">
               <control-messages [control]="vendorRegistrationForm.get('totalTurnoverLastThreeYears')">
@@ -415,7 +415,7 @@
 
           <div class="row">
             <mat-form-field class="col-md-4">
-              <input matInput type="text" maxlength="7" required onlyNumber
+              <input matInput type="text" maxlength="7" required OnlyNumber
                 placeholder="{{'Loan Capital with Bank Limit.'}}" formControlName="loanCapitalWithBankLimit">
               <control-messages [control]="vendorRegistrationForm.get('loanCapitalWithBankLimit')">
               </control-messages>
@@ -432,7 +432,7 @@
             </div>
 
             <mat-form-field class="col-md-4">
-              <input matInput type="text" maxlength="100" required validationFieldsType='onlyNameWithSpace'
+              <input matInput type="text" maxlength="255" required validationFieldsType='onlyNameWithSpace'
                 placeholder="{{'Product Manufactured with complete description'}}"
                 formControlName="productManufacturedDescription">
               <control-messages [control]="vendorRegistrationForm.get('productManufacturedDescription')">
@@ -440,7 +440,7 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput type="text" maxlength="100" OnlyNumber
+              <input matInput type="text" maxlength="10" OnlyNumber
                 placeholder="{{'Area of land occupied by the factory'}}" formControlName="areaOfLandFactory">
               <control-messages [control]="vendorRegistrationForm.get('areaOfLandFactory')">
               </control-messages>
@@ -448,28 +448,28 @@
 
 
             <mat-form-field class="col-md-4">
-              <input matInput type="text" maxlength="100" placeholder="{{'Built up area of the factory.'}}"
+              <input matInput type="text" maxlength="10" placeholder="{{'Built up area of the factory.'}}"
                 formControlName="builtAreaFactory">
               <control-messages [control]="vendorRegistrationForm.get('builtAreaFactory')">
               </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput type="text" maxlength="2" onlyNumber
+              <input matInput type="text" maxlength="2" OnlyNumber
                 placeholder="{{'No. of working shifts in the factory.'}}" formControlName="noOfWorkingShifts">
               <control-messages [control]="vendorRegistrationForm.get('noOfWorkingShifts')">
               </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput type="text" maxlength="10" onlyNumber placeholder="{{'Factory licence No.'}}"
+              <input matInput type="text" maxlength="10" OnlyNumber placeholder="{{'Factory licence No.'}}"
                 formControlName="factoryLicenceNumber">
               <control-messages [control]="vendorRegistrationForm.get('factoryLicenceNumber')">
               </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput type="text" maxlength="10" onlyNumber
+              <input matInput type="text" maxlength="10" OnlyNumber
                 placeholder="{{'Small Scale Industries / NSIC Certificate No.'}}"
                 formControlName="sscNSICCertificateNumber">
               <control-messages [control]="vendorRegistrationForm.get('sscNSICCertificateNumber')">
@@ -517,7 +517,7 @@
             </div>
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+              <input matInput type="text" maxlength="255" validationFieldsType='onlyNameWithSpace'
                 placeholder="{{'Deatils of Machinery installed with their capacities.'}}"
                 formControlName="detailsMachineryCapacity">
               <control-messages [control]="vendorRegistrationForm.get('detailsMachineryCapacity')">
@@ -525,7 +525,7 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+              <input matInput type="text" maxlength="255" validationFieldsType='onlyNameWithSpace'
                 placeholder="{{'Deatils of testing equipment with their capacities and details of calibration.'}}"
                 formControlName="detailsEquipmentCapacity">
               <control-messages [control]="vendorRegistrationForm.get('detailsEquipmentCapacity')">
@@ -568,7 +568,7 @@
 
                         <td class="text-center">
                           <mat-form-field>
-                            <input matInput type="text" appValidationFields maxlength="100"
+                            <input matInput type="text" appValidationFields maxlength="50"
                               formControlName="managerialQualification">
                             <control-messages [control]="vendorRegistrationForm.get('managerialQualification')">
                             </control-messages>
@@ -577,7 +577,7 @@
 
                         <td class="text-center">
                           <mat-form-field>
-                            <input matInput type="text" appValidationFields maxlength="100"
+                            <input matInput type="text" appValidationFields maxlength="4"
                               formControlName="managerialExperienceInYears">
                             <control-messages [control]="vendorRegistrationForm.get('managerialExperienceInYears')">
                             </control-messages>
@@ -604,7 +604,7 @@
 
                         <td class="text-center">
                           <mat-form-field>
-                            <input matInput type="text" appValidationFields maxlength="100"
+                            <input matInput type="text" appValidationFields maxlength="50"
                               formControlName="productionStaffQualification">
                             <control-messages [control]="vendorRegistrationForm.get('productionStaffQualification')">
                             </control-messages>
@@ -613,7 +613,7 @@
 
                         <td class="text-center">
                           <mat-form-field>
-                            <input matInput type="text" appValidationFields maxlength="100"
+                            <input matInput type="text" appValidationFields maxlength="4"
                               formControlName="productionStaffExperienceInYears">
                             <control-messages
                               [control]="vendorRegistrationForm.get('productionStaffExperienceInYears')">
@@ -641,7 +641,7 @@
 
                         <td class="text-center">
                           <mat-form-field>
-                            <input matInput type="text" appValidationFields maxlength="100"
+                            <input matInput type="text" appValidationFields maxlength="50"
                               formControlName="qualityControlStaffQualification">
                             <control-messages
                               [control]="vendorRegistrationForm.get('qualityControlStaffQualification')">
@@ -651,7 +651,7 @@
 
                         <td class="text-center">
                           <mat-form-field>
-                            <input matInput type="text" appValidationFields maxlength="100"
+                            <input matInput type="text" appValidationFields maxlength="4"
                               formControlName="qualityControlStaffExperienceInYears">
                             <control-messages
                               [control]="vendorRegistrationForm.get('qualityControlStaffExperienceInYears')">
@@ -672,21 +672,21 @@
             <h2><b>{{'B. Other Personnel working in the factory and their Experience.'}}</b></h2>
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+              <input matInput type="text" maxlength="255" validationFieldsType='onlyNameWithSpace'
                 placeholder="{{'Skilled'}}" formControlName="personnelDetailSkilled">
               <control-messages [control]="vendorRegistrationForm.get('personnelDetailSkilled')">
               </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+              <input matInput type="text" maxlength="255" validationFieldsType='onlyNameWithSpace'
                 placeholder="{{'Unskilled'}}" formControlName="personnelDetailUnSkilled">
               <control-messages [control]="vendorRegistrationForm.get('personnelDetailUnSkilled')">
               </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+              <input matInput type="text" maxlength="255" validationFieldsType='onlyNameWithSpace'
                 placeholder="{{'Other'}}" formControlName="personnelDetailOther">
               <control-messages [control]="vendorRegistrationForm.get('personnelDetailOther')">
               </control-messages>
@@ -717,7 +717,7 @@
           <div class="row">
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+              <input matInput type="text" maxlength="255" required validationFieldsType='onlyNameWithSpace'
                 placeholder="{{'Is testing record maintained and if so, since when'}}"
                 formControlName="isTestingRecordMaintanedDetail">
               <control-messages [control]="vendorRegistrationForm.get('isTestingRecordMaintanedDetail')">
@@ -725,7 +725,7 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+              <input matInput type="text" maxlength="255" required validationFieldsType='onlyNameWithSpace'
                 placeholder="{{'Type of tests as per Standards (This is must for registration) MTC as well as govt. Lab or Approved govt.Lab.'}}"
                 formControlName="testStandardGovtLabApproved">
               <control-messages [control]="vendorRegistrationForm.get('testStandardGovtLabApproved')">
@@ -733,7 +733,7 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+              <input matInput type="text" maxlength="255" required validationFieldsType='onlyNameWithSpace'
                 placeholder="{{'Method adopted for Quality Control'}}" formControlName="adoptedForQualityControl">
               <control-messages [control]="vendorRegistrationForm.get('adoptedForQualityControl')">
               </control-messages>
@@ -743,7 +743,7 @@
             <div class="col-md-12 ngSelect">
               <ng-select
                 placeholder="{{'Is the person in charge for Quality control independent of production control.'}}"
-                formControlName="isPersonInChargeProductionControl">
+                formControlName="isPersonInChargeProductionControl" required>
                 <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
                 </ng-option>
               </ng-select>
@@ -752,7 +752,7 @@
             </div>
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+              <input matInput type="text" maxlength="255" required validationFieldsType='onlyNameWithSpace'
                 placeholder="{{'Distinguised marks or method employed to identify, materials, if any.'}}"
                 formControlName="methodEmployeeIdentify">
               <control-messages [control]="vendorRegistrationForm.get('methodEmployeeIdentify')">
@@ -760,7 +760,7 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+              <input matInput type="text" maxlength="255" required validationFieldsType='onlyNameWithSpace'
                 placeholder="{{'Source of supply of Raw materials (with address).'}}"
                 formControlName="sourceOfRawMaterialAddress">
               <control-messages [control]="vendorRegistrationForm.get('sourceOfRawMaterialAddress')">
@@ -768,7 +768,7 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+              <input matInput type="text" maxlength="255" required validationFieldsType='onlyNameWithSpace'
                 placeholder="{{'Production capacity per annum (quantity).'}}"
                 formControlName="productionCapacityPerAnnum">
               <control-messages [control]="vendorRegistrationForm.get('productionCapacityPerAnnum')">
@@ -776,7 +776,7 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+              <input matInput type="text" maxlength="255" required validationFieldsType='onlyNameWithSpace'
                 placeholder="{{'Maximum production per annum (in city. as well as value) acheived so far.'}}"
                 formControlName="maximumProductionPerAnnum">
               <control-messages [control]="vendorRegistrationForm.get('maximumProductionPerAnnum')">
@@ -821,7 +821,7 @@
                         </td>
                         <td class="text-center">
                           <mat-form-field>
-                            <input matInput type="text" appValidationFields maxlength="100"
+                            <input matInput type="text" appValidationFields maxlength="20"
                               formControlName="orderNumber">
                             <control-messages [control]="vendorRegistrationForm.get('orderNumber')">
                             </control-messages>
@@ -889,7 +889,7 @@
             </div>
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+              <input matInput type="text" maxlength="255" validationFieldsType='onlyNameWithSpace'
                 placeholder="{{'Estimation of Stocks of raw material held and the estimated production on single shift basis from the stock so available.'}}"
                 formControlName="estimationOfStocks">
               <control-messages [control]="vendorRegistrationForm.get('estimationOfStocks')">
@@ -906,7 +906,7 @@
             </div>
 
             <mat-form-field class="col-md-4">
-              <input matInput type="text" maxlength="250" onlyNumber
+              <input matInput type="text" maxlength="255" required
                 placeholder="{{'List of Items holding ISO 9001 Certificate.'}}"
                 formControlName="numberOfItemsHoldingISOCertificate">
               <control-messages [control]="vendorRegistrationForm.get('numberOfItemsHoldingISOCertificate')">
@@ -914,7 +914,7 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-8">
-              <input matInput type="text" maxlength="250" validationFieldsType='onlyNameWithSpace'
+              <input matInput type="text" maxlength="255" validationFieldsType='onlyNameWithSpace'
                 placeholder="{{'Remarks'}}" formControlName="remarks">
               <control-messages [control]="vendorRegistrationForm.get('remarks')">
               </control-messages>
