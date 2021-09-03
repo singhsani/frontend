@@ -37,7 +37,7 @@ export class BookingFileUploadComponent implements OnInit, OnChanges {
     bookingConstants = BookingConstants;
 
 	/**
-	 * 
+	 *
 	 * @param uploadFileService - for common upload file service
 	 * @param commonService - common service for alerts
 	 */
@@ -67,7 +67,7 @@ export class BookingFileUploadComponent implements OnInit, OnChanges {
         }
     }
 	/**
-	 * This method is use for select the file 
+	 * This method is use for select the file
 	 * @param event - get selected file event
 	 */
     selectFile(event) {
@@ -133,7 +133,7 @@ export class BookingFileUploadComponent implements OnInit, OnChanges {
                     this.uploadFileService.processFileToDMSServerBooking(formData, setProgressBar => {
                         this.progress.percentage = setProgressBar;
                     }, successResponse => {
-                        this.tostr.success(this.uploadModel.labelName + " successfully uploaded", "File Uploaded");
+                        this.tostr.success("Your file uploaded successfully");
                         this.canUpload = true;
                         this.id = successResponse.data.id;
                         this.type = successResponse.data.mimeType;
@@ -143,11 +143,11 @@ export class BookingFileUploadComponent implements OnInit, OnChanges {
                         this.uploaded.emit(true);
                     });
                 }else{
-                
+
                 this.uploadFileService.processFileToServer(formData, setProgressBar => {
                     this.progress.percentage = setProgressBar;
                 }, successResponse => {
-                    this.tostr.success(this.uploadModel.labelName + " successfully uploaded", "File Uploaded");
+                    this.tostr.success("Your file uploaded successfully");
                     this.canUpload = true;
                     this.id = successResponse.data.id;
                     this.type = successResponse.data.mimeType;
@@ -197,7 +197,7 @@ export class BookingFileUploadComponent implements OnInit, OnChanges {
                 this.uploadFileService.deleteFileFromServiceForBookings(this.uploadModel.refNumber.toString(), this.id).subscribe(
                     (respData: any) => {
                         if (respData.body) {
-                            this.tostr.success(this.uploadModel.labelName + " successfully deleted", "File Deleted");
+                            this.tostr.success("Your file deleted successfully");
                             this.canUpload = false;
                             this.fileName = '';
                             this.getFile = '';
