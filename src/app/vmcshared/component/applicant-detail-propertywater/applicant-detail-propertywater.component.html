@@ -29,8 +29,9 @@
       </mat-form-field>
 
       <mat-form-field class="full-width-input col-md-4">
-        <input matInput email placeholder="Email ID" name="email" maxlength="255" #email="ngModel"
+        <input matInput required email placeholder="Email ID" name="email" maxlength="255" #email="ngModel"
           [(ngModel)]="model.email">
+          <mat-error *ngIf="email.invalid">*Email Id is invalid.</mat-error>
       </mat-form-field>
     </div><br><br>
 
@@ -81,7 +82,7 @@
       </div>
 
       <div class="col-md-6 ngSelect">
-        <ng-select required placeholder="City*" name="city" #city="ngModel" [(ngModel)]="model.citizenAddressDTO.city"
+        <ng-select required placeholder="City/District*" name="city" #city="ngModel" [(ngModel)]="model.citizenAddressDTO.city"
           [items]="cityListArray" bindValue="name" bindLabel="name">
         </ng-select>
         <div *ngIf="(form.submitted && city.invalid)  || (city.invalid && city.touched)">
