@@ -163,7 +163,7 @@
             </div>
           </div>
           <div class="row">
-            <h2>{{'Name of the Propreitor / Partners / Directors'}}</h2>
+            <h2>{{'Name of the Proprietor / Partners / Directors'}}</h2>
             <div class="col-sm-12 col-md-12 text-left">
               <button mat-raised-button color="primary" (click)="addRowVendorName()">{{'Add New'}}</button>
             </div>
@@ -345,7 +345,7 @@
               valid legal agreement that factory of(here indicate the name of the firm whose factory is being
               utilized)
               has been put at the firms disposal for the equipments / stores for which the firms disposal for the
-              equipments/stores for whcih the firms have applied.'}}</h2>
+              equipments/stores for which the firms have applied.'}}</h2>
 
             <div class="col-md-12 ngSelect">
               <ng-select formControlName="isManufacturingOwnedDetails">
@@ -364,7 +364,7 @@
 
             <div class="col-md-12 ngSelect">
               <ng-select
-                placeholder="{{'Total investment excluding Loan Capital (PI attach certified true copy of the last 3 year balance sheets'}}"
+                placeholder="{{'Total investment excluding Loan Capital (PI. attach certified true copy of the last 3 year balance sheets'}}"
                 formControlName="isTotalInvestmentDetail">
                 <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
                 </ng-option>
@@ -454,23 +454,23 @@
               </control-messages>
             </mat-form-field>
 
-            <mat-form-field class="col-md-4">
+            <mat-form-field class="col-md-3">
               <input matInput type="text" maxlength="2" OnlyNumber
                 placeholder="{{'No. of working shifts in the factory.'}}" formControlName="noOfWorkingShifts">
               <control-messages [control]="vendorRegistrationForm.get('noOfWorkingShifts')">
               </control-messages>
             </mat-form-field>
 
-            <mat-form-field class="col-md-4">
-              <input matInput type="text" maxlength="10" OnlyNumber placeholder="{{'Factory licence No.'}}"
-                formControlName="factoryLicenceNumber">
+            <mat-form-field class="col-md-3">
+              <input matInput type="text" maxlength="10" OnlyNumber
+                placeholder="{{'Factory licence No. (Notarized copy)'}}" formControlName="factoryLicenceNumber">
               <control-messages [control]="vendorRegistrationForm.get('factoryLicenceNumber')">
               </control-messages>
             </mat-form-field>
 
-            <mat-form-field class="col-md-4">
+            <mat-form-field class="col-md-6">
               <input matInput type="text" maxlength="10" OnlyNumber
-                placeholder="{{'Small Scale Industries / NSIC Certificate No.'}}"
+                placeholder="{{'Small Scale Industries / NSIC Certificate No. (Notarized copy)'}}"
                 formControlName="sscNSICCertificateNumber">
               <control-messages [control]="vendorRegistrationForm.get('sscNSICCertificateNumber')">
               </control-messages>
@@ -507,7 +507,7 @@
 
             <div class="col-md-12 ngSelect">
               <ng-select
-                placeholder="{{'Whether registeres with other central Govt/State Govt./Govt. Undertaking Department and validity thereof. (attach a copy of such registration certificate).'}}"
+                placeholder="{{'Whether registered with other central Govt/State Govt./Govt. Undertaking Department and validity thereof. (attach a copy of such registration certificate).'}}"
                 formControlName="isRegisteredByGovt">
                 <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
                 </ng-option>
@@ -518,7 +518,7 @@
 
             <mat-form-field class="col-md-12">
               <input matInput type="text" maxlength="255" validationFieldsType='onlyNameWithSpace'
-                placeholder="{{'Deatils of Machinery installed with their capacities.'}}"
+                placeholder="{{'Details of Machinery installed with their capacities.'}}"
                 formControlName="detailsMachineryCapacity">
               <control-messages [control]="vendorRegistrationForm.get('detailsMachineryCapacity')">
               </control-messages>
@@ -526,7 +526,7 @@
 
             <mat-form-field class="col-md-12">
               <input matInput type="text" maxlength="255" validationFieldsType='onlyNameWithSpace'
-                placeholder="{{'Deatils of testing equipment with their capacities and details of calibration.'}}"
+                placeholder="{{'Details of testing equipment with their capacities and details of calibration.'}}"
                 formControlName="detailsEquipmentCapacity">
               <control-messages [control]="vendorRegistrationForm.get('detailsEquipmentCapacity')">
               </control-messages>
@@ -742,7 +742,7 @@
 
             <div class="col-md-12 ngSelect">
               <ng-select
-                placeholder="{{'Is the person in charge for Quality control independent of production control.'}}"
+                placeholder="{{'Is the person in charge for Quality control independent of production control ?'}}"
                 formControlName="isPersonInChargeProductionControl" required>
                 <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
                 </ng-option>
@@ -753,7 +753,7 @@
 
             <mat-form-field class="col-md-12">
               <input matInput type="text" maxlength="255" required validationFieldsType='onlyNameWithSpace'
-                placeholder="{{'Distinguised marks or method employed to identify, materials, if any.'}}"
+                placeholder="{{'Distinguished marks or method employed to identify, materials, if any.'}}"
                 formControlName="methodEmployeeIdentify">
               <control-messages [control]="vendorRegistrationForm.get('methodEmployeeIdentify')">
               </control-messages>
@@ -777,7 +777,7 @@
 
             <mat-form-field class="col-md-12">
               <input matInput type="text" maxlength="255" required validationFieldsType='onlyNameWithSpace'
-                placeholder="{{'Maximum production per annum (in city. as well as value) acheived so far.'}}"
+                placeholder="{{'Maximum production per annum (in qty. as well as value) acheived so far.'}}"
                 formControlName="maximumProductionPerAnnum">
               <control-messages [control]="vendorRegistrationForm.get('maximumProductionPerAnnum')">
               </control-messages>
@@ -786,7 +786,7 @@
 
           <div class="row">
 
-            <h2><b>{{'A. Deatils of order executed indication quantity, value for each item/materials to be registered
+            <h2><b>{{'A. Details of order executed indicating quantity, value for each item/materials to be registered
                 for supply, self certified statement to be attached.'}}</b></h2>
 
             <div class="col-sm-12 col-md-12">
