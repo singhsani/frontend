@@ -534,12 +534,12 @@ const ROUTEMAIN = {
     'VENDOR_REG': {
         'main': 'vendor',
         'type': 'vendor'
-    }
+    },
 
-    // 'CONTRACTOR_REG': {
-    //     'main': 'contractor',
-    //     'type': 'contractor'
-    // },
+    'CONTRACTOR_REGISTRATION': {
+        'main': 'contractor',
+        'type': 'contractor'
+    },
 
 }
 
@@ -630,9 +630,10 @@ const ROUTEPREFIX = {
     'PROPERTY': 'property',
 
     'VENDORMODULE': 'vendor-registration',
+    
     'ENGINEERINGMODULE': 'engineering',
 
-    //  'CONTRACTORMODULE': 'contractor-regsitration'
+    'CONTRACTORMODULE': 'contractor-regsitration'
 
 }
 
@@ -1091,9 +1092,9 @@ const ROUTESLIST = {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.ENGINEERINGMODULE + '/' + ROUTEPREFIX.VENDORMODULE
     },
 
-    // 'CONTRACTOR-REG': {
-    //     'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CONTRACTORMODULE + '/' + ROUTEMAIN["CONTRACTOR-REG"].main
-    // },
+    'CONTRACTOR_REGISTRATION': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.ENGINEERINGMODULE + '/' + ROUTEPREFIX.CONTRACTORMODULE
+    },
     /*Engineering routes end */
 
 }
