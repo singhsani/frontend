@@ -809,8 +809,8 @@ export class MyBookingComponent implements OnInit {
        }
 	}
 
-  refundAcknowledgemnt(refNumber: string){
-	  this.bookingService.cancelAcknowledgement(refNumber).subscribe(response => {
+  refundAcknowledgemnt(refNumber: string,serviceType: string){
+	  this.bookingService.cancelAcknowledgement(refNumber,serviceType).subscribe(response => {
 		let sectionToPrint: any = document.getElementById('sectionToPrint');
 		sectionToPrint.innerHTML = response;
 		setTimeout(() => {

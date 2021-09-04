@@ -424,8 +424,12 @@ export class BookingService {
       return this.http.get(this.requestURL);
     }
 
-    cancelAcknowledgement(refNumber: string){
-      this.requestURL = `api/booking/stadium/refundRequest?refNumber=${refNumber}`;
-      return this.http.get(this.requestURL,'printReceipt');
+    cancelAcknowledgement(refNumber: string,serviceType: string){
+      if(serviceType == 'STADIUM'){
+        this.requestURL = `api/booking/stadium/refundAcknowledgment?refNumber=${refNumber}`;
+      } else if(serviceType == 'CHILDREN_THEATER'){
+        this.requestURL = `api/booking/childrenTheater/cancellationAcknowledgment?refNumber=${refNumber}`;
+      }    
+        return this.http.get(this.requestURL,'printReceipt');
     }
 }
