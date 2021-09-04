@@ -149,10 +149,16 @@ export class RefundApplicationFormComponent implements OnInit {
         if(data.status) {
         this.refundApplicationService.approveDept(this.refundAgainstVacancyId).subscribe(
           (data) => {
-            this.alertService.success(data.message);
+
+            const url = `/citizen/my-applications?printPaymentReceipt=false&apiCode=PRO-REFUND&id=${this.serviceFormId}`;
+            this.router.navigateByUrl(url);
+
+
+            /* this.alertService.success(data.message);
             // this btn is used to enable or disable to submit btn of document screen 
             this.submitBtn = true;
-            this.router.navigateByUrl('/citizen/my-applications');
+            this.router.navigateByUrl('/citizen/my-applications'); */
+
            // this.refundApplicationDataSharingService.setIsShowForm(false);
            // this.refundApplicationDataSharingService.setIsShowApproval(true);
           },
