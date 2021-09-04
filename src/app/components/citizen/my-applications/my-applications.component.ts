@@ -455,6 +455,12 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.serviceType == 'VEHICLE'){
 			return false;
 		}	
+		else if((row.serviceType === 'DUPLICATE_BIRTH_REGISTRATION' && row.fileStatus === 'REJECTED') ||
+			(row.serviceType === 'DUPLICATE_DEATH_REGISTRATION' && row.fileStatus === 'REJECTED') ||
+			(row.serviceType === 'BIRTH_CORRECTION_REGISTRATION' && row.fileStatus === 'REJECTED') ||
+			(row.serviceType === 'DEATH_CORRECTION_REGISTRATION' && row.fileStatus === 'REJECTED')){
+			return false;
+		}
 		else if (row.serviceType === 'SHOP_ESTAB_APPLICATION' && !(this.commonService.fromAdmin())) {
 			return false;
 		}
@@ -508,7 +514,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return true;
 		}
 		
-		else if((row.serviceType === 'DUPLICATE_BIRTH_REGISTRATION' && row.fileStatus === 'SUBMITTED' ) || (row.serviceType ==='DUPLICATE_DEATH_REGISTRATION' && row.fileStatus === 'SUBMITTED' ) || (row.serviceType ==='BIRTH_CORRECTION_REGISTRATION' && row.fileStatus === 'SUBMITTED') || (row.serviceType === 'DEATH_CORRECTION_REGISTRATION' && row.fileStatus === 'SUBMITTED')){
+		else if((row.serviceType === 'DUPLICATE_BIRTH_REGISTRATION' && (row.fileStatus === 'SUBMITTED' || row.fileStatus === 'REJECTED') ) || 
+		(row.serviceType ==='DUPLICATE_DEATH_REGISTRATION' && (row.fileStatus === 'SUBMITTED' || row.fileStatus === 'REJECTED' )) || 
+		(row.serviceType ==='BIRTH_CORRECTION_REGISTRATION' && (row.fileStatus === 'SUBMITTED' || row.fileStatus === 'REJECTED')) || 
+		(row.serviceType === 'DEATH_CORRECTION_REGISTRATION' && (row.fileStatus === 'SUBMITTED' || row.fileStatus === 'REJECTED'))){
 			return true;
 		}
 
