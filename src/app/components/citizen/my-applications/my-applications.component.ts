@@ -61,7 +61,8 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	@ViewChild(MatSort) sort: MatSort;
     
 	urlMap = new Map([
-        ["PRO-TAX-REBATE", "property/taxrebate/application/printReceiptForPayment"]    
+        ["PRO-TAX-REBATE", "property/taxrebate/application/printReceiptForPayment"],
+		["PRO-REFUND", "property/refundagainstvacancy/printReceiptForPayment"]
     ]);
 
 	constructor(
