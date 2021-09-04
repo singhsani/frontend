@@ -1,6 +1,6 @@
 <app-title-bar [title]="'Application Form (MGY / PMAY)'"></app-title-bar>
 
- <!--<button (click)="patchValue()">patch</button> -->
+<!-- <button (click)="patchValue()">patch</button> -->
 <mat-card class="formClass cardBorder">
 
 	<form [formGroup]="affordableHousingForm">
@@ -29,10 +29,10 @@
 
 					<div class="col-md-4 ngSelect">
 						<ng-select placeholder="{{'project' | translate: translateKey}} *" formControlName="projectId">
-								<ng-container *ngFor="let project of projectData">
-									<ng-option *ngIf="project?.isAppliedFor == 'ACTIVE'" [value]="project.id">
-										{{project.projectName}}</ng-option>
-								</ng-container>
+							<ng-container *ngFor="let project of projectData">
+								<ng-option *ngIf="project?.isAppliedFor == 'ACTIVE'" [value]="project.id">
+									{{project.projectName}}</ng-option>
+							</ng-container>
 						</ng-select>
 						<control-messages [control]="affordableHousingForm.get('projectId')">
 						</control-messages>
@@ -166,7 +166,8 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="100" appValidationFields validationFieldsType='onlyNameWithSpace'
+						<input matInput type="text" required maxlength="100" appValidationFields
+							validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'Applicant Occupation' | translate:translateKey}}"
 							formControlName="firstAppOccupation">
 						<control-messages [control]="affordableHousingForm.get('firstAppOccupation')">
@@ -174,7 +175,8 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="100" appValidationFields validationFieldsType='onlyNameWithSpace'
+						<input matInput type="text" required maxlength="100" appValidationFields
+							validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'organisation_Name' | translate:translateKey}}"
 							formControlName="firstAppOrganizationName">
 						<control-messages [control]="affordableHousingForm.get('firstAppOrganizationName')">
@@ -182,7 +184,8 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="100" appValidationFields validationFieldsType='onlyNameWithSpace'
+						<input matInput type="text" required maxlength="100" appValidationFields
+							validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'designation_Held' | translate:translateKey}}"
 							formControlName="firstAppOccupationDesignation">
 						<control-messages [control]="affordableHousingForm.get('firstAppOccupationDesignation')">
@@ -361,7 +364,8 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="100" appValidationFields validationFieldsType='onlyNameWithSpace'
+						<input matInput type="text" required maxlength="100" appValidationFields
+							validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'Applicant Occupation' | translate:translateKey}}"
 							formControlName="secondAppOccupation">
 						<control-messages [control]="affordableHousingForm.get('secondAppOccupation')">
@@ -369,7 +373,8 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="100" appValidationFields validationFieldsType='onlyNameWithSpace'
+						<input matInput type="text" required maxlength="100" appValidationFields
+							validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'organisation_Name' | translate:translateKey}}"
 							formControlName="secondAppOrganizationName">
 						<control-messages [control]="affordableHousingForm.get('secondAppOrganizationName')">
@@ -377,7 +382,8 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="100" appValidationFields validationFieldsType='onlyNameWithSpace'
+						<input matInput type="text" required maxlength="100" appValidationFields
+							validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'designation_Held' | translate:translateKey}}"
 							formControlName="secondAppOccupationDesignation">
 						<control-messages [control]="affordableHousingForm.get('secondAppOccupationDesignation')">
@@ -477,8 +483,9 @@
 
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off"  formControlName="bankBranch" type="text"
-						appValidationFields validationFieldsType='onlyNameWithSpace' maxlength="40" placeholder="{{'branch_name' | translate: translateKey}}" required>
+						<input matInput autocomplete="off" formControlName="bankBranch" type="text" appValidationFields
+							validationFieldsType='onlyNameWithSpace' maxlength="40"
+							placeholder="{{'branch_name' | translate: translateKey}}" required>
 						<control-messages [control]="affordableHousingForm.get('bankBranch')"></control-messages>
 					</mat-form-field>
 
@@ -1072,9 +1079,16 @@
 	<div class="modal-body scrollModel">
 
 		• અરજી ફોર્મની રકમ રૂ.૧૦૦/- (રૂપિયા સો પુરા) રોકડેથી ભરવાના રહેશે, જે નોન-રીફંડેબલ રહેશે.<br>
-		૧.	અરજી સાથે ભરવાની ડિપોઝીટની રકમ રૂ.૨૦,૦૦૦/- (રૂપિયા વીસ હજાર પુરા) અરજી ફોર્મ સાથે ભરવાની રકમનો વડોદરામાં ચુકવણું થઇ શકે તેવા ડી.ડી./પે ઓર્ડર “મ્‍યુનિસિપલ કમિશ્‍નર, વડોદરા” ના નામનો આપવાનો રહેશે અથવા POS થી ચુકવણુ કરી શકાશે.
-		<br>૨.	મકાનની કુલ કિંમતની ઓછામાં ઓછી ૨૦% રકમ ડ્રો માં સફળ થયા બાદ વડોદરા મ્‍યુનિસિપલ કોર્પોરેશનમાં અરજદારે ત્રણ માસમાં ભરવાની રહેશે. ત્‍યારબાદ બાકી રહેતી ૮૦% રકમના એક સરખા દસ (૧૦) હપ્તા કરી પઝેશન સુધીના સમયગાળામાં સરખા માસિક અંતરે જમા કરાવવાની રહેશે તે ઉપરાંત છેલ્લા હપ્તા સાથે મેન્‍ટેનન્‍સ ડીપોઝીટ તરીકે ૫૦,૦૦૦ તથા અન્‍ય લગત, જો હોય તો, ચાર્જીસ પણ ભરપાઇ કરવાના રહેશે. સમયસર નાણાં જમા નહીં કરાવવામાં આવે તો મકાન નોટીસ આપ્યા વગર રદ કરવામાં આવશે ઉપરાંત ડિપોઝીટની રકમ સિવાયની રકમ જ પરત કરવામાં આવશે તેમજ આ રકમ પર કોઈ વ્યાજ આપવામાં આવશે નહી. 
-		<br>૩.	આવાસ યોજનાનું બાંધકામ પૂર્ણ થયા બાદ મકાનોની ફાળવણી થાય ત્યાં સુધી અરજદારે મકાનની નક્કી થયેલ પૂરેપૂરી કિંમત ભરપાઇ કરવાની રહેશે. ત્‍યારબાદ જ અરજદારને ફાળવવામાં આવેલા મકાનનો કબજો સોંપવામાં આવશે.
+		૧. અરજી સાથે ભરવાની ડિપોઝીટની રકમ રૂ.૨૦,૦૦૦/- (રૂપિયા વીસ હજાર પુરા) અરજી ફોર્મ સાથે ભરવાની રકમનો વડોદરામાં
+		ચુકવણું થઇ શકે તેવા ડી.ડી./પે ઓર્ડર “મ્‍યુનિસિપલ કમિશ્‍નર, વડોદરા” ના નામનો આપવાનો રહેશે અથવા POS થી ચુકવણુ કરી
+		શકાશે.
+		<br>૨. મકાનની કુલ કિંમતની ઓછામાં ઓછી ૨૦% રકમ ડ્રો માં સફળ થયા બાદ વડોદરા મ્‍યુનિસિપલ કોર્પોરેશનમાં અરજદારે ત્રણ
+		માસમાં ભરવાની રહેશે. ત્‍યારબાદ બાકી રહેતી ૮૦% રકમના એક સરખા દસ (૧૦) હપ્તા કરી પઝેશન સુધીના સમયગાળામાં સરખા માસિક
+		અંતરે જમા કરાવવાની રહેશે તે ઉપરાંત છેલ્લા હપ્તા સાથે મેન્‍ટેનન્‍સ ડીપોઝીટ તરીકે ૫૦,૦૦૦ તથા અન્‍ય લગત, જો હોય તો,
+		ચાર્જીસ પણ ભરપાઇ કરવાના રહેશે. સમયસર નાણાં જમા નહીં કરાવવામાં આવે તો મકાન નોટીસ આપ્યા વગર રદ કરવામાં આવશે ઉપરાંત
+		ડિપોઝીટની રકમ સિવાયની રકમ જ પરત કરવામાં આવશે તેમજ આ રકમ પર કોઈ વ્યાજ આપવામાં આવશે નહી.
+		<br>૩. આવાસ યોજનાનું બાંધકામ પૂર્ણ થયા બાદ મકાનોની ફાળવણી થાય ત્યાં સુધી અરજદારે મકાનની નક્કી થયેલ પૂરેપૂરી
+		કિંમત ભરપાઇ કરવાની રહેશે. ત્‍યારબાદ જ અરજદારને ફાળવવામાં આવેલા મકાનનો કબજો સોંપવામાં આવશે.
 
 	</div>
 	<div class="modal-footer customthead">

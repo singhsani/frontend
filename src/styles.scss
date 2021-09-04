@@ -1135,6 +1135,10 @@ textarea.gujInputCls {margin-bottom: 0;}
 .moduleList .mat-tab-label-active .VENDOR_REG,
 .moduleList .mat-tab-label:not(.mat-tab-disabled):focus .VENDOR_REG{background:url('assets/icons/professional-tax-h.svg') !important;}
 
+.CONTRACTOR_REGISTRATION  {background:url('assets/icons/professional-tax.svg') !important;}
+.moduleList .mat-tab-label-active .CONTRACTOR_REGISTRATION,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .CONTRACTOR_REGISTRATION{background:url('assets/icons/professional-tax-h.svg') !important;}
+
 
 .moduleList .mat-tab-label:not(.mat-tab-disabled):focus .moduleName {color: #fff;}
 

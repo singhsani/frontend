@@ -1,3 +1,164 @@
-<p>
-  contractor-regsitration works!
-</p>
+<div class="pb-3">
+  <app-title-bar [title]="'Contractor Registration'">
+    <!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
+      Patch Value
+    </button> -->
+  </app-title-bar>
+  <mat-card class="formClass cardBorder">
+
+    <form [formGroup]="contractorRegistrationForm">
+      <mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+
+        <!-- Tab 1 Starts -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div>{{'Firm Detail'}}</div>
+          </ng-template>
+
+          <div class="row">
+            <div class="col-md-12">
+              <h2 style="margin-left: -16px;"><b>{{'Details of Firm'}}</b></h2>
+            </div>
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required
+                maxlength="100" placeholder="{{'applicant_first_name' | translate: translateKey}}"
+                formControlName="applicantFirstName" class="capitalCase">
+              <control-messages [control]="contractorRegistrationForm.get('applicantFirstName')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required
+                maxlength="100" placeholder="{{'applicant_middle_name' | translate: translateKey}}"
+                formControlName="applicantMiddleName" class="capitalCase">
+              <control-messages [control]="contractorRegistrationForm.get('applicantMiddleName')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required
+                maxlength="100" placeholder="{{'applicant_last_name' | translate: translateKey}}"
+                formControlName="applicantLastName" class="capitalCase">
+              <control-messages [control]="contractorRegistrationForm.get('applicantLastName')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" OnlyNumber maxlength="10"
+                placeholder="{{'applicant_mobile_number' | translate: translateKey}}"
+                formControlName="applicantMobileNumber">
+              <control-messages [control]="contractorRegistrationForm.get('applicantMobileNumber')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" required placeholder="{{'applicant_email' | translate: translateKey}}"
+                maxlength="50" formControlName="applicantEmail">
+              <control-messages [control]="contractorRegistrationForm.get('applicantEmail')">
+              </control-messages>
+            </mat-form-field>
+
+            <div class="row">
+              <h2><b>{{'Address of the Residence'}}</b></h2>
+              <app-address #residenceAddress [requiredFeilds]="true"
+                [addressFormGroup]="contractorRegistrationForm.get('residenceAddress')">
+              </app-address>
+            </div>
+
+            <div class="col-md-12 ngSelect">
+              <ng-select formControlName="hasFirmOrPartnership">
+                <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
+                </ng-option>
+              </ng-select>
+              <control-messages [control]="contractorRegistrationForm.get('hasFirmOrPartnership')">
+              </control-messages>
+            </div>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required
+                maxlength="100" placeholder="{{'power_of_attorney_name' | translate: translateKey}}"
+                formControlName="powerOfAttorneyName" class="capitalCase">
+              <control-messages [control]="contractorRegistrationForm.get('powerOfAttorneyName')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput autocomplete="off" minlength="9" maxlength="18" OnlyNumber formControlName="accountNumber"
+                type="tel" placeholder="{{'bank_account_no' | translate: translateKey}}" required>
+              <control-messages [control]="contractorRegistrationForm.get('accountNumber')"></control-messages>
+            </mat-form-field>
+
+            <div class="col-md-4 ngSelect" formGroupName="bankName">
+              <ng-select placeholder="{{'bank_name' | translate: translateKey}} *" formControlName="code">
+                <ng-option *ngFor="let bank of bankNameArray" [value]="bank.code">{{bank.name}}</ng-option>
+              </ng-select>
+              <control-messages [control]="contractorRegistrationForm.get('bankName').get('code')"></control-messages>
+            </div>
+
+            <mat-form-field class="col-md-4">
+              <input matInput appValidationFields validationFieldsType="onlyNameWithSpace" autocomplete="off"
+                maxlength="100" formControlName="branchName" type="text"
+                placeholder="{{'branch_name' | translate: translateKey}}" required>
+              <control-messages [control]="contractorRegistrationForm.get('branchName')"></control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-8">
+              <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required
+                maxlength="100" placeholder="{{'firm_name' | translate: translateKey}}" formControlName="firmName"
+                class="capitalCase">
+              <control-messages [control]="contractorRegistrationForm.get('firmName')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" OnlyNumber maxlength="10"
+                placeholder="{{'firm_mobile_number' | translate: translateKey}}" formControlName="firmMobileNumber">
+              <control-messages [control]="contractorRegistrationForm.get('firmMobileNumber')">
+              </control-messages>
+            </mat-form-field>
+
+            <div class="row">
+              <h2><b>{{'Address of the Firm'}}</b></h2>
+              <app-address #firmAddress [requiredFeilds]="true"
+                [addressFormGroup]="contractorRegistrationForm.get('firmAddress')">
+              </app-address>
+            </div>
+
+            <div class="fotButtonBar clearfix">
+              <div class="col-sm-12 col-md-12">
+                <button class="pull-right" mat-raised-button color="primary" (click)="tabIndex = 1">{{'Next'}}</button>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <!-- Tab 1 Finish -->
+        <!-- Tab 2 start -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div>{{'Tab 2'}}</div>
+          </ng-template>
+
+          <div class="row"></div>
+        </mat-tab>
+        <!-- Tab 2 Finish -->
+        <!-- Tab 3 start -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div>{{'Tab 3'}}</div>
+          </ng-template>
+          <div class="row"></div>
+        </mat-tab>
+        <!-- Tab 3 Finish -->
+        <!-- Tab 4 start -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div>{{'Tab 4'}}</div>
+          </ng-template>
+          <div class="row"></div>
+        </mat-tab>
+        <!-- Tab 4 Finish -->
+
+      </mat-tab-group>
+    </form>
+  </mat-card>
+</div>
