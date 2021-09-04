@@ -41,10 +41,10 @@ export class ContractorRegsitrationComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private toastr: ToastrService,
+
     private commonService: CommonService,
     private activatedRoute: ActivatedRoute,
-    private alertService: AlertService,
+
     private router: Router,
     private formService: FormsActionsService,
     private modalService: BsModalService,
@@ -153,7 +153,7 @@ export class ContractorRegsitrationComponent implements OnInit {
       this.showButtons = true;
       this.contractorRegistrationForm.disable();
       this.setServiceDetailsOnInit(res);
-      //	this.sortedList.push(res);
+     
     });
   }
 
@@ -254,9 +254,7 @@ export class ContractorRegsitrationComponent implements OnInit {
 
   onSubmit() {
 
-    // this.engineer.vendorSaveFormData(this.vendorRegistrationForm.getRawValue()).subscribe(res => {
-    //   this.commonService.openAlert(" Successful", "", "success", `</b>`);
-    // })
+    
     this.contractorRegistrationForm.get('serviceFormId').setValue(this.formId);
 
     this.mandatoryFileCheck(this.contractorRegistrationForm.get('serviceFormId').value, this.attachmentList).then(data => {
