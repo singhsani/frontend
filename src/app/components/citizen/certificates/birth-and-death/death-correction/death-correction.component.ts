@@ -183,6 +183,7 @@ export class DeathCorrectionComponent implements OnInit {
 			this.deathCorrectionForm.patchValue(res);
 			// this.documentList(res, this.uploadFileArray);
 
+			this.clearFormArrray(<FormArray>this.deathCorrectionForm.get('serviceDetail').get('serviceUploadDocuments'));
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
 				(<FormArray>this.deathCorrectionForm.controls.serviceDetail.get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
 			});
@@ -235,7 +236,7 @@ export class DeathCorrectionComponent implements OnInit {
 		}
 
 		else{
-			this.commonService.openAlert("Invalid Data", "Data is not Valid!!!", "warning");	
+			this.commonService.openAlert("Invalid Data", "Data is not Valid!!!", "warning");
 		}
 	}
 	/**
@@ -446,5 +447,17 @@ export class DeathCorrectionComponent implements OnInit {
 				})
 			}
 		});
+	}
+
+
+/**
+	* Method is rquired for document array Null
+	*/
+	clearFormArrray(formArray) {
+		{
+			while (formArray.length !== 0) {
+				formArray.removeAt(0)
+			}
+		}
 	}
 }
