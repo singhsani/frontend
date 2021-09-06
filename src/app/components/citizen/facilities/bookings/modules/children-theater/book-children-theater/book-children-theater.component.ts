@@ -372,8 +372,6 @@ export class BookChildrenTheaterComponent implements OnInit {
         this.childrenTheaterApplicationForm.get('confirmEmailId').setValue(resp.data.email);
         this.childrenTheaterApplicationForm.get('confirmMobile').setValue(resp.data.cellNo);
         this.childrenTheaterApplicationForm.get('accountHolderName').setValue(resp.data.firstName + ' ' + resp.data.lastName);
-        
-        debugger
     },
       err => {
         this.toster.error("Server Error");
