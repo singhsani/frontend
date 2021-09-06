@@ -122,9 +122,11 @@ export class TransferPropertyTableComponent implements OnInit {
             }
             this.resultsLength=0;
           } else {
-            this.dataSource = new MatTableDataSource(data.body.data);                   
-            this.totalCount = data.body.totalRecords;
-            this.resultsLength= data.body.totalRecords;
+            this.dataSource = new MatTableDataSource(data.body.data); 
+            this.totalCount = data.body.data.length;
+            this.resultsLength = data.body.data.length
+                        // this.totalCount = data.body.totalRecords;
+            // this.resultsLength= data.body.totalRecords;
           }    
         }          
       },

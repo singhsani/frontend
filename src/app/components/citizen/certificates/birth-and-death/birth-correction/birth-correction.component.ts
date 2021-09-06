@@ -341,8 +341,8 @@ export class BirthCorrectionComponent implements OnInit {
 		// this.birthCorrectionForm.get('motherLastNameGuj').setValue(data.motherLastNameGuj);
 		this.birthCorrectionForm.get('refNumber').setValue(this.regStatusForm.get('registrationNumber').value)
 		this.birthCorrectionForm.get('typeOfCorrection').get('code').setValue(this.regStatusForm.get('typeOfCorrection').get('code').value);
-		this.newgnDateconvert('birthDate', this.birthCorrectionForm.get('birthDate').value);
-		this.newgnDateconvert('registrationDate', this.birthCorrectionForm.get('registrationDate').value);
+		// this.newgnDateconvert('birthDate', this.birthCorrectionForm.get('birthDate').value);
+		// this.newgnDateconvert('registrationDate', this.birthCorrectionForm.get('registrationDate').value);
 		
 
 		//let tempdate = new Date(this.birthCorrectionForm.get('birthDate').value);

@@ -12,6 +12,7 @@ import * as moment from 'moment';
 import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { ManageRoutes } from 'src/app/config/routes-conf';
+import { CitizenConfig } from '../../citizen-config';
 
 @Component({
   selector: 'app-vendor-registration',
@@ -22,6 +23,8 @@ export class VendorRegistrationComponent implements OnInit {
 
   @ViewChild('officeAddr') officeAddrComponent: any;
   @ViewChild('resAddr') resAddrComponent: any;
+
+  public affordableHousingConfiguration: CitizenConfig = new CitizenConfig();
 
   actionBarKey: string = 'adminActionBar';
   listOfItemMaterialSupplier: FormArray;
@@ -44,7 +47,7 @@ export class VendorRegistrationComponent implements OnInit {
   modalJsonRef: BsModalRef;
 
   formId: number;
-  showButtons: boolean = false;
+  showButtons: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -100,7 +103,7 @@ export class VendorRegistrationComponent implements OnInit {
     this.formService.getFormData(id).subscribe(res => {
       console.log("tresr", res)
       this.vendorRegistrationForm.patchValue(res);
-      this.showButtons = true;
+      this.showButtons = false;
       this.vendorRegistrationForm.disable();
       this.setServiceDetailsOnInit(res);
       //	this.sortedList.push(res);
@@ -135,11 +138,11 @@ export class VendorRegistrationComponent implements OnInit {
       panNo: [null, [Validators.required, ValidationService.panValidator]],
       tanNo: [null, [Validators.required, ValidationService.panValidator]],
       officeContactNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
-      officeFaxNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      officeFaxNumber: [null, [ValidationService.mobileNumberValidation]],
       officeEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 
       resContactNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
-      resFaxNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      resFaxNumber: [null, [ValidationService.mobileNumberValidation]],
       resEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 
       factoryAddress: this.fb.group(this.officeAddrComponent.addressControls()),
@@ -234,9 +237,9 @@ export class VendorRegistrationComponent implements OnInit {
     this.engineer.getAllDocuments().subscribe(res => {
       this.attachmentList = _.cloneDeep(res);
 
-      for (let file of this.attachmentList) {
-        file['mandatory'] = false;
-      }
+      // for (let file of this.attachmentList) {
+      //   file['mandatory'] = false;
+      // }
     });
   }
 
@@ -344,8 +347,39 @@ export class VendorRegistrationComponent implements OnInit {
     this.modalJsonRef.hide();
   }
 
-
   onSubmit() {
+
+    if (this.vendorRegistrationForm.invalid) {
+      //this.commonService.prrintInvalidForm(this.affordableHousingForm);
+      let count = this.affordableHousingConfiguration.getAllErrors(this.vendorRegistrationForm);
+
+      this.commonService.openAlert("Warning", this.affordableHousingConfiguration.ALL_FEILD_REQUIRED_MESSAGE, "warning", "", cb => {
+        switch (true) {
+          case (count <= 27):
+            this.tabIndex = 0;
+            break;
+          case (count <= 48):
+            this.tabIndex = 1;
+            break;
+          case (count <= 58):
+            this.tabIndex = 2;
+            break;
+          case (count <= 68):
+            this.tabIndex = 4;
+            break;
+          default:
+            this.tabIndex = 0;
+        }
+
+      });
+      return;
+    }
+    /* Normal submit*/
+    this.onSubmitUsingAPI();
+
+  }
+
+  onSubmitUsingAPI() {
 
     // this.engineer.vendorSaveFormData(this.vendorRegistrationForm.getRawValue()).subscribe(res => {
     //   this.commonService.openAlert(" Successful", "", "success", `</b>`);

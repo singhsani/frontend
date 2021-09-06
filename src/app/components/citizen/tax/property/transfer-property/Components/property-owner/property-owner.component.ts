@@ -180,4 +180,8 @@ export class PropertyOwnerComponent implements OnInit {
   onBack() {
     this.transferPropertyDataSharingService.updateDataSourceMoveStepper(0);
   }
+
+  editOwner(item) {
+    this.ownerModel = Object.assign({}, item);
+  }
 }
