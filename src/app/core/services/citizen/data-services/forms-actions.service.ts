@@ -518,4 +518,9 @@ export class FormsActionsService {
 		this.requestURL = `${url}?id=${appId}`;
 		return this.http.get(this.requestURL,'printReceipt');
 	}
+
+	liglePrint(id: any){
+		this.requestURL = `api/form/marriageReg/legalprint/${id}`;
+		return this.http.get(this.requestURL,'printReceipt');
+	}
 }
