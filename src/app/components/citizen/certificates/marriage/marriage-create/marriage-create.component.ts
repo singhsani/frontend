@@ -1707,7 +1707,6 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     liglePrint(){
         this.formService.liglePrint(this.formId).subscribe(res => {
             console.log(res);
-            debugger
             let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
 				sectionToPrintReceipt.innerHTML = res;
 				setTimeout(() => {
