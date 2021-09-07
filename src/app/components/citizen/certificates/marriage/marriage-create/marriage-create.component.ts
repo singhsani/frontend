@@ -1705,7 +1705,6 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     // }
 
     liglePrint(){
-        debugger
         this.formService.liglePrint(this.formId).subscribe(res => {
             console.log(res);
             debugger
