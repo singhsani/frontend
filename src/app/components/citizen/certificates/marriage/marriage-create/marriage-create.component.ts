@@ -356,7 +356,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         "groomVisaTo": null,
         "groomSocialSecurityNumber": null,
         "groomEligibility": null,
-        "groomNriStatus":null,
+        "groomNriStatus": null,
         "groomDesignation": null,
         "groomPhoneNumber": null,
         "groomEmail": null,
@@ -366,7 +366,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         "groomCompanyAddress": null,
         "isBrideVisa": false,
         "bridePassportNumber": null,
-        "brideNriStatus":null,
+        "brideNriStatus": null,
         "brideCountryName": "",
         "brideVisaNumber": null,
         "brideVisaFrom": null,
@@ -619,7 +619,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             groomParentsMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             groomParentsLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             groomParentsBirthDate: [null, Validators.required],
-            groomParentsAge : [null],
+            groomParentsAge: [null],
             groomParentsAadharNumber: ['', Validators.maxLength(12)],
             groomParentsAddress: this.fb.group(this.addrComponent.addressControls()),
             groomParentsAddressResidence: this.fb.group(this.addrComponent.addressControls()),
@@ -632,7 +632,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             brideParentsMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             brideParentsLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             brideParentsBirthDate: [null, Validators.required],
-            brideParentsAge : [null],
+            brideParentsAge: [null],
             brideParentsAadharNumber: ['', Validators.maxLength(12)],
             brideParentsAddress: this.fb.group(this.addrComponent.addressControls()),
             brideParentsAddressResidence: this.fb.group(this.addrComponent.addressControls()),
@@ -645,7 +645,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             priestMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             priestLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             priestBirthDate: [null, Validators.required],
-            priestAge : [null],
+            priestAge: [null],
             priestAadharNumber: ['', Validators.maxLength(12)],
             priestAddress: this.fb.group(this.addrComponent.addressControls()),
             priestAddressResidence: this.fb.group(this.addrComponent.addressControls()),
@@ -658,7 +658,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             firstWitnessMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             firstWitnessLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             firstWitnessBirthDate: [null, Validators.required],
-            firstWitnessAge : [null],
+            firstWitnessAge: [null],
             firstWitnessAadharNumber: ['', Validators.maxLength(12)],
             firstWitnessAddress: this.fb.group(this.addrComponent.addressControls()),
 
@@ -667,7 +667,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             secondWitnessMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             secondWitnessLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             secondWitnessBirthDate: [null, Validators.required],
-            secondWitnessAge : [null],
+            secondWitnessAge: [null],
             secondWitnessAadharNumber: ['', Validators.maxLength(12)],
             secondWitnessAddress: this.fb.group(this.addrComponent.addressControls()),
 
@@ -714,7 +714,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
             // for NRI groom
             isGroomVisa: null,
-            groomNriStatus : ['', [Validators.maxLength(50)]],
+            groomNriStatus: ['', [Validators.maxLength(50)]],
             groomPassportNumber: [null, [Validators.maxLength(9)]],
             groomCountryName: [''],
             groomVisaNumber: ['', [Validators.maxLength(9)]],
@@ -732,7 +732,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
             // for NRI bride
             isBrideVisa: [false],
-            brideNriStatus : ['', [Validators.maxLength(50)]],
+            brideNriStatus: ['', [Validators.maxLength(50)]],
             bridePassportNumber: ['', [Validators.maxLength(9)]],
             brideCountryName: [''],
             brideVisaNumber: ['', [Validators.maxLength(9)]],
@@ -761,7 +761,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             groomNriFirstWitnessAddress: [null, Validators.maxLength(500)],
             groomNriFirstWitnessAddressGuj: [null, Validators.maxLength(1500)],
             groomNriFirstWitnessBirthDate: [null],
-            groomNriFirstWitnessAge : [null],
+            groomNriFirstWitnessAge: [null],
 
             groomNriSecondWitnessFirstName: [null, Validators.maxLength(50)],
             groomNriSecondWitnessMiddlName: [null, Validators.maxLength(50)],
@@ -772,7 +772,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             groomNriSecondWitnessAddress: [null, Validators.maxLength(500)],
             groomNriSecondWitnessAddressGuj: [null, Validators.maxLength(1500)],
             groomNriSecondWitnessBirthDate: [null],
-            groomNriSecondWitnessAge : [null],
+            groomNriSecondWitnessAge: [null],
 
             brideNriFirstWitnessFirstName: [null, Validators.maxLength(50)],
             brideNriFirstWitnessMiddlName: [null, Validators.maxLength(50)],
@@ -783,7 +783,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             brideNriFirstWitnessAddress: [null, Validators.maxLength(500)],
             brideNriFirstWitnessAddressGuj: [null, Validators.maxLength(1500)],
             brideNriFirstWitnessBirthDate: [null],
-            brideNriFirstWitnessAge:[null],
+            brideNriFirstWitnessAge: [null],
 
             brideNriSecondWitnessFirstName: [null, Validators.maxLength(50)],
             brideNriSecondWitnessMiddlName: [null, Validators.maxLength(50)],
@@ -794,18 +794,18 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             brideNriSecondWitnessAddress: [null, Validators.maxLength(500)],
             brideNriSecondWitnessAddressGuj: [null, Validators.maxLength(1500)],
             brideNriSecondWitnessBirthDate: [null],
-            brideNriSecondWitnessAge : [null],
-            groomDays : [null, Validators.max(365)],
-            brideDays : [null, Validators.max(365)]
+            brideNriSecondWitnessAge: [null],
+            groomDays: [null, Validators.max(365)],
+            brideDays: [null, Validators.max(365)]
 
         });
 
     }
 
     handleOnSaveAndNext(res) {
-        
-		this.changeDocument();
-	}
+
+        this.changeDocument();
+    }
 
     /**
      * This method is use to patch Value in marriage form
@@ -911,8 +911,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
     }
 
-    disableAddress(){
-       
+    disableAddress() {
+
         this.marriageFormGroup.get('marriagePlace').get('country').setValue('INDIA');
         this.marriageFormGroup.get('marriagePlace').get('state').setValue('GUJARAT');
         this.marriageFormGroup.get('marriagePlace').get('city').setValue('Vadodara');
@@ -920,7 +920,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         this.marriageFormGroup.get('marriagePlace').get('state').disable();
         this.marriageFormGroup.get('marriagePlace').get('city').disable();
     }
-    
+
 
     ngOnChanges() {
         this.CD.detectChanges();
@@ -980,7 +980,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
                 //display days and years
                 let mday = moment(this.marriageFormGroup.get("marriageDate").value, "YYYY-MM-DD");
-                
+
                 if (this.marriageFormGroup.get("groomBirthDate").value) {
                     let bday = moment(this.marriageFormGroup.get("groomBirthDate").value, "YYYY-MM-DD");
                     this.groomage = mday.diff(bday, 'years', false);
@@ -1043,15 +1043,15 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             return obj.code === resCode;
         }), 'gujName');
     }
-    
-    parentAgeBride(date: string,filed : string) {
+
+    parentAgeBride(date: string, filed: string) {
         let days = 0;
         let year = 0;
         if (this.marriageFormGroup.get(date).value != null) {
             let bday = moment(this.marriageFormGroup.get(date).value, "YYYY-MM-DD");
             year = moment().diff(bday, 'years', false);
             days = moment().diff(bday.add(year, 'years'), 'days', false);
-            if(filed != ''){
+            if (filed != '') {
                 this.marriageFormGroup.get(filed).setValue(year + " Year " + days + " Days");
             }
             return [year + " Year " + days + " Days"]
@@ -1065,14 +1065,14 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * This method is calculate age.
      * @param date : parents birth date
      */
-    parentAge(date: string,filed : string) {
+    parentAge(date: string, filed: string) {
         let days = 0;
         let year = 0;
         if (this.marriageFormGroup.get(date).value != null) {
             let bday = moment(this.marriageFormGroup.get(date).value, "YYYY-MM-DD");
             year = moment().diff(bday, 'years', false);
             days = moment().diff(bday.add(year, 'years'), 'days', false);
-            if(filed != ''){
+            if (filed != '') {
                 this.marriageFormGroup.get(filed).setValue(year + " Year " + days + " Days");
             }
             return [year + " Year " + days + " Days"]
@@ -1275,48 +1275,48 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         } else {
             this[varName] = null;
         }
-         
-        
-        
+
+
+
     }
 
     changeDocument() {
-       
-        
+
+
         let marriageTimeGroomStatus = this.marriageFormGroup.get('marriageTimeGroomStatus').get('code').value;
         let marriageTimeBrideStatus = this.marriageFormGroup.get('marriageTimeBrideStatus').get('code').value;
-        
+
         _.forEach(this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
             if (value['documentIdentifier'] === 'VALID_DIVORCE_PAPER' || value['documentIdentifier'] == "DEATH_CERTIFICATE") {
                 value['mandatory'] = false;
-            }   
+            }
             if (marriageTimeGroomStatus == "DIVORCED" || marriageTimeBrideStatus == 'DIVORCED') {
-                    //  devorce certi true
-                    if (value['documentIdentifier'] === 'VALID_DIVORCE_PAPER') {
-                        value['mandatory'] = true;
-                        this.uploadFilesArray.push({
-                            'labelName': value.documentLabelEn,
-                            'fieldIdentifier': value.fieldIdentifier,
-                            'documentIdentifier': value.documentIdentifier
-                        });
-                    }
-                }   
-              if (marriageTimeBrideStatus == "WIDOW" || marriageTimeGroomStatus == 'WIDOWER') {
-                    // both true
-                    if (value['documentIdentifier'] == "DEATH_CERTIFICATE") {
-                        value['mandatory'] = true;
-                        this.uploadFilesArray.push({
-                            'labelName': value.documentLabelEn,
-                            'fieldIdentifier': value.fieldIdentifier,
-                            'documentIdentifier': value.documentIdentifier
-                        });
-                    }
-
+                //  devorce certi true
+                if (value['documentIdentifier'] === 'VALID_DIVORCE_PAPER') {
+                    value['mandatory'] = true;
+                    this.uploadFilesArray.push({
+                        'labelName': value.documentLabelEn,
+                        'fieldIdentifier': value.fieldIdentifier,
+                        'documentIdentifier': value.documentIdentifier
+                    });
+                }
+            }
+            if (marriageTimeBrideStatus == "WIDOW" || marriageTimeGroomStatus == 'WIDOWER') {
+                // both true
+                if (value['documentIdentifier'] == "DEATH_CERTIFICATE") {
+                    value['mandatory'] = true;
+                    this.uploadFilesArray.push({
+                        'labelName': value.documentLabelEn,
+                        'fieldIdentifier': value.fieldIdentifier,
+                        'documentIdentifier': value.documentIdentifier
+                    });
                 }
 
-                //this.marriageFormGroup.get('serviceDetail').patchValue({'serviceUploadDocuments': this.uploadFilesArray});
-						//this.requiredDocumentList();
-           
+            }
+
+            //this.marriageFormGroup.get('serviceDetail').patchValue({'serviceUploadDocuments': this.uploadFilesArray});
+            //this.requiredDocumentList();
+
         });
     }
 
@@ -1329,11 +1329,11 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     }
 
     listOfDependentAtt: any = [];
-	/**
-	 * Method is create required document array
-	 */
+    /**
+     * Method is create required document array
+     */
     requiredDocumentList() {
-    
+
         this.uploadFilesArray = [];
 
         let organizationCategory = this.marriageFormGroup.get('groomReligion').value.code;
@@ -1345,7 +1345,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         this.listOfDependentAtt.push(brideVisa);
 
         _.forEach(this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
-        
+
             if (value.dependentFieldName == null && value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
                 this.uploadFilesArray.push({
                     'labelName': value.documentLabelEn,
@@ -1384,7 +1384,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         });
 
         // let groomreligionChange = this.marriageFormGroup.controls.groomReligion.get("code").value;
-                // let bridereligionChange = this.marriageFormGroup.controls.brideReligion.get("code").value;
+        // let bridereligionChange = this.marriageFormGroup.controls.brideReligion.get("code").value;
 
         // let groomVisa = this.marriageFormGroup.get("isGroomVisa").value;
         // if (groomVisa == null) {
@@ -1456,12 +1456,12 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         this.requiredDocumentList();
     }
 
-    onChangeWitnessNameValidation(event,firstNameWitness){
-		if(event.target.value === "" ||  this.marriageFormGroup.get(firstNameWitness).invalid){
+    onChangeWitnessNameValidation(event, firstNameWitness) {
+        if (event.target.value === "" || this.marriageFormGroup.get(firstNameWitness).invalid) {
             this.marriageFormGroup.get(firstNameWitness).setValue(null);
-            this.commonService.openAlert("Warning","Please fill all the field correctly","warning");
-		}
-	}
+            this.commonService.openAlert("Warning", "Please fill all the field correctly", "warning");
+        }
+    }
 
     /**
      * This method is check religion is same or not.
@@ -1506,13 +1506,13 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * This method is use reset value. 
      */
     changeReset(controlName: string) {
-       
+
         this.marriageFormGroup.get(controlName).reset();
-       
-        if(this.marriageFormGroup.get('applicantRelation').get('code').valid){
-            if(this.marriageFormGroup.get('applicantRelation').get('code').value == 'MR_OTHER_APPLICANT_RELATION'){
+
+        if (this.marriageFormGroup.get('applicantRelation').get('code').valid) {
+            if (this.marriageFormGroup.get('applicantRelation').get('code').value == 'MR_OTHER_APPLICANT_RELATION') {
                 this.marriageFormGroup.get('applicantRelationOther').setValidators([Validators.required]);
-            }else{
+            } else {
                 this.marriageFormGroup.get('applicantRelationOther').clearValidators();
             }
             this.marriageFormGroup.get('applicantRelationOther').updateValueAndValidity();
@@ -1704,6 +1704,19 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     //     this.marriageFormGroup.get('secondWitnessAddress').get('addressType').setValue('SECOND_WITNESS_ADDRESS');
     // }
 
-    
+    liglePrint() {
+        this.formService.liglePrint(this.formId).subscribe(res => {
+            console.log(res);
+            let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
+            sectionToPrintReceipt.innerHTML = res;
+            setTimeout(() => {
+                window.print();
+            }, 300);
+        },
+            err => {
+                this.commonService.openAlert('Error!', err.error[0].message, 'error');
+            }
+        )
+    }
 
 }
