@@ -132,6 +132,7 @@ export class BookStadiumComponent implements OnInit {
      * @param date - selected start date
      */
     onDateChange(date){
+        this.Dates = [];
         let futureMonth = moment(date).add(3, 'month');
         this.maxEndDate = moment(futureMonth).format("YYYY-MM-DD");
     }
@@ -260,6 +261,7 @@ export class BookStadiumComponent implements OnInit {
      * Method is used to submit stadium application form.
      */
     submitStadiumApplication(): void {
+        debugger
         let errCount = this.bookingUtils.getAllErrors(this.stadiumApplicationForm);
         if (this.stadiumApplicationForm.invalid) {
             this.handleErrorsOnSubmit(errCount);
@@ -297,6 +299,7 @@ export class BookStadiumComponent implements OnInit {
                     })
                 }
             }, (err) => {
+                debugger
                 this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
             })
             return;
