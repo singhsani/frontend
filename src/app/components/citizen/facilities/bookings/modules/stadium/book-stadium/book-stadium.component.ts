@@ -261,8 +261,7 @@ export class BookStadiumComponent implements OnInit {
      * Method is used to submit stadium application form.
      */
     submitStadiumApplication(): void {
-        debugger
-        let errCount = this.bookingUtils.getAllErrors(this.stadiumApplicationForm);
+      let errCount = this.bookingUtils.getAllErrors(this.stadiumApplicationForm);
         if (this.stadiumApplicationForm.invalid) {
             this.handleErrorsOnSubmit(errCount);
             this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
@@ -299,8 +298,7 @@ export class BookStadiumComponent implements OnInit {
                     })
                 }
             }, (err) => {
-                debugger
-                this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+               this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
             })
             return;
         }
