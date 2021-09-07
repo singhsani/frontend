@@ -73,7 +73,7 @@ export class BookChildrenTheaterComponent implements OnInit {
     startMinDate: Date = moment(new Date()).add(7, 'day').toDate();
     endMinDate: Date = moment(new Date()).add(7, 'day').toDate();
     endMaxDate:any = new Date();;
-
+    endDate:any; 
 
     /**
      * ngx-bootstrap models.
@@ -104,7 +104,7 @@ export class BookChildrenTheaterComponent implements OnInit {
         this.createCTApplicationForm();
         this.getLookUpData();
         this.getResourceList();
-
+        this.maxSlotDate();
         /**
 		 * Subscribe start date changes
 		 */
@@ -131,6 +131,7 @@ export class BookChildrenTheaterComponent implements OnInit {
 	 * @param date get the selected date value
 	 */
 	onDateChange(date) {
+        this.Dates = []; 
         let futureMonth = moment(date).add(36, 'day');
         this.endMaxDate = moment(futureMonth).format("YYYY-MM-DD");
 	}
@@ -139,8 +140,12 @@ export class BookChildrenTheaterComponent implements OnInit {
      * Get All Resource List Of Stadium.
      */
     getResourceList() {
+        debugger
         this.bookingService.getResourceList().subscribe(resp => {
+            debugger
             this.CHILDREN_THEATERS = resp.data;
+            this.childrenTheaterSearchForm.get('code').setValue(resp.data[0].name);
+            this.childrenTheaterSearchForm.get('code').disable();
         })
     }
 
@@ -269,7 +274,8 @@ export class BookChildrenTheaterComponent implements OnInit {
 		    * Filter Object to get list of available dates.
 		    */
             let filterData = {
-                resourceName: this.childrenTheaterSearchForm.get('code').value,
+                resourceName : this.CHILDREN_THEATERS[0].code,
+                // resourceName: this.childrenTheaterSearchForm.get('code').value,
                 startDate: moment(this.childrenTheaterSearchForm.get('startDate').value).format("YYYY-MM-DD"),
                 endDate: moment(this.childrenTheaterSearchForm.get('endDate').value).format("YYYY-MM-DD"),
             }
@@ -280,6 +286,7 @@ export class BookChildrenTheaterComponent implements OnInit {
                 //console.log(resp);
                 this.filteredReponse = resp;
                 let temp = resp.data.scheduleList;
+                debugger
                 this.Dates = temp.sort((a, b) => {
                     if ((new Date(a.key).getTime()) >= (new Date(b.key).getTime())) {
                         return 1
@@ -377,5 +384,11 @@ export class BookChildrenTheaterComponent implements OnInit {
         this.toster.error("Server Error");
       });
   }
+
+  maxSlotDate(){
+   this.endDate =  moment(new Date()).add(90, 'day').toDate()
+  }
+
+ 
 
 }
