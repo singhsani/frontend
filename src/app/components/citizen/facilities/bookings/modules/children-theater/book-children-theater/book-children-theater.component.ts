@@ -140,9 +140,7 @@ export class BookChildrenTheaterComponent implements OnInit {
      * Get All Resource List Of Stadium.
      */
     getResourceList() {
-        debugger
-        this.bookingService.getResourceList().subscribe(resp => {
-            debugger
+      this.bookingService.getResourceList().subscribe(resp => {
             this.CHILDREN_THEATERS = resp.data;
             this.childrenTheaterSearchForm.get('code').setValue(resp.data[0].name);
             this.childrenTheaterSearchForm.get('code').disable();
@@ -286,7 +284,6 @@ export class BookChildrenTheaterComponent implements OnInit {
                 //console.log(resp);
                 this.filteredReponse = resp;
                 let temp = resp.data.scheduleList;
-                debugger
                 this.Dates = temp.sort((a, b) => {
                     if ((new Date(a.key).getTime()) >= (new Date(b.key).getTime())) {
                         return 1
