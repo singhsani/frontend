@@ -1687,6 +1687,13 @@
 					</div> -->
 				<!-- </div>  -->
 
+				<ng-container>
+					<div class= "col-md-12">
+					<button type="button" mat-raised-button color="primary" class="pull-right"
+					 (click)="liglePrint()">{{'ligle_print' | translate:translateKey}}</button>
+					</div>
+					</ng-container>
+
 				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray"
 					[form]="marriageFormGroup" (tabIndex)="onTabChange($event)"
 					(handleOnSaveAndNext)="handleOnSaveAndNext($event)" [stepInfo]="{step: 'final', next: 9, back: 7}" (handleErrors)="handleErrorsOnSubmit($event)">
@@ -1699,3 +1706,6 @@
 	<!-- End  form -->
 	<!-- {{marriageFormGroup.value | json}} -->
 </mat-card>
+
+<!-- this div is used for printing the receipt -->
+<div id="sectionToPrint"></div>

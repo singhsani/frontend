@@ -1704,6 +1704,21 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     //     this.marriageFormGroup.get('secondWitnessAddress').get('addressType').setValue('SECOND_WITNESS_ADDRESS');
     // }
 
-    
+    liglePrint(){
+        debugger
+        this.formService.liglePrint(this.formId).subscribe(res => {
+            console.log(res);
+            debugger
+            let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
+				sectionToPrintReceipt.innerHTML = res;
+				setTimeout(() => {
+					window.print();
+				}, 300);
+			},
+			err => {
+				this.commonService.openAlert('Error!', err.error[0].message, 'error');
+			}
+        )
+    }
 
 }
