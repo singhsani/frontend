@@ -509,8 +509,7 @@ export class MyBookingComponent implements OnInit {
 				this.getAllBooking();
 				//this.modalResRef = this.modalService.show(this.templateResponseModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }))
 				this.modalResRef.hide();
-				this.commonService.successAlert("Success", "SuccessFully Cancel", "success");
-
+				this.commonService.successAlert("Success", "Applied For Cancellation", "success");
 				if (this.bookingService.resourceType == 'amphiTheater') {
 					//This method is used to send SMS during cancellation request of booking
 					this.sendSms(this.refNumber, this.bookingConstant.CANCEL);
