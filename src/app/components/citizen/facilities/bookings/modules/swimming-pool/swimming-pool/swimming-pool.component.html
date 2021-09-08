@@ -59,7 +59,7 @@
 	</mat-card-content>
 	<div class="fotButtonBar">
 		<div class="col-sm-12 col-md-12 text-right">
-			<button mat-raised-button (click)="showDowlLoadFileTab = true; showSwimmingPoolForm= false;"
+			<button mat-raised-button (click)="showDowlLoadFileTab = true; showSwimmingPoolForm= false; saveFormData()"
 				color="primary">
 				<!-- <mat-icon>thumb_up_alt</mat-icon> -->
 				{{'proceed'| translate: translateKey}}
@@ -77,7 +77,7 @@
 			<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
 				<!-- Tab 1 Starts -->
-				<mat-tab #tab1 [disabled]='!tab1.isActive'>
+				<mat-tab #tab1 >
 					<ng-template mat-tab-label>
 						<div>{{'general_details' | translate:translateKey}}</div>
 					</ng-template>
@@ -166,7 +166,7 @@
 				<!-- Tab 1 Ends -->
 
 				<!-- Tab 2 for applicant details -->
-				<mat-tab #tab2 [disabled]='!tab2.isActive'>
+				<mat-tab #tab2 >
 
 					<ng-template mat-tab-label>
 						<div>{{'applicant_details' | translate:translateKey}}</div>
@@ -327,7 +327,7 @@
 
 
 				<!-- step Attachment Starts -->
-				<mat-tab #tab3 [disabled]='!tab3.isActive'>
+				<mat-tab #tab3 >
 					<ng-template mat-tab-label>
 						<div>{{'attachment' | translate: translateKey}}</div>
 					</ng-template>
