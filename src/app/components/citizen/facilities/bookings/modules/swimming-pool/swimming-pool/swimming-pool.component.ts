@@ -42,6 +42,7 @@ export class SwimmingPoolComponent implements OnInit {
   apiCode: string;
   public tabIndex: number = 0;
   disableDate = new Date(moment().subtract(1, 'd').format('YYYY-MM-DD'));
+  minBirthDate = new Date(1900, 0, 1);
   isFileUploaded1: boolean = false;
   isFileUploaded2: boolean = false;
   isFileUploaded3: boolean = false;
