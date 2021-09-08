@@ -741,7 +741,7 @@ export class MyBookingComponent implements OnInit {
 
 
   enableMoreAction(element){
-    if(element.status == this.bookingConstant.DRAFT || element.status == this.bookingConstant.EXPIRED || (element.resourceType == 'SWIMMING_POOL' && element.status == this.bookingConstant.APPROVED)){
+    if(element.status == this.bookingConstant.DRAFT || element.status == this.bookingConstant.EXPIRED || (element.resourceType == 'SWIMMING_POOL' && element.status == this.bookingConstant.APPROVED) || (element.status == this.bookingConstant.APPROVED && element.resourceType == 'STADIUM')){
         return false;
     }
         return true;

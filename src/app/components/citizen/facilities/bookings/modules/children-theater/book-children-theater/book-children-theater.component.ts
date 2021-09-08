@@ -386,6 +386,8 @@ export class BookChildrenTheaterComponent implements OnInit {
    this.endDate =  moment(new Date()).add(90, 'day').toDate()
   }
 
- 
+  onSameApplicantHolderName(event){
+    this.childrenTheaterApplicationForm.get('accountHolderName').setValue(event.value);
+  }
 
 }
