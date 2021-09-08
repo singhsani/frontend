@@ -98,7 +98,7 @@
       <div class="col-md-12" *ngFor="let outstandingDetail of outstandingDetailModel.occupierOutstandingDetails">
         <ul class="outstandig-detail">
           <li>
-            <h4>{{selectedItem.propertyNo}}-{{outstandingDetail.occupierCode}}-{{outstandingDetail.occupierName}}-{{outstandingDetail.outstandingAmount}}</h4>
+            <!-- <h4>{{selectedItem.propertyNo}}-{{outstandingDetail.occupierCode}}-{{outstandingDetail.occupierName}}-{{outstandingDetail.outstandingAmount}}</h4> -->
             <table class="custome-table">
               <thead>
                 <tr>
@@ -135,7 +135,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of serviceCharge.serviceChargeDetail">
+            <tr *ngFor="let item of feesDetails">
               <td>{{item.chargeName}}</td>
               <td>{{item.chargeAmount}}</td>
             </tr>

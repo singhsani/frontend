@@ -48,6 +48,9 @@ export class NoDueCertificateTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 	pageRecord = Constants.pageRecord; 
 	resultsLength: number = 0;	
+  feesDetails = [];
+  serviceFeesDetails: Array<any> = [];
+  NumberOfCopies :number = 1;
 
   constructor(
     private noDueCertificateDataSharingService: NoDueCertificateDataSharingService,
@@ -183,6 +186,9 @@ export class NoDueCertificateTableComponent implements OnInit {
           this.serviceCharge.occupierId = this.selectedItem.propertyOccupierId;
           this.serviceCharge.propertyBasicId = this.selectedItem.propertyBasicId;
           this.isShowPayMode = true;
+          this.serviceFeesDetails = data.body.data.serviceChargeDetail;
+          this.setOrUpdateFeesDetails(this.serviceFeesDetails,this.NumberOfCopies);
+
         }
         else {
           this.isShowPayMode = false;
@@ -232,6 +238,8 @@ export class NoDueCertificateTableComponent implements OnInit {
 
   onBlurNoofCopies(event) {
     this.serviceCharge.totalAmount = this.serviceCharge.totalAmountOriginal * event.target.value;
+    this.NumberOfCopies = event.target.value;
+    this.setOrUpdateFeesDetails(this.serviceFeesDetails,this.NumberOfCopies);
   }
 
   onDetailCLick() {
@@ -340,5 +348,14 @@ export class NoDueCertificateTableComponent implements OnInit {
     }
   }
 
+  setOrUpdateFeesDetails(serviceFeesDetails,NumberOfCopies){
+    this.feesDetails = [];
+    serviceFeesDetails.forEach((value) => {
+    let chargeName = value.chargeName;
+    let chargeAmount = value.chargeAmount *NumberOfCopies;
+    let obj = {'chargeName' : chargeName,'chargeAmount':chargeAmount}
+    this.feesDetails.push(obj);
+  });
+}
 
 }
