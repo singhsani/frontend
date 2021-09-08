@@ -202,7 +202,7 @@ export class CommonService {
     
     dueToOutstandingMessage(pNo) {
         // this.alertService.warning('Due to outstanding application can not proceed. Click ok button to make payment.',' ');
-        this.alertService.warning('Can not proceed further due to remaining outstanding payment. Please complete payment of remaining outstanding amount',' ');
+        this.alertService.warning('Can not proceed further due to remaining outstanding payment. Please complete payment of remaining outstanding amount.',' ');
         var subConfirm = this.alertService.getConfirm().subscribe(isConfirm => {
         if (isConfirm) {
             // this path is present in admin side so it can't reach there. 
