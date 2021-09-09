@@ -11,18 +11,22 @@
     <div class="row">
       <div class="col-md-6">
         <mat-form-field class="full-width-input" *ngIf="wardZoneLevel.length>=1">
-          <mat-select name="level1Id" (ngModelChange)="onChangedWardZone($event,2)" [(ngModel)]="searchModel.level1Id"
+          <mat-select required name="level1Id" (ngModelChange)="onChangedWardZone($event,2)" [(ngModel)]="searchModel.level1Id"
             #Level1Id="ngModel" [placeholder]="!wardZoneLevel[0]?'': wardZoneLevel[0].levelName">
             <mat-option *ngFor="let item of wardZoneLevel1List" [value]="item.parentWardzoneId">{{item.wardzoneName}}</mat-option>
           </mat-select>
+          <mat-error *ngIf="formDetail.form.get('level1Id') && formDetail.form.get('level1Id').invalid">
+            *Zone No. is required.</mat-error>
         </mat-form-field>
       </div>
       <div class="col-md-6">
         <mat-form-field class="full-width-input" *ngIf="wardZoneLevel.length>=1">
-          <mat-select name="level2Id" (ngModelChange)="onChangedWardZone($event,3)" [(ngModel)]="searchModel.level2Id"
+          <mat-select required name="level2Id" (ngModelChange)="onChangedWardZone($event,3)" [(ngModel)]="searchModel.level2Id"
             #Level2Id="ngModel" [placeholder]="!wardZoneLevel[1]?'': wardZoneLevel[1].levelName">
             <mat-option *ngFor="let item of wardZoneLevel2List" [value]="item.wardzoneId">{{item.wardzoneName}}</mat-option>
           </mat-select>
+          <mat-error *ngIf="formDetail.form.get('Level2Id') && formDetail.form.get('Level2Id').invalid">
+            *Ward No. is required.</mat-error>
         </mat-form-field>
       </div>
    
