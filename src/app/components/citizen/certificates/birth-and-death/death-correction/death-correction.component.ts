@@ -236,7 +236,7 @@ export class DeathCorrectionComponent implements OnInit {
 		}
 
 		else{
-			this.commonService.openAlert("Invalid Data", "Data is not Valid!!!", "warning");
+			this.commonService.openAlert("Warning", "No Data Found", "warning");
 		}
 	}
 	/**
@@ -253,6 +253,11 @@ export class DeathCorrectionComponent implements OnInit {
 			}
 			else if (err.error[0].code == 'INVALID_REQUEST') {
 				this.commonService.openAlert("Invalid Request", "Request Not Valid", "warning");
+			}
+			else {
+				if (err.error && err.error.length) {
+					this.commonService.openAlert("Warning", err.error[0].message, "warning");
+				}
 			}
 		});
 	}

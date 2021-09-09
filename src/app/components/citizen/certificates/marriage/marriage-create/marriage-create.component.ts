@@ -1705,8 +1705,23 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     // }
 
     liglePrint() {
-        this.formService.liglePrint(this.formId).subscribe(res => {
-            console.log(res);
+        let service = 'legalprint';
+        this.formService.getCertificatOrLiglePrint(service, this.formId).subscribe(res => {
+            let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
+            sectionToPrintReceipt.innerHTML = res;
+            setTimeout(() => {
+                window.print();
+            }, 300);
+        },
+            err => {
+                this.commonService.openAlert('Error!', err.error[0].message, 'error');
+            }
+        )
+    }
+
+    getCertificate(){
+        let certificate = 'certificate';
+        this.formService.getCertificatOrLiglePrint(certificate,this.formId).subscribe(res => {
             let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
             sectionToPrintReceipt.innerHTML = res;
             setTimeout(() => {
