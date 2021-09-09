@@ -360,10 +360,7 @@ export class BirthCorrectionComponent implements OnInit {
 			this.showApplicationSearch = false;
 		}
 		else{
-			// this.toster.error('Wrong Date');
-			// this.alertService.error("Invalide Data!!!");
-			// this.commonService.openAlert("Error");
-			this.commonService.openAlert("Invalid Data", "Data is not Valid!!!", "warning");
+			this.commonService.openAlert("Warning", "No Data Found", "warning");
 		}
 
 	}
