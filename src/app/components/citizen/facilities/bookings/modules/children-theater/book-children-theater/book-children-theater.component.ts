@@ -256,7 +256,8 @@ export class BookChildrenTheaterComponent implements OnInit {
                     })
                 }
             }, (err) => {
-                this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+                // this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+                this.commonService.openAlert("Warning!", err.error[0].message, "warning");
             })
             return;
         }
