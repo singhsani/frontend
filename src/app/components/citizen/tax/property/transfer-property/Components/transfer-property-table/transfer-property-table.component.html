@@ -43,9 +43,9 @@
 <mat-card class="col-md-12 mt-3" *ngIf="isShowDetail">
     <form #formDetail="ngForm" (ngSubmit)="onEnterClick(formDetail)">
   <div class="row margin-top-20">
-    <div class="col-md-2">
+    <div class="col-md-3">
       <mat-form-field class="full-width-input">
-        <input matInput disabled placeholder="Outstanding Tax Amount" name="outstandingAmount" [(ngModel)]="outstandingDetailModel.outstandingAmount">
+        <input matInput disabled placeholder="Outstanding Tax Amount (In Rs.)" name="outstandingAmount" [(ngModel)]="outstandingDetailModel.outstandingAmount">
       </mat-form-field>
     </div>
     <div class="col-md-2">
@@ -59,7 +59,7 @@
           <mat-error *ngIf="ApplicationNo.invalid">*Application No. is required.</mat-error>
         </mat-form-field>
       </div>
-    <div class="col-md-6 text-right">
+    <div class="col-md-5 text-right">
       <button class="ml-3" mat-raised-button color="primary" type="submit">
         <mat-icon>add_circle_outline</mat-icon> Enter Transfer Details
       </button>
