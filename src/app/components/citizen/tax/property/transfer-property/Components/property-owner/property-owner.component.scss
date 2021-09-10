@@ -4,3 +4,7 @@
 .table-width{
     width: 100%
 }
+
+.property-owner-table th.mat-header-cell:first-of-type, .property-owner-table td.mat-cell:first-of-type{
+    padding-left: 24px !important;
+}
