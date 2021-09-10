@@ -241,6 +241,10 @@ export class RecordSearchComponent implements OnInit {
 					return observableOf([]);
 				})
 			).subscribe(data => {
+				if(!data.length){
+					this.commonService.openAlert("Warning", "No Data Found", "warning");
+					this.showAlert();
+				}
 				const arr = this.listOfData(data);
 				this.resultsLength = arr.length;
 				if (!arr.length) {
