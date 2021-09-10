@@ -171,10 +171,10 @@ export class BookChildrenTheaterComponent implements OnInit {
             programPurpose: [null, [Validators.required, Validators.maxLength(200)]],
 
             //step 2
-            applicantName: [null, [Validators.required, Validators.maxLength(50)]],
+            applicantName: [null, [Validators.required, Validators.maxLength(100)]],
             applicantMobile: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
             confirmMobile: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
-            emailId: [null, [Validators.required, ValidationService.emailValidator , Validators.maxLength(50)]],
+            emailId: [null, [Validators.required, ValidationService.emailValidator , Validators.maxLength(100)]],
             confirmEmailId: [null, [Validators.required, ValidationService.emailValidator , Validators.maxLength(50)]],
             relationshipWithOrg: [null, [Validators.required, Validators.maxLength(20)]],
             panCard:[null, ValidationService.panValidator],
@@ -256,7 +256,8 @@ export class BookChildrenTheaterComponent implements OnInit {
                     })
                 }
             }, (err) => {
-                this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+                // this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+                this.commonService.openAlert("Warning!", err.error[0].message, "warning");
             })
             return;
         }
