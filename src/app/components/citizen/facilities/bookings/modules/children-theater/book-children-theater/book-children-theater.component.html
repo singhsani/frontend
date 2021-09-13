@@ -353,7 +353,7 @@
 
                     <div class="row">
                         <mat-form-field class="col-md-4">
-                            <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="applicantName"
+                            <input matInput maxlength="100" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="applicantName"
                                 placeholder="{{'applicant_name' | translate: translateKey}}" required (change)="onSameApplicantHolderName(childrenTheaterApplicationForm.get('applicantName'))">
                             <control-messages [control]="childrenTheaterApplicationForm.get('applicantName')"></control-messages>
                         </mat-form-field>
