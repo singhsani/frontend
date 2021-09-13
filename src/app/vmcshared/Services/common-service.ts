@@ -246,6 +246,28 @@ export class CommonService {
     }
 
     /**
+     * API error is handled, and display the 
+     * message as warning
+     * @param warn API response object
+     */
+    callWarningResponse(warn) {
+        if (warn.status === 400) {
+            let warnMessage = '';
+            warn.error[0].propertyList.forEach(element => {
+                warnMessage = warnMessage + element + "</br>";
+            });
+            this.alertService.warning(warnMessage);
+          } else {
+            if(warn.error instanceof ArrayBuffer) {
+                let responseData = this.convertArrayBufferToNumber(warn.error);
+                this.alertService.warning(responseData.message);
+            } else {
+              this.alertService.warning(warn.error.message);
+            }
+          }
+    }
+
+    /**
 	 * This method is used to get user profile data
 	 */
   getUserProfile() {
