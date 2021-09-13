@@ -254,7 +254,7 @@ export class CommonService {
         if (warn.status === 400) {
             let warnMessage = '';
             warn.error[0].propertyList.forEach(element => {
-                warnMessage = warnMessage + element + "</br>";
+                warnMessage += `${element}</br>`;
             });
             this.alertService.warning(warnMessage);
           } else {
