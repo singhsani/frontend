@@ -218,7 +218,7 @@ export class AddressDetailComponent implements OnInit, OnDestroy {
           this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(2);
         },
         (error) => {
-          this.commonService.callErrorResponse(error);
+          this.commonService.callWarningResponse(error);
         });
     }
   }
