@@ -292,7 +292,7 @@
                         <!-- case2 property/water tax -->
                         <ng-container *ngSwitchCase="'case2'">
                             <div class="mobile-label1">:</div>
-                            <button class="actionBtn" *ngIf="((row.serviceType === 'NO_DUE_CERTIFICATE' || row.serviceType === 'EXTRACT_OF_PROPERTY' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.serviceType === 'DUPLICATE_BILL') && row.fileStatus === 'SUBMITTED') || 
+                            <button class="actionBtn" *ngIf="((row.serviceType === 'NO_DUE_CERTIFICATE' || row.serviceType === 'EXTRACT_OF_PROPERTY' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.serviceType === 'DUPLICATE_BILL' || row.serviceType === 'VACANT_PREMISES_CERTIFICATE') && row.fileStatus === 'SUBMITTED') || 
                             row.fileStatus === 'PAYMENT_RECEIVED' || ((row.fileStatus === 'APPROVED') && (row.serviceType == 'PROPERTY_ASSESSMENT' || row.serviceType == 'TRANSFER_OF_PROPERTY')) ||
                             row.fileStatus === 'PAYMENT' || row.fileStatus === 'SCRUTINY' || (row.serviceType === 'WTR_NEW_WATER_CONNECTION' && row.fileStatus === 'SUBMITTED' && row.newgenStatus === 'SUBMIT_AFTER_SCRUTINY')" mat-button [matMenuTriggerFor]="menuTax">
                                 <!-- *ngIf="isMoreBtnVisibleProperty(row)" -->
@@ -321,7 +321,7 @@
                                     {{'payment' | translate:translateKey}}
                                 </button>
 
-                                <div *ngIf="(row.serviceType === 'NO_DUE_CERTIFICATE' || row.serviceType === 'EXTRACT_OF_PROPERTY' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.serviceType === 'DUPLICATE_BILL') && row.fileStatus === 'SUBMITTED'
+                                <div *ngIf="(row.serviceType === 'NO_DUE_CERTIFICATE' || row.serviceType === 'EXTRACT_OF_PROPERTY' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.serviceType === 'DUPLICATE_BILL' || row.serviceType === 'VACANT_PREMISES_CERTIFICATE') && row.fileStatus === 'SUBMITTED'
                                 || (row.serviceType === 'WTR_NEW_WATER_CONNECTION' && row.fileStatus === 'SUBMITTED' && row.newgenStatus === 'SUBMIT_AFTER_SCRUTINY') || row.serviceType === 'PROPERTY_ASSESSMENT' && row.fileStatus === 'APPROVED'">
                                 <button mat-menu-item  color="primary"
                                     (click)="printPropertyACKReceipt(row.fileNumber)">
