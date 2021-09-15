@@ -51,7 +51,7 @@
 						[addressFormGroup]="marriageFormGroup.get('marriagePlace')"></app-address>
 				</div>
 
-				<div class="alert alert-info ">
+				<div class="alert alert-info">
 					{{'note' | translate:translateKey}} :
 					{{'municipal_corporation_limit_only' | translate:translateKey}}
 				</div>
@@ -133,7 +133,7 @@
 						</mat-form-field> -->
 					<div class="col-md-4 ngSelect" formGroupName="groomReligion">
 						<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}*"
-							(change)="onChange($event,religionArray,'religionGujgroom');checkReligion();changeReset('marriageTimeGroomStatus');changeReset('aliveWives');removeGuj('maritalstatusGujgroom')">
+							(change)="onChange($event,religionArray,'religionGujgroom');setBrideReligion($event);checkReligion();changeReset('marriageTimeGroomStatus');changeReset('aliveWives');removeGuj('maritalstatusGujgroom')">
 							<ng-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.name}}
 							</ng-option>
 						</ng-select>
@@ -372,7 +372,7 @@
 				</ng-template>
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="50" formControlName="brideFirstName"
+						<input matInput type="text" maxlength="50" formControlName="brideFirstName" 
 							placeholder="{{'first_name' | translate:translateKey }}" appValidationFields
 							[validationFieldsType]="'onlyNameWithOutSpace'" required appGujInputSource
 							targetElement="brideFirstNameGuj" [form]="marriageFormGroup">
@@ -1619,7 +1619,7 @@
 						*ngFor="let doc of marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value | filterAttachmentMR:listOfDependentAtt ">
 						
 						<!-- marriageFormGroup.get('groomReligion').value:marriageFormGroup.get('isGroomVisa').value:marriageFormGroup.get('isBrideVisa').value -->
-						<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
+						<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons && doc.documentIdentifier != 'RELIGIOUS_CERTIFICATE'">
 							<label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
 								<span *ngIf="doc.mandatory">*</span>
 
