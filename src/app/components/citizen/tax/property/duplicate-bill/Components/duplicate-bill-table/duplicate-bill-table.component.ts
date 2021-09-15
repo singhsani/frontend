@@ -49,6 +49,7 @@ export class DuplicateBillTableComponent implements OnInit {
   feesDetails = [];
   serviceFeesDetails: Array<any> = [];
   NumberOfCopies :number = 1;
+  checkForCurrentBill: boolean = false;
   
   constructor(
     private duplicateBillDataSharingService: DuplicateBillDataSharingService,
@@ -241,7 +242,8 @@ export class DuplicateBillTableComponent implements OnInit {
             propertyBasicId: this.serviceCharge.propertyBasicId,  
             numberOfCopies: this.serviceCharge.noofCopies,
             billTypeLookupId: this.serviceCharge.billTypeLookupId,
-            propertyServiceApplicationId: this.commonService.serviceFormId
+            propertyServiceApplicationId: this.commonService.serviceFormId,
+            checkForCurrentBill : this.checkForCurrentBill
           }
           this.formService.saveDuplicateBill('saveDuplicate', data).subscribe
           (res=> {
@@ -297,7 +299,15 @@ export class DuplicateBillTableComponent implements OnInit {
               }
             });
           }, error => {
-            this.alertService.error(error);
+            if (error.status == 403) {
+              this.cService.commonAlert('Warning', 'Property Bill of Current Year will not be generated. Do you want to generate Previous Bill?', 'info', 'Yes', true, '', cb => {
+                this.checkForCurrentBill = true;
+                this.onEnterClick(formDetail);
+              })
+
+            } else {
+              this.cService.openAlert("Warning", "Property Bill does not Exists.", "warning");
+            }
           }
           )
         // }; // from Admin else

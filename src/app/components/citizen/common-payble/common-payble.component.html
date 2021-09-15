@@ -207,6 +207,10 @@
         <span class="font16">{{collectionModel?.occupierName}}</span>
       </div>
       <div class="col-md-12">
+        <label class="col-md-2 font16 font-weight-bold">Mobile Number :</label>
+        <span class="font16">{{collectionModel?.mobileNo}}</span>
+      </div>
+      <div class="col-md-12">
         <label class="col-md-2 font16 font-weight-bold">Postal address :</label>
         <span class="font16">{{collectionModel?.address}}</span>
       </div>
@@ -222,10 +226,12 @@
                 <th>Financial Year</th>
                 <th>Bill No</th>
                 <th>Bill Date </th>
+                <th>Bill Due Date</th>
                 <th>Due Amount</th>
                 <!-- <th>Rebate</th> -->
                 <th>Interest/Penalty Amount	</th>
                 <th>Payable Amount</th>
+                <th>Payment Status</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -246,6 +252,7 @@
                   <td>{{dues?.financialYear}}</td>
                   <td>{{dues?.billNo}}</td>
                   <td>{{dues?.billDate}}</td>
+                  <td>{{dues?.billDueDate}}</td>
                   <td>{{dues?.billAmount}}</td>
                 
                   <!-- <td>{{collectionModel?.rebateAmount}}</td> -->
@@ -253,6 +260,7 @@
                   <!-- <td OnlyNumber [textContent]="model" (input)="model=$event.target.textContent" contentEditable>{{collectionModel?.payableAmount}}</td>  -->
                   <!-- <td>{{collectionModel?.payableAmount}} </td> -->
                   <td>{{dues?.totalTaxWiseBillAmount}} </td>
+                  <td>{{dues.totalTaxWiseBillAmount == 0 ? "Paid" : "Unpaid"}}</td>
                   <td>
                     <button mat-button title="Detail" class="btn-width-auto" color="accent" type="button" (click)="onDetailClick(dues)">
                       <mat-icon>details</mat-icon>
