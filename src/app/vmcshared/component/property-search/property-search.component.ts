@@ -119,6 +119,9 @@ export class PropertySearchComponent implements OnInit {
       this.searchModel.propertyNo = null;
       this.isSearchByPropertyNo = false;
       this.searchsearchProperty();
+    }else {
+      formDetails.form.get('level1Id').markAsTouched();
+      formDetails.form.get('Level2Id').markAsTouched();
     }
   }
 

@@ -154,6 +154,7 @@ export class TransferDocumentUploadComponent implements OnInit {
             });
 
           } else {
+            this.alertService.success(data.body.message);
             this.router.navigateByUrl('/citizen/my-applications');
           }
 
