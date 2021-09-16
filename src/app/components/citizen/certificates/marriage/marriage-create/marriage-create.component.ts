@@ -623,7 +623,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             groomParentsFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             groomParentsMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             groomParentsLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            groomParentsBirthDate: [null, Validators.required],
+            groomParentsBirthDate: [null],
             groomParentsAge: [null],
             groomParentsAadharNumber: ['', Validators.maxLength(12)],
             groomParentsAddress: this.fb.group(this.addrComponent.addressControls()),
@@ -636,7 +636,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             brideParentsFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             brideParentsMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             brideParentsLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            brideParentsBirthDate: [null, Validators.required],
+            brideParentsBirthDate: [null],
             brideParentsAge: [null],
             brideParentsAadharNumber: ['', Validators.maxLength(12)],
             brideParentsAddress: this.fb.group(this.addrComponent.addressControls()),
@@ -649,7 +649,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             priestFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             priestMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             priestLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            priestBirthDate: [null, Validators.required],
+            priestBirthDate: [null],
             priestAge: [null],
             priestAadharNumber: ['', Validators.maxLength(12)],
             priestAddress: this.fb.group(this.addrComponent.addressControls()),
@@ -662,7 +662,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             firstWitnessFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             firstWitnessMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             firstWitnessLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            firstWitnessBirthDate: [null, Validators.required],
+            firstWitnessBirthDate: [null],
             firstWitnessAge: [null],
             firstWitnessAadharNumber: ['', Validators.maxLength(12)],
             firstWitnessAddress: this.fb.group(this.addrComponent.addressControls()),
@@ -671,7 +671,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             secondWitnessFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             secondWitnessMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             secondWitnessLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            secondWitnessBirthDate: [null, Validators.required],
+            secondWitnessBirthDate: [null],
             secondWitnessAge: [null],
             secondWitnessAadharNumber: ['', Validators.maxLength(12)],
             secondWitnessAddress: this.fb.group(this.addrComponent.addressControls()),
@@ -956,31 +956,31 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     this.formControlNameToTabIndex.set('groomNriSecondWitnessAddressGuj',7);
     this.formControlNameToTabIndex.set('groomNriSecondWitnessBirthDate',7);
 
-    this.formControlNameToTabIndex.set('brideNriFirstWitnessFirstName',7);
-    this.formControlNameToTabIndex.set('brideNriFirstWitnessMiddlName',7);
-    this.formControlNameToTabIndex.set('brideNriFirstWitnessLastName',7);
-    this.formControlNameToTabIndex.set('brideNriFirstWitnessFirstNameGuj',7);
-    this.formControlNameToTabIndex.set('brideNriFirstWitnessMiddlNameGuj',7);
-    this.formControlNameToTabIndex.set('brideNriFirstWitnessLastNameGuj',7);     
-    this.formControlNameToTabIndex.set('brideNriFirstWitnessAddress',7);
-    this.formControlNameToTabIndex.set('brideNriFirstWitnessAddressGuj',7);
-    this.formControlNameToTabIndex.set('brideNriFirstWitnessBirthDate',7);
+    this.formControlNameToTabIndex.set('brideNriFirstWitnessFirstName',8);
+    this.formControlNameToTabIndex.set('brideNriFirstWitnessMiddlName',8);
+    this.formControlNameToTabIndex.set('brideNriFirstWitnessLastName',8);
+    this.formControlNameToTabIndex.set('brideNriFirstWitnessFirstNameGuj',8);
+    this.formControlNameToTabIndex.set('brideNriFirstWitnessMiddlNameGuj',8);
+    this.formControlNameToTabIndex.set('brideNriFirstWitnessLastNameGuj',8);     
+    this.formControlNameToTabIndex.set('brideNriFirstWitnessAddress',8);
+    this.formControlNameToTabIndex.set('brideNriFirstWitnessAddressGuj',8);
+    this.formControlNameToTabIndex.set('brideNriFirstWitnessBirthDate',8);
 
-    this.formControlNameToTabIndex.set('brideNriSecondWitnessFirstName',7);
-    this.formControlNameToTabIndex.set('brideNriSecondWitnessMiddlName',7);
-    this.formControlNameToTabIndex.set('brideNriSecondWitnessLastName',7);
-    this.formControlNameToTabIndex.set('brideNriSecondWitnessFirstNameGuj',7);
-    this.formControlNameToTabIndex.set('brideNriSecondWitnessMiddlNameGuj',7);
-    this.formControlNameToTabIndex.set('brideNriSecondWitnessLastNameGuj',7);
-    this.formControlNameToTabIndex.set('brideNriSecondWitnessAddress',7);    
-    this.formControlNameToTabIndex.set('brideNriSecondWitnessAddressGuj',7);
-    this.formControlNameToTabIndex.set('brideNriSecondWitnessBirthDate',7);
+    this.formControlNameToTabIndex.set('brideNriSecondWitnessFirstName',8);
+    this.formControlNameToTabIndex.set('brideNriSecondWitnessMiddlName',8);
+    this.formControlNameToTabIndex.set('brideNriSecondWitnessLastName',8);
+    this.formControlNameToTabIndex.set('brideNriSecondWitnessFirstNameGuj',8);
+    this.formControlNameToTabIndex.set('brideNriSecondWitnessMiddlNameGuj',8);
+    this.formControlNameToTabIndex.set('brideNriSecondWitnessLastNameGuj',8);
+    this.formControlNameToTabIndex.set('brideNriSecondWitnessAddress',8);    
+    this.formControlNameToTabIndex.set('brideNriSecondWitnessAddressGuj',8);
+    this.formControlNameToTabIndex.set('brideNriSecondWitnessBirthDate',8);
 
-    this.formControlNameToTabIndex.set('groomDays',7);
-    this.formControlNameToTabIndex.set('brideDays',7);  
+    this.formControlNameToTabIndex.set('groomDays',8);
+    this.formControlNameToTabIndex.set('brideDays',8);  
 
-    this.formControlNameToTabIndex.set('applicantRelation',8);
-    this.formControlNameToTabIndex.set('applicantRelationOther',8);
+    this.formControlNameToTabIndex.set('applicantRelation',9);
+    this.formControlNameToTabIndex.set('applicantRelationOther',9);
   }
 
   handleErrorsOnSubmit(key){

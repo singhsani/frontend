@@ -700,15 +700,15 @@
 						<input matInput [max]="adultPerson" appDate [matDatepicker]="picker4"
 							formControlName="groomParentsBirthDate"
 							(dateChange)="dateFormate($event.value,'groomParentsBirthDate')"
-							placeholder="{{'date_of_birth' | translate:translateKey }}  " required>
+							placeholder="{{'date_of_birth' | translate:translateKey }}  ">
 						<mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
 						<mat-datepicker #picker4 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
-						<control-messages [control]="marriageFormGroup.get('groomParentsBirthDate')"></control-messages>
+						<!-- <control-messages [control]="marriageFormGroup.get('groomParentsBirthDate')"></control-messages> -->
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" formControlName="groomParentsAge" [value]="parentAge('groomParentsBirthDate','groomParentsAge')" readonly />
+						<input matInput placeholder="Age:" formControlName="groomParentsAge" [value]="parentAge('groomParentsBirthDate','groomParentsAge')" />
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -813,15 +813,15 @@
 						<input matInput [max]="adultPerson" appDate [matDatepicker]="picker5"
 							formControlName="brideParentsBirthDate"
 							(dateChange)="dateFormate($event.value,'brideParentsBirthDate')"
-							placeholder="{{'date_of_birth' | translate:translateKey }}  " required>
+							placeholder="{{'date_of_birth' | translate:translateKey }}  ">
 						<mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
 						<mat-datepicker #picker5 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
-						<control-messages [control]="marriageFormGroup.get('brideParentsBirthDate')"></control-messages>
+						<!-- <control-messages [control]="marriageFormGroup.get('brideParentsBirthDate')"></control-messages> -->
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" formControlName="brideParentsAge" [value]="parentAge('brideParentsBirthDate','brideParentsAge')" readonly />
+						<input matInput placeholder="Age:" formControlName="brideParentsAge" [value]="parentAge('brideParentsBirthDate','brideParentsAge')" />
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -923,15 +923,15 @@
 					<mat-form-field class="col-md-4">
 						<input matInput [max]="adultPerson" appDate [matDatepicker]="picker6"
 							formControlName="priestBirthDate" (dateChange)="dateFormate($event.value,'priestBirthDate')"
-							placeholder="{{'date_of_birth' | translate:translateKey }}  " required>
+							placeholder="{{'date_of_birth' | translate:translateKey }}  ">
 						<mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
 						<mat-datepicker #picker6 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
-						<control-messages [control]="marriageFormGroup.get('priestBirthDate')"></control-messages>
+						<!-- <control-messages [control]="marriageFormGroup.get('priestBirthDate')"></control-messages> -->
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" formControlName="priestAge" [value]="parentAge('priestBirthDate' , 'priestAge')" readonly />
+						<input matInput placeholder="Age:" formControlName="priestAge" [value]="parentAge('priestBirthDate' , 'priestAge')" />
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -1026,15 +1026,15 @@
 						<input matInput [max]="adultPerson" appDate [matDatepicker]="picker7"
 							formControlName="firstWitnessBirthDate"
 							(dateChange)="dateFormate($event.value,'firstWitnessBirthDate')"
-							placeholder="{{'date_of_birth' | translate:translateKey }}  " required>
+							placeholder="{{'date_of_birth' | translate:translateKey }}  ">
 						<mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
 						<mat-datepicker #picker7 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
-						<control-messages [control]="marriageFormGroup.get('firstWitnessBirthDate')"></control-messages>
+						<!-- <control-messages [control]="marriageFormGroup.get('firstWitnessBirthDate')"></control-messages> -->
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" [value]="parentAge('firstWitnessBirthDate','firstWitnessAge')" readonly />
+						<input matInput placeholder="Age:" [value]="parentAge('firstWitnessBirthDate','firstWitnessAge')" />
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -1117,16 +1117,16 @@
 						<input matInput [max]="adultPerson" appDate [matDatepicker]="picker8"
 							formControlName="secondWitnessBirthDate"
 							(dateChange)="dateFormate($event.value,'secondWitnessBirthDate')"
-							placeholder="{{'date_of_birth' | translate:translateKey }} " required>
+							placeholder="{{'date_of_birth' | translate:translateKey }} ">
 						<mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
 						<mat-datepicker #picker8 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
-						<control-messages [control]="marriageFormGroup.get('secondWitnessBirthDate')">
-						</control-messages>
+						<!-- <control-messages [control]="marriageFormGroup.get('secondWitnessBirthDate')"> -->
+						<!-- </control-messages> -->
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" [value]="parentAge('secondWitnessBirthDate','secondWitnessAge')" readonly />
+						<input matInput placeholder="Age:" [value]="parentAge('secondWitnessBirthDate','secondWitnessAge')" />
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
