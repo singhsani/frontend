@@ -396,13 +396,5 @@ export class BookChildrenTheaterComponent implements OnInit {
         })
     }
 
-    covertReadableString(headerName: string) {
-        var changedHeder = _.startCase(headerName);
-         if(changedHeder == 'CHILDREN THEATER SCHOOL'){
-             changedHeder = 'SCHOOL'
-         }else if(changedHeder == 'CHILDREN THEATER OTHER'){
-             changedHeder = 'OTHER'
-         }
-        return changedHeder;
-     }
+   
 }
