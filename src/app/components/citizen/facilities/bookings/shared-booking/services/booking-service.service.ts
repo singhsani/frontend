@@ -432,4 +432,9 @@ export class BookingService {
       }    
         return this.http.get(this.requestURL,'printReceipt');
     }
+
+    getChildrenFees(){
+      this.requestURL = 'api/booking/childrenTheater/getFeesDetail';
+      return this.http.get(this.requestURL);
+    }
 }
