@@ -289,7 +289,6 @@ export class GatewayResponseComponent implements OnInit {
 	}
 
 	redirectToHome() {
-		debugger
 		if (this.dispData.payableServiceType == "PROFESSIONAL_TAX") {
 			setTimeout(() => {
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS')]);
