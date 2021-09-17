@@ -308,7 +308,7 @@
 
                     <div class="row">
                         <mat-form-field class="col-md-6">
-                            <input  matInput  appValidationFields [validationFieldsType]="'onlyNameWithSpace'" maxlength="25" type="text" formControlName="organizationName" placeholder="{{'organization_name' | translate: translateKey}}"
+                            <input  matInput  appValidationFields [validationFieldsType]="'onlyNameWithSpace'" maxlength="100" type="text" formControlName="organizationName" placeholder="{{'organization_name' | translate: translateKey}}"
                                 required>
                             <control-messages [control]="childrenTheaterApplicationForm.get('organizationName')"></control-messages>
                         </mat-form-field>
