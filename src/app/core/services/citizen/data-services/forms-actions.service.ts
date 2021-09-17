@@ -523,4 +523,9 @@ export class FormsActionsService {
 		this.requestURL = `api/form/marriageReg/legalprint/${data}/${id}`;
 		return this.http.get(this.requestURL,'printReceipt');
 	}
+
+	getCertificatOrLiglePrintForDuplicateMrg(data: any,id: any){
+		this.requestURL = `api/form/duplicateMarriageReg/legalprint/${data}/${id}`;
+		return this.http.get(this.requestURL,'printReceipt');
+	}
 }

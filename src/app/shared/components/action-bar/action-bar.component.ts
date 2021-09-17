@@ -170,7 +170,6 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	 * This method is use for submit form using API
 	 */
 	onSubmit() {
-	
 		this.isSubmitBtnDisabled = true;
 		var count = 1;
 		this.markFormGroupTouched(this.form);
@@ -228,19 +227,19 @@ export class ActionBarComponent implements OnInit, OnChanges {
 			let count = 1;
 			for (const key in this.form.controls) {
 				if (this.form.get(key).invalid) {
-					if (this.form.get('apiType').value == 'marriageReg') {
-						let groomreligionChange = this.form.controls.groomReligion.get("code").value;
-						let bridereligionChange = this.form.controls.brideReligion.get("code").value;
-						if (!_.isEmpty(groomreligionChange) && !_.isEmpty(bridereligionChange)) {
-							if (groomreligionChange != bridereligionChange) {
-								this.handleErrors.emit(67);
-								break;
-							}
-						}
-					}
+					// if (this.form.get('apiType').value == 'marriageReg') {
+					// 	let groomreligionChange = this.form.controls.groomReligion.get("code").value;
+					// 	let bridereligionChange = this.form.controls.brideReligion.get("code").value;
+					// 	if (!_.isEmpty(groomreligionChange) && !_.isEmpty(bridereligionChange)) {
+					// 		if (groomreligionChange != bridereligionChange) {
+					// 			this.handleErrors.emit(67);
+					// 			break;
+					// 		}
+					// 	}
+					// }
 
 					if(this.form.get('apiType').value == 'shop' || 
-					this.form.get('apiType').value == 'shop-transfer' || this.form.get('apiType').value == 'afhForm') {
+					this.form.get('apiType').value == 'shop-transfer' || this.form.get('apiType').value == 'afhForm' || this.form.get('apiType').value == 'marriageReg') {
 						this.handleErrors.emit(key);
 						break;
 					}

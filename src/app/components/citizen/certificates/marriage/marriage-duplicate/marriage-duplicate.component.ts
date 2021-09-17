@@ -411,6 +411,36 @@ export class MarriageDuplicateComponent implements OnInit {
 		// 	});
 	}
 
+	getCertificate(){
+        let certificate = 'certificate';
+        this.formService.getCertificatOrLiglePrintForDuplicateMrg(certificate,this.appId).subscribe(res => {
+            let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
+            sectionToPrintReceipt.innerHTML = res;
+            setTimeout(() => {
+                window.print();
+            }, 300);
+        },
+            err => {
+                this.commonService.openAlert('Error!', err.error[0].message, 'error');
+            }
+        )
+    }
+
+	// liglePrint() {
+    //     let service = 'legalprint';
+    //     this.formService.getCertificatOrLiglePrintForDuplicateMrg(service, this.appId).subscribe(res => {
+    //         let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
+    //         sectionToPrintReceipt.innerHTML = res;
+    //         setTimeout(() => {
+    //             window.print();
+    //         }, 300);
+    //     },
+    //         err => {
+    //             this.commonService.openAlert('Error!', err.error[0].message, 'error');
+    //         }
+    //     )
+    // }
+
 	/**
 	 * This method use for redirect to duplicate form
 	 * @param data - Row data

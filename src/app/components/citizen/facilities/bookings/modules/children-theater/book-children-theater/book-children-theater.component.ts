@@ -10,6 +10,7 @@ import { CommonService } from 'src/app/shared/services/common.service';
 import { BookingService } from '../../../shared-booking/services/booking-service.service';
 import { ValidationService } from 'src/app/shared/services/validation.service';
 import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
+import * as _ from 'lodash';
 
 @Component({
     selector: 'app-book-children-theater',
@@ -62,10 +63,7 @@ export class BookChildrenTheaterComponent implements OnInit {
     tabIndex: number = 0;
 
     displayedColumnsFeeDetails: string[] = ['sno', 'programmePurpose', 'bookingRent', 'gst'];
-    dataSource = [
-          {sno: 1, programmePurpose:"Other", bookingRent:"1000" ,gst:"180"},
-          {sno: 2, programmePurpose:"School", bookingRent:"1000" ,gst:"180"}
-      ];
+    dataSource = [];
 
     /**
      * Date validations
@@ -105,6 +103,7 @@ export class BookChildrenTheaterComponent implements OnInit {
         this.getLookUpData();
         this.getResourceList();
         this.maxSlotDate();
+        this.getFeesDetail();
         /**
 		 * Subscribe start date changes
 		 */
@@ -240,7 +239,7 @@ export class BookChildrenTheaterComponent implements OnInit {
         } else {
             this.bookingService.commonBookSlot(this.childrenTheaterApplicationForm.value).subscribe(resp => {
                 if (resp.data.status == this.bookingConstants.SUBMITTED) {
-                    this.commonService.commonAlert("Children Theater Booking", "Children Theater Booked Successfully", "success", "Print Acknowledgement Receipt", false, '', pA => {
+                    this.commonService.commonAlert("Children Theater", "Your Application has been submitted.", "success", "Print Acknowledgement Receipt", false, '', pA => {
                         this.bookingService.printAcknowledgementReceipt(resp.data.refNumber).subscribe(acknowledgementHTML => {
                             let sectionToPrint: any = document.getElementById('sectionToPrint');
                             sectionToPrint.innerHTML = acknowledgementHTML;
@@ -391,4 +390,11 @@ export class BookChildrenTheaterComponent implements OnInit {
     this.childrenTheaterApplicationForm.get('accountHolderName').setValue(event.value);
   }
 
+  getFeesDetail(){
+        this.bookingService.getChildrenFees().subscribe(resp =>{
+            this.dataSource = resp.data;
+        })
+    }
+
+   
 }
