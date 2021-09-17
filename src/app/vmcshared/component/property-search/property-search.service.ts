@@ -40,4 +40,11 @@ export class PropertySearchService {
       { observe: 'response' })
       .pipe(map((response: any) => response))
   }
+
+  // search prperty wise data
+  searchPropertyDetailsInPage(data: any) {
+    return this.http.post(`${Constants.assessmentModuleApiUrl}active/searchPropertiesByPage`, data,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
 }
