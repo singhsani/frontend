@@ -293,7 +293,7 @@ export class GatewayResponseComponent implements OnInit {
 			setTimeout(() => {
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS')]);
 			}, 10000);
-		}else if(this.dispData.payableServiceType  == "STADIUM_FEES"){
+		}else if(this.dispData.payableServiceType  == "STADIUM_FEES" || this.dispData.payableServiceType == "STADIUM_DEPOSIT"){
 			setTimeout(() => {
 				this.router.navigate([this.bookingConstant.MY_BOOKINGS_URL]);
 			}, 10000);
