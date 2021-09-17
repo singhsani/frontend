@@ -6,19 +6,16 @@
 export const environment = {
 	production: false,
 	envName: 'dev',
-	// envAPIServer: '/VMC/',
+	envAPIServer: '/VMC/',
  	// envAPIServer: 'http://192.168.10.107:8080/VMC/',
 	// envAPIServer: 'http://192.168.10.202:8080/VMC/',
 	// envAPIServer: '/VMC/',
-	envAPIServer: window.location.protocol + "//" + window.location.hostname + ":8080/",
+	// envAPIServer: window.location.protocol + "//" + window.location.hostname + ":8080/",
 
 	//Usefull url and api url's.
-	adminUrl: 'http://' + window.location.hostname + ':' + window.location.port + '/',
-	// citizenUrl: 'http://' + window.location.hostname + ':' + window.location.port + '/vmcportal/',
-	// returnUrl: 'http://' + window.location.hostname + ':' + window.location.port + '/vmcportal/citizen/payment-response',
-	// returnhosUrl: 'http://' + window.location.hostname + ':' + window.location.port + '/vmcportal/hospital/hos-payment-gateway-response'
-	citizenUrl: 'http://' + window.location.hostname + ':' + window.location.port + '/',
-	returnUrl: 'http://' + window.location.hostname + ':' + window.location.port + '/citizen/payment-response',
-	returnhosUrl: 'http://' + window.location.hostname + ':' + window.location.port + '/hospital/hos-payment-gateway-response'
+	adminUrl: 'http://' + window.location.hostname + ':' + window.location.port + '/vmcadminportal/',
+	citizenUrl: 'http://' + window.location.hostname + ':' + window.location.port + '/vmcportal/',
+	returnUrl: 'http://' + window.location.hostname + ':' + window.location.port + '/vmcportal/citizen/payment-response',
+	returnhosUrl: 'http://' + window.location.hostname + ':' + window.location.port + '/vmcportal/hospital/hos-payment-gateway-response'
 };
 
