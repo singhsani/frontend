@@ -41,7 +41,7 @@ export class PropertySearchService {
       .pipe(map((response: any) => response))
   }
 
-  // search prperty wise data
+  // search property wise data by page
   searchPropertyDetailsInPage(data: any) {
     return this.http.post(`${Constants.assessmentModuleApiUrl}active/searchPropertiesByPage`, data,
       { observe: 'response' })
