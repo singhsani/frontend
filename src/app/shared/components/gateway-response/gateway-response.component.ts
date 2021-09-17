@@ -289,11 +289,17 @@ export class GatewayResponseComponent implements OnInit {
 	}
 
 	redirectToHome() {
+		debugger
 		if (this.dispData.payableServiceType == "PROFESSIONAL_TAX") {
 			setTimeout(() => {
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS')]);
 			}, 10000);
-		} else {
+		}else if(this.dispData.payableServiceType  == "STADIUM_FEES"){
+			setTimeout(() => {
+				this.router.navigate([this.bookingConstant.MY_BOOKINGS_URL]);
+			}, 10000);
+		} 
+		else {
 			setTimeout(() => {
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
 			}, 10000);

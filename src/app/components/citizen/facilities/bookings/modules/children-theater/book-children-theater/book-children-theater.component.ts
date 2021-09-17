@@ -164,7 +164,7 @@ export class BookChildrenTheaterComponent implements OnInit {
     createCTApplicationForm() {
         this.childrenTheaterApplicationForm = this._fb.group({
             //step 1
-            organizationName: [null, [Validators.required, Validators.maxLength(25)]],
+            organizationName: [null, [Validators.required, Validators.maxLength(100)]],
             orgTelephoneNo: [null, [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
             organizationAddress: this._fb.group(this.addressComp.addressControls()),
             programPurpose: [null, [Validators.required, Validators.maxLength(200)]],
