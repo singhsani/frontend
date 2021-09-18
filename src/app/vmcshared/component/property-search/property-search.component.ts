@@ -2,10 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Constants } from 'src/app/vmcshared/Constants';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
 import { PropertySearchSharingService } from './property-search-sharing.service';
 import { PropertySearchService } from './property-search.service';
 import { CommonService } from '../../Services/common-service';
+import { merge, of } from 'rxjs';
+import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-property-search',
@@ -28,6 +30,9 @@ export class PropertySearchComponent implements OnInit {
   isSearchByPropertyNo: boolean = false;
   isShowTable: boolean = false;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  pageRecord = Constants.pageRecord;
+  resultsLength: number = 0;
 
   constructor(
     private propertySearchSharingService: PropertySearchSharingService,
@@ -38,6 +43,7 @@ export class PropertySearchComponent implements OnInit {
 
   ngOnInit() {
     this.getWardZoneLevel();
+    this.paginator.pageSize=Constants.pageSize;
   }
 
   getWardZoneLevel() {
@@ -118,8 +124,8 @@ export class PropertySearchComponent implements OnInit {
     if (formDetails.form.valid) {
       this.searchModel.propertyNo = null;
       this.isSearchByPropertyNo = false;
-      this.searchsearchProperty();
-    }else {
+      this.serachOptions();
+    } else {
       formDetails.form.get('level1Id').markAsTouched();
       formDetails.form.get('Level2Id').markAsTouched();
     }
@@ -128,14 +134,13 @@ export class PropertySearchComponent implements OnInit {
   searchByPropertyNo() {
     if (!this.propertyNo) {
       this.alertService.error("Please enter property no.");
-    }
-    else {
+    } else {
       this.searchModel = {};
       if (this.propertyNo) {
         this.searchModel.propertyNo = this.propertyNo.toString().trim();
       }
       this.isSearchByPropertyNo = true;
-      this.searchsearchProperty();
+      this.searchPropertyList();
     }
   }
   clear() {
@@ -145,28 +150,55 @@ export class PropertySearchComponent implements OnInit {
     this.wardZoneLevel4List = [];
     this.searchModel = {};
     this.propertySearchSharingService.setPropertyModel(null);
-    this.isShowTable=false;
+    this.isShowTable = false;
   }
 
   onBack() {
     this.propertySearchSharingService.setIsOpenSearchForm(false);
   }
 
+  serachOptions() {
+    this.paginator.pageIndex = 0;
+    this.searchModel.pageNo = null;
+    this.searchModel.pageSize = null;
+    this.searchPropertyList();
+  }
 
-  searchsearchProperty() {
-    this.propertySearchService.searchPropertyDetails(this.searchModel).subscribe(
-      (data) => {
-        if (data.status === 200) {
-          if (data.body.length == 0) {
-            this.alertService.info('No Data Found!');
-            if (!this.isSearchByPropertyNo || (this.isSearchByPropertyNo && this.dataSource.length == 0)) {
-              this.isShowTable=false;
+  searchPropertyList() {
+
+    merge(this.paginator.page)
+      .pipe( startWith({}), switchMap(() => {
+
+          if (this.searchModel.pageNo !== this.paginator.pageIndex || this.searchModel.pageSize !== this.paginator.pageSize){
+            if (this.searchModel.pageSize === this.paginator.pageSize) {
+              this.searchModel.pageNo = this.paginator.pageIndex;
+            } else {
+              this.searchModel.pageNo = 0;
+              this.paginator.pageIndex = 0;
             }
+            this.searchModel.pageSize = this.paginator.pageSize;
+            return this.propertySearchService.searchPropertyDetailsInPage(this.searchModel);
           }
-          else {
-            this.isShowTable=true;
-            this.dataSource = new MatTableDataSource(data.body);
+        }),
+        map(data => {
+          return data;
+        }),
+        catchError(() => {
+          return of([]);
+        })
+      ).subscribe((data) => {
+        if (data.status === 200) {
+          if (data.body.length === 0) {
+            this.alertService.info('No Data Found!');
+            if (!this.isSearchByPropertyNo || (this.isSearchByPropertyNo && this.dataSource.length === 0)) {
+              this.isShowTable = false;
+            }
+            this.resultsLength = 0;
+          } else {
+            this.isShowTable = true;
+            this.dataSource = new MatTableDataSource(data.body.data);
             this.dataSource.sort = this.sort;
+            this.resultsLength = data.body.totalRecords;
           }
         }
       },

@@ -105,8 +105,8 @@
   </form>
 </mat-card>
 
-<div class="mt-4" *ngIf="isShowTable">
-  <div class="example-container mat-elevation-z8">
+<div class="mt-4">
+  <div class="example-container mat-elevation-z8" *ngIf="isShowTable">
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 width100">
 
       <ng-container matColumnDef="propertyNo">
@@ -137,6 +137,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
+  <mat-paginator [length]="resultsLength" [hidden]="resultsLength==0" [pageSizeOptions]="pageRecord" showFirstLastButtons></mat-paginator> 
 </div>
 
 </mat-card>
