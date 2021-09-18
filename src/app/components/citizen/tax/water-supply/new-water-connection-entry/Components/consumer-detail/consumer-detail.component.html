@@ -55,13 +55,13 @@
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input readonly matInput name="connectionNo" [(ngModel)]="model.connectionNo" #ConnectionNo="ngModel"
-                        placeholder="Water Connection No">
+                        placeholder="Water Connection Number">
                 </mat-form-field>
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input matInput name="oldConnectionNo" [(ngModel)]="model.oldConnectionNo"  maxlength="20"
-                        #OldConnectionNo="ngModel" placeholder="Old Water Connection No">
+                        #OldConnectionNo="ngModel" placeholder="Old Water Connection Number">
                     <!-- <mat-error *ngIf="OldConnectionNo.invalid">*Old Water Connection No is required.</mat-error> -->
                 </mat-form-field>
             </div>
@@ -77,8 +77,8 @@
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input  matInput number-only [allowDecimals]="false" type="text" maxlength="10"  minlength="10" name="mobileNo"
-                        [(ngModel)]="model.mobileNo" #MobileNo="ngModel" placeholder="Mobile No">
-                    <mat-error *ngIf="MobileNo.invalid">*Mobile No is invalid.</mat-error>
+                        [(ngModel)]="model.mobileNo" #MobileNo="ngModel" placeholder="Mobile Number">
+                    <mat-error *ngIf="MobileNo.invalid">*Mobile Number is invalid.</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -86,8 +86,8 @@
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input  matInput number-only [allowDecimals]="false" type="text" name="aadharNo"
-                        [(ngModel)]="model.aadharNo" #AadharNo="ngModel" placeholder="Aadhaar No" maxlength="12"  minlength="12">
-                    <mat-error *ngIf="AadharNo.invalid">*Aadhaar No is invalid.</mat-error>
+                        [(ngModel)]="model.aadharNo" #AadharNo="ngModel" placeholder="Aadhaar Number" maxlength="12"  minlength="12">
+                    <mat-error *ngIf="AadharNo.invalid">*Aadhaar Number is invalid.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
@@ -242,8 +242,8 @@
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput (keypress)="keyPressAlphaNumeric($event)" maxlength="20"
                      name="gasConnectionNo" [(ngModel)]="model.gasConnectionNo"
-                        #GasConnectionNo="ngModel" placeholder="Gas Connection No">
-                    <mat-error *ngIf="GasConnectionNo.invalid">*Gas Connection No is required.</mat-error>
+                        #GasConnectionNo="ngModel" placeholder="Gas Connection Number">
+                    <mat-error *ngIf="GasConnectionNo.invalid">*Gas Connection Number is required.</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -252,16 +252,16 @@
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput (keypress)="keyPressAlphaNumeric($event)" maxlength="20" 
                     name="electricityConnectionNo" [(ngModel)]="model.electricityConnectionNo"
-                        #ElectricityConnectionNo="ngModel" placeholder="Electricity Connection No">
-                    <mat-error *ngIf="ElectricityConnectionNo.invalid">*Electricity Connection No is required.</mat-error>
+                        #ElectricityConnectionNo="ngModel" placeholder="Electricity Connection Number">
+                    <mat-error *ngIf="ElectricityConnectionNo.invalid">*Electricity Connection Number is required.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput (keypress)="keyPressAlphaNumeric($event)" maxlength="20"
                      name="buildingPermissionNo" [(ngModel)]="model.buildingPermissionNo"
-                        #BuildingPermissionNo="ngModel" placeholder="Building Permission No">
-                    <mat-error *ngIf="BuildingPermissionNo.invalid">*Building Permission No is required.</mat-error>
+                        #BuildingPermissionNo="ngModel" placeholder="Building Permission Number">
+                    <mat-error *ngIf="BuildingPermissionNo.invalid">*Building Permission Number is required.</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -270,16 +270,16 @@
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput (keypress)="keyPressAlphaNumeric($event)" maxlength="20"
                     name="completionCertificateNo" [(ngModel)]="model.completionCertificateNo"
-                        #CompletionCertificateNo="ngModel" placeholder="Completion Certificate No">
-                    <mat-error *ngIf="CompletionCertificateNo.invalid">*Completion Certificate No is required.</mat-error>
+                        #CompletionCertificateNo="ngModel" placeholder="Completion Certificate Number">
+                    <mat-error *ngIf="CompletionCertificateNo.invalid">*Completion Certificate Number is required.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input trim="blur"  matInput  (keypress)="keyPressAlphaNumeric($event)" maxlength="20"
                     name="occupancyCertificateNo" [(ngModel)]="model.occupancyCertificateNo"
-                        #OccupancyCertificateNo="ngModel" placeholder="Occupancy Certificate No">
-                    <mat-error *ngIf="OccupancyCertificateNo.invalid">*Occupancy Certificate No is required.</mat-error>
+                        #OccupancyCertificateNo="ngModel" placeholder="Occupancy Certificate Number">
+                    <mat-error *ngIf="OccupancyCertificateNo.invalid">*Occupancy Certificate Number is required.</mat-error>
                 </mat-form-field>
             </div>
         </div>

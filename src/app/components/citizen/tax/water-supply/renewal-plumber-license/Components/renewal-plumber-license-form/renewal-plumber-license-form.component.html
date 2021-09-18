@@ -7,14 +7,14 @@
     <div class="row">
         <!-- <div class="col-md-6">
             <mat-form-field class="full-width-input">
-                <input readonly matInput name="applicationNumber" placeholder="Application No" [(ngModel)]="applicationModel.applicationNumber">
+                <input readonly matInput name="applicationNumber" placeholder="Application Number" [(ngModel)]="applicationModel.applicationNumber">
             </mat-form-field>
         </div> -->
 
         <div class="col-md-6">
             <mat-form-field class="full-width-input" hidden>
-              <input matInput trim="blur"  placeholder="Application No" maxlength="20" #ApplicationNo="ngModel" name="applicationNumber" [(ngModel)]="applicationModel.applicationNumber">
-              <mat-error *ngIf="ApplicationNo.invalid">*Application No is required.</mat-error>
+              <input matInput trim="blur"  placeholder="Application Number" maxlength="20" #ApplicationNo="ngModel" name="applicationNumber" [(ngModel)]="applicationModel.applicationNumber">
+              <mat-error *ngIf="ApplicationNo.invalid">*Application Number is required.</mat-error>
             </mat-form-field>
         </div>
 
@@ -49,8 +49,8 @@
         <div class="row">
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <input trim="blur" required matInput name="licenseNo" [(ngModel)]="licenseNo" #LicenseNo="ngModel" placeholder="License No">
-                    <mat-error *ngIf="LicenseNo.invalid">*License No is required.</mat-error>
+                    <input trim="blur" required matInput name="licenseNo" [(ngModel)]="licenseNo" #LicenseNo="ngModel" placeholder="License Number">
+                    <mat-error *ngIf="LicenseNo.invalid">*License Number is required.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
@@ -76,7 +76,7 @@
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <input disabled matInput placeholder="Aadhaar No" name="aadharNo" [(ngModel)]="plumberLicenseModel.aadharNo">
+                    <input disabled matInput placeholder="Aadhaar Number" name="aadharNo" [(ngModel)]="plumberLicenseModel.aadharNo">
                 </mat-form-field>
             </div>
         </div>
@@ -112,23 +112,23 @@
         <div class="row">
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <input matInput required number-only maxlength="10" minlength="10" #MobileNo1="ngModel" placeholder="Mobile No 1"
+                    <input matInput required number-only maxlength="10" minlength="10" #MobileNo1="ngModel" placeholder="Mobile Number 1"
                         name="mobileNo1" [(ngModel)]="plumberLicenseModel.mobileNo1">
-                    <mat-error *ngIf="MobileNo1.invalid">*Mobile No 1 is invalid.</mat-error>
+                    <mat-error *ngIf="MobileNo1.invalid">*Mobile Number 1 is invalid.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <input matInput number-only maxlength="10" minlength="10" #MobileNo2="ngModel" placeholder="Mobile No 2" name="mobileNo2" [(ngModel)]="plumberLicenseModel.mobileNo2">
-                    <mat-error *ngIf="MobileNo2.invalid">*Mobile No 2 is invalid.</mat-error>
+                    <input matInput number-only maxlength="10" minlength="10" #MobileNo2="ngModel" placeholder="Mobile Number 2" name="mobileNo2" [(ngModel)]="plumberLicenseModel.mobileNo2">
+                    <mat-error *ngIf="MobileNo2.invalid">*Mobile Number 2 is invalid.</mat-error>
                 </mat-form-field>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <input matInput number-only maxlength="10" minlength="10" #MobileNo3="ngModel" placeholder="Mobile No 3" name="mobileNo3" [(ngModel)]="plumberLicenseModel.mobileNo3">
-                    <mat-error *ngIf="MobileNo3.invalid">*Mobile No 3 is invalid.</mat-error>
+                    <input matInput number-only maxlength="10" minlength="10" #MobileNo3="ngModel" placeholder="Mobile Number 3" name="mobileNo3" [(ngModel)]="plumberLicenseModel.mobileNo3">
+                    <mat-error *ngIf="MobileNo3.invalid">*Mobile Number 3 is invalid.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">

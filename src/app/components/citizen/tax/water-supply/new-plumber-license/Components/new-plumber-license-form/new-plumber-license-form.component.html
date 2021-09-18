@@ -7,17 +7,17 @@
                 <div class="row">
                     <!-- <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <input readonly matInput name="applicationNumber" placeholder="Application No"
+                    <input readonly matInput name="applicationNumber" placeholder="Application Number"
                         [(ngModel)]="applicationModel.applicationNumber">
                 </mat-form-field>
             </div> -->
 
                     <div class="col-md-6">
                         <mat-form-field class="full-width-input" hidden>
-                            <input matInput trim="blur" placeholder="Application No" maxlength="20"
+                            <input matInput trim="blur" placeholder="Application Number" maxlength="20"
                                 #ApplicationNo="ngModel" name="applicationNumber"
                                 [(ngModel)]="applicationModel.applicationNumber">
-                            <mat-error *ngIf="ApplicationNo.invalid">*Application No is required.</mat-error>
+                            <mat-error *ngIf="ApplicationNo.invalid">*Application Number is required.</mat-error>
                         </mat-form-field>
                     </div>
 
@@ -60,7 +60,7 @@
                     <div class="col-md-6">
                         <mat-form-field class="full-width-input">
                             <input matInput disabled name="licenseNo" [(ngModel)]="model.licenseNo"
-                                placeholder="License No">
+                                placeholder="License Number">
                         </mat-form-field>
                     </div>
                     <div class="col-md-6">
@@ -88,9 +88,9 @@
                     <div class="col-md-6">
                         <mat-form-field class="full-width-input">
                             <input matInput number-only [allowDecimals]="false" maxlength="12" minlength="12"
-                                placeholder="Aadhaar No" name="aadharNo" #AadharNo="ngModel"
+                                placeholder="Aadhaar Number" name="aadharNo" #AadharNo="ngModel"
                                 [(ngModel)]="model.aadharNo">
-                            <mat-error *ngIf="AadharNo.invalid">*Aadhaar No is invalid.</mat-error>
+                            <mat-error *ngIf="AadharNo.invalid">*Aadhaar Number is invalid.</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -152,17 +152,17 @@
                     <div class="col-md-6">
                         <mat-form-field class="full-width-input">
                             <input required matInput number-only maxlength="10" minlength="10" [allowDecimals]="false"
-                                placeholder="Mobile No 1" name="mobileNo1" #MobileNo1="ngModel"
+                                placeholder="Mobile Number 1" name="mobileNo1" #MobileNo1="ngModel"
                                 [(ngModel)]="model.mobileNo1">
-                            <mat-error *ngIf="MobileNo1.invalid">*Mobile No 1 is invalid.</mat-error>
+                            <mat-error *ngIf="MobileNo1.invalid">*Mobile Number 1 is invalid.</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="col-md-6">
                         <mat-form-field class="full-width-input">
                             <input matInput number-only maxlength="10" minlength="10" [allowDecimals]="false"
-                                placeholder="Mobile No 2" name="mobileNo2" [(ngModel)]="model.mobileNo2"
+                                placeholder="Mobile Number 2" name="mobileNo2" [(ngModel)]="model.mobileNo2"
                                 #MobileNo2="ngModel">
-                            <mat-error *ngIf="MobileNo2.invalid">*Mobile No 2 is invalid.</mat-error>
+                            <mat-error *ngIf="MobileNo2.invalid">*Mobile Number 2 is invalid.</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -170,9 +170,9 @@
                     <div class="col-md-6">
                         <mat-form-field class="full-width-input">
                             <input matInput number-only maxlength="10" minlength="10" [allowDecimals]="false"
-                                placeholder="Mobile No 3" name="mobileNo3" [(ngModel)]="model.mobileNo3"
+                                placeholder="Mobile Number 3" name="mobileNo3" [(ngModel)]="model.mobileNo3"
                                 #MobileNo3="ngModel">
-                            <mat-error *ngIf="MobileNo3.invalid">*Mobile No 3 is invalid.</mat-error>
+                            <mat-error *ngIf="MobileNo3.invalid">*Mobile Number 3 is invalid.</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="col-md-6">
