@@ -497,7 +497,8 @@ export class MyBookingComponent implements OnInit {
 				ifscCode: this.refundBankDetailsForm.value.ifscCode,
 				accountNo: this.refundBankDetailsForm.value.accountNumber,
 				accountHolderName: this.refundBankDetailsForm.value.accountHolderName,
-				bankCode: this.refundBankDetailsForm.value.bank.code
+				bankCode: this.refundBankDetailsForm.value.bank.code,
+				reasonForCancellation: this.refundBankDetailsForm.value.reasonForCancellation
 			}
 			console.log(object);
 			this.bookingService.cancelTownHall(object).subscribe(res => {
@@ -540,7 +541,8 @@ export class MyBookingComponent implements OnInit {
 				code: [null],
 				name: [null]
 			}),
-			slotBookingNo: ['']
+			slotBookingNo: [''],
+			reasonForCancellation:['']
 		});
 	}
 	/*
