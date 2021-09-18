@@ -217,6 +217,7 @@ export class BirthCorrectionComponent implements OnInit {
 
 			// this.config.documentList(res, this.uploadFileArray);
 
+			this.clearFormArrray(<FormArray>this.birthCorrectionForm.get('serviceDetail').get('serviceUploadDocuments'));
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
 				(<FormArray>this.birthCorrectionForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.configDoc.createDocumentsGrp(app));
 			});
@@ -234,8 +235,8 @@ export class BirthCorrectionComponent implements OnInit {
 			// this.birthCorrectionForm.get('refNumber').setValue(this.regStatusForm.get('registrationNumber').value)
 			// this.birthCorrectionForm.get('typeOfCorrection').get('code').setValue(this.regStatusForm.get('typeOfCorrection').get('code').value);
 			/**
-		    * save data
-		    */
+			* save data
+			*/
 			// this.formService.saveFormData(this.birthCorrectionForm.value).subscribe(res => {
 			// 	this.birthCorrectionForm.patchValue(res);
 			// })
@@ -282,7 +283,7 @@ export class BirthCorrectionComponent implements OnInit {
 	 * call API to get registration data and status.
 	 */
 	getRegistrationNumberStatus() {
-		
+
 		this.formService.getRegistrationStatus(this.regStatusForm.value).subscribe(resp => {
 			if (resp.success) {
 				this.createBirthCorrectionData(resp.data);
@@ -322,48 +323,45 @@ export class BirthCorrectionComponent implements OnInit {
 		console.log(moment(this.regStatusForm.get('birthDate').value).format("YYYY-MM-DD") );
 		console.log(moment(prod_array[0].birthDate,'DD-MM-YYYY').format("YYYY-MM-DD"));
 		if(moment(this.regStatusForm.get('birthDate').value).format("YYYY-MM-DD") == moment(prod_array[0].birthDate,'DD-MM-YYYY').format("YYYY-MM-DD")){
-		this.birthCorrectionForm.patchValue(prod_array[0]);
-		// this.birthCorrectionForm.get('fieldView').setValue(data.fieldView);
-		// this.birthCorrectionForm.get('fieldList').setValue(data.fieldList);
-		// this.birthCorrectionForm.get('childName').setValue(data.childName);
-		// this.birthCorrectionForm.get('childNameGuj').setValue(data.childNameGuj);
-		// this.birthCorrectionForm.get('fatherFirstName').setValue(data.fatherFirstName);
-		// this.birthCorrectionForm.get('fatherMiddleName').setValue(data.fatherMiddleName);
-		// this.birthCorrectionForm.get('fatherLastName').setValue(data.fatherLastName);
-		// this.birthCorrectionForm.get('fatherFirstNameGuj').setValue(data.fatherFirstNameGuj);
-		// this.birthCorrectionForm.get('fatherMiddleNameGuj').setValue(data.fatherMiddleNameGuj);
-		// this.birthCorrectionForm.get('fatherLastNameGuj').setValue(data.fatherLastNameGuj);
-		// this.birthCorrectionForm.get('motherFirstName').setValue(data.motherFirstName);
-		// this.birthCorrectionForm.get('motherMiddleName').setValue(data.motherMiddleName);
-		// this.birthCorrectionForm.get('motherLastName').setValue(data.motherLastName);
-		// this.birthCorrectionForm.get('motherFirstNameGuj').setValue(data.motherFirstNameGuj);
-		// this.birthCorrectionForm.get('motherMiddleNameGuj').setValue(data.motherMiddleNameGuj);
-		// this.birthCorrectionForm.get('motherLastNameGuj').setValue(data.motherLastNameGuj);
-		this.birthCorrectionForm.get('refNumber').setValue(this.regStatusForm.get('registrationNumber').value)
-		this.birthCorrectionForm.get('typeOfCorrection').get('code').setValue(this.regStatusForm.get('typeOfCorrection').get('code').value);
-		// this.newgnDateconvert('birthDate', this.birthCorrectionForm.get('birthDate').value);
-		// this.newgnDateconvert('registrationDate', this.birthCorrectionForm.get('registrationDate').value);
-		
+			this.birthCorrectionForm.patchValue(prod_array[0]);
+			// this.birthCorrectionForm.get('fieldView').setValue(data.fieldView);
+			// this.birthCorrectionForm.get('fieldList').setValue(data.fieldList);
+			// this.birthCorrectionForm.get('childName').setValue(data.childName);
+			// this.birthCorrectionForm.get('childNameGuj').setValue(data.childNameGuj);
+			// this.birthCorrectionForm.get('fatherFirstName').setValue(data.fatherFirstName);
+			// this.birthCorrectionForm.get('fatherMiddleName').setValue(data.fatherMiddleName);
+			// this.birthCorrectionForm.get('fatherLastName').setValue(data.fatherLastName);
+			// this.birthCorrectionForm.get('fatherFirstNameGuj').setValue(data.fatherFirstNameGuj);
+			// this.birthCorrectionForm.get('fatherMiddleNameGuj').setValue(data.fatherMiddleNameGuj);
+			// this.birthCorrectionForm.get('fatherLastNameGuj').setValue(data.fatherLastNameGuj);
+			// this.birthCorrectionForm.get('motherFirstName').setValue(data.motherFirstName);
+			// this.birthCorrectionForm.get('motherMiddleName').setValue(data.motherMiddleName);
+			// this.birthCorrectionForm.get('motherLastName').setValue(data.motherLastName);
+			// this.birthCorrectionForm.get('motherFirstNameGuj').setValue(data.motherFirstNameGuj);
+			// this.birthCorrectionForm.get('motherMiddleNameGuj').setValue(data.motherMiddleNameGuj);
+			// this.birthCorrectionForm.get('motherLastNameGuj').setValue(data.motherLastNameGuj);
+			this.birthCorrectionForm.get('refNumber').setValue(this.regStatusForm.get('registrationNumber').value)
+			this.birthCorrectionForm.get('typeOfCorrection').get('code').setValue(this.regStatusForm.get('typeOfCorrection').get('code').value);
+			// this.newgnDateconvert('birthDate', this.birthCorrectionForm.get('birthDate').value);
+			// this.newgnDateconvert('registrationDate', this.birthCorrectionForm.get('registrationDate').value);
 
-		//let tempdate = new Date(this.birthCorrectionForm.get('birthDate').value);
-		/**
-		 * save data
-		 */
 
-		this.formService.saveFormData(this.birthCorrectionForm.value).subscribe(res => {
-			this.birthCorrectionForm.patchValue(res);
-		
-		})
+			//let tempdate = new Date(this.birthCorrectionForm.get('birthDate').value);
+			/**
+			 * save data
+			 */
 
-		this.showcorrectionForm = true;
-		this.showApplicationSearch = false;
-	}
-	else{
-		// this.toster.error('Wrong Date');
-		// this.alertService.error("Invalide Data!!!");
-		// this.commonService.openAlert("Error");
-		this.commonService.openAlert("Invalid Data", "Data is not Valid!!!", "warning");
-	}
+			this.formService.saveFormData(this.birthCorrectionForm.value).subscribe(res => {
+				this.birthCorrectionForm.patchValue(res);
+
+			})
+
+			this.showcorrectionForm = true;
+			this.showApplicationSearch = false;
+		}
+		else{
+			this.commonService.openAlert("Warning", "No Data Found", "warning");
+		}
 
 	}
 
@@ -371,14 +369,14 @@ export class BirthCorrectionComponent implements OnInit {
 		* This method for convert newgn response date to yyyy-mm-dd formate
 		*/
 	newgnDateconvert(controlName: any, date) {
-	 if(date) {
-		let dateString = date;
-		let dateParts = dateString.split(" ");
-		let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
-		this.birthCorrectionForm.get(controlName).setValue(moment(dateParts[0]).format("YYYY-MM-DD"));
-	 } else {
-		 console.log('control name is undefined', controlName)
-	 }
+		if(date) {
+			let dateString = date;
+			let dateParts = dateString.split(" ");
+			let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+			this.birthCorrectionForm.get(controlName).setValue(moment(dateParts[0]).format("YYYY-MM-DD"));
+		} else {
+			console.log('control name is undefined', controlName)
+		}
 	}
 
 	/**
@@ -409,7 +407,7 @@ export class BirthCorrectionComponent implements OnInit {
 	 * @param count - count of invalid control.
 	 */
 	handleErrorsOnSubmit(count) {
-		let step1 = 19;
+		let step1 = 20;
 
 		if (count <= step1) {
 			this.tabIndex = 0;
@@ -479,15 +477,15 @@ export class BirthCorrectionComponent implements OnInit {
 	 * This method use for covert date format
 	 * @param date - Selected date
 	 */
-	 onDateChange(date) {
+	onDateChange(date) {
 		this.birthCorrectionForm.get('date').setValue(moment(date).format("YYYY-MM-DD"));
-		
+
 	}
 
 	/**
 	 * maximum date validation.
 	 */
-	 maxDate: Date = new Date();
+	maxDate: Date = new Date();
 
 	/**
 	 * This method use to get output event of tab change
@@ -537,5 +535,12 @@ export class BirthCorrectionComponent implements OnInit {
 				})
 			}
 		});
+	}
+	clearFormArrray(formArray) {
+		{
+			while (formArray.length !== 0) {
+				formArray.removeAt(0)
+			}
+		}
 	}
 }

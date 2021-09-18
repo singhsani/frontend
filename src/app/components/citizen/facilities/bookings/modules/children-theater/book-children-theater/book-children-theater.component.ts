@@ -10,6 +10,7 @@ import { CommonService } from 'src/app/shared/services/common.service';
 import { BookingService } from '../../../shared-booking/services/booking-service.service';
 import { ValidationService } from 'src/app/shared/services/validation.service';
 import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
+import * as _ from 'lodash';
 
 @Component({
     selector: 'app-book-children-theater',
@@ -62,10 +63,7 @@ export class BookChildrenTheaterComponent implements OnInit {
     tabIndex: number = 0;
 
     displayedColumnsFeeDetails: string[] = ['sno', 'programmePurpose', 'bookingRent', 'gst'];
-    dataSource = [
-          {sno: 1, programmePurpose:"Other", bookingRent:"1000" ,gst:"180"},
-          {sno: 2, programmePurpose:"School", bookingRent:"1000" ,gst:"180"}
-      ];
+    dataSource = [];
 
     /**
      * Date validations
@@ -73,7 +71,7 @@ export class BookChildrenTheaterComponent implements OnInit {
     startMinDate: Date = moment(new Date()).add(7, 'day').toDate();
     endMinDate: Date = moment(new Date()).add(7, 'day').toDate();
     endMaxDate:any = new Date();;
-
+    endDate:any; 
 
     /**
      * ngx-bootstrap models.
@@ -104,7 +102,8 @@ export class BookChildrenTheaterComponent implements OnInit {
         this.createCTApplicationForm();
         this.getLookUpData();
         this.getResourceList();
-
+        this.maxSlotDate();
+        this.getFeesDetail();
         /**
 		 * Subscribe start date changes
 		 */
@@ -131,6 +130,7 @@ export class BookChildrenTheaterComponent implements OnInit {
 	 * @param date get the selected date value
 	 */
 	onDateChange(date) {
+        this.Dates = []; 
         let futureMonth = moment(date).add(36, 'day');
         this.endMaxDate = moment(futureMonth).format("YYYY-MM-DD");
 	}
@@ -139,8 +139,10 @@ export class BookChildrenTheaterComponent implements OnInit {
      * Get All Resource List Of Stadium.
      */
     getResourceList() {
-        this.bookingService.getResourceList().subscribe(resp => {
+      this.bookingService.getResourceList().subscribe(resp => {
             this.CHILDREN_THEATERS = resp.data;
+            this.childrenTheaterSearchForm.get('code').setValue(resp.data[0].name);
+            this.childrenTheaterSearchForm.get('code').disable();
         })
     }
 
@@ -162,16 +164,16 @@ export class BookChildrenTheaterComponent implements OnInit {
     createCTApplicationForm() {
         this.childrenTheaterApplicationForm = this._fb.group({
             //step 1
-            organizationName: [null, [Validators.required, Validators.maxLength(25)]],
+            organizationName: [null, [Validators.required, Validators.maxLength(100)]],
             orgTelephoneNo: [null, [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
             organizationAddress: this._fb.group(this.addressComp.addressControls()),
             programPurpose: [null, [Validators.required, Validators.maxLength(200)]],
 
             //step 2
-            applicantName: [null, [Validators.required, Validators.maxLength(50)]],
+            applicantName: [null, [Validators.required, Validators.maxLength(100)]],
             applicantMobile: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
             confirmMobile: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
-            emailId: [null, [Validators.required, ValidationService.emailValidator , Validators.maxLength(50)]],
+            emailId: [null, [Validators.required, ValidationService.emailValidator , Validators.maxLength(100)]],
             confirmEmailId: [null, [Validators.required, ValidationService.emailValidator , Validators.maxLength(50)]],
             relationshipWithOrg: [null, [Validators.required, Validators.maxLength(20)]],
             panCard:[null, ValidationService.panValidator],
@@ -237,7 +239,7 @@ export class BookChildrenTheaterComponent implements OnInit {
         } else {
             this.bookingService.commonBookSlot(this.childrenTheaterApplicationForm.value).subscribe(resp => {
                 if (resp.data.status == this.bookingConstants.SUBMITTED) {
-                    this.commonService.commonAlert("Children Theater Booking", "Children Theater Booked Successfully", "success", "Print Acknowledgement Receipt", false, '', pA => {
+                    this.commonService.commonAlert("Children Theater", "Your Application has been submitted.", "success", "Print Acknowledgement Receipt", false, '', pA => {
                         this.bookingService.printAcknowledgementReceipt(resp.data.refNumber).subscribe(acknowledgementHTML => {
                             let sectionToPrint: any = document.getElementById('sectionToPrint');
                             sectionToPrint.innerHTML = acknowledgementHTML;
@@ -253,7 +255,8 @@ export class BookChildrenTheaterComponent implements OnInit {
                     })
                 }
             }, (err) => {
-                this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+                // this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+                this.commonService.openAlert("Warning!", err.error[0].message, "warning");
             })
             return;
         }
@@ -269,7 +272,8 @@ export class BookChildrenTheaterComponent implements OnInit {
 		    * Filter Object to get list of available dates.
 		    */
             let filterData = {
-                resourceName: this.childrenTheaterSearchForm.get('code').value,
+                resourceName : this.CHILDREN_THEATERS[0].code,
+                // resourceName: this.childrenTheaterSearchForm.get('code').value,
                 startDate: moment(this.childrenTheaterSearchForm.get('startDate').value).format("YYYY-MM-DD"),
                 endDate: moment(this.childrenTheaterSearchForm.get('endDate').value).format("YYYY-MM-DD"),
             }
@@ -371,10 +375,26 @@ export class BookChildrenTheaterComponent implements OnInit {
         this.childrenTheaterApplicationForm.get('applicantMobile').setValue(resp.data.cellNo);
         this.childrenTheaterApplicationForm.get('confirmEmailId').setValue(resp.data.email);
         this.childrenTheaterApplicationForm.get('confirmMobile').setValue(resp.data.cellNo);
+        this.childrenTheaterApplicationForm.get('accountHolderName').setValue(resp.data.firstName + ' ' + resp.data.lastName);
     },
       err => {
         this.toster.error("Server Error");
       });
   }
 
+  maxSlotDate(){
+   this.endDate =  moment(new Date()).add(90, 'day').toDate()
+  }
+
+  onSameApplicantHolderName(event){
+    this.childrenTheaterApplicationForm.get('accountHolderName').setValue(event.value);
+  }
+
+  getFeesDetail(){
+        this.bookingService.getChildrenFees().subscribe(resp =>{
+            this.dataSource = resp.data;
+        })
+    }
+
+   
 }

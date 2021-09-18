@@ -87,63 +87,72 @@
     </div>
     <select-payment-gateway-property #paymentGateway></select-payment-gateway-property>
   </form>
-  <mat-card *ngIf="isShowOutstandingDetail">
+
+  <ng-container>
     <div class="row">
-      <div class="col-md-12">
-        <div class="section-title">
-          <h4>Outstanding Details</h4>
-          <mat-divider></mat-divider>
-        </div>
+      <div class="col-md-6" *ngIf="isShowOutstandingDetail">
+        <mat-card>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="section-title">
+                <h4>Outstanding Details</h4>
+                <mat-divider></mat-divider>
+              </div>
+            </div>
+            <div class="col-md-12" *ngFor="let outstandingDetail of outstandingDetailModel.occupierOutstandingDetails">
+              <ul class="outstandig-detail">
+                <li>
+                  <!-- <h4>{{selectedItem.propertyNo}}-{{outstandingDetail.occupierCode}}-{{outstandingDetail.occupierName}}-{{outstandingDetail.outstandingAmount}}</h4> -->
+                  <table class="custome-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Amount (In Rs.)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of outstandingDetail.taxRateWiseOutstandingDetails">
+                        <td>{{item.name}}</td>
+                        <td>{{item.outstandingAmount}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </mat-card>
       </div>
-      <div class="col-md-12" *ngFor="let outstandingDetail of outstandingDetailModel.occupierOutstandingDetails">
-        <ul class="outstandig-detail">
-          <li>
-            <h4>{{selectedItem.propertyNo}}-{{outstandingDetail.occupierCode}}-{{outstandingDetail.occupierName}}-{{outstandingDetail.outstandingAmount}}</h4>
-            <table class="custome-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Amount (In Rs.)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of outstandingDetail.taxRateWiseOutstandingDetails">
-                  <td>{{item.name}}</td>
-                  <td>{{item.outstandingAmount}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </li>
-        </ul>
+      <div class="col-md-6" *ngIf="isShowDetail">
+        <mat-card >
+          <div class="row">
+            <div class="col-md-12">
+              <div class="section-title">
+                <h4>Detail</h4>
+                <mat-divider></mat-divider>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <table class="custome-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Charge Name</th>
+                    <th scope="col">Charge Amount (In Rs.)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of feesDetails">
+                    <td>{{item.chargeName}}</td>
+                    <td>{{item.chargeAmount}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </mat-card>
       </div>
     </div>
-  </mat-card>
-  <mat-card *ngIf="isShowDetail">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="section-title">
-          <h4>Detail</h4>
-          <mat-divider></mat-divider>
-        </div>
-      </div>
-      <div class="col-md-12">
-        <table class="custome-table">
-          <thead>
-            <tr>
-              <th>Charge Name</th>
-              <th>Charge Amount (In Rs.)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of serviceCharge.serviceChargeDetail">
-              <td>{{item.chargeName}}</td>
-              <td>{{item.chargeAmount}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </mat-card>
+  </ng-container>
 </mat-card>
 
 <!-- <mat-card class="mt-3" *ngIf="modelFileDownload.length>0">

@@ -5,7 +5,7 @@
         <h4>Existing Owner</h4>
         <mat-divider></mat-divider>
       </div>
-      <div class="table-responsive paddLeftRight5">
+      <div class="table-responsive">
         <table mat-table [dataSource]="dataSourceExistingOwner" matSort class="width100 table-width">
           <ng-container matColumnDef="titleName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
@@ -119,7 +119,7 @@
         </div>
       </form>
       <div *ngIf="isNewOwnerExist">
-        <div class="table-responsive paddLeftRight5">
+        <div class="table-responsive">
           <table mat-table [dataSource]="dataSourceNewOwner" matSort class="width100 table-width">
             <ng-container matColumnDef="titleName">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>

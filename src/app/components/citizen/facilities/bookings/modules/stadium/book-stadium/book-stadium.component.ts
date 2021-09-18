@@ -132,6 +132,7 @@ export class BookStadiumComponent implements OnInit {
      * @param date - selected start date
      */
     onDateChange(date){
+        this.Dates = [];
         let futureMonth = moment(date).add(3, 'month');
         this.maxEndDate = moment(futureMonth).format("YYYY-MM-DD");
     }
@@ -260,7 +261,7 @@ export class BookStadiumComponent implements OnInit {
      * Method is used to submit stadium application form.
      */
     submitStadiumApplication(): void {
-        let errCount = this.bookingUtils.getAllErrors(this.stadiumApplicationForm);
+      let errCount = this.bookingUtils.getAllErrors(this.stadiumApplicationForm);
         if (this.stadiumApplicationForm.invalid) {
             this.handleErrorsOnSubmit(errCount);
             this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
@@ -279,7 +280,7 @@ export class BookStadiumComponent implements OnInit {
         } else {
             this.bookingService.commonBookSlot(this.stadiumApplicationForm.value).subscribe(resp => {
                 if (resp.data.status == this.bookingConstants.SUBMITTED) {
-                    this.commonService.commonAlert("Stadium Booking", "Stadium Booked Successfully", "success", "Print Acknowledgement Receipt", false, '', pA => {
+                    this.commonService.commonAlert("Stadium Booking", "Your Application has been submitted.", "success", "Print Acknowledgement Receipt", false, '', pA => {
                         this.bookingService.printAcknowledgementReceipt(resp.data.refNumber).subscribe(acknowledgementHTML => {
                             let sectionToPrint: any = document.getElementById('sectionToPrint');
                             sectionToPrint.innerHTML = acknowledgementHTML;
@@ -297,7 +298,7 @@ export class BookStadiumComponent implements OnInit {
                     })
                 }
             }, (err) => {
-                this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+               this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
             })
             return;
         }

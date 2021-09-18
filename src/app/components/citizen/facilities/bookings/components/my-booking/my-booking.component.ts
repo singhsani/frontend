@@ -497,7 +497,8 @@ export class MyBookingComponent implements OnInit {
 				ifscCode: this.refundBankDetailsForm.value.ifscCode,
 				accountNo: this.refundBankDetailsForm.value.accountNumber,
 				accountHolderName: this.refundBankDetailsForm.value.accountHolderName,
-				bankCode: this.refundBankDetailsForm.value.bank.code
+				bankCode: this.refundBankDetailsForm.value.bank.code,
+				reasonForCancellation: this.refundBankDetailsForm.value.reasonForCancellation
 			}
 			console.log(object);
 			this.bookingService.cancelTownHall(object).subscribe(res => {
@@ -509,8 +510,7 @@ export class MyBookingComponent implements OnInit {
 				this.getAllBooking();
 				//this.modalResRef = this.modalService.show(this.templateResponseModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }))
 				this.modalResRef.hide();
-				this.commonService.successAlert("Success", "SuccessFully Cancel", "success");
-
+				this.commonService.successAlert("Success", "Applied For Cancellation", "success");
 				if (this.bookingService.resourceType == 'amphiTheater') {
 					//This method is used to send SMS during cancellation request of booking
 					this.sendSms(this.refNumber, this.bookingConstant.CANCEL);
@@ -540,7 +540,8 @@ export class MyBookingComponent implements OnInit {
 				code: [null],
 				name: [null]
 			}),
-			slotBookingNo: ['']
+			slotBookingNo: [''],
+			reasonForCancellation:['']
 		});
 	}
 	/*
@@ -741,7 +742,7 @@ export class MyBookingComponent implements OnInit {
 
 
   enableMoreAction(element){
-    if(element.status == this.bookingConstant.DRAFT || element.status == this.bookingConstant.EXPIRED || (element.resourceType == 'SWIMMING_POOL' && element.status == this.bookingConstant.APPROVED)){
+    if(element.status == this.bookingConstant.DRAFT || element.status == this.bookingConstant.EXPIRED || (element.resourceType == 'SWIMMING_POOL' && element.status == this.bookingConstant.APPROVED) || (element.status == this.bookingConstant.APPROVED && element.resourceType == 'STADIUM')){
         return false;
     }
         return true;

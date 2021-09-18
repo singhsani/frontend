@@ -202,7 +202,7 @@ export class CommonService {
     
     dueToOutstandingMessage(pNo) {
         // this.alertService.warning('Due to outstanding application can not proceed. Click ok button to make payment.',' ');
-        this.alertService.warning('Due to outstanding application can not proceed. Please first make outstanding payment.',' ');
+        this.alertService.warning('Can not proceed further due to remaining outstanding payment. Please complete payment of remaining outstanding amount.',' ');
         var subConfirm = this.alertService.getConfirm().subscribe(isConfirm => {
         if (isConfirm) {
             // this path is present in admin side so it can't reach there. 
@@ -241,6 +241,28 @@ export class CommonService {
                 this.alertService.info(responseData.message);
             } else {
               this.alertService.info(error.error.message);
+            }
+          }
+    }
+
+    /**
+     * API error is handled, and display the 
+     * message as warning
+     * @param warn API response object
+     */
+    callWarningResponse(warn) {
+        if (warn.status === 400) {
+            let warnMessage = '';
+            warn.error[0].propertyList.forEach(element => {
+                warnMessage += `${element}</br>`;
+            });
+            this.alertService.warning(warnMessage);
+          } else {
+            if(warn.error instanceof ArrayBuffer) {
+                let responseData = this.convertArrayBufferToNumber(warn.error);
+                this.alertService.warning(responseData.message);
+            } else {
+              this.alertService.warning(warn.error.message);
             }
           }
     }

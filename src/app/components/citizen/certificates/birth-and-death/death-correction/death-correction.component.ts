@@ -183,6 +183,7 @@ export class DeathCorrectionComponent implements OnInit {
 			this.deathCorrectionForm.patchValue(res);
 			// this.documentList(res, this.uploadFileArray);
 
+			this.clearFormArrray(<FormArray>this.deathCorrectionForm.get('serviceDetail').get('serviceUploadDocuments'));
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
 				(<FormArray>this.deathCorrectionForm.controls.serviceDetail.get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
 			});
@@ -235,7 +236,7 @@ export class DeathCorrectionComponent implements OnInit {
 		}
 
 		else{
-			this.commonService.openAlert("Invalid Data", "Data is not Valid!!!", "warning");	
+			this.commonService.openAlert("Warning", "No Data Found", "warning");
 		}
 	}
 	/**
@@ -252,6 +253,11 @@ export class DeathCorrectionComponent implements OnInit {
 			}
 			else if (err.error[0].code == 'INVALID_REQUEST') {
 				this.commonService.openAlert("Invalid Request", "Request Not Valid", "warning");
+			}
+			else {
+				if (err.error && err.error.length) {
+					this.commonService.openAlert("Warning", err.error[0].message, "warning");
+				}
 			}
 		});
 	}
@@ -446,5 +452,17 @@ export class DeathCorrectionComponent implements OnInit {
 				})
 			}
 		});
+	}
+
+
+/**
+	* Method is rquired for document array Null
+	*/
+	clearFormArrray(formArray) {
+		{
+			while (formArray.length !== 0) {
+				formArray.removeAt(0)
+			}
+		}
 	}
 }

@@ -74,14 +74,19 @@
         <div class="p-15">
             <form [formGroup]="childrenTheaterSearchForm" (ngSubmit)="searchBooking()" autocomplete="off" ngNativeValidate>
                 <div class="row mt-3 mb-3">
-                    <div class="col-md-6 ngSelect">
+                    <!-- <div class="col-md-6 ngSelect">
                         <ng-select placeholder="{{'select_children_theater'| translate: translateKey}}" formControlName="code">
                             <ng-option *ngFor="let ct of CHILDREN_THEATERS" [value]="ct.code">
                                 {{ ct.name }}
                             </ng-option>
                         </ng-select>
                         <control-messages [control]="childrenTheaterSearchForm.get('code')"></control-messages>
-                    </div>
+                    </div> -->
+
+                    <mat-form-field class="col-md-6">
+                        <input matInput formControlName="code">
+                        <control-messages [control]="childrenTheaterSearchForm.get('code')"></control-messages>
+                      </mat-form-field>
 
                     <div formGroupName="purpose" class="col-md-6 ngSelect">
                         <ng-select placeholder="{{'category'| translate: translateKey}}" formControlName="code">
@@ -98,7 +103,7 @@
                             {{'choose_start_date'| translate: translateKey}}
                         </mat-label>
                         <!-- matDatepickerFilter]="myFilter" -->
-                        <input appDate matInput [min]="startMinDate" (dateChange)="onDateChange($event.value)" [matDatepicker]="stadiumBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
+                        <input appDate matInput [min]="startMinDate" [max]="endDate" (dateChange)="onDateChange($event.value)" [matDatepicker]="stadiumBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
                         <mat-datepicker-toggle matSuffix [for]="stadiumBookingfromPicker"></mat-datepicker-toggle>
                         <mat-datepicker #stadiumBookingfromPicker touchUi="true"></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
@@ -110,7 +115,7 @@
                         <mat-label>
                             {{'choose_end_date'| translate: translateKey}}
                         </mat-label>
-                        <input appDate matInput [min]="endMinDate" [max]="endMaxDate" [matDatepicker]="stadiumBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
+                        <input appDate matInput [min]="endMinDate" [max]="endDate" [matDatepicker]="stadiumBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
                         <mat-datepicker-toggle matSuffix [for]="stadiumBookingtoPicker"></mat-datepicker-toggle>
                         <mat-datepicker #stadiumBookingtoPicker touchUi="true"></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
@@ -303,7 +308,7 @@
 
                     <div class="row">
                         <mat-form-field class="col-md-6">
-                            <input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" maxlength="50" type="text" formControlName="organizationName" placeholder="{{'organization_name' | translate: translateKey}}"
+                            <input  matInput  appValidationFields [validationFieldsType]="'onlyNameWithSpace'" maxlength="100" type="text" formControlName="organizationName" placeholder="{{'organization_name' | translate: translateKey}}"
                                 required>
                             <control-messages [control]="childrenTheaterApplicationForm.get('organizationName')"></control-messages>
                         </mat-form-field>
@@ -348,8 +353,8 @@
 
                     <div class="row">
                         <mat-form-field class="col-md-4">
-                            <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="applicantName"
-                                placeholder="{{'applicant_name' | translate: translateKey}}" required>
+                            <input matInput maxlength="100" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="applicantName"
+                                placeholder="{{'applicant_name' | translate: translateKey}}" required (change)="onSameApplicantHolderName(childrenTheaterApplicationForm.get('applicantName'))">
                             <control-messages [control]="childrenTheaterApplicationForm.get('applicantName')"></control-messages>
                         </mat-form-field>
 
@@ -388,14 +393,14 @@
 
                       <div class="col-md-4">
                         <mat-form-field>
-                          <input matInput type="text" formControlName="panCard" autocomplete="off" class="capitalCase" maxlength="10" placeholder="{{'pancard' | translate : translateKey}}" required>
+                          <input matInput type="text" formControlName="panCard" autocomplete="off" class="capitalCase" maxlength="10" minlength="10"  placeholder="{{'pancard' | translate : translateKey}}" required >
                           <control-messages [control]="childrenTheaterApplicationForm.get('panCard')"></control-messages>
                         </mat-form-field>
                       </div>
 
                       <div class="col-md-4">
                         <mat-form-field>
-                          <input matInput type="text" formControlName="gstNo" placeholder="{{'gstNo' | translate : translateKey}}">
+                          <input  matInput type="text" minlength="15" maxlength="15"  formControlName="gstNo" placeholder="{{'gstNo' | translate : translateKey}}" >
                           <control-messages [control]="childrenTheaterApplicationForm.get('gstNo')"></control-messages>
                         </mat-form-field>
                       </div>

@@ -9,6 +9,7 @@ import { CommonService } from './../../../../../shared/services/common.service';
 
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { constants } from 'os';
 
 @Component({
 	selector: 'record-search',
@@ -92,22 +93,22 @@ export class RecordSearchComponent implements OnInit {
 	/**
 	 * Registration year static look up.
 	 */
-	RegYear: Array<any> = [
-		{ id: "2008", code: 2008, name: "2008" },
-		{ id: "2009", code: 2009, name: "2009" },
-		{ id: "2010", code: 2010, name: "2010" },
-		{ id: "2011", code: 2011, name: "2011" },
-		{ id: "2012", code: 2012, name: "2012" },
-		{ id: "2013", code: 2013, name: "2013" },
-		{ id: "2014", code: 2014, name: "2014" },
-		{ id: "2015", code: 2015, name: "2015" },
-		{ id: "2016", code: 2016, name: "2016" },
-		{ id: "2017", code: 2017, name: "2017" },
-		{ id: "2018", code: 2018, name: "2018" },
-		{ id: "2019", code: 2019, name: "2019" },
-		{ id: "2020", code: 2020, name: "2020" },
-		{ id: "2021", code: 2021, name: "2021" }
-	];
+	// RegYear: Array<any> = [
+	// 	{ id: "2008", code: 2008, name: "2008" },
+	// 	{ id: "2009", code: 2009, name: "2009" },
+	// 	{ id: "2010", code: 2010, name: "2010" },
+	// 	{ id: "2011", code: 2011, name: "2011" },
+	// 	{ id: "2012", code: 2012, name: "2012" },
+	// 	{ id: "2013", code: 2013, name: "2013" },
+	// 	{ id: "2014", code: 2014, name: "2014" },
+	// 	{ id: "2015", code: 2015, name: "2015" },
+	// 	{ id: "2016", code: 2016, name: "2016" },
+	// 	{ id: "2017", code: 2017, name: "2017" },
+	// 	{ id: "2018", code: 2018, name: "2018" },
+	// 	{ id: "2019", code: 2019, name: "2019" },
+	// 	{ id: "2020", code: 2020, name: "2020" },
+	// 	{ id: "2021", code: 2021, name: "2021" }
+	// ];
 
 	/**
 	 * length of result in paginator.
@@ -166,11 +167,11 @@ export class RecordSearchComponent implements OnInit {
 	searchFormBirthControls() {
 		this.searchForm = this.fb.group({
 			birthRegNumber: [null, Validators.required],
-			birthRegYear: null,
+			// birthRegYear: null,
 			birthDate: [null, Validators.required],
-			childName: null,
-			fatherFirstName: null,
-			motherName: null
+			// childName: null,
+			// fatherFirstName: null,
+			// motherName: null
 			// regNumber: null,
 			// regYear: this.fb.group({
 			// 	code: null
@@ -189,11 +190,11 @@ export class RecordSearchComponent implements OnInit {
 	searchFormDeathControls() {
 		this.searchForm = this.fb.group({
 			deathRegNumber: [null, Validators.required],
-			deathRegYear: null,
+			// deathRegYear: null,
 			deathDate: [null, Validators.required],
-			deceasedName: null,
-			fatherName: null,
-			motherName: null
+			// deceasedName: null,
+			// fatherName: null,
+			// motherName: null
 		})
 	}
 
@@ -232,7 +233,7 @@ export class RecordSearchComponent implements OnInit {
 				}),
 				map(data => {
 					this.isLoadingResults = false;
-					this.resultsLength = data.totalRecords;
+					// this.resultsLength = data.totalRecords;
 					return data.data;
 				}),
 				catchError(() => {
@@ -240,10 +241,17 @@ export class RecordSearchComponent implements OnInit {
 					return observableOf([]);
 				})
 			).subscribe(data => {
-				if (!data.length) {
+				if(!data.length){
+					this.commonService.openAlert("Warning", "No Data Found", "warning");
+					this.showAlert();
+				}
+				const arr = this.listOfData(data);
+				this.resultsLength = arr.length;
+				if (!arr.length) {
+					this.commonService.openAlert("Warning", "No Data Found", "warning");
 					this.showAlert();
 				} else {
-					this.dataSource.data = this.listOfData(data);
+					this.dataSource.data = arr;
 				}
 			});
 	}
@@ -252,12 +260,20 @@ export class RecordSearchComponent implements OnInit {
 	 * This method use for displaying string data in json 
 	 */
 	listOfData(prods) {
-		let newgnData = JSON.parse(prods);
+		let newgnData = JSON.parse(prods);	
 		let prod_array = [];
 		for (let i = 0; i < newgnData.length; i += 1) {
 			prod_array.push(newgnData[i]);
+			// moment(this.searchForm.get('birthDate').value).format("DD-MM-YYYY");
+			// console.log(moment(this.searchForm.get('birthDate').value).format("DD-MM-YYYY"))
 		}
-		return prod_array;
+		return prod_array.filter(data => {
+			let variableName = data.birthDate?'birthDate':'dateofdeath';
+			let formVariableName = data.birthDate?'birthDate':'deathDate';
+			return data[variableName] == moment(this.searchForm.get(formVariableName).value).format("DD-MM-YYYY")});
+
+
+			
 	}
 
 	/**
@@ -273,7 +289,7 @@ export class RecordSearchComponent implements OnInit {
 			type = 'NRCDeath';
 		} else {
 			type = this.apiType;
-		}
+		}	
 
 		// this.commonService.confirmAlert('No record found!', `Do you want to create ${type} certificate`, 'warning', '', confirm => {
 		// 	// this.searchResult.emit(false);

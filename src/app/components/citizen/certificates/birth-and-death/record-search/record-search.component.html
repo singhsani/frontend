@@ -4,19 +4,19 @@
 		<!--Start  form  -->
 		<form [formGroup]="searchForm" autocomplete="off" ngNativeValidate>
 			<div class="row" *ngIf="!deathFromName">
-				<mat-form-field class="col-md-4">
+				<mat-form-field class="col-md-6">
 					<input matInput trim type="text" formControlName="birthRegNumber"
 						placeholder="{{'reg_number' | translate: translateKey}}" required>
 						<mat-error *ngIf="searchForm.get('birthRegNumber').invalid">Registration Number is Required.</mat-error>
 				</mat-form-field>
 
-				<div class="col-md-4 ngSelect">
+				<!-- <div class="col-md-4 ngSelect">
 					<ng-select placeholder="{{'reg_year' | translate: translateKey}}" formControlName="birthRegYear">
 						<ng-option *ngFor="let regyear of RegYear" [value]="regyear.code">{{regyear.name}}</ng-option>
 					</ng-select>
-				</div>
+				</div> -->
 
-				<mat-form-field class="col-md-4">
+				<mat-form-field class="col-md-6">
 					<input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="birthDate"
 					(dateChange)="onDateChange($event.value)"
 						placeholder="{{deathFromName ? 'death_date' : 'birth_date' | translate: translateKey}}"
@@ -26,23 +26,23 @@
 					<mat-error *ngIf="searchForm.get('birthDate').invalid">Birth Date is Required.</mat-error>
 				</mat-form-field>
 
-				<mat-form-field class="col-md-4">
+				<!-- <mat-form-field class="col-md-4">
 					<input matInput type="text" formControlName="childName" appValidationFields
 						validationFieldsType="onlyNameWithOutSpace"
 						placeholder="{{deathFromName ? 'deceased_name' : 'child_name' | translate: translateKey}}">
-				</mat-form-field>
+				</mat-form-field> -->
 
-				<mat-form-field class="col-md-4">
+				<!-- <mat-form-field class="col-md-4">
 					<input matInput type="text" formControlName="fatherFirstName" appValidationFields
 						validationFieldsType="onlyNameWithOutSpace"
 						placeholder="{{'father_name' | translate: translateKey}}">
-				</mat-form-field>
+				</mat-form-field> -->
 
-				<mat-form-field class="col-md-4">
+				<!-- <mat-form-field class="col-md-4">
 					<input matInput type="text" formControlName="motherName" appValidationFields
 						validationFieldsType="onlyNameWithOutSpace"
 						placeholder="{{'mother_name' | translate: translateKey}}">
-				</mat-form-field>
+				</mat-form-field> -->
 
 				<div class="col-md-12 text-right">
 					<button mat-raised-button color="primary"
@@ -52,19 +52,19 @@
 			</div>
 			<!-- this form for cash of death  -->
 			<div class="row" *ngIf="deathFromName">
-				<mat-form-field class="col-md-4">
+				<mat-form-field class="col-md-6">
 					<input matInput trim type="text" formControlName="deathRegNumber"
 						placeholder="{{'reg_number' | translate: translateKey}}" required>
 					<mat-error *ngIf="searchForm.get('deathRegNumber').invalid">Registration Number is Required.</mat-error>
 				</mat-form-field>
 
-				<div class="col-md-4 ngSelect">
+				<!-- <div class="col-md-4 ngSelect">
 					<ng-select placeholder="{{'reg_year' | translate: translateKey}}" formControlName="deathRegYear">
 						<ng-option *ngFor="let regyear of RegYear" [value]="regyear.code">{{regyear.name}}</ng-option>
 					</ng-select>
-				</div>
+				</div> -->
 
-				<mat-form-field class="col-md-4">
+				<mat-form-field class="col-md-6">
 					<input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="deathDate"
 					(dateChange)="onDateChange($event.value)"
 						placeholder="{{ 'death_date' | translate: translateKey}}"
@@ -74,23 +74,23 @@
 					<mat-error *ngIf="searchForm.get('deathDate').invalid">Death Date is Required.</mat-error>
 				</mat-form-field>
 
-				<mat-form-field class="col-md-4">
+				<!-- <mat-form-field class="col-md-4">
 					<input matInput type="text" formControlName="deceasedName" appValidationFields
 						validationFieldsType="onlyNameWithSpace"
 						placeholder="{{ 'deceased_name'  | translate: translateKey}}">
-				</mat-form-field>
+				</mat-form-field> -->
 
-				<mat-form-field class="col-md-4">
+				<!-- <mat-form-field class="col-md-4">
 					<input matInput type="text" formControlName="fatherName" appValidationFields
 						validationFieldsType="onlyNameWithSpace"
 						placeholder="{{'father_name' | translate: translateKey}}">
-				</mat-form-field>
+				</mat-form-field> -->
 
-				<mat-form-field class="col-md-4">
+				<!-- <mat-form-field class="col-md-6">
 					<input matInput type="text" formControlName="motherName" appValidationFields
 						validationFieldsType="onlyNameWithSpace"
 						placeholder="{{'mother_name' | translate: translateKey}}">
-				</mat-form-field>
+				</mat-form-field> -->
 
 				<div class="col-md-12 text-right">
 					<button mat-raised-button color="primary"
