@@ -1651,6 +1651,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
     onChangeVisaStatus() {
         this.requiredDocumentList();
+        this.setFormControlToTabIndexMap();
     }
 
     onChangeWitnessNameValidation(event, firstNameWitness) {
