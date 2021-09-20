@@ -979,8 +979,20 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     this.formControlNameToTabIndex.set('groomDays',8);
     this.formControlNameToTabIndex.set('brideDays',8);  
 
-    this.formControlNameToTabIndex.set('applicantRelation',9);
-    this.formControlNameToTabIndex.set('applicantRelationOther',9);
+    if((this.marriageFormGroup.get('isNriMarriage').value && this.marriageFormGroup.get('isGroomVisa').value) || (this.marriageFormGroup.get('isNriMarriage').value && this.marriageFormGroup.get('isBrideVisa').value)){
+        this.formControlNameToTabIndex.set('applicantRelation',8);
+        this.formControlNameToTabIndex.set('applicantRelationOther',8); 
+    }
+
+    else if(this.marriageFormGroup.get('isNriMarriage').value && (this.marriageFormGroup.get('isGroomVisa').value && this.marriageFormGroup.get('isBrideVisa').value) ){
+       this.formControlNameToTabIndex.set('applicantRelation',9);
+       this.formControlNameToTabIndex.set('applicantRelationOther',9);      
+   }
+
+   else{
+       this.formControlNameToTabIndex.set('applicantRelation',7);
+       this.formControlNameToTabIndex.set('applicantRelationOther',7);
+   }
   }
 
   handleErrorsOnSubmit(key){
