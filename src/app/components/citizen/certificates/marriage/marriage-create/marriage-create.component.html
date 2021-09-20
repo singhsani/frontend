@@ -708,7 +708,9 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" formControlName="groomParentsAge" [value]="parentAge('groomParentsBirthDate','groomParentsAge')" />
+						<input matInput placeholder="Age:" formControlName="groomParentsAge" [value]="parentAge('groomParentsBirthDate','groomParentsAge')" required/>
+						<control-messages [control]="marriageFormGroup.get('groomParentsAge')">
+						</control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -821,7 +823,9 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" formControlName="brideParentsAge" [value]="parentAge('brideParentsBirthDate','brideParentsAge')" />
+						<input matInput placeholder="Age:" formControlName="brideParentsAge" [value]="parentAge('brideParentsBirthDate','brideParentsAge')" required />
+						<control-messages [control]="marriageFormGroup.get('brideParentsAge')">
+						</control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -931,7 +935,9 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" formControlName="priestAge" [value]="parentAge('priestBirthDate' , 'priestAge')" />
+						<input matInput placeholder="Age:" formControlName="priestAge" [value]="parentAge('priestBirthDate' , 'priestAge')" required />
+						<control-messages [control]="marriageFormGroup.get('priestAge')">
+						</control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -1034,7 +1040,9 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" [value]="parentAge('firstWitnessBirthDate','firstWitnessAge')" />
+						<input matInput placeholder="Age:" formControlName = "firstWitnessAge"  [value]="parentAge('firstWitnessBirthDate','firstWitnessAge')" required />
+						<control-messages [control]="marriageFormGroup.get('firstWitnessAge')">
+						</control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -1126,7 +1134,9 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" [value]="parentAge('secondWitnessBirthDate','secondWitnessAge')" />
+						<input matInput placeholder="Age:" formControlName = "secondWitnessAge" [value]="parentAge('secondWitnessBirthDate','secondWitnessAge')" required/>
+						<control-messages [control]="marriageFormGroup.get('secondWitnessAge')">
+						</control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -1703,7 +1713,7 @@
 
 				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray"
 					[form]="marriageFormGroup" (tabIndex)="onTabChange($event)"
-					(handleOnSaveAndNext)="handleOnSaveAndNext($event)" [stepInfo]="{step: 'final', next: 9, back: 7}" (handleErrors)="handleErrorsOnSubmit($event)">
+					(handleOnSaveAndNext)="handleOnSaveAndNext($event)" [stepInfo]="{step: 'final', next: 10, back: 7}" (handleErrors)="handleErrorsOnSubmit($event)">
 				</app-action-bar>
 			</mat-tab>
 			<!-- End nine step -->
