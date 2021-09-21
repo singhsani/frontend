@@ -624,7 +624,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             groomParentsMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             groomParentsLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             groomParentsBirthDate: [null],
-            groomParentsAge: [null],
+            groomParentsAge: [null, Validators.required],
             groomParentsAadharNumber: ['', Validators.maxLength(12)],
             groomParentsAddress: this.fb.group(this.addrComponent.addressControls()),
             groomParentsAddressResidence: this.fb.group(this.addrComponent.addressControls()),
@@ -637,7 +637,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             brideParentsMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             brideParentsLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             brideParentsBirthDate: [null],
-            brideParentsAge: [null],
+            brideParentsAge: [null, Validators.required],
             brideParentsAadharNumber: ['', Validators.maxLength(12)],
             brideParentsAddress: this.fb.group(this.addrComponent.addressControls()),
             brideParentsAddressResidence: this.fb.group(this.addrComponent.addressControls()),
@@ -650,7 +650,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             priestMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             priestLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             priestBirthDate: [null],
-            priestAge: [null],
+            priestAge: [null, Validators.required],
             priestAadharNumber: ['', Validators.maxLength(12)],
             priestAddress: this.fb.group(this.addrComponent.addressControls()),
             priestAddressResidence: this.fb.group(this.addrComponent.addressControls()),
@@ -663,7 +663,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             firstWitnessMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             firstWitnessLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             firstWitnessBirthDate: [null],
-            firstWitnessAge: [null],
+            firstWitnessAge: [null, Validators.required],
             firstWitnessAadharNumber: ['', Validators.maxLength(12)],
             firstWitnessAddress: this.fb.group(this.addrComponent.addressControls()),
 
@@ -672,7 +672,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             secondWitnessMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             secondWitnessLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             secondWitnessBirthDate: [null],
-            secondWitnessAge: [null],
+            secondWitnessAge: [null, Validators.required],
             secondWitnessAadharNumber: ['', Validators.maxLength(12)],
             secondWitnessAddress: this.fb.group(this.addrComponent.addressControls()),
 
@@ -979,8 +979,21 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     this.formControlNameToTabIndex.set('groomDays',8);
     this.formControlNameToTabIndex.set('brideDays',8);  
 
-    this.formControlNameToTabIndex.set('applicantRelation',9);
-    this.formControlNameToTabIndex.set('applicantRelationOther',9);
+    if((this.marriageFormGroup.get('isNriMarriage').value && this.marriageFormGroup.get('isGroomVisa').value) || (this.marriageFormGroup.get('isNriMarriage').value && this.marriageFormGroup.get('isBrideVisa').value)){
+         this.formControlNameToTabIndex.set('applicantRelation',8);
+         this.formControlNameToTabIndex.set('applicantRelationOther',8); 
+     }
+
+     else if(this.marriageFormGroup.get('isNriMarriage').value && (this.marriageFormGroup.get('isGroomVisa').value && this.marriageFormGroup.get('isBrideVisa').value) ){
+        this.formControlNameToTabIndex.set('applicantRelation',9);
+        this.formControlNameToTabIndex.set('applicantRelationOther',9);      
+    }
+ 
+    else{
+        this.formControlNameToTabIndex.set('applicantRelation',7);
+        this.formControlNameToTabIndex.set('applicantRelationOther',7);
+    }
+    
   }
 
   handleErrorsOnSubmit(key){
@@ -1639,6 +1652,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
     onChangeVisaStatus() {
         this.requiredDocumentList();
+        this.setFormControlToTabIndexMap();
     }
 
     onChangeWitnessNameValidation(event, firstNameWitness) {

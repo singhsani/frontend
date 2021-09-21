@@ -636,7 +636,7 @@
 				</div>
 
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
-				(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
+				(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step2', next: 2, back: 1}"></app-action-bar>
 
 			</mat-tab>
 			<!-- End Second step -->
@@ -708,7 +708,9 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" formControlName="groomParentsAge" [value]="parentAge('groomParentsBirthDate','groomParentsAge')" />
+						<input matInput placeholder="Age:" formControlName="groomParentsAge" [value]="parentAge('groomParentsBirthDate','groomParentsAge')" required/>
+						<control-messages [control]="marriageFormGroup.get('groomParentsAge')">
+						</control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -749,7 +751,7 @@
 					[addressFormGroup]="marriageFormGroup.get('groomParentsAddressResidence')"></app-address>
 
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
-				(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
+				(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step3', next: 3, back: 2}"></app-action-bar>
 
 			</mat-tab>
 			<!-- End Third step -->
@@ -821,7 +823,9 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" formControlName="brideParentsAge" [value]="parentAge('brideParentsBirthDate','brideParentsAge')" />
+						<input matInput placeholder="Age:" formControlName="brideParentsAge" [value]="parentAge('brideParentsBirthDate','brideParentsAge')" required />
+						<control-messages [control]="marriageFormGroup.get('brideParentsAge')">
+						</control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -861,7 +865,7 @@
 					[addressFormGroup]="marriageFormGroup.get('brideParentsAddressResidence')"></app-address>
 
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
-				(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
+				(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step4', next: 4, back: 3}"></app-action-bar>
 
 			</mat-tab>
 			<!-- End Forth step -->
@@ -931,7 +935,9 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" formControlName="priestAge" [value]="parentAge('priestBirthDate' , 'priestAge')" />
+						<input matInput placeholder="Age:" formControlName="priestAge" [value]="parentAge('priestBirthDate' , 'priestAge')" required />
+						<control-messages [control]="marriageFormGroup.get('priestAge')">
+						</control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -959,7 +965,7 @@
 				</app-address>
 
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
-				(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step5', next: 5, back:3 }"></app-action-bar>
+				(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step5', next: 5, back:4 }"></app-action-bar>
 
 
 			</mat-tab>
@@ -1034,7 +1040,9 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" [value]="parentAge('firstWitnessBirthDate','firstWitnessAge')" />
+						<input matInput placeholder="Age:" formControlName = "firstWitnessAge"  [value]="parentAge('firstWitnessBirthDate','firstWitnessAge')" required />
+						<control-messages [control]="marriageFormGroup.get('firstWitnessAge')">
+						</control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -1052,7 +1060,7 @@
 				</div>
 
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
-				(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step6', next: 6, back: 4}"></app-action-bar>
+				(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step6', next: 6, back: 5}"></app-action-bar>
 
 			</mat-tab>
 			<!-- End sixth step -->
@@ -1126,7 +1134,9 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" [value]="parentAge('secondWitnessBirthDate','secondWitnessAge')" />
+						<input matInput placeholder="Age:" formControlName = "secondWitnessAge" [value]="parentAge('secondWitnessBirthDate','secondWitnessAge')" required/>
+						<control-messages [control]="marriageFormGroup.get('secondWitnessAge')">
+						</control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -1143,7 +1153,7 @@
 				</div>
 
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
-				(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step7', next: 7, back: 5}"></app-action-bar>
+				(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step7', next: 7, back: 6}"></app-action-bar>
 
 
 			</mat-tab>
@@ -1331,7 +1341,7 @@
 				</div>
 
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
-				(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step8', next: 8, back: 6}"></app-action-bar>
+				(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step8', next: 8, back: 7}"></app-action-bar>
 
 			</mat-tab>
 
@@ -1520,12 +1530,12 @@
 
 				<span *ngIf="marriageFormGroup.get('isGroomVisa').value == true">
 					<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
-					(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step9', next: 9, back: 7}">
+					(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step9', next: 9, back: 8}">
 					</app-action-bar>
 				</span>
 				<span *ngIf="marriageFormGroup.get('isGroomVisa').value == false">
 					<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
-					(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step8', next: 8, back: 6}">
+					(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step8', next: 8, back: 7}">
 					</app-action-bar>
 				</span>
 			</mat-tab>
@@ -1598,7 +1608,7 @@
 				</div>
 
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
-				(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step10', next: 10, back: 6}"></app-action-bar>
+				(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step9', next: 10, back: 9}"></app-action-bar>
 
 			</mat-tab>
 			<!-- End applicant step -->
@@ -1703,7 +1713,7 @@
 
 				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray"
 					[form]="marriageFormGroup" (tabIndex)="onTabChange($event)"
-					(handleOnSaveAndNext)="handleOnSaveAndNext($event)" [stepInfo]="{step: 'final', next: 9, back: 7}" (handleErrors)="handleErrorsOnSubmit($event)">
+					(handleOnSaveAndNext)="handleOnSaveAndNext($event)" [stepInfo]="{step: 'final', next: 10, back: 8}" (handleErrors)="handleErrorsOnSubmit($event)">
 				</app-action-bar>
 			</mat-tab>
 			<!-- End nine step -->
