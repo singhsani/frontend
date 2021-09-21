@@ -877,7 +877,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     this.formControlNameToTabIndex.set('groomParentsFirstName',2);    
     this.formControlNameToTabIndex.set('groomParentsMiddleName',2); 
     this.formControlNameToTabIndex.set('groomParentsLastName',2); 
-    this.formControlNameToTabIndex.set('groomParentsBirthDate',2); 
+    this.formControlNameToTabIndex.set('groomParentsBirthDate',2);    
+    this.formControlNameToTabIndex.set('groomParentsAge',2);
     this.formControlNameToTabIndex.set('groomParentsAadharNumber',2);  
     this.formControlNameToTabIndex.set('groomParentsFirstNameGuj',2); 
     this.formControlNameToTabIndex.set('groomParentsMiddleNameGuj',2);   
@@ -891,6 +892,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     this.formControlNameToTabIndex.set('brideParentsMiddleName',3);
     this.formControlNameToTabIndex.set('brideParentsLastName',3);   
     this.formControlNameToTabIndex.set('brideParentsBirthDate',3);
+    this.formControlNameToTabIndex.set('brideParentsAge',3);
     this.formControlNameToTabIndex.set('brideParentsAadharNumber',3);
     this.formControlNameToTabIndex.set('brideParentsFirstNameGuj',3);
     this.formControlNameToTabIndex.set('brideParentsMiddleNameGuj',3); 
@@ -904,7 +906,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     this.formControlNameToTabIndex.set('priestFirstName',4); 
     this.formControlNameToTabIndex.set('priestMiddleName',4);   
     this.formControlNameToTabIndex.set('priestLastName',4);  
-    this.formControlNameToTabIndex.set('priestBirthDate',4); 
+    this.formControlNameToTabIndex.set('priestBirthDate',4);   
+    this.formControlNameToTabIndex.set('priestAge',4);
     this.formControlNameToTabIndex.set('priestAadharNumber',4); 
     this.formControlNameToTabIndex.set('priestFirstNameGuj',4);
     this.formControlNameToTabIndex.set('priestMiddleNameGuj',4); 
@@ -917,8 +920,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     this.formControlNameToTabIndex.set('firstWitnessFirstName',5);   
     this.formControlNameToTabIndex.set('firstWitnessMiddleName',5);  
     this.formControlNameToTabIndex.set('firstWitnessLastName',5); 
-    this.formControlNameToTabIndex.set('firstWitnessBirthDate',5);
-    this.formControlNameToTabIndex.set('firstWitnessAadharNumber',5);  
+    this.formControlNameToTabIndex.set('firstWitnessBirthDate',5);    
+    this.formControlNameToTabIndex.set('firstWitnessBirthDate',5); 
+    this.formControlNameToTabIndex.set('firstWitnessAge',5);  
     this.formControlNameToTabIndex.set('firstWitnessFirstNameGuj',5);  
     this.formControlNameToTabIndex.set('firstWitnessMiddleNameGuj',5);   
     this.formControlNameToTabIndex.set('firstWitnessLastNameGuj',5); 
@@ -928,8 +932,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     this.formControlNameToTabIndex.set('secondWitnessFirstName',6);    
     this.formControlNameToTabIndex.set('secondWitnessMiddleName',6); 
     this.formControlNameToTabIndex.set('secondWitnessLastName',6);  
-    this.formControlNameToTabIndex.set('secondWitnessBirthDate',6);   
-    this.formControlNameToTabIndex.set('secondWitnessAadharNumber',6); 
+    this.formControlNameToTabIndex.set('secondWitnessBirthDate',6); 
+    this.formControlNameToTabIndex.set('secondWitnessAge',6);  
+    this.formControlNameToTabIndex.set('secondWitnessAadharNumber',6);     
     this.formControlNameToTabIndex.set('secondWitnessFirstNameGuj',6); 
     this.formControlNameToTabIndex.set('secondWitnessMiddleNameGuj',6);  
     this.formControlNameToTabIndex.set('secondWitnessLastNameGuj',6);
@@ -1003,6 +1008,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     handleOnSaveAndNext(res) {
 
         this.changeDocument();
+        this.setBrideReligion(res);
     }
 
     /**
@@ -1936,6 +1942,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     setBrideReligion(evt){
         console.log(this.marriageFormGroup.get('groomReligion').value);
         this.marriageFormGroup.get('brideReligion').setValue(this.marriageFormGroup.get('groomReligion').value);
+        this.religionGujbride = this.marriageFormGroup.get('groomReligion').get('gujName').value
 
     }
 
