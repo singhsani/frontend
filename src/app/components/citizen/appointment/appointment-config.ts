@@ -9,9 +9,11 @@ export class AppointmentConfig extends CitizenConfig {
     public  NOT_ALLOWED_TO_CANCEL = "Not Allowed To Cancel, Appointment might be expired"
     public  APPOINTMENT_CANCELLAION_ERROR = "Appointment Cancellation Error"
     public  APPOINTMENT_SCHEDULE_ERROR = "Appointment Schedule Error"
+    public  YOU_HAVE_RACHED_THE_MAXIMUM_RESCHEDULE_ATTEMPTS = "You have reached the maximum reschedule attempts"
     public  ONLY_ONE_APPOINTMENT_ALLOWED_CODE = "ONLY_ONE_APPOINTMENT_ALLOWED"
     public  ONLY_ONE_APPOINTMENT_ALLOWED_ERROR = "You can schedule only one appointment for application"
     public  ONLY_ONE_APPOINTMENT_ALLOWED_ERROR_MESSAGE = "Please delete the existing booked appointment inorder to reschedule new appointment"
+    public BOOKING_NOT_ALLOWED = "Booking not Allowed"
 
     constructor() {
         super();
