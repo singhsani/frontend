@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import * as moment from 'moment';
 import { CitizenConfig } from '../../citizen-config';
@@ -19,10 +19,13 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 })
 export class NewAffordableHousingComponent implements OnInit {
 
+	@ViewChild('currentAddress') currentAddressComponent: any;
+	@ViewChild('permanentAddress') permanentAddressComponent: any;
+
 	@ViewChild('firstAppCorrespondenceAddress') firstAppCorrespondenceAddressComponent: any;
 	@ViewChild('firstAppOccupationAddress') firstAppOccupationAddressComponent: any;
 
-	@ViewChild('secondAppCorrespondenceAddress') secondAppCorrespondenceAddressComponent: any;
+	//@ViewChild('secondAppCorrespondenceAddress') secondAppCorrespondenceAddressComponent: any;
 	@ViewChild('secondAppOccupationAddress') secondAppOccupationAddressComponent: any;
 
 	// @ViewChild('applicantCorrespondenceAddr') applicantCorrespondenceAddrComponent: any;
@@ -49,6 +52,8 @@ export class NewAffordableHousingComponent implements OnInit {
 
 	showButtons: boolean = false;
 	bankNameArray = [];
+	maritalStatusArray = [];
+	wardNameArray = [];
 	//{ "id": 1, "code": "ALLAHABAD_BANK", "name": "Allahabad Bank" }, { "id": 3, "code": "BANK_OF_BARODA", "name": "Bank of Baroda" }, { "id": 4, "code": "BANK_OF_MAHARASHTRA", "name": "Bank of Maharashtra" }, { "id": 5, "code": "CANARA_BANK", "name": "Canara Bank" }, { "id": 6, "code": "BANK_OF_INDIA", "name": "Bank of India" }, { "id": 7, "code": "CENTRAL_BANK_OF_INDIA", "name": "Central Bank of India" }, { "id": 8, "code": "CORPORATION_BANK", "name": "Corporation India" }, { "id": 9, "code": "DENA_BANK", "name": "Dena India" }, { "id": 10, "code": "INDIAN_BANK", "name": "Indian India" }, { "id": 11, "code": "INDIAN_OVERSEAS_BANK", "name": "Indian Overseas India" }, { "id": 12, "code": "ORIENTAL_BANK_OF_COMMERCE", "name": "Oriental Bank of Commerce" }, { "id": 13, "code": "PUNJAB_NATIONAL_BANK", "name": "Punjab National Bank" }, { "id": 14, "code": "SYNDICATE_BANK", "name": "Syndicate Bank" }, { "id": 15, "code": "UNION_BANK_OF_INDIA", "name": "Union Bank of India" }, { "id": 16, "code": "UNITED_BANK_OF_INDIA", "name": "United Bank of India" }, { "id": 17, "code": "PUNJAB_AND_SIND_BANK", "name": "Punjab & Sind Bank" }, { "id": 18, "code": "UCO_BANK", "name": "UCO Bank" }, { "id": 19, "code": "VIJAYA_BANK", "name": "Vijaya Bank" }, { "id": 20, "code": "AXIS_BANK_LIMITED_BANK", "name": "Axis Bank Limited" }, { "id": 21, "code": "BANDHAN_BANK_LIMITED_BANK", "name": "Bandhan Bank Limited" }, { "id": 22, "code": "CATHOLIC_SYRIAN_BANK_LIMITED_BANK", "name": "Catholic Syrian Bank Limited" }, { "id": 23, "code": "CITY_UNION_BANK_LIMITED_BANK", "name": "City Union Bank Limited" }, { "id": 24, "code": "DCB_UNION_BANK_LIMITED_BANK", "name": "DCB Bank Limited" }, { "id": 25, "code": "DHANLAXMI_BANK_LIMITED_BANK", "name": "Dhanlaxmi Union Bank Limited" }, { "id": 26, "code": "FEDERAL_BANK_LIMITED_BANK", "name": "Federal Union Bank Limited" }, { "id": 27, "code": "HDFC_BANK_LIMITED_BANK", "name": "HDFC Bank Limited" }, { "id": 28, "code": "ICICI_BANK_LIMITED_BANK", "name": "ICICI Bank Limited" }, { "id": 29, "code": "KARUR_VYSYA_BANK_LIMITED", "name": "Karur Vysya Bank Limited" }, { "id": 30, "code": "JAMMU_AND_KASHMIR_BANK_LIMITED", "name": "Jammu & Kashmir Bank Limited" }, { "id": 31, "code": "KARNATAKA_BANK_LIMITED", "name": "Karnataka Bank Limited" }, { "id": 32, "code": "KOTAK_MAHINDRA_BANK_LIMITED", "name": "Kotak Mahindra Bank Limited" }, { "id": 33, "code": "LAKSHMI_VILAS_BANK_LIMITED", "name": "Lakshmi Vilas Bank Limited" }, { "id": 34, "code": "NAINITAL_BANK_LIMITED", "name": "Nainital Bank Limited" }, { "id": 35, "code": "R_B_L_BANK_LIMITED", "name": "RBL Bank Limited" }, { "id": 36, "code": "SOUTH_INDIAN_BANK_LIMITED", "name": "South Indian Bank Limited" }, { "id": 37, "code": "TAMILNAD_MERCANTILE_BANK_LIMITED", "name": "Tamilnad Mercantile Bank Limited" }, { "id": 38, "code": "YES_BANK_LIMITED", "name": "YES Bank Limited" }]
 
 
@@ -64,9 +69,12 @@ export class NewAffordableHousingComponent implements OnInit {
 	public affordableHousingConfiguration: CitizenConfig = new CitizenConfig();
 	MF_CATEGORY_TYPE: Array<any> = [];
 
+	personTypeArray = [];
 	relationArray: Array<any> = ["Father", "Mother", "Husband", "Wife", "Brother", "Son ", "Sister", "Daughter"];
-
+	implYesNorray: Array<any> = [{ name: 'YES', code: true }, { name: 'NO', code: false }];
 	LOOKUP: any;
+
+	houseTypes = [];
 
 	// Map for the formcontrol to tabIndex id;
 
@@ -81,6 +89,7 @@ export class NewAffordableHousingComponent implements OnInit {
 		private commonService: CommonService,
 		private toster: ToastrService,
 		private modalService: BsModalService,
+		private CD: ChangeDetectorRef,
 		private affodableService: AffodableService) {
 		this.formService.apiType = "afhForm";
 	}
@@ -99,6 +108,7 @@ export class NewAffordableHousingComponent implements OnInit {
 			this.affordableHousingFormControls();
 		this.getLookupData();
 		this.getLookupDataApplyFor();
+		this.getHouseType();
 		this.getAllDocumentLists();
 		if (!this.formId) {
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
@@ -112,11 +122,20 @@ export class NewAffordableHousingComponent implements OnInit {
 
 	}
 
+	getHouseType() {
+		this.affodableService.getHouseTypeLookup().subscribe(res => {
+			this.houseTypes = res.AH_HOUSE_TYPE;
+		});
+	}
+
 	setFormControlToTabIndexMap(){
 
 		this.formControlNameToTabIndex.set('schemeId',0)
 		this.formControlNameToTabIndex.set('projectId',0)
 		this.formControlNameToTabIndex.set('category',0)
+		this.formControlNameToTabIndex.set('firstPersonTypeTitle',0)
+		this.formControlNameToTabIndex.set('marriageStatus',0)
+		
 		this.formControlNameToTabIndex.set('firstApplicantFirstName',0)
 		this.formControlNameToTabIndex.set('firstApplicantLastName',0)
 		this.formControlNameToTabIndex.set('firstAppHusWifeFirstName',0)
@@ -136,9 +155,11 @@ export class NewAffordableHousingComponent implements OnInit {
 		this.formControlNameToTabIndex.set('firstAppRationCardNumber',0)
 		this.formControlNameToTabIndex.set('firstAppCorrespondenceAddress',0)
 		this.formControlNameToTabIndex.set('firstAppOccupationAddress',0)
+		this.formControlNameToTabIndex.set('categoryCode',0)
 		
 		this.formControlNameToTabIndex.set('secondApplicantFirstName',1)
 		this.formControlNameToTabIndex.set('secondApplicantMiddleName',1)
+		this.formControlNameToTabIndex.set('secondPersonTypeTitle',1)
 		this.formControlNameToTabIndex.set('secondApplicantLastName',1)
 		this.formControlNameToTabIndex.set('secondAppHusWifeFirstName',1)
 		this.formControlNameToTabIndex.set('secondAppHusWifeMiddleName',1)
@@ -156,31 +177,40 @@ export class NewAffordableHousingComponent implements OnInit {
 		this.formControlNameToTabIndex.set('secondAppAadharCardNumber',1)
 		this.formControlNameToTabIndex.set('secondAppPanCardNumber',1)
 		this.formControlNameToTabIndex.set('secondAppRationCardNumber',1)
-		this.formControlNameToTabIndex.set('secondAppCorrespondenceAddress',1)
+		//this.formControlNameToTabIndex.set('secondAppCorrespondenceAddress',1)
 		this.formControlNameToTabIndex.set('secondAppOccupationAddress',1)
 			
 
-		this.formControlNameToTabIndex.set('bankAccountNumber',2)
-		this.formControlNameToTabIndex.set('bank',2)
-		this.formControlNameToTabIndex.set('bankBranch',2)
-		this.formControlNameToTabIndex.set('bankIFSC',2)
-		this.formControlNameToTabIndex.set('bankMicrCode',2)
-		this.formControlNameToTabIndex.set('ddBank',2)
-		this.formControlNameToTabIndex.set('ddBankBranch',2)
-		this.formControlNameToTabIndex.set('ddNumber',2)
-		this.formControlNameToTabIndex.set('ddAmount',2)
-		this.formControlNameToTabIndex.set('ddIssuingDate',2)
+		this.formControlNameToTabIndex.set('ward',2)
+		this.formControlNameToTabIndex.set('currentAddress',2)
+		this.formControlNameToTabIndex.set('permanentAddress',2)
+		this.formControlNameToTabIndex.set('howLongLivingInVadodara',2)
+		this.formControlNameToTabIndex.set('sqMetersPresentBuilding',2)
+		this.formControlNameToTabIndex.set('hasCurrentHouseKacchaOrPucca',2)
+		this.formControlNameToTabIndex.set('hasCurrentHouseRentedOrPurchased',2)
 
+		this.formControlNameToTabIndex.set('bankAccountNumber',3)
+		this.formControlNameToTabIndex.set('bank',3)
+		this.formControlNameToTabIndex.set('bankBranch',3)
+		this.formControlNameToTabIndex.set('bankIFSC',3)
+		this.formControlNameToTabIndex.set('bankMicrCode',3)
+		
 		this.formControlNameToTabIndex.set('aggregateAnnualIncomeAmount',3)
 		this.formControlNameToTabIndex.set('aggregateAnnualIncomeAmountInWords',3)
 
-		this.formControlNameToTabIndex.set('familyMembers',3)
+		this.formControlNameToTabIndex.set('familyMembers',4)
 		this.formControlNameToTabIndex.set('ownHouseDetail',4)
-		this.formControlNameToTabIndex.set('ownLandPlotDetail',5)
+		this.formControlNameToTabIndex.set('ownLandPlotDetail',4)
 
-		this.formControlNameToTabIndex.set('nomineeName',6)
-		this.formControlNameToTabIndex.set('nomineeApplicantRelationShip',6)
-		this.formControlNameToTabIndex.set('nomineeAddress',6)
+		this.formControlNameToTabIndex.set('nomineeName',5)
+		this.formControlNameToTabIndex.set('nomineeApplicantRelationShip',5)
+		this.formControlNameToTabIndex.set('nomineeAddress',5)
+
+		this.formControlNameToTabIndex.set('ddBank',6)
+		this.formControlNameToTabIndex.set('ddBankBranch',6)
+		this.formControlNameToTabIndex.set('ddNumber',6)
+		this.formControlNameToTabIndex.set('ddAmount',6)
+		this.formControlNameToTabIndex.set('ddIssuingDate',6)
 
 	}
 
@@ -197,7 +227,149 @@ export class NewAffordableHousingComponent implements OnInit {
 	}
 
 
-	setServiceDetailsOnInit(res) {
+	changeMarriageStatus() {
+		var value = this.affordableHousingForm.get('marriageStatus').get('code').value
+		if (value) {
+			if (value == "MARRIED") {
+				this.mandotoryFileds(true);
+				this.setSecoundApplciatPhoto(true);
+			}
+			else {
+				this.mandotoryFileds(false);
+				this.setSecoundApplciatPhoto(false);
+			}
+		}
+	}
+
+	rentChange() {
+		var values = this.affordableHousingForm.get('hasCurrentHouseRentedOrPurchased').value;
+		this.setServiceDetailsOnInit(values);
+	}
+
+	setSecoundApplciatPhoto(event) {
+		this.serverUploadFilesArray = this.attachmentList;
+		const localUploadArray = [...this.serverUploadFilesArray]
+		this.attachmentList = [];
+		if(event){
+		for (let file of localUploadArray) {
+			if (file['documentIdentifier'] === 'UPLOAD_PHOTO_2') {
+				file['mandatory'] = true;
+			}
+			this.attachmentList.push(file);
+		}
+		}else{
+			for (let file of localUploadArray) {
+				if (file['documentIdentifier'] === 'UPLOAD_PHOTO_2') {
+					file['mandatory'] = false;
+				}
+				this.attachmentList.push(file);
+			}
+		}
+		this.manadoty();
+	}
+
+	manadoty(){
+		this.uploadFilesArray = [];
+		_.forEach(this.attachmentList, (value) => {
+			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+				this.uploadFilesArray.push({
+					'labelName': value.documentLabelEn,
+					'fieldIdentifier': value.fieldIdentifier,
+					'documentIdentifier': value.documentIdentifier
+				})
+			}
+		});
+	}
+	setServiceDetailsOnInit(event) {
+		this.serverUploadFilesArray = this.attachmentList;
+		const localUploadArray = [...this.serverUploadFilesArray]
+		this.attachmentList = [];
+		if(event){
+		for (let file of localUploadArray) {
+			if (file['documentIdentifier'] === 'RENT_AGREEMENT') {
+				file['mandatory'] = true;
+			}
+			this.attachmentList.push(file);
+		}
+		}else{
+			for (let file of localUploadArray) {
+				if (file['documentIdentifier'] === 'RENT_AGREEMENT') {
+					file['mandatory'] = false;
+				}
+				this.attachmentList.push(file);
+			}
+		}
+		this.manadoty();
+	}
+
+	mandotoryFileds(flag) {
+		if (flag) {
+			this.affordableHousingForm.get('secondPersonTypeTitle').get('code').setValidators([Validators.required]);
+			this.affordableHousingForm.get('secondApplicantFirstName').setValidators([Validators.required]);
+			this.affordableHousingForm.get('secondApplicantMiddleName').setValidators([Validators.maxLength(100)]);
+			this.affordableHousingForm.get('secondApplicantLastName').setValidators([Validators.required, Validators.maxLength(100)]);
+			this.affordableHousingForm.get('secondAppHusWifeFirstName').setValidators([Validators.required, Validators.maxLength(100)]);
+			this.affordableHousingForm.get('secondAppHusWifeMiddleName').setValidators([Validators.maxLength(100)]);
+			this.affordableHousingForm.get('secondAppHusWifeLastName').setValidators([Validators.required, Validators.maxLength(100)]);
+			this.affordableHousingForm.get('secondAppDateOfBirth').setValidators([Validators.required]);
+			this.affordableHousingForm.get('secondAppTelephoneNumber').setValidators([Validators.maxLength(11)]);
+			this.affordableHousingForm.get('secondAppMobileNumOne').setValidators([Validators.required, Validators.maxLength(10)]);
+			this.affordableHousingForm.get('secondAppMobileNumTwo').setValidators([Validators.maxLength(10)]);
+			this.affordableHousingForm.get('secondAppEmail').setValidators([ValidationService.emailValidator, Validators.maxLength(50)]);
+			this.affordableHousingForm.get('secondAppOrganizationName').setValidators([Validators.required, Validators.maxLength(20)]);
+			this.affordableHousingForm.get('secondAppOccupation').setValidators([Validators.required, Validators.maxLength(10)]);
+			this.affordableHousingForm.get('secondAppOccupationDesignation').setValidators([Validators.required, Validators.maxLength(10)]);
+			this.affordableHousingForm.get('secondAppDrivingLicenseNumber').setValidators([ValidationService.drivingLicenseValidator]);
+			this.affordableHousingForm.get('secondAppVoterIdNumber').setValidators([ValidationService.electionCardValidator]);
+			this.affordableHousingForm.get('secondAppAadharCardNumber').setValidators([Validators.required, Validators.maxLength(12)]);
+			this.affordableHousingForm.get('secondAppPanCardNumber').setValidators([Validators.required, ValidationService.panValidator]);
+			this.affordableHousingForm.get('secondAppRationCardNumber').setValidators([Validators.maxLength(10)]);
+		} else {
+			this.affordableHousingForm.get('secondPersonTypeTitle').get('code').clearValidators();
+			this.affordableHousingForm.get('secondApplicantFirstName').clearValidators();
+			this.affordableHousingForm.get('secondApplicantMiddleName').clearValidators();
+			this.affordableHousingForm.get('secondApplicantLastName').clearValidators();
+			this.affordableHousingForm.get('secondAppHusWifeFirstName').clearValidators();
+			this.affordableHousingForm.get('secondAppHusWifeMiddleName').clearValidators();
+			this.affordableHousingForm.get('secondAppHusWifeLastName').clearValidators();
+			this.affordableHousingForm.get('secondAppDateOfBirth').clearValidators();
+			this.affordableHousingForm.get('secondAppTelephoneNumber').clearValidators();
+			this.affordableHousingForm.get('secondAppMobileNumOne').clearValidators();
+			this.affordableHousingForm.get('secondAppMobileNumTwo').clearValidators();
+			this.affordableHousingForm.get('secondAppEmail').clearValidators();
+			this.affordableHousingForm.get('secondAppOrganizationName').clearValidators();
+			this.affordableHousingForm.get('secondAppOccupation').clearValidators();
+			this.affordableHousingForm.get('secondAppOccupationDesignation').clearValidators();
+			this.affordableHousingForm.get('secondAppDrivingLicenseNumber').clearValidators();
+			this.affordableHousingForm.get('secondAppVoterIdNumber').clearValidators();
+			this.affordableHousingForm.get('secondAppAadharCardNumber').clearValidators();
+			this.affordableHousingForm.get('secondAppPanCardNumber').clearValidators();
+			this.affordableHousingForm.get('secondAppRationCardNumber').clearValidators();
+		}
+		this.affordableHousingForm.get('secondPersonTypeTitle').get('code').updateValueAndValidity();
+		this.affordableHousingForm.get('secondApplicantFirstName').updateValueAndValidity();
+		this.affordableHousingForm.get('secondApplicantMiddleName').updateValueAndValidity();
+		this.affordableHousingForm.get('secondApplicantLastName').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppHusWifeFirstName').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppHusWifeMiddleName').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppHusWifeLastName').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppDateOfBirth').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppTelephoneNumber').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppMobileNumOne').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppMobileNumTwo').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppEmail').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppOrganizationName').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppOccupation').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppOccupationDesignation').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppDrivingLicenseNumber').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppVoterIdNumber').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppAadharCardNumber').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppPanCardNumber').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppRationCardNumber').updateValueAndValidity();
+		this.CD.detectChanges();
+	}
+
+	setServiceDetailsOnInits(res) {
 		this.attachmentList = [];
 		this.serverUploadFilesArray = res.serviceDetail.serviceUploadDocuments;
 		const localUploadArray = [...this.serverUploadFilesArray];
@@ -231,7 +403,7 @@ export class NewAffordableHousingComponent implements OnInit {
 					(<FormArray>this.affordableHousingForm.get('ownLandPlotDetail')).push(this.createFormGroup('ownLandPlotDetail',app));
 				});
 
-				this.setServiceDetailsOnInit(res);
+				this.setServiceDetailsOnInits(res);
 				this.showButtons = true;
 				
 				this.affordableHousingForm.get('ddBank').get('code').setValue(res.paymentAcceptance[0].ddBank.code);
@@ -240,6 +412,7 @@ export class NewAffordableHousingComponent implements OnInit {
 				this.affordableHousingForm.get('ddAmount').setValue(res.paymentAcceptance[0].ddAmount);
 				this.affordableHousingForm.get('ddIssuingDate').setValue(res.paymentAcceptance[0].ddIssuingDate);
 				
+				this.projectChange(res.projectId);
 
 			} catch (error) {
 				console.log(error.message)
@@ -255,6 +428,9 @@ export class NewAffordableHousingComponent implements OnInit {
 			this.LOOKUP = res;
 			this.MF_CATEGORY_TYPE = res.AH_CATEGORY;
 			this.bankNameArray = res.AH_BANKS;
+			this.personTypeArray = res.PERSON_TYPE;
+			this.maritalStatusArray = res.MARITAL_STATUS;
+			this.wardNameArray = res.WARD;
 		});
 	}
 
@@ -299,6 +475,37 @@ export class NewAffordableHousingComponent implements OnInit {
 				name: null,
 			}),
 
+			categoryCode: this.fb.group({
+				code: [null, [Validators.required]],
+				name: null,
+			}),
+
+			firstPersonTypeTitle: this.fb.group({
+				code: [null, [Validators.required]],
+				name: null,
+			}),
+
+			secondPersonTypeTitle: this.fb.group({
+				code: [null, [Validators.required]],
+				name: null,
+			}),
+
+			ward: this.fb.group({
+				code: [null, [Validators.required]],
+				name: null,
+			}),
+			howLongLivingInVadodara: [null, [Validators.required]],
+			sqMetersPresentBuilding: [null, [Validators.required]],
+			hasCurrentHouseKacchaOrPucca: [null, [Validators.required]],
+			hasCurrentHouseRentedOrPurchased: [null, [Validators.required]],
+
+			marriageStatus: this.fb.group({
+				code: [null, Validators.required]
+			}),
+
+			location: null,
+			tpNumber: null,
+			fpNumber: null,
 			// /* First Beneficiary controls Start *//
 			firstApplicantFirstName: [null, [Validators.required, Validators.maxLength(100)]],
 			firstApplicantMiddleName: [null, [Validators.maxLength(100)]],
@@ -324,6 +531,9 @@ export class NewAffordableHousingComponent implements OnInit {
 			firstAppOccupationAddress: this.fb.group(this.firstAppOccupationAddressComponent.addressControls()),
 			// /* First Beneficiary controls End *//
 
+			currentAddress: this.fb.group(this.currentAddressComponent.addressControls()),
+			permanentAddress: this.fb.group(this.permanentAddressComponent.addressControls()),
+
 			// /* Second Beneficiary controls Start *//
 			secondApplicantFirstName: [null, [Validators.required, Validators.maxLength(100)]],
 			secondApplicantMiddleName: [null, [Validators.maxLength(100)]],
@@ -345,7 +555,7 @@ export class NewAffordableHousingComponent implements OnInit {
 			secondAppPanCardNumber: [null, [Validators.required, ValidationService.panValidator]],
 			secondAppRationCardNumber: [null, [Validators.maxLength(20)]],
 
-			secondAppCorrespondenceAddress: this.fb.group(this.secondAppCorrespondenceAddressComponent.addressControls()),
+			//secondAppCorrespondenceAddress: this.fb.group(this.secondAppCorrespondenceAddressComponent.addressControls()),
 			secondAppOccupationAddress: this.fb.group(this.secondAppOccupationAddressComponent.addressControls()),
 			// /* Second Beneficiary controls End *//
 
@@ -421,6 +631,21 @@ export class NewAffordableHousingComponent implements OnInit {
 			words = " "
 		}
 		return words;
+	}
+
+	projectChange(projectId) {
+
+		this.projectData = [];
+		if (projectId)
+			this.affodableService.getProjectLocation(projectId).subscribe(
+				(res: any) => {
+					let Obj = res[0];
+					this.affordableHousingForm.get('location').setValue(Obj.location);
+					this.affordableHousingForm.get('tpNumber').setValue(Obj.locationTPNo);
+					this.affordableHousingForm.get('fpNumber').setValue(Obj.locationFPNo);
+				}, (err: any) => {
+
+				})
 	}
 
 	/**
@@ -680,6 +905,7 @@ export class NewAffordableHousingComponent implements OnInit {
 		}
 
 	}
+
 
 	/**
 	 * This method is used to submit the PEC registration data
