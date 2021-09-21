@@ -29,4 +29,12 @@ export class AffodableService {
 		return this.http.get('api/afhForm/doc/list');
 	}
 
+	getHouseTypeLookup() {
+		return this.http.get(`api/afhForm/projectMaster/lookups`);
+	}
+
+	getProjectLocation(projectCode) {
+		return this.http.get(`api/afhForm/projectMaster/fetchByProjectId/` + projectCode);
+	}
+
 }

@@ -28,7 +28,7 @@
 					</div>
 
 					<div class="col-md-4 ngSelect">
-						<ng-select placeholder="{{'project' | translate: translateKey}} *" formControlName="projectId">
+						<ng-select placeholder="{{'project' | translate: translateKey}} *" (change)="projectChange($event)" formControlName="projectId">
 							<ng-container *ngFor="let project of projectData">
 								<ng-option *ngIf="project?.isAppliedFor == 'ACTIVE'" [value]="project.id">
 									{{project.projectName}}</ng-option>
@@ -37,6 +37,30 @@
 						<control-messages [control]="affordableHousingForm.get('projectId')">
 						</control-messages>
 					</div>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields readonly
+							validationFieldsType='onlyNameWithSpace' required maxlength="100"
+							placeholder="{{'Location' | translate:translateKey}}" formControlName="location">
+						<control-messages [control]="affordableHousingForm.get('location')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields readonly
+							validationFieldsType='onlyNameWithSpace' required maxlength="100"
+							placeholder="{{'TP Number' | translate:translateKey}}" formControlName="tpNumber">
+						<control-messages [control]="affordableHousingForm.get('tpNumber')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields readonly
+							validationFieldsType='onlyNameWithSpace' required maxlength="100"
+							placeholder="{{'FP Number' | translate:translateKey}}" formControlName="fpNumber">
+						<control-messages [control]="affordableHousingForm.get('fpNumber')">
+						</control-messages>
+					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="category">
 						<ng-select placeholder="{{'category' | translate: translateKey}} *" formControlName="code">
@@ -48,26 +72,47 @@
 						</control-messages>
 					</div>
 
+					<div class="col-md-4 ngSelect" formGroupName="categoryCode">
+						<ng-select placeholder="{{'House Type' | translate: translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let type of houseTypes"
+								[value]="type.code">
+								{{type.name}}
+							</ng-option>
+						</ng-select>
+						<control-messages [control]="affordableHousingForm.get('categoryCode').get('code')">
+						</control-messages>
+					</div>
+
 					<div class="col-md-12">
 						<h2 style="margin-left: -16px;"><b>{{'First Applicant / Beneficiary' | translate:
 								translateKey}}</b></h2>
 					</div>
 
-					<mat-form-field class="col-md-4">
+					<div class="col-md-3 ngSelect" formGroupName="firstPersonTypeTitle">
+						<ng-select placeholder="{{'Title' | translate: translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let person of personTypeArray" [value]="person.code">
+								{{person.name}}
+							</ng-option>
+						</ng-select>
+						<control-messages [control]="affordableHousingForm.get('firstPersonTypeTitle').get('code')">
+						</control-messages>
+					</div>
+
+					<mat-form-field class="col-md-3">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
 							required maxlength="100" placeholder="{{'First Name' | translate:translateKey}}"
 							formControlName="firstApplicantFirstName">
 						<control-messages [control]="affordableHousingForm.get('firstApplicantFirstName')">
 						</control-messages>
 					</mat-form-field>
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-3">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
 							maxlength="100" placeholder="{{'Middle Name' | translate:translateKey}}"
 							formControlName="firstApplicantMiddleName">
 						<control-messages [control]="affordableHousingForm.get('firstApplicantMiddleName')">
 						</control-messages>
 					</mat-form-field>
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-3">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
 							required maxlength="100" placeholder="{{'Last Name' | translate:translateKey}}"
 							formControlName="firstApplicantLastName">
@@ -158,6 +203,17 @@
 					<app-address #firstAppCorrespondenceAddress [requiredFeilds]="true"
 						[addressFormGroup]="affordableHousingForm.get('firstAppCorrespondenceAddress')">
 					</app-address>
+				</div>
+
+				<div class="col-md-3 ngSelect" formGroupName="marriageStatus">
+					<ng-select (change)="changeMarriageStatus()" placeholder="{{'marital_status' | translate: translateKey}} *"
+						formControlName="code">
+						<ng-option *ngFor="let status of maritalStatusArray" [value]="status.code">
+							{{status.name}}
+						</ng-option>
+					</ng-select>
+					<control-messages [control]="affordableHousingForm.get('marriageStatus').get('code')">
+					</control-messages>
 				</div>
 
 				<div class="col-md-12">
@@ -256,22 +312,31 @@
 				</ng-template>
 
 				<div class="row">
-
-					<mat-form-field class="col-md-4">
+					<div class="col-md-3 ngSelect" formGroupName="secondPersonTypeTitle">
+						<ng-select placeholder="{{'Title' | translate: translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let person of personTypeArray" [value]="person.code">
+								{{person.name}}
+							</ng-option>
+						</ng-select>
+						<control-messages
+							[control]="affordableHousingForm.get('secondPersonTypeTitle').get('code')">
+						</control-messages>
+					</div>
+					<mat-form-field class="col-md-3">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
 							required maxlength="100" placeholder="{{'First Name' | translate:translateKey}}"
 							formControlName="secondApplicantFirstName">
 						<control-messages [control]="affordableHousingForm.get('secondApplicantFirstName')">
 						</control-messages>
 					</mat-form-field>
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-3">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
 							maxlength="100" placeholder="{{'Middle Name' | translate:translateKey}}"
 							formControlName="secondApplicantMiddleName">
 						<control-messages [control]="affordableHousingForm.get('secondApplicantMiddleName')">
 						</control-messages>
 					</mat-form-field>
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-3">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
 							required maxlength="100" placeholder="{{'Last Name' | translate:translateKey}}"
 							formControlName="secondApplicantLastName">
@@ -351,12 +416,12 @@
 
 				</div>
 
-				<div class="row">
+				<!-- <div class="row">
 					<h2><b>{{'applicant_correspondence_address' | translate: translateKey}}</b></h2>
-					<app-address #secondAppCorrespondenceAddress [requiredFeilds]="true"
+					<app-address #secondAppCorrespondenceAddress [requiredAhf]="this.affordableHousingForm.get('marriageStatus').get('code').value == 'MARRIED'"
 						[addressFormGroup]="affordableHousingForm.get('secondAppCorrespondenceAddress')">
 					</app-address>
-				</div>
+				</div> -->
 
 				<div class="col-md-12">
 					<h2 style="margin-left: -16px;"><b>Applicant Occupation Details</b></h2>
@@ -431,7 +496,7 @@
 				</div>
 				<div class="row">
 					<h2><b>{{'occupationAddress' | translate: translateKey}}</b></h2>
-					<app-address #secondAppOccupationAddress [requiredFeilds]="true"
+					<app-address #secondAppOccupationAddress [requiredAhf]="this.affordableHousingForm.get('marriageStatus').get('code').value == 'MARRIED'"
 						[addressFormGroup]="affordableHousingForm.get('secondAppOccupationAddress')"></app-address>
 				</div>
 
@@ -453,6 +518,88 @@
 			<!-- step 2 Ends -->
 
 			<!-- step 3 Starts -->
+
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'Address Of Residence'}}
+					</div>
+				</ng-template>
+
+				<div class="row">
+					<div class="col-md-4 ngSelect" formGroupName="ward">
+						<ng-select placeholder="{{'Ward ' | translate: translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let ward of wardNameArray" [value]="ward.code">
+								{{ward.name}}
+							</ng-option>
+						</ng-select>
+						<control-messages [control]="affordableHousingForm.get('ward').get('code')">
+						</control-messages>
+					</div>
+				</div>
+				<div class="row">
+					<h2><b>{{'Current Address' | translate: translateKey}}</b></h2>
+					<app-address #currentAddress [requiredFeilds]="true"
+						[addressFormGroup]="affordableHousingForm.get('currentAddress')"></app-address>
+				</div>
+
+				<div class="row">
+					<h2><b>{{'Permanent Address' | translate: translateKey}}</b></h2>
+					<app-address #permanentAddress [requiredFeilds]="true"
+						[addressFormGroup]="affordableHousingForm.get('permanentAddress')"></app-address>
+				</div>
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput autocomplete="off" formControlName="howLongLivingInVadodara" type="text"
+							placeholder="{{'How long have you been living in Vadodara?' | translate: translateKey}}"
+							required>
+						<control-messages [control]="affordableHousingForm.get('howLongLivingInVadodara')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput autocomplete="off" formControlName="sqMetersPresentBuilding" type="text"
+							placeholder="{{'How many square meters is the present building?' | translate: translateKey}}"
+							required>
+						<control-messages [control]="affordableHousingForm.get('sqMetersPresentBuilding')">
+						</control-messages>
+					</mat-form-field>
+
+					<div class="col-md-4 ngSelect">
+						<ng-select placeholder="{{'is your house kaccha or pucca ?' | translate: translateKey}}"
+							formControlName="hasCurrentHouseKacchaOrPucca">
+							<ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
+							</ng-option>
+						</ng-select>
+						<control-messages [control]="affordableHousingForm.get('hasCurrentHouseKacchaOrPucca')">
+						</control-messages>
+					</div>
+
+					<div class="col-md-4 ngSelect">
+						<ng-select (change)="rentChange();" placeholder="{{'Is house Rented or Own Property ?' | translate: translateKey}}"
+							formControlName="hasCurrentHouseRentedOrPurchased">
+							<ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
+							</ng-option>
+						</ng-select>
+						<control-messages [control]="affordableHousingForm.get('hasCurrentHouseRentedOrPurchased')">
+						</control-messages>
+					</div>
+
+				</div>
+
+				<div class="fotButtonBar clearfix">
+					<div class="col-sm-12 col-md-12">
+						<button type="button" type="button" class="liteBorder pull-left" mat-raised-button
+							(click)="tabIndex = 1">{{'back' |
+							translate: actionBarKey}}</button>
+						<button type="button" mat-raised-button class="pull-right" color="primary"
+							(click)="tabIndex = 3">{{'next'
+							| translate:
+							actionBarKey}}</button>
+					</div>
+				</div>
+
+			</mat-tab>
+
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>{{'bank_detail' | translate:translateKey}}</div>
@@ -505,71 +652,11 @@
 				</div>
 
 				<div class="col-md-12">
-					<h2 style="margin-left: -16px;">{{'Beneficiary DD/Banker Cheque Details' | translate:
-						translateKey}}</h2>
+					<h2 style="margin-left: -16px;"><b>{{'Aggregate Annual Income of Family of Applicant.' |
+							translate:
+							translateKey}}</b></h2>
 				</div>
 
-				<div class="row">
-					<div class="col-md-4 ngSelect" formGroupName="ddBank">
-						<ng-select placeholder="{{'Bank Name *' | translate: translateKey}}" formControlName="code">
-							<ng-option *ngFor="let ddbank of bankNameArray" [value]="ddbank.code">{{ ddbank.name
-								}}
-							</ng-option>
-							<control-messages [control]="affordableHousingForm.get('ddBank').get('code')">
-							</control-messages>
-						</ng-select>
-					</div>
-					<mat-form-field class="col-md-4">
-						<input matInput placeholder="{{'Branch Name *' | translate: translateKey}}"
-							formControlName="ddBankBranch" type="text" appValidationFields
-							validationFieldsType='onlyNameWithSpace' maxlength="20">
-						<control-messages [control]="affordableHousingForm.get('ddBankBranch')"></control-messages>
-					</mat-form-field>
-					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber maxlength="6" formControlName="ddNumber"
-							placeholder="{{'DD Number' | translate: translateKey}}">
-						<control-messages [control]="affordableHousingForm.get('ddNumber')"></control-messages>
-					</mat-form-field>
-					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber maxlength="6" formControlName="ddAmount"
-							placeholder="{{'DD Amount' | translate: translateKey}}">
-						<control-messages [control]="affordableHousingForm.get('ddAmount')"></control-messages>
-					</mat-form-field>
-
-					<mat-form-field class="col-md-4">
-						<mat-label>{{'Cheque/DD Issuing date *'| translate: translateKey}}</mat-label>
-						<input appDate matInput [min]="minDate" [max]="maxDate" [matDatepicker]="chequeDate"
-							formControlName="ddIssuingDate">
-						<mat-datepicker-toggle matSuffix [for]="chequeDate"></mat-datepicker-toggle>
-						<mat-datepicker #chequeDate touchUi="true"></mat-datepicker>
-						<control-messages [control]="affordableHousingForm.get('ddIssuingDate')"></control-messages>
-						<div align="end" class="default-show-hint mat-hint mat-right">
-							Hint: DD/MM/YYYY
-						</div>
-
-					</mat-form-field>
-				</div>
-
-				<div class="fotButtonBar clearfix">
-					<div class="col-sm-12 col-md-12">
-						<button type="button" class="liteBorder pull-left" mat-raised-button
-							(click)="tabIndex = 1">{{'back' |
-							translate: actionBarKey}}</button>
-						<button mat-raised-button class="pull-right" color="primary" (click)="tabIndex = 3">{{'next'
-							| translate:
-							actionBarKey}}</button>
-					</div>
-				</div>
-
-			</mat-tab>
-
-			<!-- step 3 Ends -->
-
-			<!-- step 4 Starts -->
-			<mat-tab>
-				<ng-template mat-tab-label>
-					<div>{{'annual_income' | translate:translateKey}}</div>
-				</ng-template>
 				<div class="row">
 
 					<mat-form-field class="col-md-4">
@@ -585,19 +672,35 @@
 						<input matInput readonly autocomplete="off" maxlength="200"
 							placeholder="{{'annualIncomeWords' | translate:translateKey}}" type="text"
 							formControlName="aggregateAnnualIncomeAmountInWords" required>
-						<control-messages [control]="affordableHousingForm.get('aggregateAnnualIncomeAmountInWords')">
+						<control-messages
+							[control]="affordableHousingForm.get('aggregateAnnualIncomeAmountInWords')">
 						</control-messages>
 					</mat-form-field>
-
 				</div>
 
+				<div class="fotButtonBar clearfix">
+					<div class="col-sm-12 col-md-12">
+						<button type="button" class="liteBorder pull-left" mat-raised-button
+							(click)="tabIndex = 2">{{'back' |
+							translate: actionBarKey}}</button>
+						<button mat-raised-button class="pull-right" color="primary" (click)="tabIndex = 4">{{'next'
+							| translate:
+							actionBarKey}}</button>
+					</div>
+				</div>
 
+			</mat-tab>
+
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'Own Family / Land Detail' | translate:translateKey}}</div>
+				</ng-template>
 				<div class="row pb-3">
 					<div class="col-md-10">
-						<h2>{{ 'family_members_details' | translate:translateKey}}</h2>
+						<h2><b>{{ 'family_members_details' | translate:translateKey}}</b></h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
-						<button type="button" *ngIf="addnewBtnfamily"
+						<button [disabled]="isEditModeBtn" type="button" *ngIf="addnewBtnfamily"
 							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
 							(click)="addRecordFormArray('familyMembers')">{{'add'|
 							translate:translateKey}}</button>
@@ -669,17 +772,18 @@
 
 
 									<td style="width: 40px;" *ngIf="affordableHousingForm.get('canEdit').value">
-										<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
-											(click)="editRecord(item)">
+										<button [disabled]="isEditModeBtn" mat-icon-button color="primary"
+											*ngIf="!item.isEditMode" (click)="editRecord(item)">
 											<mat-icon title="Edit">edit</mat-icon>
 										</button>
-										<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary"
-											*ngIf="item.isEditMode" (click)="saveRecord(item)">
+										<button type="submit" [disabled]="item.invalid" mat-icon-button
+											color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
 											<mat-icon title="save">save</mat-icon>
 										</button>
 									</td>
 									<td style="width: 40px;" *ngIf="affordableHousingForm.get('canEdit').value">
-										<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
+										<button [disabled]="isEditModeBtn" mat-icon-button color="warn"
+											*ngIf="!item.isEditMode"
 											(click)="deleteFormArrayRecord('familyMembers',indx)">
 											<mat-icon title="Delete">delete</mat-icon>
 										</button>
@@ -694,34 +798,14 @@
 					</div>
 				</div>
 
-				<div class="fotButtonBar clearfix">
-					<div class="col-sm-12 col-md-12">
-						<button type="button" class="liteBorder pull-left" mat-raised-button
-							(click)="tabIndex = 2">{{'back' |
-							translate: actionBarKey}}</button>
-						<button mat-raised-button class="pull-right" color="primary" (click)="tabIndex = 4">{{'next'
-							| translate:
-							actionBarKey}}</button>
-					</div>
-				</div>
-
-			</mat-tab>
-			<!--  step 4 Ends -->
-
-
-			<!-- step 5 Starts -->
-			<mat-tab>
-				<ng-template mat-tab-label>
-					<div>{{'Own House Detail' | translate:translateKey}}</div>
-				</ng-template>
-
 				<div class="row pb-3">
 					<div class="col-md-10">
-						<h2>{{ 'Own House Detail' | translate:translateKey}}</h2>
+						<h2><b>{{ 'Own House Detail' | translate:translateKey}}</b></h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
-						<button type="button" *ngIf="addnewBtnown" matTooltip="{{'add_more' | translate:translateKey}}"
-							mat-raised-button color="primary" (click)="addRecordFormArray('ownHouseDetail')">{{'add'|
+						<button [disabled]="isEditModeBtn" type="button" *ngIf="addnewBtnown"
+							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
+							(click)="addRecordFormArray('ownHouseDetail')">{{'add'|
 							translate:translateKey}}</button>
 					</div>
 				</div>
@@ -756,7 +840,7 @@
 										<div class="d-md-none">{{'Full Name' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput appValidationFields
+											<input matInput appValidationFields maxlength="50"
 												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
 											<control-messages [control]="item.get('name')"></control-messages>
 										</mat-form-field>
@@ -766,7 +850,7 @@
 										<div class="d-md-none">{{'flat_no' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('flatNo').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput formControlName="flatNo">
+											<input matInput maxlength="10" formControlName="flatNo">
 											<control-messages [control]="item.get('flatNo')"></control-messages>
 										</mat-form-field>
 									</td>
@@ -775,7 +859,7 @@
 										<div class="d-md-none">{{'street' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('street').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput formControlName="street">
+											<input matInput maxlength="10" formControlName="street">
 											<control-messages [control]="item.get('street')"></control-messages>
 										</mat-form-field>
 									</td>
@@ -784,7 +868,9 @@
 										<div class="d-md-none">{{'city' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('city').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput formControlName="city">
+											<input matInput appValidationFields
+												[validationFieldsType]="'onlyNameWithSpace'" maxlength="20"
+												formControlName="city">
 											<control-messages [control]="item.get('city')"></control-messages>
 										</mat-form-field>
 									</td>
@@ -793,7 +879,9 @@
 										<div class="d-md-none">{{'district' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('district').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput formControlName="district">
+											<input matInput appValidationFields
+												[validationFieldsType]="'onlyNameWithSpace'" maxlength="20"
+												formControlName="district">
 											<control-messages [control]="item.get('district')"></control-messages>
 										</mat-form-field>
 									</td>
@@ -808,8 +896,8 @@
 
 									<td width="110px">
 										<div *ngIf="affordableHousingForm.get('canEdit').value" class="float-left">
-											<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
-												(click)="editRecord(item)">
+											<button [disabled]="isEditModeBtn" mat-icon-button color="primary"
+												*ngIf="!item.isEditMode" (click)="editRecord(item)">
 												<mat-icon title="Edit">edit</mat-icon>
 											</button>
 											<button type="submit" [disabled]="item.invalid" mat-icon-button
@@ -819,7 +907,8 @@
 										</div>
 
 										<div *ngIf="affordableHousingForm.get('canEdit').value">
-											<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
+											<button [disabled]="isEditModeBtn" mat-icon-button color="warn"
+												*ngIf="!item.isEditMode"
 												(click)="deleteFormArrayRecord('ownHouseDetail',indx)">
 												<mat-icon title="Delete">delete</mat-icon>
 											</button>
@@ -836,39 +925,20 @@
 					</div>
 				</div>
 
-				<div class="fotButtonBar clearfix">
-					<div class="col-sm-12 col-md-12">
-						<button type="button" class="liteBorder pull-left" mat-raised-button
-							(click)="tabIndex = 3">{{'back' |
-							translate: actionBarKey}}</button>
-						<button mat-raised-button class="pull-right" color="primary" (click)="tabIndex = 5">{{'next'
-							| translate:
-							actionBarKey}}</button>
-					</div>
-				</div>
-
-			</mat-tab>
-			<!-- step 5 Ends -->
-
-			<!-- step 6 Starts -->
-			<mat-tab>
-				<ng-template mat-tab-label>
-					<div>{{'Own Plot Detail' | translate:translateKey}}</div>
-				</ng-template>
-
-
 				<div class="row pb-3">
 					<div class="col-md-10">
-						<h2>{{ 'Own Plot Detail' | translate:translateKey}}</h2>
+						<h2><b>{{ 'Own Plot Detail' | translate:translateKey}}</b></h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
-						<button type="button" *ngIf="addnewBtnPlot" matTooltip="{{'add_more' | translate:translateKey}}"
-							mat-raised-button color="primary" (click)="addRecordFormArray('ownLandPlotDetail')">{{'add'|
+						<button [disabled]="isEditModeBtn" type="button" *ngIf="addnewBtnPlot"
+							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
+							(click)="addRecordFormArray('ownLandPlotDetail')">{{'add'|
 							translate:translateKey}}</button>
 					</div>
 				</div>
 
-				<div style="overflow: scroll" *ngIf="affordableHousingForm.get('ownLandPlotDetail')['controls'].length">
+				<div style="overflow: scroll"
+					*ngIf="affordableHousingForm.get('ownLandPlotDetail')['controls'].length">
 					<div>
 						<table class="table table-striped responsiveTableRow">
 							<thead>
@@ -897,7 +967,7 @@
 										<div class="d-md-none">{{'Full Name' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput appValidationFields
+											<input matInput appValidationFields maxlength="50"
 												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
 											<control-messages [control]="item.get('name')"></control-messages>
 										</mat-form-field>
@@ -907,7 +977,7 @@
 										<div class="d-md-none">{{'flat_no' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('flatNo').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput formControlName="flatNo">
+											<input matInput maxlength="10" formControlName="flatNo">
 											<control-messages [control]="item.get('flatNo')"></control-messages>
 										</mat-form-field>
 									</td>
@@ -916,7 +986,7 @@
 										<div class="d-md-none">{{'street' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('street').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput formControlName="street">
+											<input matInput maxlength="20" formControlName="street">
 											<control-messages [control]="item.get('street')"></control-messages>
 										</mat-form-field>
 									</td>
@@ -925,7 +995,9 @@
 										<div class="d-md-none">{{'city' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('city').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput formControlName="city">
+											<input matInput appValidationFields
+												[validationFieldsType]="'onlyNameWithSpace'" maxlength="20"
+												formControlName="city">
 											<control-messages [control]="item.get('city')"></control-messages>
 										</mat-form-field>
 									</td>
@@ -934,7 +1006,9 @@
 										<div class="d-md-none">{{'district' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('district').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput formControlName="district">
+											<input matInput appValidationFields
+												[validationFieldsType]="'onlyNameWithSpace'" maxlength="20"
+												formControlName="district">
 											<control-messages [control]="item.get('district')"></control-messages>
 										</mat-form-field>
 									</td>
@@ -951,8 +1025,8 @@
 										<div *ngIf="affordableHousingForm.get('canEdit').value" class="float-left">
 
 
-											<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
-												(click)="editRecord(item)">
+											<button [disabled]="isEditModeBtn" mat-icon-button color="primary"
+												*ngIf="!item.isEditMode" (click)="editRecord(item)">
 												<mat-icon title="Edit">edit</mat-icon>
 											</button>
 											<button type="submit" [disabled]="item.invalid" mat-icon-button
@@ -961,7 +1035,8 @@
 											</button>
 										</div>
 										<div *ngIf="affordableHousingForm.get('canEdit').value">
-											<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
+											<button [disabled]="isEditModeBtn" mat-icon-button color="warn"
+												*ngIf="!item.isEditMode"
 												(click)="deleteFormArrayRecord('ownLandPlotDetail',indx)">
 												<mat-icon title="Delete">delete</mat-icon>
 											</button>
@@ -977,21 +1052,21 @@
 					</div>
 				</div>
 
+
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">
 						<button type="button" class="liteBorder pull-left" mat-raised-button
-							(click)="tabIndex = 4">{{'back' |
+							(click)="tabIndex = 3">{{'back' |
 							translate: actionBarKey}}</button>
-						<button mat-raised-button class="pull-right" color="primary" (click)="tabIndex = 6">{{'next'
+						<button type="button" mat-raised-button class="pull-right" color="primary"
+							(click)="tabIndex = 5">{{'next'
 							| translate:
 							actionBarKey}}</button>
 					</div>
 				</div>
 
 			</mat-tab>
-			<!-- step 6 Ends -->
 
-			<!-- step 7 Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>{{'Nominee_details' | translate:translateKey}}</div>
@@ -1026,9 +1101,9 @@
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">
 						<button type="button" class="liteBorder pull-left" mat-raised-button
-							(click)="tabIndex = 5">{{'back' |
+							(click)="tabIndex = 4">{{'back' |
 							translate: actionBarKey}}</button>
-						<button mat-raised-button class="pull-right" color="primary" (click)="tabIndex = 7">{{'next'
+						<button mat-raised-button class="pull-right" color="primary" (click)="tabIndex = 6">{{'next'
 							| translate:
 							actionBarKey}}</button>
 					</div>
@@ -1036,7 +1111,64 @@
 
 			</mat-tab>
 			<!-- step 7 Ends -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'DD/Cheque Details.' | translate:translateKey}}</div>
+				</ng-template>
 
+				<div class="row">
+					<div class="col-md-4 ngSelect" formGroupName="ddBank">
+						<ng-select placeholder="{{'Bank Name *' | translate: translateKey}}" formControlName="code">
+							<ng-option *ngFor="let ddbank of bankNameArray" [value]="ddbank.code">{{ ddbank.name
+								}}
+							</ng-option>
+							<control-messages [control]="affordableHousingForm.get('ddBank').get('code')">
+							</control-messages>
+						</ng-select>
+					</div>
+					<mat-form-field class="col-md-4">
+						<input matInput placeholder="{{'Branch Name *' | translate: translateKey}}"
+							formControlName="ddBankBranch" type="text" appValidationFields
+							validationFieldsType='onlyNameWithSpace' maxlength="50">
+						<control-messages [control]="affordableHousingForm.get('ddBankBranch')"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput OnlyNumber maxlength="6" formControlName="ddNumber"
+							placeholder="{{'DD Number' | translate: translateKey}}">
+						<control-messages [control]="affordableHousingForm.get('ddNumber')"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput OnlyNumber maxlength="6" formControlName="ddAmount"
+							placeholder="{{'DD Amount' | translate: translateKey}}">
+						<control-messages [control]="affordableHousingForm.get('ddAmount')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<mat-label>{{'Cheque/DD Issuing date *'| translate: translateKey}}</mat-label>
+						<input appDate matInput [min]="minDate" [max]="maxDate" [matDatepicker]="chequeDate"
+							formControlName="ddIssuingDate">
+						<mat-datepicker-toggle matSuffix [for]="chequeDate"></mat-datepicker-toggle>
+						<mat-datepicker #chequeDate touchUi="true"></mat-datepicker>
+						<control-messages [control]="affordableHousingForm.get('ddIssuingDate')"></control-messages>
+						<div align="end" class="default-show-hint mat-hint mat-right">
+							Hint: DD/MM/YYYY
+						</div>
+
+					</mat-form-field>
+				</div>
+				<div class="fotButtonBar clearfix">
+					<div class="col-sm-12 col-md-12">
+						<button type="button" class="liteBorder pull-left" mat-raised-button
+							(click)="tabIndex = 5">{{'back' |
+							translate: actionBarKey}}</button>
+						<button type="button" mat-raised-button class="pull-right" color="primary"
+							(click)="tabIndex = 7">{{'next'
+							| translate:
+							actionBarKey}}</button>
+					</div>
+				</div>
+
+			</mat-tab>
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>{{'attachment' | translate: translateKey}}</div>
