@@ -151,18 +151,18 @@
         <div class="row">
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <input matInput disabled placeholder="License Valid Till" name="licenseValidTill"
+                    <input matInput disabled placeholder="License Valid Till Date" name="licenseValidTill"
                         [(ngModel)]="plumberLicenseModel.licenseValidTill">
                 </mat-form-field>
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <input #LicenseRenewUpto="ngModel" matInput required [matDatepicker]="RenewedUpTo" placeholder="Renewed Up To"
-                        name="licenseRenewUpto" [(ngModel)]="plumberLicenseModel.licenseRenewUpto" mask-date>
+                    <input #LicenseRenewUpto="ngModel" matInput required [matDatepicker]="RenewedUpTo" placeholder="Renew Up To Date"
+                        name="licenseRenewUpto" [min]="minDate" [max]="maxDate" [(ngModel)]="plumberLicenseModel.licenseRenewUpto" mask-date>
                     <mat-datepicker-toggle matSuffix [for]="RenewedUpTo"></mat-datepicker-toggle>
                     <mat-datepicker #RenewedUpTo disabled="false"></mat-datepicker>
                     <mat-error>{{errorMessage.dateFormateErrorMsg}}</mat-error>
-                    <div class="default-show-hint mat-hint mat-right" align="end">{{errorMessage    .dateFormateHint}}</div>
+                    <div class="default-show-hint mat-hint mat-right" align="end">{{errorMessage.dateFormateHint}}</div>
                 </mat-form-field>
             </div>
         </div>

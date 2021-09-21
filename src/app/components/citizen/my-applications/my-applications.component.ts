@@ -757,8 +757,13 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}
 	}
 
-	printPropertyACKReceipt(applicationNum) {
-		const url = "/property/ack?applicationNo=" + applicationNum;
+	printPropertyACKReceipt(applicationNum,dept) {		
+		let url = "";		
+		if(dept === "WATER-SUPPLY"){
+			url = "/water/ackReceipt?applicationNo="+ applicationNum;
+		}else{
+			url = "/property/ack?applicationNo=" + applicationNum;
+		}
 		this.paymentService.downloadFile(url).subscribe(
 			(data) => {
 				downloadFile(data, "certificate" + "-" + Date.now() + ".pdf", 'application/pdf');
