@@ -1679,6 +1679,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         if (!_.isEmpty(groomreligionChange) && !_.isEmpty(bridereligionChange)) {
             if (bridereligionChange != groomreligionChange) {
                 this.marriageFormGroup.get('brideReligion').reset(); 
+                this.religionGujbride = "";
                 this.commonService.openAlert("Warning", "Bride Groom and Bride religion must be same. Your Marriage has to be Registered under Special Marriage Act. Kindly contact office of Special Marriage Registration at Kuber Bhavan, Kothi char Rasta, Vadodara", "warning");      
             }
             else {
