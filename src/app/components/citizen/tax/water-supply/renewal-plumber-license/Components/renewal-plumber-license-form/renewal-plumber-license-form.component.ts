@@ -7,7 +7,7 @@ import { RenewalPlumberLicenseDataSharingService } from '../../Services/new-plum
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
 import { MatStepper } from '@angular/material';
-
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-renewal-plumber-license-form',
@@ -26,7 +26,9 @@ export class RenewalPlumberLicenseFormComponent implements OnInit {
     applicationModel: ApplicationModel;
     licenseNo: string;
     isShowSaveButton: boolean = false;
-
+    minDate = moment(new Date()).format("YYYY-MM-DD");
+    maxDate = moment().add('year', 1).month('March').endOf('month').format("YYYY-MM-DD");
+    
     constructor(private renewalPlumberLicenseService: RenewalPlumberLicenseService,
         private renewalPlumberLicenseDataSharingService: RenewalPlumberLicenseDataSharingService,
         private alertService: AlertService,
@@ -50,6 +52,7 @@ export class RenewalPlumberLicenseFormComponent implements OnInit {
                 (data) => {
                     if (data.status === 200) {
                         this.plumberLicenseModel = data.body;
+                        this.minDate = moment(this.plumberLicenseModel.licenseValidTill).add(1, 'day').toISOString();
                         if (this.plumberLicenseModel.plumberLicenseId == null) {
                             this.isShowSaveButton = false;
                             this.alertService.info('No Data Found!');
