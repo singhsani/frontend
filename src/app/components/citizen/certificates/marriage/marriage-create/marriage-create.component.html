@@ -719,6 +719,12 @@
 						<control-messages [control]="marriageFormGroup.get('groomParentsAadharNumber')">
 						</control-messages>
 					</mat-form-field>
+
+					<div formGroupName='isParentsAddressSameAsGroomAddress'>
+						<mat-checkbox type="checkbox" class="col-md-4" [checked]="addObject.checkedPar4"
+							(change)="checkBox($event,'isParentsAddressSameAsGroomAddress','groomParentsAddress','groomAddress','4')">{{'is_present_address_same_as_groom_address'
+							| translate:translateKey}}</mat-checkbox>
+					</div>
 				</div>
 
 				<!-- For NIR Marrige -->
@@ -834,6 +840,12 @@
 						<control-messages [control]="marriageFormGroup.get('brideParentsAadharNumber')">
 						</control-messages>
 					</mat-form-field>
+
+					<div formGroupName='isParentsAddressSameAsBrideAddress'>  
+						<mat-checkbox type="checkbox" class="col-md-4" [checked]="addObject.checkedPar5"
+							(change)="checkBox($event,'isParentsAddressSameAsBrideAddress','brideParentsAddress','brideAddress','5')">{{'is_present_address_same_as_bride_address'
+							| translate:translateKey}}</mat-checkbox>
+					</div>
 				</div>
 
 				<!-- For NIR Marrige -->
