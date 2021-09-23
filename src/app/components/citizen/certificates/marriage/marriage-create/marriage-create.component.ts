@@ -631,6 +631,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             isGroomParResAddressSame: this.fb.group({
                 code: [null]
             }),
+            isParentsAddressSameAsGroomAddress: this.fb.group({
+                code: [null]
+            }),
 
             //forth step
             brideParentsFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
@@ -642,6 +645,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             brideParentsAddress: this.fb.group(this.addrComponent.addressControls()),
             brideParentsAddressResidence: this.fb.group(this.addrComponent.addressControls()),
             isBrideParResAddressSame: this.fb.group({
+                code: [null]
+            }),
+            isParentsAddressSameAsBrideAddress: this.fb.group({
                 code: [null]
             }),
 
@@ -1054,6 +1060,20 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                     this.addObject['checkedPar3'] = false;
                     this.setValue('isPriestParResAddressSame', 'NO');
                 }
+                if (res.isParentsAddressSameAsGroomAddress.code == "YES"){
+                    this.addObject['checkedPar4'] = true;
+                }
+                else{
+                    this.addObject['checkedPar4'] = false;
+                    this.setValue('isParentsAddressSameAsGroomAddress', 'NO');
+                }
+                if(res.isParentsAddressSameAsBrideAddress.code == "YES"){
+                    this.addObject['checkedPar5'] = true;
+                }
+                else{
+                    this.addObject['checkedPar5'] = false;
+                    this.setValue('isParentsAddressSameAsBrideAddress', 'NO');
+                }
 
                 this.marriageFormGroup.patchValue(res);
                 this.checkReligion();
@@ -1303,6 +1323,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         this.marriageFormGroup.get('isGroomVisa').setValue(false);
         this.marriageFormGroup.get('isBrideVisa').setValue(false);
 
+        this.marriageFormGroup.get('groomAddress').reset();
+        this.marriageFormGroup.get('brideAddress').reset();
+        
         this.marriageFormGroup.get('groomParentsAddress').reset();
         this.marriageFormGroup.get('groomParentsAddressResidence').reset();
 
@@ -1312,8 +1335,16 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         this.addObject['checkedPar1'] = false;
         this.addObject['checkedPar2'] = false;
         this.addObject['checkedPar3'] = false;
+        this.addObject['checkedPar4'] = false;
+        this.addObject['checkedPar5'] = false;
         this.marriageFormGroup.get('isGroomParResAddressSame').get('code').setValue('NO');
         this.marriageFormGroup.get('isBrideParResAddressSame').get('code').setValue('NO');
+        this.marriageFormGroup.get('isParentsAddressSameAsGroomAddress').get('code').setValue('NO');
+        this.marriageFormGroup.get('isParentsAddressSameAsBrideAddress').get('code').setValue('NO');
+
+        this.marriageFormGroup.get('groomAddress').get('addressType').setValue('GROOM_ADDRESS');
+        this.marriageFormGroup.get('brideAddress').get('addressType').setValue('BRIDE_ADDRESS');
+       
         this.marriageFormGroup.get('groomParentsAddress').get('addressType').setValue('GROOM_PARENTS_ADDRESS');
         this.marriageFormGroup.get('groomParentsAddressResidence').get('addressType').setValue('GROOM_PARENTS_ADDRESS_RESIDENCE');
         this.marriageFormGroup.get('brideParentsAddress').get('addressType').setValue('BRIDE_PARENTS_ADDRESS');
@@ -1913,11 +1944,18 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     liglePrint() {
         let service = 'legalprint';
         this.formService.getCertificatOrLiglePrint(service, this.formId).subscribe(res => {
-            let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
-            sectionToPrintReceipt.innerHTML = res;
-            setTimeout(() => {
-                window.print();
-            }, 300);
+
+            var winPrint = window.open('', '', 'left=0,top=0,width=800,height=600,toolbar=0,scrollbars=0,status=0');
+            winPrint.document.write(res);
+            winPrint.document.close();
+            winPrint.focus();
+            winPrint.print();
+            winPrint.close(); 
+            // let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
+            // sectionToPrintReceipt.innerHTML = res;
+            // setTimeout(() => {
+            //     window.print();
+            // }, 300);
         },
             err => {
                 this.commonService.openAlert('Error!', err.error[0].message, 'error');
