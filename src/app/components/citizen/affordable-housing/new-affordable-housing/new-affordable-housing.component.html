@@ -28,7 +28,8 @@
 					</div>
 
 					<div class="col-md-4 ngSelect">
-						<ng-select placeholder="{{'project' | translate: translateKey}} *" (change)="projectChange($event)" formControlName="projectId">
+						<ng-select placeholder="{{'project' | translate: translateKey}} *"
+							(change)="projectChange($event)" formControlName="projectId">
 							<ng-container *ngFor="let project of projectData">
 								<ng-option *ngIf="project?.isAppliedFor == 'ACTIVE'" [value]="project.id">
 									{{project.projectName}}</ng-option>
@@ -74,8 +75,7 @@
 
 					<div class="col-md-4 ngSelect" formGroupName="categoryCode">
 						<ng-select placeholder="{{'House Type' | translate: translateKey}} *" formControlName="code">
-							<ng-option *ngFor="let type of houseTypes"
-								[value]="type.code">
+							<ng-option *ngFor="let type of houseTypes" [value]="type.code">
 								{{type.name}}
 							</ng-option>
 						</ng-select>
@@ -198,16 +198,16 @@
 					</app-address>
 				</div>  -->
 
-				<div class="row">
+				<!-- <div class="row">
 					<h2><b>{{'applicant_correspondence_address' | translate: translateKey}}</b></h2>
 					<app-address #firstAppCorrespondenceAddress [requiredFeilds]="true"
 						[addressFormGroup]="affordableHousingForm.get('firstAppCorrespondenceAddress')">
 					</app-address>
-				</div>
+				</div> -->
 
 				<div class="col-md-3 ngSelect" formGroupName="marriageStatus">
-					<ng-select (change)="changeMarriageStatus()" placeholder="{{'marital_status' | translate: translateKey}} *"
-						formControlName="code">
+					<ng-select (change)="changeMarriageStatus()"
+						placeholder="{{'marital_status' | translate: translateKey}} *" formControlName="code">
 						<ng-option *ngFor="let status of maritalStatusArray" [value]="status.code">
 							{{status.name}}
 						</ng-option>
@@ -318,8 +318,7 @@
 								{{person.name}}
 							</ng-option>
 						</ng-select>
-						<control-messages
-							[control]="affordableHousingForm.get('secondPersonTypeTitle').get('code')">
+						<control-messages [control]="affordableHousingForm.get('secondPersonTypeTitle').get('code')">
 						</control-messages>
 					</div>
 					<mat-form-field class="col-md-3">
@@ -496,7 +495,8 @@
 				</div>
 				<div class="row">
 					<h2><b>{{'occupationAddress' | translate: translateKey}}</b></h2>
-					<app-address #secondAppOccupationAddress [requiredAhf]="this.affordableHousingForm.get('marriageStatus').get('code').value == 'MARRIED'"
+					<app-address #secondAppOccupationAddress
+						[requiredAhf]="this.affordableHousingForm.get('marriageStatus').get('code').value == 'MARRIED'"
 						[addressFormGroup]="affordableHousingForm.get('secondAppOccupationAddress')"></app-address>
 				</div>
 
@@ -575,7 +575,8 @@
 					</div>
 
 					<div class="col-md-4 ngSelect">
-						<ng-select (change)="rentChange();" placeholder="{{'Is house Rented or Own Property ?' | translate: translateKey}}"
+						<ng-select (change)="rentChange();"
+							placeholder="{{'Is house Rented or Own Property ?' | translate: translateKey}}"
 							formControlName="hasCurrentHouseRentedOrPurchased">
 							<ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
 							</ng-option>
@@ -672,8 +673,7 @@
 						<input matInput readonly autocomplete="off" maxlength="200"
 							placeholder="{{'annualIncomeWords' | translate:translateKey}}" type="text"
 							formControlName="aggregateAnnualIncomeAmountInWords" required>
-						<control-messages
-							[control]="affordableHousingForm.get('aggregateAnnualIncomeAmountInWords')">
+						<control-messages [control]="affordableHousingForm.get('aggregateAnnualIncomeAmountInWords')">
 						</control-messages>
 					</mat-form-field>
 				</div>
@@ -712,7 +712,7 @@
 						<table class="table table-striped responsiveTableRow">
 							<thead>
 								<tr class="mo-d-none">
-									<th>#</th>
+									<th>S.No.</th>
 									<th>{{'Full Name' | translate:translateKey}}</th>
 									<th width="100">{{'age' | translate:translateKey}}</th>
 									<th>{{'relationship_with_applicant' | translate:translateKey}}</th>
@@ -725,7 +725,7 @@
 									[formGroupName]="indx">
 
 									<td>
-										<div class="d-md-none">#</div>
+										<div class="d-md-none">S.No.</div>
 										{{indx+1}}
 									</td>
 
@@ -733,7 +733,7 @@
 										<div class="d-md-none">{{'Full Name' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput appValidationFields
+											<input matInput appValidationFields maxlength="200"
 												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
 											<control-messages [control]="item.get('name')"></control-messages>
 										</mat-form-field>
@@ -776,8 +776,8 @@
 											*ngIf="!item.isEditMode" (click)="editRecord(item)">
 											<mat-icon title="Edit">edit</mat-icon>
 										</button>
-										<button type="submit" [disabled]="item.invalid" mat-icon-button
-											color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
+										<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary"
+											*ngIf="item.isEditMode" (click)="saveRecord(item)">
 											<mat-icon title="save">save</mat-icon>
 										</button>
 									</td>
@@ -816,7 +816,7 @@
 						<table class="table table-striped responsiveTableRow">
 							<thead>
 								<tr class="mo-d-none">
-									<th>#</th>
+									<th>S.No.</th>
 									<th>{{'Full Name' | translate:translateKey}}</th>
 									<th>{{'flat_no' | translate:translateKey}}</th>
 									<th>{{'street' | translate:translateKey}}</th>
@@ -832,7 +832,7 @@
 									[formGroupName]="indx">
 
 									<td>
-										<div class="d-md-none">#</div>
+										<div class="d-md-none">S.No.</div>
 										{{indx+1}}
 									</td>
 
@@ -840,7 +840,7 @@
 										<div class="d-md-none">{{'Full Name' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput appValidationFields maxlength="50"
+											<input matInput appValidationFields maxlength="200"
 												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
 											<control-messages [control]="item.get('name')"></control-messages>
 										</mat-form-field>
@@ -937,13 +937,12 @@
 					</div>
 				</div>
 
-				<div style="overflow: scroll"
-					*ngIf="affordableHousingForm.get('ownLandPlotDetail')['controls'].length">
+				<div style="overflow: scroll" *ngIf="affordableHousingForm.get('ownLandPlotDetail')['controls'].length">
 					<div>
 						<table class="table table-striped responsiveTableRow">
 							<thead>
 								<tr class="mo-d-none">
-									<th>#</th>
+									<th>S.No.</th>
 									<th>{{'Full Name' | translate:translateKey}}</th>
 									<th>{{'flat_no' | translate:translateKey}}</th>
 									<th>{{'street' | translate:translateKey}}</th>
@@ -959,7 +958,7 @@
 									[formGroupName]="indx">
 
 									<td>
-										<div class="d-md-none">#</div>
+										<div class="d-md-none">S.No.</div>
 										{{indx+1}}
 									</td>
 
@@ -967,7 +966,7 @@
 										<div class="d-md-none">{{'Full Name' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput appValidationFields maxlength="50"
+											<input matInput appValidationFields maxlength="200"
 												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
 											<control-messages [control]="item.get('name')"></control-messages>
 										</mat-form-field>
