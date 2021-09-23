@@ -105,7 +105,7 @@ export class NewAffordableHousingComponent implements OnInit {
 			err => {
 				this.toster.error(err.error.error_description);
 			});
-			this.affordableHousingFormControls();
+		this.affordableHousingFormControls();
 		this.getLookupData();
 		this.getLookupDataApplyFor();
 		this.getHouseType();
@@ -128,89 +128,89 @@ export class NewAffordableHousingComponent implements OnInit {
 		});
 	}
 
-	setFormControlToTabIndexMap(){
+	setFormControlToTabIndexMap() {
 
-		this.formControlNameToTabIndex.set('schemeId',0)
-		this.formControlNameToTabIndex.set('projectId',0)
-		this.formControlNameToTabIndex.set('category',0)
-		this.formControlNameToTabIndex.set('firstPersonTypeTitle',0)
-		this.formControlNameToTabIndex.set('marriageStatus',0)
-		
-		this.formControlNameToTabIndex.set('firstApplicantFirstName',0)
-		this.formControlNameToTabIndex.set('firstApplicantLastName',0)
-		this.formControlNameToTabIndex.set('firstAppHusWifeFirstName',0)
-		this.formControlNameToTabIndex.set('firstAppHusWifeLastName',0)
-		this.formControlNameToTabIndex.set('firstAppDateOfBirth',0)
-		this.formControlNameToTabIndex.set('firstAppTelephoneNumber',0)
-		this.formControlNameToTabIndex.set('firstAppMobileNumOne',0)
-		this.formControlNameToTabIndex.set('firstAppMobileNumTwo',0)
-		this.formControlNameToTabIndex.set('firstAppEmail',0)
-		this.formControlNameToTabIndex.set('firstAppOccupation',0)
-		this.formControlNameToTabIndex.set('firstAppOrganizationName',0)
-		this.formControlNameToTabIndex.set('firstAppOccupationDesignation',0)
-		this.formControlNameToTabIndex.set('firstAppDrivingLicenseNumber',0)
-		this.formControlNameToTabIndex.set('firstAppVoterIdNumber',0)
-		this.formControlNameToTabIndex.set('firstAppAadharCardNumber',0)
-		this.formControlNameToTabIndex.set('firstAppPanCardNumber',0)
-		this.formControlNameToTabIndex.set('firstAppRationCardNumber',0)
-		this.formControlNameToTabIndex.set('firstAppCorrespondenceAddress',0)
-		this.formControlNameToTabIndex.set('firstAppOccupationAddress',0)
-		this.formControlNameToTabIndex.set('categoryCode',0)
-		
-		this.formControlNameToTabIndex.set('secondApplicantFirstName',1)
-		this.formControlNameToTabIndex.set('secondApplicantMiddleName',1)
-		this.formControlNameToTabIndex.set('secondPersonTypeTitle',1)
-		this.formControlNameToTabIndex.set('secondApplicantLastName',1)
-		this.formControlNameToTabIndex.set('secondAppHusWifeFirstName',1)
-		this.formControlNameToTabIndex.set('secondAppHusWifeMiddleName',1)
-		this.formControlNameToTabIndex.set('secondAppHusWifeLastName',1)
-		this.formControlNameToTabIndex.set('secondAppDateOfBirth',1)
-		this.formControlNameToTabIndex.set('secondAppTelephoneNumber',1)
-		this.formControlNameToTabIndex.set('secondAppMobileNumOne',1)
-		this.formControlNameToTabIndex.set('secondAppMobileNumTwo',1)
-		this.formControlNameToTabIndex.set('secondAppEmail',1)
-		this.formControlNameToTabIndex.set('secondAppOrganizationName',1)
-		this.formControlNameToTabIndex.set('secondAppOccupation',1)
-		this.formControlNameToTabIndex.set('secondAppOccupationDesignation',1)
-		this.formControlNameToTabIndex.set('secondAppDrivingLicenseNumber',1)
-		this.formControlNameToTabIndex.set('secondAppVoterIdNumber',1)
-		this.formControlNameToTabIndex.set('secondAppAadharCardNumber',1)
-		this.formControlNameToTabIndex.set('secondAppPanCardNumber',1)
-		this.formControlNameToTabIndex.set('secondAppRationCardNumber',1)
+		this.formControlNameToTabIndex.set('schemeId', 0)
+		this.formControlNameToTabIndex.set('projectId', 0)
+		this.formControlNameToTabIndex.set('category', 0)
+		this.formControlNameToTabIndex.set('firstPersonTypeTitle', 0)
+		this.formControlNameToTabIndex.set('marriageStatus', 0)
+
+		this.formControlNameToTabIndex.set('firstApplicantFirstName', 0)
+		this.formControlNameToTabIndex.set('firstApplicantLastName', 0)
+		this.formControlNameToTabIndex.set('firstAppHusWifeFirstName', 0)
+		this.formControlNameToTabIndex.set('firstAppHusWifeLastName', 0)
+		this.formControlNameToTabIndex.set('firstAppDateOfBirth', 0)
+		this.formControlNameToTabIndex.set('firstAppTelephoneNumber', 0)
+		this.formControlNameToTabIndex.set('firstAppMobileNumOne', 0)
+		this.formControlNameToTabIndex.set('firstAppMobileNumTwo', 0)
+		this.formControlNameToTabIndex.set('firstAppEmail', 0)
+		this.formControlNameToTabIndex.set('firstAppOccupation', 0)
+		this.formControlNameToTabIndex.set('firstAppOrganizationName', 0)
+		this.formControlNameToTabIndex.set('firstAppOccupationDesignation', 0)
+		this.formControlNameToTabIndex.set('firstAppDrivingLicenseNumber', 0)
+		this.formControlNameToTabIndex.set('firstAppVoterIdNumber', 0)
+		this.formControlNameToTabIndex.set('firstAppAadharCardNumber', 0)
+		this.formControlNameToTabIndex.set('firstAppPanCardNumber', 0)
+		this.formControlNameToTabIndex.set('firstAppRationCardNumber', 0)
+		this.formControlNameToTabIndex.set('firstAppCorrespondenceAddress', 0)
+		this.formControlNameToTabIndex.set('firstAppOccupationAddress', 0)
+		this.formControlNameToTabIndex.set('categoryCode', 0)
+
+		this.formControlNameToTabIndex.set('secondApplicantFirstName', 1)
+		this.formControlNameToTabIndex.set('secondApplicantMiddleName', 1)
+		this.formControlNameToTabIndex.set('secondPersonTypeTitle', 1)
+		this.formControlNameToTabIndex.set('secondApplicantLastName', 1)
+		this.formControlNameToTabIndex.set('secondAppHusWifeFirstName', 1)
+		this.formControlNameToTabIndex.set('secondAppHusWifeMiddleName', 1)
+		this.formControlNameToTabIndex.set('secondAppHusWifeLastName', 1)
+		this.formControlNameToTabIndex.set('secondAppDateOfBirth', 1)
+		this.formControlNameToTabIndex.set('secondAppTelephoneNumber', 1)
+		this.formControlNameToTabIndex.set('secondAppMobileNumOne', 1)
+		this.formControlNameToTabIndex.set('secondAppMobileNumTwo', 1)
+		this.formControlNameToTabIndex.set('secondAppEmail', 1)
+		this.formControlNameToTabIndex.set('secondAppOrganizationName', 1)
+		this.formControlNameToTabIndex.set('secondAppOccupation', 1)
+		this.formControlNameToTabIndex.set('secondAppOccupationDesignation', 1)
+		this.formControlNameToTabIndex.set('secondAppDrivingLicenseNumber', 1)
+		this.formControlNameToTabIndex.set('secondAppVoterIdNumber', 1)
+		this.formControlNameToTabIndex.set('secondAppAadharCardNumber', 1)
+		this.formControlNameToTabIndex.set('secondAppPanCardNumber', 1)
+		this.formControlNameToTabIndex.set('secondAppRationCardNumber', 1)
 		//this.formControlNameToTabIndex.set('secondAppCorrespondenceAddress',1)
-		this.formControlNameToTabIndex.set('secondAppOccupationAddress',1)
-			
+		this.formControlNameToTabIndex.set('secondAppOccupationAddress', 1)
 
-		this.formControlNameToTabIndex.set('ward',2)
-		this.formControlNameToTabIndex.set('currentAddress',2)
-		this.formControlNameToTabIndex.set('permanentAddress',2)
-		this.formControlNameToTabIndex.set('howLongLivingInVadodara',2)
-		this.formControlNameToTabIndex.set('sqMetersPresentBuilding',2)
-		this.formControlNameToTabIndex.set('hasCurrentHouseKacchaOrPucca',2)
-		this.formControlNameToTabIndex.set('hasCurrentHouseRentedOrPurchased',2)
 
-		this.formControlNameToTabIndex.set('bankAccountNumber',3)
-		this.formControlNameToTabIndex.set('bank',3)
-		this.formControlNameToTabIndex.set('bankBranch',3)
-		this.formControlNameToTabIndex.set('bankIFSC',3)
-		this.formControlNameToTabIndex.set('bankMicrCode',3)
-		
-		this.formControlNameToTabIndex.set('aggregateAnnualIncomeAmount',3)
-		this.formControlNameToTabIndex.set('aggregateAnnualIncomeAmountInWords',3)
+		this.formControlNameToTabIndex.set('ward', 2)
+		this.formControlNameToTabIndex.set('currentAddress', 2)
+		this.formControlNameToTabIndex.set('permanentAddress', 2)
+		this.formControlNameToTabIndex.set('howLongLivingInVadodara', 2)
+		this.formControlNameToTabIndex.set('sqMetersPresentBuilding', 2)
+		this.formControlNameToTabIndex.set('hasCurrentHouseKacchaOrPucca', 2)
+		this.formControlNameToTabIndex.set('hasCurrentHouseRentedOrPurchased', 2)
 
-		this.formControlNameToTabIndex.set('familyMembers',4)
-		this.formControlNameToTabIndex.set('ownHouseDetail',4)
-		this.formControlNameToTabIndex.set('ownLandPlotDetail',4)
+		this.formControlNameToTabIndex.set('bankAccountNumber', 3)
+		this.formControlNameToTabIndex.set('bank', 3)
+		this.formControlNameToTabIndex.set('bankBranch', 3)
+		this.formControlNameToTabIndex.set('bankIFSC', 3)
+		this.formControlNameToTabIndex.set('bankMicrCode', 3)
 
-		this.formControlNameToTabIndex.set('nomineeName',5)
-		this.formControlNameToTabIndex.set('nomineeApplicantRelationShip',5)
-		this.formControlNameToTabIndex.set('nomineeAddress',5)
+		this.formControlNameToTabIndex.set('aggregateAnnualIncomeAmount', 3)
+		this.formControlNameToTabIndex.set('aggregateAnnualIncomeAmountInWords', 3)
 
-		this.formControlNameToTabIndex.set('ddBank',6)
-		this.formControlNameToTabIndex.set('ddBankBranch',6)
-		this.formControlNameToTabIndex.set('ddNumber',6)
-		this.formControlNameToTabIndex.set('ddAmount',6)
-		this.formControlNameToTabIndex.set('ddIssuingDate',6)
+		this.formControlNameToTabIndex.set('familyMembers', 4)
+		this.formControlNameToTabIndex.set('ownHouseDetail', 4)
+		this.formControlNameToTabIndex.set('ownLandPlotDetail', 4)
+
+		this.formControlNameToTabIndex.set('nomineeName', 5)
+		this.formControlNameToTabIndex.set('nomineeApplicantRelationShip', 5)
+		this.formControlNameToTabIndex.set('nomineeAddress', 5)
+
+		this.formControlNameToTabIndex.set('ddBank', 6)
+		this.formControlNameToTabIndex.set('ddBankBranch', 6)
+		this.formControlNameToTabIndex.set('ddNumber', 6)
+		this.formControlNameToTabIndex.set('ddAmount', 6)
+		this.formControlNameToTabIndex.set('ddIssuingDate', 6)
 
 	}
 
@@ -250,14 +250,14 @@ export class NewAffordableHousingComponent implements OnInit {
 		this.serverUploadFilesArray = this.attachmentList;
 		const localUploadArray = [...this.serverUploadFilesArray]
 		this.attachmentList = [];
-		if(event){
-		for (let file of localUploadArray) {
-			if (file['documentIdentifier'] === 'UPLOAD_PHOTO_2') {
-				file['mandatory'] = true;
+		if (event) {
+			for (let file of localUploadArray) {
+				if (file['documentIdentifier'] === 'UPLOAD_PHOTO_2') {
+					file['mandatory'] = true;
+				}
+				this.attachmentList.push(file);
 			}
-			this.attachmentList.push(file);
-		}
-		}else{
+		} else {
 			for (let file of localUploadArray) {
 				if (file['documentIdentifier'] === 'UPLOAD_PHOTO_2') {
 					file['mandatory'] = false;
@@ -268,7 +268,7 @@ export class NewAffordableHousingComponent implements OnInit {
 		this.manadoty();
 	}
 
-	manadoty(){
+	manadoty() {
 		this.uploadFilesArray = [];
 		_.forEach(this.attachmentList, (value) => {
 			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
@@ -284,14 +284,14 @@ export class NewAffordableHousingComponent implements OnInit {
 		this.serverUploadFilesArray = this.attachmentList;
 		const localUploadArray = [...this.serverUploadFilesArray]
 		this.attachmentList = [];
-		if(event){
-		for (let file of localUploadArray) {
-			if (file['documentIdentifier'] === 'RENT_AGREEMENT') {
-				file['mandatory'] = true;
+		if (event) {
+			for (let file of localUploadArray) {
+				if (file['documentIdentifier'] === 'RENT_AGREEMENT') {
+					file['mandatory'] = true;
+				}
+				this.attachmentList.push(file);
 			}
-			this.attachmentList.push(file);
-		}
-		}else{
+		} else {
 			for (let file of localUploadArray) {
 				if (file['documentIdentifier'] === 'RENT_AGREEMENT') {
 					file['mandatory'] = false;
@@ -385,33 +385,33 @@ export class NewAffordableHousingComponent implements OnInit {
 	getAhfData() {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
-				if(res.schemeId){
+				if (res.schemeId) {
 					this.schemeChange(res.schemeId);
 				}
 
 				this.affordableHousingForm.patchValue(res);
-				
+
 				res.familyMembers.forEach(app => {
-					(<FormArray>this.affordableHousingForm.get('familyMembers')).push(this.createFormGroup('familyMembers',app));
+					(<FormArray>this.affordableHousingForm.get('familyMembers')).push(this.createFormGroup('familyMembers', app));
 				});
-	
+
 				res.ownHouseDetail.forEach(app => {
-					(<FormArray>this.affordableHousingForm.get('ownHouseDetail')).push(this.createFormGroup('ownHouseDetail',app));
+					(<FormArray>this.affordableHousingForm.get('ownHouseDetail')).push(this.createFormGroup('ownHouseDetail', app));
 				});
-	
+
 				res.ownLandPlotDetail.forEach(app => {
-					(<FormArray>this.affordableHousingForm.get('ownLandPlotDetail')).push(this.createFormGroup('ownLandPlotDetail',app));
+					(<FormArray>this.affordableHousingForm.get('ownLandPlotDetail')).push(this.createFormGroup('ownLandPlotDetail', app));
 				});
 
 				this.setServiceDetailsOnInits(res);
 				this.showButtons = true;
-				
+
 				this.affordableHousingForm.get('ddBank').get('code').setValue(res.paymentAcceptance[0].ddBank.code);
 				this.affordableHousingForm.get('ddBankBranch').setValue(res.paymentAcceptance[0].ddBankBranch);
 				this.affordableHousingForm.get('ddNumber').setValue(res.paymentAcceptance[0].ddNumber);
 				this.affordableHousingForm.get('ddAmount').setValue(res.paymentAcceptance[0].ddAmount);
 				this.affordableHousingForm.get('ddIssuingDate').setValue(res.paymentAcceptance[0].ddIssuingDate);
-				
+
 				this.projectChange(res.projectId);
 
 			} catch (error) {
@@ -449,13 +449,13 @@ export class NewAffordableHousingComponent implements OnInit {
 	 */
 	schemeChange(shcmeid) {
 		this.projectData = [];
-		if(shcmeid)
-		this.affodableService.getProject(shcmeid).subscribe(
-			(res: any) => {
-				this.projectData = res;
-			}, (err: any) => {
+		if (shcmeid)
+			this.affodableService.getProject(shcmeid).subscribe(
+				(res: any) => {
+					this.projectData = res;
+				}, (err: any) => {
 
-			})
+				})
 	}
 
 	/**
@@ -527,7 +527,7 @@ export class NewAffordableHousingComponent implements OnInit {
 			firstAppPanCardNumber: [null, [Validators.required, ValidationService.panValidator]],
 			firstAppRationCardNumber: [null, [Validators.maxLength(20)]],
 
-			firstAppCorrespondenceAddress: this.fb.group(this.firstAppCorrespondenceAddressComponent.addressControls()),
+			//	firstAppCorrespondenceAddress: this.fb.group(this.firstAppCorrespondenceAddressComponent.addressControls()),
 			firstAppOccupationAddress: this.fb.group(this.firstAppOccupationAddressComponent.addressControls()),
 			// /* First Beneficiary controls End *//
 
@@ -666,20 +666,20 @@ export class NewAffordableHousingComponent implements OnInit {
 	}
 
 	/**
-     * This method required for final form submition.
-     * @param flag - flag of invalid control.
-     */
-	 handleErrorsOnSubmit(key) {
-		
+	 * This method required for final form submition.
+	 * @param flag - flag of invalid control.
+	 */
+	handleErrorsOnSubmit(key) {
+
 		const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 0;
-		
+
 		this.tabIndex = index;
 		return false;
-		
+
 
 	}
 
-	
+
 
 
 
@@ -736,16 +736,16 @@ export class NewAffordableHousingComponent implements OnInit {
 			this.attachmentList = _.cloneDeep(res);
 
 
-		this.uploadFilesArray = [];
-		_.forEach(this.attachmentList, (value) => {
-			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
-				this.uploadFilesArray.push({
-					'labelName': value.documentLabelEn,
-					'fieldIdentifier': value.fieldIdentifier,
-					'documentIdentifier': value.documentIdentifier
-				})
-			}
-		});
+			this.uploadFilesArray = [];
+			_.forEach(this.attachmentList, (value) => {
+				if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+					this.uploadFilesArray.push({
+						'labelName': value.documentLabelEn,
+						'fieldIdentifier': value.fieldIdentifier,
+						'documentIdentifier': value.documentIdentifier
+					})
+				}
+			});
 
 		});
 	}
