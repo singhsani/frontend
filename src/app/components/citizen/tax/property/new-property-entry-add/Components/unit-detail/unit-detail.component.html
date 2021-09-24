@@ -72,7 +72,7 @@
 <div class="row mt-3">
     <div class="col-md-12">
         <mat-accordion>
-            <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
+            <mat-expansion-panel [expanded]="step == 0" (opened)="setStep(0)" (closed)="revertStep()">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <div class="panel-title">Unit Details {{isEditMode ? '- Unit No. : '+ unitDetailModel.unitNo : ''

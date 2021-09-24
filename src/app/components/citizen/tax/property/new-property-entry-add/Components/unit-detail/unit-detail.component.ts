@@ -9,7 +9,7 @@ import { MatSort, MatTableDataSource, MatDatepickerInputEvent } from '@angular/m
 import { UnitDetailModel, MeasurementModel, RoomModel } from '../../Models/new-property-entry-add.model';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import * as moment from 'moment';
-
+import $ from 'jquery';
 @Component({
   selector: 'app-unit-detail',
   templateUrl: './unit-detail.component.html',
@@ -82,13 +82,16 @@ export class UnitDetailComponent implements OnInit {
         this.getUnitListByOccupierId();
         this.clearUnit();
       }
-    })
+    });
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
+  revertStep() {
+    this.step = 1;
+  }
 
   getLookups() {
     const lookupcode = `lookup_codes=${Constants.LookupCodes.Floor_No}&lookup_codes=${Constants.LookupCodes.Room_Type}`;
@@ -143,7 +146,7 @@ export class UnitDetailComponent implements OnInit {
     );
   }
 
-  getSubUsageList(usageMasterId) {
+   getSubUsageList(usageMasterId) {
     this.subUsageList = [];
     this.newNewPropertyEntryAddService.getSubUsageList({ usageMasterId: usageMasterId, active: true }).subscribe(
       (data) => {
