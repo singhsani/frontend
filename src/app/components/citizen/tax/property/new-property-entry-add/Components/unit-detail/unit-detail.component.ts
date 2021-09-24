@@ -9,7 +9,6 @@ import { MatSort, MatTableDataSource, MatDatepickerInputEvent } from '@angular/m
 import { UnitDetailModel, MeasurementModel, RoomModel } from '../../Models/new-property-entry-add.model';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import * as moment from 'moment';
-import $ from 'jquery';
 @Component({
   selector: 'app-unit-detail',
   templateUrl: './unit-detail.component.html',
