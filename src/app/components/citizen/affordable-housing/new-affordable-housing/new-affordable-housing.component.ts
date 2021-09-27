@@ -643,7 +643,7 @@ export class NewAffordableHousingComponent implements OnInit {
 
 	projectChange(projectId) {
 
-		this.projectData = [];
+		
 		if (projectId)
 			this.affodableService.getProjectLocation(projectId).subscribe(
 				(res: any) => {
