@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { ExtractPropertyDataSharingService } from '../../Services/extract-property-data-sharing.service';
 import { ExtractPropertyService } from '../../Services/extract-property.service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
-import { Subscription } from 'rxjs';
 import { SearchModel, ServiceCharge, TaxRateWiseOutstandingDetails } from '../../Models/extract-property.model';
 import { NgForm } from '@angular/forms';
 import { MatTableDataSource, MatSort,MatPaginator } from '@angular/material';
@@ -16,9 +15,8 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { SelectPaymentGatewayPropertyComponent } from 'src/app/vmcshared/component/select-payment-gateway-property/select-payment-gateway-property.component';
 import { DatePipe } from '@angular/common';
-import { merge, of } from 'rxjs';
+import { Subscription, merge, of } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
-import { Console } from 'console';
 import * as moment from 'moment';
 
 @Component({
@@ -30,7 +28,7 @@ import * as moment from 'moment';
 export class ExtractPropertyTableComponent implements OnInit {
 
   subscription: Subscription;
-  displayedColumns: string[] = ['select', 'propertyNo', 'propertyAddress', 'ownerName', 'occupierName'];
+  displayedColumns: string[] = ['select', 'propertyNo', 'propAddress', 'ownerName', 'occupierName'];
   dataSource: any = [];
   searchModel = new SearchModel();
   selectedItem: any = null;
@@ -68,22 +66,22 @@ export class ExtractPropertyTableComponent implements OnInit {
     this.formService.apiType = 'extractOfProperty';
     this.extractPropertyDataSharingService.observableIsSearchByPropertyNo.subscribe((data) => {
       this.isSearchByPropertyNo = data;
-    })
+    });
     this.extractPropertyDataSharingService.observableIsClear.subscribe((data) => {
       if (data) {
         this.dataSource = [];
       }
-    })
+    });
     this.extractPropertyDataSharingService.observableSearchModel.subscribe((data) => {
       this.searchModel = data;
-    })
+    });
     this.subscription = this.extractPropertyDataSharingService.observableIsShowTable.subscribe((data) => {
       if (data) {
         this.isShowPayMode = false;
         this.isShowDetail = false;
         this.search();
       }
-    })
+    });
   }
 
   ngOnDestroy() {
@@ -110,9 +108,9 @@ export class ExtractPropertyTableComponent implements OnInit {
       (error) => {
         this.alertService.error(error.error.message);
       });*/
-      this.paginator.pageIndex=0;
-      this.searchModel.pageNo=null;
-	    this.searchModel.pageSize=null;
+      this.paginator.pageIndex = 0;
+      this.searchModel.pageNo = null;
+      this.searchModel.pageSize = null;
       this.searchList();
   }
   searchList() {
@@ -131,7 +129,7 @@ export class ExtractPropertyTableComponent implements OnInit {
           return this.extractPropertyService.search(this.searchModel);
         }        
         }),
-        map(data => {				
+        map(data => {
           return data;
         }),
         catchError(() => {
@@ -144,13 +142,18 @@ export class ExtractPropertyTableComponent implements OnInit {
             if (!this.isSearchByPropertyNo || (this.isSearchByPropertyNo && this.dataSource.length == 0)) {
               this.extractPropertyDataSharingService.updatedIsShowTable(false);
             }
-            this.resultsLength=0;
+            this.resultsLength = 0;
           } else {
-            this.dataSource = new MatTableDataSource(data.body.data);                   
+            let resData = data.body.data.map(ele =>{
+              ele.propAddress = ele.propertyAddress.propertyAddress;
+              return ele;
+            });
+            this.dataSource = new MatTableDataSource(resData);
+            this.dataSource.sort = this.sort;
             this.totalCount = data.body.totalRecords;
-            this.resultsLength= data.body.totalRecords;
-          }   
-        }           
+            this.resultsLength = data.body.totalRecords;
+          }
+        }
       },
       (error) => {
         this.alertService.error(error.error.message);

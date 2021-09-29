@@ -448,7 +448,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	 * This method for serach project by shcmeid .
 	 */
 	schemeChange(shcmeid) {
-		this.projectData = [];
+		this.resetLookUpField();
 		if (shcmeid)
 			this.affodableService.getProject(shcmeid).subscribe(
 				(res: any) => {
@@ -456,6 +456,14 @@ export class NewAffordableHousingComponent implements OnInit {
 				}, (err: any) => {
 
 				})
+	}
+
+	resetLookUpField(){
+		this.projectData = [];
+		this.affordableHousingForm.get('projectId').setValue(null);
+		this.affordableHousingForm.get('location').setValue(null);
+		this.affordableHousingForm.get('tpNumber').setValue(null);
+		this.affordableHousingForm.get('fpNumber').setValue(null);
 	}
 
 	/**
@@ -635,7 +643,7 @@ export class NewAffordableHousingComponent implements OnInit {
 
 	projectChange(projectId) {
 
-		this.projectData = [];
+		
 		if (projectId)
 			this.affodableService.getProjectLocation(projectId).subscribe(
 				(res: any) => {
@@ -775,11 +783,11 @@ export class NewAffordableHousingComponent implements OnInit {
 			case 'ownHouseDetail':
 			case 'ownLandPlotDetail':
 				formGroupData = this.fb.group({
-					name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(200)]],
-					flatNo: [data.flatNo ? data.flatNo : null, [Validators.required, Validators.maxLength(200)]],
-					street: [data.street ? data.street : null, [Validators.required, Validators.maxLength(200)]],
-					city: [data.city ? data.city : null, [Validators.required, Validators.maxLength(200)]],
-					district: [data.district ? data.district : null, [Validators.required, Validators.maxLength(200)]],
+					name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(100)]],
+					flatNo: [data.flatNo ? data.flatNo : null, [Validators.required, Validators.maxLength(10)]],
+					street: [data.street ? data.street : null, [Validators.required, Validators.maxLength(10)]],
+					city: [data.city ? data.city : null, [Validators.required, Validators.maxLength(20)]],
+					district: [data.district ? data.district : null, [Validators.required, Validators.maxLength(20)]],
 					pincode: [data.pincode ? data.pincode : null, [Validators.required, Validators.maxLength(6)]]
 				})
 				break;
