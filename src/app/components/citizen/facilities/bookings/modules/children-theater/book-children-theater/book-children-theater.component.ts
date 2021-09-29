@@ -71,7 +71,7 @@ export class BookChildrenTheaterComponent implements OnInit {
     startMinDate: Date = moment(new Date()).add(7, 'day').toDate();
     endMinDate: Date = moment(new Date()).add(7, 'day').toDate();
     endMaxDate:any = new Date();;
-    endDate:any; 
+    endDate:any;
 
     /**
      * ngx-bootstrap models.
@@ -103,7 +103,7 @@ export class BookChildrenTheaterComponent implements OnInit {
         this.getLookUpData();
         this.getResourceList();
         this.maxSlotDate();
-        this.getFeesDetail();
+        this.getFeesStructure();
         /**
 		 * Subscribe start date changes
 		 */
@@ -130,7 +130,7 @@ export class BookChildrenTheaterComponent implements OnInit {
 	 * @param date get the selected date value
 	 */
 	onDateChange(date) {
-        this.Dates = []; 
+        this.Dates = [];
         let futureMonth = moment(date).add(36, 'day');
         this.endMaxDate = moment(futureMonth).format("YYYY-MM-DD");
 	}
@@ -390,11 +390,13 @@ export class BookChildrenTheaterComponent implements OnInit {
     this.childrenTheaterApplicationForm.get('accountHolderName').setValue(event.value);
   }
 
-  getFeesDetail(){
-        this.bookingService.getChildrenFees().subscribe(resp =>{
-            this.dataSource = resp.data;
-        })
+   getFeesStructure(){
+      this.bookingService.getFeesStructure().subscribe(res =>{
+      if(!res.success){
+        this.commonService.openAlert("Error", res.message, "warning")
+       }
+      this.dataSource = res.data
+      });
     }
 
-   
 }

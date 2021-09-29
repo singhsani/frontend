@@ -85,7 +85,7 @@ export class BookStadiumComponent implements OnInit {
 
     displayedColumnsFeeDetails: string[] = ['sno', 'programmePurpose', 'bookingRent', 'administrativeCharge', 'gst', 'deposit'];
     dataSource: Array<any> = [];
-   
+
     startMinDate: Date = moment(new Date()).add(1, 'day').toDate();
     endMinDate: Date = moment(new Date()).add(1, 'day').toDate();
     maxEndDate:any;
@@ -116,7 +116,7 @@ export class BookStadiumComponent implements OnInit {
         this.createStadiumApplicationForm();
         this.getLookUpData();
         this.getResourceList();
-        this.getAllFees();
+        this.getFeesStructure();
         /**
          * Subscribe changes of start date.
          */
@@ -413,11 +413,14 @@ export class BookStadiumComponent implements OnInit {
         this.stadiumApplicationForm.get('applicantAddress').get('city').setValue('Vadodara');
       }
 
-      getAllFees(){
-        this.bookingService.getStadiumRateData().subscribe(res =>{
+      getFeesStructure(){
+          this.bookingService.getFeesStructure().subscribe(res =>{
+          if(!res.success){
+            this.commonService.openAlert("Error", res.message, "warning")
+           }
           this.dataSource = res.data
-        })
-      }  
+          });
+        }
 
       covertReadableString(headerName: string) {
         var  str = _.startCase(headerName);
