@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy,ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
 import { TaxTransactionHistoryDataSharingService } from '../../Services/tax-transaction-history-data-sharing.service';
@@ -17,6 +17,7 @@ export class TaxTransactionHistorySearchComponent implements OnInit, OnDestroy {
   transactionTypeList = [];
   viewModel: any = {};
   viewModelSubscription: Subscription
+  @ViewChild('formDetail') mytemplateForm : NgForm;
   constructor(
     private commonService: CommonService,
     private taxTransactionHistoryDataSharingService: TaxTransactionHistoryDataSharingService
@@ -69,6 +70,7 @@ export class TaxTransactionHistorySearchComponent implements OnInit, OnDestroy {
      this.viewModel.censusNo =null;
      this.viewModel.taxPayerName=null;
      this.viewModel.address=null;
+     this.mytemplateForm.reset();
     // this.taxTransactionHistoryDataSharingService.(false);
     // this.taxTransactionHistoryDataSharingService.updatedIsClear(true);
   }
