@@ -235,7 +235,6 @@ export class RefundApplicationFormComponent implements OnInit {
 
       saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
         applicantDetailsDTO.uniqueId = this.refundApplicationDataSharingService.applicationNo;
-        debugger
         this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
              (data) => {
                this.commonService.applicationNo = data.body.applicationNo;
