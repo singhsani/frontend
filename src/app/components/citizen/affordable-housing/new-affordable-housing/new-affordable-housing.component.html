@@ -205,9 +205,12 @@
 					</app-address>
 				</div> -->
 
+				<div class="col-md-3">
+					<h2 style="margin-left: -16px;"><b>Marital Status</b></h2>
+				</div>
+
 				<div class="col-md-3 ngSelect" formGroupName="marriageStatus">
-					<ng-select (change)="changeMarriageStatus()"
-						placeholder="{{'marital_status' | translate: translateKey}} *" formControlName="code">
+					<ng-select (change)="changeMarriageStatus()" required formControlName="code">
 						<ng-option *ngFor="let status of maritalStatusArray" [value]="status.code">
 							{{status.name}}
 						</ng-option>
@@ -296,7 +299,8 @@
 
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">
-						<button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 1">{{'next'
+						<button class="pull-right" type="button" mat-raised-button color="primary"
+							(click)="tabIndex = 1">{{'next'
 							| translate:
 							actionBarKey}}</button>
 					</div>
@@ -507,7 +511,8 @@
 						<button type="button" class="liteBorder pull-left" mat-raised-button
 							(click)="tabIndex = 0">{{'back' |
 							translate: actionBarKey}}</button>
-						<button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 2">{{'next'
+						<button class="pull-right" type="button" mat-raised-button color="primary"
+							(click)="tabIndex = 2">{{'next'
 							| translate:
 							actionBarKey}}</button>
 					</div>
@@ -550,6 +555,7 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" formControlName="howLongLivingInVadodara" type="text"
+							maxlength="50"
 							placeholder="{{'How long have you been living in Vadodara?' | translate: translateKey}}"
 							required>
 						<control-messages [control]="affordableHousingForm.get('howLongLivingInVadodara')">
@@ -558,6 +564,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" formControlName="sqMetersPresentBuilding" type="text"
+							maxlength="50"
 							placeholder="{{'How many square meters is the present building?' | translate: translateKey}}"
 							required>
 						<control-messages [control]="affordableHousingForm.get('sqMetersPresentBuilding')">
@@ -567,7 +574,7 @@
 					<div class="col-md-4 ngSelect">
 						<ng-select placeholder="{{'is your house kaccha or pucca ?' | translate: translateKey}}"
 							formControlName="hasCurrentHouseKacchaOrPucca">
-							<ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
+							<ng-option *ngFor="let impl of houseOldOrNew" [value]="impl">{{impl}}
 							</ng-option>
 						</ng-select>
 						<control-messages [control]="affordableHousingForm.get('hasCurrentHouseKacchaOrPucca')">
@@ -683,7 +690,8 @@
 						<button type="button" class="liteBorder pull-left" mat-raised-button
 							(click)="tabIndex = 2">{{'back' |
 							translate: actionBarKey}}</button>
-						<button mat-raised-button class="pull-right" type="button" color="primary" (click)="tabIndex = 4">{{'next'
+						<button mat-raised-button class="pull-right" type="button" color="primary"
+							(click)="tabIndex = 4">{{'next'
 							| translate:
 							actionBarKey}}</button>
 					</div>
@@ -724,12 +732,12 @@
 								<tr *ngFor="let item of affordableHousingForm.get('familyMembers')['controls']; let indx = index;"
 									[formGroupName]="indx">
 
-									<td>
+									<td style="width: 40px;">
 										<div class="d-md-none">S.No.</div>
 										{{indx+1}}
 									</td>
 
-									<td>
+									<td style="width: 350px;">
 										<div class="d-md-none">{{'Full Name' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
@@ -739,7 +747,7 @@
 										</mat-form-field>
 									</td>
 
-									<td>
+									<td style="width: 200px;">
 										<div class="d-md-none">{{'age' | translate:translateKey}}</div>
 										<p class="width60" *ngIf="!item.isEditMode">{{item.get('memberAge').value}}
 										</p>
@@ -749,7 +757,7 @@
 										</mat-form-field>
 									</td>
 
-									<td>
+									<td style="width: 200px;">
 										<div class="d-md-none">{{'relationship' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('relationshipWithApplicant').value}}
 										</p>
@@ -764,12 +772,7 @@
 
 										<control-messages [control]="item.get('relationshipWithApplicant')">
 										</control-messages>
-
-
-
-
 									</td>
-
 
 									<td style="width: 40px;" *ngIf="affordableHousingForm.get('canEdit').value">
 										<button [disabled]="isEditModeBtn" mat-icon-button color="primary"
@@ -818,7 +821,7 @@
 								<tr class="mo-d-none">
 									<th>S.No.</th>
 									<th>{{'Full Name' | translate:translateKey}}</th>
-									<th>{{'flat_no' | translate:translateKey}}</th>
+									<th>{{'Flat Address' | translate:translateKey}}</th>
 									<th>{{'street' | translate:translateKey}}</th>
 									<th>{{'city' | translate:translateKey}}</th>
 									<th>{{'district' | translate:translateKey}}</th>
@@ -847,7 +850,7 @@
 									</td>
 
 									<td>
-										<div class="d-md-none">{{'flat_no' | translate:translateKey}}</div>
+										<div class="d-md-none">{{'Flat Address' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('flatNo').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput maxlength="10" formControlName="flatNo">
@@ -944,7 +947,7 @@
 								<tr class="mo-d-none">
 									<th>S.No.</th>
 									<th>{{'Full Name' | translate:translateKey}}</th>
-									<th>{{'flat_no' | translate:translateKey}}</th>
+									<th>{{'Plot Address' | translate:translateKey}}</th>
 									<th>{{'street' | translate:translateKey}}</th>
 									<th>{{'city' | translate:translateKey}}</th>
 									<th>{{'district' | translate:translateKey}}</th>
@@ -973,7 +976,7 @@
 									</td>
 
 									<td>
-										<div class="d-md-none">{{'flat_no' | translate:translateKey}}</div>
+										<div class="d-md-none">{{'Plot Address' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('flatNo').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput maxlength="10" formControlName="flatNo">
@@ -1102,7 +1105,8 @@
 						<button type="button" class="liteBorder pull-left" mat-raised-button
 							(click)="tabIndex = 4">{{'back' |
 							translate: actionBarKey}}</button>
-						<button mat-raised-button type="button" class="pull-right" color="primary" type="button" (click)="tabIndex = 6">{{'next'
+						<button mat-raised-button type="button" class="pull-right" color="primary" type="button"
+							(click)="tabIndex = 6">{{'next'
 							| translate:
 							actionBarKey}}</button>
 					</div>
