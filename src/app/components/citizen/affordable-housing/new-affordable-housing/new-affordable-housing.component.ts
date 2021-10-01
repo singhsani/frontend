@@ -644,8 +644,6 @@ export class NewAffordableHousingComponent implements OnInit {
 	}
 
 	projectChange(projectId) {
-
-
 		if (projectId)
 			this.affodableService.getProjectLocation(projectId).subscribe(
 				(res: any) => {
