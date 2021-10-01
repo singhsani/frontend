@@ -429,12 +429,13 @@ export class BookingService {
         this.requestURL = `api/booking/stadium/refundAcknowledgment?refNumber=${refNumber}`;
       } else if(serviceType == 'CHILDREN_THEATER'){
         this.requestURL = `api/booking/childrenTheater/cancellationAcknowledgment?refNumber=${refNumber}`;
-      }    
+      }
         return this.http.get(this.requestURL,'printReceipt');
     }
 
-    getChildrenFees(){
-      this.requestURL = 'api/booking/childrenTheater/getFeesDetail';
+    getFeesStructure(){
+      this.requestURL = `api/booking/${this.resourceType}/getFeesStructure?resourceType=${this.resourceType}`;
       return this.http.get(this.requestURL);
     }
+
 }

@@ -323,7 +323,7 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <mat-label>{{'DD Issuing date *'}}</mat-label>
+              <mat-label>{{'DD Issuing date'}}</mat-label>
               <input appDate matInput [min]="minDate" [max]="maxDate" [matDatepicker]="chequeDate"
                 formControlName="registrationDDIssuingDate" required>
               <mat-datepicker-toggle matSuffix [for]="chequeDate"></mat-datepicker-toggle>
@@ -837,7 +837,7 @@
                         </td>
                         <td class="text-center">
                           <mat-form-field>
-                            <input matInput autocomplete="off" appDate formControlName="orderDate" [max]="maxDate"
+                            <input matInput autocomplete="off" appDate formControlName="orderDate" [min]="maxDate"
                               [matDatepicker]="orderPicker" (dateChange)="onDateChange('orderDate', $event.value)">
                             <mat-datepicker-toggle matSuffix [for]="orderPicker"></mat-datepicker-toggle>
                             <mat-datepicker touchUi="true" #orderPicker></mat-datepicker>
@@ -859,7 +859,7 @@
                         <td class="text-center">
                           <mat-form-field>
                             <input matInput autocomplete="off" appDate formControlName="quantitySuppliedCompletionDate"
-                              [max]="maxDate" [matDatepicker]="qualityPicker"
+                              [matDatepicker]="qualityPicker" [min]="maxDate"
                               (dateChange)="onDateChange('quantitySuppliedCompletionDate', $event.value)">
                             <mat-datepicker-toggle matSuffix [for]="qualityPicker"></mat-datepicker-toggle>
                             <mat-datepicker touchUi="true" #qualityPicker></mat-datepicker>
