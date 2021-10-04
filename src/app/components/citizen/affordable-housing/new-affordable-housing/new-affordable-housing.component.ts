@@ -72,6 +72,8 @@ export class NewAffordableHousingComponent implements OnInit {
 	personTypeArray = [];
 	relationArray: Array<any> = ["Father", "Mother", "Husband", "Wife", "Brother", "Son ", "Sister", "Daughter"];
 	implYesNorray: Array<any> = [{ name: 'YES', code: true }, { name: 'NO', code: false }];
+	houseOldOrNew: Array<any> = ["Kuccha", "Pucca"];
+
 	LOOKUP: any;
 
 	houseTypes = [];
@@ -458,7 +460,7 @@ export class NewAffordableHousingComponent implements OnInit {
 				})
 	}
 
-	resetLookUpField(){
+	resetLookUpField() {
 		this.projectData = [];
 		this.affordableHousingForm.get('projectId').setValue(null);
 		this.affordableHousingForm.get('location').setValue(null);
@@ -511,9 +513,9 @@ export class NewAffordableHousingComponent implements OnInit {
 				code: [null, Validators.required]
 			}),
 
-			location: null,
-			tpNumber: null,
-			fpNumber: null,
+			location: [{ value: null, disabled: true }],
+			tpNumber: [{ value: null, disabled: true }],
+			fpNumber: [{ value: null, disabled: true }],
 			// /* First Beneficiary controls Start *//
 			firstApplicantFirstName: [null, [Validators.required, Validators.maxLength(100)]],
 			firstApplicantMiddleName: [null, [Validators.maxLength(100)]],
@@ -568,7 +570,7 @@ export class NewAffordableHousingComponent implements OnInit {
 			// /* Second Beneficiary controls End *//
 
 			// /* Bank Details controls Start *//
-			bankAccountNumber: [null, [Validators.required, Validators.maxLength(16)]],
+			bankAccountNumber: [null, [Validators.required, Validators.maxLength(18)]],
 			bank: this.fb.group({
 				code: [null, [Validators.required]],
 				name: null,
@@ -642,8 +644,6 @@ export class NewAffordableHousingComponent implements OnInit {
 	}
 
 	projectChange(projectId) {
-
-		
 		if (projectId)
 			this.affodableService.getProjectLocation(projectId).subscribe(
 				(res: any) => {
@@ -1059,7 +1059,7 @@ export class NewAffordableHousingComponent implements OnInit {
 			"firstAppHusWifeLastName": "Patel",
 			"firstAppDateOfBirth": "2002-01-27",
 			"firstAppMobileNumOne": "2323232323",
-			"firstAppCorrespondenceAddress": {
+			"currentAddress": {
 				"buildingName": "12",
 				"streetName": "kishan",
 				"landmark": "sfasdfa",
@@ -1095,7 +1095,7 @@ export class NewAffordableHousingComponent implements OnInit {
 			"secondAppHusWifeLastName": "Kumar",
 			"secondAppDateOfBirth": "2002-01-27",
 			"secondAppMobileNumOne": "2323232323",
-			"secondAppCorrespondenceAddress": {
+			"permanentAddress": {
 				"buildingName": "12",
 				"streetName": "kishan",
 				"landmark": "sfasdfa",
@@ -1106,7 +1106,6 @@ export class NewAffordableHousingComponent implements OnInit {
 				"country": "INDIA",
 				"pincode": "232333"
 			},
-
 			"secondAppOccupation": "ASE",
 			"secondAppOrganizationName": "NASCENT",
 			"secondAppOccupationDesignation": "CCC",
