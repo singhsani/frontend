@@ -149,13 +149,20 @@
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" appDate formControlName="firstAppDateOfBirth"
 							[max]="dobMaxDate" [matDatepicker]="firstdobpicker" [matDatepicker]="firstdobpicker"
-							(dateChange)="onDateChange('firstAppDateOfBirth', $event.value)"
+							(dateChange)="onDateChangeFirstAge('firstAppDateOfBirth', $event.value)"
 							placeholder="{{'applicant_dob' | translate: translateKey}}" required>
 						<mat-datepicker-toggle matSuffix [for]="firstdobpicker"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #firstdobpicker></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">
 							{{affordableHousingConfiguration.DATE_HINT_MSG}}</div>
 						<control-messages [control]="affordableHousingForm.get('firstAppDateOfBirth')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput OnlyNumber placeholder="{{'Age' | translate:translateKey}}"
+							formControlName="firstAppAge">
+						<control-messages [control]="affordableHousingForm.get('firstAppAge')">
 						</control-messages>
 					</mat-form-field>
 
@@ -376,13 +383,20 @@
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" appDate formControlName="secondAppDateOfBirth"
 							[max]="dobMaxDate" [matDatepicker]="seconddobpicker" [matDatepicker]="seconddobpicker"
-							(dateChange)="onDateChange('secondAppDateOfBirth', $event.value)"
+							(dateChange)="onDateChangeSecondAge('secondAppDateOfBirth', $event.value)"
 							placeholder="{{'applicant_dob' | translate: translateKey}}" required>
 						<mat-datepicker-toggle matSuffix [for]="seconddobpicker"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #seconddobpicker></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">
 							{{affordableHousingConfiguration.DATE_HINT_MSG}}</div>
 						<control-messages [control]="affordableHousingForm.get('secondAppDateOfBirth')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput OnlyNumber placeholder="{{'Age' | translate:translateKey}}"
+							formControlName="secondAppAge">
+						<control-messages [control]="affordableHousingForm.get('secondAppAge')">
 						</control-messages>
 					</mat-form-field>
 
@@ -589,6 +603,16 @@
 							</ng-option>
 						</ng-select>
 						<control-messages [control]="affordableHousingForm.get('hasCurrentHouseRentedOrPurchased')">
+						</control-messages>
+					</div>
+
+					<div class="col-md-4 ngSelect">
+						<ng-select placeholder="{{'is your ration card APL or BPL ?' | translate: translateKey}}"
+							formControlName="rationCardType">
+							<ng-option *ngFor="let impl of rationCard" [value]="impl">{{impl}}
+							</ng-option>
+						</ng-select>
+						<control-messages [control]="affordableHousingForm.get('rationCardType')">
 						</control-messages>
 					</div>
 
