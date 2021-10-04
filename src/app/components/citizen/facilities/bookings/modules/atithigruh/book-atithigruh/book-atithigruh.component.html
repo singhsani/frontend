@@ -246,10 +246,11 @@
                     <div class="row">
                         <div *ngFor="let date of bookingUtils.filterAcc(month.id, Dates)"
                             class="col-6 col-md-3 col-lg-2 mb-1 p-1">
-                            <div class="dateBox rounded border availableDate" *ngFor="let shift of date.slotList; let i = index" 
-                            [ngClass]="{'bookDate': shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.RESERVED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED, 
-                                        'checkDate': shift.slotStatus != bookingConstants.AVAILABLE && shift.slotStatus != bookingConstants.HOLIDAY && shift.slotStatus != bookingConstants.FESTIVAL,
-                                        'blockDate': shift.slotStatus == 'TEMPORARY_BLOCKED'}">
+                            <div class="dateBox rounded border availableDate" *ngFor="let shift of date.slotList; let i = index"
+                                 [ngClass]="{'bookDate': shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED,
+                                        'checkDate': shift.slotStatus != bookingConstants.AVAILABLE,
+                                        'blockDate': shift.slotStatus == 'TEMPORARY_BLOCKED',
+                                        'holiyDay': shift.slotStatus == bookingConstants.RESERVED || shift.slotStatus == bookingConstants.HOLIDAY || shift.slotStatus == bookingConstants.FESTIVAL}">
                                 <strong>
                                     {{bookingUtils.returnProperDate(date.key)}}
                                 </strong>
@@ -456,13 +457,13 @@
                         </h2>
                         <app-address #address [requiredFeilds]="true"
                             [addressFormGroup]="atithigruhForm.get('applicantAddress')"></app-address>
-                       
-                           
+
+
                         <mat-form-field class="col-md-4">
                             <input matInput maxlength="15" formControlName="gstNo"
                             placeholder="{{'GSTIN_Number' | translate: translateKey}}">
                             <control-messages [control]="atithigruhForm.get('gstNo')"></control-messages>
-                        </mat-form-field> 
+                        </mat-form-field>
 
                     </div>
 
