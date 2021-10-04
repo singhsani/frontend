@@ -73,6 +73,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	relationArray: Array<any> = ["Father", "Mother", "Husband", "Wife", "Brother", "Son ", "Sister", "Daughter"];
 	implYesNorray: Array<any> = [{ name: 'YES', code: true }, { name: 'NO', code: false }];
 	houseOldOrNew: Array<any> = ["Kuccha", "Pucca"];
+	rationCard: Array<any> = ["APL", "BPL", "Not Applicable"];
 
 	LOOKUP: any;
 
@@ -508,6 +509,7 @@ export class NewAffordableHousingComponent implements OnInit {
 			sqMetersPresentBuilding: [null, [Validators.required]],
 			hasCurrentHouseKacchaOrPucca: [null, [Validators.required]],
 			hasCurrentHouseRentedOrPurchased: [null, [Validators.required]],
+			rationCardType: [null, [Validators.required]],
 
 			marriageStatus: this.fb.group({
 				code: [null, Validators.required]
@@ -516,6 +518,10 @@ export class NewAffordableHousingComponent implements OnInit {
 			location: [{ value: null, disabled: true }],
 			tpNumber: [{ value: null, disabled: true }],
 			fpNumber: [{ value: null, disabled: true }],
+
+			firstAppAge: [{ value: null, disabled: true }],
+			secondAppAge: [{ value: null, disabled: true }],
+
 			// /* First Beneficiary controls Start *//
 			firstApplicantFirstName: [null, [Validators.required, Validators.maxLength(100)]],
 			firstApplicantMiddleName: [null, [Validators.maxLength(100)]],
@@ -665,6 +671,25 @@ export class NewAffordableHousingComponent implements OnInit {
 		this.affordableHousingForm.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
 	}
 
+	onDateChangeFirstAge(field, value) {
+		let timeDiff = Math.abs(Date.now() - value);
+		let age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365.25);
+		console.log(age);
+
+		this.affordableHousingForm.get('firstAppAge').setValue(age);
+		this.affordableHousingForm.get(field).setValue(moment(value).format("YYYY-MM-DD"));
+		return age
+	}
+
+	onDateChangeSecondAge(field, value) {
+		let timeDiff = Math.abs(Date.now() - value);
+		let age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365.25);
+		console.log(age);
+
+		this.affordableHousingForm.get('secondAppAge').setValue(age);
+		this.affordableHousingForm.get(field).setValue(moment(value).format("YYYY-MM-DD"));
+		return age
+	}
 	/**
 	 * This method use to get output event of tab change
 	 * @param evt - Tab index
