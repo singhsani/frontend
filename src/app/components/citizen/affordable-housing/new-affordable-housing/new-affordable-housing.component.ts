@@ -72,6 +72,9 @@ export class NewAffordableHousingComponent implements OnInit {
 	personTypeArray = [];
 	relationArray: Array<any> = ["Father", "Mother", "Husband", "Wife", "Brother", "Son ", "Sister", "Daughter"];
 	implYesNorray: Array<any> = [{ name: 'YES', code: true }, { name: 'NO', code: false }];
+	houseOldOrNew: Array<any> = ["Kuccha", "Pucca"];
+	rationCard: Array<any> = ["APL", "BPL", "Not Applicable"];
+
 	LOOKUP: any;
 
 	houseTypes = [];
@@ -458,7 +461,7 @@ export class NewAffordableHousingComponent implements OnInit {
 				})
 	}
 
-	resetLookUpField(){
+	resetLookUpField() {
 		this.projectData = [];
 		this.affordableHousingForm.get('projectId').setValue(null);
 		this.affordableHousingForm.get('location').setValue(null);
@@ -506,14 +509,19 @@ export class NewAffordableHousingComponent implements OnInit {
 			sqMetersPresentBuilding: [null, [Validators.required]],
 			hasCurrentHouseKacchaOrPucca: [null, [Validators.required]],
 			hasCurrentHouseRentedOrPurchased: [null, [Validators.required]],
+			rationCardType: [null, [Validators.required]],
 
 			marriageStatus: this.fb.group({
 				code: [null, Validators.required]
 			}),
 
-			location: null,
-			tpNumber: null,
-			fpNumber: null,
+			location: [{ value: null, disabled: true }],
+			tpNumber: [{ value: null, disabled: true }],
+			fpNumber: [{ value: null, disabled: true }],
+
+			firstAppAge: [{ value: null, disabled: true }],
+			secondAppAge: [{ value: null, disabled: true }],
+
 			// /* First Beneficiary controls Start *//
 			firstApplicantFirstName: [null, [Validators.required, Validators.maxLength(100)]],
 			firstApplicantMiddleName: [null, [Validators.maxLength(100)]],
@@ -568,7 +576,7 @@ export class NewAffordableHousingComponent implements OnInit {
 			// /* Second Beneficiary controls End *//
 
 			// /* Bank Details controls Start *//
-			bankAccountNumber: [null, [Validators.required, Validators.maxLength(16)]],
+			bankAccountNumber: [null, [Validators.required, Validators.maxLength(18)]],
 			bank: this.fb.group({
 				code: [null, [Validators.required]],
 				name: null,
@@ -642,8 +650,6 @@ export class NewAffordableHousingComponent implements OnInit {
 	}
 
 	projectChange(projectId) {
-
-		
 		if (projectId)
 			this.affodableService.getProjectLocation(projectId).subscribe(
 				(res: any) => {
@@ -665,6 +671,25 @@ export class NewAffordableHousingComponent implements OnInit {
 		this.affordableHousingForm.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
 	}
 
+	onDateChangeFirstAge(field, value) {
+		let timeDiff = Math.abs(Date.now() - value);
+		let age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365.25);
+		console.log(age);
+
+		this.affordableHousingForm.get('firstAppAge').setValue(age);
+		this.affordableHousingForm.get(field).setValue(moment(value).format("YYYY-MM-DD"));
+		return age
+	}
+
+	onDateChangeSecondAge(field, value) {
+		let timeDiff = Math.abs(Date.now() - value);
+		let age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365.25);
+		console.log(age);
+
+		this.affordableHousingForm.get('secondAppAge').setValue(age);
+		this.affordableHousingForm.get(field).setValue(moment(value).format("YYYY-MM-DD"));
+		return age
+	}
 	/**
 	 * This method use to get output event of tab change
 	 * @param evt - Tab index
@@ -1059,7 +1084,7 @@ export class NewAffordableHousingComponent implements OnInit {
 			"firstAppHusWifeLastName": "Patel",
 			"firstAppDateOfBirth": "2002-01-27",
 			"firstAppMobileNumOne": "2323232323",
-			"firstAppCorrespondenceAddress": {
+			"currentAddress": {
 				"buildingName": "12",
 				"streetName": "kishan",
 				"landmark": "sfasdfa",
@@ -1095,7 +1120,7 @@ export class NewAffordableHousingComponent implements OnInit {
 			"secondAppHusWifeLastName": "Kumar",
 			"secondAppDateOfBirth": "2002-01-27",
 			"secondAppMobileNumOne": "2323232323",
-			"secondAppCorrespondenceAddress": {
+			"permanentAddress": {
 				"buildingName": "12",
 				"streetName": "kishan",
 				"landmark": "sfasdfa",
@@ -1106,7 +1131,6 @@ export class NewAffordableHousingComponent implements OnInit {
 				"country": "INDIA",
 				"pincode": "232333"
 			},
-
 			"secondAppOccupation": "ASE",
 			"secondAppOrganizationName": "NASCENT",
 			"secondAppOccupationDesignation": "CCC",

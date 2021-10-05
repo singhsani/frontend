@@ -15,7 +15,8 @@ import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
 
 @Component({
     selector: 'app-refund-application-form',
-    templateUrl: './refund-application-form.component.html'
+    templateUrl: './refund-application-form.component.html',
+    styleUrls: ['./refund-application-form.component.scss']
 })
 
 export class RefundApplicationFormComponent implements OnInit {
