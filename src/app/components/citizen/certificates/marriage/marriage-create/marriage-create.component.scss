@@ -29,3 +29,14 @@
 .leftpadding{
   padding-left: 20px;
 }
+
+.customthead{
+    background-color: #673ab7;
+    color: white;
+}
+
+.scrollModel{
+    overflow-y:auto;
+    max-height: 500px;
+}
+/deep/ .cdk-overlay-container {z-index: 1051 !important;}
