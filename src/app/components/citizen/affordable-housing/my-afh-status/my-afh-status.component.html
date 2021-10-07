@@ -1,0 +1,87 @@
+
+<mat-card>
+<form class="searchBox">
+  <div class="col-md-6">
+  <mat-form-field>
+    <input matInput autocomplete="off" trim="blur" #regNoTextBox #searchInput="matInput" type="text"
+      placeholder="Barcode/Application No">
+    <button mat-button matSuffix mat-icon-button (click)="searchApplication($event, regNoTextBox.value)">
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+</form>
+</mat-card>
+
+<mat-card>
+<div class="row">
+
+  <div class="col-md-6">
+    <label class="col-md-5 font16 font-weight-bold">First Applicant Name </label>
+    <span class="col-md-1 font-weight-bold">:</span>
+    <span class="font16">{{finalPossessionData?.firstApplicantFirstName}}</span>
+  </div>
+
+  <div class="col-md-6">
+    <label class="col-md-5 font16 font-weight-bold">Mobile No</label>
+    <span class="col-md-1 font-weight-bold">:</span>
+    <span class="font16">{{finalPossessionData?.firstAppMobileNumOne}}</span>
+  </div>
+
+  <div class="col-md-6">
+    <label class="col-md-5 font16 font-weight-bold">Second Applicant Name </label>
+    <span class="col-md-1 font-weight-bold">:</span>
+    <span class="font16">{{finalPossessionData?.secondApplicantFirstName}}</span>
+  </div>
+
+  <div class="col-md-6">
+    <label class="col-md-5 font16 font-weight-bold">Aadhar No</label>
+    <span class="col-md-1 font-weight-bold">:</span>
+    <span class="font16">{{finalPossessionData?.firstAppAadharCardNumber}}</span>
+  </div>
+
+  <div class="col-md-6">
+    <label class="col-md-5 font16 font-weight-bold">Scheme Name</label>
+    <span class="col-md-1 font-weight-bold">:</span>
+    <span class="font16">{{finalPossessionData?.schemeName}}</span>
+  </div>
+
+  <div class="col-md-6">
+    <label class="col-md-5 font16 font-weight-bold">PAN No</label>
+    <span class="col-md-1 font-weight-bold">:</span>
+    <span class="font16">{{finalPossessionData?.firstAppPanCardNumber}}</span>
+  </div>
+
+  <div class="col-md-6">
+    <label class="col-md-5 font16 font-weight-bold">Project Name </label>
+    <span class="col-md-1 font-weight-bold">:</span>
+    <span class="font16">{{finalPossessionData?.projectName}}</span>
+  </div>
+
+  <div class="col-md-6">
+    <label class="col-md-5 font16 font-weight-bold">Voter ID No</label>
+    <span class="col-md-1 font-weight-bold">:</span>
+    <span class="font16">{{finalPossessionData?.firstAppVoterIdNumber}}</span>
+  </div>
+
+  <div class="col-md-6">
+    <label class="col-md-5 font16 font-weight-bold">Location </label>
+    <span class="col-md-1 font-weight-bold">:</span>
+    <span class="font16">{{finalPossessionData?.schemeName}}</span>
+  </div>
+
+  <div class="col-md-6">
+    <label class="col-md-5 font16 font-weight-bold">License No</label>
+    <span class="col-md-1 font-weight-bold">:</span>
+    <span class="font16">{{finalPossessionData?.firstAppDrivingLicenseNumber}}</span>
+  </div>
+
+</div>
+</mat-card>
+<mat-card>
+  <button mat-raised-button color="accent">Draw</button>
+  <button mat-raised-button color="accent">Sortlisted</button>
+  <button mat-raised-button color="accent">Final Draw</button>
+  <button mat-raised-button color="accent">Final Latter</button>
+  
+</mat-card>
