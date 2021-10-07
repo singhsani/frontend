@@ -173,7 +173,7 @@
 						<input matInput [max]="groomagecalendar" appDate [matDatepicker]="picker2"
 							formControlName="groomBirthDate"
 							(dateChange)="dateFormate($event.value,'groomBirthDate');CalculateAge('groomBirthDate');touchedField('groomAge')"
-							placeholder="{{ 'date_of_birth' | translate:translateKey }}  " required>
+							placeholder="{{ 'date_of_birth' | translate:translateKey }}  " readonly required>
 						<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
 						<mat-datepicker #picker2 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
@@ -491,7 +491,7 @@
 						<input matInput [max]="brideagecalender" appDate [matDatepicker]="picker3"
 							formControlName="brideBirthDate"
 							(dateChange)="dateFormate($event.value,'brideBirthDate');CalculateAge('brideBirthDate')"
-							placeholder="{{'date_of_birth' | translate:translateKey }}  " required>
+							placeholder="{{'date_of_birth' | translate:translateKey }}  " readonly required>
 						<mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
 						<mat-datepicker #picker3 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
@@ -772,7 +772,7 @@
 						<input matInput [max]="adultPerson" appDate [matDatepicker]="picker4"
 							formControlName="groomParentsBirthDate"
 							(dateChange)="dateFormate($event.value,'groomParentsBirthDate')"
-							placeholder="{{'date_of_birth' | translate:translateKey }}  ">
+							placeholder="{{'date_of_birth' | translate:translateKey }}  " readonly>
 						<mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
 						<mat-datepicker #picker4 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
@@ -898,7 +898,7 @@
 						<input matInput [max]="adultPerson" appDate [matDatepicker]="picker5"
 							formControlName="brideParentsBirthDate"
 							(dateChange)="dateFormate($event.value,'brideParentsBirthDate')"
-							placeholder="{{'date_of_birth' | translate:translateKey }}  ">
+							placeholder="{{'date_of_birth' | translate:translateKey }}  " readonly>
 						<mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
 						<mat-datepicker #picker5 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
@@ -1017,7 +1017,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput [max]="adultPerson" appDate [matDatepicker]="picker6"
 							formControlName="priestBirthDate" (dateChange)="dateFormate($event.value,'priestBirthDate')"
-							placeholder="{{'date_of_birth' | translate:translateKey }}  ">
+							placeholder="{{'date_of_birth' | translate:translateKey }}  " readonly>
 						<mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
 						<mat-datepicker #picker6 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
@@ -1122,7 +1122,7 @@
 						<input matInput [max]="adultPerson" appDate [matDatepicker]="picker7"
 							formControlName="firstWitnessBirthDate"
 							(dateChange)="dateFormate($event.value,'firstWitnessBirthDate')"
-							placeholder="{{'date_of_birth' | translate:translateKey }}  ">
+							placeholder="{{'date_of_birth' | translate:translateKey }}  " readonly>
 						<mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
 						<mat-datepicker #picker7 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
@@ -1215,7 +1215,7 @@
 						<input matInput [max]="adultPerson" appDate [matDatepicker]="picker8"
 							formControlName="secondWitnessBirthDate"
 							(dateChange)="dateFormate($event.value,'secondWitnessBirthDate')"
-							placeholder="{{'date_of_birth' | translate:translateKey }} ">
+							placeholder="{{'date_of_birth' | translate:translateKey }} " readonly>
 						<mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
 						<mat-datepicker #picker8 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
