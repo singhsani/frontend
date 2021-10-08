@@ -102,9 +102,12 @@
   </div>
 </mat-card>
 <mat-card>
-  <button mat-raised-button color="accent">Draw</button>
-  <button mat-raised-button color="accent">Sortlisted</button>
-  <button mat-raised-button color="accent">Final Draw</button>
-  <button mat-raised-button color="accent">Final Latter</button>
+  <button mat-raised-button color="accent" [disabled]="isFormApproved">Submitted</button>
+  <button mat-raised-button color="accent" [disabled]="isShortListed">Form Shortlist</button>
+  <button mat-raised-button color="accent" [disabled]="isFinalDraw">Final Draw</button>
+  <button mat-raised-button color="accent" [disabled]="isAllotmentLetter">Allotted</button>
+  <button mat-raised-button color="accent" [disabled]="isGenerateNoc">NOC Generated</button>
+  <button mat-raised-button color="accent" [disabled]="isSaleDeedLetter">Sale Deed Letter</button>
+  <button mat-raised-button color="accent" [disabled]="isFinalPossession">Final Possession</button>
 
 </mat-card>
