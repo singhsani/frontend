@@ -12,7 +12,7 @@ export class MyAfhStatusComponent implements OnInit {
   constructor(private toster: ToastrService,
     private affodableService: AffodableService) { }
 
-  finalPossessionData: any;
+  applicationStatus: any;
 
   ngOnInit() {
   }
@@ -24,7 +24,7 @@ export class MyAfhStatusComponent implements OnInit {
       this.affodableService.getMyAfhStatus(refNo).subscribe(
         (res: any) => {
 
-          this.finalPossessionData = res;
+          this.applicationStatus = res;
 
         }, (err: any) => {
           this.toster.error(err.error.error_description);
