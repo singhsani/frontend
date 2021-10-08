@@ -105,11 +105,11 @@
       </button>
     </div>
   </div>
-  <div class="button-row text-right mt-3" *ngIf="showSkipButton">
+  <div class="button-row mt-3" *ngIf="showSkipButton">
     <button mat-raised-button class="ml-3" color="primary" type="button" (click)="onBack()">
       <mat-icon>skip_previous</mat-icon>Back
     </button>
-    <button mat-raised-button class="ml-3" color="primary" type="submit">
+    <button mat-raised-button class="btn" style="float:right" color="primary" type="submit">
       Next<mat-icon>skip_next</mat-icon>
     </button>
   </div>
