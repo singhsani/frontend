@@ -57,7 +57,7 @@ export class BankDetailComponent implements OnInit, OnDestroy {
     this.model = {};
     this.modelForCliear = {};
     this.model.vacancyFrom = new Date();
-    this.vacancyToMinDate = new Date(moment(new Date()).add("days", 1).toString());
+    this.vacancyToMinDate = new Date(moment(new Date()).add('days', 1).toString());
     this.modelSubscription = this.vacancyPremiseCertificateDataSharingService.observableDataModel.subscribe(data => {
       if (data) {
         this.model = Object.assign({}, data);
@@ -86,7 +86,7 @@ export class BankDetailComponent implements OnInit, OnDestroy {
   }
 
   onChangeVacancyFrom(event) {
-    this.vacancyToMinDate = new Date(moment(new Date(this.model.vacancyFrom)).add("days", 1).toString());
+    this.vacancyToMinDate = new Date(moment(new Date(this.model.vacancyFrom)).add('days', 1).toString());
   }
 
   onActionOnVacancy(val) {
@@ -225,7 +225,7 @@ export class BankDetailComponent implements OnInit, OnDestroy {
 
         this.submit();
       } else {
-        this.commonservice2.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
+        this.commonservice2.openAlert('File Upload', `Please upload file for "${data.fileName}"`, 'warning');
         return
       }
 
@@ -249,8 +249,18 @@ export class BankDetailComponent implements OnInit, OnDestroy {
   }
 
   onClear() {
-    this.model = this.modelForCliear;
-    this.model.vacancyFrom = new Date();
+    const bankDetail = {
+      'refundAccountName': '',
+      'refundAccountNumber': '',
+      'bankId': null,
+      'branchIdhId': null,
+      'bankBranchId': null,
+      'ifscCode': '',
+      'vacancyFrom': new Date()
+    };
+    Object.assign(this.model, bankDetail);
+    /* this.model = this.modelForCliear;
+    this.model.vacancyFrom = new Date(); */
   }
 
   onUploadDoc(event:number){
@@ -274,9 +284,9 @@ export class BankDetailComponent implements OnInit, OnDestroy {
               resolve({ fileName: doc.documentLabelEn, status: false })
             }
           });
-          resolve({ fileName: "", status: true });
+          resolve({ fileName: '', status: true });
         } else {
-          resolve({ fileName: "", status: true })
+          resolve({ fileName: '', status: true })
         }
       })
     })
@@ -353,7 +363,7 @@ saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
       if (error.status === 400) {
         var errorMessage = '';
         error.error[0].propertyList.forEach(element => {
-          errorMessage = errorMessage + element + "</br>";
+          errorMessage = errorMessage + element + '</br>';
         });
         this.alertService.error(errorMessage);
       }
