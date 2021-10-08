@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { AffodableService } from '../services/AffordableService';
 
 @Component({
   selector: 'app-my-afh-status',
@@ -7,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyAfhStatusComponent implements OnInit {
 
-  constructor() { }
+  constructor(private toster: ToastrService,
+    private affodableService: AffodableService) { }
 
-  finalPossessionData : any;
+  finalPossessionData: any;
 
   ngOnInit() {
   }
@@ -17,9 +20,17 @@ export class MyAfhStatusComponent implements OnInit {
 
   searchApplication(event, refNo) {
 
-    if (event && refNo != ""){
-      
+    if (event && refNo != "") {
+      this.affodableService.getMyAfhStatus(refNo).subscribe(
+        (res: any) => {
+
+          this.finalPossessionData = res;
+
+        }, (err: any) => {
+          this.toster.error(err.error.error_description);
+        })
     }
   }
+
 
 }

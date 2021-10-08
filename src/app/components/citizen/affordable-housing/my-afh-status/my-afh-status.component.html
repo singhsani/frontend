@@ -1,17 +1,30 @@
 
-<mat-card>
-<form class="searchBox">
-  <div class="col-md-6">
-  <mat-form-field>
-    <input matInput autocomplete="off" trim="blur" #regNoTextBox #searchInput="matInput" type="text"
-      placeholder="Barcode/Application No">
-    <button mat-button matSuffix mat-icon-button (click)="searchApplication($event, regNoTextBox.value)">
-      <mat-icon>search</mat-icon>
-    </button>
-  </mat-form-field>
-</div>
-</form>
-</mat-card>
+
+<div class=''>
+  <mat-card class="formClass cardBorder">
+      <div class="pageTitle">Application Status</div>
+      <div class="p-15">
+          <form  autocomplete="off" ngNativeValidate>
+              <div class="row">
+                  <div class="col-md-4">
+                      <mat-form-field>
+                        <input matInput autocomplete="off" trim="blur" #regNoTextBox #searchInput="matInput" type="text"
+                        placeholder="Barcode/Application No">
+                      </mat-form-field>
+                  </div>
+
+                  <div class="col-md-2">
+                    <button mat-button matSuffix mat-icon-button (click)="searchApplication($event, regNoTextBox.value)">
+                      <mat-icon>search</mat-icon>
+                    </button>
+                  </div>
+              </div>
+          </form>
+        </div>
+      </mat-card>
+      </div>
+
+
 
 <mat-card>
 <div class="row">

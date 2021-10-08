@@ -37,4 +37,8 @@ export class AffodableService {
 		return this.http.get(`api/afhForm/projectMaster/fetchByProjectId/` + projectCode);
 	}
 
+	getMyAfhStatus(appNo) {
+		return this.http.get(`api/form/afhForm/getApplicationStatus/` + appNo);
+	}
+
 }

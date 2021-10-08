@@ -306,6 +306,7 @@ export class DashboardComponent implements OnInit {
 			case 'WTR-RNW-PLUMB-LIC':
 			case 'PRO-TAX-TRAS-HISTORY':
 			case 'PROPERTY_UPDATE_EMAIL_AND_MOBILE':
+			case 'AFFORD-HOUSE-STATUS':		
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode)]);
 				break;
 			default:
