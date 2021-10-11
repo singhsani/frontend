@@ -639,7 +639,7 @@ export class SwimmingPoolComponent implements OnInit {
       this.attachments = res.attachments;
       this.swimmimgPoolBookingForm.patchValue(res);
       // this.attachments = res.data;
-      this.swimmimgPoolBookingForm.disable();
+      // this.swimmimgPoolBookingForm.disable();
       this.searchObj.isDisplayRenewLicenceForm = false;
       this.showDowlLoadFileTab = false;
       this.showSwimmingPoolForm = true;
