@@ -262,6 +262,16 @@ export class ValidationService {
         }
     }
 
+    // tan number validation 
+	static tanValidator(control: FormControl) {
+		if (control.value) {
+			const matches = control.value.match(/^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}/);
+			return matches ? null : { 'invalidTan': true };
+		} else {
+			return null;
+		}
+	}
+
     // gst number validation 
     static gstinValidator(control: FormControl) {
         if (control.value) {
