@@ -646,7 +646,7 @@ export class SwimmingPoolComponent implements OnInit {
       this.isRenewalForm = true;
       this.swimmimgPoolBookingForm.get('isRenewalForm').setValue(true);
       // this.swimmimgPoolBookingForm.get('remarks').enable();
-      // this.filterAsperBatchName(this.swimmimgPoolBookingForm.get('category').get('code').value);
+      this.filterAsperBatchName(this.swimmimgPoolBookingForm.get('category').get('code').value);
     })
   }  
 }
