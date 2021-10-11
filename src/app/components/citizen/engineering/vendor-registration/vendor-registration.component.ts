@@ -26,6 +26,8 @@ export class VendorRegistrationComponent implements OnInit {
 
   public affordableHousingConfiguration: CitizenConfig = new CitizenConfig();
 
+  public formControlNameToTabIndex = new Map();
+
   actionBarKey: string = 'adminActionBar';
   listOfItemMaterialSupplier: FormArray;
   academicQualifications: FormArray;
@@ -99,6 +101,46 @@ export class VendorRegistrationComponent implements OnInit {
     });
   }
 
+  // setFormControlToTabIndexMap() {
+
+    
+  //   this.formControlNameToTabIndex.set('nameOfTheFirm', 0)
+  //     this.formControlNameToTabIndex.set('panNo', 0)
+  //     this.formControlNameToTabIndex.set('tanNo', 0)
+  //     this.formControlNameToTabIndex.set('locationOfFactoryWorks', 0)
+  //     this.formControlNameToTabIndex.set('factoryAddress', 0)
+  //     this.formControlNameToTabIndex.set('officeContactNumber', 0)
+  //     this.formControlNameToTabIndex.set('officeFaxNumber', 0)
+  //     this.formControlNameToTabIndex.set('officeEmailId', 0)
+  //     this.formControlNameToTabIndex.set('resContactNumber', 0)
+  //     this.formControlNameToTabIndex.set('resFaxNumber', 0)
+  //     this.formControlNameToTabIndex.set('resEmailId', 0)
+  //     this.formControlNameToTabIndex.set('registeredAddress', 0)
+
+  //     this.formControlNameToTabIndex.set('registrationBank', 1)
+  //     this.formControlNameToTabIndex.set('registrationAmount', 1)
+  //     this.formControlNameToTabIndex.set('registrationDDNumber', 1)
+  //     this.formControlNameToTabIndex.set('registrationDDIssuingDate', 1)
+  //     this.formControlNameToTabIndex.set('isIncomeTaxDetails', 1)
+  //     this.formControlNameToTabIndex.set('vendorNameDetails', 1)
+  //     this.formControlNameToTabIndex.set('isManufacturingOwnedDetails', 1)
+  //     this.formControlNameToTabIndex.set('isTotalInvestmentDetail', 1)
+  //     this.formControlNameToTabIndex.set('isLastThreeYearsCopies', 1)
+      
+  //     this.formControlNameToTabIndex.set('loanCapitalWithBankLimit', 2)
+  //     this.formControlNameToTabIndex.set('isCopyOfITCClearanceCertificate', 2)
+  //     this.formControlNameToTabIndex.set('factoryLicenceNumber', 2)
+  //     this.formControlNameToTabIndex.set('isRegistrationOfficeACT', 2)
+  //     this.formControlNameToTabIndex.set('isISIProductManufactured', 2)
+  //     this.formControlNameToTabIndex.set('isRegisteredByGovt', 2)
+
+  //     this.formControlNameToTabIndex.set('isTestingRecordMaintanedDetail', 3)
+  //     this.formControlNameToTabIndex.set('testStandardGovtLabApproved', 0)
+  //     this.formControlNameToTabIndex.set('testStandardGovtLabApproved', 0)
+  //     this.formControlNameToTabIndex.set('testStandardGovtLabApproved', 0)
+
+
+  // }  
   getVendorData(id: number) {
     this.formService.getFormData(id).subscribe(res => {
       console.log("tresr", res)
@@ -131,12 +173,12 @@ export class VendorRegistrationComponent implements OnInit {
       applicationNumber: null,
 
       id: null,
-      nameOfTheFirm: null,
+      nameOfTheFirm: [null, [Validators.required]],
       commencementDate: null,
       yearOfEstablishment: null,
 
       panNo: [null, [Validators.required, ValidationService.panValidator]],
-      tanNo: [null, [Validators.required, ValidationService.panValidator]],
+      tanNo: [null, [Validators.required, ValidationService.tanValidator]],
       officeContactNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
       officeFaxNumber: [null, [ValidationService.mobileNumberValidation]],
       officeEmailId: [null, [Validators.required, ValidationService.emailValidator]],
@@ -159,12 +201,12 @@ export class VendorRegistrationComponent implements OnInit {
         code: [null, [Validators.required]],
         name: null
       }),
-      registrationDDNumber: null,
+      registrationDDNumber:  [null, [Validators.required]],
       registrationAmount: [null, [Validators.maxLength(7)]],
-      registrationDDIssuingDate: null,
+      registrationDDIssuingDate:  [null, [Validators.required]],
 
       locationOfFactoryWorks: this.fb.group({
-        code: null,
+        code: [null,[Validators.required]],
         name: null
       }),
 
@@ -187,7 +229,7 @@ export class VendorRegistrationComponent implements OnInit {
       areaOfLandFactory: null,
       builtAreaFactory: null,
       noOfWorkingShifts: null,
-      factoryLicenceNumber: null,
+      factoryLicenceNumber:  [null, [Validators.required]],
       sscNSICCertificateNumber: null,
       valueOfPlantAndMachinery: null,
       detailsEquipmentCapacity: null,
@@ -348,7 +390,7 @@ export class VendorRegistrationComponent implements OnInit {
   }
 
   onSubmit() {
-
+debugger;
     if (this.vendorRegistrationForm.invalid) {
       //this.commonService.prrintInvalidForm(this.affordableHousingForm);
       let count = this.affordableHousingConfiguration.getAllErrors(this.vendorRegistrationForm);
@@ -393,15 +435,16 @@ export class VendorRegistrationComponent implements OnInit {
             this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
             this.commonService.openAlert("Application Submitted Successful", "", "success", `</b>`);
             this.resetForm();
-          } else {
-            this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
-            return
-          }
+          } 
         }, (err) => {
           this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
         });
         return;
 
+      }
+      else {
+        this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
+        return
       }
     });
   }
