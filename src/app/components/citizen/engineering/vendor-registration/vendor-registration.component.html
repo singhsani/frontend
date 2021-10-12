@@ -1,8 +1,8 @@
 <div class="pb-3">
   <app-title-bar [title]="'Vendor Registration'">
-    <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
+    <!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
       Patch Value
-    </button> 
+    </button>  -->
   </app-title-bar>
 
 
@@ -859,7 +859,7 @@
                         <td class="text-center">
                           <mat-form-field>
                             <input matInput autocomplete="off" appDate formControlName="quantitySuppliedCompletionDate"
-                              [matDatepicker]="qualityPicker" [min]="maxDate"
+                              [matDatepicker]="qualityPicker" [min]="vendorRegistrationForm.get('orderDate').value"
                               (dateChange)="onDateChange('quantitySuppliedCompletionDate', $event.value)">
                             <mat-datepicker-toggle matSuffix [for]="qualityPicker"></mat-datepicker-toggle>
                             <mat-datepicker touchUi="true" #qualityPicker></mat-datepicker>
