@@ -64,7 +64,6 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
     }
 
     searchByConnectionNo() {
-        debugger;
         if (!this.connectioNo || (this.connectioNo && this.connectioNo.toString().trim() == '')) {
             this.alertService.error('Please enter Connectio No');
         }
