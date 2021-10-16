@@ -64,6 +64,7 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
     }
 
     searchByConnectionNo() {
+        debugger;
         if (!this.connectioNo || (this.connectioNo && this.connectioNo.toString().trim() == '')) {
             this.alertService.error('Please enter Connectio No');
         }
@@ -73,7 +74,7 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
                 this.applicationTransferOwnershipService.searchByConnection(this.connectioNo.toString().trim()).subscribe(
                     (data) => {
                         if (data.status === 200) {
-                            if (data.body.connectionDetail == null) {
+                            if (data.body.data.connectionDetail == null) {
                                 this.isShowSaveButton = false;
                                 this.alertService.info('No data found!');
                                 this.connectionsModel = new ConnectionsModel();
@@ -82,8 +83,8 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
                             }
                             else {
                                 this.isShowSaveButton = true;
-                                this.connectionsModel = data.body;
-                                this.outstandingDetail = data.body;
+                                this.connectionsModel = data.body.data;
+                                this.outstandingDetail = data.body.data;
                             }
                         }
                     },
