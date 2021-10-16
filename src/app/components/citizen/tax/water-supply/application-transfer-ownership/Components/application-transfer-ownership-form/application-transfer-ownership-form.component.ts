@@ -73,7 +73,7 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
                 this.applicationTransferOwnershipService.searchByConnection(this.connectioNo.toString().trim()).subscribe(
                     (data) => {
                         if (data.status === 200) {
-                            if (data.body.connectionDetail == null) {
+                            if (data.body.data.connectionDetail == null) {
                                 this.isShowSaveButton = false;
                                 this.alertService.info('No data found!');
                                 this.connectionsModel = new ConnectionsModel();
@@ -82,8 +82,8 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
                             }
                             else {
                                 this.isShowSaveButton = true;
-                                this.connectionsModel = data.body;
-                                this.outstandingDetail = data.body;
+                                this.connectionsModel = data.body.data;
+                                this.outstandingDetail = data.body.data;
                             }
                         }
                     },
