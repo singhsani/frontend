@@ -39,7 +39,7 @@ export class TicketingFileUploadComponent implements OnInit {
   ticketingConstants = TicketingConstants;
 
 	/**
-	 * 
+	 *
 	 * @param uploadFileService - for common upload file service
 	 * @param commonService - common service for alerts
 	 */
@@ -57,7 +57,7 @@ export class TicketingFileUploadComponent implements OnInit {
   ngOnInit() { }
 
 	/**
-	 * This method is use for select the file 
+	 * This method is use for select the file
 	 * @param event - get selected file event
 	 */
   selectFile(event) {
@@ -123,7 +123,8 @@ export class TicketingFileUploadComponent implements OnInit {
           this.uploadFileService.processFileToDMSServerBooking(formData, setProgressBar => {
               this.progress.percentage = setProgressBar;
           }, successResponse => {
-              this.tostr.success(this.uploadModel.labelName + " successfully uploaded", "File Uploaded");
+              //this.tostr.success(this.uploadModel.labelName + " successfully uploaded", "File Uploaded");
+              this.tostr.success("Your file uploaded successfully");
               this.canUpload = true;
               this.id = successResponse.data.id;
               this.type = successResponse.data.mimeType;
@@ -136,7 +137,8 @@ export class TicketingFileUploadComponent implements OnInit {
         this.uploadFileService.processFileToServer(formData, setProgressBar => {
           this.progress.percentage = setProgressBar;
         }, successResponse => {
-          this.tostr.success(this.uploadModel.labelName + " successfully uploaded", "File Uploaded");
+          //this.tostr.success(this.uploadModel.labelName + " successfully uploaded", "File Uploaded");
+          this.tostr.success("Your file uploaded successfully");
           this.canUpload = true;
           this.id = successResponse.data.id;
           this.type = successResponse.data.mimeType;
