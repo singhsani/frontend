@@ -15,6 +15,7 @@ import { DocumentCheckListComponent } from './Components/document-check-list/doc
 import { PropertyTransferApprovalComponent } from './Components/property-transfer-approval/property-transfer-approval.component';
 import { SharedComponentModule } from 'src/app/vmcshared/shared-component.module';
 import { TransferDocumentUploadComponent } from './Components/transfer-document-upload/transfer-document-upload.component';
+import { MatSortModule } from '@angular/material';
 
 
 
@@ -28,7 +29,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     FormsModule,
     ReactiveFormsModule,
-    SharedComponentModule
+    SharedComponentModule,
+    MatSortModule
   ],
   declarations: [
     TransferPropertyComponent,

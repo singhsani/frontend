@@ -11,6 +11,7 @@ import { merge, of } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { Constants } from 'src/app/vmcshared/Constants';
 
+
 @Component({
   selector: 'app-transfer-property-table',
   templateUrl: './transfer-property-table.component.html',
@@ -122,7 +123,8 @@ export class TransferPropertyTableComponent implements OnInit {
             }
             this.resultsLength=0;
           } else {
-            this.dataSource = new MatTableDataSource(data.body.data); 
+            this.dataSource = new MatTableDataSource(data.body.data);
+            this.dataSource.sort = this.sort;
             this.totalCount = data.body.data.length;
             this.resultsLength = data.body.data.length
                         // this.totalCount = data.body.totalRecords;
