@@ -294,11 +294,11 @@ export class NewDrainageConnectionComponent implements OnInit {
       waterDrainageWardId: [null, [Validators.required]],
       waterDrainageBlockId: [null, [Validators.required]],
 
-      electricityConnectionNo : [null],
-      gasConnectionNo : [null],
-      buildingPermissionNo : [null],
-      completionCertificateNo : [null],
-      occupancyCertificateNo : [null],
+      electricityConnectionNo : [null, [Validators.maxLength(50)]],
+      gasConnectionNo : [null, [Validators.maxLength(50)]],
+      buildingPermissionNo : [null, [Validators.maxLength(50)]],
+      completionCertificateNo : [null, [Validators.maxLength(50)]],
+      occupancyCertificateNo : [null, [Validators.maxLength(50)]],
 
 
       connectionUsage: [null, [Validators.required]],
