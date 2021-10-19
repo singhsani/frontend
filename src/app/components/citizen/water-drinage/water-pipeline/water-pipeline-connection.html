@@ -55,13 +55,13 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-6">
-						<textarea matInput rows="3" cols="50" maxlength="250" formControlName="landmark"
-							placeholder="{{ 'landmark' | translate:translateKey }}" > </textarea>
+						<input matInput rows="1" cols="50" maxlength="250" formControlName="landmark"
+							placeholder="{{ 'landmark' | translate:translateKey }}" > 
 						<!-- <control-messages [control]="waterPipeliConnectionForm.get('landmark')"></control-messages> -->
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<textarea matInput rows="3" cols="50" maxlength="250" formControlName="propertyAddress"
+						<textarea matInput rows="1" cols="50" maxlength="250" formControlName="propertyAddress"
 							placeholder="{{ 'property-address' | translate:translateKey }}" required> </textarea>
 						<control-messages [control]="waterPipeliConnectionForm.get('propertyAddress')"></control-messages>
 					</mat-form-field>

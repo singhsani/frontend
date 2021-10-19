@@ -425,10 +425,17 @@ export class NewDrainageConnectionComponent implements OnInit {
       this.wardZoneLevel2List = [];
       this.wardZoneLevel3List = [];
       this.wardZoneLevel4List = [];
+      if(!value){
+        this.newDrainageConnectionForm.get('waterDrainageWardId').setValue(null);
+        this.newDrainageConnectionForm.get('waterDrainageBlockId').setValue(null);
+      }
     }
     else if (level == 3) {
       this.wardZoneLevel3List = [];
       this.wardZoneLevel4List = [];
+      if(!value){
+        this.newDrainageConnectionForm.get('waterDrainageBlockId').setValue(null);
+      }
     }
     else if (level == 4) {
       this.wardZoneLevel4List = [];
@@ -489,10 +496,13 @@ export class NewDrainageConnectionComponent implements OnInit {
   }
 
   onChangedConnectionUsage(val) {
-    console.log("value", val)
     this.connectionSubUsageList = null;
-    if (val)
+    if (val){
       this.getSubUsageList(val);
+    }else{
+      this.newDrainageConnectionForm.get('connectionSubUsage').setValue(null);
+    }
+      
   }
 
   getUsageList() {
