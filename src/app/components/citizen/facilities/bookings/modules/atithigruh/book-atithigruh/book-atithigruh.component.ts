@@ -468,11 +468,11 @@ export class BookAtithigruhComponent implements OnInit {
 						setTimeout(() => {
 							window.print();
 							this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
-						});
+						}, 1000);
 
 					}, rA => {
 						this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
-					});
+					  });
 				}, (err) => {
 					console.log("fsdfsf");
 					this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
