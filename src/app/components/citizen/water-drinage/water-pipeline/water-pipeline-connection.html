@@ -89,7 +89,7 @@
 						<!-- <control-messages [control]="waterPipeliConnectionForm.get('fpNo')"></control-messages> -->
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber maxlength="10"  formControlName="revenueSurveyNo" 
+						<input matInput  maxlength="10"  formControlName="revenueSurveyNo" 
 							placeholder="{{'revenue-survey-no' | translate:translateKey}}">
 						<!-- <control-messages [control]="waterPipeliConnectionForm.get('revenueSurveyNo')">
 						</control-messages> -->
@@ -173,7 +173,13 @@
 					<mat-form-field class="col-md-4">
 						<input matInput required maxlength="10" formControlName="reraRegNo"
 							placeholder="{{'rera-reg-no' | translate:translateKey}}">
-						<control-messages [control]="waterPipeliConnectionForm.get('reraRegNo')"></control-messages>
+						<!-- <control-messages [control]="waterPipeliConnectionForm.get('reraRegNo')"></control-messages> -->
+						<mat-error *ngIf="waterPipeliConnectionForm.get('reraRegNo') && !waterPipeliConnectionForm.get('reraRegNo')">
+							Please enter a valid email address
+						  </mat-error>
+						  <mat-error *ngIf="waterPipeliConnectionForm.get('reraRegNo')" style="font-size: 11px;">
+							RERA Registration Number is required
+						  </mat-error>
 					</mat-form-field>
 
 				</div>
@@ -186,8 +192,14 @@
 						<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
 						<mat-datepicker #picker2 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
-						<control-messages [control]="waterPipeliConnectionForm.get('reraRegistrationDate')">
-						</control-messages>
+						<!-- <control-messages [control]="waterPipeliConnectionForm.get('reraRegistrationDate')">
+						</control-messages> -->
+						<mat-error *ngIf="waterPipeliConnectionForm.get('reraRegistrationDate') && !waterPipeliConnectionForm.get('reraRegistrationDate')">
+							Please enter a valid email address
+						  </mat-error>
+						  <mat-error *ngIf="waterPipeliConnectionForm.get('reraRegistrationDate')" style="font-size: 11px;">
+							RERA Registration Date is required
+						  </mat-error>
 					</mat-form-field>
 				</div>
 				<app-action-bar [form]="waterPipeliConnectionForm" (tabIndex)="onTabChange($event)"
@@ -313,7 +325,7 @@
 			<!-- step 4 Ends -->
 			<mat-tab>
 				<ng-template mat-tab-label>
-					<div>{{'upload' | translate: translateKey}}</div>
+					<div>{{'Attachment' | translate: translateKey}}</div>
 				</ng-template>
 				<!-- <div class="alert alert-warning">
 					{{'note' | translate:translateKey}} :
@@ -331,7 +343,7 @@
 				</div>
 				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray"
 					[form]="waterPipeliConnectionForm" (tabIndex)="onTabChange($event)"
-					[stepInfo]="{step: 'final', next: 4, back: 4}" (handleErrors)="handleErrorsOnSubmit($event)">
+					[stepInfo]="{step: 'final', next: 4, back: 2}" (handleErrors)="handleErrorsOnSubmit($event)">
 				</app-action-bar>
 			</mat-tab>
 			<!-- Tab 4 End -->
