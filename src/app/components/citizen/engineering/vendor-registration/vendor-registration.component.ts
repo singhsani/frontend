@@ -46,6 +46,9 @@ export class VendorRegistrationComponent implements OnInit {
   attachmentList: any = [];
   bankNameArray: any = [];
   public serverUploadFilesArray: Array<any> = [];
+
+  uploadFilesArray: Array<any> = [];
+
   modalJsonRef: BsModalRef;
 
   formId: number;
@@ -145,8 +148,8 @@ export class VendorRegistrationComponent implements OnInit {
     this.formService.getFormData(id).subscribe(res => {
       console.log("tresr", res)
       this.vendorRegistrationForm.patchValue(res);
-      this.showButtons = false;
-      this.vendorRegistrationForm.disable();
+      //this.showButtons = false;
+//this.vendorRegistrationForm.disable();
       this.setServiceDetailsOnInit(res);
       //	this.sortedList.push(res);
     });
@@ -160,17 +163,31 @@ export class VendorRegistrationComponent implements OnInit {
       console.log("file" + JSON.stringify(file));
       this.attachmentList.push(file);
     }
+    this.manadoty();
   }
 
+  manadoty() {
+		this.uploadFilesArray = [];
+		_.forEach(this.attachmentList, (value) => {
+			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+				this.uploadFilesArray.push({
+					'labelName': value.documentLabelEn,
+					'fieldIdentifier': value.fieldIdentifier,
+					'documentIdentifier': value.documentIdentifier
+				})
+			}
+		});
+	}
 
   vendorRegistrationControl() {
 
     this.vendorRegistrationForm = this.fb.group({
 
-      apiType: null,
+      apiType: "vendor",
       serviceCode: null,
       serviceFormId: this.formId,
       applicationNumber: null,
+      canEdit: [true],
 
       id: null,
       nameOfTheFirm: [null, [Validators.required]],
@@ -314,6 +331,16 @@ export class VendorRegistrationComponent implements OnInit {
       isNumber: null,
     });
   }
+
+  handleErrorsOnSubmit(key) {
+
+		//const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 0;
+
+		//this.tabIndex = index;
+		return false;
+
+
+	}
 
   onRemoveRowItemMaterial(rowIndex: number) {
     this.listOfItemMaterialSupplier.removeAt(rowIndex);
