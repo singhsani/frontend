@@ -1,8 +1,8 @@
 <div class="pb-3">
   <app-title-bar [title]="'Vendor Registration'">
-    <!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
+     <!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
       Patch Value
-    </button>  -->
+    </button> -->
   </app-title-bar>
 
 
@@ -970,7 +970,7 @@
               read and agree with <u style="color: rebeccapurple;">Terms and conditions</u> </a>
           </div>
 
-          <div class="fotButtonBar clearfix">
+          <!-- <div class="fotButtonBar clearfix">
             <div class="col-sm-12 col-md-12">
               <span class="pull-left">
                 <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 3">{{'Back'}}</button>
@@ -981,7 +981,15 @@
                 (click)="openTermModel(templateViewDetails);">{{'Review
                 '}}</button>
             </div>
-          </div>
+          </div> -->
+
+          <app-action-bar [uploadFiles]="uploadFilesArray" [form]="vendorRegistrationForm"
+					(tabIndex)="onTabChange($event)" [paymentGateway]="paymentGateway"
+					(handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next:7, back:6} ">
+				</app-action-bar>
+
+				<!-- step Attachment Ends -->
+				<select-payment-gateway #paymentGateway></select-payment-gateway>
 
 
         </mat-tab>
