@@ -71,15 +71,6 @@ export class OwnerDetailComponent implements OnInit {
     });
   }
 
-  togglePanel() {
-    this.panelOpenState = !this.panelOpenState
-  }
-
-  clearPropertyOwner(form: NgForm){
-    console.log("Successfully Cleared.");
-    form.resetForm();
-  }
-
   onChangedPropertyType(val) {
     this.propertySubTypeList = [];
     this.propertyModel.subPropertyTypeMstId = null;
@@ -203,6 +194,7 @@ export class OwnerDetailComponent implements OnInit {
 
   editOwner(item) {
     this.ownerModel = Object.assign({}, item);
+    this.panelOpenState = true;
   }
 
   checkOwnerExist() {
@@ -258,5 +250,15 @@ export class OwnerDetailComponent implements OnInit {
       return false;
     }
   }
+
+  togglePanel() {
+    this.panelOpenState = !this.panelOpenState
+  }
+
+  clearPropertyOwner(form: NgForm){
+    console.log("Successfully Cleared.");
+    form.resetForm();
+  }
+
 }
 
