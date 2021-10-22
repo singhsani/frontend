@@ -186,7 +186,7 @@ export class TicketingFileUploadComponent implements OnInit {
         this.uploadFileService.deleteFileFromServiceForBookings(this.uploadModel.refNumber.toString(), this.id).subscribe(
           (respData: any) => {
             if (respData.body) {
-              this.tostr.success(this.uploadModel.labelName + " successfully deleted", "File Deleted");
+              this.tostr.success("Your file deleted successfully");
               this.canUpload = false;
               this.fileName = '';
               this.getFile = '';
