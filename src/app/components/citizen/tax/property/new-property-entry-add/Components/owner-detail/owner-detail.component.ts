@@ -32,6 +32,8 @@ export class OwnerDetailComponent implements OnInit {
   highLowRiseList = [];
   waterZoneList = [];
   isShowOwnerTable: boolean = false;
+  panelOpenState: boolean = false;
+
   @ViewChild(MatSort) sort: MatSort;
   constructor(
     private newNewPropertyEntryAddDataSharingService: NewPropertyEntryAddDataSharingService,
@@ -67,6 +69,15 @@ export class OwnerDetailComponent implements OnInit {
       this.highLowRiseList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.High_Low_Rise))[0].items;
       this.waterZoneList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.Water_Zone))[0].items;
     });
+  }
+
+  togglePanel() {
+    this.panelOpenState = !this.panelOpenState
+  }
+
+  clearPropertyOwner(form: NgForm){
+    console.log("Successfully Cleared.");
+    form.resetForm();
   }
 
   onChangedPropertyType(val) {

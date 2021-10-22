@@ -1,90 +1,115 @@
-<mat-card>
+<mat-card class="pb-0">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-9">
             <div class="section-title">
                 <h4>{{'property_owner' | translate:translateKey }}</h4>
-                <mat-divider></mat-divider>
             </div>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-2">
+            <button color="primary" class="ml-3" mat-raised-button (click)="togglePanel()">
+                <mat-icon>add</mat-icon> Add
+            </button>
         </div>
     </div>
-    <form #formOwner="ngForm" (ngSubmit)="saveOwner(formOwner)">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="ngSelect" style="min-width: 100%;">
-                    <ng-select required placeholder="{{'title' | translate:translateKey }} *" [items]="titleList" bindValue="itemId"
-                        bindLabel="itemName" name="titleId" [(ngModel)]="ownerModel.titleId" #TitleId="ngModel"
-                        [ngClass]="{'ng-invalid ng-touched':  formOwner.submitted && TitleId.invalid}">
-                    </ng-select>
-                    <div *ngIf="(formOwner.submitted && TitleId.invalid)  || (TitleId.invalid && TitleId.touched)">
-                        <mat-error *ngIf="TitleId.errors.required">*Title is required.</mat-error>
+    <div class="row">
+        <div class="col-md-12">
+            <mat-divider></mat-divider>
+        </div>
+    </div>
+    <mat-expansion-panel [expanded]="panelOpenState">
+    
+        <form #formOwner="ngForm" (ngSubmit)="saveOwner(formOwner)">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="ngSelect" style="min-width: 100%;">
+                        <ng-select required placeholder="{{'title' | translate:translateKey }} *" [items]="titleList"
+                            bindValue="itemId" bindLabel="itemName" name="titleId" [(ngModel)]="ownerModel.titleId"
+                            #TitleId="ngModel"
+                            [ngClass]="{'ng-invalid ng-touched':  formOwner.submitted && TitleId.invalid}">
+                        </ng-select>
+                        <div *ngIf="(formOwner.submitted && TitleId.invalid)  || (TitleId.invalid && TitleId.touched)">
+                            <mat-error *ngIf="TitleId.errors.required">*Title is required.</mat-error>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field class="full-width-input">
+                        <input trim="blur" matInput required maxlength="50"
+                            placeholder="{{'first_name' | translate:translateKey }}" name="firstName" #FirstName="ngModel"
+                            [(ngModel)]="ownerModel.firstName" (keypress)="keyPressAlphabetOnly($event)">
+                        <mat-error *ngIf="FirstName.invalid">*First Name is required.</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field class="full-width-input">
+                        <input trim="blur" matInput maxlength="50" placeholder="{{'middle_name' | translate:translateKey }}"
+                            name="middleName" [(ngModel)]="ownerModel.middleName" (keypress)="keyPressAlphabetOnly($event)">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                    <mat-form-field class="full-width-input">
+                        <input trim="blur" matInput required maxlength="50"
+                            placeholder="{{'last_name' | translate:translateKey }}" name="lastName" #LastName="ngModel"
+                            [(ngModel)]="ownerModel.lastName" (keypress)="keyPressAlphabetOnly($event)">
+                        <mat-error *ngIf="LastName.invalid">*Last Name is required.</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <mat-form-field class="full-width-input">
+                        <input matInput number-only maxlength="12" minlength="12"
+                            placeholder="{{'aadhar_no' | translate:translateKey }}" name="aadharNo" #AadhaarNo="ngModel"
+                            [(ngModel)]="ownerModel.aadharNo">
+                        <mat-error *ngIf="AadhaarNo.invalid">*Aadhaar No. is invalid.</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field class="full-width-input">
+                        <input matInput number-only maxlength="10" minlength="10"
+                            placeholder="{{'mobile_no' | translate:translateKey }}" name="mobileNo" #MobileNo="ngModel"
+                            [(ngModel)]="ownerModel.mobileNo">
+                        <mat-error *ngIf="MobileNo.invalid">*Mobile No. is invalid.</mat-error>
+                    </mat-form-field>
+    
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field class="full-width-input">
+                        <input matInput email placeholder="{{'email' | translate:translateKey }}" name="emailAddress"
+                            maxlength="255" #EmailAddress="ngModel" [(ngModel)]="ownerModel.emailAddress">
+                        <mat-error *ngIf="EmailAddress.invalid && EmailAddress.errors.email">*Email Id is invalid.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <div class="ngSelect">
+                        <ng-select [(ngModel)]="ownerModel.isPrimaryOwner" name="isPrimaryOwner" required
+                            placeholder="{{'is_primary_owner' | translate:translateKey }}*" #PrimaryOwner="ngModel">
+                            <ng-option [value]="true">Yes</ng-option>
+                            <ng-option [value]="false">No</ng-option>
+                        </ng-select>
+                        <div
+                            *ngIf="(formOwner.submitted && PrimaryOwner.invalid)  || (PrimaryOwner.invalid && PrimaryOwner.touched)">
+                            <mat-error *ngIf="PrimaryOwner.invalid">*Select Owner Type.</mat-error>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <mat-form-field class="full-width-input">
-                    <input trim="blur" matInput required maxlength="50" placeholder="{{'first_name' | translate:translateKey }}" name="firstName"
-                        #FirstName="ngModel" [(ngModel)]="ownerModel.firstName" (keypress)="keyPressAlphabetOnly($event)">
-                    <mat-error *ngIf="FirstName.invalid">*First Name is required.</mat-error>
-                </mat-form-field>
-            </div>
-            <div class="col-md-3">
-                <mat-form-field class="full-width-input">
-                    <input trim="blur" matInput maxlength="50" placeholder="{{'middle_name' | translate:translateKey }}" name="middleName"
-                        [(ngModel)]="ownerModel.middleName" (keypress)="keyPressAlphabetOnly($event)">
-                </mat-form-field>
-            </div>
-            <div class="col-md-2">
-                <mat-form-field class="full-width-input">
-                    <input trim="blur" matInput required maxlength="50" placeholder="{{'last_name' | translate:translateKey }}" name="lastName"
-                        #LastName="ngModel" [(ngModel)]="ownerModel.lastName" (keypress)="keyPressAlphabetOnly($event)">
-                    <mat-error *ngIf="LastName.invalid">*Last Name is required.</mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <mat-form-field class="full-width-input">
-                    <input matInput number-only maxlength="12" minlength="12" placeholder="{{'aadhar_no' | translate:translateKey }}" name="aadharNo"
-                        #AadhaarNo="ngModel" [(ngModel)]="ownerModel.aadharNo">
-                    <mat-error *ngIf="AadhaarNo.invalid">*Aadhaar No. is invalid.</mat-error>
-                </mat-form-field>
-            </div>
-            <div class="col-md-3">
-                <mat-form-field class="full-width-input">
-                    <input matInput number-only maxlength="10" minlength="10" placeholder="{{'mobile_no' | translate:translateKey }}" name="mobileNo"
-                        #MobileNo="ngModel" [(ngModel)]="ownerModel.mobileNo">
-                    <mat-error *ngIf="MobileNo.invalid">*Mobile No. is invalid.</mat-error>
-                </mat-form-field>
-
-            </div>
-            <div class="col-md-3">
-                <mat-form-field class="full-width-input">
-                    <input matInput email placeholder="{{'email' | translate:translateKey }}" name="emailAddress" maxlength="255"
-                        #EmailAddress="ngModel" [(ngModel)]="ownerModel.emailAddress">
-                    <mat-error *ngIf="EmailAddress.invalid && EmailAddress.errors.email">*Email Id is invalid.
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <div class="col-md-2">
-                <div class="ngSelect">
-                    <ng-select [(ngModel)]="ownerModel.isPrimaryOwner" name="isPrimaryOwner" required
-                        placeholder="{{'is_primary_owner' | translate:translateKey }}*" #PrimaryOwner="ngModel">
-                        <ng-option [value]="true">Yes</ng-option>
-                        <ng-option [value]="false">No</ng-option>
-                    </ng-select>
-                    <div
-                        *ngIf="(formOwner.submitted && PrimaryOwner.invalid)  || (PrimaryOwner.invalid && PrimaryOwner.touched)">
-                        <mat-error *ngIf="PrimaryOwner.invalid">*Select Owner Type.</mat-error>
-                    </div>
+            <div class="row text-right mt-3">
+                <div class="col-md-7"></div>
+                <div class="col-md-12">
+                    <button mat-raised-button class="ml-3" type="submit" color="primary" title="Save">
+                        <mat-icon>save</mat-icon> Save
+                    </button>
+                    <button mat-raised-button class="ml-3" type="button" (click)="clearPropertyOwner(formOwner)"
+                        color="primary" title="Cancel">
+                        <mat-icon>clear_all</mat-icon> Cancel
+                    </button>
                 </div>
             </div>
-            <div class="col-md-1">
-                <button mat-mini-fab type="submit" color="primary" title="Add">
-                    <mat-icon>add</mat-icon>
-                </button>
-            </div>
-        </div>
-    </form>
+        </form>
+    </mat-expansion-panel>
 
     <div class="row mt-4" *ngIf="!isOwnerExist">
         <div class="col-md-12">
@@ -250,5 +275,4 @@
             </button>
         </div>
     </div>
-
 </form>
