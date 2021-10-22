@@ -519,6 +519,9 @@ export class WaterPipelineConnection implements OnInit {
       this.wardZoneLevel2List = [];
       this.wardZoneLevel3List = [];
       this.wardZoneLevel4List = [];
+      if(!value){
+        this.waterPipeliConnectionForm.get('waterPipelineWardId').setValue(null);
+      }
     }
     else if (level == 3) {
       this.wardZoneLevel3List = [];

@@ -374,6 +374,9 @@ export class DrainagePipelineConnectionComponent implements OnInit {
       this.wardZoneLevel2List = [];
       this.wardZoneLevel3List = [];
       this.wardZoneLevel4List = [];
+      if(!value){
+        this.drainagePipeliConnectionForm.get('drainagePipelineWardId').setValue(null);
+      }
     }
     else if (level == 3) {
       this.wardZoneLevel3List = [];
