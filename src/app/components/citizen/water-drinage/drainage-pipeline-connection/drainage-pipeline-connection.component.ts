@@ -197,6 +197,8 @@ export class DrainagePipelineConnectionComponent implements OnInit {
   getDrainagePipelineConnectionNewData() {
     this.formService.getFormData(this.formId).subscribe(res => {
       try {
+        res.workExecutionFromAmount === 0 ? res.workExecutionFromAmount=null:res.workExecutionFromAmount;
+        res.workExecutionToAmount === 0 ? res.workExecutionToAmount=null:res.workExecutionToAmount;
         this.drainagePipeliConnectionForm.patchValue(res);
         this.showButtons = true;
       } catch (error) {

@@ -112,8 +112,10 @@ export class WaterPipelineConnection implements OnInit {
 	 * Method is used to get form data
 	 */
   getAnimalPondLicNewData() {
-    this.formService.getFormData(this.formId).subscribe(res => {
+    this.formService.getFormData(this.formId).subscribe(res => {      
       try {
+        res.workExecutionFromAmount === 0 ? res.workExecutionFromAmount=null:res.workExecutionFromAmount;
+        res.workExecutionToAmount === 0 ? res.workExecutionToAmount=null:res.workExecutionToAmount;
         this.waterPipeliConnectionForm.patchValue(res);
         this.showButtons = true;
       } catch (error) {
@@ -269,7 +271,8 @@ export class WaterPipelineConnection implements OnInit {
       /* Step 4 controls start*/
       // attachments: ['']
       /* Step 4 controls end */
-    }, { validator: this.myAwesomeRangeValidator });
+    }, { validator: this.myAwesomeRangeValidator }
+    );
   }
 
   getFormData(id: number) {
@@ -478,6 +481,7 @@ export class WaterPipelineConnection implements OnInit {
         return { range: true }
       }
     }
+    
   };
 
 
