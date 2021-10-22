@@ -25,7 +25,9 @@
 					<mat-form-field class="col-md-6">
 						<input matInput type="text" required maxlength="250"
 							placeholder="{{'society-name' | translate:translateKey}}" formControlName="societyName">
-						<control-messages [control]="waterPipeliConnectionForm.get('societyName')"></control-messages>
+						<mat-error *ngIf="waterPipeliConnectionForm.get('societyName')" style="font-size: 11px;">
+							Society Name / Apartment Name is required
+						  </mat-error>
 					</mat-form-field>
 
 					<div class="col-md-6 ngSelect">
@@ -35,8 +37,10 @@
 								(change)="onChangedWardZone($event,2)">
 								<ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.parentWardzoneId">{{zone.wardzoneName}}</ng-option>
 							</ng-select>
-							<control-messages [control]="waterPipeliConnectionForm.get('waterPipelineZoneId')">
-							</control-messages>
+							<mat-error *ngIf="waterPipeliConnectionForm.get('waterPipelineZoneId').touched && !waterPipeliConnectionForm.get('waterPipelineZoneId').value" style="font-size: 11px;">
+								Zone is required
+							  </mat-error>
+							  
 						</div>
 					</div>
 					<div class="col-md-6 ngSelect">
@@ -46,8 +50,9 @@
 								(change)="onChangedWardZone($event,3)">
 								<ng-option *ngFor="let zone of wardZoneLevel2List" [value]="zone.wardzoneId">{{zone.wardzoneName}}</ng-option>
 							</ng-select>
-							<control-messages [control]="waterPipeliConnectionForm.get('waterPipelineWardId')">
-							</control-messages>
+							<mat-error *ngIf="waterPipeliConnectionForm.get('waterPipelineWardId').touched && !waterPipeliConnectionForm.get('waterPipelineWardId').value" style="font-size: 11px;">
+								Ward is required
+							  </mat-error>
 						</div>
 					</div>
 
@@ -63,7 +68,9 @@
 					<mat-form-field class="col-md-6">
 						<textarea matInput rows="1" cols="50" maxlength="250" formControlName="propertyAddress"
 							placeholder="{{ 'property-address' | translate:translateKey }}" required> </textarea>
-						<control-messages [control]="waterPipeliConnectionForm.get('propertyAddress')"></control-messages>
+						<mat-error *ngIf="waterPipeliConnectionForm.get('propertyAddress')" style="font-size: 11px;">
+							Address is required
+						  </mat-error>
 					</mat-form-field>
 					<!-- <mat-form-field class="col-md-4">
 						<input matInput formControlName="firmCity" appValidationFields
@@ -77,6 +84,9 @@
 					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber formControlName="pinCode"
 						placeholder="{{'pin-code' | translate:translateKey}}" minlength="6" maxlength="6">
+						<mat-error *ngIf="waterPipeliConnectionForm.get('pinCode')" style="font-size: 11px;">
+							Pin Code is required
+						  </mat-error>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="tel"  formControlName="tpNo"
@@ -89,7 +99,7 @@
 						<!-- <control-messages [control]="waterPipeliConnectionForm.get('fpNo')"></control-messages> -->
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber maxlength="10"  formControlName="revenueSurveyNo" 
+						<input matInput  maxlength="10"  formControlName="revenueSurveyNo" 
 							placeholder="{{'revenue-survey-no' | translate:translateKey}}">
 						<!-- <control-messages [control]="waterPipeliConnectionForm.get('revenueSurveyNo')">
 						</control-messages> -->
@@ -160,8 +170,9 @@
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber required maxlength="10" minlength="10" formControlName="developerMobileNo"
 							placeholder="{{'developer-mobile-no' | translate:translateKey}}">
-						<control-messages [control]="waterPipeliConnectionForm.get('developerMobileNo')">
-						</control-messages>
+						<mat-error *ngIf="waterPipeliConnectionForm.get('developerMobileNo')" style="font-size: 11px;">
+							Developer Mobile No. is required
+						  </mat-error>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput  appPreventSpace
@@ -173,7 +184,9 @@
 					<mat-form-field class="col-md-4">
 						<input matInput required maxlength="10" formControlName="reraRegNo"
 							placeholder="{{'rera-reg-no' | translate:translateKey}}">
-						<control-messages [control]="waterPipeliConnectionForm.get('reraRegNo')"></control-messages>
+						  <mat-error *ngIf="waterPipeliConnectionForm.get('reraRegNo')" style="font-size: 11px;">
+							RERA Registration Number is required
+						  </mat-error>
 					</mat-form-field>
 
 				</div>
@@ -186,8 +199,9 @@
 						<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
 						<mat-datepicker #picker2 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
-						<control-messages [control]="waterPipeliConnectionForm.get('reraRegistrationDate')">
-						</control-messages>
+						  <mat-error *ngIf="waterPipeliConnectionForm.get('reraRegistrationDate')" style="font-size: 11px;">
+							RERA Registration Date is required
+						  </mat-error>
 					</mat-form-field>
 				</div>
 				<app-action-bar [form]="waterPipeliConnectionForm" (tabIndex)="onTabChange($event)"
@@ -224,8 +238,9 @@
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber required maxlength="10" minlength="10" formControlName="contractorMobileNo"
 							placeholder="{{'contractor-mobile-no' | translate:translateKey}}">
-						<control-messages [control]="waterPipeliConnectionForm.get('contractorMobileNo')">
-						</control-messages>
+						<mat-error *ngIf="waterPipeliConnectionForm.get('contractorMobileNo')" style="font-size: 11px;">
+								Contractor Mobile No. is required
+							  </mat-error>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput  appPreventSpace
@@ -313,7 +328,7 @@
 			<!-- step 4 Ends -->
 			<mat-tab>
 				<ng-template mat-tab-label>
-					<div>{{'upload' | translate: translateKey}}</div>
+					<div>{{'Attachment' | translate: translateKey}}</div>
 				</ng-template>
 				<!-- <div class="alert alert-warning">
 					{{'note' | translate:translateKey}} :
@@ -331,7 +346,7 @@
 				</div>
 				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray"
 					[form]="waterPipeliConnectionForm" (tabIndex)="onTabChange($event)"
-					[stepInfo]="{step: 'final', next: 4, back: 4}" (handleErrors)="handleErrorsOnSubmit($event)">
+					[stepInfo]="{step: 'final', next: 4, back: 2}" (handleErrors)="handleErrorsOnSubmit($event)">
 				</app-action-bar>
 			</mat-tab>
 			<!-- Tab 4 End -->
