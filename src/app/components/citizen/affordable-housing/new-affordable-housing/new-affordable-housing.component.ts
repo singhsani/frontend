@@ -590,7 +590,7 @@ export class NewAffordableHousingComponent implements OnInit {
 			}),
 			ddBankBranch: [null, [Validators.required, Validators.maxLength(200)]],
 			ddNumber: [null, [Validators.required]],
-			ddAmount: [null, [Validators.required, Validators.maxLength(7)]],
+			ddAmount: [{ value: null, disabled: true }, [Validators.required, Validators.maxLength(6)]],
 			ddIssuingDate: [null, [Validators.required]],
 
 			// /* Bank Details controls End *//
@@ -657,6 +657,7 @@ export class NewAffordableHousingComponent implements OnInit {
 					this.affordableHousingForm.get('location').setValue(Obj.location);
 					this.affordableHousingForm.get('tpNumber').setValue(Obj.locationTPNo);
 					this.affordableHousingForm.get('fpNumber').setValue(Obj.locationFPNo);
+					this.affordableHousingForm.get('ddAmount').setValue(Obj.depositAmount);
 				}, (err: any) => {
 
 				})
