@@ -1,3 +1,7 @@
 .margin-top-10 {
     margin: 10px 0 0 0;
 }
+
+.mat-expansion-panel:not([class*=mat-elevation-z]) {
+    box-shadow: none !important;
+}

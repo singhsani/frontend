@@ -30,6 +30,7 @@ export class OccupierDetailComponent implements OnInit {
   isShowTable: boolean = false;
   isUnitDetailEntered: boolean = false;
   unitDetailErrorMessage: string;
+  panelOpenState: boolean = false;
 
   constructor(private commonService: CommonService,
     private revaluationDataSharingService: RevaluationDataSharingService,
@@ -140,7 +141,8 @@ export class OccupierDetailComponent implements OnInit {
   }
 
   eidt(item) {
-    this.model = item;
+    this.model = Object.assign({}, item);
+    this.panelOpenState = true;
   }
 
   delete(item) {
@@ -236,5 +238,13 @@ export class OccupierDetailComponent implements OnInit {
   }
   onBack() {
     this.revaluationDataSharingService.updateDataSourceMoveStepper(0);
+  }
+
+  togglePanel() {
+    this.panelOpenState = !this.panelOpenState
+  }
+
+  clearPropertyOccupier(form: NgForm){
+    form.resetForm();
   }
 }
