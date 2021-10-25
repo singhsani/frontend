@@ -54,6 +54,12 @@ export class VendorRegistrationComponent implements OnInit {
   formId: number;
   showButtons: boolean = true;
 
+  vendorNameLastYear: FormArray;
+
+  vendorNameAuthorized: FormArray;
+
+  vendorNameholding: FormArray;
+
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
@@ -70,12 +76,19 @@ export class VendorRegistrationComponent implements OnInit {
     this.listOfItemMaterialSupplier = this.fb.array([]);
     this.academicQualifications = this.fb.array([]);
     this.vendorNameArray = this.fb.array([]);
+    this.vendorNameLastYear = this.fb.array([]);
+    this.vendorNameAuthorized = this.fb.array([]);
+    this.vendorNameholding = this.fb.array([]);
+
   }
 
   ngOnInit() {
     this.vendorRegistrationControl();
     this.vendorRegistrationForm.addControl('listOfItemMaterialSupplier', this.listOfItemMaterialSupplier);
     this.vendorRegistrationForm.addControl('vendorNameArray', this.vendorNameArray);
+    this.vendorRegistrationForm.addControl('vendorNameLastYear', this.vendorNameLastYear);
+    this.vendorRegistrationForm.addControl('vendorNameAuthorized', this.vendorNameAuthorized);
+    this.vendorRegistrationForm.addControl('vendorNameholding', this.vendorNameholding);
 
     this.activatedRoute.paramMap.subscribe(param => {
       this.formId = Number(param.get('id'));
@@ -189,6 +202,9 @@ export class VendorRegistrationComponent implements OnInit {
       applicationNumber: null,
       canEdit: [true],
 
+      gstNo: [null, ValidationService.gstNoValidator],
+      gstRegiDate : null,
+
       id: null,
       nameOfTheFirm: [null, [Validators.required]],
       commencementDate: null,
@@ -213,6 +229,10 @@ export class VendorRegistrationComponent implements OnInit {
       listOfItemMaterial: this.listOfItemMaterialSupplier,
       academicQualificationsDetail: this.fb.array([]),
       vendorNameDetails: this.vendorNameArray,
+
+      vendorNameLastYearDetails: this.vendorNameLastYear,
+      vendorNameAuthorizedDetails: this.vendorNameAuthorized,
+      vendorNameholdingDetails: this.vendorNameholding,
 
       registrationBank: this.fb.group({
         code: [null, [Validators.required]],
@@ -262,7 +282,7 @@ export class VendorRegistrationComponent implements OnInit {
       remarks: null,
 
       purchaserName: null,
-      orderNumber: null,
+      orderNo: null,
       orderDate: null,
       quantitySuppliedCompletionDate: null,
 
@@ -286,6 +306,9 @@ export class VendorRegistrationComponent implements OnInit {
     this.academicQualifications.push(this.createEducationQualification());
     this.vendorNameArray.push(this.createVendorNameArray());
     this.listOfItemMaterialSupplier.push(this.createItemMaterialSupplier());
+    this.vendorNameLastYear.push(this.createItemMaterialSupplierLastThreeYear());
+    this.vendorNameAuthorized.push(this.createItemAuthorized());
+    this.vendorNameholding.push(this.createItemHolding());
   }
 
   onTabChange(evt) {
@@ -330,6 +353,53 @@ export class VendorRegistrationComponent implements OnInit {
       description: null,
       isNumber: null,
     });
+  }
+
+  createItemMaterialSupplierLastThreeYear(): FormGroup {
+    return this.fb.group({
+      companyName: null,
+      purchasingItem: null,
+      purchasingDate: null,
+    });
+  }
+
+  createItemAuthorized(): FormGroup {
+    return this.fb.group({
+      autthorized: null,
+      contactNumber: null,
+      address: null,
+    });
+  }
+
+  createItemHolding(): FormGroup {
+    return this.fb.group({
+      itemName: null,
+      certificateDetail: null,
+    });
+  }
+
+  addRowLastThreeYear() {
+    this.vendorNameLastYear.push(this.createItemMaterialSupplierLastThreeYear());
+  }
+
+  addRowvendorNameAuthorized() {
+    this.vendorNameAuthorized.push(this.createItemAuthorized());
+  }
+
+  addRowvendorNameholding() {
+    this.vendorNameholding.push(this.createItemHolding());
+  }
+
+  onRemoveRowVendorTypeLastYear(rowIndex: number) {
+    this.vendorNameLastYear.removeAt(rowIndex);
+  }
+
+  onRemovevendorNameAuthorized(rowIndex: number) {
+    this.vendorNameAuthorized.removeAt(rowIndex);
+  }
+  
+  onRemovevendorNameholding(rowIndex: number) {
+    this.vendorNameholding.removeAt(rowIndex);
   }
 
   handleErrorsOnSubmit(key) {
@@ -514,7 +584,7 @@ debugger;
 
       "registrationDDNumber": "741852",
 
-      "registrationDDIssuingDate": "2021-07-15",
+      "registrationDDIssuingDate": "2021-10-25",
 
       "locationOfFactoryWorks": {
         "code": "WITH_IN_GUJARAT",
@@ -560,43 +630,43 @@ debugger;
 
       "totalTurnoverLastThreeYears": "Fifteen Lakhs",
       "loanCapitalWithBankLimit": "500000",
-      "productManufacturedDescription": "Nascent Info Technologies",
+      "productManufacturedDescription": "sdf",
       "areaOfLandFactory": 1500,
       "builtAreaFactory": 15000,
       "noOfWorkingShifts": 15,
       "factoryLicenceNumber": "147852963",
       "sscNSICCertificateNumber": "1488529636",
-      "valueOfPlantAndMachinery": "Nascent Info Technologies",
-      "detailsEquipmentCapacity": "Nascent Info Technologies",
-      "detailsMachineryCapacity": "Nascent Info Technologies",
-      "testStandardGovtLabApproved": "Nascent Info Technologies",
-      "adoptedForQualityControl": "Nascent Info Technologies",
-      "methodEmployeeIdentify": "Nascent Info Technologies",
-      "sourceOfRawMaterialAddress": "Nascent Info Technologies",
+      "valueOfPlantAndMachinery": "sdf",
+      "detailsEquipmentCapacity": "dd",
+      "detailsMachineryCapacity": "dd",
+      "testStandardGovtLabApproved": "ffgf",
+      "adoptedForQualityControl": "sdf",
+      "methodEmployeeIdentify": "fdg",
+      "sourceOfRawMaterialAddress": "gfgh",
       "productionCapacityPerAnnum": 25000,
       "maximumProductionPerAnnum": 2500,
 
-      "purchaserName": "Nascent Info Technologies",
+      "purchaserName": "sdf",
       "orderNumber": 14785,
       "orderDate": "15-07-2021",
       "quantitySuppliedCompletionDate": "15-07-2021",
 
-      "estimationOfStocks": "Nascent Info Technologies",
-      "numberOfItemsHoldingISOCertificate": "Nascent Info Technologies",
+      "estimationOfStocks": "SDF",
+      "numberOfItemsHoldingISOCertificate": "SDF",
 
-      "managerialFullName": "Nascent Info Technologies",
-      "managerialQualification": "Nascent Info Technologies",
-      "managerialExperienceInYears": "Nascent Info Technologies",
-      "productionStaffFullName": "Nascent Info Technologies",
-      "productionStaffQualification": "Nascent Info Technologies",
-      "productionStaffExperienceInYears": "Nascent Info Technologies",
-      "qualityControlStaffFullName": "Nascent Info Technologies",
-      "qualityControlStaffQualification": "Nascent Info Technologies",
-      "qualityControlStaffExperienceInYears": "Nascent Info Technologies",
+      "managerialFullName": "SDF",
+      "managerialQualification": "SDF",
+      "managerialExperienceInYears": "SDF",
+      "productionStaffFullName": "SDF",
+      "productionStaffQualification": "SDF",
+      "productionStaffExperienceInYears": "SDF",
+      "qualityControlStaffFullName": "SDF",
+      "qualityControlStaffQualification": "SDF",
+      "qualityControlStaffExperienceInYears": "SDF",
 
-      "personnelDetailSkilled": "Nascent Info Technologies",
-      "personnelDetailUnSkilled": "Nascent Info Technologies",
-      "personnelDetailOther": "Nascent Info Technologies",
+      "personnelDetailSkilled": "SDF",
+      "personnelDetailUnSkilled": "SDF",
+      "personnelDetailOther": "SDF",
     }
 
     this.vendorRegistrationForm.patchValue(obj);

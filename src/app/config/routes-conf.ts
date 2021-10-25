@@ -213,6 +213,11 @@ const ROUTEMAIN = {
         'main': 'afhForm',
         'type': 'afhForm'
     }, 
+    'AFFORD_HOUSE_FEES': {
+        'main': 'afhForm',
+        'type': 'afhForm'
+    }, 
+    
     'AFFORD-HOUSE-STATUS' : {
         'main': 'myafhStatus',
         'type':'myafhStatus'
