@@ -226,6 +226,15 @@ export class VendorRegistrationComponent implements OnInit {
       namesOfTheOwner: null,
       manufacturingOwnedDetails: null,
 
+      detailsOfLandDocumentsFactory : null,
+      buildingPermissionDetail : null,
+      factoryLicenseStartDate : null,
+      factoryLicenseEndDate : null,
+      MSMENSICSSIcertificateStartDate: null,
+      MSMENSICSSIcertificateEndDate : null,
+
+      ISIBISCElicences : null,
+
       listOfItemMaterial: this.listOfItemMaterialSupplier,
       academicQualificationsDetail: this.fb.array([]),
       vendorNameDetails: this.vendorNameArray,
