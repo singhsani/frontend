@@ -217,7 +217,7 @@ export class WaterPipelineConnection implements OnInit {
   waterPipeliConnectionFormControls() {
     this.waterPipeliConnectionForm = this.fb.group({
       apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-      serviceCode: 'HEL-WTR-PIPELINE',
+      serviceCode: 'HEL_WTR_PIPELINE',
       /* Step 1 controls start */
       fieldView: [null],
       fieldList: [null],
@@ -420,7 +420,7 @@ export class WaterPipelineConnection implements OnInit {
 
   dummyJSON: any = {
     "apiType": "waterPipeLineConnection",
-    "serviceCode": "HEL-WTR-PIPELINE",
+    "serviceCode": "HEL_WTR_PIPELINE",
     "fieldView": "ALL",
     "serviceType": "WATER_PIPELINE_CONNECTION_REGISTRATION",
     "fieldList": null,

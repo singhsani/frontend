@@ -230,11 +230,11 @@ const ROUTEMAIN = {
         'main': 'newWaterConnectionEntry',
         'type': 'newWaterConnectionEntry'
     },
-    'HEL-WTR-PIPELINE': {
+    'HEL_WTR_PIPELINE': {
         'main': 'waterPipeLineConnection',
         'type': 'waterPipeLineConnection'
     },
-    'HEL-DRNG-PIPELINE': {
+    'HEL_DRNG_PIPELINE': {
         'main': 'drainagePipeLineConnection',
         'type': 'drainagePipeLineConnection'
     },
@@ -834,11 +834,11 @@ const ROUTESLIST = {
     'WTR-NEW': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERMODULE + '/' + ROUTEMAIN["WTR-NEW"].main
     },
-    'HEL-WTR-PIPELINE': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERDRINAGE + '/' + ROUTEMAIN["HEL-WTR-PIPELINE"].main
+    'HEL_WTR_PIPELINE': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERDRINAGE + '/' + ROUTEMAIN["HEL_WTR_PIPELINE"].main
     },
-    'HEL-DRNG-PIPELINE': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERDRINAGE + '/' + ROUTEMAIN["HEL-DRNG-PIPELINE"].main
+    'HEL_DRNG_PIPELINE': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERDRINAGE + '/' + ROUTEMAIN["HEL_DRNG_PIPELINE"].main
     },
     'HEL-WTRPIP-WRK-COMPL': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERDRINAGE + '/' + ROUTEMAIN["HEL-WTRPIP-WRK-COMPL"].main

@@ -56,10 +56,10 @@ export class ConsumerDetailComponent implements OnInit {
     this.commonService.getLookupValuesAccordingToScreen(lookupcode).subscribe(data => {
       this.connectionTypeList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.Connection_Type))[0].items;
       this.limitList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.Water_Within_Limit))[0].items;
-      var objLimit = this.limitList.filter(f => f.itemCode == Constants.ItemCodes.With_In_Limit)[0];
-      this.model.limitLookupId = objLimit.itemId;
-      var objconnectionType = this.connectionTypeList.filter(f => f.itemCode == Constants.ItemCodes.Meter)[0];
-      this.model.connectionTypeId = objconnectionType.itemId;
+      // var objLimit = this.limitList.filter(f => f.itemCode == Constants.ItemCodes.With_In_Limit)[0];
+      // this.model.limitLookupId = objLimit.itemId;
+      // var objconnectionType = this.connectionTypeList.filter(f => f.itemCode == Constants.ItemCodes.Meter)[0];
+      // this.model.connectionTypeId = objconnectionType.itemId;
     });
     this.getConnectionSizeList();
     this.getUsageList();
