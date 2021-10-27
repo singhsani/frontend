@@ -1,6 +1,6 @@
 <div class="pb-3">
   <app-title-bar [title]="'Vendor Registration'">
-      <!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
+    <!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
       Patch Value
     </button>  -->
   </app-title-bar>
@@ -65,16 +65,17 @@
             <div class="col-md-12">
               <h2 style="margin-left: -16px;"><b>{{'GST Registration detail'}}</b></h2>
             </div>
-           
+
             <mat-form-field class="col-md-4">
-              <input matInput autocomplete="off" type="text" maxlength="15" formControlName="gstNo" class="capitalCase" placeholder="Gst No">
+              <input matInput autocomplete="off" type="text" maxlength="15" formControlName="gstNo" class="capitalCase"
+                placeholder="Gst No">
               <control-messages [control]="vendorRegistrationForm.get('gstNo')"></control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
               <mat-label>{{'GST Registration Date'}}</mat-label>
-              <input appDate matInput (dateChange)="onDateChange('gstRegiDate', $event.value)" [matDatepicker]="gstRegiDate"
-                formControlName="gstRegiDate">
+              <input appDate matInput (dateChange)="onDateChange('gstRegiDate', $event.value)"
+                [matDatepicker]="gstRegiDate" formControlName="gstRegiDate">
               <mat-datepicker-toggle matSuffix [for]="gstRegiDate"></mat-datepicker-toggle>
               <mat-datepicker #gstRegiDate touchUi="true"></mat-datepicker>
               <control-messages [control]="vendorRegistrationForm.get('gstRegiDate')">
@@ -84,8 +85,8 @@
               </div>
             </mat-form-field>
 
-            </div>
-            
+          </div>
+
 
           <div class="row">
             <h2><b>{{'Address of the factory/works from where material will be supplied'}}</b></h2>
@@ -188,7 +189,8 @@
           <div class="row">
             <h2>{{'Name of the Propreitor / Partners / Directors'}}</h2>
             <div class="col-sm-12 col-md-12 text-left">
-              <button mat-raised-button color="primary" type="button" (click)="addRowVendorName()">{{'Add New'}}</button>
+              <button mat-raised-button color="primary" type="button" (click)="addRowVendorName()">{{'Add
+                New'}}</button>
             </div>
           </div>
 
@@ -246,7 +248,8 @@
             <h2>{{'List of Items/Materials to be registered for supply with rating/description. The relevant IS number
               shall be Mentioned.'}}</h2>
             <div class="col-sm-12 col-md-12 text-left">
-              <button mat-raised-button type="button" color="primary" (click)="addRow()">{{'Add New Item/Material'}}</button>
+              <button mat-raised-button type="button" color="primary" (click)="addRow()">{{'Add New
+                Item/Material'}}</button>
             </div>
           </div>
 
@@ -718,7 +721,7 @@
           </div>
 
           <mat-form-field class="col-md-12">
-            <input matInput type="text" maxlength="1000" 
+            <input matInput type="text" maxlength="1000"
               placeholder="{{'Details of land documents occupied by the factory.'}}"
               formControlName="detailsOfLandDocumentsFactory">
             <control-messages [control]="vendorRegistrationForm.get('detailsOfLandDocumentsFactory')">
@@ -726,17 +729,16 @@
           </mat-form-field>
 
           <mat-form-field class="col-md-12">
-            <input matInput type="text" maxlength="1000" 
-              placeholder="{{'Building permission detail.'}}"
+            <input matInput type="text" maxlength="1000" placeholder="{{'Building permission detail.'}}"
               formControlName="buildingPermissionDetail">
             <control-messages [control]="vendorRegistrationForm.get('buildingPermissionDetail')">
             </control-messages>
           </mat-form-field>
 
           <mat-form-field class="col-md-6">
-            <input matInput placeholder="{{'Factory license validity period startDate.'}}" autocomplete="off" appDate formControlName="factoryLicenseStartDate"
-              [min]="maxDate" [matDatepicker]="factoryLicenseStartDate"
-              (dateChange)="onDateChange('factoryLicenseStartDate', $event.value,row)">
+            <input matInput placeholder="{{'Factory license validity period startDate.'}}" autocomplete="off" appDate
+              formControlName="factoryLicenseStartDate" [min]="maxDate" [matDatepicker]="factoryLicenseStartDate"
+              (dateChange)="onDateChange('factoryLicenseStartDate', $event.value)">
             <mat-datepicker-toggle matSuffix [for]="factoryLicenseStartDate"></mat-datepicker-toggle>
             <mat-datepicker touchUi="true" #factoryLicenseStartDate></mat-datepicker>
             <div align="end" class="default-show-hint mat-hint mat-right"></div>
@@ -745,9 +747,11 @@
           </mat-form-field>
 
           <mat-form-field class="col-md-6">
-            <input matInput autocomplete="off" placeholder="{{'Factory license validity period endDate.'}}" appDate formControlName="factoryLicenseEndDate"
-              [min]="vendorRegistrationForm.get('factoryLicenseStartDate').value" [matDatepicker]="factoryLicenseEndDate"
-              (dateChange)="onDateChange('factoryLicenseEndDate', $event.value,row)">
+            <input matInput autocomplete="off" placeholder="{{'Factory license validity period endDate.'}}" appDate
+              formControlName="factoryLicenseEndDate"
+              [min]="vendorRegistrationForm.get('factoryLicenseStartDate').value"
+              [matDatepicker]="factoryLicenseEndDate"
+              (dateChange)="onDateChange('factoryLicenseEndDate', $event.value)">
             <mat-datepicker-toggle matSuffix [for]="factoryLicenseEndDate"></mat-datepicker-toggle>
             <mat-datepicker touchUi="true" #factoryLicenseEndDate></mat-datepicker>
             <div align="end" class="default-show-hint mat-hint mat-right"></div>
@@ -756,9 +760,10 @@
           </mat-form-field>
 
           <mat-form-field class="col-md-6">
-            <input matInput placeholder="{{'MSME,NSIC and SSI certificate validity period StartDate'}}" autocomplete="off" appDate formControlName="MSMENSICSSIcertificateStartDate"
-              [min]="maxDate" [matDatepicker]="MSMENSICSSIcertificateStartDate"
-              (dateChange)="onDateChange('MSMENSICSSIcertificateStartDate', $event.value,row)">
+            <input matInput placeholder="{{'MSME,NSIC and SSI certificate validity period StartDate'}}"
+              autocomplete="off" appDate formControlName="MSMENSICSSIcertificateStartDate" [min]="maxDate"
+              [matDatepicker]="MSMENSICSSIcertificateStartDate"
+              (dateChange)="onDateChange('MSMENSICSSIcertificateStartDate', $event.value)">
             <mat-datepicker-toggle matSuffix [for]="MSMENSICSSIcertificateStartDate"></mat-datepicker-toggle>
             <mat-datepicker touchUi="true" #MSMENSICSSIcertificateStartDate></mat-datepicker>
             <div align="end" class="default-show-hint mat-hint mat-right"></div>
@@ -767,9 +772,12 @@
           </mat-form-field>
 
           <mat-form-field class="col-md-6">
-            <input matInput autocomplete="off" placeholder="{{'MSME,NSIC and SSI certificate validity period endDate.'}}" appDate formControlName="MSMENSICSSIcertificateEndDate"
-              [min]="vendorRegistrationForm.get('MSMENSICSSIcertificateStartDate').value" [matDatepicker]="MSMENSICSSIcertificateEndDate"
-              (dateChange)="onDateChange('MSMENSICSSIcertificateEndDate', $event.value,row)">
+            <input matInput autocomplete="off"
+              placeholder="{{'MSME,NSIC and SSI certificate validity period endDate.'}}" appDate
+              formControlName="MSMENSICSSIcertificateEndDate"
+              [min]="vendorRegistrationForm.get('MSMENSICSSIcertificateStartDate').value"
+              [matDatepicker]="MSMENSICSSIcertificateEndDate"
+              (dateChange)="onDateChange('MSMENSICSSIcertificateEndDate', $event.value)">
             <mat-datepicker-toggle matSuffix [for]="MSMENSICSSIcertificateEndDate"></mat-datepicker-toggle>
             <mat-datepicker touchUi="true" #MSMENSICSSIcertificateEndDate></mat-datepicker>
             <div align="end" class="default-show-hint mat-hint mat-right"></div>
@@ -878,146 +886,149 @@
           </div>
 
           <div class="row">
-            
-              <h2 class="col-md-6">{{'List of Authorized Distributors in Vadodara city'}}</h2>
-           
-            <div class="col-md-6 text-right">             
-                <button mat-raised-button type="button" color="primary" (click)="addRowvendorNameAuthorized()">{{'Add New'}}</button>
+
+            <h2 class="col-md-6">{{'List of Authorized Distributors in Vadodara city'}}</h2>
+
+            <div class="col-md-6 text-right">
+              <button mat-raised-button type="button" color="primary" (click)="addRowvendorNameAuthorized()">{{'Add
+                New'}}</button>
             </div>
           </div>
 
-        
-              <div class="table-responsive">
-                <table class="table table-bordered  table-striped text-center">
-                  <tbody>
-                    <tr>
-                      <th class="text-center">S.no.</th>
-                      <th class="text-center">Authorized distributor Name</th>
-                      <th class="text-center">Contact Number</th>
-                      <th class="text-center">Address</th>
-                      <th class="text-center">Action</th>
-                    </tr>
-                    <tr *ngFor="let row of vendorRegistrationForm.get('vendorNameAuthorized')?.controls;let index = index;">
-                      <td>
-                        {{index+1}}
-                      </td>
-                      <td>
-                        <mat-form-field>
-                          <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
-                            maxlength="100" [formControl]="row.get('autthorized')">
-                          <control-messages [control]="row.get('autthorized')">
-                          </control-messages>
-                        </mat-form-field>
-                      </td>
 
-                      <td>
-                        <mat-form-field>
-                          <input matInput type="text" appValidationFields maxlength="100"
-                            [formControl]="row.get('contactNumber')">
-                          <control-messages [control]="row.get('contactNumber')">
-                          </control-messages>
-                        </mat-form-field>
-                      </td>
+          <div class="table-responsive">
+            <table class="table table-bordered  table-striped text-center">
+              <tbody>
+                <tr>
+                  <th class="text-center">S.no.</th>
+                  <th class="text-center">Authorized distributor Name</th>
+                  <th class="text-center">Contact Number</th>
+                  <th class="text-center">Address</th>
+                  <th class="text-center">Action</th>
+                </tr>
+                <tr *ngFor="let row of vendorRegistrationForm.get('vendorNameAuthorized')?.controls;let index = index;">
+                  <td>
+                    {{index+1}}
+                  </td>
+                  <td>
+                    <mat-form-field>
+                      <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+                        maxlength="100" [formControl]="row.get('autthorized')">
+                      <control-messages [control]="row.get('autthorized')">
+                      </control-messages>
+                    </mat-form-field>
+                  </td>
 
-                      <td>
-                        <mat-form-field>
-                          <input matInput type="text" appValidationFields maxlength="100"
-                            [formControl]="row.get('address')">
-                          <control-messages [control]="row.get('address')">
-                          </control-messages>
-                        </mat-form-field>
-                      </td>
+                  <td>
+                    <mat-form-field>
+                      <input matInput type="text" appValidationFields maxlength="100"
+                        [formControl]="row.get('contactNumber')">
+                      <control-messages [control]="row.get('contactNumber')">
+                      </control-messages>
+                    </mat-form-field>
+                  </td>
+
+                  <td>
+                    <mat-form-field>
+                      <input matInput type="text" appValidationFields maxlength="100"
+                        [formControl]="row.get('address')">
+                      <control-messages [control]="row.get('address')">
+                      </control-messages>
+                    </mat-form-field>
+                  </td>
 
 
-                      
-                      <td>
-                        <!-- <div class="col-sm-12 col-md-12 text-right"> -->
-                        <button mat-raised-button type="button" color="warn" style="margin-top: 22px;"
-                          (click)="onRemovevendorNameAuthorized(index)">
-                          <mat-icon title="Cancel">cancel</mat-icon>
-                        </button>
-                        <!-- </div> -->
-                        <!-- <button class="close" aria-label="Close"
+
+                  <td>
+                    <!-- <div class="col-sm-12 col-md-12 text-right"> -->
+                    <button mat-raised-button type="button" color="warn" style="margin-top: 22px;"
+                      (click)="onRemovevendorNameAuthorized(index)">
+                      <mat-icon title="Cancel">cancel</mat-icon>
+                    </button>
+                    <!-- </div> -->
+                    <!-- <button class="close" aria-label="Close"
                               (click)="onRemoveRow(index)">Remove</button> -->
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-            
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
           </div>
 
-        <div class="row">
-            
+          <div class="row">
+
             <h2 class="col-md-6">{{'Last three years purchasing item detail'}}</h2>
-         
-          <div class="col-md-6 text-right">             
-            <button mat-raised-button type="button" color="primary" type="button" (click)="addRowLastThreeYear()">{{'Add New'}}</button>
+
+            <div class="col-md-6 text-right">
+              <button mat-raised-button type="button" color="primary" type="button"
+                (click)="addRowLastThreeYear()">{{'Add New'}}</button>
+            </div>
           </div>
-        </div>
-
-        
-              <div class="table-responsive">
-                <table class="table table-bordered  table-striped text-center">
-                  <tbody>
-                    <tr>
-                      <th class="text-center">S.no.</th>
-                      <th class="text-center">Company Name</th>
-                      <th class="text-center">Purchasing Item / Material</th>
-                      <th class="text-center">Purchasing Date</th>
-                      <th class="text-center">Action</th>
-                    </tr>
-                    <tr *ngFor="let row of vendorRegistrationForm.get('vendorNameLastYear')?.controls;let index = index;">
-                      <td>
-                        {{index+1}}
-                      </td>
-                      <td>
-                        <mat-form-field>
-                          <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
-                            maxlength="100" [formControl]="row.get('companyName')">
-                          <control-messages [control]="row.get('companyName')">
-                          </control-messages>
-                        </mat-form-field>
-                      </td>
-
-                      <td>
-                        <mat-form-field>
-                          <input matInput type="text" appValidationFields maxlength="100"
-                            [formControl]="row.get('purchasingItem')">
-                          <control-messages [control]="row.get('purchasingItem')">
-                          </control-messages>
-                        </mat-form-field>
-                      </td>
-
-                      <td>
-                        <mat-form-field>
-                        
-                            <input matInput autocomplete="off" appDate [formControl]="row.get('purchasingDate')" [min]="maxDate"
-                              [matDatepicker]="purchasingDate" (dateChange)="onDateChangePurchasDate('purchasingDate', $event.value,row)">
-                            <mat-datepicker-toggle matSuffix [for]="purchasingDate"></mat-datepicker-toggle>
-                            <mat-datepicker touchUi="true" #purchasingDate></mat-datepicker>
-                            <div align="end" class="default-show-hint mat-hint mat-right"></div>
-
-                          <control-messages [control]="row.get('purchasingDate')">
-                          </control-messages>
-                        </mat-form-field>
-                      </td>
 
 
-                      
-                      <td>
-                        <!-- <div class="col-sm-12 col-md-12 text-right"> -->
-                        <button mat-raised-button  type="button" color="warn" style="margin-top: 22px;"
-                          (click)="onRemoveRowVendorTypeLastYear(index)">
-                          <mat-icon title="Cancel">cancel</mat-icon>
-                        </button>
-                        <!-- </div> -->
-                        <!-- <button class="close" aria-label="Close"
+          <div class="table-responsive">
+            <table class="table table-bordered  table-striped text-center">
+              <tbody>
+                <tr>
+                  <th class="text-center">S.no.</th>
+                  <th class="text-center">Company Name</th>
+                  <th class="text-center">Purchasing Item / Material</th>
+                  <th class="text-center">Purchasing Date</th>
+                  <th class="text-center">Action</th>
+                </tr>
+                <tr *ngFor="let row of vendorRegistrationForm.get('vendorNameLastYear')?.controls;let index = index;">
+                  <td>
+                    {{index+1}}
+                  </td>
+                  <td>
+                    <mat-form-field>
+                      <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+                        maxlength="100" [formControl]="row.get('companyName')">
+                      <control-messages [control]="row.get('companyName')">
+                      </control-messages>
+                    </mat-form-field>
+                  </td>
+
+                  <td>
+                    <mat-form-field>
+                      <input matInput type="text" appValidationFields maxlength="100"
+                        [formControl]="row.get('purchasingItem')">
+                      <control-messages [control]="row.get('purchasingItem')">
+                      </control-messages>
+                    </mat-form-field>
+                  </td>
+
+                  <td>
+                    <mat-form-field>
+
+                      <input matInput autocomplete="off" appDate [formControl]="row.get('purchasingDate')"
+                        [min]="maxDate" [matDatepicker]="purchasingDate"
+                        (dateChange)="onDateChangePurchasDate('purchasingDate', $event.value,row)">
+                      <mat-datepicker-toggle matSuffix [for]="purchasingDate"></mat-datepicker-toggle>
+                      <mat-datepicker touchUi="true" #purchasingDate></mat-datepicker>
+                      <div align="end" class="default-show-hint mat-hint mat-right"></div>
+
+                      <control-messages [control]="row.get('purchasingDate')">
+                      </control-messages>
+                    </mat-form-field>
+                  </td>
+
+
+
+                  <td>
+                    <!-- <div class="col-sm-12 col-md-12 text-right"> -->
+                    <button mat-raised-button type="button" color="warn" style="margin-top: 22px;"
+                      (click)="onRemoveRowVendorTypeLastYear(index)">
+                      <mat-icon title="Cancel">cancel</mat-icon>
+                    </button>
+                    <!-- </div> -->
+                    <!-- <button class="close" aria-label="Close"
                               (click)="onRemoveRow(index)">Remove</button> -->
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-             
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
           </div>
 
           <div class="row">
@@ -1025,92 +1036,91 @@
             <h2><b>{{'A. Deatils of order executed indication quantity, value for each item/materials to be registered
                 for supply, self certified statement to be attached.'}}</b></h2>
 
-          
-                <div class="table-responsive">
-                  <table class="table table-bordered  table-striped text-center">
-                    <tbody>
-                      <tr>
-                        <td class="text-center">
-                          {{1}}
-                        </td>
-                        <td class="text-center">
-                          {{'Purchasers Name'}}
-                        </td>
-                        <td class="text-center">
-                          <mat-form-field>
-                            <input matInput type="text" appValidationFields maxlength="100"
-                              formControlName="purchaserName">
-                            <control-messages [control]="vendorRegistrationForm.get('purchaserName')">
-                            </control-messages>
-                          </mat-form-field>
-                        </td>
-                      </tr>
 
-                      <tr>
+            <div class="table-responsive">
+              <table class="table table-bordered  table-striped text-center">
+                <tbody>
+                  <tr>
+                    <td class="text-center">
+                      {{1}}
+                    </td>
+                    <td class="text-center">
+                      {{'Purchasers Name'}}
+                    </td>
+                    <td class="text-center">
+                      <mat-form-field>
+                        <input matInput type="text" appValidationFields maxlength="100" formControlName="purchaserName">
+                        <control-messages [control]="vendorRegistrationForm.get('purchaserName')">
+                        </control-messages>
+                      </mat-form-field>
+                    </td>
+                  </tr>
 
-                        <td class="text-center">
-                          {{2}}
-                        </td>
-                        <td class="text-center">
-                          {{'Order no.'}}
-                        </td>
-                        <td class="text-center">
-                          <mat-form-field>
-                            <input matInput type="text" appValidationFields maxlength="20" required
-                              formControlName="orderNo">
-                            <control-messages [control]="vendorRegistrationForm.get('orderNo')">
-                            </control-messages>
-                          </mat-form-field>
-                        </td>
-                      </tr>
+                  <tr>
 
-                      <tr>
+                    <td class="text-center">
+                      {{2}}
+                    </td>
+                    <td class="text-center">
+                      {{'Order no.'}}
+                    </td>
+                    <td class="text-center">
+                      <mat-form-field>
+                        <input matInput type="text" appValidationFields maxlength="20" required
+                          formControlName="orderNo">
+                        <control-messages [control]="vendorRegistrationForm.get('orderNo')">
+                        </control-messages>
+                      </mat-form-field>
+                    </td>
+                  </tr>
 
-                        <td class="text-center">
-                          {{3}}
-                        </td>
-                        <td class="text-center">
-                          {{'Order Date'}}
-                        </td>
-                        <td class="text-center">
-                          <mat-form-field>
-                            <input matInput autocomplete="off" appDate formControlName="orderDate" [min]="maxDate"
-                              [matDatepicker]="orderPicker" (dateChange)="onDateChange('orderDate', $event.value)">
-                            <mat-datepicker-toggle matSuffix [for]="orderPicker"></mat-datepicker-toggle>
-                            <mat-datepicker touchUi="true" #orderPicker></mat-datepicker>
-                            <div align="end" class="default-show-hint mat-hint mat-right"></div>
-                            <control-messages [control]="vendorRegistrationForm.get('orderDate')"></control-messages>
-                          </mat-form-field>
-                        </td>
-                      </tr>
+                  <tr>
+
+                    <td class="text-center">
+                      {{3}}
+                    </td>
+                    <td class="text-center">
+                      {{'Order Date'}}
+                    </td>
+                    <td class="text-center">
+                      <mat-form-field>
+                        <input matInput autocomplete="off" appDate formControlName="orderDate" [min]="maxDate"
+                          [matDatepicker]="orderPicker" (dateChange)="onDateChange('orderDate', $event.value)">
+                        <mat-datepicker-toggle matSuffix [for]="orderPicker"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi="true" #orderPicker></mat-datepicker>
+                        <div align="end" class="default-show-hint mat-hint mat-right"></div>
+                        <control-messages [control]="vendorRegistrationForm.get('orderDate')"></control-messages>
+                      </mat-form-field>
+                    </td>
+                  </tr>
 
 
-                      <tr>
+                  <tr>
 
-                        <td class="text-center">
-                          {{4}}
-                        </td>
-                        <td class="text-center">
-                          {{'Quantity supplied till actual completion Date'}}
-                        </td>
-                        <td class="text-center">
-                          <mat-form-field>
-                            <input matInput autocomplete="off" appDate formControlName="quantitySuppliedCompletionDate"
-                              [matDatepicker]="qualityPicker" [min]="vendorRegistrationForm.get('orderDate').value"
-                              (dateChange)="onDateChange('quantitySuppliedCompletionDate', $event.value)">
-                            <mat-datepicker-toggle matSuffix [for]="qualityPicker"></mat-datepicker-toggle>
-                            <mat-datepicker touchUi="true" #qualityPicker></mat-datepicker>
-                            <div align="end" class="default-show-hint mat-hint mat-right"></div>
-                            <control-messages [control]="vendorRegistrationForm.get('quantitySuppliedCompletionDate')">
-                            </control-messages>
-                          </mat-form-field>
-                        </td>
-                      </tr>
+                    <td class="text-center">
+                      {{4}}
+                    </td>
+                    <td class="text-center">
+                      {{'Quantity supplied till actual completion Date'}}
+                    </td>
+                    <td class="text-center">
+                      <mat-form-field>
+                        <input matInput autocomplete="off" appDate formControlName="quantitySuppliedCompletionDate"
+                          [matDatepicker]="qualityPicker" [min]="vendorRegistrationForm.get('orderDate').value"
+                          (dateChange)="onDateChange('quantitySuppliedCompletionDate', $event.value)">
+                        <mat-datepicker-toggle matSuffix [for]="qualityPicker"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi="true" #qualityPicker></mat-datepicker>
+                        <div align="end" class="default-show-hint mat-hint mat-right"></div>
+                        <control-messages [control]="vendorRegistrationForm.get('quantitySuppliedCompletionDate')">
+                        </control-messages>
+                      </mat-form-field>
+                    </td>
+                  </tr>
 
-                    </tbody>
-                  </table>
-                </div>
-             
+                </tbody>
+              </table>
+            </div>
+
 
           </div>
 
@@ -1157,58 +1167,59 @@
             <div class="row">
               <h2>{{'List of items holding ISO 9001 Certificate'}}</h2>
               <div class="col-sm-12 col-md-12 text-left">
-                <button mat-raised-button color="primary" type="button" (click)="addRowvendorNameholding()">{{'Add New'}}</button>
+                <button mat-raised-button color="primary" type="button" (click)="addRowvendorNameholding()">{{'Add
+                  New'}}</button>
               </div>
             </div>
-  
-            
-                <div class="table-responsive">
-                  <table class="table table-bordered table-striped text-center">
-                    <tbody>
-                      <tr>
-                        <th class="text-center">S.no.</th>
-                        <th class="text-center">Item Name</th>
-                        <th class="text-center">ISO 9001 Certificate Detail</th>
-                        <th class="text-center">Action</th>
-                      </tr>
-                      <tr *ngFor="let row of vendorRegistrationForm.get('vendorNameholding')?.controls;let index = index;">
-                        <td>
-                          {{index+1}}
-                        </td>
-                        <td>
-                          <mat-form-field>
-                            <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
-                              maxlength="100" [formControl]="row.get('itemName')">
-                            <control-messages [control]="row.get('itemName')">
-                            </control-messages>
-                          </mat-form-field>
-                        </td>
-  
-                        <td>
-                          <mat-form-field>
-                            <input matInput type="text" appValidationFields maxlength="100"
-                              [formControl]="row.get('certificateDetail')">
-                            <control-messages [control]="row.get('certificateDetail')">
-                            </control-messages>
-                          </mat-form-field>
-                        </td>
-                        
-                        <td>
-                          <!-- <div class="col-sm-12 col-md-12 text-right"> -->
-                          <button mat-raised-button color="warn" type="button" style="margin-top: 22px;"
-                            (click)="onRemovevendorNameholding(index)">
-                            <mat-icon title="Cancel">cancel</mat-icon>
-                          </button>
-                          <!-- </div> -->
-                          <!-- <button class="close" aria-label="Close"
+
+
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped text-center">
+                <tbody>
+                  <tr>
+                    <th class="text-center">S.no.</th>
+                    <th class="text-center">Item Name</th>
+                    <th class="text-center">ISO 9001 Certificate Detail</th>
+                    <th class="text-center">Action</th>
+                  </tr>
+                  <tr *ngFor="let row of vendorRegistrationForm.get('vendorNameholding')?.controls;let index = index;">
+                    <td>
+                      {{index+1}}
+                    </td>
+                    <td>
+                      <mat-form-field>
+                        <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+                          maxlength="100" [formControl]="row.get('itemName')">
+                        <control-messages [control]="row.get('itemName')">
+                        </control-messages>
+                      </mat-form-field>
+                    </td>
+
+                    <td>
+                      <mat-form-field>
+                        <input matInput type="text" appValidationFields maxlength="100"
+                          [formControl]="row.get('certificateDetail')">
+                        <control-messages [control]="row.get('certificateDetail')">
+                        </control-messages>
+                      </mat-form-field>
+                    </td>
+
+                    <td>
+                      <!-- <div class="col-sm-12 col-md-12 text-right"> -->
+                      <button mat-raised-button color="warn" type="button" style="margin-top: 22px;"
+                        (click)="onRemovevendorNameholding(index)">
+                        <mat-icon title="Cancel">cancel</mat-icon>
+                      </button>
+                      <!-- </div> -->
+                      <!-- <button class="close" aria-label="Close"
                                 (click)="onRemoveRow(index)">Remove</button> -->
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-        
-            
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+
             <mat-form-field class="col-md-8">
               <input matInput type="text" maxlength="255" validationFieldsType='onlyNameWithSpace'
                 placeholder="{{'Remarks'}}" formControlName="remarks">
@@ -1273,12 +1284,12 @@
           </div> -->
 
           <app-action-bar [uploadFiles]="uploadFilesArray" [form]="vendorRegistrationForm"
-					(tabIndex)="onTabChange($event)" [paymentGateway]="paymentGateway"
-					(handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next:7, back:6} ">
-				</app-action-bar>
+            (tabIndex)="onTabChange($event)" [paymentGateway]="paymentGateway"
+            (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next:7, back:6} ">
+          </app-action-bar>
 
-				<!-- step Attachment Ends -->
-				<select-payment-gateway #paymentGateway></select-payment-gateway>
+          <!-- step Attachment Ends -->
+          <select-payment-gateway #paymentGateway></select-payment-gateway>
 
 
         </mat-tab>
