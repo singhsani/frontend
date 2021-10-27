@@ -10,7 +10,7 @@ import { NewWaterConnectionEntryService } from './Services/new-water-connection-
 import { NewWaterConnectionEntryDataSharingService } from './Services/new-water-connection-entry-data-sharing.service';
 import { SharedComponentModule } from 'src/app/vmcshared/shared-component.module';
 import { DocumentUploadComponent } from './Components/document-upload/document-upload.component';
-
+import {MatTooltipModule} from '@angular/material/tooltip';
 const routes: Routes = [
   { path: '', component: NewWaterConnectionEntryComponent }
 ]
@@ -21,7 +21,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     FormsModule,
     ReactiveFormsModule,
-    SharedComponentModule
+    SharedComponentModule,
+    MatTooltipModule
   ],
   declarations: [
     NewWaterConnectionEntryComponent,
