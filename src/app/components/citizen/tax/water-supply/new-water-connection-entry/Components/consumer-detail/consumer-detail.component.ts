@@ -212,7 +212,7 @@ export class ConsumerDetailComponent implements OnInit {
             this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(1);
           }
           else {
-            this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(2);
+            this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(2,0);
           }
           if (data.status === 200) {
             this.alertService.success(data.body.message);

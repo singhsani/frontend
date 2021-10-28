@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { NewWaterConnectionEntryDataSharingService } from '../../Services/new-water-connection-entry-data-sharing.service';
 import { NewWaterConnectionEntryService } from '../../Services/new-water-connection-entry.service';
@@ -72,7 +72,7 @@ export class DocumentUploadComponent implements OnInit {
               this.alertService.success(data.body.message);
               this.newNewWaterConnectionEntryDataSharingService.updateDataSourceIsShowDocument(true);
               //this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(2);
-              this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
+              this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
             }
           },
           (error) => {
@@ -98,7 +98,7 @@ export class DocumentUploadComponent implements OnInit {
     }
 
     onBackClick(){
-      this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(1);
+        this.newNewWaterConnectionEntryDataSharingService.updateDataSourceBackMoveStepper();     
     }
 
   mandatoryFileCheck() {

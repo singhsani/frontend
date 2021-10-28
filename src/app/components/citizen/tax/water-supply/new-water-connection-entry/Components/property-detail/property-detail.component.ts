@@ -21,6 +21,7 @@ export class PropertyDetailComponent implements OnInit {
   subscription: Subscription;
   connectionDtlId: number;
   isShowSubmitButton: boolean = false;
+  fullAddress: string;
   constructor(private newNewWaterConnectionEntryDataSharingService: NewWaterConnectionEntryDataSharingService,
     private alertService: AlertService,private router: Router,
     private newNewWaterConnectionEntryService: NewWaterConnectionEntryService) {
@@ -140,14 +141,17 @@ export class PropertyDetailComponent implements OnInit {
   }
 
   savePropertyAddress1(formDetails: NgForm,isSubmit:boolean) {
-    if (formDetails.form.valid) {
+    if (formDetails.form.valid) {    
+      if (!this.model.postalAddressDiff) {
+        this.model.postalAddress = this.fullAddress;
+      }
       this.model.connectionDtlId = this.connectionDtlId;
       this.newNewWaterConnectionEntryService.savePropertyAddress(this.model).subscribe(
         (data) => {
           if (data.status === 200) {
             this.alertService.success(data.body.message);
             this.isShowSubmitButton = true;
-            this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(2);
+            this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(2,1);
           }
           // if(isSubmit) {
           //   this.finalSubmit();
@@ -202,27 +206,27 @@ export class PropertyDetailComponent implements OnInit {
   }
 
   onChangeAddress() {
-    var fullAddress = "";
+    this.fullAddress = "";
     if (this.model.houseNo) {
-      fullAddress = fullAddress + `${this.model.houseNo}, `;
+      this.fullAddress =  this.fullAddress + `${this.model.houseNo}, `;
     }
     if (this.model.buildingName) {
-      fullAddress = fullAddress + `${this.model.buildingName}, `;
+       this.fullAddress =  this.fullAddress + `${this.model.buildingName}, `;
     }
     if (this.model.societyName) {
-      fullAddress = fullAddress + `${this.model.societyName}, `;
+       this.fullAddress =  this.fullAddress + `${this.model.societyName}, `;
     }
     if (this.model.streetName) {
-      fullAddress = fullAddress + `${this.model.streetName}, `;
+       this.fullAddress =  this.fullAddress + `${this.model.streetName}, `;
     }
     if (this.model.landMark) {
-      fullAddress = fullAddress + `${this.model.landMark}, `;
+       this.fullAddress =  this.fullAddress + `${this.model.landMark}, `;
     }
     if (this.model.areaName) {
-      fullAddress = fullAddress + `${this.model.areaName}, `;
+       this.fullAddress =  this.fullAddress + `${this.model.areaName}, `;
     }
     if (this.model.pincode) {
-      fullAddress = fullAddress + `Pin: ${this.model.pincode}, `;
+       this.fullAddress =  this.fullAddress + `Pin: ${this.model.pincode}, `;
     }
 
     var address2 = "";
@@ -238,15 +242,15 @@ export class PropertyDetailComponent implements OnInit {
     if (this.model.serveyNo) {
       address2 = address2 + `Survey No: ${this.model.serveyNo}, `;
     }
-    fullAddress = fullAddress;
+     this.fullAddress =  this.fullAddress;
     if (address2 != '') {
-      fullAddress =  address2 + '\n' + fullAddress;
+       this.fullAddress =  address2 + '\n' +  this.fullAddress;
     }
-    if (fullAddress != '' && address2 != '')
-      fullAddress = fullAddress.substring(0, fullAddress.length - 2);
-    this.model.address = fullAddress;
-    if (!this.model.postalAddressDiff) {
-      this.model.postalAddress = fullAddress;
-    }
+    if ( this.fullAddress != '' && address2 != '')
+       this.fullAddress =  this.fullAddress.substring(0,  this.fullAddress.length - 2);
+    this.model.address =  this.fullAddress;
+    // if (!this.model.postalAddressDiff) {
+    //   this.model.postalAddress = fullAddress;
+    // }
   }
 }
