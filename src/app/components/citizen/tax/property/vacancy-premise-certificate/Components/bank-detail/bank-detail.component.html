@@ -148,7 +148,7 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="ngSelect">
+                 <!--  <div class="ngSelect">
                     <ng-select [required]="isBankDetailRequired" placeholder="Branch Name *" [items]="branchList"
                       bindValue="branchId" bindLabel="name" name="branchId" [(ngModel)]="model.bankBranchId"
                       #BranchId="ngModel"
@@ -157,8 +157,13 @@
                     <div *ngIf="(formDetail.submitted && BranchId.invalid)  || (BranchId.invalid && BranchId.touched)">
                       <mat-error *ngIf="BranchId.errors.required">*Branch Name is required.</mat-error>
                     </div>
+                  </div> -->
+                  <mat-form-field class="full-width-input">
+                    <input matInput [required]="isBankDetailRequired" placeholder="Branch Name" maxlength="20" name="branchName"
+                      [(ngModel)]="model.bankBranchName" #BranchName="ngModel" letter-digits-only>
+                    <mat-error *ngIf="BranchName.invalid">*Branch Name is required.</mat-error>
+                  </mat-form-field>
                   </div>
-                </div>
               </div>
               <div class="row">
                 <div class="col-md-6">
