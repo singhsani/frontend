@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ValidationService } from '../../../../../../../shared/services/validation.service';
 import { BookingConstants, BookingUtils } from '../../../config/booking-config';
 import { BookingService } from './../../../shared-booking/services/booking-service.service';
@@ -349,6 +349,10 @@ export class BookAtithigruhComponent implements OnInit {
 		this.bookingService.generateReference(shortListData).subscribe(resp => {
 			if (resp) {
 				this.atithigruhForm.patchValue(resp.data);
+
+				if(resp.data.bookingPurposeMaster.code == 'SAMUH_LAGAN'){
+					this.atithigruhForm.addControl('samuhLaganCoupleCount',new FormControl(5, [Validators.required, Validators.max(25),Validators.min(5)]));
+				  }
 				if (resp.data.status == this.bookingConstants.DRAFT) {
 					this.bookingService.calculateFees(resp.data.refNumber).subscribe(payResp => {
 						this.paymentObject = payResp.data;
@@ -400,6 +404,9 @@ export class BookAtithigruhComponent implements OnInit {
 
 				this.showSearchForm = false;
 				this.atithigruhForm.patchValue(resp.data);
+				if(resp.data.bookingPurposeMaster.code == 'SAMUH_LAGAN'){
+					this.atithigruhForm.addControl('samuhLaganCoupleCount',new FormControl(5, [Validators.required, Validators.max(25),Validators.min(5)]));
+				  }
 				this.addressComp.getCountryLists();
 				if (resp.data.status == this.bookingConstants.DRAFT) {
 					this.bookingService.searchPayment(resp.data.refNumber).subscribe(payResp => {
