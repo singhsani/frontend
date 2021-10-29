@@ -191,6 +191,9 @@ export class BookTheaterComponent implements OnInit {
             /**
              * Organization Details
              */
+            eventFromDate:[null],
+            eventToDate:[null],
+            programmePurpose:[null],
             organizationName: [null, [Validators.required, Validators.maxLength(50)]],
             organizationNumber: [null, [Validators.required]],
             confirmMobile: [null, Validators.required],
@@ -291,15 +294,24 @@ export class BookTheaterComponent implements OnInit {
                 if (resp.success) {
                     this.showTheaterSearchForm = false;
                     this.theaterBookingForm.patchValue(resp.data);
+                    if(resp.data.bookingPurposeMaster){
+                        this.theaterBookingForm.get('programmePurpose').setValue(resp.data.bookingPurposeMaster.name)
+                        this.theaterBookingForm.get('programmePurpose').disable();
+                    }
                     this.addressComp.getCountryLists();
                     if (resp.data.status == this.bookingConstants.DRAFT) {
                         this.bookingService.searchPayment(resp.data.refNumber).subscribe(payResp => {
                             this.paymentObject = payResp.data;
+                            this.theaterBookingForm.get('eventFromDate').setValue(this.paymentObject.EVENT_FROM_DATE);
+                            this.theaterBookingForm.get('eventFromDate').disable();
+                            this.theaterBookingForm.get('eventToDate').setValue(this.paymentObject.EVENT_TO_DATE);
+                            this.theaterBookingForm.get('eventToDate').disable();
                             this.showPaymentReciept = true;
                             this.confirmRef.hide();
                         })
                     }
                 }
+                
             }, err => {
                 this.confirmRef.hide();
                 this.commonService.openAlert("Error", err.error[0].message, "warning");
