@@ -72,6 +72,7 @@ export class ConsumerDetailComponent implements OnInit {
       (data) => {
         if (data.status === 200 && data.body.length) {
           this.connectionSizeList = data.body;
+          this.shortDropdown(this.connectionSizeList,'connectionSize');
         }
       },
       (error) => {
@@ -92,6 +93,7 @@ export class ConsumerDetailComponent implements OnInit {
       (data) => {
         if (data.status === 200 && data.body.length) {
           this.connectionUsageList = data.body;
+          this.shortDropdown(this.connectionUsageList,'usageName')
         }
       },
       (error) => {
@@ -106,6 +108,7 @@ export class ConsumerDetailComponent implements OnInit {
       (data) => {
         if (data.status === 200 && data.body.length) {
           this.connectionSubUsageList = data.body;
+          this.shortDropdown(this.connectionSubUsageList,'subUsage')
         }
       },
       (error) => {
@@ -134,6 +137,7 @@ export class ConsumerDetailComponent implements OnInit {
       (data) => {
         if (data.status === 200 && data.body.length) {
           this.wardZoneLevel1List = data.body;
+          this.shortDropdown(this.wardZoneLevel1List,'wardzoneName');
         }
       },
       (error) => {
@@ -185,12 +189,15 @@ export class ConsumerDetailComponent implements OnInit {
         if (data.status === 200 && data.body.length) {
           if (level == 2) {
             this.wardZoneLevel2List = data.body;
+            this.shortDropdown(this.wardZoneLevel2List,'wardzoneName');
           }
           else if (level == 3) {
             this.wardZoneLevel3List = data.body;
+            this.shortDropdown(this.wardZoneLevel3List,'wardzoneName');
           }
           else if (level == 4) {
             this.wardZoneLevel4List = data.body;
+            this.shortDropdown(this.wardZoneLevel4List,'wardzoneName');
           }
         }
       },
@@ -246,6 +253,7 @@ export class ConsumerDetailComponent implements OnInit {
       (data) => {
         if (data.status === 200 && data.body.length) {
           this.plumberList = data.body;
+          this.shortDropdown(this.plumberList,'nameOfApplicant');
           this.filteredPlumerList = this.plumerCtrl.valueChanges
             .pipe(
               startWith(''),
@@ -278,10 +286,13 @@ export class ConsumerDetailComponent implements OnInit {
     }
   }
   numberOnly(event): boolean {
-    const charCode = (event.which) ? event.which : event.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-      return false;
-    }
-    return true;
+    const charCode = (event.which) ? event.which : event.keyCode;    
+    return charCode > 31 && (charCode < 48 || charCode > 57) ? false : true    
+  }
+  
+  shortDropdown(item:any,columnName:any){
+    item.sort((a, b) => {      
+      return typeof a[columnName] === 'number' ?  a[columnName] - b[columnName] : a[columnName].localeCompare(b[columnName]);
+     });
   }
 }
