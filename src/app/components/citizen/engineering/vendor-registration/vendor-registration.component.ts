@@ -43,6 +43,7 @@ export class VendorRegistrationComponent implements OnInit {
   isFromOnlineApp: boolean = false;
   maxDate: Date = new Date();
   minDate = moment().subtract(2, 'months').format('YYYY-MM-DD');
+  minDateNew = moment().subtract(2000, 'months').format('YYYY-MM-DD');
   attachmentList: any = [];
   bankNameArray: any = [];
   public serverUploadFilesArray: Array<any> = [];
@@ -213,11 +214,11 @@ export class VendorRegistrationComponent implements OnInit {
       panNo: [null, [Validators.required, ValidationService.panValidator]],
       tanNo: [null, [Validators.required, ValidationService.tanValidator]],
       officeContactNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
-      officeFaxNumber: [null, [ValidationService.mobileNumberValidation]],
+      officeFaxNumber: [null, [ValidationService.faxValidation]],
       officeEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 
       resContactNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
-      resFaxNumber: [null, [ValidationService.mobileNumberValidation]],
+      resFaxNumber: [null, [ValidationService.faxValidation]],
       resEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 
       factoryAddress: this.fb.group(this.officeAddrComponent.addressControls()),
@@ -309,7 +310,7 @@ export class VendorRegistrationComponent implements OnInit {
       personnelDetailOther: null,
 
       attachments: [],
-      acceptAndCondition: [true],
+      acceptAndCondition: [false, [Validators.required]],
       createdByCitizen: [true],
     });
     this.academicQualifications.push(this.createEducationQualification());
