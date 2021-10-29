@@ -451,6 +451,15 @@
 
                     </div>
 
+                    <div class="col-md-4" *ngIf = "atithigruhForm.contains('samuhLaganCoupleCount')"> 
+                        <mat-form-field>
+                          <input matInput OnlyNumber formControlName="samuhLaganCoupleCount" maxlength="2" 
+                          
+                            placeholder="{{'samuh_lagan_couple_count' | translate: stadiumTranslateKey}}" required>
+                          <control-messages [control]="atithigruhForm.get('samuhLaganCoupleCount')"></control-messages>
+                        </mat-form-field>
+                      </div>
+
                     <div>
                         <h2>
                             {{'applicant_address' | translate:stadiumTranslateKey}}
