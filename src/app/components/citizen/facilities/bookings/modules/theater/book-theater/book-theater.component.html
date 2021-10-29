@@ -192,6 +192,11 @@
                     <div class="row">
                         <div *ngFor="let date of bookingUtils.filterAcc(month.id, Dates)" class="col-6 col-md-3 col-lg-2 mb-1 p-1">
                             <div class="dateBox rounded border">
+                                <div class="dateBox rounded border availableDate" *ngFor="let shift of date.slotList; let i = index"
+                                    [ngClass]="{'bookDate': shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED,
+                                   'checkDate': shift.slotStatus != bookingConstants.AVAILABLE,
+                                   'blockDate': shift.slotStatus == 'TEMPORARY_BLOCKED',
+                                   'holiyDay': shift.slotStatus == bookingConstants.RESERVED || shift.slotStatus == bookingConstants.HOLIDAY || shift.slotStatus == bookingConstants.FESTIVAL}">
                                 <strong>
                                     {{bookingUtils.returnProperDate(date.key)}}
                                 </strong>
@@ -202,7 +207,7 @@
                                         &nbsp;{{shift.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : shift.slotStatus }}
                                     </mat-checkbox>
                                 </div>
-
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -288,17 +293,22 @@
                 <thead>
                     <tr>
                         <th scope="col">{{'booking_date'| translate: translateKey}}</th>
+                        <th scope="col">{{'event_date_from'| translate: translateKey}}</th>
+                        <th scope="col">{{'event_to_date'| translate: translateKey}}</th>
                         <th scope="col">{{'rent_amount'| translate: translateKey}}</th>
 <!--                        <th scope="col">{{'deposit_amount'| translate: translateKey}}</th>-->
-<!--                        <th scope="col">{{'GST'| translate: translateKey}}</th>-->
+                       <th scope="col">{{'GST'| translate: translateKey}}</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td scope="col">{{bookingUtils.returnProperDate(paymentObject.BOOKING_DATE)}}</td>
+                        <td scope="col">{{paymentObject.EVENT_FROM_DATE}}</td>
+                        <td scope="col">{{paymentObject.EVENT_TO_DATE}}</td>
                         <td scope="col">{{paymentObject.RENT_FEES}}</td>
+                        
 <!--                        <td scope="col">{{paymentObject.DEPOSIT_FEES}}</td>-->
-<!--                        <td scope="col">{{paymentObject.GST}}</td>-->
+                       <td scope="col">{{paymentObject.GST}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -331,6 +341,29 @@
                     <ng-template mat-tab-label>
                         <div>{{'theater_booking_details' | translate:translateKey}}</div>
                     </ng-template>
+
+                    <div class="row">
+                        <mat-form-field class="col-md-4">
+                            <mat-label>{{'event_date_from' | translate:translateKey}}</mat-label>
+                            <input matInput formControlName="eventFromDate" readonly>
+                            <control-messages [control]="theaterBookingForm.get('eventFromDate')"></control-messages>
+                          </mat-form-field>
+    
+
+                        <mat-form-field class="col-md-4">
+                            <mat-label>{{'event_date_to' | translate:translateKey}}</mat-label>
+                            <input matInput formControlName="eventToDate" readonly>
+                            <control-messages [control]="theaterBookingForm.get('eventToDate')"></control-messages>
+                          </mat-form-field>
+
+                        
+                         
+                        <mat-form-field class="col-md-4">
+                            <mat-label>{{'purpose_of_booking'| translate: translateKey}}</mat-label>
+                            <input matInput formControlName="programmePurpose" readonly>
+                            <control-messages [control]="theaterBookingForm.get('programmePurpose')"></control-messages>
+                          </mat-form-field>
+                    </div>    
 
                     <h2>
                         {{'organization_details' | translate:translateKey}}
