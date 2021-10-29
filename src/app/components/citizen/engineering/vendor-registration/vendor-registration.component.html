@@ -29,16 +29,16 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput type="text" OnlyNumber maxlength="4" placeholder="{{'Year of Establishment'}}"
+              <input matInput type="text" OnlyNumber maxlength="4" placeholder="{{'Year of Establishment *'}}"
                 formControlName="yearOfEstablishment">
               <control-messages [control]="vendorRegistrationForm.get('yearOfEstablishment')">
               </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput autocomplete="off" appDate formControlName="commencementDate" [max]="maxDate"
+              <input matInput  autocomplete="off" appDate formControlName="commencementDate" [max]="maxDate" [min]="minDateNew"
                 [matDatepicker]="commencementDatePicker" (dateChange)="onDateChange('commencementDate', $event.value)"
-                placeholder="{{'The date of Commencement of commercial production'}}" required>
+                placeholder="{{'The date of Commencement of commercial production *'}}" required>
               <mat-datepicker-toggle matSuffix [for]="commencementDatePicker"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #commencementDatePicker></mat-datepicker>
               <div align="end" class="default-show-hint mat-hint mat-right"></div>
@@ -158,7 +158,7 @@
 
           <div class="fotButtonBar clearfix">
             <div class="col-sm-12 col-md-12">
-              <button class="pull-right" mat-raised-button color="primary" (click)="tabIndex = 1">{{'Next'}}</button>
+              <button type="button" class="pull-right" mat-raised-button color="primary" (click)="tabIndex = 1">{{'Next'}}</button>
             </div>
           </div>
         </mat-tab>
@@ -212,7 +212,7 @@
                       <td>
                         <mat-form-field>
                           <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
-                            maxlength="100" [formControl]="row.get('ownerType')">
+                          #ownerType [value]="ownerType.value.toUpperCase()" maxlength="50" [formControl]="row.get('ownerType')">
                           <control-messages [control]="row.get('ownerType')">
                           </control-messages>
                         </mat-form-field>
@@ -220,7 +220,7 @@
 
                       <td>
                         <mat-form-field>
-                          <input matInput type="text" appValidationFields maxlength="100"
+                          <input matInput type="text"  appValidationFields maxlength="50"
                             [formControl]="row.get('ownerName')">
                           <control-messages [control]="row.get('ownerName')">
                           </control-messages>
@@ -1084,7 +1084,7 @@
                     </td>
                     <td class="text-center">
                       <mat-form-field>
-                        <input matInput autocomplete="off" appDate formControlName="orderDate" [min]="maxDate"
+                        <input maxlength="10" matInput autocomplete="off" appDate formControlName="orderDate" [min]="maxDate"
                           [matDatepicker]="orderPicker" (dateChange)="onDateChange('orderDate', $event.value)">
                         <mat-datepicker-toggle matSuffix [for]="orderPicker"></mat-datepicker-toggle>
                         <mat-datepicker touchUi="true" #orderPicker></mat-datepicker>
@@ -1105,7 +1105,7 @@
                     </td>
                     <td class="text-center">
                       <mat-form-field>
-                        <input matInput autocomplete="off" appDate formControlName="quantitySuppliedCompletionDate"
+                        <input maxlength="10" matInput autocomplete="off" appDate formControlName="quantitySuppliedCompletionDate"
                           [matDatepicker]="qualityPicker" [min]="vendorRegistrationForm.get('orderDate').value"
                           (dateChange)="onDateChange('quantitySuppliedCompletionDate', $event.value)">
                         <mat-datepicker-toggle matSuffix [for]="qualityPicker"></mat-datepicker-toggle>
@@ -1265,6 +1265,8 @@
             <mat-checkbox class="col accept-terms" required formControlName="acceptAndCondition">
 
             </mat-checkbox>
+            <control-messages [control]="vendorRegistrationForm.get('acceptAndCondition')">
+            </control-messages>
 
             <a (click)="openTermModel(termCondition);"> I have
               read and agree with <u style="color: rebeccapurple;">Terms and conditions</u> </a>

@@ -34,6 +34,7 @@ export class ValidationService {
             invalidPinCode: `Pin Code Not Valid`,
             invalidAadhar: `Invalid Aadhar Number`,
             invalidNumber: `Invalid Mobile Number`,
+            invalidFaxNumber : `Invalid Fax Number`,
             invalidpregnanceTime: 'Pregnancy duration between 25 to 40',
             invalidbirthRegNumber: 'Invalid Birth Registration Date',
             invalidBuildingName: 'Building name is not valid',
@@ -182,6 +183,16 @@ export class ValidationService {
         if (control.value) {
             const matches = control.value.match(/^[0-9]{10,10}$/);
             return matches ? null : { 'invalidNumber': true };
+        } else {
+            return null;
+        }
+    }
+
+    static faxValidation(control: AbstractControl) {
+        // RFC 2822 compliant regex
+        if (control.value) {
+            const matches = control.value.match(/^[0-9]{10,10}$/);
+            return matches ? null : { 'invalidFaxNumber': true };
         } else {
             return null;
         }
