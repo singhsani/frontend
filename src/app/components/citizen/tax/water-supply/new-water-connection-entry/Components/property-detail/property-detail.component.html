@@ -144,7 +144,7 @@
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <input trim="blur" matInput (input)="onChangeAddress()" name="landMark" [(ngModel)]="model.areaName"
+                    <input trim="blur" matInput (input)="onChangeAddress()" name="areaName" [(ngModel)]="model.areaName"
                         #AreaName="ngModel" maxlength="100" placeholder="Area Name">
                     <mat-error *ngIf="AreaName.invalid">*Area Name is required.</mat-error>
                 </mat-form-field>
