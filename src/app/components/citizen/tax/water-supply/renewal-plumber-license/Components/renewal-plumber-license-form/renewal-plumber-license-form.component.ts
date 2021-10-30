@@ -51,7 +51,6 @@ export class RenewalPlumberLicenseFormComponent implements OnInit {
             this.renewalPlumberLicenseService.search(this.licenseNo.toString().trim()).subscribe(
                 (data) => {
                     if (data.status === 200) {
-                        debugger;
                         this.plumberLicenseModel = data.body;
                         this.plumberLicenseModel.birthdate = moment(data.body.birthdate).format('DD-MM-YYYY');
                         this.plumberLicenseModel.licenseValidTill = moment(data.body.licenseValidTill).format('DD-MM-YYYY');
@@ -104,7 +103,6 @@ export class RenewalPlumberLicenseFormComponent implements OnInit {
 
             this.plumberLicenseModel.applicationNumber = this.applicationModel.applicationNumber;
             var dataToPost = Object.assign({}, this.plumberLicenseModel);
-            debugger;
             if (dataToPost.birthdate)
                 dataToPost.birthdate = this.commonService.getPayloadDate(dataToPost.birthdate);
             if (dataToPost.licenseValidTill)
