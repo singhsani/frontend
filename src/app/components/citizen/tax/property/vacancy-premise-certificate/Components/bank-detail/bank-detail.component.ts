@@ -255,6 +255,7 @@ export class BankDetailComponent implements OnInit, OnDestroy {
       'bankId': null,
       'branchIdhId': null,
       'bankBranchId': null,
+      'bankBranchName': null,
       'ifscCode': '',
       'vacancyFrom': new Date()
     };
