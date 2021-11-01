@@ -1,5 +1,4 @@
 <mat-card class="cardBox mt-2">
-  <!-- <div class="mt-4"> -->
     <div class="example-container mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 width100">
         <ng-container matColumnDef="select">
@@ -31,12 +30,13 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </div>
-    <mat-paginator [length]="resultsLength" [hidden]="resultsLength==0" [pageSizeOptions]="pageRecord" showFirstLastButtons></mat-paginator> 
-	
-  <!-- </div> -->
-  <div class="row margin-top-20">
+  <div class="row">
     <div class="col-md-2">
       <mat-card>Total Count : <b>{{totalCount}}</b></mat-card>
+    </div>
+    <div class="col-md-10">
+      <mat-paginator [length]="resultsLength" [hidden]="resultsLength==0" [pageSizeOptions]="pageRecord" showFirstLastButtons>
+      </mat-paginator>
     </div>
   </div>
   <mat-card class="col-md-12 mt-3" *ngIf="isShowPayMode">
