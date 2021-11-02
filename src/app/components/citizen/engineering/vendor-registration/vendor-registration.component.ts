@@ -221,6 +221,16 @@ export class VendorRegistrationComponent implements OnInit {
       resFaxNumber: [null, [ValidationService.faxValidation]],
       resEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 
+      branchMobileNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      branchAlterMobileNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      branchISDNumber: null,
+      branchSTDNumber: null,
+
+      headMobileNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      headAlterMobileNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      headISDNumber: null,
+      headSTDNumber: null,
+
       factoryAddress: this.fb.group(this.officeAddrComponent.addressControls()),
       registeredAddress: this.fb.group(this.resAddrComponent.addressControls()),
 
