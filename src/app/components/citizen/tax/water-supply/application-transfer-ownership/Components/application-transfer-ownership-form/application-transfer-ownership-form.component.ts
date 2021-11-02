@@ -216,6 +216,10 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
     onBackClick(){
         this.stepper.selectedIndex = 0;
     }
+    numberOnly(event): boolean {
+        const charCode = (event.which) ? event.which : event.keyCode;    
+        return charCode > 31 && (charCode < 48 || charCode > 57) ? false : true    
+      }
 }
 
 

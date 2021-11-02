@@ -199,7 +199,7 @@ export class VendorRegistrationComponent implements OnInit {
 
       apiType: "vendor",
       serviceCode: null,
-      serviceFormId: this.formId,
+      serviceFormId: this.formId, 
       applicationNumber: null,
       canEdit: [true],
 
@@ -454,6 +454,7 @@ export class VendorRegistrationComponent implements OnInit {
     return this.fb.group({
       ownerType: null,
       ownerName: null,
+      ownerAddress: null
     });
   }
 

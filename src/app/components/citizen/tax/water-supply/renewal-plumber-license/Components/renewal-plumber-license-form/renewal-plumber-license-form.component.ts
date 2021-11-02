@@ -52,6 +52,8 @@ export class RenewalPlumberLicenseFormComponent implements OnInit {
                 (data) => {
                     if (data.status === 200) {
                         this.plumberLicenseModel = data.body;
+                        this.plumberLicenseModel.birthdate = moment(data.body.birthdate).format('DD-MM-YYYY');
+                        this.plumberLicenseModel.licenseValidTill = moment(data.body.licenseValidTill).format('DD-MM-YYYY');
                         this.minDate = moment(this.plumberLicenseModel.licenseValidTill).add(1, 'day').toISOString();
                         if (this.plumberLicenseModel.plumberLicenseId == null) {
                             this.isShowSaveButton = false;

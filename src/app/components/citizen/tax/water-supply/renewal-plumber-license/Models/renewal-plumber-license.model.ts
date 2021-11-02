@@ -2,13 +2,13 @@ export class PlumberLicenseModel {
     aadharNo: string;
     active: boolean;
     applicationNumber: string;
-    birthdate: Date;
+    birthdate: any;
     businessAddress: string;
     educationQualificationId: number;
     emailId: string;
     licenseForId: number;
     licenseNo: string;
-    licenseValidTill: Date;
+    licenseValidTill: any;
     mobileNo1: string;
     mobileNo2: string;
     mobileNo3: string;
