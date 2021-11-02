@@ -254,7 +254,7 @@ export class BookTheaterComponent implements OnInit {
                 });
                 this.availableStots = resp.data;
             }, err => {
-                this.toster.error(err.error.message);
+                //this.toster.error(err.error.message);
             });
         }
         else {
