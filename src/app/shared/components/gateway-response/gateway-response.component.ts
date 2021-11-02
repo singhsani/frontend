@@ -24,7 +24,7 @@ export class GatewayResponseComponent implements OnInit {
 	dispData: any;
 	isSearchanble: string = "";
 	resourceType: String;
-
+	serviceType : any;
 	/**
 	 * Common for all bookings
 	 */
@@ -209,7 +209,7 @@ export class GatewayResponseComponent implements OnInit {
 			} else {
 				this.formService.createPayment(payData).subscribe(payResp => {
 					const payRespData = payResp.data.responseData;
-
+					this.serviceType = payResp.data.responseData.payableServiceType;
 					//	This methods are used to send SMS and Email ater booking payment for Amphi Theater as
 					//  discussed with B A team.It can be applied for all module letter.
 					if (payRespData.payableServiceType == "AMPHI_FEES") {
@@ -290,14 +290,18 @@ export class GatewayResponseComponent implements OnInit {
 
 	redirectToHome() {
 		if (this.dispData.payableServiceType == "PROFESSIONAL_TAX") {
-			setTimeout(() => {
+			
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS')]);
-			}, 10000);
+			
 		}else if((this.dispData.payableServiceType  == "STADIUM_FEES") || (this.dispData.payableServiceType == "STADIUM_DEPOSIT")){
-			setTimeout(() => {
+			
 				this.router.navigate([this.bookingConstant.MY_BOOKINGS_URL]);
-			}, 10000);
-		} 
+			
+		}else if (this.serviceType == "ZOO_TICKETING_FEES"|| this.serviceType =="ZOO_ANIMAL_ADOPTION_FEES" || this.serviceType == "PLANETARIUM_TICKETING_FEES") {
+			
+				this.router.navigate([this.bookingConstant.MY_TICKETINGS_URL]);
+			
+		}
 		else {
 			setTimeout(() => {
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
