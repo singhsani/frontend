@@ -1,8 +1,8 @@
 <div class="pb-3">
   <app-title-bar [title]="'Vendor Registration'">
-    <!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
+     <!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
       Patch Value
-    </button>  -->
+    </button>   -->
   </app-title-bar>
 
 
@@ -439,14 +439,14 @@
               has been put at the firms disposal for the equipments / stores for which the firms disposal for the
               equipments/stores for Which the firms have applied.'}}</h2>
 
-            <div class="col-md-12 ngSelect">
-              <ng-select formControlName="isManufacturingOwnedDetails">
-                <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
-                </ng-option>
-              </ng-select>
-              <control-messages [control]="vendorRegistrationForm.get('isManufacturingOwnedDetails')">
-              </control-messages>
-            </div>
+              <div class="col-md-12 ngSelect" formGroupName="manufacturingOwnedDetails">
+                <ng-select formControlName="code">
+                  <ng-option *ngFor="let impl of manuFacturDetails" [value]="impl.code">{{impl.name}}
+                  </ng-option>
+                </ng-select>
+                <control-messages [control]="vendorRegistrationForm.get('manufacturingOwnedDetails').get('code')">
+                </control-messages>
+              </div>
           </div>
 
           <div class="row">
