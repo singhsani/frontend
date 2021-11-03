@@ -76,6 +76,8 @@ export class BookTheaterComponent implements OnInit {
 	 * display colums in table.
 	 */
     displayedColumns: Array<string> = ['id', 'start', 'end', 'slotStatus', 'action'];
+    displayedColumnsFeeDetails: string[] = ['sno', 'programmePurpose','bookingRent'];
+
 
 	/**
 	 * Min date should be current date.
@@ -88,6 +90,7 @@ export class BookTheaterComponent implements OnInit {
        * ngx-bootstrap models.
        */
     confirmRef: BsModalRef;
+    dataSource = [];
 
 	/**
 	 * Constructor
@@ -117,6 +120,7 @@ export class BookTheaterComponent implements OnInit {
 	 * Method Initialzes first.
 	 */
     ngOnInit() {
+        this.getFeesStructure();
         this.createSearchTheaterForm();
         this.createTheaterBookingForm();
         this.getResourceList();
@@ -395,4 +399,35 @@ export class BookTheaterComponent implements OnInit {
             return false;
         }
     }
+
+    getFeesStructure(){
+        this.bookingService.getFeesStructure().subscribe(res =>{
+            debugger
+          if(!res.success){
+            this.commonService.openAlert("Error", res.message, "warning")
+          }
+          debugger
+          this.dataSource = res.data
+        });
+      }
+
+      covertReadableString(headerName: string){
+          
+        console.log("header Name" +headerName);
+        if(headerName ==  "ORG"){
+           headerName =   "For Organization";	 
+        }else if(headerName == "SCHOOL"){
+            headerName = " For School";
+        }
+        return headerName;
+      }
+      
+      covertGujaratiString(headerName: string){
+        if(headerName ==  "ORG"){
+            headerName =   "સંસ્થા માટે";	 
+         }else if(headerName == "SCHOOL"){
+             headerName = "શાળા માટે";
+         }
+         return headerName;
+      }
 }
