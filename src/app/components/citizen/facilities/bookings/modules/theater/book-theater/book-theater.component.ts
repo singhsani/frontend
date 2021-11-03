@@ -402,18 +402,14 @@ export class BookTheaterComponent implements OnInit {
 
     getFeesStructure(){
         this.bookingService.getFeesStructure().subscribe(res =>{
-            debugger
           if(!res.success){
             this.commonService.openAlert("Error", res.message, "warning")
           }
-          debugger
           this.dataSource = res.data
         });
       }
 
       covertReadableString(headerName: string){
-          
-        console.log("header Name" +headerName);
         if(headerName ==  "ORG"){
            headerName =   "For Organization";	 
         }else if(headerName == "SCHOOL"){
