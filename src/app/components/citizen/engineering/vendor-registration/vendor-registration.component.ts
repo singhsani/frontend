@@ -50,6 +50,8 @@ export class VendorRegistrationComponent implements OnInit {
 
   uploadFilesArray: Array<any> = [];
 
+  manuFacturDetails : any;
+  
   modalJsonRef: BsModalRef;
 
   formId: number;
@@ -99,6 +101,7 @@ export class VendorRegistrationComponent implements OnInit {
     this.getBankNames();
     this.getAllDocumentLists();
     this.getAllLocationDetail();
+    this.getLookUp();
 
     if (!this.formId) {
       this.createFormData();
@@ -193,6 +196,14 @@ export class VendorRegistrationComponent implements OnInit {
 		});
 	}
 
+  getLookUp() {
+		this.engineer.getLookup().subscribe(res => {
+			
+			this.manuFacturDetails = res.VENDOR_MANUFACTURING_OWNED;
+     
+		});
+	}
+
   vendorRegistrationControl() {
 
     this.vendorRegistrationForm = this.fb.group({
@@ -235,8 +246,13 @@ export class VendorRegistrationComponent implements OnInit {
       registeredAddress: this.fb.group(this.resAddrComponent.addressControls()),
 
       namesOfTheOwner: null,
-      manufacturingOwnedDetails: null,
+      //manufacturingOwnedDetails: null,
 
+      manufacturingOwnedDetails: this.fb.group({
+        code: null,
+        name: null
+      }),
+      
       detailsOfLandDocumentsFactory : null,
       buildingPermissionDetail : null,
       factoryLicenseStartDate : null,

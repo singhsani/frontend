@@ -14,6 +14,11 @@ export class EngineeringService {
     return this.http.get('api/vendor/doc/list');
   }
 
+   getLookup() {
+    return this.http.get('api/vendor/lookups');
+  }
+  
+
   vendorSaveFormData(formData) {
 
     this.requestURL = `api/${this.apiType}/save`;
