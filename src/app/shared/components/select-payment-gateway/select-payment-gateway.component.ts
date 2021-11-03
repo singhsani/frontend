@@ -131,7 +131,7 @@ export class SelectPaymentGatewayComponent implements OnInit {
   }
 
   getBillDeskPage() {
-
+  
     /**
      * This condition is added as there are two transactions in swimming pool and each time bill desk needs different customerId so
      * instead of reference number of Gateway transaction Id is passed.
@@ -140,11 +140,15 @@ export class SelectPaymentGatewayComponent implements OnInit {
       ru: this.payData.returnUrl,
       orderid: this.payData.gatewayCustomerId ? this.payData.gatewayCustomerId : this.payData.refNumber,
       amount: this.payData.amount,
+      // additional_info1 : this.payData.payableServiceType,
     }
 
     if (this.applicationType == 'HOSPITAL') {
       this.hosFormActionsService.getBillDeskPage(obj).subscribe(res => {
-        
+        if(res.data== 'undefined'){
+          this.toastr.error("BillDesk Server Down Please Try After Some Time");
+          this.onCancel();
+        }else{
         var flow_config = {
           merchantId: res.data.mercid,
           bdOrderId: res.data.bdorderid,
@@ -165,9 +169,15 @@ export class SelectPaymentGatewayComponent implements OnInit {
           flowType: "payments"
         }
         window.loadBillDeskSdk(config);
+      }
       });
     } else {
+    
       this.formService.getBillDeskPage(obj).subscribe(res => {
+        if(res.data== undefined){
+          this.toastr.error("BillDesk Server Down Please Try After Some Time");
+          this.onCancel();
+        }else{
         var flow_config = {
           merchantId: res.data.mercid,
           bdOrderId: res.data.bdorderid,
@@ -188,6 +198,7 @@ export class SelectPaymentGatewayComponent implements OnInit {
           flowType: "payments"
         }
         window.loadBillDeskSdk(config);
+      }
       });
     }
 
