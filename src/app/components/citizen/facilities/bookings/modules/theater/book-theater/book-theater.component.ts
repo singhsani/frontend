@@ -142,6 +142,7 @@ export class BookTheaterComponent implements OnInit {
      * @param date - selected start date
      */
     onDateChange(date){
+        this.Dates = [];
         let futureMonth = moment(date).add(30, 'day');
         this.maxEndDate = moment(futureMonth).format("YYYY-MM-DD");
     }
@@ -315,7 +316,7 @@ export class BookTheaterComponent implements OnInit {
                         })
                     }
                 }
-                
+
             }, err => {
                 this.confirmRef.hide();
                 this.commonService.openAlert("Error", err.error[0].message, "warning");
@@ -411,16 +412,16 @@ export class BookTheaterComponent implements OnInit {
 
       covertReadableString(headerName: string){
         if(headerName ==  "ORG"){
-           headerName =   "For Organization";	 
+           headerName =   "For Organization";
         }else if(headerName == "SCHOOL"){
             headerName = " For School";
         }
         return headerName;
       }
-      
+
       covertGujaratiString(headerName: string){
         if(headerName ==  "ORG"){
-            headerName =   "સંસ્થા માટે";	 
+            headerName =   "સંસ્થા માટે";
          }else if(headerName == "SCHOOL"){
              headerName = "શાળા માટે";
          }
