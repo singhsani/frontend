@@ -140,7 +140,10 @@ export class SelectPaymentGatewayComponent implements OnInit {
       ru: this.payData.returnUrl,
       orderid: this.payData.gatewayCustomerId ? this.payData.gatewayCustomerId : this.payData.refNumber,
       amount: this.payData.amount,
-      // additional_info1 : this.payData.payableServiceType,
+      additional_info :{
+        additional_info1: this.payData.payableServiceType ? this.payData.payableServiceType : this.payData.resourceType,
+      } 
+      
     }
 
     if (this.applicationType == 'HOSPITAL') {
