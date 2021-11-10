@@ -7,13 +7,14 @@
 			<span class="successmsg">Payment Sucessful ! </span>
 		</h1>
 		<h4 class="mt-4" style="font-weight: 600;">
-			Thank you! Your payment of Rs. {{responseObj.mer_amount}} has been received.
+			Thank you!
+			 <!-- Your payment of Rs. {{responseObj.mer_amount}} has been received. -->
 		</h4>
 
-		<h6 class="mt-4">
+		<!-- <h6 class="mt-4">
 			Order ID: {{responseObj.order_id}} | Transaction ID: {{responseObj.bank_ref_no}} <br> 
-			Payment Type : {{responseObj.payment_method_type}} | Service Name : {{resourceType}}
-		</h6>
+			Payment Type : {{responseObj.payment_method_type == 'netbanking' ? 'Online' : 'Offline'}} | Service Name : {{resourceType}}
+		</h6> -->
 	</div>
 
 
@@ -22,10 +23,19 @@
 		<mat-card class="cardDetail">
 			<div class="row">
 				<div class="col mb-2">
+					Transaction Status : &nbsp;{{"Successful"}}
+				</div>
+				<div class="col">
+					Order ID : &nbsp;{{responseObj.order_id}}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col mb-2">
 					Amount Paid : &#8377; &nbsp;{{responseObj.mer_amount}}
 				</div>
 				<div class="col">
-					Reference Number : &nbsp;{{responseObj.bank_ref_no}}
+					<!-- Reference Number : &nbsp;{{responseObj.bank_ref_no}} -->
+					Transaction ID : &nbsp;{{responseObj.bank_ref_no}}
 				</div>
 			</div>
 			<div class="row">
@@ -34,6 +44,15 @@
 				</div>
 				<div class="col">
 					Transaction Date : &nbsp;{{responseObj.trans_date}}
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col mb-2">
+					Payment Type : &nbsp;{{responseObj.payment_method_type == 'netbanking' ? 'Online' : 'Offline'}}
+				</div>
+				<div class="col">
+					Service Name : &nbsp;{{resourceType}}
 				</div>
 			</div>
 			<div class="row">
@@ -61,16 +80,15 @@
 	<mat-icon class="failedIcon">error</mat-icon>
 	<h1 class="errorMessage">Your payment failed</h1>
 	<h4>Please try after some time</h4>
-	<div class="row">
+	<!-- <div class="row">
 		<div class="col mb-3">
-			<!-- Reason : {{responseObj?.billDeskAuthStatus?.reason}}<br> -->
 			Transaction Failed Detail: {{responseObj.transaction_error_desc}}
 		</div>
 	</div>
 	<h6 class="mt-4">
 		Order ID: {{responseObj.order_id}} | Transaction ID: {{responseObj.transactionid}} <br>
-		Payment Type : {{responseObj.payment_method_type}}
-	</h6>
+		Payment Type : {{responseObj.payment_method_type == 'netbanking' ? 'Online' :'Offline'}}
+	</h6> -->
 
 	<div>
 		<h5 class="payDetails">Payment Details</h5>
@@ -80,7 +98,8 @@
 					Amount Paid : &#8377; &nbsp;{{responseObj.txnAmount}}
 				</div>
 				<div class="col">
-					Transaction Number : &nbsp;{{responseObj.transactionid}}
+					Transaction ID: &nbsp; {{responseObj.transactionid}} 
+					<!-- Transaction Number : &nbsp;{{responseObj.transactionid}} -->
 				</div>
 			</div>
 			<div class="row">
@@ -91,9 +110,20 @@
 					Transaction Date : &nbsp;{{responseObj.trans_date}}
 				</div>
 			</div>
+
+			<div class="row">
+				<div class="col mb-2">
+					Payment Type : &nbsp; {{responseObj.payment_method_type == 'netbanking' ? 'Online' :'Offline'}}
+				</div>
+				<div class="col">
+					Order ID: &nbsp; {{responseObj.order_id}}
+				</div>
+			</div>
+			
 			<div class="row">
 				<div class="col mb-3">
-					Payment Failed Detail : {{responseObj?.billDeskAuthStatus?.reason}}<br>
+					Transaction Failed Detail: {{responseObj.transaction_error_desc}}
+					<!-- Payment Failed Detail : {{responseObj?.billDeskAuthStatus?.reason}}<br> -->
 					<!-- Transaction Msg : {{responseObj.transaction_error_desc}} -->
 				</div>
 			</div>

@@ -2,7 +2,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import * as _ from 'lodash';
-
+import * as moment from 'moment';
 import { ManageRoutes } from './../../../config/routes-conf';
 import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
 import { SessionStorageService } from 'angular-web-storage';
@@ -75,10 +75,14 @@ export class GatewayResponseComponent implements OnInit {
 						this.responseObj.mer_amount = this.responseObj.txnAmount;
 						this.responseObj.order_id = this.responseObj.order_id;
 						this.responseObj.bank_ref_no = this.responseObj.transactionid;
-						this.responseObj.trans_date = this.responseObj.trans_date
+						this.responseObj.trans_date = moment(this.responseObj.trans_date).format('YYYY-MM-DD');
 						this.paymentStatus = "SUCCESS";
 						this.postSessionData(this.dispData, 'BILLDESK', this.responseObj);
 					} else {
+						this.responseObj.mer_amount = this.responseObj.txnAmount;
+						this.responseObj.order_id = this.responseObj.order_id;
+						this.responseObj.bank_ref_no = this.responseObj.transactionid;
+						this.responseObj.trans_date = moment(this.responseObj.trans_date).format('YYYY-MM-DD');
 						this.redirectToHome();
 					}
 					this.clearSession();
