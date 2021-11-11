@@ -246,7 +246,7 @@
                         <th scope="col">{{'date_of_programme'| translate: translateKey}}</th>
                         <!-- <th scope="col">{{'end_date'| translate: translateKey}}</th> -->
                         <th scope="col">{{'slot_status'| translate: translateKey}}</th>
-                        <th scope="col">{{'occupancy'| translate: translateKey}}</th>
+                        <!-- <th scope="col">{{'occupancy'| translate: translateKey}}</th> -->
                         <th scope="col" width="65">{{'action'| translate: translateKey}}</th>
                     </tr>
                 </thead>
@@ -257,7 +257,7 @@
                         <!-- <td>{{bookingUtils.returnProperDate(shifts.end)}}</td> -->
                         <td>{{shifts.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : shifts.slotStatus
                             }}</td>
-                        <td>{{shifts.occupancy}}</td>
+                        <!-- <td>{{shifts.occupancy}}</td> -->
                         <td>
                             <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" [disabled]="selectedShift.length == 1" (click)="selectedShift = bookingUtils.removeSelectedShift(shifts,selectedShift,  i)">
                                 <mat-icon color="warn">delete</mat-icon>
@@ -351,7 +351,7 @@
     
 
                         <mat-form-field class="col-md-4">
-                            <mat-label>{{'event_date_to' | translate:translateKey}}</mat-label>
+                            <mat-label>{{'event_to_date' | translate:translateKey}}</mat-label>
                             <input matInput formControlName="eventToDate" readonly>
                             <control-messages [control]="theaterBookingForm.get('eventToDate')"></control-messages>
                           </mat-form-field>
@@ -438,7 +438,7 @@
                 <mat-tab>
                     <ng-template mat-tab-label>
                         <div>
-                            {{'bank_details' | translate:translateKey}}
+                            {{'applicant_bank_details' | translate:translateKey}}
                         </div>
                     </ng-template>
 
