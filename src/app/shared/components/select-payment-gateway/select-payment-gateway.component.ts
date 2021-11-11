@@ -131,7 +131,7 @@ export class SelectPaymentGatewayComponent implements OnInit {
   }
 
   getBillDeskPage() {
-  debugger
+  
     /**
      * This condition is added as there are two transactions in swimming pool and each time bill desk needs different customerId so
      * instead of reference number of Gateway transaction Id is passed.
