@@ -131,7 +131,7 @@ export class SelectPaymentGatewayComponent implements OnInit {
   }
 
   getBillDeskPage() {
-  
+  debugger
     /**
      * This condition is added as there are two transactions in swimming pool and each time bill desk needs different customerId so
      * instead of reference number of Gateway transaction Id is passed.
@@ -141,7 +141,7 @@ export class SelectPaymentGatewayComponent implements OnInit {
       orderid: this.payData.gatewayCustomerId ? this.payData.gatewayCustomerId : this.payData.refNumber,
       amount: this.payData.amount,
       // txtadditionalInfo1: this.payData.payableServiceType ? this.payData.payableServiceType : this.payData.resourceType,
-      txtadditionalInfo1: this.payData.txtadditionalInfo1
+      txtadditionalInfo1: this.payData.txtadditionalInfo1 ? this.payData.txtadditionalInfo1  : this.payData.resourceType
     }
 
     if (this.applicationType == 'HOSPITAL') {
