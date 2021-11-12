@@ -126,6 +126,12 @@ export class NewPlumberLicenseFormComponent implements OnInit {
 
     clear() {
         this.model = new PlumberLicenseModel();
+        this.commonService.getCurrentfinancialyear().subscribe(
+            (data) => {
+                this.currentYear = data.body;
+                this.model.licenseValidTill = this.currentYear.endDate;
+            }
+        );
     }
     saveDetail(formDetail: NgForm) {
         if (formDetail.form.valid) {
