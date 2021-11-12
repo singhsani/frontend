@@ -2,7 +2,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import * as _ from 'lodash';
-
+import * as moment from 'moment';
 import { ManageRoutes } from './../../../config/routes-conf';
 import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
 import { SessionStorageService } from 'angular-web-storage';
@@ -24,7 +24,7 @@ export class GatewayResponseComponent implements OnInit {
 	dispData: any;
 	isSearchanble: string = "";
 	resourceType: String;
-
+	serviceType : any;
 	/**
 	 * Common for all bookings
 	 */
@@ -73,12 +73,16 @@ export class GatewayResponseComponent implements OnInit {
 
 					if (this.responseObj.authStatus == '0300') {
 						this.responseObj.mer_amount = this.responseObj.txnAmount;
-						this.responseObj.order_id = this.responseObj.customerID;
-						this.responseObj.bank_ref_no = this.responseObj.txnReferenceNo;
-						this.responseObj.trans_date = this.responseObj.txnDate
+						this.responseObj.order_id = this.responseObj.order_id;
+						this.responseObj.bank_ref_no = this.responseObj.transactionid;
+						this.responseObj.trans_date = moment(this.responseObj.trans_date).format('YYYY-MM-DD');
 						this.paymentStatus = "SUCCESS";
 						this.postSessionData(this.dispData, 'BILLDESK', this.responseObj);
 					} else {
+						this.responseObj.mer_amount = this.responseObj.txnAmount;
+						this.responseObj.order_id = this.responseObj.order_id;
+						this.responseObj.bank_ref_no = this.responseObj.transactionid;
+						this.responseObj.trans_date = moment(this.responseObj.trans_date).format('YYYY-MM-DD');
 						this.redirectToHome();
 					}
 					this.clearSession();
@@ -209,7 +213,7 @@ export class GatewayResponseComponent implements OnInit {
 			} else {
 				this.formService.createPayment(payData).subscribe(payResp => {
 					const payRespData = payResp.data.responseData;
-
+					this.serviceType = payResp.data.responseData.payableServiceType;
 					//	This methods are used to send SMS and Email ater booking payment for Amphi Theater as
 					//  discussed with B A team.It can be applied for all module letter.
 					if (payRespData.payableServiceType == "AMPHI_FEES") {
@@ -290,14 +294,18 @@ export class GatewayResponseComponent implements OnInit {
 
 	redirectToHome() {
 		if (this.dispData.payableServiceType == "PROFESSIONAL_TAX") {
-			setTimeout(() => {
+			
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS')]);
-			}, 10000);
+			
 		}else if((this.dispData.payableServiceType  == "STADIUM_FEES") || (this.dispData.payableServiceType == "STADIUM_DEPOSIT")){
-			setTimeout(() => {
+			
 				this.router.navigate([this.bookingConstant.MY_BOOKINGS_URL]);
-			}, 10000);
-		} 
+			
+		}else if (this.serviceType == "ZOO_TICKETING_FEES"|| this.serviceType =="ZOO_ANIMAL_ADOPTION_FEES" || this.serviceType == "PLANETARIUM_TICKETING_FEES") {
+			
+				this.router.navigate([this.bookingConstant.MY_TICKETINGS_URL]);
+			
+		}
 		else {
 			setTimeout(() => {
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);

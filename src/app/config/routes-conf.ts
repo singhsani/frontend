@@ -212,6 +212,15 @@ const ROUTEMAIN = {
     'AFFORD-HOUSE': {
         'main': 'afhForm',
         'type': 'afhForm'
+    }, 
+    'AFFORD_HOUSE_FEES': {
+        'main': 'afhForm',
+        'type': 'afhForm'
+    }, 
+    
+    'AFFORD-HOUSE-STATUS' : {
+        'main': 'myafhStatus',
+        'type':'myafhStatus'
     },
 
     /*Affordable Housing routes end */
@@ -813,6 +822,9 @@ const ROUTESLIST = {
 
     'AFFORD-HOUSE': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.AFFORDABLEMODULE + '/' + ROUTEMAIN["AFFORD-HOUSE"].main
+    },
+    'AFFORD-HOUSE-STATUS' : {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.AFFORDABLEMODULE + '/' + ROUTEMAIN["AFFORD-HOUSE-STATUS"].main
     },
     /*Affordable Housing routes end */
 

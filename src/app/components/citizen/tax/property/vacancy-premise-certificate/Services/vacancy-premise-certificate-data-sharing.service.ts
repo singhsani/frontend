@@ -54,4 +54,11 @@ export class VacancyPremiseCertificateDataSharingService {
     this.dataSourceDataModel.next(data);
   }
 
+  modelMoveStepper: any = null;
+  dataSourceMoveStepper = new BehaviorSubject(this.modelMoveStepper);
+  observableMoveStepper = this.dataSourceMoveStepper.asObservable();
+  updateDataSourceMoveStepper(data: any) {
+    this.dataSourceMoveStepper.next(data);
+  }
+
 }

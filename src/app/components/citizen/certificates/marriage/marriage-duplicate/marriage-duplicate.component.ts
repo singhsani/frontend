@@ -195,6 +195,8 @@ export class MarriageDuplicateComponent implements OnInit {
 			fieldList: null,
 			applicantName: null,
 			applicantNameGuj: null,
+			brideimage : null,
+			groomimage: null,
 			// id: null,
 			// 	uniqueId: null,
 			// 	version:null,
@@ -269,6 +271,8 @@ export class MarriageDuplicateComponent implements OnInit {
 		this.marriageDuplicateForm.get("marriageRegYear").setValue(data.marriageRegYear);
 		this.marriageDuplicateForm.get("groomName").setValue(data.groomName);
 		this.marriageDuplicateForm.get("brideName").setValue(data.brideName);
+		this.marriageDuplicateForm.get("brideimage").setValue(data.brideimage);
+		this.marriageDuplicateForm.get("groomimage").setValue(data.groomimage);
 	}
 
 	  /**

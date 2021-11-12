@@ -249,8 +249,19 @@ export class BankDetailComponent implements OnInit, OnDestroy {
   }
 
   onClear() {
-    this.model = this.modelForCliear;
-    this.model.vacancyFrom = new Date();
+    const bankDetail = {
+      'refundAccountName': '',
+      'refundAccountNumber': '',
+      'bankId': null,
+      'branchIdhId': null,
+      'bankBranchId': null,
+      'bankBranchName': null,
+      'ifscCode': '',
+      'vacancyFrom': new Date()
+    };
+    Object.assign(this.model, bankDetail);
+    /* this.model = this.modelForCliear;
+    this.model.vacancyFrom = new Date(); */
   }
 
   onUploadDoc(event:number){

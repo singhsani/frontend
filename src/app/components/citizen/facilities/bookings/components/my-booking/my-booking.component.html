@@ -467,7 +467,7 @@
         <mat-form-field class="col-md-12">
           <textarea matInput  type="text" 
                  placeholder="{{'remarks' | translate: translateKey}}"
-                 trim="blur" formControlName="reasonForCancellation">
+                 trim="blur" formControlName="reasonForCancellation" maxlength="255">
           <control-messages [control]="refundBankDetailsForm.get('reasonForCancellation')"></control-messages>
           </textarea>
         </mat-form-field>

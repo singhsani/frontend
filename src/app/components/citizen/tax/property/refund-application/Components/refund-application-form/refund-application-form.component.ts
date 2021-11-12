@@ -15,7 +15,8 @@ import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
 
 @Component({
     selector: 'app-refund-application-form',
-    templateUrl: './refund-application-form.component.html'
+    templateUrl: './refund-application-form.component.html',
+    styleUrls: ['./refund-application-form.component.scss']
 })
 
 export class RefundApplicationFormComponent implements OnInit {
@@ -235,7 +236,6 @@ export class RefundApplicationFormComponent implements OnInit {
 
       saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
         applicantDetailsDTO.uniqueId = this.refundApplicationDataSharingService.applicationNo;
-        debugger
         this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
              (data) => {
                this.commonService.applicationNo = data.body.applicationNo;

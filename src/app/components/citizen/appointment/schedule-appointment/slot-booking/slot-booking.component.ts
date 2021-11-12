@@ -257,6 +257,11 @@ export class SlotBookingComponent implements OnInit {
 
 			}, err => {
 				if (err.error[0]) {
+					console.log(err.error[0].code);
+					console.log(this.config.BOOKING_NOT_ALLOWED);
+					if(err.error[0].code == this.config.BOOKING_NOT_ALLOWED){
+						this.commonService.openAlert(this.config.BOOKING_NOT_ALLOWED, this.config.YOU_HAVE_RACHED_THE_MAXIMUM_RESCHEDULE_ATTEMPTS, "error");
+					}
 					if (err.error[0].code == this.config.ONLY_ONE_APPOINTMENT_ALLOWED_CODE) {
 						this.commonService.openAlert(this.config.APPOINTMENT_SCHEDULE_ERROR, this.config.ONLY_ONE_APPOINTMENT_ALLOWED_ERROR_MESSAGE, "error");
 					}

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnChanges, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, OnChanges, ChangeDetectorRef, TemplateRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -12,6 +12,10 @@ import { ManageRoutes } from '../../../../../config/routes-conf';
 import { CertificateConfig } from '../../certificate-config';
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
 import { Console } from 'console';
+import { AppointmentServices } from '../../../appointment/appointment.service';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { SlotDetails } from '../../../appointment/schedule-appointment/slot-booking/slot-booking.component';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 
 
 @Component({
@@ -19,9 +23,14 @@ import { Console } from 'console';
     templateUrl: './marriage-create.component.html',
     styleUrls: ['./marriage-create.component.scss']
 })
+
 export class MarriageCreateComponent implements OnInit, OnChanges {
 
     @ViewChild('address') addrComponent: any;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild('templateMyAppointmentModel') templateMyAppointmentModel: TemplateRef<any>;
+    @ViewChild(MatSort) sort: MatSort;
+    slotDataSource = new MatTableDataSource<SlotDetails>([]);
 
     //Mandatory attachments Array
     public uploadFilesArray: Array<any> = [];
@@ -437,6 +446,18 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
     translateKey: string = 'marriageRegScreen';
     marriageFormGroup: FormGroup;
+    appointmentForm: FormGroup;
+    formSlotId: string;
+
+    resources: any = [];
+    isLoadingResults: boolean = true;
+    displayedColumns = ['sno', 'date', 'start_time', 'end_time', 'status'];
+    modalRef: BsModalRef;
+    apiType: string;
+    /**
+	* Minimum start date.
+	*/
+	minDate = moment(new Date()).add(0, 'day').toISOString();
 
     // Select id for edit marriage form
     formId: number;
@@ -482,7 +503,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     identityproofGuj: string = '';
 
     // Map for the formcontrol to tabIndex id;
-	public formControlNameToTabIndex = new Map();
+    public formControlNameToTabIndex = new Map();
 
     /**
      * Using Common Configuration
@@ -533,7 +554,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         private commonService: CommonService,
         private CD: ChangeDetectorRef,
         public translateService: TranslateService,
-        private toster: ToastrService
+        private toster: ToastrService,
+        private appointmentService: AppointmentServices,
+        private modalService: BsModalService
     ) { }
 
     /**
@@ -557,6 +580,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             this.isGuideLineActive = true;
             //Form Controls 
             this.marriageFormControls();
+            this.controlName();
+
             //Get form data
             this.getFormData(this.formId);
             //Get lookup array 
@@ -564,6 +589,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         }
 
         this.setFormControlToTabIndexMap();
+        this.appointmentService.apiType = 'marriageReg';
+        this.getResources();
 
     }
 
@@ -631,6 +658,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             isGroomParResAddressSame: this.fb.group({
                 code: [null]
             }),
+            isParentsAddressSameAsGroomAddress: this.fb.group({
+                code: [null]
+            }),
 
             //forth step
             brideParentsFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
@@ -642,6 +672,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             brideParentsAddress: this.fb.group(this.addrComponent.addressControls()),
             brideParentsAddressResidence: this.fb.group(this.addrComponent.addressControls()),
             isBrideParResAddressSame: this.fb.group({
+                code: [null]
+            }),
+            isParentsAddressSameAsBrideAddress: this.fb.group({
                 code: [null]
             }),
 
@@ -801,209 +834,225 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             brideNriSecondWitnessBirthDate: [null],
             brideNriSecondWitnessAge: [null],
             groomDays: [null, Validators.max(365)],
-            brideDays: [null, Validators.max(365)]
+            brideDays: [null, Validators.max(365)],
 
         });
 
     }
 
-  setFormControlToTabIndexMap(){
-      //step one tab index
-    this.formControlNameToTabIndex.set('marriageDate',0);
-    this.formControlNameToTabIndex.set('isNriMarriage',0); 
-    this.formControlNameToTabIndex.set('groomFirstName',0);
-    this.formControlNameToTabIndex.set('groomMiddleName',0);
-    this.formControlNameToTabIndex.set('groomLastName',0);
-    this.formControlNameToTabIndex.set('groomBirthDate',0); 
-    this.formControlNameToTabIndex.set('groomAge',0);  
-    this.formControlNameToTabIndex.set('groomReligion',0);  
-    this.formControlNameToTabIndex.set('groomAadharNumber',0); 
-    this.formControlNameToTabIndex.set('marriageTimeGroomStatus',0);  
-    this.formControlNameToTabIndex.set('groomFirstNameGuj',0); 
-    this.formControlNameToTabIndex.set('groomMiddleNameGuj',0); 
-    this.formControlNameToTabIndex.set('groomLastNameGuj',0); 
-    // for NRI groom
-    this.formControlNameToTabIndex.set('groomNriStatus',0); 
-    this.formControlNameToTabIndex.set('groomPassportNumber',0); 
-    this.formControlNameToTabIndex.set('groomVisaNumber',0); 
-    this.formControlNameToTabIndex.set('groomSocialSecurityNumber',0); 
-    this.formControlNameToTabIndex.set('groomEligibility',0);
-    this.formControlNameToTabIndex.set('groomDesignation',0);
-    this.formControlNameToTabIndex.set('groomPhoneNumber',0);
-    this.formControlNameToTabIndex.set('groomEmail',0);
-    this.formControlNameToTabIndex.set('nriGroomAddress',0);
-    this.formControlNameToTabIndex.set('groomCompanyName',0);
-    this.formControlNameToTabIndex.set('groomCompanyPhoneNumber',0); 
-    this.formControlNameToTabIndex.set('groomCompanyAddress',0); 
-    this.formControlNameToTabIndex.set('marriagePlace',0); 
-    this.formControlNameToTabIndex.set('aliveWives',0);        
-    this.formControlNameToTabIndex.set('groomCountryName',0);  
-    this.formControlNameToTabIndex.set('groomVisaFrom',0);
-    this.formControlNameToTabIndex.set('groomVisaTo',0);
+    controlName() {
+		this.appointmentForm = this.fb.group({
+			resources: this.fb.group({
+				code: [null, Validators.required],
+				id: null,
+				name: null
+			}),
+			appointmentdate: [null, Validators.required]
+		})
+	}
+
+    setFormControlToTabIndexMap() {
+        //step one tab index
+        this.formControlNameToTabIndex.set('marriageDate', 0);
+        this.formControlNameToTabIndex.set('isNriMarriage', 0);
+        this.formControlNameToTabIndex.set('groomFirstName', 0);
+        this.formControlNameToTabIndex.set('groomMiddleName', 0);
+        this.formControlNameToTabIndex.set('groomLastName', 0);
+        this.formControlNameToTabIndex.set('groomBirthDate', 0);
+        this.formControlNameToTabIndex.set('groomAge', 0);
+        this.formControlNameToTabIndex.set('groomReligion', 0);
+        this.formControlNameToTabIndex.set('groomAadharNumber', 0);
+        this.formControlNameToTabIndex.set('marriageTimeGroomStatus', 0);
+        this.formControlNameToTabIndex.set('groomFirstNameGuj', 0);
+        this.formControlNameToTabIndex.set('groomMiddleNameGuj', 0);
+        this.formControlNameToTabIndex.set('groomLastNameGuj', 0);
+        // for NRI groom
+        this.formControlNameToTabIndex.set('groomNriStatus', 0);
+        this.formControlNameToTabIndex.set('groomPassportNumber', 0);
+        this.formControlNameToTabIndex.set('groomVisaNumber', 0);
+        this.formControlNameToTabIndex.set('groomSocialSecurityNumber', 0);
+        this.formControlNameToTabIndex.set('groomEligibility', 0);
+        this.formControlNameToTabIndex.set('groomDesignation', 0);
+        this.formControlNameToTabIndex.set('groomPhoneNumber', 0);
+        this.formControlNameToTabIndex.set('groomEmail', 0);
+        this.formControlNameToTabIndex.set('nriGroomAddress', 0);
+        this.formControlNameToTabIndex.set('groomCompanyName', 0);
+        this.formControlNameToTabIndex.set('groomCompanyPhoneNumber', 0);
+        this.formControlNameToTabIndex.set('groomCompanyAddress', 0);
+        this.formControlNameToTabIndex.set('marriagePlace', 0);
+        this.formControlNameToTabIndex.set('aliveWives', 0);
+        this.formControlNameToTabIndex.set('groomCountryName', 0);
+        this.formControlNameToTabIndex.set('groomVisaFrom', 0);
+        this.formControlNameToTabIndex.set('groomVisaTo', 0);
 
 
 
-    //step two tab index
-    this.formControlNameToTabIndex.set('brideFirstName',1);  
-    this.formControlNameToTabIndex.set('brideMiddleName',1);
-    this.formControlNameToTabIndex.set('brideLastName',1);
-    this.formControlNameToTabIndex.set('brideBirthDate',1);        
-    this.formControlNameToTabIndex.set('brideReligion',1);   
-    this.formControlNameToTabIndex.set('brideAadharNumber',1);  
-    this.formControlNameToTabIndex.set('marriageTimeBrideStatus',1);  
-    this.formControlNameToTabIndex.set('brideFirstNameGuj',1);  
-    this.formControlNameToTabIndex.set('brideMiddleNameGuj',1); 
-    this.formControlNameToTabIndex.set('brideLastNameGuj',1);
-    // for NRI bride
-    this.formControlNameToTabIndex.set('brideNriStatus',1);
-    this.formControlNameToTabIndex.set('bridePassportNumber',1);
-    this.formControlNameToTabIndex.set('brideSocialSecurityNumber',1);
-    this.formControlNameToTabIndex.set('brideEligibility',1);
-    this.formControlNameToTabIndex.set('brideEmail',1);
-    this.formControlNameToTabIndex.set('bridePhoneNumber',1);
-    this.formControlNameToTabIndex.set('nriBrideAddress',1);
-    this.formControlNameToTabIndex.set('brideCompanyName',1);
-    this.formControlNameToTabIndex.set('brideCompanyPhoneNumber',1);
-    this.formControlNameToTabIndex.set('brideCompanyAddress',1);   
-    this.formControlNameToTabIndex.set('brideVisaNumber',1);   
-    this.formControlNameToTabIndex.set('brideCountryName',1);  
-    this.formControlNameToTabIndex.set('brideVisaFrom',1);
-    this.formControlNameToTabIndex.set('brideVisaTo',1);  
-    this.formControlNameToTabIndex.set('brideDesignation',1);
-    this.formControlNameToTabIndex.set('brideAddress',1);
+        //step two tab index
+        this.formControlNameToTabIndex.set('brideFirstName', 1);
+        this.formControlNameToTabIndex.set('brideMiddleName', 1);
+        this.formControlNameToTabIndex.set('brideLastName', 1);
+        this.formControlNameToTabIndex.set('brideBirthDate', 1);
+        this.formControlNameToTabIndex.set('brideReligion', 1);
+        this.formControlNameToTabIndex.set('brideAadharNumber', 1);
+        this.formControlNameToTabIndex.set('marriageTimeBrideStatus', 1);
+        this.formControlNameToTabIndex.set('brideFirstNameGuj', 1);
+        this.formControlNameToTabIndex.set('brideMiddleNameGuj', 1);
+        this.formControlNameToTabIndex.set('brideLastNameGuj', 1);
+        // for NRI bride
+        this.formControlNameToTabIndex.set('brideNriStatus', 1);
+        this.formControlNameToTabIndex.set('bridePassportNumber', 1);
+        this.formControlNameToTabIndex.set('brideSocialSecurityNumber', 1);
+        this.formControlNameToTabIndex.set('brideEligibility', 1);
+        this.formControlNameToTabIndex.set('brideEmail', 1);
+        this.formControlNameToTabIndex.set('bridePhoneNumber', 1);
+        this.formControlNameToTabIndex.set('nriBrideAddress', 1);
+        this.formControlNameToTabIndex.set('brideCompanyName', 1);
+        this.formControlNameToTabIndex.set('brideCompanyPhoneNumber', 1);
+        this.formControlNameToTabIndex.set('brideCompanyAddress', 1);
+        this.formControlNameToTabIndex.set('brideVisaNumber', 1);
+        this.formControlNameToTabIndex.set('brideCountryName', 1);
+        this.formControlNameToTabIndex.set('brideVisaFrom', 1);
+        this.formControlNameToTabIndex.set('brideVisaTo', 1);
+        this.formControlNameToTabIndex.set('brideDesignation', 1);
+        this.formControlNameToTabIndex.set('brideAddress', 1);
 
 
-    //step three tab index
-    this.formControlNameToTabIndex.set('groomParentsFirstName',2);    
-    this.formControlNameToTabIndex.set('groomParentsMiddleName',2); 
-    this.formControlNameToTabIndex.set('groomParentsLastName',2); 
-    this.formControlNameToTabIndex.set('groomParentsBirthDate',2); 
-    this.formControlNameToTabIndex.set('groomParentsAadharNumber',2);  
-    this.formControlNameToTabIndex.set('groomParentsFirstNameGuj',2); 
-    this.formControlNameToTabIndex.set('groomParentsMiddleNameGuj',2);   
-    this.formControlNameToTabIndex.set('groomParentsLastNameGuj',2);
-    this.formControlNameToTabIndex.set('nriGroomParentsAddress',2); 
-    this.formControlNameToTabIndex.set('groomParentsAddress',2);
-    this.formControlNameToTabIndex.set('groomParentsAddressResidence',2);
+        //step three tab index
+        this.formControlNameToTabIndex.set('groomParentsFirstName', 2);
+        this.formControlNameToTabIndex.set('groomParentsMiddleName', 2);
+        this.formControlNameToTabIndex.set('groomParentsLastName', 2);
+        this.formControlNameToTabIndex.set('groomParentsBirthDate', 2);
+        this.formControlNameToTabIndex.set('groomParentsAge', 2);
+        this.formControlNameToTabIndex.set('groomParentsAadharNumber', 2);
+        this.formControlNameToTabIndex.set('groomParentsFirstNameGuj', 2);
+        this.formControlNameToTabIndex.set('groomParentsMiddleNameGuj', 2);
+        this.formControlNameToTabIndex.set('groomParentsLastNameGuj', 2);
+        this.formControlNameToTabIndex.set('nriGroomParentsAddress', 2);
+        this.formControlNameToTabIndex.set('groomParentsAddress', 2);
+        this.formControlNameToTabIndex.set('groomParentsAddressResidence', 2);
 
-    //step four tab index
-    this.formControlNameToTabIndex.set('brideParentsFirstName',3);   
-    this.formControlNameToTabIndex.set('brideParentsMiddleName',3);
-    this.formControlNameToTabIndex.set('brideParentsLastName',3);   
-    this.formControlNameToTabIndex.set('brideParentsBirthDate',3);
-    this.formControlNameToTabIndex.set('brideParentsAadharNumber',3);
-    this.formControlNameToTabIndex.set('brideParentsFirstNameGuj',3);
-    this.formControlNameToTabIndex.set('brideParentsMiddleNameGuj',3); 
-    this.formControlNameToTabIndex.set('brideParentsLastNameGuj',3); 
-    this.formControlNameToTabIndex.set('nriBrideParentsAddress',3); 
-    this.formControlNameToTabIndex.set('brideParentsAddress',3);
-    this.formControlNameToTabIndex.set('brideParentsAddressResidence',3);
+        //step four tab index
+        this.formControlNameToTabIndex.set('brideParentsFirstName', 3);
+        this.formControlNameToTabIndex.set('brideParentsMiddleName', 3);
+        this.formControlNameToTabIndex.set('brideParentsLastName', 3);
+        this.formControlNameToTabIndex.set('brideParentsBirthDate', 3);
+        this.formControlNameToTabIndex.set('brideParentsAge', 3);
+        this.formControlNameToTabIndex.set('brideParentsAadharNumber', 3);
+        this.formControlNameToTabIndex.set('brideParentsFirstNameGuj', 3);
+        this.formControlNameToTabIndex.set('brideParentsMiddleNameGuj', 3);
+        this.formControlNameToTabIndex.set('brideParentsLastNameGuj', 3);
+        this.formControlNameToTabIndex.set('nriBrideParentsAddress', 3);
+        this.formControlNameToTabIndex.set('brideParentsAddress', 3);
+        this.formControlNameToTabIndex.set('brideParentsAddressResidence', 3);
 
 
-    //step five tab index 
-    this.formControlNameToTabIndex.set('priestFirstName',4); 
-    this.formControlNameToTabIndex.set('priestMiddleName',4);   
-    this.formControlNameToTabIndex.set('priestLastName',4);  
-    this.formControlNameToTabIndex.set('priestBirthDate',4); 
-    this.formControlNameToTabIndex.set('priestAadharNumber',4); 
-    this.formControlNameToTabIndex.set('priestFirstNameGuj',4);
-    this.formControlNameToTabIndex.set('priestMiddleNameGuj',4); 
-    this.formControlNameToTabIndex.set('priestLastNameGuj',4); 
-    this.formControlNameToTabIndex.set('priestAddress',4); 
-    this.formControlNameToTabIndex.set('priestAddressResidence',4); 
-     // nri witness  
+        //step five tab index 
+        this.formControlNameToTabIndex.set('priestFirstName', 4);
+        this.formControlNameToTabIndex.set('priestMiddleName', 4);
+        this.formControlNameToTabIndex.set('priestLastName', 4);
+        this.formControlNameToTabIndex.set('priestBirthDate', 4);
+        this.formControlNameToTabIndex.set('priestAge', 4);
+        this.formControlNameToTabIndex.set('priestAadharNumber', 4);
+        this.formControlNameToTabIndex.set('priestFirstNameGuj', 4);
+        this.formControlNameToTabIndex.set('priestMiddleNameGuj', 4);
+        this.formControlNameToTabIndex.set('priestLastNameGuj', 4);
+        this.formControlNameToTabIndex.set('priestAddress', 4);
+        this.formControlNameToTabIndex.set('priestAddressResidence', 4);
+        // nri witness  
 
-    //step six tab index 
-    this.formControlNameToTabIndex.set('firstWitnessFirstName',5);   
-    this.formControlNameToTabIndex.set('firstWitnessMiddleName',5);  
-    this.formControlNameToTabIndex.set('firstWitnessLastName',5); 
-    this.formControlNameToTabIndex.set('firstWitnessBirthDate',5);
-    this.formControlNameToTabIndex.set('firstWitnessAadharNumber',5);  
-    this.formControlNameToTabIndex.set('firstWitnessFirstNameGuj',5);  
-    this.formControlNameToTabIndex.set('firstWitnessMiddleNameGuj',5);   
-    this.formControlNameToTabIndex.set('firstWitnessLastNameGuj',5); 
-    this.formControlNameToTabIndex.set('firstWitnessAddress',5); 
+        //step six tab index 
+        this.formControlNameToTabIndex.set('firstWitnessFirstName', 5);
+        this.formControlNameToTabIndex.set('firstWitnessMiddleName', 5);
+        this.formControlNameToTabIndex.set('firstWitnessLastName', 5);
+        this.formControlNameToTabIndex.set('firstWitnessBirthDate', 5);
+        this.formControlNameToTabIndex.set('firstWitnessBirthDate', 5);
+        this.formControlNameToTabIndex.set('firstWitnessAge', 5);
+        this.formControlNameToTabIndex.set('firstWitnessFirstNameGuj', 5);
+        this.formControlNameToTabIndex.set('firstWitnessMiddleNameGuj', 5);
+        this.formControlNameToTabIndex.set('firstWitnessLastNameGuj', 5);
+        this.formControlNameToTabIndex.set('firstWitnessAddress', 5);
 
-    //step seven tab index 
-    this.formControlNameToTabIndex.set('secondWitnessFirstName',6);    
-    this.formControlNameToTabIndex.set('secondWitnessMiddleName',6); 
-    this.formControlNameToTabIndex.set('secondWitnessLastName',6);  
-    this.formControlNameToTabIndex.set('secondWitnessBirthDate',6);   
-    this.formControlNameToTabIndex.set('secondWitnessAadharNumber',6); 
-    this.formControlNameToTabIndex.set('secondWitnessFirstNameGuj',6); 
-    this.formControlNameToTabIndex.set('secondWitnessMiddleNameGuj',6);  
-    this.formControlNameToTabIndex.set('secondWitnessLastNameGuj',6);
-    this.formControlNameToTabIndex.set('secondWitnessAddress',6);
+        //step seven tab index 
+        this.formControlNameToTabIndex.set('secondWitnessFirstName', 6);
+        this.formControlNameToTabIndex.set('secondWitnessMiddleName', 6);
+        this.formControlNameToTabIndex.set('secondWitnessLastName', 6);
+        this.formControlNameToTabIndex.set('secondWitnessBirthDate', 6);
+        this.formControlNameToTabIndex.set('secondWitnessAge', 6);
+        this.formControlNameToTabIndex.set('secondWitnessAadharNumber', 6);
+        this.formControlNameToTabIndex.set('secondWitnessFirstNameGuj', 6);
+        this.formControlNameToTabIndex.set('secondWitnessMiddleNameGuj', 6);
+        this.formControlNameToTabIndex.set('secondWitnessLastNameGuj', 6);
+        this.formControlNameToTabIndex.set('secondWitnessAddress', 6);
 
-    //step eight tab index 
-    this.formControlNameToTabIndex.set('groomNriFirstWitnessFirstName',7);
-    this.formControlNameToTabIndex.set('groomNriFirstWitnessMiddlName',7);
-    this.formControlNameToTabIndex.set('groomNriFirstWitnessLastName',7);
-    this.formControlNameToTabIndex.set('groomNriFirstWitnessFirstNameGuj',7);
-    this.formControlNameToTabIndex.set('groomNriFirstWitnessMiddlNameGuj',7);
-    this.formControlNameToTabIndex.set('groomNriFirstWitnessLastNameGuj',7);
-    this.formControlNameToTabIndex.set('groomNriFirstWitnessAddress',7);    
-    this.formControlNameToTabIndex.set('groomNriFirstWitnessAddressGuj',7);
-    this.formControlNameToTabIndex.set('groomNriFirstWitnessBirthDate',7);
+        //step eight tab index 
+        this.formControlNameToTabIndex.set('groomNriFirstWitnessFirstName', 7);
+        this.formControlNameToTabIndex.set('groomNriFirstWitnessMiddlName', 7);
+        this.formControlNameToTabIndex.set('groomNriFirstWitnessLastName', 7);
+        this.formControlNameToTabIndex.set('groomNriFirstWitnessFirstNameGuj', 7);
+        this.formControlNameToTabIndex.set('groomNriFirstWitnessMiddlNameGuj', 7);
+        this.formControlNameToTabIndex.set('groomNriFirstWitnessLastNameGuj', 7);
+        this.formControlNameToTabIndex.set('groomNriFirstWitnessAddress', 7);
+        this.formControlNameToTabIndex.set('groomNriFirstWitnessAddressGuj', 7);
+        this.formControlNameToTabIndex.set('groomNriFirstWitnessBirthDate', 7);
 
-    this.formControlNameToTabIndex.set('groomNriSecondWitnessFirstName',7);
-    this.formControlNameToTabIndex.set('groomNriSecondWitnessMiddlName',7);
-    this.formControlNameToTabIndex.set('groomNriSecondWitnessLastName',7);
-    this.formControlNameToTabIndex.set('groomNriSecondWitnessFirstNameGuj',7);
-    this.formControlNameToTabIndex.set('groomNriSecondWitnessMiddlNameGuj',7); 
-    this.formControlNameToTabIndex.set('groomNriSecondWitnessLastNameGuj',7);
-    this.formControlNameToTabIndex.set('groomNriSecondWitnessAddress',7);   
-    this.formControlNameToTabIndex.set('groomNriSecondWitnessAddressGuj',7);
-    this.formControlNameToTabIndex.set('groomNriSecondWitnessBirthDate',7);
+        this.formControlNameToTabIndex.set('groomNriSecondWitnessFirstName', 7);
+        this.formControlNameToTabIndex.set('groomNriSecondWitnessMiddlName', 7);
+        this.formControlNameToTabIndex.set('groomNriSecondWitnessLastName', 7);
+        this.formControlNameToTabIndex.set('groomNriSecondWitnessFirstNameGuj', 7);
+        this.formControlNameToTabIndex.set('groomNriSecondWitnessMiddlNameGuj', 7);
+        this.formControlNameToTabIndex.set('groomNriSecondWitnessLastNameGuj', 7);
+        this.formControlNameToTabIndex.set('groomNriSecondWitnessAddress', 7);
+        this.formControlNameToTabIndex.set('groomNriSecondWitnessAddressGuj', 7);
+        this.formControlNameToTabIndex.set('groomNriSecondWitnessBirthDate', 7);
 
-    this.formControlNameToTabIndex.set('brideNriFirstWitnessFirstName',8);
-    this.formControlNameToTabIndex.set('brideNriFirstWitnessMiddlName',8);
-    this.formControlNameToTabIndex.set('brideNriFirstWitnessLastName',8);
-    this.formControlNameToTabIndex.set('brideNriFirstWitnessFirstNameGuj',8);
-    this.formControlNameToTabIndex.set('brideNriFirstWitnessMiddlNameGuj',8);
-    this.formControlNameToTabIndex.set('brideNriFirstWitnessLastNameGuj',8);     
-    this.formControlNameToTabIndex.set('brideNriFirstWitnessAddress',8);
-    this.formControlNameToTabIndex.set('brideNriFirstWitnessAddressGuj',8);
-    this.formControlNameToTabIndex.set('brideNriFirstWitnessBirthDate',8);
+        this.formControlNameToTabIndex.set('brideNriFirstWitnessFirstName', 8);
+        this.formControlNameToTabIndex.set('brideNriFirstWitnessMiddlName', 8);
+        this.formControlNameToTabIndex.set('brideNriFirstWitnessLastName', 8);
+        this.formControlNameToTabIndex.set('brideNriFirstWitnessFirstNameGuj', 8);
+        this.formControlNameToTabIndex.set('brideNriFirstWitnessMiddlNameGuj', 8);
+        this.formControlNameToTabIndex.set('brideNriFirstWitnessLastNameGuj', 8);
+        this.formControlNameToTabIndex.set('brideNriFirstWitnessAddress', 8);
+        this.formControlNameToTabIndex.set('brideNriFirstWitnessAddressGuj', 8);
+        this.formControlNameToTabIndex.set('brideNriFirstWitnessBirthDate', 8);
 
-    this.formControlNameToTabIndex.set('brideNriSecondWitnessFirstName',8);
-    this.formControlNameToTabIndex.set('brideNriSecondWitnessMiddlName',8);
-    this.formControlNameToTabIndex.set('brideNriSecondWitnessLastName',8);
-    this.formControlNameToTabIndex.set('brideNriSecondWitnessFirstNameGuj',8);
-    this.formControlNameToTabIndex.set('brideNriSecondWitnessMiddlNameGuj',8);
-    this.formControlNameToTabIndex.set('brideNriSecondWitnessLastNameGuj',8);
-    this.formControlNameToTabIndex.set('brideNriSecondWitnessAddress',8);    
-    this.formControlNameToTabIndex.set('brideNriSecondWitnessAddressGuj',8);
-    this.formControlNameToTabIndex.set('brideNriSecondWitnessBirthDate',8);
+        this.formControlNameToTabIndex.set('brideNriSecondWitnessFirstName', 8);
+        this.formControlNameToTabIndex.set('brideNriSecondWitnessMiddlName', 8);
+        this.formControlNameToTabIndex.set('brideNriSecondWitnessLastName', 8);
+        this.formControlNameToTabIndex.set('brideNriSecondWitnessFirstNameGuj', 8);
+        this.formControlNameToTabIndex.set('brideNriSecondWitnessMiddlNameGuj', 8);
+        this.formControlNameToTabIndex.set('brideNriSecondWitnessLastNameGuj', 8);
+        this.formControlNameToTabIndex.set('brideNriSecondWitnessAddress', 8);
+        this.formControlNameToTabIndex.set('brideNriSecondWitnessAddressGuj', 8);
+        this.formControlNameToTabIndex.set('brideNriSecondWitnessBirthDate', 8);
 
-    this.formControlNameToTabIndex.set('groomDays',8);
-    this.formControlNameToTabIndex.set('brideDays',8);  
+        this.formControlNameToTabIndex.set('groomDays', 8);
+        this.formControlNameToTabIndex.set('brideDays', 8);
 
-    if((this.marriageFormGroup.get('isNriMarriage').value && this.marriageFormGroup.get('isGroomVisa').value) || (this.marriageFormGroup.get('isNriMarriage').value && this.marriageFormGroup.get('isBrideVisa').value)){
-         this.formControlNameToTabIndex.set('applicantRelation',8);
-         this.formControlNameToTabIndex.set('applicantRelationOther',8); 
-     }
+        if ((this.marriageFormGroup.get('isNriMarriage').value && this.marriageFormGroup.get('isGroomVisa').value) || (this.marriageFormGroup.get('isNriMarriage').value && this.marriageFormGroup.get('isBrideVisa').value)) {
+            this.formControlNameToTabIndex.set('applicantRelation', 8);
+            this.formControlNameToTabIndex.set('applicantRelationOther', 8);
+        }
 
-     else if(this.marriageFormGroup.get('isNriMarriage').value && (this.marriageFormGroup.get('isGroomVisa').value && this.marriageFormGroup.get('isBrideVisa').value) ){
-        this.formControlNameToTabIndex.set('applicantRelation',9);
-        this.formControlNameToTabIndex.set('applicantRelationOther',9);      
+        else if (this.marriageFormGroup.get('isNriMarriage').value && (this.marriageFormGroup.get('isGroomVisa').value && this.marriageFormGroup.get('isBrideVisa').value)) {
+            this.formControlNameToTabIndex.set('applicantRelation', 9);
+            this.formControlNameToTabIndex.set('applicantRelationOther', 9);
+        }
+
+        else {
+            this.formControlNameToTabIndex.set('applicantRelation', 7);
+            this.formControlNameToTabIndex.set('applicantRelationOther', 7);
+        }
     }
- 
-    else{
-        this.formControlNameToTabIndex.set('applicantRelation',7);
-        this.formControlNameToTabIndex.set('applicantRelationOther',7);
-    }
-    
-  }
 
-  handleErrorsOnSubmit(key){
-    const index = this.formControlNameToTabIndex.get(key)
-    this.tabIndex  = index;
+    handleErrorsOnSubmit(key) {
+        const index = this.formControlNameToTabIndex.get(key)
+        this.tabIndex = index;
     }
 
     handleOnSaveAndNext(res) {
 
         this.changeDocument();
+        this.setBrideReligion(res);
     }
 
     /**
@@ -1048,6 +1097,20 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 else {
                     this.addObject['checkedPar3'] = false;
                     this.setValue('isPriestParResAddressSame', 'NO');
+                }
+                if (res.isParentsAddressSameAsGroomAddress.code == "YES") {
+                    this.addObject['checkedPar4'] = true;
+                }
+                else {
+                    this.addObject['checkedPar4'] = false;
+                    this.setValue('isParentsAddressSameAsGroomAddress', 'NO');
+                }
+                if (res.isParentsAddressSameAsBrideAddress.code == "YES") {
+                    this.addObject['checkedPar5'] = true;
+                }
+                else {
+                    this.addObject['checkedPar5'] = false;
+                    this.setValue('isParentsAddressSameAsBrideAddress', 'NO');
                 }
 
                 this.marriageFormGroup.patchValue(res);
@@ -1298,6 +1361,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         this.marriageFormGroup.get('isGroomVisa').setValue(false);
         this.marriageFormGroup.get('isBrideVisa').setValue(false);
 
+        this.marriageFormGroup.get('groomAddress').reset();
+        this.marriageFormGroup.get('brideAddress').reset();
+
         this.marriageFormGroup.get('groomParentsAddress').reset();
         this.marriageFormGroup.get('groomParentsAddressResidence').reset();
 
@@ -1307,8 +1373,16 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         this.addObject['checkedPar1'] = false;
         this.addObject['checkedPar2'] = false;
         this.addObject['checkedPar3'] = false;
+        this.addObject['checkedPar4'] = false;
+        this.addObject['checkedPar5'] = false;
         this.marriageFormGroup.get('isGroomParResAddressSame').get('code').setValue('NO');
         this.marriageFormGroup.get('isBrideParResAddressSame').get('code').setValue('NO');
+        this.marriageFormGroup.get('isParentsAddressSameAsGroomAddress').get('code').setValue('NO');
+        this.marriageFormGroup.get('isParentsAddressSameAsBrideAddress').get('code').setValue('NO');
+
+        this.marriageFormGroup.get('groomAddress').get('addressType').setValue('GROOM_ADDRESS');
+        this.marriageFormGroup.get('brideAddress').get('addressType').setValue('BRIDE_ADDRESS');
+
         this.marriageFormGroup.get('groomParentsAddress').get('addressType').setValue('GROOM_PARENTS_ADDRESS');
         this.marriageFormGroup.get('groomParentsAddressResidence').get('addressType').setValue('GROOM_PARENTS_ADDRESS_RESIDENCE');
         this.marriageFormGroup.get('brideParentsAddress').get('addressType').setValue('BRIDE_PARENTS_ADDRESS');
@@ -1543,7 +1617,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         this.listOfDependentAtt.push(brideVisa);
 
         _.forEach(this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
-            
+
             if (value.dependentFieldName == null && value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
                 this.uploadFilesArray.push({
                     'labelName': value.documentLabelEn,
@@ -1673,8 +1747,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
         if (!_.isEmpty(groomreligionChange) && !_.isEmpty(bridereligionChange)) {
             if (bridereligionChange != groomreligionChange) {
-                this.marriageFormGroup.get('brideReligion').reset(); 
-                this.commonService.openAlert("Warning", "Bride Groom and Bride religion must be same. Your Marriage has to be Registered under Special Marriage Act. Kindly contact office of Special Marriage Registration at Kuber Bhavan, Kothi char Rasta, Vadodara", "warning");      
+                this.marriageFormGroup.get('brideReligion').reset();
+                this.religionGujbride = "";
+                this.commonService.openAlert("Warning", "Bride Groom and Bride religion must be same. Your Marriage has to be Registered under Special Marriage Act. Kindly contact office of Special Marriage Registration at Kuber Bhavan, Kothi char Rasta, Vadodara", "warning");
             }
             else {
                 // if (bridereligionChange != 'HINDU' && bridereligionChange == groomreligionChange) {
@@ -1907,11 +1982,18 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     liglePrint() {
         let service = 'legalprint';
         this.formService.getCertificatOrLiglePrint(service, this.formId).subscribe(res => {
-            let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
-            sectionToPrintReceipt.innerHTML = res;
-            setTimeout(() => {
-                window.print();
-            }, 300);
+
+            var winPrint = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
+            winPrint.document.write(res);
+            winPrint.document.close();
+            winPrint.focus();
+            winPrint.print();
+            winPrint.close();
+            // let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
+            // sectionToPrintReceipt.innerHTML = res;
+            // setTimeout(() => {
+            //     window.print();
+            // }, 300);
         },
             err => {
                 this.commonService.openAlert('Error!', err.error[0].message, 'error');
@@ -1919,9 +2001,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         )
     }
 
-    getCertificate(){
+    getCertificate() {
         let certificate = 'certificate';
-        this.formService.getCertificatOrLiglePrint(certificate,this.formId).subscribe(res => {
+        this.formService.getCertificatOrLiglePrint(certificate, this.formId).subscribe(res => {
             let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
             sectionToPrintReceipt.innerHTML = res;
             setTimeout(() => {
@@ -1934,10 +2016,76 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         )
     }
 
-    setBrideReligion(evt){
+    setBrideReligion(evt) {
         console.log(this.marriageFormGroup.get('groomReligion').value);
         this.marriageFormGroup.get('brideReligion').setValue(this.marriageFormGroup.get('groomReligion').value);
+        this.religionGujbride = this.marriageFormGroup.get('groomReligion').get('gujName').value
 
     }
+
+    /**
+	* This method use for get available slot 
+	*/
+	onSubmit() {
+		if (this.appointmentForm.invalid) {
+			this.config.getAllErrors(this.appointmentForm);
+			this.commonService.openAlert("Error", this.config.ALL_FEILD_REQUIRED_MESSAGE, "warning");
+		} else {
+			this.getSlot();
+		}
+	}
+
+    	/**
+	* This method is get available slots 
+	*/
+	getSlot() {
+		let resourcecode = this.appointmentForm.controls.resources.get('code').value;
+		let startdate = this.appointmentForm.get('appointmentdate').value;
+		this.appointmentService.getSlots(resourcecode, startdate, this.formSlotId).subscribe(slot => {
+			this.slotDataSource.data = slot.data.filter(s => s.slotStatus == 'AVAILABLE') as SlotDetails[];
+			this.slotDataSource.paginator = this.paginator;
+			this.paginator.pageSize = 5;
+			this.paginator.pageIndex = 0;
+			this.isLoadingResults = false;
+		},
+			err => {
+				if (err.error[0])
+					this.commonService.openAlert("error", err.error[0].message, "error");
+			});
+	}
+
+    /**
+	 * This method is use for open modal.
+	 */
+	openModal(template: TemplateRef<any>) {
+		this.modalRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
+	}
+
+    /**
+	* This method is get available resource list 
+	*/
+	getResources() {
+		this.appointmentService.getResources().subscribe((resp) => {
+			this.resources = resp.data;
+		}, (err) => {
+			if (err.error[0])
+				this.commonService.openAlert("Error", err.error[0].message, "warning");
+		})
+	}
+
+    disableSunday(d: Date) {
+		if(d.getDay() != 0) {
+		  return d;
+		}
+	  }
+
+     /**
+	 * This method is change date format 
+	 */
+	dateFormateOne(date, controlType) {
+		this.appointmentForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+
+	}
+
 
 }

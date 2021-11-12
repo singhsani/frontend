@@ -1,0 +1,113 @@
+<div class=''>
+  <mat-card class="formClass cardBorder">
+    <div class="pageTitle">Application Status</div>
+    <div class="p-15">
+      <form autocomplete="off" ngNativeValidate>
+        <div class="row">
+          <div class="col-md-4">
+            <mat-form-field>
+              <input matInput autocomplete="off" trim="blur" #regNoTextBox #searchInput="matInput" type="text"
+                placeholder="Barcode/Application No">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2">
+            <button mat-button matSuffix mat-icon-button (click)="searchApplication($event, regNoTextBox.value)">
+              <mat-icon>search</mat-icon>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </mat-card>
+</div>
+
+
+
+<mat-card>
+  <div class="row">
+
+    <div class="col-md-6">
+      <label class="col-md-5 font16 font-weight-bold">Acknowledgement Number </label>
+      <span class="col-md-1 font-weight-bold">:</span>
+      <span class="font16">{{applicationStatus?.acknowledgementNumber}}</span>
+    </div>
+
+    <div class="col-md-6">
+      <label class="col-md-5 font16 font-weight-bold">Barcode </label>
+      <span class="col-md-1 font-weight-bold">:</span>
+      <span class="font16">{{applicationStatus?.barcode}}</span>
+    </div>
+
+    <div class="col-md-6">
+      <label class="col-md-5 font16 font-weight-bold">First Applicant Name </label>
+      <span class="col-md-1 font-weight-bold">:</span>
+      <span class="font16">{{applicationStatus?.firstApplicantName}}</span>
+    </div>
+
+    <div class="col-md-6">
+      <label class="col-md-5 font16 font-weight-bold">Mobile No</label>
+      <span class="col-md-1 font-weight-bold">:</span>
+      <span class="font16">{{applicationStatus?.firstAppMobileNumOne}}</span>
+    </div>
+
+    <div class="col-md-6">
+      <label class="col-md-5 font16 font-weight-bold">Second Applicant Name </label>
+      <span class="col-md-1 font-weight-bold">:</span>
+      <span class="font16">{{applicationStatus?.secondApplicantName}}</span>
+    </div>
+
+    <div class="col-md-6">
+      <label class="col-md-5 font16 font-weight-bold">Aadhar No</label>
+      <span class="col-md-1 font-weight-bold">:</span>
+      <span class="font16">{{applicationStatus?.firstAppAadharCardNumber}}</span>
+    </div>
+
+    <div class="col-md-6">
+      <label class="col-md-5 font16 font-weight-bold">Scheme Name</label>
+      <span class="col-md-1 font-weight-bold">:</span>
+      <span class="font16">{{applicationStatus?.schemeName}}</span>
+    </div>
+
+    <div class="col-md-6">
+      <label class="col-md-5 font16 font-weight-bold">PAN No</label>
+      <span class="col-md-1 font-weight-bold">:</span>
+      <span class="font16">{{applicationStatus?.firstAppPanCardNumber}}</span>
+    </div>
+
+    <div class="col-md-6">
+      <label class="col-md-5 font16 font-weight-bold">Project Name </label>
+      <span class="col-md-1 font-weight-bold">:</span>
+      <span class="font16">{{applicationStatus?.projectName}}</span>
+    </div>
+
+    <div class="col-md-6">
+      <label class="col-md-5 font16 font-weight-bold">Voter ID No</label>
+      <span class="col-md-1 font-weight-bold">:</span>
+      <span class="font16">{{applicationStatus?.firstAppVoterIdNumber}}</span>
+    </div>
+
+    <div class="col-md-6">
+      <label class="col-md-5 font16 font-weight-bold">Location </label>
+      <span class="col-md-1 font-weight-bold">:</span>
+      <span class="font16">{{applicationStatus?.locationName}}</span>
+    </div>
+
+    <div class="col-md-6">
+      <label class="col-md-5 font16 font-weight-bold">License No</label>
+      <span class="col-md-1 font-weight-bold">:</span>
+      <span class="font16">{{applicationStatus?.firstAppDrivingLicenseNumber}}</span>
+    </div>
+
+  </div>
+</mat-card>
+<mat-card>
+  <button mat-raised-button color="accent" [disabled]="isFormApproved">Submitted</button>
+  <button mat-raised-button color="accent" [disabled]="isShortListed">Form Shortlist</button>
+  <button mat-raised-button color="accent" [disabled]="isFinalDraw">Final Draw</button>
+  <button mat-raised-button color="accent" [disabled]="isAllotmentLetter">Allotted</button>
+  <button mat-raised-button color="accent" [disabled]="isGenerateNoc">NOC Generated</button>
+  <button mat-raised-button color="accent" [disabled]="isSaleDeedLetter">Sale Deed Letter</button>
+  <button mat-raised-button color="accent" [disabled]="isFinalPossession">Final Possession</button>
+
+</mat-card>

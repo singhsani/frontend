@@ -76,6 +76,8 @@ export class BookTheaterComponent implements OnInit {
 	 * display colums in table.
 	 */
     displayedColumns: Array<string> = ['id', 'start', 'end', 'slotStatus', 'action'];
+    displayedColumnsFeeDetails: string[] = ['sno', 'programmePurpose','bookingRent'];
+
 
 	/**
 	 * Min date should be current date.
@@ -88,6 +90,7 @@ export class BookTheaterComponent implements OnInit {
        * ngx-bootstrap models.
        */
     confirmRef: BsModalRef;
+    dataSource = [];
 
 	/**
 	 * Constructor
@@ -117,6 +120,7 @@ export class BookTheaterComponent implements OnInit {
 	 * Method Initialzes first.
 	 */
     ngOnInit() {
+        this.getFeesStructure();
         this.createSearchTheaterForm();
         this.createTheaterBookingForm();
         this.getResourceList();
@@ -138,6 +142,7 @@ export class BookTheaterComponent implements OnInit {
      * @param date - selected start date
      */
     onDateChange(date){
+        this.Dates = [];
         let futureMonth = moment(date).add(30, 'day');
         this.maxEndDate = moment(futureMonth).format("YYYY-MM-DD");
     }
@@ -191,6 +196,9 @@ export class BookTheaterComponent implements OnInit {
             /**
              * Organization Details
              */
+            eventFromDate:[null],
+            eventToDate:[null],
+            programmePurpose:[null],
             organizationName: [null, [Validators.required, Validators.maxLength(50)]],
             organizationNumber: [null, [Validators.required]],
             confirmMobile: [null, Validators.required],
@@ -251,7 +259,7 @@ export class BookTheaterComponent implements OnInit {
                 });
                 this.availableStots = resp.data;
             }, err => {
-                this.toster.error(err.error.message);
+                //this.toster.error(err.error.message);
             });
         }
         else {
@@ -291,15 +299,24 @@ export class BookTheaterComponent implements OnInit {
                 if (resp.success) {
                     this.showTheaterSearchForm = false;
                     this.theaterBookingForm.patchValue(resp.data);
+                    if(resp.data.bookingPurposeMaster){
+                        this.theaterBookingForm.get('programmePurpose').setValue(resp.data.bookingPurposeMaster.name)
+                        this.theaterBookingForm.get('programmePurpose').disable();
+                    }
                     this.addressComp.getCountryLists();
                     if (resp.data.status == this.bookingConstants.DRAFT) {
                         this.bookingService.searchPayment(resp.data.refNumber).subscribe(payResp => {
                             this.paymentObject = payResp.data;
+                            this.theaterBookingForm.get('eventFromDate').setValue(this.paymentObject.EVENT_FROM_DATE);
+                            this.theaterBookingForm.get('eventFromDate').disable();
+                            this.theaterBookingForm.get('eventToDate').setValue(this.paymentObject.EVENT_TO_DATE);
+                            this.theaterBookingForm.get('eventToDate').disable();
                             this.showPaymentReciept = true;
                             this.confirmRef.hide();
                         })
                     }
                 }
+
             }, err => {
                 this.confirmRef.hide();
                 this.commonService.openAlert("Error", err.error[0].message, "warning");
@@ -383,4 +400,31 @@ export class BookTheaterComponent implements OnInit {
             return false;
         }
     }
+
+    getFeesStructure(){
+        this.bookingService.getFeesStructure().subscribe(res =>{
+          if(!res.success){
+            this.commonService.openAlert("Error", res.message, "warning")
+          }
+          this.dataSource = res.data
+        });
+      }
+
+      covertReadableString(headerName: string){
+        if(headerName ==  "ORG"){
+           headerName =   "For Organization";
+        }else if(headerName == "SCHOOL"){
+            headerName = " For School";
+        }
+        return headerName;
+      }
+
+      covertGujaratiString(headerName: string){
+        if(headerName ==  "ORG"){
+            headerName =   "સંસ્થા માટે";
+         }else if(headerName == "SCHOOL"){
+             headerName = "શાળા માટે";
+         }
+         return headerName;
+      }
 }

@@ -117,7 +117,8 @@ export class TaxRebateApplicationTableComponent implements OnInit {
             }
             this.resultsLength=0;
           } else {
-            this.dataSource = new MatTableDataSource(data.body.data);                   
+            this.dataSource = new MatTableDataSource(data.body.data); 
+            this.dataSource.sort = this.sort;                  
             this.totalCount = data.body.totalRecords;
             this.resultsLength= data.body.totalRecords;
           }  

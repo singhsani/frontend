@@ -26,6 +26,8 @@ export class VendorRegistrationComponent implements OnInit {
 
   public affordableHousingConfiguration: CitizenConfig = new CitizenConfig();
 
+  public formControlNameToTabIndex = new Map();
+
   actionBarKey: string = 'adminActionBar';
   listOfItemMaterialSupplier: FormArray;
   academicQualifications: FormArray;
@@ -41,13 +43,27 @@ export class VendorRegistrationComponent implements OnInit {
   isFromOnlineApp: boolean = false;
   maxDate: Date = new Date();
   minDate = moment().subtract(2, 'months').format('YYYY-MM-DD');
+  minDateNew = moment().subtract(2000, 'months').format('YYYY-MM-DD');
   attachmentList: any = [];
   bankNameArray: any = [];
   public serverUploadFilesArray: Array<any> = [];
+
+  uploadFilesArray: Array<any> = [];
+
+  manuFacturDetails: any;
+
   modalJsonRef: BsModalRef;
 
   formId: number;
   showButtons: boolean = true;
+
+  vendorNameLastYear: FormArray;
+
+  vendorNameAuthorized: FormArray;
+
+  vendorNameholding: FormArray;
+
+  vendorDetailsOfOrderIndicationQuantity: FormArray;
 
   constructor(
     private fb: FormBuilder,
@@ -65,12 +81,20 @@ export class VendorRegistrationComponent implements OnInit {
     this.listOfItemMaterialSupplier = this.fb.array([]);
     this.academicQualifications = this.fb.array([]);
     this.vendorNameArray = this.fb.array([]);
+    this.vendorNameLastYear = this.fb.array([]);
+    this.vendorNameAuthorized = this.fb.array([]);
+    this.vendorNameholding = this.fb.array([]);
+    this.vendorDetailsOfOrderIndicationQuantity = this.fb.array([]);
   }
 
   ngOnInit() {
     this.vendorRegistrationControl();
     this.vendorRegistrationForm.addControl('listOfItemMaterialSupplier', this.listOfItemMaterialSupplier);
     this.vendorRegistrationForm.addControl('vendorNameArray', this.vendorNameArray);
+    this.vendorRegistrationForm.addControl('vendorNameLastYear', this.vendorNameLastYear);
+    this.vendorRegistrationForm.addControl('vendorNameAuthorized', this.vendorNameAuthorized);
+    this.vendorRegistrationForm.addControl('vendorNameholding', this.vendorNameholding);
+    this.vendorRegistrationForm.addControl('vendorDetailsOfOrderIndicationQuantity', this.vendorDetailsOfOrderIndicationQuantity);
 
     this.activatedRoute.paramMap.subscribe(param => {
       this.formId = Number(param.get('id'));
@@ -80,6 +104,7 @@ export class VendorRegistrationComponent implements OnInit {
     this.getBankNames();
     this.getAllDocumentLists();
     this.getAllLocationDetail();
+    this.getLookUp();
 
     if (!this.formId) {
       this.createFormData();
@@ -99,12 +124,52 @@ export class VendorRegistrationComponent implements OnInit {
     });
   }
 
+  // setFormControlToTabIndexMap() {
+
+
+  //   this.formControlNameToTabIndex.set('nameOfTheFirm', 0)
+  //     this.formControlNameToTabIndex.set('panNo', 0)
+  //     this.formControlNameToTabIndex.set('tanNo', 0)
+  //     this.formControlNameToTabIndex.set('locationOfFactoryWorks', 0)
+  //     this.formControlNameToTabIndex.set('factoryAddress', 0)
+  //     this.formControlNameToTabIndex.set('officeContactNumber', 0)
+  //     this.formControlNameToTabIndex.set('officeFaxNumber', 0)
+  //     this.formControlNameToTabIndex.set('officeEmailId', 0)
+  //     this.formControlNameToTabIndex.set('resContactNumber', 0)
+  //     this.formControlNameToTabIndex.set('resFaxNumber', 0)
+  //     this.formControlNameToTabIndex.set('resEmailId', 0)
+  //     this.formControlNameToTabIndex.set('registeredAddress', 0)
+
+  //     this.formControlNameToTabIndex.set('registrationBank', 1)
+  //     this.formControlNameToTabIndex.set('registrationAmount', 1)
+  //     this.formControlNameToTabIndex.set('registrationDDNumber', 1)
+  //     this.formControlNameToTabIndex.set('registrationDDIssuingDate', 1)
+  //     this.formControlNameToTabIndex.set('isIncomeTaxDetails', 1)
+  //     this.formControlNameToTabIndex.set('vendorNameDetails', 1)
+  //     this.formControlNameToTabIndex.set('isManufacturingOwnedDetails', 1)
+  //     this.formControlNameToTabIndex.set('isTotalInvestmentDetail', 1)
+  //     this.formControlNameToTabIndex.set('isLastThreeYearsCopies', 1)
+
+  //     this.formControlNameToTabIndex.set('loanCapitalWithBankLimit', 2)
+  //     this.formControlNameToTabIndex.set('isCopyOfITCClearanceCertificate', 2)
+  //     this.formControlNameToTabIndex.set('factoryLicenceNumber', 2)
+  //     this.formControlNameToTabIndex.set('isRegistrationOfficeACT', 2)
+  //     this.formControlNameToTabIndex.set('isISIProductManufactured', 2)
+  //     this.formControlNameToTabIndex.set('isRegisteredByGovt', 2)
+
+  //     this.formControlNameToTabIndex.set('isTestingRecordMaintanedDetail', 3)
+  //     this.formControlNameToTabIndex.set('testStandardGovtLabApproved', 0)
+  //     this.formControlNameToTabIndex.set('testStandardGovtLabApproved', 0)
+  //     this.formControlNameToTabIndex.set('testStandardGovtLabApproved', 0)
+
+
+  // }  
   getVendorData(id: number) {
     this.formService.getFormData(id).subscribe(res => {
       console.log("tresr", res)
       this.vendorRegistrationForm.patchValue(res);
-      this.showButtons = false;
-      this.vendorRegistrationForm.disable();
+      //this.showButtons = false;
+      //this.vendorRegistrationForm.disable();
       this.setServiceDetailsOnInit(res);
       //	this.sortedList.push(res);
     });
@@ -118,53 +183,107 @@ export class VendorRegistrationComponent implements OnInit {
       console.log("file" + JSON.stringify(file));
       this.attachmentList.push(file);
     }
+    this.manadoty();
   }
 
+  manadoty() {
+    this.uploadFilesArray = [];
+    _.forEach(this.attachmentList, (value) => {
+      if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+        this.uploadFilesArray.push({
+          'labelName': value.documentLabelEn,
+          'fieldIdentifier': value.fieldIdentifier,
+          'documentIdentifier': value.documentIdentifier
+        })
+      }
+    });
+  }
+
+  getLookUp() {
+    this.engineer.getLookup().subscribe(res => {
+
+      this.manuFacturDetails = res.VENDOR_MANUFACTURING_OWNED;
+
+    });
+  }
 
   vendorRegistrationControl() {
 
     this.vendorRegistrationForm = this.fb.group({
 
-      apiType: null,
+      apiType: "vendor",
       serviceCode: null,
       serviceFormId: this.formId,
       applicationNumber: null,
+      canEdit: [true],
+
+      gstNo: [null, ValidationService.gstNoValidator],
+      gstRegiDate: null,
 
       id: null,
-      nameOfTheFirm: null,
+      nameOfTheFirm: [null, [Validators.required]],
       commencementDate: null,
       yearOfEstablishment: null,
 
       panNo: [null, [Validators.required, ValidationService.panValidator]],
-      tanNo: [null, [Validators.required, ValidationService.panValidator]],
+      tanNo: [null, [Validators.required, ValidationService.tanValidator]],
       officeContactNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
-      officeFaxNumber: [null, [ValidationService.mobileNumberValidation]],
+      officeFaxNumber: [null, [ValidationService.faxValidation]],
       officeEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 
       resContactNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
-      resFaxNumber: [null, [ValidationService.mobileNumberValidation]],
+      resFaxNumber: [null, [ValidationService.faxValidation]],
       resEmailId: [null, [Validators.required, ValidationService.emailValidator]],
+
+      branchMobileNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      branchAlterMobileNumber: [null, [ValidationService.mobileNumberValidation]],
+      branchISDNumber: null,
+      branchSTDNumber: null,
+
+      headMobileNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      headAlterMobileNumber: [null, [ValidationService.mobileNumberValidation]],
+      headISDNumber: null,
+      headSTDNumber: null,
 
       factoryAddress: this.fb.group(this.officeAddrComponent.addressControls()),
       registeredAddress: this.fb.group(this.resAddrComponent.addressControls()),
 
       namesOfTheOwner: null,
-      manufacturingOwnedDetails: null,
+      //manufacturingOwnedDetails: null,
+
+      manufacturingOwnedDetails: this.fb.group({
+        code: null,
+        name: null
+      }),
+
+      detailsOfLandDocumentsFactory: null,
+      buildingPermissionDetail: null,
+      factoryLicenseStartDate: null,
+      factoryLicenseEndDate: null,
+      MSMENSICSSIcertificateStartDate: null,
+      MSMENSICSSIcertificateEndDate: null,
+
+      ISIBISCElicences: null,
 
       listOfItemMaterial: this.listOfItemMaterialSupplier,
       academicQualificationsDetail: this.fb.array([]),
       vendorNameDetails: this.vendorNameArray,
 
+      vendorNameLastYearDetails: this.vendorNameLastYear,
+      vendorNameAuthorizedDetails: this.vendorNameAuthorized,
+      vendorNameholdingDetails: this.vendorNameholding,
+      supplierOrderDetails: this.vendorDetailsOfOrderIndicationQuantity,
+
       registrationBank: this.fb.group({
         code: [null, [Validators.required]],
         name: null
       }),
-      registrationDDNumber: null,
+      registrationDDNumber: [null, [Validators.required]],
       registrationAmount: [null, [Validators.maxLength(7)]],
-      registrationDDIssuingDate: null,
+      registrationDDIssuingDate: [null, [Validators.required]],
 
       locationOfFactoryWorks: this.fb.group({
-        code: null,
+        code: [null, [Validators.required]],
         name: null
       }),
 
@@ -187,7 +306,7 @@ export class VendorRegistrationComponent implements OnInit {
       areaOfLandFactory: null,
       builtAreaFactory: null,
       noOfWorkingShifts: null,
-      factoryLicenceNumber: null,
+      factoryLicenceNumber: [null, [Validators.required]],
       sscNSICCertificateNumber: null,
       valueOfPlantAndMachinery: null,
       detailsEquipmentCapacity: null,
@@ -203,7 +322,7 @@ export class VendorRegistrationComponent implements OnInit {
       remarks: null,
 
       purchaserName: null,
-      orderNumber: null,
+      orderNo: null,
       orderDate: null,
       quantitySuppliedCompletionDate: null,
 
@@ -221,12 +340,16 @@ export class VendorRegistrationComponent implements OnInit {
       personnelDetailOther: null,
 
       attachments: [],
-      acceptAndCondition: [true],
+      acceptAndCondition: [false, [Validators.required]],
       createdByCitizen: [true],
     });
     this.academicQualifications.push(this.createEducationQualification());
     this.vendorNameArray.push(this.createVendorNameArray());
     this.listOfItemMaterialSupplier.push(this.createItemMaterialSupplier());
+    this.vendorNameLastYear.push(this.createItemMaterialSupplierLastThreeYear());
+    this.vendorNameAuthorized.push(this.createItemAuthorized());
+    this.vendorNameholding.push(this.createItemHolding());
+    this.vendorDetailsOfOrderIndicationQuantity.push(this.createDetailsOfIndicatingQuantity());
   }
 
   onTabChange(evt) {
@@ -245,6 +368,10 @@ export class VendorRegistrationComponent implements OnInit {
 
   onDateChange(fieldName, date) {
     this.vendorRegistrationForm.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
+  }
+
+  onDateChangePurchaseDate(control, date, obj) {
+    obj.get(control).setValue(moment(date).format("YYYY-MM-DD"));
   }
 
   getAllLocationDetail() {
@@ -271,6 +398,71 @@ export class VendorRegistrationComponent implements OnInit {
       description: null,
       isNumber: null,
     });
+  }
+
+  createItemMaterialSupplierLastThreeYear(): FormGroup {
+    return this.fb.group({
+      companyName: null,
+      purchasingItem: null,
+      purchasingDate: null,
+    });
+  }
+
+  createItemAuthorized(): FormGroup {
+    return this.fb.group({
+      autthorized: null,
+      contactNumber: null,
+      address: null,
+    });
+  }
+
+  createItemHolding(): FormGroup {
+    return this.fb.group({
+      itemName: null,
+      certificateDetail: null,
+    });
+  }
+
+  addRowLastThreeYear() {
+    this.vendorNameLastYear.push(this.createItemMaterialSupplierLastThreeYear());
+  }
+
+  addRowvendorNameAuthorized() {
+    this.vendorNameAuthorized.push(this.createItemAuthorized());
+  }
+
+  addRowvendorNameholding() {
+    this.vendorNameholding.push(this.createItemHolding());
+  }
+
+  addRowVendorDetailsOfOrderIndicationQuantity() {
+    this.vendorDetailsOfOrderIndicationQuantity.push(this.createDetailsOfIndicatingQuantity());
+  }
+
+  onRemoveRowVendorTypeLastYear(rowIndex: number) {
+    this.vendorNameLastYear.removeAt(rowIndex);
+  }
+
+  onRemovevendorNameAuthorized(rowIndex: number) {
+    this.vendorNameAuthorized.removeAt(rowIndex);
+  }
+
+  onRemovevendorNameholding(rowIndex: number) {
+    this.vendorNameholding.removeAt(rowIndex);
+  }
+
+  onRemoveVendorDetailsOfOrderIndicationQuantity(rowIndex: number) {
+    this.vendorDetailsOfOrderIndicationQuantity.removeAt(rowIndex);
+  }
+
+  handleErrorsOnSubmit(key) {
+
+    //const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 0;
+
+    //this.tabIndex = index;
+    return false;
+
+
   }
 
   onRemoveRowItemMaterial(rowIndex: number) {
@@ -305,8 +497,19 @@ export class VendorRegistrationComponent implements OnInit {
     return this.fb.group({
       ownerType: null,
       ownerName: null,
+      ownerAddress: null
     });
   }
+
+  createDetailsOfIndicatingQuantity(): FormGroup {
+    return this.fb.group({
+      purchaserName: null,
+      orderNo: null,
+      orderDate: null,
+      quantitySuppliedCompletionDate: null
+    });
+  }
+
 
   onRemoveRowVendorType(rowIndex: number) {
     this.vendorNameArray.removeAt(rowIndex);
@@ -348,7 +551,7 @@ export class VendorRegistrationComponent implements OnInit {
   }
 
   onSubmit() {
-
+    debugger;
     if (this.vendorRegistrationForm.invalid) {
       //this.commonService.prrintInvalidForm(this.affordableHousingForm);
       let count = this.affordableHousingConfiguration.getAllErrors(this.vendorRegistrationForm);
@@ -393,15 +596,16 @@ export class VendorRegistrationComponent implements OnInit {
             this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
             this.commonService.openAlert("Application Submitted Successful", "", "success", `</b>`);
             this.resetForm();
-          } else {
-            this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
-            return
           }
         }, (err) => {
           this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
         });
         return;
 
+      }
+      else {
+        this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
+        return
       }
     });
   }
@@ -444,7 +648,7 @@ export class VendorRegistrationComponent implements OnInit {
 
       "registrationDDNumber": "741852",
 
-      "registrationDDIssuingDate": "2021-07-15",
+      "registrationDDIssuingDate": "2021-10-25",
 
       "locationOfFactoryWorks": {
         "code": "WITH_IN_GUJARAT",
@@ -490,43 +694,54 @@ export class VendorRegistrationComponent implements OnInit {
 
       "totalTurnoverLastThreeYears": "Fifteen Lakhs",
       "loanCapitalWithBankLimit": "500000",
-      "productManufacturedDescription": "Nascent Info Technologies",
+      "productManufacturedDescription": "sdf",
       "areaOfLandFactory": 1500,
       "builtAreaFactory": 15000,
       "noOfWorkingShifts": 15,
       "factoryLicenceNumber": "147852963",
       "sscNSICCertificateNumber": "1488529636",
-      "valueOfPlantAndMachinery": "Nascent Info Technologies",
-      "detailsEquipmentCapacity": "Nascent Info Technologies",
-      "detailsMachineryCapacity": "Nascent Info Technologies",
-      "testStandardGovtLabApproved": "Nascent Info Technologies",
-      "adoptedForQualityControl": "Nascent Info Technologies",
-      "methodEmployeeIdentify": "Nascent Info Technologies",
-      "sourceOfRawMaterialAddress": "Nascent Info Technologies",
+      "valueOfPlantAndMachinery": "sdf",
+      "detailsEquipmentCapacity": "dd",
+      "detailsMachineryCapacity": "dd",
+      "testStandardGovtLabApproved": "ffgf",
+      "adoptedForQualityControl": "sdf",
+      "methodEmployeeIdentify": "fdg",
+      "sourceOfRawMaterialAddress": "gfgh",
       "productionCapacityPerAnnum": 25000,
       "maximumProductionPerAnnum": 2500,
 
-      "purchaserName": "Nascent Info Technologies",
+      "purchaserName": "sdf",
       "orderNumber": 14785,
       "orderDate": "15-07-2021",
       "quantitySuppliedCompletionDate": "15-07-2021",
 
-      "estimationOfStocks": "Nascent Info Technologies",
-      "numberOfItemsHoldingISOCertificate": "Nascent Info Technologies",
+      "estimationOfStocks": "SDF",
+      "numberOfItemsHoldingISOCertificate": "SDF",
 
-      "managerialFullName": "Nascent Info Technologies",
-      "managerialQualification": "Nascent Info Technologies",
-      "managerialExperienceInYears": "Nascent Info Technologies",
-      "productionStaffFullName": "Nascent Info Technologies",
-      "productionStaffQualification": "Nascent Info Technologies",
-      "productionStaffExperienceInYears": "Nascent Info Technologies",
-      "qualityControlStaffFullName": "Nascent Info Technologies",
-      "qualityControlStaffQualification": "Nascent Info Technologies",
-      "qualityControlStaffExperienceInYears": "Nascent Info Technologies",
+      "managerialFullName": "SDF",
+      "managerialQualification": "SDF",
+      "managerialExperienceInYears": "SDF",
+      "productionStaffFullName": "SDF",
+      "productionStaffQualification": "SDF",
+      "productionStaffExperienceInYears": "SDF",
+      "qualityControlStaffFullName": "SDF",
+      "qualityControlStaffQualification": "SDF",
+      "qualityControlStaffExperienceInYears": "SDF",
 
-      "personnelDetailSkilled": "Nascent Info Technologies",
-      "personnelDetailUnSkilled": "Nascent Info Technologies",
-      "personnelDetailOther": "Nascent Info Technologies",
+      "personnelDetailSkilled": "SDF",
+      "personnelDetailUnSkilled": "SDF",
+      "personnelDetailOther": "SDF",
+
+      "branchMobileNumber": "7485967485",
+      "branchAlterMobileNumber": "7485967485",
+      "branchISDNumber": "7485967485",
+      "branchSTDNumber": "7485967485",
+      "headMobileNumber": "7485967485",
+      "headAlterMobileNumber": "7485967485",
+      "headISDNumber": "7485967485",
+      "headSTDNumber": "7485967485",
+      "ISIBISCElicences": "7485967485"
+
     }
 
     this.vendorRegistrationForm.patchValue(obj);

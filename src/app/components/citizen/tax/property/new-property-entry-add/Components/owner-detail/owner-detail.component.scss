@@ -1,7 +1,10 @@
-td.mat-cell   {
+td.mat-cell {
   min-width: 120px;
-  }
-  .mat-horizontal-content-container {
-    overflow: inherit !important;
-    
+}
+.mat-horizontal-content-container {
+  overflow: inherit !important;
+}
+
+.mat-expansion-panel.mat-expanded {
+  box-shadow: none;
 }

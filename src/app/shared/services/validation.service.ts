@@ -34,6 +34,7 @@ export class ValidationService {
             invalidPinCode: `Pin Code Not Valid`,
             invalidAadhar: `Invalid Aadhar Number`,
             invalidNumber: `Invalid Mobile Number`,
+            invalidFaxNumber : `Invalid Fax Number`,
             invalidpregnanceTime: 'Pregnancy duration between 25 to 40',
             invalidbirthRegNumber: 'Invalid Birth Registration Date',
             invalidBuildingName: 'Building name is not valid',
@@ -187,6 +188,16 @@ export class ValidationService {
         }
     }
 
+    static faxValidation(control: AbstractControl) {
+        // RFC 2822 compliant regex
+        if (control.value) {
+            const matches = control.value.match(/^[0-9]{10,10}$/);
+            return matches ? null : { 'invalidFaxNumber': true };
+        } else {
+            return null;
+        }
+    }
+
     // mother age
     static motherMarriageTimeAge(control: FormControl) {
         if (control.value != null) {
@@ -261,6 +272,16 @@ export class ValidationService {
             return null;
         }
     }
+
+    // tan number validation 
+	static tanValidator(control: FormControl) {
+		if (control.value) {
+			const matches = control.value.match(/^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}/);
+			return matches ? null : { 'invalidTan': true };
+		} else {
+			return null;
+		}
+	}
 
     // gst number validation 
     static gstinValidator(control: FormControl) {

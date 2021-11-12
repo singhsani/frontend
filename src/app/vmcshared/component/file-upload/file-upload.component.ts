@@ -139,7 +139,7 @@ export class FileUploadComponentWaterTax implements OnInit {
 					this.uploadFileService.processFileToDMSServer(formData, setProgressBar => {
 						this.progress.percentage = setProgressBar;
 					}, successres => {
-						this.tostr.success(this.uploadModel.labelName ? this.uploadModel.labelName : this.uploadModel.documentLabelEn + " successfully uploaded", "File Uploaded");
+						this.tostr.success(this.uploadModel.labelName ? this.uploadModel.labelName : this.uploadModel.documentLabelEn + " uploaded successfully", "File Uploaded");
 						this.canUpload = true;
 						this.isUploaded = false;
 						this.id = successres.data.id;
@@ -240,7 +240,7 @@ export class FileUploadComponentWaterTax implements OnInit {
 				this.uploadFileService.deleteFile(this.uploadModel.id.toString(), this.id).subscribe(
 					(respData: any) => {
 						if (respData.body) {
-							this.tostr.success(this.uploadModel.documentLabelEn + " successfully deleted", "File Deleted");
+							this.tostr.success(this.uploadModel.documentLabelEn + " deleted successfully", "File Deleted");
 							this.canUpload = false;
 							this.fileName = '';
 							this.getFile = '';

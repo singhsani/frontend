@@ -928,7 +928,7 @@ textarea.gujInputCls {margin-bottom: 0;}
 
 @media print {
 @page {margin: 0 !important; padding:0 !important;}
-.example-container.borderOne, .mainMenu, .mat-toolbar, .titleBar, mat-card, .mat-elevation-z8.borderOne, .hideOnPrint, .overlay-container,.mat-menu-panel, .loadingDiv {display: none !important;}
+.example-container.borderOne, .mainMenu, .mat-toolbar, .titleBar, mat-card, .mat-elevation-z8.borderOne, .hideOnPrint, .overlay-container,.mat-menu-panel, .loadingDiv, .iframeTitleBar {display: none !important;}
 #matSidenav {display: none !important; visibility: hidden !important;}
 .mat-drawer-content {margin-left: 0 !important;}
 #sectionToPrint, #sectionToPrint {visibility: visible;}
