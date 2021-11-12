@@ -126,7 +126,7 @@
                 </div>
                 <div class="col-md-6">
                   <mat-form-field class="full-width-input">
-                    <input matInput [required]="isBankDetailRequired" placeholder="Account Number" maxlength="30"
+                    <input matInput [required]="isBankDetailRequired" placeholder="Account Number" maxlength="18"
                       minlength="9" name="refundAccountNumber" [(ngModel)]="model.refundAccountNumber"
                       #RefundAccountNumber="ngModel" digits-only pattern="[0-9_]*"
                       (keydown.space)="$event.preventDefault()">
@@ -169,7 +169,7 @@
                 <div class="col-md-6">
                   <mat-form-field class="full-width-input">
                     <input trim="blur" matInput [required]="isBankDetailRequired" placeholder="IFSC Code"
-                      name="ifscCode" [(ngModel)]="model.ifscCode" #IfscCode="ngModel" maxlength="20" letter-digits-only
+                      name="ifscCode" [(ngModel)]="model.ifscCode" #IfscCode="ngModel" maxlength="11" letter-digits-only
                       pattern="[a-zA-Z0-9]*">
                     <mat-error *ngIf="IfscCode.invalid">*IFSC Code is required.</mat-error>
                   </mat-form-field>
