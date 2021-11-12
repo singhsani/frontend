@@ -664,6 +664,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	getInnerHTMLForRemark() {
 		return `<b>Remarks :</b> ${this.queryrraiseRemarks}`;
 	}
+	copyInnerHTMLForRemark(){
+		navigator.clipboard.writeText(this.queryrraiseRemarks);
+	}
 	isQueryRaiseDisplay(row) {
 		if (row.fileStatus === 'QUERY_RAISED' || row.fileStatus === 'REJECTED') {
 			return true;
