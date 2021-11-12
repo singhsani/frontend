@@ -63,6 +63,8 @@ export class VendorRegistrationComponent implements OnInit {
 
   vendorNameholding: FormArray;
 
+  vendorDetailsOfOrderIndicationQuantity: FormArray;
+
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
@@ -82,7 +84,7 @@ export class VendorRegistrationComponent implements OnInit {
     this.vendorNameLastYear = this.fb.array([]);
     this.vendorNameAuthorized = this.fb.array([]);
     this.vendorNameholding = this.fb.array([]);
-
+    this.vendorDetailsOfOrderIndicationQuantity = this.fb.array([]);
   }
 
   ngOnInit() {
@@ -92,6 +94,7 @@ export class VendorRegistrationComponent implements OnInit {
     this.vendorRegistrationForm.addControl('vendorNameLastYear', this.vendorNameLastYear);
     this.vendorRegistrationForm.addControl('vendorNameAuthorized', this.vendorNameAuthorized);
     this.vendorRegistrationForm.addControl('vendorNameholding', this.vendorNameholding);
+    this.vendorRegistrationForm.addControl('vendorDetailsOfOrderIndicationQuantity', this.vendorDetailsOfOrderIndicationQuantity);
 
     this.activatedRoute.paramMap.subscribe(param => {
       this.formId = Number(param.get('id'));
@@ -269,6 +272,7 @@ export class VendorRegistrationComponent implements OnInit {
       vendorNameLastYearDetails: this.vendorNameLastYear,
       vendorNameAuthorizedDetails: this.vendorNameAuthorized,
       vendorNameholdingDetails: this.vendorNameholding,
+      supplierOrderDetails: this.vendorDetailsOfOrderIndicationQuantity,
 
       registrationBank: this.fb.group({
         code: [null, [Validators.required]],
@@ -345,6 +349,7 @@ export class VendorRegistrationComponent implements OnInit {
     this.vendorNameLastYear.push(this.createItemMaterialSupplierLastThreeYear());
     this.vendorNameAuthorized.push(this.createItemAuthorized());
     this.vendorNameholding.push(this.createItemHolding());
+    this.vendorDetailsOfOrderIndicationQuantity.push(this.createDetailsOfIndicatingQuantity());
   }
 
   onTabChange(evt) {
@@ -363,6 +368,10 @@ export class VendorRegistrationComponent implements OnInit {
 
   onDateChange(fieldName, date) {
     this.vendorRegistrationForm.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
+  }
+
+  onDateChangePurchaseDate(control, date, obj) {
+    obj.get(control).setValue(moment(date).format("YYYY-MM-DD"));
   }
 
   getAllLocationDetail() {
@@ -426,6 +435,10 @@ export class VendorRegistrationComponent implements OnInit {
     this.vendorNameholding.push(this.createItemHolding());
   }
 
+  addRowVendorDetailsOfOrderIndicationQuantity() {
+    this.vendorDetailsOfOrderIndicationQuantity.push(this.createDetailsOfIndicatingQuantity());
+  }
+
   onRemoveRowVendorTypeLastYear(rowIndex: number) {
     this.vendorNameLastYear.removeAt(rowIndex);
   }
@@ -436,6 +449,10 @@ export class VendorRegistrationComponent implements OnInit {
 
   onRemovevendorNameholding(rowIndex: number) {
     this.vendorNameholding.removeAt(rowIndex);
+  }
+
+  onRemoveVendorDetailsOfOrderIndicationQuantity(rowIndex: number) {
+    this.vendorDetailsOfOrderIndicationQuantity.removeAt(rowIndex);
   }
 
   handleErrorsOnSubmit(key) {
@@ -483,6 +500,16 @@ export class VendorRegistrationComponent implements OnInit {
       ownerAddress: null
     });
   }
+
+  createDetailsOfIndicatingQuantity(): FormGroup {
+    return this.fb.group({
+      purchaserName: null,
+      orderNo: null,
+      orderDate: null,
+      quantitySuppliedCompletionDate: null
+    });
+  }
+
 
   onRemoveRowVendorType(rowIndex: number) {
     this.vendorNameArray.removeAt(rowIndex);

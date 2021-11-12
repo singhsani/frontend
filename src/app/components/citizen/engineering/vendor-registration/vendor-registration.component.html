@@ -1103,96 +1103,87 @@
 
           <div class="row">
 
-            <h2><b>{{'A. Deatils of order executed indicating quantity, value for each item/materials to be registered
-                for supply, self certified statement to be attached.'}}</b></h2>
+            <h2 class="col-md-6">{{'A. Deatils of order executed indicating quantity, value for each item/materials to
+              be registered
+              for supply, self certified statement to be attached.'}}</h2>
 
-
-            <div class="table-responsive">
-              <table class="table table-bordered  table-striped text-center">
-                <tbody>
-                  <tr>
-                    <td class="text-center">
-                      {{1}}
-                    </td>
-                    <td class="text-center">
-                      {{'Purchaser’s Name'}}
-                    </td>
-                    <td class="text-center">
-                      <mat-form-field>
-                        <input matInput type="text" appValidationFields maxlength="100" formControlName="purchaserName">
-                        <control-messages [control]="vendorRegistrationForm.get('purchaserName')">
-                        </control-messages>
-                      </mat-form-field>
-                    </td>
-                  </tr>
-
-                  <tr>
-
-                    <td class="text-center">
-                      {{2}}
-                    </td>
-                    <td class="text-center">
-                      {{'Order no.'}}
-                    </td>
-                    <td class="text-center">
-                      <mat-form-field>
-                        <input matInput type="text" appValidationFields OnlyNumber maxlength="20" required
-                          formControlName="orderNo">
-                        <control-messages [control]="vendorRegistrationForm.get('orderNo')">
-                        </control-messages>
-                      </mat-form-field>
-                    </td>
-                  </tr>
-
-                  <tr>
-
-                    <td class="text-center">
-                      {{3}}
-                    </td>
-                    <td class="text-center">
-                      {{'Order Date'}}
-                    </td>
-                    <td class="text-center">
-                      <mat-form-field>
-                        <input maxlength="10" matInput autocomplete="off" appDate formControlName="orderDate"
-                          [min]="maxDate" [matDatepicker]="orderPicker"
-                          (dateChange)="onDateChange('orderDate', $event.value)">
-                        <mat-datepicker-toggle matSuffix [for]="orderPicker"></mat-datepicker-toggle>
-                        <mat-datepicker touchUi="true" #orderPicker></mat-datepicker>
-                        <div align="end" class="default-show-hint mat-hint mat-right"></div>
-                        <control-messages [control]="vendorRegistrationForm.get('orderDate')"></control-messages>
-                      </mat-form-field>
-                    </td>
-                  </tr>
-
-
-                  <tr>
-
-                    <td class="text-center">
-                      {{4}}
-                    </td>
-                    <td class="text-center">
-                      {{'Quantity supplied till actual completion Date'}}
-                    </td>
-                    <td class="text-center">
-                      <mat-form-field>
-                        <input maxlength="10" matInput autocomplete="off" appDate
-                          formControlName="quantitySuppliedCompletionDate" [matDatepicker]="qualityPicker"
-                          [min]="vendorRegistrationForm.get('orderDate').value"
-                          (dateChange)="onDateChange('quantitySuppliedCompletionDate', $event.value)">
-                        <mat-datepicker-toggle matSuffix [for]="qualityPicker"></mat-datepicker-toggle>
-                        <mat-datepicker touchUi="true" #qualityPicker></mat-datepicker>
-                        <div align="end" class="default-show-hint mat-hint mat-right"></div>
-                        <control-messages [control]="vendorRegistrationForm.get('quantitySuppliedCompletionDate')">
-                        </control-messages>
-                      </mat-form-field>
-                    </td>
-                  </tr>
-
-                </tbody>
-              </table>
+            <div class="col-md-6 text-right">
+              <button mat-raised-button type="button" color="primary" type="button"
+                (click)="addRowVendorDetailsOfOrderIndicationQuantity()">{{'Add New'}}</button>
             </div>
+          </div>
 
+
+          <div class="table-responsive">
+            <table class="table table-bordered  table-striped text-center">
+              <tbody>
+                <tr>
+                  <th class="text-center">S.no.</th>
+                  <th class="text-center">Purchaser’s Name</th>
+                  <th class="text-center">Order no.</th>
+                  <th class="text-center">Order Date</th>
+                  <th class="text-center">Quantity supplied till actual completion Date</th>
+                  <th class="text-center">Action</th>
+                </tr>
+                <tr
+                  *ngFor="let row of vendorRegistrationForm.get('vendorDetailsOfOrderIndicationQuantity')?.controls;let index = index;">
+                  <td>
+                    {{index+1}}
+                  </td>
+
+                  <td>
+                    <mat-form-field>
+                      <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+                        maxlength="100" [formControl]="row.get('purchaserName')">
+                      <control-messages [control]="row.get('purchaserName')">
+                      </control-messages>
+                    </mat-form-field>
+                  </td>
+
+                  <td>
+                    <mat-form-field>
+                      <input matInput type="text" appValidationFields OnlyNumber maxlength="20"
+                        [formControl]="row.get('orderNo')">
+                      <control-messages [control]="row.get('orderNo')">
+                      </control-messages>
+                    </mat-form-field>
+                  </td>
+
+                  <td class="text-center">
+                    <mat-form-field>
+                      <input matInput autocomplete="off" appDate [formControl]="row.get('orderDate')" [min]="maxDate"
+                        [matDatepicker]="orderPicker"
+                        (dateChange)="onDateChangePurchaseDate('orderDate', $event.value,row)">
+                      <mat-datepicker-toggle matSuffix [for]="orderPicker"></mat-datepicker-toggle>
+                      <mat-datepicker touchUi="true" #orderPicker></mat-datepicker>
+                      <div align="end" class="default-show-hint mat-hint mat-right"></div>
+                      <control-messages [control]="row.get('orderDate')"></control-messages>
+                    </mat-form-field>
+                  </td>
+
+                  <td class="text-center">
+                    <mat-form-field>
+                      <input matInput autocomplete="off" appDate
+                        [formControl]="row.get('quantitySuppliedCompletionDate')" [min]="maxDate"
+                        [matDatepicker]="supplierPicker"
+                        (dateChange)="onDateChangePurchaseDate('quantitySuppliedCompletionDate', $event.value,row)">
+                      <mat-datepicker-toggle matSuffix [for]="supplierPicker"></mat-datepicker-toggle>
+                      <mat-datepicker touchUi="true" #supplierPicker></mat-datepicker>
+                      <div align="end" class="default-show-hint mat-hint mat-right"></div>
+                      <control-messages [control]="row.get('quantitySuppliedCompletionDate')"></control-messages>
+                    </mat-form-field>
+                  </td>
+
+
+                  <td>
+                    <button mat-raised-button type="button" color="warn" style="margin-top: 22px;"
+                      (click)="onRemoveVendorDetailsOfOrderIndicationQuantity(index)">
+                      <mat-icon title="Cancel">cancel</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
           </div>
 
