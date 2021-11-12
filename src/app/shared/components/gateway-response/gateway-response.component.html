@@ -52,7 +52,10 @@
 					Payment Type : &nbsp;{{responseObj.payment_method_type == 'netbanking' ? 'Online' : 'Offline'}}
 				</div>
 				<div class="col">
-					Service Name : &nbsp;{{resourceType}}
+					<!-- Service Name : &nbsp;{{resourceType}} -->
+					<!-- Service Name : &nbsp;{{responseObj.additional_info.additional_info1}} -->
+					Service Name : &nbsp;{{dispData.txtadditionalInfo1}}
+					<!-- Service Name : &nbsp;{{serviceType ? serviceType : payableServiceType}} -->
 				</div>
 			</div>
 			<div class="row">

@@ -259,7 +259,8 @@ export class CommonService {
 			paymentMode: "NETBANKING",
 			returnUrl: retAfterPayment,
 			myApplicationUrl: myApplicationUrl,
-			gatewayAccountKey : paymentData.gatewayAccountKey
+			gatewayAccountKey : paymentData.gatewayAccountKey,
+			txtadditionalInfo1 : paymentData.serviceCode,
 
 		}
 		this.session.set('paymentData', JSON.stringify(payData));
