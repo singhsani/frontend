@@ -50,8 +50,8 @@ export class VendorRegistrationComponent implements OnInit {
 
   uploadFilesArray: Array<any> = [];
 
-  manuFacturDetails : any;
-  
+  manuFacturDetails: any;
+
   modalJsonRef: BsModalRef;
 
   formId: number;
@@ -123,7 +123,7 @@ export class VendorRegistrationComponent implements OnInit {
 
   // setFormControlToTabIndexMap() {
 
-    
+
   //   this.formControlNameToTabIndex.set('nameOfTheFirm', 0)
   //     this.formControlNameToTabIndex.set('panNo', 0)
   //     this.formControlNameToTabIndex.set('tanNo', 0)
@@ -146,7 +146,7 @@ export class VendorRegistrationComponent implements OnInit {
   //     this.formControlNameToTabIndex.set('isManufacturingOwnedDetails', 1)
   //     this.formControlNameToTabIndex.set('isTotalInvestmentDetail', 1)
   //     this.formControlNameToTabIndex.set('isLastThreeYearsCopies', 1)
-      
+
   //     this.formControlNameToTabIndex.set('loanCapitalWithBankLimit', 2)
   //     this.formControlNameToTabIndex.set('isCopyOfITCClearanceCertificate', 2)
   //     this.formControlNameToTabIndex.set('factoryLicenceNumber', 2)
@@ -166,7 +166,7 @@ export class VendorRegistrationComponent implements OnInit {
       console.log("tresr", res)
       this.vendorRegistrationForm.patchValue(res);
       //this.showButtons = false;
-//this.vendorRegistrationForm.disable();
+      //this.vendorRegistrationForm.disable();
       this.setServiceDetailsOnInit(res);
       //	this.sortedList.push(res);
     });
@@ -184,25 +184,25 @@ export class VendorRegistrationComponent implements OnInit {
   }
 
   manadoty() {
-		this.uploadFilesArray = [];
-		_.forEach(this.attachmentList, (value) => {
-			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
-				this.uploadFilesArray.push({
-					'labelName': value.documentLabelEn,
-					'fieldIdentifier': value.fieldIdentifier,
-					'documentIdentifier': value.documentIdentifier
-				})
-			}
-		});
-	}
+    this.uploadFilesArray = [];
+    _.forEach(this.attachmentList, (value) => {
+      if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+        this.uploadFilesArray.push({
+          'labelName': value.documentLabelEn,
+          'fieldIdentifier': value.fieldIdentifier,
+          'documentIdentifier': value.documentIdentifier
+        })
+      }
+    });
+  }
 
   getLookUp() {
-		this.engineer.getLookup().subscribe(res => {
-			
-			this.manuFacturDetails = res.VENDOR_MANUFACTURING_OWNED;
-     
-		});
-	}
+    this.engineer.getLookup().subscribe(res => {
+
+      this.manuFacturDetails = res.VENDOR_MANUFACTURING_OWNED;
+
+    });
+  }
 
   vendorRegistrationControl() {
 
@@ -210,12 +210,12 @@ export class VendorRegistrationComponent implements OnInit {
 
       apiType: "vendor",
       serviceCode: null,
-      serviceFormId: this.formId, 
+      serviceFormId: this.formId,
       applicationNumber: null,
       canEdit: [true],
 
       gstNo: [null, ValidationService.gstNoValidator],
-      gstRegiDate : null,
+      gstRegiDate: null,
 
       id: null,
       nameOfTheFirm: [null, [Validators.required]],
@@ -233,12 +233,12 @@ export class VendorRegistrationComponent implements OnInit {
       resEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 
       branchMobileNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
-      branchAlterMobileNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      branchAlterMobileNumber: [null, [ValidationService.mobileNumberValidation]],
       branchISDNumber: null,
       branchSTDNumber: null,
 
       headMobileNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
-      headAlterMobileNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      headAlterMobileNumber: [null, [ValidationService.mobileNumberValidation]],
       headISDNumber: null,
       headSTDNumber: null,
 
@@ -252,15 +252,15 @@ export class VendorRegistrationComponent implements OnInit {
         code: null,
         name: null
       }),
-      
-      detailsOfLandDocumentsFactory : null,
-      buildingPermissionDetail : null,
-      factoryLicenseStartDate : null,
-      factoryLicenseEndDate : null,
-      MSMENSICSSIcertificateStartDate: null,
-      MSMENSICSSIcertificateEndDate : null,
 
-      ISIBISCElicences : null,
+      detailsOfLandDocumentsFactory: null,
+      buildingPermissionDetail: null,
+      factoryLicenseStartDate: null,
+      factoryLicenseEndDate: null,
+      MSMENSICSSIcertificateStartDate: null,
+      MSMENSICSSIcertificateEndDate: null,
+
+      ISIBISCElicences: null,
 
       listOfItemMaterial: this.listOfItemMaterialSupplier,
       academicQualificationsDetail: this.fb.array([]),
@@ -274,12 +274,12 @@ export class VendorRegistrationComponent implements OnInit {
         code: [null, [Validators.required]],
         name: null
       }),
-      registrationDDNumber:  [null, [Validators.required]],
+      registrationDDNumber: [null, [Validators.required]],
       registrationAmount: [null, [Validators.maxLength(7)]],
-      registrationDDIssuingDate:  [null, [Validators.required]],
+      registrationDDIssuingDate: [null, [Validators.required]],
 
       locationOfFactoryWorks: this.fb.group({
-        code: [null,[Validators.required]],
+        code: [null, [Validators.required]],
         name: null
       }),
 
@@ -302,7 +302,7 @@ export class VendorRegistrationComponent implements OnInit {
       areaOfLandFactory: null,
       builtAreaFactory: null,
       noOfWorkingShifts: null,
-      factoryLicenceNumber:  [null, [Validators.required]],
+      factoryLicenceNumber: [null, [Validators.required]],
       sscNSICCertificateNumber: null,
       valueOfPlantAndMachinery: null,
       detailsEquipmentCapacity: null,
@@ -433,20 +433,20 @@ export class VendorRegistrationComponent implements OnInit {
   onRemovevendorNameAuthorized(rowIndex: number) {
     this.vendorNameAuthorized.removeAt(rowIndex);
   }
-  
+
   onRemovevendorNameholding(rowIndex: number) {
     this.vendorNameholding.removeAt(rowIndex);
   }
 
   handleErrorsOnSubmit(key) {
 
-		//const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 0;
+    //const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 0;
 
-		//this.tabIndex = index;
-		return false;
+    //this.tabIndex = index;
+    return false;
 
 
-	}
+  }
 
   onRemoveRowItemMaterial(rowIndex: number) {
     this.listOfItemMaterialSupplier.removeAt(rowIndex);
@@ -524,7 +524,7 @@ export class VendorRegistrationComponent implements OnInit {
   }
 
   onSubmit() {
-debugger;
+    debugger;
     if (this.vendorRegistrationForm.invalid) {
       //this.commonService.prrintInvalidForm(this.affordableHousingForm);
       let count = this.affordableHousingConfiguration.getAllErrors(this.vendorRegistrationForm);
@@ -569,7 +569,7 @@ debugger;
             this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
             this.commonService.openAlert("Application Submitted Successful", "", "success", `</b>`);
             this.resetForm();
-          } 
+          }
         }, (err) => {
           this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
         });
@@ -704,6 +704,17 @@ debugger;
       "personnelDetailSkilled": "SDF",
       "personnelDetailUnSkilled": "SDF",
       "personnelDetailOther": "SDF",
+
+      "branchMobileNumber": "7485967485",
+      "branchAlterMobileNumber": "7485967485",
+      "branchISDNumber": "7485967485",
+      "branchSTDNumber": "7485967485",
+      "headMobileNumber": "7485967485",
+      "headAlterMobileNumber": "7485967485",
+      "headISDNumber": "7485967485",
+      "headSTDNumber": "7485967485",
+      "ISIBISCElicences": "7485967485"
+
     }
 
     this.vendorRegistrationForm.patchValue(obj);
