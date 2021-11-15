@@ -665,7 +665,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		return `<b>Remarks :</b> ${this.queryrraiseRemarks}`;
 	}
 	copyInnerHTMLForRemark(){
-		navigator.clipboard.writeText(this.queryrraiseRemarks);
+		let newVariable: any;
+        newVariable = window.navigator;
+        newVariable.clipboard.writeText(this.queryrraiseRemarks);	
 	}
 	isQueryRaiseDisplay(row) {
 		if (row.fileStatus === 'QUERY_RAISED' || row.fileStatus === 'REJECTED') {
