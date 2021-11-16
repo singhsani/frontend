@@ -63,6 +63,8 @@ export class VendorRegistrationComponent implements OnInit {
 
   vendorNameholding: FormArray;
 
+  academicQualificationAndExperience: FormArray;
+
   vendorDetailsOfOrderIndicationQuantity: FormArray;
 
   constructor(
@@ -79,6 +81,7 @@ export class VendorRegistrationComponent implements OnInit {
     this.engineer.apiType = "vendor";
     this.formService.apiType = "vendor";
     this.listOfItemMaterialSupplier = this.fb.array([]);
+    this.academicQualificationAndExperience = this.fb.array([]);
     this.academicQualifications = this.fb.array([]);
     this.vendorNameArray = this.fb.array([]);
     this.vendorNameLastYear = this.fb.array([]);
@@ -91,6 +94,7 @@ export class VendorRegistrationComponent implements OnInit {
     this.vendorRegistrationControl();
     this.vendorRegistrationForm.addControl('listOfItemMaterialSupplier', this.listOfItemMaterialSupplier);
     this.vendorRegistrationForm.addControl('vendorNameArray', this.vendorNameArray);
+    this.vendorRegistrationForm.addControl('academicQualificationAndExperience', this.academicQualificationAndExperience);
     this.vendorRegistrationForm.addControl('vendorNameLastYear', this.vendorNameLastYear);
     this.vendorRegistrationForm.addControl('vendorNameAuthorized', this.vendorNameAuthorized);
     this.vendorRegistrationForm.addControl('vendorNameholding', this.vendorNameholding);
@@ -183,7 +187,7 @@ export class VendorRegistrationComponent implements OnInit {
       console.log("file" + JSON.stringify(file));
       this.attachmentList.push(file);
     }
-    this.manadoty();
+    //this.manadoty();
   }
 
   manadoty() {
@@ -273,6 +277,7 @@ export class VendorRegistrationComponent implements OnInit {
       vendorNameAuthorizedDetails: this.vendorNameAuthorized,
       vendorNameholdingDetails: this.vendorNameholding,
       supplierOrderDetails: this.vendorDetailsOfOrderIndicationQuantity,
+      academicQualificationAndExperienceDetail: this.fb.array([]),
 
       registrationBank: this.fb.group({
         code: [null, [Validators.required]],
@@ -344,6 +349,7 @@ export class VendorRegistrationComponent implements OnInit {
       createdByCitizen: [true],
     });
     this.academicQualifications.push(this.createEducationQualification());
+    this.academicQualificationAndExperience.push(this.createEducationQualification());
     this.vendorNameArray.push(this.createVendorNameArray());
     this.listOfItemMaterialSupplier.push(this.createItemMaterialSupplier());
     this.vendorNameLastYear.push(this.createItemMaterialSupplierLastThreeYear());
@@ -435,6 +441,15 @@ export class VendorRegistrationComponent implements OnInit {
     this.vendorNameholding.push(this.createItemHolding());
   }
 
+  addacademicQualification() {
+    this.academicQualificationAndExperience.push(this.createEducationQualification());
+  }
+
+  onRemoveacademicQualificationAndExperience(rowIndex: number) {
+    this.academicQualificationAndExperience.removeAt(rowIndex);
+  }
+
+
   addRowVendorDetailsOfOrderIndicationQuantity() {
     this.vendorDetailsOfOrderIndicationQuantity.push(this.createDetailsOfIndicatingQuantity());
   }
@@ -473,6 +488,10 @@ export class VendorRegistrationComponent implements OnInit {
     return this.fb.group({
       managerialFullName: null,
       managerialQualification: null,
+      managerialDesi: this.fb.group({
+        code: null,
+        name: null
+      }),
       managerialExperienceInYears: null,
 
       productionStaffFullName: null,
@@ -551,7 +570,6 @@ export class VendorRegistrationComponent implements OnInit {
   }
 
   onSubmit() {
-    debugger;
     if (this.vendorRegistrationForm.invalid) {
       //this.commonService.prrintInvalidForm(this.affordableHousingForm);
       let count = this.affordableHousingConfiguration.getAllErrors(this.vendorRegistrationForm);

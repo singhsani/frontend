@@ -397,6 +397,8 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}
 		else if (row.canEdit || row.fileStatus === 'QUERIED' || row.fileStatus === 'QUERY_RAISED')
 			return true;
+		else if (row.fileStatus === 'REJECTED')
+			return true;
 	}
 	/**
 	 * This method is use for delete option
