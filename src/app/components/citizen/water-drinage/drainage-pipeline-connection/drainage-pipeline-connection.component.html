@@ -100,7 +100,7 @@
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="tel"  formControlName="tpNo"
-							placeholder="{{'tp-no' | translate: translateKey }} " minlength="6" maxlength="6">
+							placeholder="{{'tp-no' | translate: translateKey }} " minlength="10" maxlength="10">
 						<!-- <control-messages [control]="drainagePipeliConnectionForm.get('tpNo')"></control-messages> -->
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
@@ -109,7 +109,7 @@
 						<!-- <control-messages [control]="drainagePipeliConnectionForm.get('fpNo')"></control-messages> -->
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber maxlength="10"  formControlName="revenueSurveyNo" 
+						<input matInput  maxlength="10"  formControlName="revenueSurveyNo" 
 							placeholder="{{'revenue-survey-no' | translate:translateKey}}">
 						<!-- <control-messages [control]="drainagePipeliConnectionForm.get('revenueSurveyNo')">
 						</control-messages> -->
@@ -138,7 +138,7 @@
 
 					<mat-form-field class="col-md-4">
 						<!-- [max]="disablefutureDate" -->
-						<input  matInput appDate  [matDatepicker]="picker1"
+						<input  matInput appDate  [matDatepicker]="picker1" [max]="disablefutureDate"
 							formControlName="buildingPermissionDate"
 							(dateChange)="dateFormate($event.value,'buildingPermissionDate');"
 							placeholder="{{ 'building-permission-date' | translate:translateKey }}  ">
