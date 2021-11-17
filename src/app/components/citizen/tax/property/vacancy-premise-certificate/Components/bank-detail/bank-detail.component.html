@@ -1,4 +1,5 @@
 <mat-card class="col-md-12 mt-3">
+  <div *ngIf = "showBackBtn">
   <div class="row">
     <!-- <div class="col-md-6">
       <div class="section-title">
@@ -12,6 +13,7 @@
     </div>
     <hr class="margin-top-10">
   </div>
+</div>
 
   <mat-horizontal-stepper #stepper class="stepperToTab">
     <mat-step>
