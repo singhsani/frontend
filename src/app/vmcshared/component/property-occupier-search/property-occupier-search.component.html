@@ -1,141 +1,146 @@
 <mat-card class="cardH1 mat-card">
-  <div class="row ">
-    <div class="col-md-6 ">
-      <h1 class="">Property Search</h1>
-    </div>
-    <div class="col-md-6 text-right">
-      <button mat-raised-button color="primary" type="button" (click)="onBackFromSearch()">
-        <mat-icon>skip_previous</mat-icon>Back
-      </button>
-    </div>
+  <div class="col-md-6">
+    <h2 class="">Property Search</h2>
   </div>
+  <div class="col-md-6 text-right">
+    <button mat-raised-button color="primary" type="button" (click)="onBackFromSearch()">
+      <mat-icon>skip_previous</mat-icon>Back
+    </button>
+  </div>
+
 </mat-card>
 
 <mat-card class="mt-4">
-  <form #formDetail="ngForm" (ngSubmit)="search(formDetail)">
-    <div class="row">
-      <div class="col-md-6">
-        <mat-form-field class="full-width-input" *ngIf="wardZoneLevel.length>=1">
-          <mat-select name="level1Id" (ngModelChange)="onChangedWardZone($event,2)" [(ngModel)]="searchModel.level1Id"
-            #Level1Id="ngModel" [placeholder]="!wardZoneLevel[0]?'': wardZoneLevel[0].levelName">
-            <mat-option *ngFor="let item of wardZoneLevel1List" [value]="item.parentWardzoneId">{{item.wardzoneName}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="col-md-6">
-        <mat-form-field class="full-width-input" *ngIf="wardZoneLevel.length>=1">
-          <mat-select name="level2Id" (ngModelChange)="onChangedWardZone($event,3)" [(ngModel)]="searchModel.level2Id"
-            #Level2Id="ngModel" [placeholder]="!wardZoneLevel[1]?'': wardZoneLevel[1].levelName">
-            <mat-option *ngFor="let item of wardZoneLevel2List" [value]="item.wardzoneId">{{item.wardzoneName}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+<form #formDetail="ngForm" (ngSubmit)="search(formDetail)">
+  <div class="row">
+    <div class="col-md-6">
+      <mat-form-field class="full-width-input" *ngIf="wardZoneLevel.length>=1">
+        <mat-select name="level1Id" (ngModelChange)="onChangedWardZone($event,2)" [(ngModel)]="searchModel.level1Id"
+          #Level1Id="ngModel" [placeholder]="!wardZoneLevel[0]?'': wardZoneLevel[0].levelName" required>
+          <mat-option *ngFor="let item of wardZoneLevel1List" [value]="item.parentWardzoneId">{{item.wardzoneName}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="formDetail.form.get('level1Id') && formDetail.form.get('level1Id').invalid && formDetail.form.get('level1Id').touched">
+          *Zone No. is required.</mat-error>
+      </mat-form-field>
     </div>
-    <div class="row">
-      <div class="col-md-6">
-        <mat-form-field class="full-width-input" *ngIf="wardZoneLevel.length>=3">
-          <mat-select name="level3Id" (ngModelChange)="onChangedWardZone($event,4)" [(ngModel)]="searchModel.level3Id"
-            #Level3Id="ngModel" [placeholder]="!wardZoneLevel[2]?'': wardZoneLevel[2].levelName">
-            <mat-option *ngFor="let item of wardZoneLevel3List" [value]="item.wardzoneId">{{item.wardzoneName}}</mat-option>
-          </mat-select>
+    <div class="col-md-6">
+      <mat-form-field class="full-width-input" *ngIf="wardZoneLevel.length>=1">
+        <mat-select name="level2Id" (ngModelChange)="onChangedWardZone($event,3)" [(ngModel)]="searchModel.level2Id"
+          #Level2Id="ngModel" [placeholder]="!wardZoneLevel[1]?'': wardZoneLevel[1].levelName" required>
+          <mat-option *ngFor="let item of wardZoneLevel2List" [value]="item.wardzoneId">{{item.wardzoneName}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="formDetail.form.get('level2Id') && formDetail.form.get('level2Id').invalid && formDetail.form.get('level2Id').touched">
+          *Ward No. is required.</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <mat-form-field class="full-width-input" *ngIf="wardZoneLevel.length>=3">
+        <mat-select name="level3Id" (ngModelChange)="onChangedWardZone($event,4)" [(ngModel)]="searchModel.level3Id"
+          #Level3Id="ngModel" [placeholder]="!wardZoneLevel[2]?'': wardZoneLevel[2].levelName">
+          <mat-option *ngFor="let item of wardZoneLevel3List" [value]="item.wardzoneId">{{item.wardzoneName}}</mat-option>
+        </mat-select>
 
-        </mat-form-field>
-      </div>
-      <div class="col-md-6">
-        <mat-form-field class="full-width-input" *ngIf="wardZoneLevel.length>=4">
-          <mat-select name="level4Id" [(ngModel)]="searchModel.level4Id" #Level4Id="ngModel" [placeholder]="!wardZoneLevel[3]?'': wardZoneLevel[3].levelName">
-            <mat-option *ngFor="let item of wardZoneLevel4List" [value]="item.wardzoneId">{{item.wardzoneName}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+      </mat-form-field>
     </div>
-    <div class="row">
-      <div class="col-md-6">
-        <mat-form-field class="full-width-input">
-          <input matInput number-only maxlength="10" name="mobileNo" placeholder="Mobile No" [(ngModel)]="searchModel.mobileNo">
-        </mat-form-field>
-      </div>
-      <div class="col-md-6">
-        <mat-form-field class="full-width-input">
-          <input matInput name="censusNo" mask-census-no maxlength="17" placeholder="Census No" [(ngModel)]="searchModel.censusNo">
-        </mat-form-field>
-      </div>
+    <div class="col-md-6">
+      <mat-form-field class="full-width-input" *ngIf="wardZoneLevel.length>=4">
+        <mat-select name="level4Id" [(ngModel)]="searchModel.level4Id" #Level4Id="ngModel" [placeholder]="!wardZoneLevel[3]?'': wardZoneLevel[3].levelName">
+          <mat-option *ngFor="let item of wardZoneLevel4List" [value]="item.wardzoneId">{{item.wardzoneName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
-    <div class="row">
-      <div class="col-md-6">
-        <mat-form-field class="full-width-input">
-          <input matInput name="ownerName" placeholder="Owner Name" [(ngModel)]="searchModel.ownerName">
-        </mat-form-field>
-      </div>
-      <div class="col-md-6">
-        <mat-form-field class="full-width-input">
-          <input matInput name="occupierName" placeholder="Occupier Name" [(ngModel)]="searchModel.occupierName">
-        </mat-form-field>
-      </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <mat-form-field class="full-width-input">
+        <input matInput number-only maxlength="10" name="mobileNo" placeholder="Mobile No" [(ngModel)]="searchModel.mobileNo">
+      </mat-form-field>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field class="full-width-input">
+        <input matInput name="censusNo" mask-census-no maxlength="17" placeholder="Census No" [(ngModel)]="searchModel.censusNo">
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <mat-form-field class="full-width-input">
+        <input matInput name="ownerName" placeholder="Owner Name" [(ngModel)]="searchModel.ownerName">
+      </mat-form-field>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field class="full-width-input">
+        <input matInput name="occupierName" placeholder="Occupier Name" [(ngModel)]="searchModel.occupierName">
+      </mat-form-field>
+    </div>
 
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <mat-form-field class="full-width-input">
+        <input matInput name="address" placeholder="Address" [(ngModel)]="searchModel.address">
+      </mat-form-field>
     </div>
-    <div class="row">
-      <div class="col-md-6">
-        <mat-form-field class="full-width-input">
-          <input matInput name="address" placeholder="Address" [(ngModel)]="searchModel.address">
-        </mat-form-field>
-      </div>
-      <div class="col-md-6">
-      </div>
+    <div class="col-md-6">
     </div>
-    <div class="row">
-      <div class="col-md-4">
-        <mat-form-field class="full-width-input">
-          <input matInput mask-property-no-with-occuiper-code maxlength="16" name="propertyNo" placeholder="Property No" [(ngModel)]="propertyNo">
-        </mat-form-field>
-      </div>
-      <div class="col-md-2">
-        <button class="ml-3" mat-raised-button color="primary" type="button" (click)="searchByPropertyNo()">
-          Go
-        </button>
-      </div>
-      <div class="col-md-6 text-right mt-4">
-        <button mat-raised-button class="gray-btn ml-3" type="submit">
-          <mat-icon>search</mat-icon> Search
-        </button>
-        <button mat-raised-button class=" ml-3" type="button" color="warn" (click)="clear()">
-          <mat-icon>clear_all</mat-icon> Clear
-        </button>
-      </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <mat-form-field class="full-width-input">
+        <input matInput mask-property-no-with-occuiper-code maxlength="16" name="propertyNo" placeholder="Property No" [(ngModel)]="propertyNo">
+      </mat-form-field>
     </div>
-  </form>
+    <div class="col-md-2">
+      <button class="ml-3" mat-raised-button color="primary" type="button" (click)="searchByPropertyNo()">
+        Go
+      </button>
+    </div>
+    <div class="col-md-6 text-right mt-4">
+      <button mat-raised-button class="gray-btn ml-3" type="submit" style="border: 1px solid #ccc !important;">
+        <mat-icon>search</mat-icon> Search
+      </button>
+      <button mat-raised-button class=" ml-3" type="button" color="warn" (click)="clear()">
+        <mat-icon>clear_all</mat-icon> Clear
+      </button>
+    </div>
+  </div>
+</form>
 </mat-card>
 
 <div class="mt-4" *ngIf="isShowTable">
-  <div class="example-container mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 width100">
+<div class="example-container mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 width100">
 
-      <ng-container matColumnDef="propertyNo">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Property No </th>
-        <td mat-cell *matCellDef="let element"> {{element.propertyNo}} </td>
-      </ng-container>
-      <ng-container matColumnDef="propertyAddress">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
-        <td mat-cell *matCellDef="let element"> {{element.propertyAddress.propertyAddress}} </td>
-      </ng-container>
-      <ng-container matColumnDef="ownerNames">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Owner Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.ownerNames}} </td>
-      </ng-container>
-      <ng-container matColumnDef="occupierName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Occupier Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.occupierName}} </td>
-      </ng-container>
-      <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef>Select </th>
-        <td mat-cell *matCellDef="let element">
-          <button mat-button title="Select" class="btn-width-auto" color="primary" type="button" (click)="onSelect(element)">
-            <mat-icon>arrow_forward</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  </div>
+    <ng-container matColumnDef="propertyNo">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Property No </th>
+      <td mat-cell *matCellDef="let element"> {{element.propertyNo}} </td>
+    </ng-container>
+    <ng-container matColumnDef="propertyAddress">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
+      <td mat-cell *matCellDef="let element"> {{element.propertyAddress.propertyAddress}} </td>
+    </ng-container>
+    <ng-container matColumnDef="ownerNames">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Owner Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.ownerNames}} </td>
+    </ng-container>
+    <ng-container matColumnDef="occupierName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Occupier Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.occupierName}} </td>
+    </ng-container>
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>Select </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-button title="Select" class="btn-width-auto" color="primary" type="button" (click)="onSelect(element)">
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+<mat-paginator [hidden]="resultsLength==0" [length]="resultsLength" [pageSizeOptions]="pageRecord" showFirstLastButtons></mat-paginator>
+<br> 
 </div>

@@ -47,4 +47,11 @@ export class PropertySearchService {
       { observe: 'response' })
       .pipe(map((response: any) => response))
   }
+  
+ // serach occupier wise data 
+  searchPropertyByPage(data: any) {
+    return this.http.post(`${Constants.assessmentModuleApiUrl}active/searchByPage?page=${data.pageNo}&limit=${data.pageSize}`, data.model,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
 }
