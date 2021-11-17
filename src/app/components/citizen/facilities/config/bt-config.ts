@@ -223,7 +223,8 @@ export class BTConfig extends CitizenConfig {
             // retPath: 'citizen/payment-gateway-response',
             retPath: environment.citizenUrl,
             myApplicationUrl: redirectionURL,
-            amount: data.amount
+            amount: data.amount,
+            txtadditionalInfo1 : resourceType
 
         };
 
