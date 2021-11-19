@@ -77,15 +77,6 @@ export class NewDrainageConnectionComponent implements OnInit {
 
   ngOnInit() {
     
-    console.log('*******',moment("10-15-2019").format("DD-MM-YYYY"));
-    console.log('*******',moment("2019-12-10").format("DD-MM-YYYY"));
-    
-    
-    
-    
-    
-    
-
     this.route.paramMap.subscribe(param => {
       this.formId = Number(param.get('id'));
       this.apiCode = param.get('apiCode');
