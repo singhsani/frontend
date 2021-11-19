@@ -297,11 +297,16 @@ export class GatewayResponseComponent implements OnInit {
 			
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS')]);
 			
-		}else if((this.dispData.payableServiceType  == "STADIUM_FEES") || (this.dispData.payableServiceType == "STADIUM_DEPOSIT")){
+		}else if((this.dispData.payableServiceType  == "STADIUM_FEES") || (this.dispData.payableServiceType == "STADIUM_DEPOSIT")|| (this.dispData.payableServiceType == "SWIMMING_POOL_FEES")){
 			
 				this.router.navigate([this.bookingConstant.MY_BOOKINGS_URL]);
 			
-		}else if (this.serviceType == "ZOO_TICKETING_FEES"|| this.serviceType =="ZOO_ANIMAL_ADOPTION_FEES" || this.serviceType == "PLANETARIUM_TICKETING_FEES") {
+		}else if((this.dispData.resourceType =="townhall") || (this.dispData.resourceType =="amphiTheater") || (this.dispData.resourceType == "stadium") || (this.dispData.resourceType == "childrenTheater") || (this.dispData.resourceType == "atithigruh") || (this.dispData.resourceType == "shootingPermission")){
+			
+			this.router.navigate([this.bookingConstant.MY_BOOKINGS_URL]);
+		
+	}
+		else if (this.serviceType == "ZOO_TICKETING_FEES"|| this.serviceType =="ZOO_ANIMAL_ADOPTION_FEES" || this.serviceType == "PLANETARIUM_TICKETING_FEES") {
 			
 				this.router.navigate([this.bookingConstant.MY_TICKETINGS_URL]);
 			
