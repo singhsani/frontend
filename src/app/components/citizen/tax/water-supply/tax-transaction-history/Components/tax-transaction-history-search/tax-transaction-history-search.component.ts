@@ -35,9 +35,10 @@ export class TaxTransactionHistorySearchComponent implements OnInit, OnDestroy {
 
 
   getLookups() {
-    let lookupcode = `lookup_codes=${Constants.LookupCodes.History_Transaction_Type}`;
+    const lookupcode = `lookup_codes=${Constants.LookupCodes.History_Transaction_Type}`;
     this.commonService.getLookupValuesAccordingToScreen(lookupcode).subscribe(data => {
-      this.transactionTypeList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.History_Transaction_Type))[0].items;
+      this.transactionTypeList = Object.assign([], data)
+        .filter(f => f.lookupCode.includes(Constants.LookupCodes.History_Transaction_Type))[0].items;
     });
     this.viewModelSubscription = this.taxTransactionHistoryDataSharingService.getViewModel().subscribe(data => {
       if (data) {
@@ -61,18 +62,14 @@ export class TaxTransactionHistorySearchComponent implements OnInit, OnDestroy {
       }
     }
   }
-  clear() {
-   // this.propertyNo=null;
+
+  clear(pForm: NgForm) {
      this.searchModel = new SearchModel();
-     this.searchModel.propertyNo=null;
-     this.searchModel.transactionTypeId=null;
-     this.viewModel.censusNo =null;
-     this.viewModel.taxPayerName=null;
-     this.viewModel.address=null;
+     this.viewModel.censusNo = null;
+     this.viewModel.taxPayerName = null;
+     this.viewModel.address = null;
      this.taxTransactionHistoryDataSharingService.setIsShowHistoryTable(false);
      this.taxTransactionHistoryDataSharingService.setIsShowTransactionTable(false);
-     this.mytemplateForm.reset();
-    // this.taxTransactionHistoryDataSharingService.(false);
-    // this.taxTransactionHistoryDataSharingService.updatedIsClear(true);
+     pForm.resetForm();
   }
 }

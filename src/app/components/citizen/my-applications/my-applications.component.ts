@@ -397,6 +397,8 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}
 		else if (row.canEdit || row.fileStatus === 'QUERIED' || row.fileStatus === 'QUERY_RAISED')
 			return true;
+		else if (row.fileStatus === 'REJECTED')
+			return true;
 	}
 	/**
 	 * This method is use for delete option
@@ -663,6 +665,11 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	}
 	getInnerHTMLForRemark() {
 		return `<b>Remarks :</b> ${this.queryrraiseRemarks}`;
+	}
+	copyInnerHTMLForRemark(){
+		let newVariable: any;
+        newVariable = window.navigator;
+        newVariable.clipboard.writeText(this.queryrraiseRemarks);	
 	}
 	isQueryRaiseDisplay(row) {
 		if (row.fileStatus === 'QUERY_RAISED' || row.fileStatus === 'REJECTED') {

@@ -48,11 +48,17 @@
 			</div>
 
 			<div class="row">
-				<div class="col mb-2">
+				<div class="col mb-2" *ngIf="responseObj.getway == 'BILLDESK'">
 					Payment Type : &nbsp;{{responseObj.payment_method_type == 'netbanking' ? 'Online' : 'Offline'}}
 				</div>
+				<div class="col mb-2" *ngIf="responseObj.getway == 'CCAVENUE'">
+					Payment Type : &nbsp;{{responseObj.payment_mode}}
+				</div>
 				<div class="col">
-					Service Name : &nbsp;{{resourceType}}
+					<!-- Service Name : &nbsp;{{resourceType}} -->
+					<!-- Service Name : &nbsp;{{responseObj.additional_info.additional_info1}} -->
+					Service Name : &nbsp;{{dispData.txtadditionalInfo1}}
+					<!-- Service Name : &nbsp;{{serviceType ? serviceType : payableServiceType}} -->
 				</div>
 			</div>
 			<div class="row">
@@ -139,6 +145,72 @@
 	</div>
 </div>
 </div>
+
+<div *ngIf="responseObj.getway == 'BILLDESK'">
+	<div class="conatiner text-center"
+		*ngIf="(responseObj.order_status == 'Pending' || (responseObj.hasOwnProperty('authStatus') && responseObj.authStatus == '0002') || responseObj.authStatus == 'NOT RECEIVED')">
+		<mat-icon class="failedIcon">error</mat-icon>
+		<h1 class="errorMessage">Your payment is pending</h1>
+		<h4>Please check back for status after 45 minutes</h4>
+		<!-- <div class="row">
+			<div class="col mb-3">
+				Transaction Failed Detail: {{responseObj.transaction_error_desc}}
+			</div>
+		</div>
+		<h6 class="mt-4">
+			Order ID: {{responseObj.order_id}} | Transaction ID: {{responseObj.transactionid}} <br>
+			Payment Type : {{responseObj.payment_method_type == 'netbanking' ? 'Online' :'Offline'}}
+		</h6> -->
+	
+		<div>
+			<h5 class="payDetails">Payment Details</h5>
+			<mat-card class="cardDetail">
+				<div class="row">
+					<div class="col mb-2">
+						Amount Paid : &#8377; &nbsp;{{responseObj.txnAmount}}
+					</div>
+					<div class="col">
+						Transaction ID: &nbsp; {{responseObj.transactionid}} 
+						<!-- Transaction Number : &nbsp;{{responseObj.transactionid}} -->
+					</div>
+				</div>
+				<div class="row">
+					<div class="col mb-2">
+						Balance Amount : &#8377; &nbsp;{{responseObj.txnAmount}}
+					</div>
+					<div class="col">
+						Transaction Date : &nbsp;{{responseObj.trans_date}}
+					</div>
+				</div>
+	
+				<div class="row">
+					<div class="col mb-2">
+						Payment Type : &nbsp; {{responseObj.payment_method_type == 'netbanking' ? 'Online' :'Offline'}}
+					</div>
+					<div class="col">
+						Order ID: &nbsp; {{responseObj.order_id}}
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col mb-3">
+						Transaction Detail: {{responseObj.transaction_error_desc}}
+						<!-- Payment Failed Detail : {{responseObj?.billDeskAuthStatus?.reason}}<br> -->
+						<!-- Transaction Msg : {{responseObj.transaction_error_desc}} -->
+					</div>
+				</div>
+			</mat-card>
+		</div>
+		<div class="mt-4">
+			<p style="font-size: 14px;">You will be automatically redirect to home page after
+				<span style="color:#f00">{{dispTime}} second</span>.
+			</p>
+			<p>OR
+				<a style="font-size: 14px;" href="javascript:0;" (click)="redirectToMyApps()">Click here</a>
+			</p>
+		</div>
+	</div>
+	</div>
 
 <!-- Payment failed-->
 <div *ngIf="responseObj.getway == 'CCAVENUE'">
