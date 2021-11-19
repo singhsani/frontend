@@ -40,6 +40,7 @@ export class BankDetailComponent implements OnInit, OnDestroy {
   count : number  = 0;
   submitBtn:boolean = true;
   serviceFormId: String;
+  showBackBtn:boolean = true;
   constructor(
     private vacancyPremiseCertificateDataSharingService: VacancyPremiseCertificateDataSharingService,
     private paymentDataSharingService: PaymentDataSharingService,
@@ -147,6 +148,7 @@ export class BankDetailComponent implements OnInit, OnDestroy {
           this.isShaved = true;
           this.model.vacancyPremiseCertficateId =  data.body.data.vacancyPremiseCertficateId;
           this.stepper.selectedIndex = 1;
+          this.showBackBtn = false;
           this.vacancyPremiseCertificateDataSharingService.applicationNumber = data.body.data.applicationNo ;
           this.vacancyPremiseCertificateDataSharingService.vacancyPremisesCetiId = data.body.data.vacancyPremiseCertficateId;
           //this.alertService.success(data.body.message);
@@ -336,6 +338,7 @@ submit(){
 
 stepChangedEvent(event){
   this.stepper.selectedIndex = event;
+  this.showBackBtn = true;
 }
 
 saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
@@ -347,6 +350,7 @@ saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
          this.getApplicationDetails(data.body.id);
          console.log(' data.body.id - > ', data.body.id);
          this.stepper.selectedIndex = 2;
+         this.showBackBtn = true;
        },
        (error) => {
          this.commonService.callErrorResponse(error);
