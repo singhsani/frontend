@@ -76,6 +76,15 @@ export class NewDrainageConnectionComponent implements OnInit {
   }
 
   ngOnInit() {
+    
+    console.log('*******',moment("10-15-2019").format("DD-MM-YYYY"));
+    console.log('*******',moment("2019-12-10").format("DD-MM-YYYY"));
+    
+    
+    
+    
+    
+    
 
     this.route.paramMap.subscribe(param => {
       this.formId = Number(param.get('id'));
@@ -445,7 +454,7 @@ export class NewDrainageConnectionComponent implements OnInit {
   }
 
   getPlumberList() {
-    this.newWaterConnectionEntryService.getPlumberList({ licenseFor: Constants.ItemCodes.License_Water, activeOnly: true }).subscribe(
+    this.newWaterConnectionEntryService.getPlumberList({ licenseFor: Constants.ItemCodes.License_Drainge, activeOnly: true }).subscribe(
       (data) => {
        if (data.status === 200 && data.body.length) {
           this.plumberList = data.body;
