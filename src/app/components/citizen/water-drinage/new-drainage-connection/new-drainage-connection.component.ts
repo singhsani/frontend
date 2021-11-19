@@ -76,7 +76,7 @@ export class NewDrainageConnectionComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    
     this.route.paramMap.subscribe(param => {
       this.formId = Number(param.get('id'));
       this.apiCode = param.get('apiCode');
@@ -445,7 +445,7 @@ export class NewDrainageConnectionComponent implements OnInit {
   }
 
   getPlumberList() {
-    this.newWaterConnectionEntryService.getPlumberList({ licenseFor: Constants.ItemCodes.License_Water, activeOnly: true }).subscribe(
+    this.newWaterConnectionEntryService.getPlumberList({ licenseFor: Constants.ItemCodes.License_Drainge, activeOnly: true }).subscribe(
       (data) => {
        if (data.status === 200 && data.body.length) {
           this.plumberList = data.body;
