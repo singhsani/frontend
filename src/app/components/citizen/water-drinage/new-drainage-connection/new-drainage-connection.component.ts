@@ -179,7 +179,8 @@ export class NewDrainageConnectionComponent implements OnInit {
     if(this.dataSource.length == 0) {
       this.isShowPropertyGrid = false;
       this.waterDrainageConnPropertyDetailsDTOList=[];
-      
+      this.isprimaryProperty = false;
+      this.newDrainageConnectionForm.reset();
     }
 
   }
@@ -377,8 +378,8 @@ export class NewDrainageConnectionComponent implements OnInit {
     if (fullAddress != '' && address2 != '')
       fullAddress = fullAddress.substring(0, fullAddress.length - 2);
     
-      this.newDrainageConnectionForm.get('postalAddress').setValue(fullAddress);
-      this.newDrainageConnectionForm.get('correspondenceAddress').setValue(fullAddress);
+      // this.newDrainageConnectionForm.get('postalAddress').setValue(fullAddress);
+      // this.newDrainageConnectionForm.get('correspondenceAddress').setValue(fullAddress);
     
   }
 
