@@ -1,11 +1,13 @@
 import { Component, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { PropertyOccupierSearchSharingService } from './property-occupier-search-sharing.service';
 import { PropertySearchService } from '../property-search/property-search.service';
 import { AlertService } from '../../Services/alert.service';
 import { Constants } from '../../Constants';
 import { NgForm } from '@angular/forms';
 import { CommonService } from '../../Services/common-service';
+import { merge, of, Subscription } from 'rxjs';
+import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 @Component({
   selector: 'app-property-occupier-search',
   templateUrl: './property-occupier-search.component.html',
@@ -29,6 +31,13 @@ export class PropertyOccupierSearchComponent implements OnInit {
   isSearchByPropertyNo: boolean = false;
   isShowTable: boolean = false;
   @ViewChild(MatSort) sort: MatSort;
+  //variables for paginator 
+  @ViewChild(MatPaginator) paginator:MatPaginator;
+  resultsLength: number = 0;
+  pageRecord = Constants.pageRecord;
+  pageSize:number = 5;
+  pageNo:number = 0;
+  totalCount: any = 0;
 
   constructor(
     private propertyOccupierSearchSharingService: PropertyOccupierSearchSharingService,
@@ -119,7 +128,7 @@ export class PropertyOccupierSearchComponent implements OnInit {
     if (formDetails.form.valid) {
       this.searchModel.propertyNo = null;
       this.isSearchByPropertyNo = false;
-      this.searchsearchProperty();
+      this.paginationActivity()
     }
   }
 
@@ -133,7 +142,7 @@ export class PropertyOccupierSearchComponent implements OnInit {
         this.searchModel.propertyNo = this.propertyNo.toString().trim();
       }
       this.isSearchByPropertyNo = true;
-      this.searchsearchProperty();
+      this.paginationActivity()
     }
   }
   clear() {
@@ -150,29 +159,6 @@ export class PropertyOccupierSearchComponent implements OnInit {
     this.propertyOccupierSearchSharingService.setIsOpenSearchForm(false);
   }
 
-
-  searchsearchProperty() {
-    this.propertySearchService.searchProperty(this.searchModel).subscribe(
-      (data) => {
-        if (data.status === 200) {
-          if (data.body.length == 0) {
-            this.alertService.info('No Data Found!');
-            if (!this.isSearchByPropertyNo || (this.isSearchByPropertyNo && this.dataSource.length == 0)) {
-              this.isShowTable=false;
-            }
-          }
-          else {
-            this.isShowTable=true;
-            this.dataSource = new MatTableDataSource(data.body);
-            this.dataSource.sort = this.sort;
-          }
-        }
-      },
-      (error) => {
-        this.commonService.callErrorResponse(error);
-      });
-  }
-
   onSelect(item) {
     this.propertyOccupierSearchSharingService.setPropertyModel(item);
     this.propertyOccupierSearchSharingService.setIsOpenSearchForm(false);
@@ -182,6 +168,54 @@ export class PropertyOccupierSearchComponent implements OnInit {
   onBackFromSearch() {
     this.propertyOccupierSearchSharingService.setIsOpenSearchForm(false);
     this.showPayable.emit(true);
+  }
+
+  paginationActivity(){
+    this.paginator.pageIndex = 0;
+    this.pageNo = null;
+    this.pageSize = null;
+    merge(this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+        if(this.pageNo !== this.paginator.pageIndex || this.pageSize !== this.paginator.pageSize){
+          if (this.pageSize === this.paginator.pageSize) {
+            this.pageNo = this.paginator.pageIndex;
+          } else {
+            this.pageNo = 0;
+            this.paginator.pageIndex = 0;
+          }
+          this.pageSize = this.paginator.pageSize;
+          return this.propertySearchService.searchPropertyByPage({model:this.searchModel,pageNo:this.pageNo,pageSize:this.pageSize});
+        }
+        }),
+        map(data => {
+          return data;
+        }),
+        catchError(() => {
+          return of([]);
+        })
+      ).subscribe((data) => {
+        if (data.status === 200) {
+          if (data.body.data.length === 0) {
+            this.isShowTable=false;
+            this.alertService.info('No Data Found!');
+            if (!this.isSearchByPropertyNo || (this.isSearchByPropertyNo && this.dataSource.length === 0)) {
+              this.isShowTable=false;
+            }
+            this.resultsLength = 0;
+          } else {
+            this.isShowTable = true;
+            this.dataSource = new MatTableDataSource(data.body.data);
+            this.dataSource.sort = this.sort;
+            this.totalCount = data.body.totalRecords;
+            this.resultsLength = data.body.totalRecords;
+          }
+        }
+      },
+      (error) => {
+        this.commonService.callErrorResponse(error);
+      });
   }
 
 }
