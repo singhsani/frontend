@@ -50,7 +50,7 @@ export class PropertySearchService {
   
  // serach occupier wise data 
   searchPropertyByPage(data: any) {
-    return this.http.post(`${Constants.assessmentModuleApiUrl}active/searchByPage?page=${data.pageNo}&limit=${data.pageSize}`, data.model,
+    return this.http.post(`${Constants.assessmentModuleApiUrl}active/searchByPage`, data,
       { observe: 'response' })
       .pipe(map((response: any) => response))
   }
