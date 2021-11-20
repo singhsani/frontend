@@ -438,4 +438,8 @@ export class BookingService {
       return this.http.get(this.requestURL);
     }
 
+    getAvailableStots(filterData) {
+      this.requestURL = `api/${this.moduleName}/${this.resourceType}/availlableSlots?resource=${filterData}`;
+      return this.http.get(this.requestURL);
+    }
 }
