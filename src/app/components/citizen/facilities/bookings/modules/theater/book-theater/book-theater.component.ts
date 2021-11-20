@@ -120,11 +120,13 @@ export class BookTheaterComponent implements OnInit {
 	 * Method Initialzes first.
 	 */
     ngOnInit() {
+        
         this.getFeesStructure();
         this.createSearchTheaterForm();
         this.createTheaterBookingForm();
         this.getResourceList();
         this.getLookUps();
+       
         //this.getCategoryLookUps();
 
         /**
@@ -143,7 +145,7 @@ export class BookTheaterComponent implements OnInit {
      */
     onDateChange(date){
         let futureMonth = moment(date).add(30, 'day');
-        this.maxEndDate = moment(futureMonth).format("YYYY-MM-DD");
+        // this.maxEndDate = moment(futureMonth).format("YYYY-MM-DD");
     }
 
 	/**
@@ -170,6 +172,7 @@ export class BookTheaterComponent implements OnInit {
                 this.bookingObject = res.data[0];
             }
             this.THEATERS = res.data;
+            this.getAvaillableSlot(res.data);
         },
             err => {
                 this.toster.error(err.error.error_description);
@@ -425,5 +428,11 @@ export class BookTheaterComponent implements OnInit {
              headerName = "શાળા માટે";
          }
          return headerName;
+      }
+
+      getAvaillableSlot(data){
+        this.bookingService.getAvailableStots(data[0].code).subscribe(respData => {
+            this.maxEndDate = moment(respData.data.endDate, "DD-MM-YYYY").toDate();
+        })
       }
 }

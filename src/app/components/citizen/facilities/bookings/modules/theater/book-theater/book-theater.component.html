@@ -138,7 +138,7 @@
                             {{'choose_start_date'| translate: translateKey}}
                         </mat-label>
                         <!-- matDatepickerFilter]="myFilter" -->
-                        <input appDate matInput (dateChange)="onDateChange($event.value)" [min]="startMinDate" [matDatepicker]="theaterBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
+                        <input appDate matInput (dateChange)="onDateChange($event.value)" [min]="startMinDate" [max]="maxEndDate" [matDatepicker]="theaterBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
                         <mat-datepicker-toggle matSuffix [for]="theaterBookingfromPicker"></mat-datepicker-toggle>
                         <mat-datepicker #theaterBookingfromPicker touchUi="true"></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
