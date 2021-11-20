@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, ViewChild, EventEmitter, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { PropertyOccupierSearchSharingService } from './property-occupier-search-sharing.service';
 import { PropertySearchService } from '../property-search/property-search.service';
@@ -33,7 +33,7 @@ export class PropertyOccupierSearchComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   //variables for paginator 
   @ViewChild(MatPaginator) paginator:MatPaginator;
-  resultsLength: number = 10;
+  resultsLength: number = 0;
   pageRecord = Constants.pageRecord;
   pageSize:number = 5;
   pageNo:number = 0;
@@ -128,7 +128,7 @@ export class PropertyOccupierSearchComponent implements OnInit {
     if (formDetails.form.valid) {
       this.searchModel.propertyNo = null;
       this.isSearchByPropertyNo = false;
-      this.searchsearchProperty();
+      this.paginationActivity()
     }
   }
 
@@ -142,7 +142,7 @@ export class PropertyOccupierSearchComponent implements OnInit {
         this.searchModel.propertyNo = this.propertyNo.toString().trim();
       }
       this.isSearchByPropertyNo = true;
-      this.searchsearchProperty();
+      this.paginationActivity()
     }
   }
   clear() {
@@ -157,35 +157,6 @@ export class PropertyOccupierSearchComponent implements OnInit {
 
   onBack() {
     this.propertyOccupierSearchSharingService.setIsOpenSearchForm(false);
-  }
-
-
-  searchsearchProperty() {
-    // this.propertySearchService.searchProperty(this.searchModel).subscribe(
-    this.propertySearchService.searchPropertyByPage({model:this.searchModel,pageNo:this.pageNo,pageSize:this.pageSize}).subscribe(
-      (data) => {
-        if (data.status === 200) {
-          if (data.body.data.length == 0) {
-            this.alertService.info('No Data Found!');
-            if (!this.isSearchByPropertyNo || (this.isSearchByPropertyNo && this.dataSource.length == 0)) {
-              this.isShowTable=false;
-            }
-          }
-          else {
-            this.isShowTable = true;
-            this.dataSource = new MatTableDataSource(data.body.data);
-            this.dataSource.sort = this.sort;
-            this.totalCount = data.body.totalRecords;
-            this.resultsLength = data.body.totalRecords;
-            setTimeout(() => { //perform activity after paginator get initialize
-              this.paginationActivity();
-            }, 10);
-          }
-        }
-      },
-      (error) => {
-        this.commonService.callErrorResponse(error);
-      });
   }
 
   onSelect(item) {

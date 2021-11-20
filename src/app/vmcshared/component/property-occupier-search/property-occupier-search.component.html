@@ -109,7 +109,7 @@
 </form>
 </mat-card>
 
-<div class="mt-4" *ngIf="isShowTable">
+<div class="mt-4" [hidden]="!isShowTable">
 <div class="example-container mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 width100">
 
@@ -142,5 +142,5 @@
   </table>
 </div>
 <mat-paginator [hidden]="resultsLength==0" [length]="resultsLength" [pageSizeOptions]="pageRecord" showFirstLastButtons></mat-paginator>
-<br> 
+<br>
 </div>
