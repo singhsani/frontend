@@ -161,9 +161,9 @@ export class VendorRegistrationComponent implements OnInit {
     this.formControlNameToTabIndex.set('isIncomeTaxDetails', 1)
     this.formControlNameToTabIndex.set('manufacturingOwnedDetails', 1)
     this.formControlNameToTabIndex.set('acceptAndCondition', 4)
-    
 
-  }  
+
+  }
   getVendorData(id: number) {
     this.formService.getFormData(id).subscribe(res => {
       console.log("tresr", res)
@@ -217,27 +217,27 @@ export class VendorRegistrationComponent implements OnInit {
       applicationNumber: null,
       canEdit: [true],
 
-      nameOfTheFirm:  [null,[Validators.required, Validators.maxLength(150)]],
-      commencementDate: [null,[Validators.required]],
-      yearOfEstablishment: [null,[Validators.required]],
+      nameOfTheFirm: [null, [Validators.required, Validators.maxLength(150)]],
+      commencementDate: [null, [Validators.required]],
+      yearOfEstablishment: [null, [Validators.required]],
       panNo: [null, [Validators.required, ValidationService.panValidator]],
       tanNo: [null, [ValidationService.tanValidator]],
-      gstNo: [null, [Validators.required,ValidationService.gstNoValidator]],
-      gstRegiDate: [null,[Validators.required]],
+      gstNo: [null, [ValidationService.gstNoValidator]],
+      gstRegiDate: [null],
 
       officeContactNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
       officeFaxNumber: [null, [ValidationService.faxValidation]],
       officeEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 
       branchMobileNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
-      branchAlterMobileNumber:  [null,[Validators.maxLength(10),Validators.minLength(10)]],
-      branchISDNumber:  [null,[Validators.maxLength(11)]],
-      branchSTDNumber:  [null,[Validators.maxLength(12)]],
+      branchAlterMobileNumber: [null, [Validators.maxLength(10), Validators.minLength(10)]],
+      branchISDNumber: [null, [Validators.maxLength(11)]],
+      branchSTDNumber: [null, [Validators.maxLength(12)]],
 
       headMobileNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
-      headAlterMobileNumber:  [null,[Validators.maxLength(10),Validators.minLength(10)]],
-      headISDNumber: [null,[Validators.maxLength(11)]],
-      headSTDNumber: [null,[Validators.maxLength(12)]],
+      headAlterMobileNumber: [null, [Validators.maxLength(10), Validators.minLength(10)]],
+      headISDNumber: [null, [Validators.maxLength(11)]],
+      headSTDNumber: [null, [Validators.maxLength(12)]],
 
       resContactNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
       resFaxNumber: [null, [ValidationService.faxValidation]],
@@ -258,12 +258,12 @@ export class VendorRegistrationComponent implements OnInit {
       supplierOrderDetails: this.vendorDetailsOfOrderIndicationQuantity,
 
       registrationBank: this.fb.group({
-        code: [null, [Validators.required]],
+        code: [{ value: null, disabled: true }],
         name: null
       }),
-      registrationDDNumber: null,
-      registrationAmount: [null, [Validators.maxLength(7)]],
-      registrationDDIssuingDate: null,
+      registrationDDNumber: [{ value: null, disabled: true }],
+      registrationAmount: [{ value: null, disabled: true }],
+      registrationDDIssuingDate: [{ value: null, disabled: true }],
 
       locationOfFactoryWorks: this.fb.group({
         code: [null, [Validators.required]],
@@ -368,13 +368,13 @@ export class VendorRegistrationComponent implements OnInit {
 
   handleErrorsOnSubmit(key) {
 
-		const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 0;
-    
-		this.tabIndex = index;
-		return false;
+    const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 0;
+
+    this.tabIndex = index;
+    return false;
 
 
-	}
+  }
 
   onDateChange(fieldName, date) {
     this.vendorRegistrationForm.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
