@@ -185,11 +185,32 @@ export class NewDrainageConnectionComponent implements OnInit {
 
   }
   getPropertyAddressDetail() {
-    if(this.newDrainageConnectionForm.get('primaryProperty').value && this.newDrainageConnectionForm.get('propertyNo').value)
+    // if(this.newDrainageConnectionForm.get('primaryProperty').value && this.newDrainageConnectionForm.get('propertyNo').value)
+    if(this.newDrainageConnectionForm.get('primaryProperty').value!=null && this.newDrainageConnectionForm.get('propertyNo').value)
     this.newWaterConnectionEntryService.getPropertyAddress(this.newDrainageConnectionForm.get('propertyNo').value).subscribe(
       (data) => {
         if (data.status === 200) {
-          if(this.newDrainageConnectionForm.get('primaryProperty').value != this.isprimaryProperty){
+          if(this.newDrainageConnectionForm.get('primaryProperty').value === this.isprimaryProperty){
+            let temojbNonPrimary :any= { 'propertyNo' :  this.newDrainageConnectionForm.get('propertyNo').value ,
+          'ownerName' :  data.body.propertyOwners[0].firstName , 
+           'address' :data.body.propertyBasic.propertyAddressDTO.propertyAddress }           
+           if(this.dataSource.length === 0){
+              this.dataSource.push(temojbNonPrimary)
+              this.isShowPropertyGrid = true;
+           }else if(this.dataSource.length > 0 && this.dataSource.filter(x=>x.propertyNo === temojbNonPrimary.propertyNo).length===0){
+            this.dataSource.push(temojbNonPrimary)
+            this.dataSource = this.dataSource.slice();
+           }else{
+             if(this.isprimaryProperty){
+              this.alertService.info("you can add only one primary property");
+              return;
+             }else{
+              this.alertService.info("Recode Already Exist");
+             }
+           
+           }        
+          }        
+          else if(this.newDrainageConnectionForm.get('primaryProperty').value != this.isprimaryProperty){
             this.isprimaryProperty = true;
           this.getPropertyValues(data.body.propertyBasic.propertyAddressDTO);
           
@@ -197,16 +218,28 @@ export class NewDrainageConnectionComponent implements OnInit {
           'ownerName' :  data.body.propertyOwners[0].firstName , 
            'address' :data.body.propertyBasic.propertyAddressDTO.propertyAddress }
           this.waterDrainageConnPropertyDetailsDTOList.push(temojb);
-          
           let propertyObj = {'primaryProperty': this.newDrainageConnectionForm.get('primaryProperty').value , 'propertyNo':this.newDrainageConnectionForm.get('propertyNo').value};
           this.propertyaryy.push(propertyObj);
           
-          this.dataSource = [];
-          
-          this.dataSource = this.waterDrainageConnPropertyDetailsDTOList;
+          // this.dataSource = [];
+          if(this.dataSource.length === 0){
+            this.dataSource.push(temojb);
+            this.isShowPropertyGrid = true;
+         }else if(this.dataSource.length > 0 && this.dataSource.filter(x=>x.propertyNo === temojb.propertyNo).length===0){
+          this.dataSource.push(temojb);
           this.dataSource = this.dataSource.slice();
           this.isShowPropertyGrid = true;
-          
+         }else{
+          if(this.isprimaryProperty && !this.newDrainageConnectionForm.get('primaryProperty').value){
+            this.alertService.info("Recode Already Exist");
+            return;
+           }else{
+            this.alertService.info("you can add only one primary property");            
+           }
+         }              
+          // this.dataSource.push(this.waterDrainageConnPropertyDetailsDTOList);
+          // this.dataSource = this.dataSource.slice();
+          // this.isShowPropertyGrid = true;          
           this.getFormsArray().push(this.createFormGroup("waterDrainageConnPropertyDetailsDTOList", {}));
           
           this.newDrainageConnectionForm.get('waterDrainageConnPropertyDetailsDTOList').setValue(this.propertyaryy);
