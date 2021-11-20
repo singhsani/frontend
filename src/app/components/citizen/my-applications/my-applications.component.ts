@@ -18,6 +18,7 @@ import { Location } from '@angular/common';
 import { downloadFile } from 'src/app/vmcshared/downloadFile';
 import { PaymentService } from 'src/app/vmcshared/component/payment/payment.service'
 import { PaymentNewService } from 'src/app/shared/services/paymentNew.service';
+
 @Component({
 	selector: 'app-my-applications',
 	templateUrl: './my-applications.component.html',
@@ -665,12 +666,21 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	}
 	getInnerHTMLForRemark() {
 		return `<b>Remarks :</b> ${this.queryrraiseRemarks}`;
+	}	
+	copyInnerHTMLForRemark(val: string){
+		let selBox = document.createElement('textarea');
+		  selBox.style.position = 'fixed';
+		  selBox.style.left = '0';
+		  selBox.style.top = '0';
+		  selBox.style.opacity = '0';
+		  selBox.value = this.queryrraiseRemarks;
+		  document.body.appendChild(selBox);
+		  selBox.focus();
+		  selBox.select();
+		  document.execCommand('copy');
+		  document.body.removeChild(selBox);
 	}
-	copyInnerHTMLForRemark(){
-		let newVariable: any;
-        newVariable = window.navigator;
-        newVariable.clipboard.writeText(this.queryrraiseRemarks);	
-	}
+		
 	isQueryRaiseDisplay(row) {
 		if (row.fileStatus === 'QUERY_RAISED' || row.fileStatus === 'REJECTED') {
 			return true;

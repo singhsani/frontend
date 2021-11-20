@@ -770,7 +770,7 @@ export class MyBookingComponent implements OnInit {
 		  if((element.status == this.bookingConstant.SUBMITTED || element.status == this.bookingConstant.CANCELLED && (element.resourceType == 'STADIUM' || element.resourceType == 'CHILDREN_THEATER'))){
 			  return true;
 		  }
-		  else if(element.status == this.bookingConstant.SUBMITTED && element.resourceType == 'ATITHIGRUH'){
+		  else if((element.status == this.bookingConstant.SUBMITTED || element.status == this.bookingConstant.CANCELLED || element.status == this.bookingConstant.WAITINGLIST)&& element.resourceType == 'ATITHIGRUH'){
 				return true;
 		  }
 // 		  else if(element.status == this.bookingConstant.CANCELLED && element.resourceType == 'STADIUM'){

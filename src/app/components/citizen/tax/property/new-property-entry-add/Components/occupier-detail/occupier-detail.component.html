@@ -38,7 +38,8 @@
 
             <div class="col-md-2">
                 <div class="ngSelect" style="min-width: 100%;">
-                    <ng-select required [disabled]="model.propertyOccupierId>0" placeholder="{{'occupier_code' | translate:translateKey }} *" [items]="occupierList" bindValue="itemCode"
+                    <!-- <ng-select required [disabled]="model.propertyOccupierId>0" placeholder="{{'occupier_code' | translate:translateKey }} *" [items]="occupierList" bindValue="itemCode" -->
+                        <ng-select required placeholder="{{'occupier_code' | translate:translateKey }} *" [items]="occupierList" bindValue="itemCode"
                         bindLabel="itemName" name="occupierCode" [(ngModel)]="model.occupierCode" #occupierCode="ngModel"
                         [ngClass]="{'ng-invalid ng-touched':  form.submitted && occupierCode.invalid}"
                         (mouseenter)="show=1" (mouseleave)="show=0">
