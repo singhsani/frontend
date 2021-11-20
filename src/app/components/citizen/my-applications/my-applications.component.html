@@ -287,13 +287,6 @@
                                 {{'print_receipt' | translate:translateKey}}
                             </button>
 
-                            <button mat-menu-item *ngIf="row.fileStatus == 'TRANSACTION_PENDING'" color="primary"
-                                (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
-                                <mat-icon class="m-1" title="{{'preview_application' | translate:translateKey}}">
-                                    remove_red_eye
-                                </mat-icon>
-                                {{'preview_application' | translate:translateKey}}
-                            </button>
 
                         </mat-menu>
                     </ng-container>
@@ -366,13 +359,6 @@
                                 Remark
                             </button>
 
-                            <button mat-menu-item *ngIf="row.fileStatus == 'TRANSACTION_PENDING'" color="primary"
-                                (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
-                                <mat-icon class="m-1" title="{{'preview_application' | translate:translateKey}}">
-                                    remove_red_eye
-                                </mat-icon>
-                                {{'preview_application' | translate:translateKey}}
-                            </button>
                         </mat-menu>
 
                     </ng-container>
@@ -492,13 +478,6 @@
                                 {{'payment' | translate:translateKey}}
                             </button>
 
-                            <button mat-menu-item *ngIf="row.fileStatus == 'TRANSACTION_PENDING'" color="primary"
-                                (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
-                                <mat-icon class="m-1" title="{{'preview_application' | translate:translateKey}}">
-                                    remove_red_eye
-                                </mat-icon>
-                                {{'preview_application' | translate:translateKey}}
-                            </button>
 
                             <!-- <button mat-menu-item *ngIf="(row.fileStatus === 'DRAFT')" color="primary"
                                                 (click)="openModal(LoiPaymentTemplate);remarksDisplayForQueryRaise(row)">
