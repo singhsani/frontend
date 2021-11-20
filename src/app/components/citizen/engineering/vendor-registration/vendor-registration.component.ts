@@ -114,6 +114,8 @@ export class VendorRegistrationComponent implements OnInit {
       this.createFormData();
     }
 
+    this.setFormControlToTabIndexMap();
+
   }
 
   /**
@@ -128,46 +130,40 @@ export class VendorRegistrationComponent implements OnInit {
     });
   }
 
-  // setFormControlToTabIndexMap() {
+  setFormControlToTabIndexMap() {
 
+    this.formControlNameToTabIndex.set('nameOfTheFirm', 0)
+    this.formControlNameToTabIndex.set('commencementDate', 0)
+    this.formControlNameToTabIndex.set('yearOfEstablishment', 0)
+    this.formControlNameToTabIndex.set('panNo', 0)
+    this.formControlNameToTabIndex.set('tanNo', 0)
+    this.formControlNameToTabIndex.set('gstNo', 0)
+    this.formControlNameToTabIndex.set('gstRegiDate', 0)
+    this.formControlNameToTabIndex.set('officeContactNumber', 0)
+    this.formControlNameToTabIndex.set('officeFaxNumber', 0)
+    this.formControlNameToTabIndex.set('officeEmailId', 0)
+    this.formControlNameToTabIndex.set('branchMobileNumber', 0)
+    this.formControlNameToTabIndex.set('branchAlterMobileNumber', 0)
+    this.formControlNameToTabIndex.set('branchISDNumber', 0)
+    this.formControlNameToTabIndex.set('branchSTDNumber', 0)
+    this.formControlNameToTabIndex.set('headMobileNumber', 0)
+    this.formControlNameToTabIndex.set('headAlterMobileNumber', 0)
+    this.formControlNameToTabIndex.set('headISDNumber', 0)
+    this.formControlNameToTabIndex.set('headSTDNumber', 0)
+    this.formControlNameToTabIndex.set('resContactNumber', 0)
+    this.formControlNameToTabIndex.set('resFaxNumber', 0)
+    this.formControlNameToTabIndex.set('resEmailId', 0)
+    this.formControlNameToTabIndex.set('factoryAddress', 0)
+    this.formControlNameToTabIndex.set('registeredAddress', 0)
+    this.formControlNameToTabIndex.set('registrationBank', 1)
+    this.formControlNameToTabIndex.set('registrationAmount', 1)
+    this.formControlNameToTabIndex.set('locationOfFactoryWorks', 0)
+    this.formControlNameToTabIndex.set('isIncomeTaxDetails', 1)
+    this.formControlNameToTabIndex.set('manufacturingOwnedDetails', 1)
+    this.formControlNameToTabIndex.set('acceptAndCondition', 4)
+    
 
-  //   this.formControlNameToTabIndex.set('nameOfTheFirm', 0)
-  //     this.formControlNameToTabIndex.set('panNo', 0)
-  //     this.formControlNameToTabIndex.set('tanNo', 0)
-  //     this.formControlNameToTabIndex.set('locationOfFactoryWorks', 0)
-  //     this.formControlNameToTabIndex.set('factoryAddress', 0)
-  //     this.formControlNameToTabIndex.set('officeContactNumber', 0)
-  //     this.formControlNameToTabIndex.set('officeFaxNumber', 0)
-  //     this.formControlNameToTabIndex.set('officeEmailId', 0)
-  //     this.formControlNameToTabIndex.set('resContactNumber', 0)
-  //     this.formControlNameToTabIndex.set('resFaxNumber', 0)
-  //     this.formControlNameToTabIndex.set('resEmailId', 0)
-  //     this.formControlNameToTabIndex.set('registeredAddress', 0)
-
-  //     this.formControlNameToTabIndex.set('registrationBank', 1)
-  //     this.formControlNameToTabIndex.set('registrationAmount', 1)
-  //     this.formControlNameToTabIndex.set('registrationDDNumber', 1)
-  //     this.formControlNameToTabIndex.set('registrationDDIssuingDate', 1)
-  //     this.formControlNameToTabIndex.set('isIncomeTaxDetails', 1)
-  //     this.formControlNameToTabIndex.set('vendorNameDetails', 1)
-  //     this.formControlNameToTabIndex.set('isManufacturingOwnedDetails', 1)
-  //     this.formControlNameToTabIndex.set('isTotalInvestmentDetail', 1)
-  //     this.formControlNameToTabIndex.set('isLastThreeYearsCopies', 1)
-
-  //     this.formControlNameToTabIndex.set('loanCapitalWithBankLimit', 2)
-  //     this.formControlNameToTabIndex.set('isCopyOfITCClearanceCertificate', 2)
-  //     this.formControlNameToTabIndex.set('factoryLicenceNumber', 2)
-  //     this.formControlNameToTabIndex.set('isRegistrationOfficeACT', 2)
-  //     this.formControlNameToTabIndex.set('isISIProductManufactured', 2)
-  //     this.formControlNameToTabIndex.set('isRegisteredByGovt', 2)
-
-  //     this.formControlNameToTabIndex.set('isTestingRecordMaintanedDetail', 3)
-  //     this.formControlNameToTabIndex.set('testStandardGovtLabApproved', 0)
-  //     this.formControlNameToTabIndex.set('testStandardGovtLabApproved', 0)
-  //     this.formControlNameToTabIndex.set('testStandardGovtLabApproved', 0)
-
-
-  // }  
+  }  
   getVendorData(id: number) {
     this.formService.getFormData(id).subscribe(res => {
       console.log("tresr", res)
@@ -221,33 +217,31 @@ export class VendorRegistrationComponent implements OnInit {
       applicationNumber: null,
       canEdit: [true],
 
-      gstNo: [null, ValidationService.gstNoValidator],
-      gstRegiDate: null,
-
-      id: null,
-      nameOfTheFirm: [null, [Validators.required]],
-      commencementDate: null,
-      yearOfEstablishment: null,
-
+      nameOfTheFirm:  [null,[Validators.required, Validators.maxLength(150)]],
+      commencementDate: [null,[Validators.required]],
+      yearOfEstablishment: [null,[Validators.required]],
       panNo: [null, [Validators.required, ValidationService.panValidator]],
-      tanNo: [null, [Validators.required, ValidationService.tanValidator]],
+      tanNo: [null, [ValidationService.tanValidator]],
+      gstNo: [null, [Validators.required,ValidationService.gstNoValidator]],
+      gstRegiDate: [null,[Validators.required]],
+
       officeContactNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
       officeFaxNumber: [null, [ValidationService.faxValidation]],
       officeEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 
+      branchMobileNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      branchAlterMobileNumber:  [null,[Validators.maxLength(10),Validators.minLength(10)]],
+      branchISDNumber:  [null,[Validators.maxLength(11)]],
+      branchSTDNumber:  [null,[Validators.maxLength(12)]],
+
+      headMobileNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      headAlterMobileNumber:  [null,[Validators.maxLength(10),Validators.minLength(10)]],
+      headISDNumber: [null,[Validators.maxLength(11)]],
+      headSTDNumber: [null,[Validators.maxLength(12)]],
+
       resContactNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
       resFaxNumber: [null, [ValidationService.faxValidation]],
       resEmailId: [null, [Validators.required, ValidationService.emailValidator]],
-
-      branchMobileNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
-      branchAlterMobileNumber: [null, [ValidationService.mobileNumberValidation]],
-      branchISDNumber: null,
-      branchSTDNumber: null,
-
-      headMobileNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
-      headAlterMobileNumber: [null, [ValidationService.mobileNumberValidation]],
-      headISDNumber: null,
-      headSTDNumber: null,
 
       factoryAddress: this.fb.group(this.officeAddrComponent.addressControls()),
       registeredAddress: this.fb.group(this.resAddrComponent.addressControls()),
@@ -255,8 +249,32 @@ export class VendorRegistrationComponent implements OnInit {
       namesOfTheOwner: null,
       //manufacturingOwnedDetails: null,
 
+      listOfItemMaterial: this.listOfItemMaterialSupplier,
+      academicQualificationAndExperienceDetail: this.fb.array([]),
+      vendorNameDetails: this.vendorNameArray,
+      vendorNameLastYearDetails: this.vendorNameLastYear,
+      vendorNameAuthorizedDetails: this.vendorNameAuthorized,
+      vendorNameholdingDetails: this.vendorNameholding,
+      supplierOrderDetails: this.vendorDetailsOfOrderIndicationQuantity,
+
+      registrationBank: this.fb.group({
+        code: [null, [Validators.required]],
+        name: null
+      }),
+      registrationDDNumber: null,
+      registrationAmount: [null, [Validators.maxLength(7)]],
+      registrationDDIssuingDate: null,
+
+      locationOfFactoryWorks: this.fb.group({
+        code: [null, [Validators.required]],
+        name: null
+      }),
+
+      isIncomeTaxDetails: [null, [Validators.required]],
+      isManufacturingOwnedDetails: [null],
+
       manufacturingOwnedDetails: this.fb.group({
-        code: null,
+        code: [null, [Validators.required]],
         name: null
       }),
 
@@ -268,42 +286,16 @@ export class VendorRegistrationComponent implements OnInit {
       MSMENSICSSIcertificateEndDate: null,
 
       ISIBISCElicences: null,
-
-      listOfItemMaterial: this.listOfItemMaterialSupplier,
-      academicQualificationsDetail: this.fb.array([]),
-      vendorNameDetails: this.vendorNameArray,
-
-      vendorNameLastYearDetails: this.vendorNameLastYear,
-      vendorNameAuthorizedDetails: this.vendorNameAuthorized,
-      vendorNameholdingDetails: this.vendorNameholding,
-      supplierOrderDetails: this.vendorDetailsOfOrderIndicationQuantity,
-      academicQualificationAndExperienceDetail: this.fb.array([]),
-
-      registrationBank: this.fb.group({
-        code: [null, [Validators.required]],
-        name: null
-      }),
-      registrationDDNumber: [null, [Validators.required]],
-      registrationAmount: [null, [Validators.maxLength(7)]],
-      registrationDDIssuingDate: [null, [Validators.required]],
-
-      locationOfFactoryWorks: this.fb.group({
-        code: [null, [Validators.required]],
-        name: null
-      }),
-
-      isIncomeTaxDetails: [null, [Validators.required]],
-      isManufacturingOwnedDetails: [null, [Validators.required]],
-      isTotalInvestmentDetail: [null, [Validators.required]],
-      isLastThreeYearsCopies: [null, [Validators.required]],
-      isCopyOfITCClearanceCertificate: [null, [Validators.required]],
-      isRegistrationOfficeACT: [null, [Validators.required]],
-      isISIProductManufactured: [null, [Validators.required]],
-      isRegisteredByGovt: [null, [Validators.required]],
-      isTestingRecordMaintanedDetail: [null, [Validators.required]],
-      isPersonInChargeProductionControl: [null, [Validators.required]],
-      isFirmUnderDealBlacklisted: [null, [Validators.required]],
-      isResultSampleTesting: [null, [Validators.required]],
+      isTotalInvestmentDetail: [null],
+      isLastThreeYearsCopies: [null],
+      isCopyOfITCClearanceCertificate: [null],
+      isRegistrationOfficeACT: [null],
+      isISIProductManufactured: [null],
+      isRegisteredByGovt: [null],
+      isTestingRecordMaintanedDetail: [null],
+      isPersonInChargeProductionControl: [null],
+      isFirmUnderDealBlacklisted: [null],
+      isResultSampleTesting: [null],
 
       totalTurnoverLastThreeYears: null,
       loanCapitalWithBankLimit: null,
@@ -311,7 +303,7 @@ export class VendorRegistrationComponent implements OnInit {
       areaOfLandFactory: null,
       builtAreaFactory: null,
       noOfWorkingShifts: null,
-      factoryLicenceNumber: [null, [Validators.required]],
+      factoryLicenceNumber: [null],
       sscNSICCertificateNumber: null,
       valueOfPlantAndMachinery: null,
       detailsEquipmentCapacity: null,
@@ -347,7 +339,9 @@ export class VendorRegistrationComponent implements OnInit {
       attachments: [],
       acceptAndCondition: [false, [Validators.required]],
       createdByCitizen: [true],
+
     });
+
     this.academicQualifications.push(this.createEducationQualification());
     this.academicQualificationAndExperience.push(this.createEducationQualification());
     this.vendorNameArray.push(this.createVendorNameArray());
@@ -371,6 +365,16 @@ export class VendorRegistrationComponent implements OnInit {
       // }
     });
   }
+
+  handleErrorsOnSubmit(key) {
+
+		const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 0;
+    
+		this.tabIndex = index;
+		return false;
+
+
+	}
 
   onDateChange(fieldName, date) {
     this.vendorRegistrationForm.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
@@ -470,15 +474,6 @@ export class VendorRegistrationComponent implements OnInit {
     this.vendorDetailsOfOrderIndicationQuantity.removeAt(rowIndex);
   }
 
-  handleErrorsOnSubmit(key) {
-
-    //const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 0;
-
-    //this.tabIndex = index;
-    return false;
-
-
-  }
 
   onRemoveRowItemMaterial(rowIndex: number) {
     this.listOfItemMaterialSupplier.removeAt(rowIndex);
