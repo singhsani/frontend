@@ -35,8 +35,6 @@ export class PropertyOccupierSearchComponent implements OnInit {
   @ViewChild(MatPaginator) paginator:MatPaginator;
   resultsLength: number = 0;
   pageRecord = Constants.pageRecord;
-  pageSize:number = 5;
-  pageNo:number = 0;
   totalCount: any = 0;
 
   constructor(
@@ -172,21 +170,21 @@ export class PropertyOccupierSearchComponent implements OnInit {
 
   paginationActivity(){
     this.paginator.pageIndex = 0;
-    this.pageNo = null;
-    this.pageSize = null;
+    this.searchModel.pageNo = null;
+    this.searchModel.pageSize = null;
     merge(this.paginator.page)
       .pipe(
         startWith({}),
         switchMap(() => {
-        if(this.pageNo !== this.paginator.pageIndex || this.pageSize !== this.paginator.pageSize){
-          if (this.pageSize === this.paginator.pageSize) {
-            this.pageNo = this.paginator.pageIndex;
+        if(this.searchModel.pageNo !== this.paginator.pageIndex || this.searchModel.pageSize !== this.paginator.pageSize){
+          if (this.searchModel.pageSize === this.paginator.pageSize) {
+            this.searchModel.pageNo = this.paginator.pageIndex;
           } else {
-            this.pageNo = 0;
+            this.searchModel.pageNo = 0;
             this.paginator.pageIndex = 0;
           }
-          this.pageSize = this.paginator.pageSize;
-          return this.propertySearchService.searchPropertyByPage({model:this.searchModel,pageNo:this.pageNo,pageSize:this.pageSize});
+          this.searchModel.pageSize = this.paginator.pageSize;
+          return this.propertySearchService.searchPropertyByPage(this.searchModel);
         }
         }),
         map(data => {
