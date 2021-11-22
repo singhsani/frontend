@@ -76,8 +76,8 @@
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <input  matInput number-only [allowDecimals]="false" type="text" maxlength="10"  minlength="10" name="mobileNo"
-                        [(ngModel)]="model.mobileNo" #MobileNo="ngModel" placeholder="Mobile Number">
+                    <input required matInput number-only [allowDecimals]="false" type="text" maxlength="10"  minlength="10" name="mobileNo"
+                        [(ngModel)]="model.mobileNo" #MobileNo="ngModel" placeholder="Mobile Number" (keypress)="numberOnly($event)">
                     <mat-error *ngIf="MobileNo.invalid">*Mobile Number is invalid.</mat-error>
                 </mat-form-field>
             </div>
