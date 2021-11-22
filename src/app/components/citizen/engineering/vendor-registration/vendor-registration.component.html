@@ -22,7 +22,7 @@
               <h2 style="margin-left: -16px;"><b>{{'Details of Firm'}}</b></h2>
             </div>
             <mat-form-field class="col-md-4">
-              <input matInput type="text" appValidationFields validationFieldsType='appAlphanumericNumber' required
+              <input matInput type="text" appValidationFields validationFieldsType='alphanumericWithSpace' required
                 maxlength="150" placeholder="{{'Name of the Firm'}}" formControlName="nameOfTheFirm">
               <control-messages [control]="vendorRegistrationForm.get('nameOfTheFirm')">
               </control-messages>
@@ -47,14 +47,14 @@
               </control-messages>
             </mat-form-field>
             <mat-form-field class="col-md-4">
-              <input matInput type="text" appValidationFields validationFieldsType='appAlphanumericNumber' required
+              <input matInput type="text" appValidationFields validationFieldsType='alphanumericWithSpace' required
                 maxlength="10" required placeholder="{{'PAN No. (Attach certified copy)'}}" formControlName="panNo">
               <control-messages [control]="vendorRegistrationForm.get('panNo')" class="capitalCase">
               </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput type="text" appValidationFields validationFieldsType='appAlphanumericNumber' required
+              <input matInput type="text" appValidationFields validationFieldsType='alphanumericWithSpace' required
                 maxlength="10" placeholder="{{'TAN No. (Attach certified copy)'}}" formControlName="tanNo">
               <control-messages [control]="vendorRegistrationForm.get('tanNo')" class="capitalCase">
               </control-messages>
@@ -469,7 +469,7 @@
 
             <mat-form-field class="col-md-12">
               <input matInput type="text" maxlength="1000" appValidationFields
-                validationFieldsType='appAlphanumericNumber'
+                validationFieldsType='alphanumericWithSpace'
                 placeholder="{{'Total turnover for the last three years of regd. charted accountant'}}"
                 formControlName="totalTurnoverLastThreeYears">
               <control-messages [control]="vendorRegistrationForm.get('totalTurnoverLastThreeYears')">
@@ -511,7 +511,7 @@
           <div class="row">
             <mat-form-field class="col-md-4">
               <input matInput type="text" maxlength="11" appValidationFields
-                validationFieldsType='appAlphanumericNumber' placeholder="{{'Loan Capital with Bank Limit.'}}"
+                validationFieldsType='alphanumericWithSpace' placeholder="{{'Loan Capital with Bank Limit.'}}"
                 formControlName="loanCapitalWithBankLimit">
               <control-messages [control]="vendorRegistrationForm.get('loanCapitalWithBankLimit')">
               </control-messages>
@@ -682,7 +682,7 @@
 
                   <td>
                     <mat-form-field>
-                      <input matInput type="text" appValidationFields validationFieldsType='appAlphanumericNumber'
+                      <input matInput type="text" appValidationFields validationFieldsType='alphanumericWithSpace'
                         maxlength="100" [formControl]="row.get('managerialQualification')">
                       <control-messages [control]="row.get('managerialQualification')">
                       </control-messages>
@@ -858,16 +858,13 @@
             </mat-form-field>
 
 
-            <div class="col-md-12 ngSelect">
-              <ng-select
-                placeholder="{{'Is the person in charge for Quality control independent of production control?.'}}"
-                formControlName="isPersonInChargeProductionControl">
-                <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
-                </ng-option>
-              </ng-select>
-              <control-messages [control]="vendorRegistrationForm.get('isPersonInChargeProductionControl')">
-              </control-messages>
-            </div>
+            <mat-form-field class="col-md-12">
+              <input matInput type="text" maxlength="1000"
+              placeholder="{{'Distinguished marks or method employed to identify, materials, if any.'}}"
+              formControlName="isPersonInChargeProductionControl">
+            <control-messages [control]="vendorRegistrationForm.get('isPersonInChargeProductionControl')">
+            </control-messages>
+          </mat-form-field>
 
             <mat-form-field class="col-md-12">
               <input matInput type="text" maxlength="1000"
