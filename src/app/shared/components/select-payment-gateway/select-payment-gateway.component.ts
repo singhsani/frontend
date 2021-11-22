@@ -142,7 +142,7 @@ export class SelectPaymentGatewayComponent implements OnInit {
       amount: this.payData.amount,
       // txtadditionalInfo1: this.payData.payableServiceType ? this.payData.payableServiceType : this.payData.resourceType,
       // txtadditionalInfo1: this.payData.txtadditionalInfo1 ? this.payData.txtadditionalInfo1  : this.payData.resourceType
-      txtadditionalInfo1: this.payData.txtadditionalInfo1
+      txtadditionalInfo2: this.payData.txtadditionalInfo1
 
     }
 
