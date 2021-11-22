@@ -155,8 +155,8 @@ export class VendorRegistrationComponent implements OnInit {
     this.formControlNameToTabIndex.set('resEmailId', 0)
     this.formControlNameToTabIndex.set('factoryAddress', 0)
     this.formControlNameToTabIndex.set('registeredAddress', 0)
-    this.formControlNameToTabIndex.set('registrationBank', 1)
-    this.formControlNameToTabIndex.set('registrationAmount', 1)
+    
+    
     this.formControlNameToTabIndex.set('locationOfFactoryWorks', 0)
     this.formControlNameToTabIndex.set('isIncomeTaxDetails', 1)
     this.formControlNameToTabIndex.set('manufacturingOwnedDetails', 1)
@@ -183,7 +183,7 @@ export class VendorRegistrationComponent implements OnInit {
       console.log("file" + JSON.stringify(file));
       this.attachmentList.push(file);
     }
-    //this.manadoty();
+    this.manadoty();
   }
 
   manadoty() {
@@ -261,9 +261,9 @@ export class VendorRegistrationComponent implements OnInit {
         code: [{ value: null, disabled: true }],
         name: null
       }),
-      registrationDDNumber: [{ value: null, disabled: true }],
-      registrationAmount: [{ value: null, disabled: true }],
-      registrationDDIssuingDate: [{ value: null, disabled: true }],
+      registrationDDNumber: [null, {disabled: true }],
+      registrationAmount: [null,{ disabled: true }],
+      registrationDDIssuingDate: [null,{disabled: true }],
 
       locationOfFactoryWorks: this.fb.group({
         code: [null, [Validators.required]],
@@ -337,7 +337,7 @@ export class VendorRegistrationComponent implements OnInit {
       personnelDetailOther: null,
 
       attachments: [],
-      acceptAndCondition: [false, [Validators.required]],
+      acceptAndCondition: [null],
       createdByCitizen: [true],
 
     });

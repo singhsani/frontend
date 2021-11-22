@@ -1259,7 +1259,7 @@
 
 
           <div class="checkboxHref">
-            <mat-checkbox class="col accept-terms" required formControlName="acceptAndCondition">
+            <mat-checkbox class="col accept-terms"  formControlName="acceptAndCondition">
 
             </mat-checkbox>
             <control-messages [control]="vendorRegistrationForm.get('acceptAndCondition')">
@@ -1365,19 +1365,19 @@
           </div>
           <div class="row">
             <mat-form-field class="col-md-4" formGroupName="registrationBank">
-              <input matInput type="text" placeholder="{{'Bank'}}" required readonly formControlName="code">
+              <input matInput type="text" placeholder="{{'Bank'}}"  readonly formControlName="code">
               <control-messages [control]="vendorRegistrationForm.get('locationOfFactoryWorks').get('code')">
               </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput type="text" placeholder="{{'DD Number'}}" required readonly
+              <input matInput type="text" placeholder="{{'DD Number'}}"  readonly
                 formControlName="registrationDDNumber">
               <control-messages [control]="vendorRegistrationForm.get('registrationDDNumber')"></control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput type="text" placeholder="{{'DD Amount'}}" required readonly
+              <input matInput type="text" placeholder="{{'DD Amount'}}"  readonly
                 formControlName="registrationAmount">
               <control-messages [control]="vendorRegistrationForm.get('registrationAmount')"></control-messages>
             </mat-form-field>
