@@ -483,7 +483,7 @@ export class NewDrainageConnectionComponent implements OnInit {
       (data) => {
        if (data.status === 200 && data.body.length) {
           this.plumberList = data.body;
-          console.log("plumber list", this.plumberList)
+          this.shortDropdown(this.plumberList,'nameOfApplicant');
           //TODO Ask to nikulbhai about filter plumber list
 
           // this.filteredPlumerList = this.plumerCtrl.valueChanges
@@ -497,7 +497,13 @@ export class NewDrainageConnectionComponent implements OnInit {
         this.alertService.error(error.error.message);
       })
   }
-
+  
+  shortDropdown(item:any,columnName:any){
+    item.sort((a, b) => {      
+      return typeof a[columnName] === 'number' ?  a[columnName] - b[columnName] : a[columnName].localeCompare(b[columnName]);
+     });
+  }
+  
   getFormsArray(): FormArray {
 		let formArrayData: FormArray;
 	
