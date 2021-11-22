@@ -412,7 +412,7 @@ export class NewDrainageConnectionComponent implements OnInit {
       fullAddress = fullAddress.substring(0, fullAddress.length - 2);
     
       // this.newDrainageConnectionForm.get('postalAddress').setValue(fullAddress);
-      // this.newDrainageConnectionForm.get('correspondenceAddress').setValue(fullAddress);
+      this.newDrainageConnectionForm.get('correspondenceAddress').setValue(fullAddress);
     
   }
 

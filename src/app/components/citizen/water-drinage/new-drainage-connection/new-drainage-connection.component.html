@@ -277,7 +277,7 @@
 				</mat-card>
 				<div class="row">
 					<mat-form-field class="col-md-6">
-						<input matInput OnlyNumber (input)="onChangeAddress()" maxlength="10" formControlName="fpNo"
+						<input matInput  (input)="onChangeAddress()" maxlength="10" formControlName="fpNo"
 							placeholder="{{'fP_No' | translate:translateKey}}">
 						<control-messages [control]="newDrainageConnectionForm.get('fpNo')">
 						</control-messages>
@@ -292,7 +292,7 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-6">
-						<input matInput OnlyNumber maxlength="10" formControlName="tpNo" (input)="onChangeAddress()"
+						<input matInput  maxlength="10" formControlName="tpNo" (input)="onChangeAddress()"
 							placeholder="{{'tP_No' | translate:translateKey}}">
 						<control-messages [control]="newDrainageConnectionForm.get('tpNo')">
 						</control-messages>
