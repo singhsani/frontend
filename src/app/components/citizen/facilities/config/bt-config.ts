@@ -25,6 +25,7 @@ export class BTConstants {
     static CHECKED = "CHECKED";
     static CANCELLED = "CANCELLED";
     static EXPIRED = "EXPIRED";
+    static TRANSACTION_PENDING = "TRANSACTION_PENDING";
     static BY_FORCE = "BY_FORCE";
     static BY_CITIZEN = "BY_CITIZEN";
     static PAYMENT_RECEIVED = "PAYMENT_RECEIVED";
