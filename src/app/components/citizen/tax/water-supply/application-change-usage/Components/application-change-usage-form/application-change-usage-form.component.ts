@@ -19,10 +19,11 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
     connectionSubUsageList = [];
     connectionUsageList = [];
     connectioNo: string;
-    dataModel: DataModel
+    dataModel: DataModel;
     connectionsModel: ConnectionsModel;
     applicationModel: ApplicationModel;
     isShowSaveButton: boolean = false;
+    totalDues: number = 0;
 
     @ViewChild('stepper') stepper: MatStepper;
     changeOfUsageDocumentUploadDocs : Array<any> = [];
@@ -97,7 +98,8 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
                 this.applicationChangeUsageService.searchByConnection(this.connectioNo.toString().trim()).subscribe(
                     (data) => {
                         if (data.status === 200) {
-                            if (data.body.data.connectionDetail == null) {
+                            const result = data.body.data;
+                            if (result.connectionDetail == null) {
                                 this.isShowSaveButton = false;
                                 this.alertService.info('No data found!');
                                 this.connectionsModel = new ConnectionsModel();
@@ -106,8 +108,9 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
                             }
                             else {
                                 this.isShowSaveButton = true;
-                                this.connectionsModel = data.body.data;
-                                this.outstandingDetail = data.body.data;
+                                this.connectionsModel = result;
+                                this.outstandingDetail = result;
+                                this.totalDues = result.waterDues +result.propertyDues;
                             }
                         }
                     },
@@ -129,9 +132,15 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
 
     save(formDetail: NgForm) {
         if (formDetail.form.valid) {
+
+            if (this.totalDues > 0 ) {
+                this.alertService.warning('Can not proceed further due to remaining outstanding payment.' +
+                                        ' Please complete payment of remaining outstanding amount.');
+                return;
+            }
             this.dataModel.applicationNumber = this.applicationModel.applicationNumber;
             this.dataModel.connectionDtlId = this.connectionsModel.connectionDetail.connectionDtlId;
-            this.dataModel.changedFromDate =this.commonService.getPayloadDate(this.dataModel.changedFromDate);
+            this.dataModel.changedFromDate = this.commonService.getPayloadDate(this.dataModel.changedFromDate);
             this.applicationChangeUsageService.save(this.dataModel).subscribe(
                 (data) => {
                     if (data.status === 200) {
@@ -164,6 +173,14 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
                 });
         }
     }
+
+    clear(aForm: NgForm) {
+        this.connectioNo = '';
+        this.connectionsModel = new ConnectionsModel();
+        this.connectionsModel.connectionDetail = new ConnectionDetail();
+        aForm.resetForm();
+    }
+
     onSubmitApproved() {
 
         this.applicationChangeUsageService.submitNewgen(this.changeOfUsageId).subscribe(

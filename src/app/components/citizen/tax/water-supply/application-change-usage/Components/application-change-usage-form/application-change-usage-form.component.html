@@ -94,7 +94,7 @@
         <div class="col-md-2">
             <button *ngIf="isShowSaveButton" class="ml-3" mat-raised-button color="accent" type="button"
                 (click)="onWaterDetailClick()">
-                <mat-icon>details</mat-icon> Detail
+                <mat-icon>details</mat-icon> Detail {{totalDues}}
             </button>
         </div>
     </div>
@@ -154,6 +154,9 @@
             </div>
         </div>
         <div class="button-row text-right p-4" *ngIf="isShowSaveButton">
+            <button class="ml-3" mat-raised-button color="warn" type="button" (click)="clear(form)">
+                <mat-icon>clear_all</mat-icon> Clear
+            </button>
             <button class="ml-3" mat-raised-button color="primary" type="submit">
                 <mat-icon>save</mat-icon> Save & Next
             </button>
