@@ -93,7 +93,7 @@
 					<div class="mobile-label1">:</div>
 
 					<button
-						*ngIf="(element.status != ticketingConstants.DRAFT) && (element.status != ticketingConstants.EXPIRED) || (element.resourceType == 'Zoo Animal Adoption')"
+						*ngIf="(element.status != ticketingConstants.DRAFT) && (element.status != ticketingConstants.EXPIRED) && (element.status != ticketingConstants.TRANSACTION_PENDING) || (element.resourceType == 'Zoo Animal Adoption')"
 						mat-button [matMenuTriggerFor]="menu" class="p-0" style="min-width: 50px;">
 						<mat-icon>more_vert</mat-icon>
 					</button>
