@@ -83,6 +83,7 @@ export class MyBookingComponent implements OnInit {
 	 */
 	resultsLength: number = 0;
 	isLoadingResults: boolean = true;
+	isAmphi:boolean = false;
 
 	constructor(
 		private fb: FormBuilder,
@@ -822,5 +823,13 @@ export class MyBookingComponent implements OnInit {
 		this.commonService.openAlert('Error', err.message, 'warning');
 	  });
 
+  }
+
+  resourceType(event){
+	if(event == 'amphiTheater'){
+		this.isAmphi = true;
+	}else{
+		this.isAmphi = false;
+	}
   }
 }

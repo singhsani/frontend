@@ -6,7 +6,7 @@
   <form [formGroup]="searchBookingsForm" (ngSubmit)="getAllBooking()" autocomplete="off" ngNativeValidate>
     <div class="row">
       <div class="col-md-4 ngSelect">
-        <ng-select placeholder="{{'select_booking_resources' | translate:translateKey}}" formControlName="resourceType">
+        <ng-select placeholder="{{'select_booking_resources' | translate:translateKey}}" formControlName="resourceType" (change)="resourceType($event)">
           <ng-option *ngFor="let resource of resources" [value]="resource.type">
             {{ resource.name }}
           </ng-option>
@@ -60,7 +60,8 @@
 
     <ng-container matColumnDef="applicantName">
       <mat-header-cell class="wMatCell150"  *matHeaderCellDef>
-          {{'applicant_name' | translate:translateKey}}
+        {{ (isAmphi == true ? 'schoolAndOrg_name' : 'applicant_name') | translate: translateKey}}
+          <!-- {{'applicant_name' | translate:translateKey}} -->
       </mat-header-cell>
       <mat-cell class="wMatCell150"  *matCellDef="let element;">
           {{element.applicantName}}
