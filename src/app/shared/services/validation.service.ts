@@ -34,13 +34,14 @@ export class ValidationService {
             invalidPinCode: `Pin Code Not Valid`,
             invalidAadhar: `Invalid Aadhar Number`,
             invalidNumber: `Invalid Mobile Number`,
-            invalidFaxNumber : `Invalid Fax Number`,
+            invalidFaxNumber: `Invalid Fax Number`,
             invalidpregnanceTime: 'Pregnancy duration between 25 to 40',
             invalidbirthRegNumber: 'Invalid Birth Registration Date',
             invalidBuildingName: 'Building name is not valid',
             invalidemployeeage: 'Age must be >13 year',
             invalidIfscCode: 'IFSC Code is not valid',
             invalidPan: 'Enter valid PAN number e.g. ABCDE1234T',
+            invalidTan: 'Enter valid TAN number e.g. HIJKL1234Z',
             invalidPanLastFour: 'Enter valid PAN number e.g. 234T',
             invalidGstin: 'The GSTIN is invalid, Please enter a valid GSTIN e.g. 29ABCDE1234F2Z5',
             invalidpetaKendraNumber: 'Should contains only alpha-numeric and numeric value',
@@ -52,7 +53,7 @@ export class ValidationService {
             invalidDrivingLicense: 'Enter valid License number e.g. GJ0620210012122',
             invalidElectionCard: 'Enter valid Election Card Number e.g. ABC1234567',
             invalidPassport: 'Enter valid Passport number e,g, A1234567 or AB1234567',
-            invalidPropertyNo:'Please enter valid property no. with occupier code',
+            invalidPropertyNo: 'Please enter valid property no. with occupier code',
             invalidMemberNo: 'Please enter valid member no.'
         }
 
@@ -78,10 +79,10 @@ export class ValidationService {
         }
     }
 
-    static swimmingPoolMemberValidator(control:FormControl) {
+    static swimmingPoolMemberValidator(control: FormControl) {
         if (control.value) {
             const matches = control.value.match(/^[A-Za-z]{2}[0-9]{4}[-][0-9]{2}[A-Za-z]{2}[0-9]{5}$/);
-            return matches ? null : { 'invalidMemberNo': true}
+            return matches ? null : { 'invalidMemberNo': true }
         }
     }
 
@@ -274,14 +275,14 @@ export class ValidationService {
     }
 
     // tan number validation 
-	static tanValidator(control: FormControl) {
-		if (control.value) {
-			const matches = control.value.match(/^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}/);
-			return matches ? null : { 'invalidTan': true };
-		} else {
-			return null;
-		}
-	}
+    static tanValidator(control: FormControl) {
+        if (control.value) {
+            const matches = control.value.match(/^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}/);
+            return matches ? null : { 'invalidTan': true };
+        } else {
+            return null;
+        }
+    }
 
     // gst number validation 
     static gstinValidator(control: FormControl) {
@@ -362,8 +363,8 @@ export class ValidationService {
         }
     }
 
-     // Email validation
-     static propertyNoValidator(control: FormControl) {
+    // Email validation
+    static propertyNoValidator(control: FormControl) {
         if (control.value) {
             const matches = control.value.match(/^\d{2}-\d{2}-\d{6}-\d{3}$/);
             return matches ? null : { 'invalidPropertyNo': true };
