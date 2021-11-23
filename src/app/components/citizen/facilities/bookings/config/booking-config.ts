@@ -24,6 +24,7 @@ export class BookingConstants extends BTConstants {
     static REFUND_REQUEST='REFUND_REQUEST';
     static REFUND_APPROVED='REFUND_APPROVED';
     static STADIUM_DEPOSIT = 'STADIUM_DEPOSIT';
+    static AMPHI_RESOURCE_TYPE = 'amphiTheater';
 }
 
 /**
