@@ -93,7 +93,7 @@ export class MyBookingComponent implements OnInit {
 		private commonService: CommonService,
 		private route: ActivatedRoute,
 		private router: Router,
-		private location: Location
+		private location: Location,
 
 	) {
 		let resourcesList = [
@@ -826,7 +826,7 @@ export class MyBookingComponent implements OnInit {
   }
 
   resourceType(event){
-	if(event == 'amphiTheater'){
+	if(event == BookingConstants.AMPHI_RESOURCE_TYPE){
 		this.isAmphi = true;
 	}else{
 		this.isAmphi = false;
