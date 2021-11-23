@@ -2,7 +2,7 @@
   <app-title-bar [title]="'Vendor Registration'">
     <!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
       Patch Value
-    </button>  -->
+    </button> -->
   </app-title-bar>
 
 
@@ -860,11 +860,11 @@
 
             <mat-form-field class="col-md-12">
               <input matInput type="text" maxlength="1000"
-              placeholder="{{'Distinguished marks or method employed to identify, materials, if any.'}}"
-              formControlName="isPersonInChargeProductionControl">
-            <control-messages [control]="vendorRegistrationForm.get('isPersonInChargeProductionControl')">
-            </control-messages>
-          </mat-form-field>
+                placeholder="{{'Distinguished marks or method employed to identify, materials, if any.'}}"
+                formControlName="isPersonInChargeProductionControl">
+              <control-messages [control]="vendorRegistrationForm.get('isPersonInChargeProductionControl')">
+              </control-messages>
+            </mat-form-field>
 
             <mat-form-field class="col-md-12">
               <input matInput type="text" maxlength="1000"
@@ -1259,7 +1259,7 @@
 
 
           <div class="checkboxHref">
-            <mat-checkbox class="col accept-terms"  formControlName="acceptAndCondition">
+            <mat-checkbox class="col accept-terms" formControlName="acceptAndCondition">
 
             </mat-checkbox>
             <control-messages [control]="vendorRegistrationForm.get('acceptAndCondition')">
@@ -1365,20 +1365,18 @@
           </div>
           <div class="row">
             <mat-form-field class="col-md-4" formGroupName="registrationBank">
-              <input matInput type="text" placeholder="{{'Bank'}}"  readonly formControlName="code">
+              <input matInput type="text" placeholder="{{'Bank'}}" readonly formControlName="code">
               <control-messages [control]="vendorRegistrationForm.get('locationOfFactoryWorks').get('code')">
               </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput type="text" placeholder="{{'DD Number'}}"  readonly
-                formControlName="registrationDDNumber">
+              <input matInput type="text" placeholder="{{'DD Number'}}" readonly formControlName="registrationDDNumber">
               <control-messages [control]="vendorRegistrationForm.get('registrationDDNumber')"></control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput type="text" placeholder="{{'DD Amount'}}"  readonly
-                formControlName="registrationAmount">
+              <input matInput type="text" placeholder="{{'DD Amount'}}" readonly formControlName="registrationAmount">
               <control-messages [control]="vendorRegistrationForm.get('registrationAmount')"></control-messages>
             </mat-form-field>
           </div>
