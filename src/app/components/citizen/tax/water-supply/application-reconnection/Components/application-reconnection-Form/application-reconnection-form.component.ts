@@ -111,7 +111,12 @@ export class ApplicationReconnectionFormComponent implements OnInit {
             });
     }
     save(formDetail: NgForm) {
-        if (formDetail.form.valid && this.dataModel.plumberId) {
+        if (formDetail.form.valid && this.dataModel.plumberId) { 
+           if((this.connectionsModel.waterDues + this.connectionsModel.propertyDues) != 0){
+            this.alertService.warning('Can not proceed further due to remaining outstanding payment.' +
+            ' Please complete payment of remaining outstanding amount');
+            return;
+           }
             this.dataModel.applicationNumber = this.applicationModel.applicationNumber;
             this.dataModel.connectionDtlId = this.connectionsModel.connectionDetail.connectionDtlId;
             this.applicationReconnectionService.save(this.dataModel).subscribe(
