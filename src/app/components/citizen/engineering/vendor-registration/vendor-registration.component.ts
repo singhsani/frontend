@@ -46,6 +46,7 @@ export class VendorRegistrationComponent implements OnInit {
   minDateNew = moment().subtract(2000, 'months').format('YYYY-MM-DD');
   attachmentList: any = [];
   bankNameArray: any = [];
+  academicQualificationDes: any = [];
   public serverUploadFilesArray: Array<any> = [];
 
   uploadFilesArray: Array<any> = [];
@@ -203,6 +204,7 @@ export class VendorRegistrationComponent implements OnInit {
     this.engineer.getLookup().subscribe(res => {
 
       this.manuFacturDetails = res.VENDOR_MANUFACTURING_OWNED;
+      this.academicQualificationDes = res.ACEDEMIC_QUALIFICATION_DESC;
 
     });
   }
@@ -270,7 +272,7 @@ export class VendorRegistrationComponent implements OnInit {
         name: null
       }),
 
-      isIncomeTaxDetails: [null, [Validators.required]],
+      incomeTaxDetails: [null, [Validators.required]],
       isManufacturingOwnedDetails: [null],
 
       manufacturingOwnedDetails: this.fb.group({
@@ -287,15 +289,15 @@ export class VendorRegistrationComponent implements OnInit {
 
       ISIBISCElicences: null,
       isTotalInvestmentDetail: [null],
-      isLastThreeYearsCopies: [null],
+      lastThreeYearsCopies: [null],
       isCopyOfITCClearanceCertificate: [null],
       isRegistrationOfficeACT: [null],
       isISIProductManufactured: [null],
       isRegisteredByGovt: [null],
       isTestingRecordMaintanedDetail: [null],
-      isPersonInChargeProductionControl: [null],
+      personInChargeProductionControl: [null],
       isFirmUnderDealBlacklisted: [null],
-      isResultSampleTesting: [null],
+      resultSampleTesting: [null],
 
       totalTurnoverLastThreeYears: null,
       loanCapitalWithBankLimit: null,
