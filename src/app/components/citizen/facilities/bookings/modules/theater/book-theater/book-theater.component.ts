@@ -120,13 +120,13 @@ export class BookTheaterComponent implements OnInit {
 	 * Method Initialzes first.
 	 */
     ngOnInit() {
-        
+
         this.getFeesStructure();
         this.createSearchTheaterForm();
         this.createTheaterBookingForm();
         this.getResourceList();
         this.getLookUps();
-       
+
         //this.getCategoryLookUps();
 
         /**
@@ -169,7 +169,9 @@ export class BookTheaterComponent implements OnInit {
     getResourceList() {
         this.bookingService.getResourceList().subscribe(res => {
             if (res.data.length) {
-                this.searchTheaterForm.get('code').setValue(res.data[0].code);
+                //this.searchTheaterForm.get('code').setValue(res.data[0].code);
+                this.searchTheaterForm.get('code').setValue(res.data[0].name);
+                                          this.searchTheaterForm.get('code').disable();
                 this.bookingObject = res.data[0];
             }
             this.THEATERS = res.data;
