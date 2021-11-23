@@ -29,7 +29,7 @@
       </ol>
       <h5><b>એમ્ફી થિયેટર બુકિંગ માટે દરો:</b></h5>
       <div class=" table-responsive">
-      
+
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
             <ng-container matColumnDef="sno">
@@ -49,7 +49,7 @@
 
             <tr mat-header-row *matHeaderRowDef="displayedColumnsFeeDetails"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumnsFeeDetails;"></tr>
-        </table>    
+        </table>
 
 
       </div>
@@ -71,7 +71,7 @@
       </ol>
       <h5><b>Rates for Booking Amphi Theater:</b></h5>
       <div class=" table-responsive">
-        
+
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
             <ng-container matColumnDef="sno">
@@ -91,7 +91,7 @@
 
             <tr mat-header-row *matHeaderRowDef="displayedColumnsFeeDetails"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumnsFeeDetails;"></tr>
-        </table>  
+        </table>
       </div>
     </mat-card-content>
 
@@ -114,14 +114,18 @@
             <form [formGroup]="searchTheaterForm" (ngSubmit)="searchBooking()" autocomplete="off" ngNativeValidate>
                 <div class="row mt-3 mb-3">
 
-                    <div class="col-md-6 ngSelect">
-                        <ng-select placeholder="{{'select_theater'| translate: translateKey}}" formControlName="code">
-                            <ng-option *ngFor="let theater of THEATERS" [value]="theater.code">
-                                {{ theater.name }}
-                            </ng-option>
-                        </ng-select>
-                        <control-messages [control]="searchTheaterForm.get('code')"></control-messages>
-                    </div>
+<!--                    <div class="col-md-6 ngSelect">-->
+<!--                        <ng-select placeholder="{{'select_theater'| translate: translateKey}}" formControlName="code">-->
+<!--                            <ng-option *ngFor="let theater of THEATERS" [value]="theater.code">-->
+<!--                                {{ theater.name }}-->
+<!--                            </ng-option>-->
+<!--                        </ng-select>-->
+<!--                        <control-messages [control]="searchTheaterForm.get('code')"></control-messages>-->
+<!--                    </div>-->
+                  <mat-form-field class="col-md-6">
+                    <input matInput formControlName="code">
+                    <control-messages [control]="searchTheaterForm.get('code')"></control-messages>
+                  </mat-form-field>
 
                     <div formGroupName="category" class="col-md-6 ngSelect">
                         <ng-select placeholder="{{'category'| translate: translateKey}}" formControlName="code">
@@ -306,7 +310,7 @@
                         <td scope="col">{{paymentObject.EVENT_FROM_DATE}}</td>
                         <td scope="col">{{paymentObject.EVENT_TO_DATE}}</td>
                         <td scope="col">{{paymentObject.RENT_FEES}}</td>
-                        
+
 <!--                        <td scope="col">{{paymentObject.DEPOSIT_FEES}}</td>-->
                        <!-- <td scope="col">{{paymentObject.GST}}</td> -->
                     </tr>
@@ -348,7 +352,7 @@
                             <input matInput formControlName="eventFromDate" readonly>
                             <control-messages [control]="theaterBookingForm.get('eventFromDate')"></control-messages>
                           </mat-form-field>
-    
+
 
                         <mat-form-field class="col-md-4">
                             <mat-label>{{'event_to_date' | translate:translateKey}}</mat-label>
@@ -356,14 +360,14 @@
                             <control-messages [control]="theaterBookingForm.get('eventToDate')"></control-messages>
                           </mat-form-field>
 
-                        
-                         
+
+
                         <mat-form-field class="col-md-4">
                             <mat-label>{{'purpose_of_booking'| translate: translateKey}}</mat-label>
                             <input matInput formControlName="programmePurpose" readonly>
                             <control-messages [control]="theaterBookingForm.get('programmePurpose')"></control-messages>
                           </mat-form-field>
-                    </div>    
+                    </div>
 
                     <h2>
                         {{'organization_details' | translate:translateKey}}
