@@ -155,8 +155,8 @@ export class VendorRegistrationComponent implements OnInit {
     this.formControlNameToTabIndex.set('resEmailId', 0)
     this.formControlNameToTabIndex.set('factoryAddress', 0)
     this.formControlNameToTabIndex.set('registeredAddress', 0)
-    
-    
+
+
     this.formControlNameToTabIndex.set('locationOfFactoryWorks', 0)
     this.formControlNameToTabIndex.set('isIncomeTaxDetails', 1)
     this.formControlNameToTabIndex.set('manufacturingOwnedDetails', 1)
@@ -261,9 +261,9 @@ export class VendorRegistrationComponent implements OnInit {
         code: [{ value: null, disabled: true }],
         name: null
       }),
-      registrationDDNumber: [null, {disabled: true }],
-      registrationAmount: [null,{ disabled: true }],
-      registrationDDIssuingDate: [null,{disabled: true }],
+      registrationDDNumber: [{ value: null, disabled: true }],
+      registrationAmount: [{ value: null, disabled: true }],
+      registrationDDIssuingDate: [{ value: null, disabled: true }],
 
       locationOfFactoryWorks: this.fb.group({
         code: [null, [Validators.required]],
