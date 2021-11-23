@@ -30,8 +30,8 @@ export class SelectPaymentGatewayPropertyComponent implements OnInit {
   paymentGatewayForm: FormGroup;
 
   paymentGatewayArr: any = [
-    { name: 'CC Avenue', code: 'CC_AVENUE' },
     { name: 'BillDesk', code: 'BILLDESK' },
+    { name: 'CC Avenue', code: 'CC_AVENUE' },
   ];
 
   constructor(
@@ -47,7 +47,7 @@ export class SelectPaymentGatewayPropertyComponent implements OnInit {
      * this method is used to create form controls for payment gateway form
      */
     this.paymentGatewayForm = this.fb.group({
-      paymentGateway: ['CC_AVENUE', Validators.required]
+      paymentGateway: ['BILLDESK', Validators.required]
     });
   }
 
