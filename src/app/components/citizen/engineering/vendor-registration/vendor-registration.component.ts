@@ -298,6 +298,7 @@ export class VendorRegistrationComponent implements OnInit {
       personInChargeProductionControl: [null],
       firmUnderDealBlacklisted: [null],
       resultSampleTesting: [null],
+      MSMENSICSSIcertificateEndDate: null,
 
       totalTurnoverLastThreeYears: null,
       loanCapitalWithBankLimit: null,
