@@ -351,8 +351,8 @@
 
                       <td>
                         <mat-form-field>
-                          <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
-                            maxlength="5" [formControl]="row.get('rating')">
+                          <input matInput type="text" appValidationFields maxlength="5"
+                            [formControl]="row.get('rating')">
                           <control-messages [control]="row.get('rating')">
                           </control-messages>
                         </mat-form-field>
@@ -1010,7 +1010,7 @@
 
                       <input matInput autocomplete="off" appDate [formControl]="row.get('purchasingDate')"
                         [min]="maxDate" [matDatepicker]="purchasingDate"
-                        (dateChange)="onDateChangePurchasDate('purchasingDate', $event.value,row)">
+                        (dateChange)="onDateChangePurchaseDate('purchasingDate', $event.value,row)">
                       <mat-datepicker-toggle matSuffix [for]="purchasingDate"></mat-datepicker-toggle>
                       <mat-datepicker touchUi="true" #purchasingDate></mat-datepicker>
                       <div align="end" class="default-show-hint mat-hint mat-right"></div>
