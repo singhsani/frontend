@@ -227,7 +227,7 @@ export class VendorRegistrationComponent implements OnInit {
       gstNo: [null, [ValidationService.gstNoValidator]],
       gstRegiDate: [null],
 
-      officeContactNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      officeContactNumber: [null, [Validators.required]],
       officeFaxNumber: [null, [ValidationService.faxValidation]],
       officeEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 
@@ -241,7 +241,7 @@ export class VendorRegistrationComponent implements OnInit {
       headISDNumber: [null, [Validators.maxLength(11)]],
       headSTDNumber: [null, [Validators.maxLength(12)]],
 
-      resContactNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      resContactNumber: [null, [Validators.required]],
       resFaxNumber: [null, [ValidationService.faxValidation]],
       resEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 
