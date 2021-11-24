@@ -205,7 +205,7 @@ export class BookAtithigruhComponent implements OnInit {
 	bookingLookups() {
 		this.bookingService.getDataFromLookups().subscribe(resp => {
 			this.BOOKING_TYPE = resp.DRAW_TYPE;
-			this.PURPOSE = resp.PURPOSE;
+			this.PURPOSE = resp.PURPOSE.filter(_ => _.code !== 'Funeral');
 			// this.BankOptions = resp.BANK;
 		});
 	}

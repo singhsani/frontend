@@ -221,7 +221,7 @@
         <div class="table-responsive">
           <table class="table" style="border: 1px solid #dee2e6;">
             <thead>
-              <tr>
+              <tr class="text-center">
                 <th class="pl-4">S.No.</th>
                 <th>Financial Year</th>
                 <th>Bill No</th>
@@ -242,7 +242,7 @@
                 </td>
               </tr>
               <ng-container *ngFor="let dues of collectionModel?.billWiseDetails;let i=index">
-                <tr>
+                <tr class="text-center">
                   <td width="50" [class.pl-4]="!dues.children">
                     <mat-icon class="pull-left arrowCls" (click)="toggleRow(dues)" *ngIf="dues.children && dues.children.length > 0">
                       <span *ngIf="!dues.hidden">chevron_right</span>
