@@ -110,8 +110,8 @@
           </div>
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" OnlyNumber required maxlength="10" placeholder="{{'Telephone Number'}}"
-              formControlName="officeContactNumber">
+            <input matInput type="text" OnlyNumber required maxlength="11" minlength="10"
+              placeholder="{{'Telephone Number'}}" formControlName="officeContactNumber">
             <control-messages [control]="vendorRegistrationForm.get('officeContactNumber')">
             </control-messages>
           </mat-form-field>
@@ -138,8 +138,8 @@
           </div>
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" OnlyNumber required maxlength="11" placeholder="{{'Telephone Number'}}"
-              formControlName="resContactNumber">
+            <input matInput type="text" OnlyNumber required maxlength="11" minlength="10"
+              placeholder="{{'Telephone Number'}}" formControlName="resContactNumber">
             <control-messages [control]="vendorRegistrationForm.get('resContactNumber')">
             </control-messages>
           </mat-form-field>
@@ -285,7 +285,7 @@
                       <td>
                         <mat-form-field>
                           <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
-                            maxlength="100" [formControl]="row.get('ownerType')">
+                            maxlength="100" [formControl]="row.get('ownerType')" class="capitalCase">
                           <control-messages [control]="row.get('ownerType')">
                           </control-messages>
                         </mat-form-field>
@@ -343,7 +343,8 @@
 
                       <td>
                         <mat-form-field>
-                          <input matInput type="text" maxlength="100" [formControl]="row.get('itemsMaterial')">
+                          <input matInput type="text" maxlength="100" [formControl]="row.get('itemsMaterial')"
+                            class="capitalCase">
                           <control-messages [control]="row.get('itemsMaterial')">
                           </control-messages>
                         </mat-form-field>
@@ -352,7 +353,7 @@
                       <td>
                         <mat-form-field>
                           <input matInput type="text" appValidationFields maxlength="5"
-                            [formControl]="row.get('rating')">
+                            [formControl]="row.get('rating')" class="capitalCase">
                           <control-messages [control]="row.get('rating')">
                           </control-messages>
                         </mat-form-field>
@@ -361,7 +362,7 @@
                       <td>
                         <mat-form-field>
                           <input matInput type="text" appValidationFields maxlength="250"
-                            [formControl]="row.get('description')">
+                            [formControl]="row.get('description')" class="capitalCase">
                           <control-messages [control]="row.get('description')">
                           </control-messages>
                         </mat-form-field>
@@ -370,7 +371,7 @@
                       <td>
                         <mat-form-field>
                           <input matInput type="text" appValidationFields maxlength="100"
-                            [formControl]="row.get('isNumber')">
+                            [formControl]="row.get('isNumber')" class="capitalCase">
                           <control-messages [control]="row.get('isNumber')">
                           </control-messages>
                         </mat-form-field>
@@ -932,7 +933,8 @@
 
                   <td>
                     <mat-form-field>
-                      <input matInput type="text" OnlyNumber maxlength="10" [formControl]="row.get('contactNumber')">
+                      <input matInput type="text" OnlyNumber maxlength="11" minlength="10"
+                        [formControl]="row.get('contactNumber')">
                       <control-messages [control]="row.get('contactNumber')">
                       </control-messages>
                     </mat-form-field>
