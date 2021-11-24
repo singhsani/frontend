@@ -248,7 +248,8 @@ export class BookTheaterComponent implements OnInit {
         this.selectedShift = [];
         if (this.searchTheaterForm.valid) {
             let filterData = {
-                resourceName: this.searchTheaterForm.get('code').value,
+                // resourceName: this.searchTheaterForm.get('code').value,
+                resourceName:this.THEATERS[0].code,
                 startDate: moment(this.searchTheaterForm.get('startDate').value).format("YYYY-MM-DD"),
                 endDate: moment(this.searchTheaterForm.get('endDate').value).format("YYYY-MM-DD"),
             }
