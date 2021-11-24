@@ -463,8 +463,8 @@
               <input matInput type="text" maxlength="1000" appValidationFields
                 validationFieldsType='appAlphanumericNumberWithDash'
                 placeholder="{{'Total investment excluding Loan Capital (PI. attach certified true copy of the last 3 year balance sheets.'}}"
-                formControlName="isTotalInvestmentDetail">
-              <control-messages [control]="vendorRegistrationForm.get('isTotalInvestmentDetail')">
+                formControlName="totalInvestmentDetail">
+              <control-messages [control]="vendorRegistrationForm.get('totalInvestmentDetail')">
               </control-messages>
             </mat-form-field>
 
@@ -518,11 +518,11 @@
 
             <div class="col-md-4 ngSelect">
               <ng-select placeholder="{{'Copy of Latest Income Tax Clearance certifcate.'}}"
-                formControlName="isCopyOfITCClearanceCertificate">
+                formControlName="copyOfITCClearanceCertificate">
                 <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
                 </ng-option>
               </ng-select>
-              <control-messages [control]="vendorRegistrationForm.get('isCopyOfITCClearanceCertificate')">
+              <control-messages [control]="vendorRegistrationForm.get('copyOfITCClearanceCertificate')">
               </control-messages>
             </div>
 
@@ -583,32 +583,32 @@
             <div class="col-md-12 ngSelect">
               <ng-select
                 placeholder="{{'If registered under the companies ACT or any other ACT, give registration no. and date of registration etc. along with copy of regsitration office.'}}"
-                formControlName="isRegistrationOfficeACT">
+                formControlName="registrationOfficeACT">
                 <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
                 </ng-option>
               </ng-select>
-              <control-messages [control]="vendorRegistrationForm.get('isRegistrationOfficeACT')">
+              <control-messages [control]="vendorRegistrationForm.get('registrationOfficeACT')">
               </control-messages>
             </div>
 
             <div class="col-md-12 ngSelect">
               <ng-select placeholder="{{'Whether the product manufactured carry ISI mark (PI. Specify).'}}"
-                formControlName="isISIProductManufactured">
+                formControlName="productManufacturedISI">
                 <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
                 </ng-option>
               </ng-select>
-              <control-messages [control]="vendorRegistrationForm.get('isISIProductManufactured')">
+              <control-messages [control]="vendorRegistrationForm.get('productManufacturedISI')">
               </control-messages>
             </div>
 
             <div class="col-md-12 ngSelect">
               <ng-select
                 placeholder="{{'Whether registered with other central Govt/State Govt./Govt. Undertaking Department and validity thereof. (attach a copy of such registration certificate).'}}"
-                formControlName="isRegisteredByGovt">
+                formControlName="registeredByGovt">
                 <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
                 </ng-option>
               </ng-select>
-              <control-messages [control]="vendorRegistrationForm.get('isRegisteredByGovt')">
+              <control-messages [control]="vendorRegistrationForm.get('registeredByGovt')">
               </control-messages>
             </div>
 
@@ -661,20 +661,20 @@
                   </td>
                   <td>
 
-                    <div [formGroup]="row.get('managerialDesi')">
+                    <div [formGroup]="row.get('designation')">
                       <ng-select formControlName="code">
                         <ng-option *ngFor="let impl of academicQualificationDes" [value]="impl.code">{{impl.name}}
                         </ng-option>
                       </ng-select>
-                      <control-messages [control]="row.get('managerialDesi').get('code')">
+                      <control-messages [control]="row.get('designation').get('code')">
                       </control-messages>
                     </div>
                   </td>
                   <td>
                     <mat-form-field>
                       <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
-                        maxlength="100" [formControl]="row.get('managerialFullName')">
-                      <control-messages [control]="row.get('managerialFullName')">
+                        maxlength="100" [formControl]="row.get('fullName')">
+                      <control-messages [control]="row.get('fullName')">
                       </control-messages>
                     </mat-form-field>
                   </td>
@@ -682,17 +682,16 @@
                   <td>
                     <mat-form-field>
                       <input matInput type="text" appValidationFields validationFieldsType='alphanumericWithSpace'
-                        maxlength="100" [formControl]="row.get('managerialQualification')">
-                      <control-messages [control]="row.get('managerialQualification')">
+                        maxlength="100" [formControl]="row.get('qualification')">
+                      <control-messages [control]="row.get('qualification')">
                       </control-messages>
                     </mat-form-field>
                   </td>
 
                   <td>
                     <mat-form-field>
-                      <input matInput type="text" OnlyNumber maxlength="4"
-                        [formControl]="row.get('managerialExperienceInYears')">
-                      <control-messages [control]="row.get('managerialExperienceInYears')">
+                      <input matInput type="text" OnlyNumber maxlength="4" [formControl]="row.get('experienceInYears')">
+                      <control-messages [control]="row.get('experienceInYears')">
                       </control-messages>
                     </mat-form-field>
                   </td>
@@ -780,13 +779,13 @@
 
           <mat-form-field class="col-md-6">
             <input matInput placeholder="{{'MSME,NSIC and SSI certificate validity period StartDate'}}"
-              autocomplete="off" appDate formControlName="MSMENSICSSIcertificateStartDate" [min]="maxDate"
-              [matDatepicker]="MSMENSICSSIcertificateStartDate"
-              (dateChange)="onDateChange('MSMENSICSSIcertificateStartDate', $event.value)">
-            <mat-datepicker-toggle matSuffix [for]="MSMENSICSSIcertificateStartDate"></mat-datepicker-toggle>
-            <mat-datepicker touchUi="true" #MSMENSICSSIcertificateStartDate></mat-datepicker>
+              autocomplete="off" appDate formControlName="MSMENSICSSICertificateStartDate" [min]="maxDate"
+              [matDatepicker]="MSMENSICSSICertificateStartDate"
+              (dateChange)="onDateChange('MSMENSICSSICertificateStartDate', $event.value)">
+            <mat-datepicker-toggle matSuffix [for]="MSMENSICSSICertificateStartDate"></mat-datepicker-toggle>
+            <mat-datepicker touchUi="true" #MSMENSICSSICertificateStartDate></mat-datepicker>
             <div align="end" class="default-show-hint mat-hint mat-right"></div>
-            <control-messages [control]="vendorRegistrationForm.get('MSMENSICSSIcertificateStartDate')">
+            <control-messages [control]="vendorRegistrationForm.get('MSMENSICSSICertificateStartDate')">
             </control-messages>
           </mat-form-field>
 
@@ -794,7 +793,7 @@
             <input matInput autocomplete="off"
               placeholder="{{'MSME,NSIC and SSI certificate validity period endDate.'}}" appDate
               formControlName="MSMENSICSSIcertificateEndDate"
-              [min]="vendorRegistrationForm.get('MSMENSICSSIcertificateStartDate').value"
+              [min]="vendorRegistrationForm.get('MSMENSICSSICertificateStartDate').value"
               [matDatepicker]="MSMENSICSSIcertificateEndDate"
               (dateChange)="onDateChange('MSMENSICSSIcertificateEndDate', $event.value)">
             <mat-datepicker-toggle matSuffix [for]="MSMENSICSSIcertificateEndDate"></mat-datepicker-toggle>
@@ -836,8 +835,8 @@
             <mat-form-field class="col-md-12">
               <input matInput type="text" maxlength="1000"
                 placeholder="{{'Is testing record maintained and if so, since when'}}"
-                formControlName="isTestingRecordMaintanedDetail">
-              <control-messages [control]="vendorRegistrationForm.get('isTestingRecordMaintanedDetail')">
+                formControlName="testingRecordMaintainedDetail">
+              <control-messages [control]="vendorRegistrationForm.get('testingRecordMaintainedDetail')">
               </control-messages>
             </mat-form-field>
 
@@ -925,8 +924,8 @@
                   <td>
                     <mat-form-field>
                       <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
-                        maxlength="100" [formControl]="row.get('autthorized')">
-                      <control-messages [control]="row.get('autthorized')">
+                        maxlength="100" [formControl]="row.get('authorized')">
+                      <control-messages [control]="row.get('authorized')">
                       </control-messages>
                     </mat-form-field>
                   </td>
@@ -1081,8 +1080,8 @@
                   <td>
                     <mat-form-field>
                       <input matInput type="text" appValidationFields OnlyNumber maxlength="15"
-                        [formControl]="row.get('orderNo')">
-                      <control-messages [control]="row.get('orderNo')">
+                        [formControl]="row.get('orderNumber')">
+                      <control-messages [control]="row.get('orderNumber')">
                       </control-messages>
                     </mat-form-field>
                   </td>
@@ -1132,11 +1131,11 @@
               information may lead legal action and direct ban on product registered in VMC.'}}</h2>
 
             <div class="col-md-12 ngSelect">
-              <ng-select formControlName="isFirmUnderDealBlacklisted">
+              <ng-select formControlName="firmUnderDealBlacklisted">
                 <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
                 </ng-option>
               </ng-select>
-              <control-messages [control]="vendorRegistrationForm.get('isFirmUnderDealBlacklisted')">
+              <control-messages [control]="vendorRegistrationForm.get('firmUnderDealBlacklisted')">
               </control-messages>
             </div>
 
