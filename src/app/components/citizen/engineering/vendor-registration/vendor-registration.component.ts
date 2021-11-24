@@ -227,7 +227,7 @@ export class VendorRegistrationComponent implements OnInit {
       gstNo: [null, [ValidationService.gstNoValidator]],
       gstRegiDate: [null],
 
-      officeContactNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      officeContactNumber: [null, [Validators.required]],
       officeFaxNumber: [null, [ValidationService.faxValidation]],
       officeEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 
@@ -241,7 +241,7 @@ export class VendorRegistrationComponent implements OnInit {
       headISDNumber: [null, [Validators.maxLength(11)]],
       headSTDNumber: [null, [Validators.maxLength(12)]],
 
-      resContactNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      resContactNumber: [null, [Validators.required]],
       resFaxNumber: [null, [ValidationService.faxValidation]],
       resEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 
@@ -252,7 +252,7 @@ export class VendorRegistrationComponent implements OnInit {
       //manufacturingOwnedDetails: null,
 
       listOfItemMaterial: this.listOfItemMaterialSupplier,
-      academicQualificationAndExperienceDetail: this.fb.array([]),
+      qualificationDetails: this.academicQualificationAndExperience,
       vendorNameDetails: this.vendorNameArray,
       vendorNameLastYearDetails: this.vendorNameLastYear,
       vendorNameAuthorizedDetails: this.vendorNameAuthorized,
@@ -282,22 +282,23 @@ export class VendorRegistrationComponent implements OnInit {
 
       detailsOfLandDocumentsFactory: null,
       buildingPermissionDetail: null,
-      factoryLicenseStartDate: null,
-      factoryLicenseEndDate: null,
-      MSMENSICSSIcertificateStartDate: null,
-      MSMENSICSSIcertificateEndDate: null,
+      factoryLicenseStartDate: [null],
+      factoryLicenseEndDate: [null],
+      MSMENSICSSICertificateStartDate: [null],
+      MSMENSICSSICertificateEndDate: [null],
 
+      productManufacturedISI: [null],
       ISIBISCElicences: null,
-      isTotalInvestmentDetail: [null],
+      totalInvestmentDetail: [null],
       lastThreeYearsCopies: [null],
-      isCopyOfITCClearanceCertificate: [null],
-      isRegistrationOfficeACT: [null],
-      isISIProductManufactured: [null],
-      isRegisteredByGovt: [null],
-      isTestingRecordMaintanedDetail: [null],
+      copyOfITCClearanceCertificate: [null],
+      registrationOfficeACT: [null],
+      registeredByGovt: [null],
+      testingRecordMaintainedDetail: [null],
       personInChargeProductionControl: [null],
-      isFirmUnderDealBlacklisted: [null],
+      firmUnderDealBlacklisted: [null],
       resultSampleTesting: [null],
+      MSMENSICSSIcertificateEndDate: null,
 
       totalTurnoverLastThreeYears: null,
       loanCapitalWithBankLimit: null,
@@ -318,22 +319,22 @@ export class VendorRegistrationComponent implements OnInit {
       maximumProductionPerAnnum: null,
       estimationOfStocks: null,
       numberOfItemsHoldingISOCertificate: null,
-      remarks: null,
+      remarks: [null],
 
-      purchaserName: null,
-      orderNo: null,
-      orderDate: null,
-      quantitySuppliedCompletionDate: null,
+      // purchaserName: null,
+      // orderNo: null,
+      // orderDate: null,
+      // quantitySuppliedCompletionDate: null,
 
-      managerialFullName: null,
-      managerialQualification: null,
-      managerialExperienceInYears: null,
-      productionStaffFullName: null,
-      productionStaffQualification: null,
-      productionStaffExperienceInYears: null,
-      qualityControlStaffFullName: null,
-      qualityControlStaffQualification: null,
-      qualityControlStaffExperienceInYears: null,
+      // managerialFullName: null,
+      // managerialQualification: null,
+      // managerialExperienceInYears: null,
+      // productionStaffFullName: null,
+      // productionStaffQualification: null,
+      // productionStaffExperienceInYears: null,
+      // qualityControlStaffFullName: null,
+      // qualityControlStaffQualification: null,
+      // qualityControlStaffExperienceInYears: null,
       personnelDetailSkilled: null,
       personnelDetailUnSkilled: null,
       personnelDetailOther: null,
@@ -422,7 +423,7 @@ export class VendorRegistrationComponent implements OnInit {
 
   createItemAuthorized(): FormGroup {
     return this.fb.group({
-      autthorized: null,
+      authorized: null,
       contactNumber: null,
       address: null,
     });
@@ -483,21 +484,13 @@ export class VendorRegistrationComponent implements OnInit {
 
   createEducationQualification(): FormGroup {
     return this.fb.group({
-      managerialFullName: null,
-      managerialQualification: null,
-      managerialDesi: this.fb.group({
+      fullName: null,
+      qualification: null,
+      designation: this.fb.group({
         code: null,
         name: null
       }),
-      managerialExperienceInYears: null,
-
-      productionStaffFullName: null,
-      productionStaffQualification: null,
-      productionStaffExperienceInYears: null,
-
-      qualityControlStaffFullName: null,
-      qualityControlStaffQualification: null,
-      qualityControlStaffExperienceInYears: null,
+      experienceInYears: null,
     });
   }
 
@@ -520,7 +513,7 @@ export class VendorRegistrationComponent implements OnInit {
   createDetailsOfIndicatingQuantity(): FormGroup {
     return this.fb.group({
       purchaserName: null,
-      orderNo: null,
+      orderNumber: null,
       orderDate: null,
       quantitySuppliedCompletionDate: null
     });
@@ -659,8 +652,6 @@ export class VendorRegistrationComponent implements OnInit {
       "resFaxNumber": "7414852963",
       "resEmailId": "chetan.porwal@nascentinfo.com",
 
-      "manufacturingOwnedDetails": "true",
-
       "registrationDDNumber": "741852",
 
       "registrationDDIssuingDate": "2021-10-25",
@@ -669,18 +660,20 @@ export class VendorRegistrationComponent implements OnInit {
         "code": "WITH_IN_GUJARAT",
       },
 
-      "isIncomeTaxDetails": "true",
-      "isManufacturingOwnedDetails": "true",
-      "isTotalInvestmentDetail": "true",
-      "isLastThreeYearsCopies": "true",
-      "isCopyOfITCClearanceCertificate": "true",
-      "isRegistrationOfficeACT": "true",
-      "isISIProductManufactured": "true",
-      "isRegisteredByGovt": "true",
-      "isTestingRecordMaintanedDetail": "true",
-      "isPersonInChargeProductionControl": "true",
-      "isFirmUnderDealBlacklisted": "true",
-      "isResultSampleTesting": "true",
+      "incomeTaxDetails": "true",
+      "manufacturingOwnedDetails": {
+        "code": "OWNED",
+      },
+      "totalInvestmentDetail": "true",
+      "lastThreeYearsCopies": "true",
+      "copyOfITCClearanceCertificate": "true",
+      "registrationOfficeACT": "true",
+      "productManufacturedISI": "true",
+      "registeredByGovt": "true",
+      "testingRecordMaintainedDetail": "true",
+      "personInChargeProductionControl": "true",
+      "firmUnderDealBlacklisted": "true",
+      "resultSampleTesting": "true",
 
       "remarks": "Vendor Registration Form Submitted",
 
