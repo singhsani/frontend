@@ -825,11 +825,15 @@ export class MyBookingComponent implements OnInit {
 
   }
 
-  resourceType(event){
-	if(event == BookingConstants.AMPHI_RESOURCE_TYPE){
-		this.isAmphi = true;
-	}else{
-		this.isAmphi = false;
-	}
+  selectBookingResource(event){
+    this.isAmphi = false;
+    this.resultsLength = 0;
+    this.isLoadingResults = false;
+    if(!event){
+        this.resultsLength = 0;
+        this.isLoadingResults = false;
+    }else if(event == this.bookingConstant.AMPHI_RESOURCE_TYPE){
+        this.isAmphi = true;
+    }
   }
 }
