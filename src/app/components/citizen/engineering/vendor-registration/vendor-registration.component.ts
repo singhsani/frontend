@@ -46,6 +46,7 @@ export class VendorRegistrationComponent implements OnInit {
   minDateNew = moment().subtract(2000, 'months').format('YYYY-MM-DD');
   attachmentList: any = [];
   bankNameArray: any = [];
+  vendorTypeFirm: any = [];
   academicQualificationDes: any = [];
   public serverUploadFilesArray: Array<any> = [];
 
@@ -57,6 +58,7 @@ export class VendorRegistrationComponent implements OnInit {
 
   formId: number;
   showButtons: boolean = true;
+  vendorArrayNameButtons: boolean = false;
 
   vendorNameLastYear: FormArray;
 
@@ -205,7 +207,7 @@ export class VendorRegistrationComponent implements OnInit {
 
       this.manuFacturDetails = res.VENDOR_MANUFACTURING_OWNED;
       this.academicQualificationDes = res.ACEDEMIC_QUALIFICATION_DESC;
-
+      this.vendorTypeFirm = res.VENDOR_TYPE_FIRM;
     });
   }
 
@@ -219,6 +221,8 @@ export class VendorRegistrationComponent implements OnInit {
       applicationNumber: null,
       canEdit: [true],
 
+      applyingFor: [null, [Validators.required]],
+      typeOfFirm: [null, Validators.required],
       nameOfTheFirm: [null, [Validators.required, Validators.maxLength(150)]],
       commencementDate: [null, [Validators.required]],
       yearOfEstablishment: [null, [Validators.required]],
@@ -393,10 +397,19 @@ export class VendorRegistrationComponent implements OnInit {
     });
   }
 
-  locationChange(code) {
-    this.engineer.getFeeFromLocation(code).subscribe(res => {
+  locationChange(event) {
+    this.engineer.getFeeFromLocation(event.value).subscribe(res => {
       this.vendorRegistrationForm.get('registrationAmount').setValue(res.fee);
     })
+    this.vendorRegistrationForm.get('locationOfFactoryWorks').get('code').setValue(event.value);
+  }
+
+  typeOfFirmChange(event) {
+    if (event.value == 'PROPRIETORSHIP') {
+      this.vendorArrayNameButtons = true;
+    } else {
+      this.vendorArrayNameButtons = false;
+    }
 
   }
 
@@ -504,7 +517,10 @@ export class VendorRegistrationComponent implements OnInit {
 
   createVendorNameArray(): FormGroup {
     return this.fb.group({
-      ownerType: null,
+      ownerType: this.fb.group({
+        code: null,
+        name: null
+      }),
       ownerName: null,
       ownerAddress: null
     });

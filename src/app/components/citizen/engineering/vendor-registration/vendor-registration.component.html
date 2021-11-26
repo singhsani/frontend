@@ -18,6 +18,46 @@
           </ng-template>
 
           <div class="row">
+
+
+            <div class="col-md-6">
+
+              <div class="mb-4 mt-4">
+                <mat-label><strong>Locations *</strong></mat-label>
+              </div>
+              <mat-radio-group formControlName="applyingFor" required class="radioGroup">
+                <mat-radio-button value="IN_GUJARAT" (change)="locationChange($event)" class="mr-3">
+                  {{'With In Gujarat'}}
+                </mat-radio-button>
+                <mat-radio-button value="OUTSIDE_GUJARAT" (change)="locationChange($event)">
+                  {{'Outside Gujarat'}}
+                </mat-radio-button>
+                <mat-radio-button value="OUTSIDE_INDIA" (change)="locationChange($event)">
+                  {{'Outside India'}}
+                </mat-radio-button>
+              </mat-radio-group>
+              <control-messages [control]="vendorRegistrationForm.get('applyingFor')">
+              </control-messages>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-4 mt-4">
+                <mat-label><strong>Type of Firm *</strong></mat-label>
+              </div>
+              <mat-radio-group formControlName="typeOfFirm" required class="radioGroup">
+                <mat-radio-button value="PROPRIETORSHIP" (change)="typeOfFirmChange($event)" class="mr-3">
+                  {{'Proprietorship'}}
+                </mat-radio-button>
+                <mat-radio-button value="PARTNERS" (change)="typeOfFirmChange($event)">
+                  {{'Partners'}}
+                </mat-radio-button>
+                <mat-radio-button value="DIRECTORS" (change)="typeOfFirmChange($event)">
+                  {{'Directors'}}
+                </mat-radio-button>
+              </mat-radio-group>
+              <control-messages [control]="vendorRegistrationForm.get('applyingFor')">
+              </control-messages>
+            </div>
+
             <div class="col-md-12">
               <h2 style="margin-left: -16px;"><b>{{'Details of Firm'}}</b></h2>
             </div>
@@ -93,16 +133,6 @@
 
           <div class="row">
             <h2><b>{{'Address of the factory/works from where material will be supplied'}}</b></h2>
-
-            <div class="col-md-4 ngSelect" formGroupName="locationOfFactoryWorks">
-              <ng-select placeholder="{{'Locations *'}}" formControlName="code" (change)="locationChange($event)">
-                <ng-option *ngFor="let impl of locations" [value]="impl.code">{{ impl.name
-                  }}
-                </ng-option>
-                <control-messages [control]="vendorRegistrationForm.get('locationOfFactoryWorks').get('code')">
-                </control-messages>
-              </ng-select>
-            </div>
 
             <app-address #officeAddr [requiredFeilds]="true"
               [addressFormGroup]="vendorRegistrationForm.get('factoryAddress')">
@@ -251,7 +281,8 @@
           <div class="row">
             <h2>{{'Name of the Proprietor / Partners / Directors'}}</h2>
             <div class="col-sm-12 col-md-12 text-left">
-              <button mat-raised-button color="primary" type="button" (click)="addRowVendorName()">{{'Add
+              <button [disabled]="vendorArrayNameButtons" mat-raised-button color="primary" type="button"
+                (click)="addRowVendorName()">{{'Add
                 New'}}</button>
             </div>
           </div>
@@ -263,8 +294,8 @@
                   <tbody>
                     <tr>
                       <th class="text-center">S.no.</th>
-                      <th class="text-center">Owner Name</th>
                       <th class="text-center">Type / Designation</th>
+                      <th class="text-center">Owner Name</th>
                       <th class="text-center">Address</th>
                       <th class="text-center">Action</th>
                     </tr>
@@ -272,21 +303,33 @@
                       <td>
                         {{index+1}}
                       </td>
-                      <td>
-                        <mat-form-field>
-                          <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
-                            maxlength="100" #ownerType [value]="ownerType.value.toUpperCase()"
-                            [formControl]="row.get('ownerName')">
-                          <control-messages [control]="row.get('ownerName')">
+
+                      <td class="designationDrop">
+
+                        <div [formGroup]="row.get('ownerType')">
+                          <ng-select formControlName="code">
+                            <ng-option *ngFor="let impl of vendorTypeFirm" [value]="impl.code">{{impl.name}}
+                            </ng-option>
+                          </ng-select>
+                          <control-messages [control]="row.get('ownerType').get('code')">
                           </control-messages>
-                        </mat-form-field>
+                        </div>
                       </td>
 
-                      <td>
+                      <!-- <td>
                         <mat-form-field>
                           <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
                             maxlength="100" [formControl]="row.get('ownerType')" class="capitalCase">
                           <control-messages [control]="row.get('ownerType')">
+                          </control-messages>
+                        </mat-form-field>
+                      </td> -->
+
+                      <td>
+                        <mat-form-field>
+                          <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+                            maxlength="100" class="capitalCase" [formControl]="row.get('ownerName')">
+                          <control-messages [control]="row.get('ownerName')">
                           </control-messages>
                         </mat-form-field>
                       </td>
@@ -971,7 +1014,8 @@
 
             <div class="col-md-6 text-right">
               <button mat-raised-button type="button" color="primary" type="button"
-                (click)="addRowLastThreeYear()">{{'Add New'}}</button>
+                (click)="addRowLastThreeYear()">{{'Add
+                New'}}</button>
             </div>
           </div>
 
