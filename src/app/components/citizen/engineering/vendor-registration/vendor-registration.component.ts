@@ -46,6 +46,7 @@ export class VendorRegistrationComponent implements OnInit {
   minDateNew = moment().subtract(2000, 'months').format('YYYY-MM-DD');
   attachmentList: any = [];
   bankNameArray: any = [];
+  vendorTypeFirm: any = [];
   academicQualificationDes: any = [];
   public serverUploadFilesArray: Array<any> = [];
 
@@ -206,7 +207,7 @@ export class VendorRegistrationComponent implements OnInit {
 
       this.manuFacturDetails = res.VENDOR_MANUFACTURING_OWNED;
       this.academicQualificationDes = res.ACEDEMIC_QUALIFICATION_DESC;
-
+      this.vendorTypeFirm = res.VENDOR_TYPE_FIRM;
     });
   }
 
@@ -516,7 +517,10 @@ export class VendorRegistrationComponent implements OnInit {
 
   createVendorNameArray(): FormGroup {
     return this.fb.group({
-      ownerType: null,
+      ownerType: this.fb.group({
+        code: null,
+        name: null
+      }),
       ownerName: null,
       ownerAddress: null
     });

@@ -304,14 +304,26 @@
                         {{index+1}}
                       </td>
 
-                      <td>
+                      <td class="designationDrop">
+
+                        <div [formGroup]="row.get('ownerType')">
+                          <ng-select formControlName="code">
+                            <ng-option *ngFor="let impl of vendorTypeFirm" [value]="impl.code">{{impl.name}}
+                            </ng-option>
+                          </ng-select>
+                          <control-messages [control]="row.get('ownerType').get('code')">
+                          </control-messages>
+                        </div>
+                      </td>
+
+                      <!-- <td>
                         <mat-form-field>
                           <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
                             maxlength="100" [formControl]="row.get('ownerType')" class="capitalCase">
                           <control-messages [control]="row.get('ownerType')">
                           </control-messages>
                         </mat-form-field>
-                      </td>
+                      </td> -->
 
                       <td>
                         <mat-form-field>
