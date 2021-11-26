@@ -57,6 +57,7 @@ export class VendorRegistrationComponent implements OnInit {
 
   formId: number;
   showButtons: boolean = true;
+  vendorArrayNameButtons: boolean = false;
 
   vendorNameLastYear: FormArray;
 
@@ -219,6 +220,8 @@ export class VendorRegistrationComponent implements OnInit {
       applicationNumber: null,
       canEdit: [true],
 
+      applyingFor: [null, [Validators.required]],
+      typeOfFirm: [null, Validators.required],
       nameOfTheFirm: [null, [Validators.required, Validators.maxLength(150)]],
       commencementDate: [null, [Validators.required]],
       yearOfEstablishment: [null, [Validators.required]],
@@ -393,10 +396,19 @@ export class VendorRegistrationComponent implements OnInit {
     });
   }
 
-  locationChange(code) {
-    this.engineer.getFeeFromLocation(code).subscribe(res => {
+  locationChange(event) {
+    this.engineer.getFeeFromLocation(event.value).subscribe(res => {
       this.vendorRegistrationForm.get('registrationAmount').setValue(res.fee);
     })
+    this.vendorRegistrationForm.get('locationOfFactoryWorks').get('code').setValue(event.value);
+  }
+
+  typeOfFirmChange(event) {
+    if (event.value == 'PROPRIETORSHIP') {
+      this.vendorArrayNameButtons = true;
+    } else {
+      this.vendorArrayNameButtons = false;
+    }
 
   }
 
