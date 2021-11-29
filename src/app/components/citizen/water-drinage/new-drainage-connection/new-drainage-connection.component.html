@@ -29,7 +29,7 @@
 								formControlName="drainageConnectionNo">
 						</mat-form-field>
 						<mat-form-field class="col-md-6">
-							<input matInput type="text" maxlength="300"
+							<input matInput OnlyNumber maxlength="300" 
 								placeholder="{{'old_drainage_connection_no' | translate:translateKey}}"
 								formControlName="oldDrainageConnectionNo">
 						</mat-form-field>
@@ -43,6 +43,10 @@
 								<ng-option *ngFor="let limits of limitList" [value]="limits.itemId">
 									{{limits.itemName}}</ng-option>
 							</ng-select>
+
+							<mat-error *ngIf="!newDrainageConnectionForm.get('limit').valid && newDrainageConnectionForm.get('limit').touched">
+								Required field, must be between 5 and 10 characters.
+							</mat-error>
 						</div>
 						<div *ngIf="!isOutofLimit" class="col-md-6 ngSelect">
 							<div *ngIf="wardZoneLevel.length>=1">
@@ -52,8 +56,11 @@
 									<ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.parentWardzoneId">
 										{{zone.wardzoneName}}</ng-option>
 								</ng-select>
-								<control-messages [control]="newDrainageConnectionForm.get('waterDrainageZoneId')">
-								</control-messages>
+								<!-- <control-messages [control]="newDrainageConnectionForm.get('waterDrainageZoneId')">
+								</control-messages> -->
+								<mat-error *ngIf="!newDrainageConnectionForm.get('waterDrainageZoneId').valid && newDrainageConnectionForm.get('waterDrainageZoneId').touched">
+									Zone is required
+								</mat-error>
 							</div>
 						</div>
 					</div>
@@ -67,8 +74,12 @@
 									<ng-option *ngFor="let zone of wardZoneLevel2List" [value]="zone.wardzoneId">
 										{{zone.wardzoneName}}</ng-option>
 								</ng-select>
-								<control-messages [control]="newDrainageConnectionForm.get('waterDrainageWardId')">
-								</control-messages>
+								<!-- <control-messages [control]="newDrainageConnectionForm.get('waterDrainageWardId')">
+								</control-messages> -->
+								<mat-error *ngIf="!newDrainageConnectionForm.get('waterDrainageWardId').valid 
+								&& newDrainageConnectionForm.get('waterDrainageWardId').touched">
+									Ward is required
+								</mat-error>
 							</div>
 						</div>
 						<div class="col-md-6 ngSelect">
@@ -79,8 +90,12 @@
 									<ng-option *ngFor="let zone of wardZoneLevel3List" [value]="zone.wardzoneId">
 										{{zone.wardzoneName}}</ng-option>
 								</ng-select>
-								<control-messages [control]="newDrainageConnectionForm.get('waterDrainageBlockId')">
-								</control-messages>
+								<!-- <control-messages [control]="newDrainageConnectionForm.get('waterDrainageBlockId')">
+								</control-messages> -->
+								<mat-error *ngIf="!newDrainageConnectionForm.get('waterDrainageBlockId').valid 
+								&& newDrainageConnectionForm.get('waterDrainageBlockId').touched">
+									Block is required
+								</mat-error>
 							</div>
 						</div>
 
@@ -160,11 +175,15 @@
 								<ng-option *ngFor="let plumber of plumberList" [value]="plumber.plumberLicenseId">
 									{{plumber.nameOfApplicant}}</ng-option>
 							</ng-select>
-							<control-messages [control]="newDrainageConnectionForm.get('plumberId')">
-							</control-messages>
+							<mat-error *ngIf="!newDrainageConnectionForm.get('plumberId').valid 
+								&& newDrainageConnectionForm.get('plumberId').touched">
+									Plumber Name is required
+							</mat-error>
+							<!-- <control-messages [control]="newDrainageConnectionForm.get('plumberId')">
+							</control-messages> -->
 						</div>
 						<mat-form-field class="col-md-6">
-							<input matInput type="text"
+							<input matInput appAlphaNumeric
 								placeholder="{{'electricity_connection_no' | translate:translateKey}}"
 								formControlName="electricityConnectionNo" maxlength="50">
 						</mat-form-field>
@@ -172,11 +191,11 @@
 
 					<div class="row">
 						<mat-form-field class="col-md-6">
-							<input matInput type="text" maxlength="50" placeholder="{{'gas_connection_no' | translate:translateKey}}"
+							<input matInput appAlphaNumeric maxlength="50" placeholder="{{'gas_connection_no' | translate:translateKey}}"
 								formControlName="gasConnectionNo">
 						</mat-form-field>
 						<mat-form-field class="col-md-6">
-							<input matInput type="text"
+							<input matInput appAlphaNumeric
 								placeholder="{{'building_permission_no' | translate:translateKey}}"
 								formControlName="buildingPermissionNo" maxlength="50">
 						</mat-form-field>
@@ -185,12 +204,12 @@
 
 					<div class="row">
 						<mat-form-field class="col-md-6">
-							<input matInput type="text"
+							<input matInput appAlphaNumeric
 								placeholder="{{'completion_certificate_no' | translate:translateKey}}"
 								formControlName="completionCertificateNo" maxlength="50">
 						</mat-form-field>
 						<mat-form-field class="col-md-6">
-							<input matInput type="text"
+							<input matInput appAlphaNumeric
 								placeholder="{{'occupancy_certificate_no' | translate:translateKey}}"
 								formControlName="occupancyCertificateNo" maxlength="50">
 						</mat-form-field>
