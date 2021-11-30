@@ -360,7 +360,6 @@ export class NewDrainageConnectionComponent implements OnInit {
   }
 
   getPropertyValues(data : any){
-    debugger;
     this.newDrainageConnectionForm.get('fpNo').setValue(data.fpNo);
     this.newDrainageConnectionForm.get('plotPartNo').setValue(data.plotPartNo);
     this.newDrainageConnectionForm.get('tpNo').setValue(data.tpNo);
