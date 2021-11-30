@@ -58,6 +58,7 @@ export class NewDrainageConnectionComponent implements OnInit {
   propertyaryy = [];
   public formControlNameToTabIndex = new Map();
   bookingUtils: BookingUtils;
+  searchPropertyData: any;
 
   constructor(
     private fb: FormBuilder,
@@ -212,6 +213,7 @@ export class NewDrainageConnectionComponent implements OnInit {
           }        
           else if(this.newDrainageConnectionForm.get('primaryProperty').value != this.isprimaryProperty){
             this.isprimaryProperty = true;
+            this.searchPropertyData = data.body.propertyBasic.propertyAddressDTO;
           this.getPropertyValues(data.body.propertyBasic.propertyAddressDTO);
           
           let temojb = { 'propertyNo' :  this.newDrainageConnectionForm.get('propertyNo').value ,
@@ -358,6 +360,7 @@ export class NewDrainageConnectionComponent implements OnInit {
   }
 
   getPropertyValues(data : any){
+    debugger;
     this.newDrainageConnectionForm.get('fpNo').setValue(data.fpNo);
     this.newDrainageConnectionForm.get('plotPartNo').setValue(data.plotPartNo);
     this.newDrainageConnectionForm.get('tpNo').setValue(data.tpNo);
@@ -368,7 +371,7 @@ export class NewDrainageConnectionComponent implements OnInit {
     this.newDrainageConnectionForm.get('streetName').setValue(data.streetName);
     this.newDrainageConnectionForm.get('pincode').setValue(data.pincode);
     this.newDrainageConnectionForm.get('postalAddress').setValue(data.postalAddress);
-    this.newDrainageConnectionForm.get('correspondenceAddress').setValue(data.postalAddress);
+    this.newDrainageConnectionForm.get('correspondenceAddress').setValue(data.propertyAddress);
     this.ispostalAddressDiff = true;
   }
 
@@ -384,10 +387,10 @@ export class NewDrainageConnectionComponent implements OnInit {
       fullAddress = fullAddress + this.newDrainageConnectionForm.get('societyName').value +',';
     }
     if (this.newDrainageConnectionForm.get('streetName').value) {
-      fullAddress = fullAddress + this.newDrainageConnectionForm.get('streetName').value + ',';
+      fullAddress = fullAddress + this.newDrainageConnectionForm.get('streetName').value + ','+this.searchPropertyData.landMark + ',' + this.searchPropertyData.areaName+",";
     }
     if (this.newDrainageConnectionForm.get('pincode').value) {
-      fullAddress = fullAddress + this.newDrainageConnectionForm.get('pincode').value +',';
+      fullAddress = fullAddress+' Pincode: '+ this.newDrainageConnectionForm.get('pincode').value +',';
     }
     
 
@@ -402,7 +405,7 @@ export class NewDrainageConnectionComponent implements OnInit {
       address2 = address2 + 'TP No: '+this.newDrainageConnectionForm.get('tpNo').value + ',';
     }
     if (this.newDrainageConnectionForm.get('serveyNo').value) {
-      address2 = address2 + 'Survey No: '+this.newDrainageConnectionForm.get('serveyNo').value +',';
+      address2 = address2 + 'Revenue Survey No: '+this.newDrainageConnectionForm.get('serveyNo').value +',';
     }
     fullAddress = fullAddress;
     if (address2 != '') {
