@@ -87,7 +87,7 @@
                     </div>
                     <div class="col-md-6">
                         <mat-form-field class="full-width-input">
-                            <input matInput number-only [allowDecimals]="false" maxlength="12" minlength="12"
+                            <input required matInput number-only [allowDecimals]="false" maxlength="12" minlength="12"
                                 placeholder="Aadhaar Number" name="aadharNo" #AadharNo="ngModel"
                                 [(ngModel)]="model.aadharNo">
                             <mat-error *ngIf="AadharNo.invalid">*Aadhaar Number is invalid.</mat-error>
