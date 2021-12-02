@@ -891,17 +891,31 @@ export class NewAffordableHousingComponent implements OnInit {
 				}
 				break;
 			case 'ownHouseDetail':
-				this.getFormsArray('ownHouseDetail').push(this.createFormGroup("ownHouseDetail", {}));
+
 				let newlyadded11 = this.getFormsArray('ownHouseDetail').controls;
+				if(newlyadded11.length == 10){
+					this.toster.warning('you have added the maximum of 10 House Detail');
+					return;
+				}
+
+				this.getFormsArray('ownHouseDetail').push(this.createFormGroup("ownHouseDetail", {}));
+				
 				if (newlyadded11.length) {
 					this.editRecord((newlyadded11[newlyadded11.length - 1]));
 					(<any>newlyadded11[newlyadded11.length - 1]).newRecordAdded = true;
 				}
 				break;
 			case 'ownLandPlotDetail':
+
+				var newlyadded22 = this.getFormsArray('ownLandPlotDetail').controls;
+				if(newlyadded22.length == 10){
+					this.toster.warning('you have added the maximum of 10 Land Plot Detail');
+					return;
+				}
+
 				this.createFormGroup("placeOfChoice", {})
 				this.getFormsArray('ownLandPlotDetail').push(this.createFormGroup("ownLandPlotDetail", {}));
-				var newlyadded22 = this.getFormsArray('ownLandPlotDetail').controls;
+				
 				if (newlyadded22.length) {
 					this.editRecord((newlyadded22[newlyadded22.length - 1]));
 					(<any>newlyadded22[newlyadded22.length - 1]).newRecordAdded = true;
