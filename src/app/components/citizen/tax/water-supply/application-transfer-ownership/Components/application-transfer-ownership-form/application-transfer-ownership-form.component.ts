@@ -29,13 +29,13 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
 
     outstandingDetail: any = {};
 
-    serviceFormId : any;
+    serviceFormId: any;
 
     constructor(private commonService: CommonService,
         private alertService: AlertService,
         private applicationTransferOwnershipService: ApplicationTransferOwnershipService,
         private applicationTransferOwnershipDataSharingService: ApplicationTransferOwnershipDataSharingService,
-        private sharedCommonService : SharedCommonService) { }
+        private sharedCommonService: SharedCommonService) { }
 
 
     ngOnInit() {
@@ -104,8 +104,21 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
         }
     }
 
+    isDueAmount(): boolean {
+        if (this.connectionsModel.hasOwnProperty('propertyDues') && this.connectionsModel.hasOwnProperty('propertyDues')) {
+            return this.connectionsModel.propertyDues + this.connectionsModel.waterDues !== 0;
+        }
+    }
+
     save(formDetail: NgForm) {
         if (formDetail.form.valid) {
+
+            if (this.isDueAmount()) {
+                this.alertService.warning('Can not proceed further due to remaining outstanding payment.' +
+                    ' Please complete payment of remaining outstanding amount.');
+                return;
+            }
+
             this.dataModel.applicationNumber = this.applicationModel.applicationNumber;
             this.dataModel.connectionDtlId = this.connectionsModel.connectionDetail.connectionDtlId;
             this.applicationTransferOwnershipService.save(this.dataModel).subscribe(
@@ -164,20 +177,20 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
 
     }
     getFormDataDocuments(id: any) {
-        if(this.applictionTrasferOwnDocumentUploadDocs.length == 0){
-        this.applictionTrasferOwnDocumentUploadDocs = [];
-        this.applicationTransferOwnershipService.getTransferDocUpload(id).subscribe(
-            (data) => {
-                this.serviceFormId = data[0].id;
-                data.forEach(app => {
-                    this.applictionTrasferOwnDocumentUploadDocs.push(app);
+        if (this.applictionTrasferOwnDocumentUploadDocs.length == 0) {
+            this.applictionTrasferOwnDocumentUploadDocs = [];
+            this.applicationTransferOwnershipService.getTransferDocUpload(id).subscribe(
+                (data) => {
+                    this.serviceFormId = data[0].id;
+                    data.forEach(app => {
+                        this.applictionTrasferOwnDocumentUploadDocs.push(app);
+                    });
+
+                },
+                (error) => {
+
                 });
-
-            },
-            (error) => {
-
-            });
-    }
+        }
     }
 
 
@@ -213,13 +226,20 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
         })
     }
 
-    onBackClick(){
+    onBackClick() {
         this.stepper.selectedIndex = 0;
     }
     numberOnly(event): boolean {
-        const charCode = (event.which) ? event.which : event.keyCode;    
-        return charCode > 31 && (charCode < 48 || charCode > 57) ? false : true    
-      }
+        const charCode = (event.which) ? event.which : event.keyCode;
+        return charCode > 31 && (charCode < 48 || charCode > 57) ? false : true
+    }
+
+    clear(aForm: NgForm) {
+        this.connectioNo = '';
+        this.connectionsModel = new ConnectionsModel();
+        this.connectionsModel.connectionDetail = new ConnectionDetail();
+        aForm.resetForm();
+    }
 }
 
 
