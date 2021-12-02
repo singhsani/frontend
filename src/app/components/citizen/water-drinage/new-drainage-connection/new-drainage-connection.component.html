@@ -45,7 +45,7 @@
 							</ng-select>
 
 							<mat-error *ngIf="!newDrainageConnectionForm.get('limit').valid && newDrainageConnectionForm.get('limit').touched">
-								Required field, must be between 5 and 10 characters.
+								Within Limit/Out of Limit is required
 							</mat-error>
 						</div>
 						<div *ngIf="!isOutofLimit" class="col-md-6 ngSelect">
