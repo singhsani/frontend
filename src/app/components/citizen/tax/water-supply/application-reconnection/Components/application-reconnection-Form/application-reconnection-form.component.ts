@@ -67,6 +67,7 @@ export class ApplicationReconnectionFormComponent implements OnInit {
                             else {
                                 this.isShowSaveButton = true;
                                 this.connectionsModel = data.body;
+                                this.connectionsModel.address = data.body.propertyDetails ?data.body.propertyDetails[0].address:this.connectionsModel.address
                                 this.outstandingDetail=data.body;
                             }
                         }
@@ -128,11 +129,11 @@ export class ApplicationReconnectionFormComponent implements OnInit {
                         this.stepper.selectedIndex = 1;
                         this.getFormDataDocuments(this.dataModel.reconnectionId);
                         this.applicationReconnectionDataSharingService.setApprovalModel(this.dataModel);
-                        this.dataModel = new DataModel();
-                        this.connectionsModel = new ConnectionsModel();
-                        this.connectionsModel.connectionDetail = new ConnectionDetail();
-                        this.connectioNo = null;
-                        this.isShowSaveButton = false;
+                        // this.dataModel = new DataModel();
+                        // this.connectionsModel = new ConnectionsModel();
+                        // this.connectionsModel.connectionDetail = new ConnectionDetail();
+                        // this.connectioNo = null;
+                        // this.isShowSaveButton = false;
                         //this.applicationReconnectionDataSharingService.setIsShowApproval(true);
                     }
                 },
@@ -175,6 +176,13 @@ export class ApplicationReconnectionFormComponent implements OnInit {
             this.alertService.error(error.error.message);
           })
       }
+      clear(aForm: NgForm) {
+        this.connectioNo = '';
+        this.dataModel = new DataModel();
+        this.connectionsModel = new ConnectionsModel();
+        this.connectionsModel.connectionDetail = new ConnectionDetail();
+        aForm.resetForm();
+    }
 }
 
 
