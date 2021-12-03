@@ -121,6 +121,7 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
 
             this.dataModel.applicationNumber = this.applicationModel.applicationNumber;
             this.dataModel.connectionDtlId = this.connectionsModel.connectionDetail.connectionDtlId;
+            this.dataModel.waterConnectionNumber = this.connectioNo;
             this.applicationTransferOwnershipService.save(this.dataModel).subscribe(
                 (data) => {
                     if (data.status === 200) {
