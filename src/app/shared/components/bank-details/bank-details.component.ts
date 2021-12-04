@@ -32,7 +32,7 @@ export class BankDetailsComponent implements OnInit {
       code: new FormControl(null, [Validators.required]),
     }));
     this.atithigruhForm.addControl('accountHolderName', new FormControl(null, [Validators.required, Validators.maxLength(100), Validators.minLength(2)]));
-    this.atithigruhForm.addControl('accountNo', new FormControl(null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]))
+    this.atithigruhForm.addControl('accountNo', new FormControl(null, [Validators.required, Validators.maxLength(16), Validators.minLength(16)]))
     this.atithigruhForm.addControl('ifscCode', new FormControl(null, [Validators.required, ValidationService.ifscCodeValidator]))
   }
 
