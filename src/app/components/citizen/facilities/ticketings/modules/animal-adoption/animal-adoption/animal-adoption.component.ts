@@ -41,8 +41,8 @@ export class AnimalAdoptionComponent implements OnInit {
   displayColumnsForAnimalAdoptionPricingTable: string[] = [
     'id',
     'animalBirdName',
-    'annualBoardingExpenses',
-    'annualMaintainanceExpenses',
+    // 'annualBoardingExpenses',
+    // 'annualMaintainanceExpenses',
     'totalExpenses'
   ];
 
