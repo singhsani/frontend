@@ -63,7 +63,6 @@ export class GatewayResponseComponent implements OnInit {
 	 * @param txtRefNo - transaction reference number
 	 */
 	getBillDeskTransactionDetails(txtRefNo) {
-
 		if (txtRefNo != 'NA') {
 			this.formService.getBillDeskTransactionDetails(txtRefNo).subscribe(res => {
 				console.log(res);
@@ -83,7 +82,8 @@ export class GatewayResponseComponent implements OnInit {
 						this.responseObj.order_id = this.responseObj.order_id;
 						this.responseObj.bank_ref_no = this.responseObj.transactionid;
 						this.responseObj.trans_date = moment(this.responseObj.trans_date).format('YYYY-MM-DD');
-						this.redirectToHome();
+						// this.redirectToHome();
+						this.interVal();
 					}
 					this.clearSession();
 				}
@@ -120,7 +120,9 @@ export class GatewayResponseComponent implements OnInit {
 					this.paymentStatus = _.upperCase(this.responseObj.order_status);
 					this.postSessionData(this.dispData, 'CCAVENUE', this.responseObj);
 				} else {
-					this.redirectToHome();
+					this.paymentStatus = _.upperCase(this.responseObj.order_status);
+					// this.redirectToHome();
+					this.interVal();
 				}
 				this.clearSession();
 			}
@@ -290,6 +292,21 @@ export class GatewayResponseComponent implements OnInit {
 			this.router.navigateByUrl(myApplicationUrl);
 		}
 		clearInterval(this.interval);
+	}
+
+	redirectToHomeFail() {
+		if (this.paymentStatus != "SUCCESS"){
+			if(this.dispData.resourceType == "zoo" || this.dispData.resourceType == "zooanimaladoption" || this.dispData.resourceType == "planetarium"){
+				this.router.navigate([this.bookingConstant.MY_TICKETINGS_URL]);
+			}else if((this.dispData.resourceType =="townhall") || (this.dispData.resourceType =="amphiTheater") || (this.dispData.resourceType == "stadium") || (this.dispData.resourceType == "childrenTheater") || (this.dispData.resourceType == "atithigruh") || (this.dispData.resourceType == "shootingPermission")){
+				this.router.navigate([this.bookingConstant.MY_BOOKINGS_URL]);
+			}else {
+				// setTimeout(() => {
+					this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
+				// }, 10000);
+			}
+			this.interVal();
+		}
 	}
 
 	redirectToHome() {
