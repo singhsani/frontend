@@ -243,7 +243,7 @@
             </button>
 
             <button mat-raised-button color="primary" type="button"
-              [disabled]="ticketBookingForm.invalid || (ticketBookingForm.get('totalChild').value < 1 && ticketBookingForm.get('totalAdult').value < 1)"
+              [disabled]="ticketBookingForm.invalid || (ticketBookingForm.get('totalChild').value < 1 && ticketBookingForm.get('totalAdult').value < 1) || (numberOfVisitors > 30) "
               (click)="redirecToPayment()">
                 <mat-icon>check_circle_outline</mat-icon>
                 {{'book_ticket'| translate: translateKey}}
