@@ -296,7 +296,9 @@ export class ZooBookingComponent implements OnInit {
     this.ticketBookingForm.get('amount').setValue(this.totalAmount);
     this.ticketBookingForm.get('totalAmount').setValue(this.totalAmount);
     this.ticketBookingForm.get('personSubTotal').setValue(this.numberOfVisitors);
-
+    if(this.numberOfVisitors>30){
+      this.toster.error("Please Enter Total Limited Person(30)");
+    }
   }
 
   redirecToPayment() {
@@ -323,6 +325,9 @@ export class ZooBookingComponent implements OnInit {
           // return;
           // });
         }
+          if(err.status === 400){
+            this.commonService.openAlert('Error', err.error[0].code, 'warning');
+          }
       });
   }
 
