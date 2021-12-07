@@ -16,6 +16,45 @@
 <!-- HTML for planetarium hall booking -->
 
 <div>
+
+  <div *ngIf="guideLineFlag">
+    <mat-card class="cardBox">
+      <div class="pageTitle">{{'instruction_of_planetarium_booking'| translate: translateKey}}</div>
+      <mat-card-content class="p-4">
+        <p class="pb-2">{{head_lines| translate: translateKey}}</p>
+        <h2>{{'rules_and_regulations'| translate: translateKey}}</h2>
+        <ol class="olList">
+          <li>
+            Citizens follow the VMC Rules.
+          </li>
+          <li>
+            Production of all necessary permission is mandatory for applicant before commencement of Program.
+          </li>
+          <li>
+            Planetarium Show timings:
+            <ul>
+              <li>Special Show: 1. 03:00 PM to 03:30 PM (Gujarati) 2. 03:00 PM to 03:30 PM (Hindi)</li>
+              <li>General Show 1. 04:00 PM to 04:30 PM (Gujarati) 2. 05:00 PM to 05:30 PM (Hindi) 3. 06:00 PM to 06:30 PM</li>
+            </ul>
+          </li>
+          <li>
+            Charge: Per Seat 10 Rs.
+          </li>
+          <li>Seating Capacity: For Special Show citizen can book 156 seats and for General Show one user can book 4 seats</li>
+        </ol>
+      </mat-card-content>
+    </mat-card>
+    <div class="fotButtonBar">
+      <div class="col-sm-12 col-md-12 text-right">
+        <button mat-raised-button (click)="guideLineFlag = false;showPlanetariumSearchForm= true;" color="primary">
+          <mat-icon>thumb_up_alt</mat-icon>
+          {{'proceed'| translate: translateKey}}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="showPlanetariumSearchForm">
     <mat-card class="formClass cardBorder">
         <div class="pageTitle">{{'book_your_ticket' | translate: translateKey}}</div>
         <div class="p-15">
@@ -280,6 +319,7 @@
         </div>
         <select-payment-gateway #paymentGateway [applicationType]="'ticketing'"></select-payment-gateway>
     </mat-card>
+  </div>
 </div>
 
 <div id="sectionToPrint"></div>
