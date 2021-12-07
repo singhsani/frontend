@@ -97,6 +97,7 @@ export class UnitDetailComponent implements OnInit {
     this.commonService.getLookupValuesAccordingToScreen(lookupcode).subscribe(data => {
       this.floorList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.Floor_No))[0].items;
       this.roomTypeList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.Room_Type))[0].items;
+      this.floorList.sort((a, b) => (a.itemName < b.itemName ? -1 : 1));
     });
   }
 
@@ -111,6 +112,8 @@ export class UnitDetailComponent implements OnInit {
       (data) => {
         if (data.status === 200 && data.body.length) {
           this.usageList = data.body;
+          this.usageList.sort((a, b) => (a.usageName < b.usageName ? -1 : 1));
+
         }
       },
       (error) => {
@@ -124,6 +127,7 @@ export class UnitDetailComponent implements OnInit {
       (data) => {
         if (data.status === 200 && data.body.length) {
           this.constructionClassList = data.body;
+          this.constructionClassList.sort((a, b) => (a.description < b.description ? -1 : 1));
         }
       },
       (error) => {
@@ -137,6 +141,7 @@ export class UnitDetailComponent implements OnInit {
       (data) => {
         if (data.status === 200 && data.body.length) {
           this.occupancyTypeList = data.body;
+          this.occupancyTypeList.sort((a, b) => (a.occypancyType < b.occypancyType ? -1 : 1));
         }
       },
       (error) => {
@@ -151,6 +156,7 @@ export class UnitDetailComponent implements OnInit {
       (data) => {
         if (data.status === 200 && data.body.length) {
           this.subUsageList = data.body;
+          this.subUsageList.sort((a, b) => (a.subUsage < b.subUsage ? -1 : 1));
         }
       },
       (error) => {

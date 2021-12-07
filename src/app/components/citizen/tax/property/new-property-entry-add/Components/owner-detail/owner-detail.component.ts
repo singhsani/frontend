@@ -83,6 +83,8 @@ export class OwnerDetailComponent implements OnInit {
       (data) => {
         if (data.status === 200 && data.body.length) {
           this.propertyTypeList = data.body;
+          this.propertyTypeList.sort((a, b) => 
+          (a.propertyType < b.propertyType ? -1 : 1));
         }
       },
       (error) => {
@@ -95,6 +97,9 @@ export class OwnerDetailComponent implements OnInit {
       (data) => {
         if (data.status === 200 && data.body.length) {
           this.propertySubTypeList = data.body;
+          this.propertySubTypeList.sort((a, b) => 
+          (a.subPropertyType < b.subPropertyType ? -1 : 1));
+
         }
       },
       (error) => {
@@ -107,6 +112,8 @@ export class OwnerDetailComponent implements OnInit {
       (data) => {
         if (data.status === 200 && data.body.length) {
           this.landClassList = data.body;
+          this.landClassList.sort((a, b) => 
+          (a.locationName < b.locationName ? -1 : 1));
         }
       },
       (error) => {
