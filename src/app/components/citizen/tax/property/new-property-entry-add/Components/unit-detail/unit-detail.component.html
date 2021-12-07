@@ -35,7 +35,7 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="assessibleArea">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Accessible Area</th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Assessable Area</th>
                         <td mat-cell *matCellDef="let element">
                             {{element.propertyMeasurement.assessableArea}} </td>
                     </ng-container>
@@ -407,7 +407,7 @@
                                         <input matInput disabled number-only name="assessableArea"
                                             formControlName="assessableArea"
                                             [(ngModel)]="measurementModel.assessableArea"
-                                            placeholder="{{'accessible_area' | translate:translateKey }} (Sq.Meter)">
+                                            placeholder="{{'assessable_area' | translate:translateKey }} (Sq.Meter)">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -636,7 +636,7 @@
                                         <mat-form-field class="full-width-input">
                                             <input matInput disabled formControlName="assessableAreaRoom"
                                                 name="assessableAreaRoom" [(ngModel)]="roomModel.assessableArea"
-                                                placeholder="{{'accessible_area' | translate:translateKey }} (Sq.Meter)">
+                                                placeholder="{{'assessable_area' | translate:translateKey }} (Sq.Meter)">
 
                                         </mat-form-field>
                                     </div>

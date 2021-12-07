@@ -132,6 +132,7 @@ export class NoDueCertificateSearchComponent implements OnInit {
       this.noDueCertificateDataSharingService.updatedSearchModel(this.searchModel);
       this.noDueCertificateDataSharingService.updatedIsShowForm(false);
       this.noDueCertificateDataSharingService.updatedIsShowTable(true);
+      this.mytemplateForm.reset();
 
 
     }

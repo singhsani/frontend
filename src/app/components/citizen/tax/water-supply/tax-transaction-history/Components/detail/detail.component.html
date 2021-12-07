@@ -23,12 +23,12 @@
         <ng-container matColumnDef="billAmount">
           <th mat-header-cell *matHeaderCellDef> Bill Amount</th>
           <td mat-cell *matCellDef="let element"> {{element.billAmount}} </td>
-          <td mat-footer-cell *matFooterCellDef> {{totalBillAmount}} </td>
+          <td style="font-weight:bold" mat-footer-cell *matFooterCellDef> {{totalBillAmount}} </td>
         </ng-container>
         <ng-container matColumnDef="paidAmount">
           <th mat-header-cell *matHeaderCellDef> Paid Amount</th>
           <td mat-cell *matCellDef="let element"> {{element.paidAmount}} </td>
-          <td mat-footer-cell *matFooterCellDef> {{totalPaidAmount}} </td>
+          <td style="font-weight:bold" mat-footer-cell *matFooterCellDef> {{totalPaidAmount}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

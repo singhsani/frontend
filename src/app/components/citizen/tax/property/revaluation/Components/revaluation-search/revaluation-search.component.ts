@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { RevaluationDataSharingService } from '../../Services/revaluation-data-sharing.service';
 import { Constants } from 'src/app/vmcshared/Constants';
@@ -13,6 +13,7 @@ import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 })
 export class RevaluationSearchComponent implements OnInit {
 
+  @ViewChild('formDetail') mytemplateForm : NgForm;
   searchModel = new SearchModel();
   wardZoneLevel = [];
   wardZoneLevel1List = [];
@@ -131,11 +132,13 @@ export class RevaluationSearchComponent implements OnInit {
       this.revaluationDataSharingService.updatedSearchModel(this.searchModel);
       this.revaluationDataSharingService.updatedIsShowForm(false);
       this.revaluationDataSharingService.updatedIsShowTable(true);
+      this.mytemplateForm.reset();
 
 
     }
   }
   clear() {
+    this.mytemplateForm.reset();
     this.propertyNo = null;
     this.wardZoneLevel2List = [];
     this.wardZoneLevel3List = [];

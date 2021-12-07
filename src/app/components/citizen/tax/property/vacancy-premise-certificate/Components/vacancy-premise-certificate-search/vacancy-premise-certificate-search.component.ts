@@ -131,7 +131,7 @@ export class VacancyPremiseCertificateSearchComponent implements OnInit {
         this.vacancyPremiseCertificateDataSharingService.updatedSearchModel(this.searchModel);
         this.vacancyPremiseCertificateDataSharingService.updatedIsShowForm(false);
         this.vacancyPremiseCertificateDataSharingService.updatedIsShowTable(true);
-        
+        this.mytemplateForm.reset();
         
     }
 }

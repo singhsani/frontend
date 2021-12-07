@@ -131,7 +131,7 @@ export class AssessmentCertificateSearchComponent implements OnInit {
       this.assessmentCertificateDataSharingService.updatedSearchModel(this.searchModel);
       this.assessmentCertificateDataSharingService.updatedIsShowForm(false);
       this.assessmentCertificateDataSharingService.updatedIsShowTable(true);
-
+      this.mytemplateForm.reset();
 
     }
   }
