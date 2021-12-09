@@ -122,7 +122,7 @@
                   <mat-form-field class="full-width-input">
                     <input trim="blur" matInput [required]="isBankDetailRequired" placeholder="Account Holder Name"
                       maxlength="50" name="refundAccountName" [(ngModel)]="model.refundAccountName"
-                      #RefundAccountName="ngModel" letter-digits-only pattern="^[a-zA-Z_]*$">
+                      #RefundAccountName="ngModel" letter-only >
                     <mat-error *ngIf="RefundAccountName.invalid">*Please enter valid bank account holder name.</mat-error>
                   </mat-form-field>
                 </div>
