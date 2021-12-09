@@ -8,6 +8,7 @@ import { FormsActionsService } from './../../../core/services/citizen/data-servi
 import { SessionStorageService } from 'angular-web-storage';
 import { BookingConstants, BookingUtils } from 'src/app/components/citizen/facilities/bookings/config/booking-config';
 import { downloadFile } from 'src/app/vmcshared/downloadFile';
+import { isThisTypeNode } from 'typescript';
 
 
 @Component({
@@ -83,6 +84,10 @@ export class GatewayResponseComponent implements OnInit {
 						this.responseObj.bank_ref_no = this.responseObj.transactionid;
 						this.responseObj.trans_date = moment(this.responseObj.trans_date).format('YYYY-MM-DD');
 						// this.redirectToHome();
+						setTimeout(() => {
+							this.redirectToHomeFail();
+							//this.redirectToMyApplication(ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS'),res.data.responseData.refNumber );
+						}, 10000);
 						this.interVal();
 					}
 					this.clearSession();
@@ -122,6 +127,10 @@ export class GatewayResponseComponent implements OnInit {
 				} else {
 					this.paymentStatus = _.upperCase(this.responseObj.order_status);
 					// this.redirectToHome();
+					setTimeout(() => {
+						this.redirectToHomeFail();
+						//this.redirectToMyApplication(ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS'),res.data.responseData.refNumber );
+					}, 10000);
 					this.interVal();
 				}
 				this.clearSession();
