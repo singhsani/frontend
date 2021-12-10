@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HosFormActionsService } from 'src/app/core/services/hospital/data-services/hos-form-actions.service';
+import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 declare var $: any;
 declare const window: any;
 
@@ -39,7 +40,9 @@ export class SelectPaymentGatewayComponent implements OnInit {
     private modalService: BsModalService,
     private commonService: CommonService, private formService: FormsActionsService,
     private toastr: ToastrService, private fb: FormBuilder,
-    private router: Router, private hosFormActionsService: HosFormActionsService) {
+    private router: Router, private hosFormActionsService: HosFormActionsService,
+    private alertService: AlertService
+    ) {
 
   }
 
@@ -121,11 +124,17 @@ export class SelectPaymentGatewayComponent implements OnInit {
     if (this.applicationType == 'HOSPITAL') {
       this.hosFormActionsService.ccAvenueMakePayment(this.payData).subscribe(res => {
         this.getTransactionDetail(res.data);
-      });
+      },
+      (error) => {
+        this.alertService.error(error.error[0].message);      }
+      );
     } else {
       this.formService.ccAvenueMakePayment(this.payData).subscribe(res => {
         this.getTransactionDetail(res.data);
-      });
+      },
+      (error) => {
+        this.alertService.error(error.error[0].message);      }
+        );
     }
 
   }
@@ -173,7 +182,10 @@ export class SelectPaymentGatewayComponent implements OnInit {
         }
         window.loadBillDeskSdk(config);
       }
-      });
+      },
+      (error) => {
+        this.alertService.error(error.error[0].message);      }
+      );
     } else {
     
       this.formService.getBillDeskPage(obj).subscribe(res => {
@@ -202,7 +214,10 @@ export class SelectPaymentGatewayComponent implements OnInit {
         }
         window.loadBillDeskSdk(config);
       }
-      });
+      },
+      (error) => {
+        this.alertService.error(error.error[0].message);      }
+      );
     }
 
 
