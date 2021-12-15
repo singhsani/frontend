@@ -25,7 +25,7 @@ export class NewPlumberLicenseFormComponent implements OnInit {
 
     @ViewChild('stepper') stepper: MatStepper;
     plumberLicenseDocumentUploadDocs : Array<any> = [];
-    plumberLicenseId : any;
+    plumberLicenseId = 0;
     
     licenseForList = [];
     educationalQualificationList = [];
@@ -135,7 +135,7 @@ export class NewPlumberLicenseFormComponent implements OnInit {
     }
     saveDetail(formDetail: NgForm) {
         if (formDetail.form.valid) {
-            this.model.plumberLicenseId = 0;
+            this.model.plumberLicenseId = this.plumberLicenseId;
             this.model.applicationNumber = this.applicationModel.applicationNumber;
             var dataToPost = Object.assign({}, this.model);
             if (dataToPost.birthdate)
