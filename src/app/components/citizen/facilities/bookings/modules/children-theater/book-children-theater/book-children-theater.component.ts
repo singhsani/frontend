@@ -143,6 +143,7 @@ export class BookChildrenTheaterComponent implements OnInit {
             this.CHILDREN_THEATERS = resp.data;
             this.childrenTheaterSearchForm.get('code').setValue(resp.data[0].name);
             this.childrenTheaterSearchForm.get('code').disable();
+            this.getAvaillableSlot(resp.data);
         })
     }
 
@@ -398,5 +399,11 @@ export class BookChildrenTheaterComponent implements OnInit {
       this.dataSource = res.data
       });
     }
+   
+    getAvaillableSlot(data){
+        this.bookingService.getAvailableStots(data[0].code).subscribe(respData => {
+          this.endDate = moment(respData.data.endDate, "DD-MM-YYYY").toDate();
+        })
+      }
 
 }
