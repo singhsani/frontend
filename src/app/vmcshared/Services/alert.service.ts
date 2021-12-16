@@ -85,7 +85,7 @@ export class AlertService {
             title: title,
             html: message,
             type: 'info',
-            showCancelButton: true,
+            showCancelButton: false,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             imageUrl: this.imageUrls('info'),
