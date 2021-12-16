@@ -112,6 +112,9 @@ export class NewDrainageConnectionComponent implements OnInit {
       var objLimit = this.limitList.filter(f => f.itemId == val)[0];
       if (objLimit.itemCode == Constants.ItemCodes.Out_of_Limit) {
         this.isOutofLimit = true;
+      this.newDrainageConnectionForm.controls["waterDrainageZoneId"].clearValidators();
+      this.newDrainageConnectionForm.controls["waterDrainageWardId"].clearValidators();
+      this.newDrainageConnectionForm.controls["waterDrainageBlockId"].clearValidators();
       }
       else {
         this.isOutofLimit = false;
