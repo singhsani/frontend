@@ -140,11 +140,12 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
 				  return
             }
         });
-    }  
+    }
     save(formDetail: NgForm) {
         if (formDetail.form.valid) {
             this.dataModel.applicationNumber = this.applicationModel.applicationNumber;
             this.dataModel.connectionDtlId = this.connectionsModel.connectionDetail.connectionDtlId;
+            this.dataModel.connectionNumber = this.connectioNo;
             if(this.connectionsModel.meterDetail) {
                 this.dataModel.meterDetailId = this.connectionsModel.meterDetail.meterDetailId;
             }

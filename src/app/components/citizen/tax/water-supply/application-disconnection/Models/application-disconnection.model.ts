@@ -6,6 +6,7 @@ export class DataModel{
     meterDetailId: number;
     reasonForDisconnectionId: number;
     plumberId: number;
+    connectionNumber: string;
   }
 
   export class ConnectionsModel{
