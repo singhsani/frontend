@@ -172,7 +172,12 @@ export class VendorRegistrationComponent implements OnInit {
       console.log("tresr", res)
       this.vendorRegistrationForm.patchValue(res);
       //this.showButtons = false;
-      //this.vendorRegistrationForm.disable();
+      
+      if(res.formStatus == 'PAYMENT_RECEIVED'){
+        this.vendorRegistrationForm.get('canEdit').setValue(false);
+        this.vendorRegistrationForm.disable();
+      }
+      
       this.setServiceDetailsOnInit(res);
       //	this.sortedList.push(res);
     });
@@ -367,9 +372,16 @@ export class VendorRegistrationComponent implements OnInit {
     this.engineer.getAllDocuments().subscribe(res => {
       this.attachmentList = _.cloneDeep(res);
 
-      // for (let file of this.attachmentList) {
-      //   file['mandatory'] = false;
-      // }
+      this.uploadFilesArray = [];
+			_.forEach(this.attachmentList, (value) => {
+				if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+					this.uploadFilesArray.push({
+						'labelName': value.documentLabelEn,
+						'fieldIdentifier': value.fieldIdentifier,
+						'documentIdentifier': value.documentIdentifier
+					})
+				}
+			});
     });
   }
 
