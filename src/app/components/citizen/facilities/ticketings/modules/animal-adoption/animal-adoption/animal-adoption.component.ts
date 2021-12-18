@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { TicketingsService } from '../../../shared-ticketing/services/ticketings.service';
 import { MatTableDataSource } from '@angular/material';
 import * as moment from 'moment';
@@ -33,7 +33,7 @@ export class AnimalAdoptionComponent implements OnInit {
 
   animalAdoptionForm: FormGroup;
 
- 
+
 
   /**
     * displayColumns are used for display the columns in material table.
@@ -41,8 +41,8 @@ export class AnimalAdoptionComponent implements OnInit {
   displayColumnsForAnimalAdoptionPricingTable: string[] = [
     'id',
     'animalBirdName',
-    'annualBoardingExpenses',
-    'annualMaintainanceExpenses',
+    // 'annualBoardingExpenses',
+    // 'annualMaintainanceExpenses',
     'totalExpenses'
   ];
 
@@ -65,7 +65,7 @@ export class AnimalAdoptionComponent implements OnInit {
 
   @ViewChild("paymentGateway") paymentGateway: TemplateRef<any>;
   // Loading Ticketing Configurations
-  
+
   ticketingUtils: TicketingUtils;
 
   constructor(
@@ -77,7 +77,7 @@ export class AnimalAdoptionComponent implements OnInit {
     protected formService: FormsActionsService
   ) {
     this.ticketingService.resourceType = 'zooanimaladoption';
-    this.ticketingUtils = new TicketingUtils(formService,toster);
+    this.ticketingUtils = new TicketingUtils(formService, toster);
   }
 
   ngOnInit() {
@@ -123,6 +123,7 @@ export class AnimalAdoptionComponent implements OnInit {
       uniqueId: null,
       version: null,
       cancelledDate: null,
+      canEdit: true,
       bookingDate: null,
       status: null,
       refNumber: null,
@@ -136,80 +137,138 @@ export class AnimalAdoptionComponent implements OnInit {
       scheduleList: null,
       attachments: null,
       adoptionRequestDate: moment().format('YYYY-MM-DD'),
-      animalNameList : null,
       adoptingPersonOrganizationName: [null, Validators.required],
       adoptersAddress: [null, Validators.required],
       adopterContactNumber: [null, Validators.required],
       adopterEmailId: [null, [ValidationService.emailValidator]],
-      animalName: [null, Validators.required],
-      totalAdoptionCost: [null, Validators.required],
-      message: [null, Validators.required],
+      animalName: [null],
+      totalAdoptionCost: [null],
+      message: [null],
       agree: [],
-      termsCondition: [null, Validators.required]
+      termsCondition: [null, Validators.required],
+      animalNameList: this.fb.array([])
     });
   }
 
-  getValues(animal){
-    this.resetCalculations(animal);
+  getValues(animal) {
+
     this.animalName = animal;
-    animal.forEach((value) => {
-      this.totalExpenses = this.totalExpenses + value.totalExpenses;
-      this.animalAdoptionForm.get('animalName').setValue(value.animalBirdName);
-      this.animalAdoptionForm.get('totalAdoptionCost').setValue(this.totalExpenses);
-      this.selectedAnimalAnnualMaintainanceExpenses = this.selectedAnimalAnnualMaintainanceExpenses + value.annualMaintainanceExpenses;
-      this.selectedAnimalAnnualBoardingExpenses = this.selectedAnimalAnnualBoardingExpenses + value.annualBoardingExpenses;
-    });
+
   }
 
-  resetCalculations(animal){
+  deleteOT(OTData: any, index: number) {
+
+    let returnArray = this.animalAdoptionForm.get('animalNameList') as FormArray;
+
+    this.commonService.deleteAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
+
+      if (OTData.id == null) {
+        returnArray.removeAt(index);
+
+        this.toster.success('Animal has been removed.')
+      } else {
+
+        returnArray.removeAt(index);
+
+        this.toster.success('Animal has been removed.')
+
+
+      }
+
+
+    }
+    );
+  }
+
+  openDialog() {
+
+    if (this.validateAnimal()) {
+      this.toster.warning('Select Animal and No of count');
+      return;
+    }
+
+    let returnArray = this.animalAdoptionForm.get('animalNameList') as FormArray;
+    
+    for (let control of returnArray.controls) {
+      if (control instanceof FormGroup) {
+        
+         if(control.get('id').value == this.animalName.id){
+           this.toster.warning(this.animalName.animalBirdName +' already added Plase Select another Animal');
+           return;
+         }
+      }
+   }
+
+    this.animalName['totalQty'] = this.selectedAnimalAnnualBoardingExpenses;
+    this.animalName.totalExpenses = this.animalAdoptionForm.get('totalAdoptionCost').value;
+    if (this.animalAdoptionForm.get('canEdit').value) {
+      returnArray.push(this.createOTDetailArray(this.animalName));
+      this.resetCalculations("");
+    }
+
+  }
+
+  calculateAmount() {
+    this.selectedAnimalAnnualBoardingExpenses;
+    
+    this.animalName;
+    this.animalAdoptionForm.get('totalAdoptionCost').setValue(this.selectedAnimalAnnualBoardingExpenses * this.animalName.totalExpenses);
+  }
+  createOTDetailArray(data?: any) {
+    return this.fb.group({
+      // serviceFormId: this.formId,
+      id: data.id ? data.id : null,
+      activationEndDate: data.activationEndDate ? data.activationEndDate : null,
+      activationStartDate: data.activationStartDate ? data.activationStartDate : null,
+      active: data.active ? data.active : null,
+      animalBirdName: data.animalBirdName ? data.animalBirdName : null,
+      annualBoardingExpenses: data.annualBoardingExpenses ? data.annualBoardingExpenses : null,
+      annualMaintainanceExpenses: data.annualMaintainanceExpenses ? data.annualMaintainanceExpenses : null,
+      totalExpenses: data.totalExpenses ? data.totalExpenses : null,
+      totalQty: data.totalQty ? data.totalQty : null,
+
+    })
+
+  }
+
+  resetCalculations(data) {
     this.animalName = [];
     this.totalExpenses = 0;
-    this.animalAdoptionForm.get('animalName').setValue(0);
-    this.animalAdoptionForm.get('totalAdoptionCost').setValue(0);
+    this.animalAdoptionForm.get('animalName').setValue(null);
+    this.animalAdoptionForm.get('totalAdoptionCost').setValue(null);
+    //this.animalAdoptionForm.get('totalAdoptionCost').setValue(0);
     this.selectedAnimalAnnualMaintainanceExpenses = 0;
     this.selectedAnimalAnnualBoardingExpenses = 0;
   }
-  // selectAnimal(animal) {
-
-  //   let obj = {
-  //     'animalName': animal.animalBirdName,
-  //     'totalAdoptionCost': animal.totalExpenses
-  //   };
-  //   this.animalName.push(obj);
-  //   this.totalExpenses = this.totalExpenses + animal.totalExpenses;
-
-  //   this.animalAdoptionForm.get('animalName').setValue(animal.animalBirdName);
-  //   this.animalAdoptionForm.get('totalAdoptionCost').setValue(this.totalExpenses);
-  //   this.selectedAnimalAnnualMaintainanceExpenses = this.selectedAnimalAnnualMaintainanceExpenses + animal.annualMaintainanceExpenses;
-  //   this.selectedAnimalAnnualBoardingExpenses = this.selectedAnimalAnnualBoardingExpenses + animal.annualBoardingExpenses;
 
 
-  // }
+  validateAnimal() {
+    if (this.animalAdoptionForm.get('animalName').value == null || this.animalAdoptionForm.get('totalAdoptionCost').value == null || this.selectedAnimalAnnualBoardingExpenses == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
 
   submitAnimalAdoptionRequest() {
 
-    //this.animalName.forEach((value) => {
-      //this.animalAdoptionForm.get('animalName').setValue(value.animalName);
-      //this.animalAdoptionForm.get('totalAdoptionCost').setValue(value.totalAdoptionCost);
-      //this.animalAdopationFromArray.push(this.animalAdoptionForm.value);
-    //});
-
-    this.animalAdoptionForm.get('animalNameList').setValue(this.animalName);
 
     this.ticketingService.animalAdoptionRequest(this.animalAdoptionForm.value).subscribe(resp => {
-     
+
     },
       err => {
         if (err.status === 402) {
           this.animalAdoptionForm.get('refNumber').setValue(err.error.data.refNumber);
-          
-             this.ticketingUtils.redirectToCCAvenuePayment(err, this.commonService, this.ticketingService, this.paymentGateway ,this.animalAdoptionForm, this.router);
-             
-         
+
+          this.ticketingUtils.redirectToCCAvenuePayment(err, this.commonService, this.ticketingService, this.paymentGateway, this.animalAdoptionForm, this.router);
+
+
         }
       });
-    
-    }
+
+  }
 
 
   /**

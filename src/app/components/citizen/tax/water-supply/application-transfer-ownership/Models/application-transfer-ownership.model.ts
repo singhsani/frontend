@@ -4,8 +4,9 @@ export class DataModel{
     connectionDtlId: number;
     mobileNo: string;
     newOwnerName: string;
-    reasonForTransferId:number;
-    transferOfOwnershipId: number
+    reasonForTransferId: number;
+    transferOfOwnershipId: number;
+    waterConnectionNumber: string;
   }
 
   export class ConnectionsModel{

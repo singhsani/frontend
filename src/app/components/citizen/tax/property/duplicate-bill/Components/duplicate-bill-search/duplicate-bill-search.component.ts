@@ -133,7 +133,7 @@ export class DuplicateBillSearchComponent implements OnInit {
       this.duplicateBillDataSharingService.updatedSearchModel(this.searchModel);
       this.duplicateBillDataSharingService.updatedIsShowForm(false);
       this.duplicateBillDataSharingService.updatedIsShowTable(true);
-
+      this.mytemplateForm.reset();
 
     }
   }

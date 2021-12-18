@@ -259,8 +259,12 @@ export class BankDetailComponent implements OnInit, OnDestroy {
       'bankBranchId': null,
       'bankBranchName': null,
       'ifscCode': '',
-      'vacancyFrom': new Date()
+      'vacancyFrom': new Date(),
+      'vacancyTo' : null,
+      'actionOnVacancyAmountLookupId' : null
     };
+    this.getLookups();
+    this.isBankDetailRequired = false;
     Object.assign(this.model, bankDetail);
     /* this.model = this.modelForCliear;
     this.model.vacancyFrom = new Date(); */

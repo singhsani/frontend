@@ -134,7 +134,7 @@ export class TransferPropertySearchComponent implements OnInit {
       this.transferPropertyDataSharingService.updatedSearchModel(this.searchModel);
       this.transferPropertyDataSharingService.updatedIsShowForm(false);
       this.transferPropertyDataSharingService.updatedIsShowTable(true);
-
+      this.mytemplateForm.reset();
 
     }
   }

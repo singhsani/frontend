@@ -57,6 +57,9 @@ export class BookPlanetariumComponent implements OnInit {
   resourceName: Array<any> = [];
   DateFormate: string = 'Hint: DD/MM/YYYY';
   showFotButtonBar = false;
+  guideLineFlag: boolean = true;
+    showPlanetariumSearchForm: boolean = false;
+    head_lines: string;
 
   /**
    * @param fb - Declare FormBuilder property.
@@ -79,6 +82,7 @@ export class BookPlanetariumComponent implements OnInit {
   }
 
   ngOnInit() {
+  this.head_lines = `Online Planetarium Booking facility is the convenient and easy way to book the Planetarium of Vadodara Municipal Corporation. You can view the availability details of the Planetarium and select booking date. The booking is confirmed on successful payment of the rent amount for selected date.`;
     this.createTicketBookingForm();
     this.getLookUps();
     this.getListData();

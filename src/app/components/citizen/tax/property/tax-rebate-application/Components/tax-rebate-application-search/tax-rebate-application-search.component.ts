@@ -131,7 +131,7 @@ export class TaxRebateApplicationSearchComponent implements OnInit {
         this.taxRebateApplicationDataSharingService.updatedSearchModel(this.searchModel);
         this.taxRebateApplicationDataSharingService.updatedIsShowForm(false);
         this.taxRebateApplicationDataSharingService.updatedIsShowTable(true);
-        
+        this.mytemplateForm.reset();
         
     }
 }

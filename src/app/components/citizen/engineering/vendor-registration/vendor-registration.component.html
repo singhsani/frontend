@@ -140,7 +140,7 @@
           </div>
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" OnlyNumber required maxlength="11" minlength="10"
+            <input matInput type="text" OnlyNumber required maxlength="11" minlength="11"
               placeholder="{{'Telephone Number'}}" formControlName="officeContactNumber">
             <control-messages [control]="vendorRegistrationForm.get('officeContactNumber')">
             </control-messages>
@@ -168,7 +168,7 @@
           </div>
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" OnlyNumber required maxlength="11" minlength="10"
+            <input matInput type="text" OnlyNumber required maxlength="11" minlength="11"
               placeholder="{{'Telephone Number'}}" formControlName="resContactNumber">
             <control-messages [control]="vendorRegistrationForm.get('resContactNumber')">
             </control-messages>
@@ -264,7 +264,24 @@
 
           <div class="row">
 
-            <h2>{{'Whether Proprietary or Partnership or Pvt. Ltd., or public Ltd.
+            <div class="col-md-12">
+
+              <div class="mb-4 mt-12">
+                <mat-label><h2>Whether Proprietary or Partnership or Pvt. Ltd., or public Ltd.
+                  (Copy of Income Tax Returns for 3 years in case of Proprietary Firm,
+                  Partnership Deed in case of Partnership Firm and Memorandum and article of Association in case of
+                  Company) *</h2></mat-label>
+              </div>
+              <mat-radio-group formControlName="incomeTaxDetails"  class="radioGroup">
+                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code"  class="mr-3">
+                  {{impl.name}}
+                </mat-radio-button>
+              </mat-radio-group>
+              <control-messages [control]="vendorRegistrationForm.get('incomeTaxDetails')">
+              </control-messages>
+            </div>
+
+            <!-- <h2>{{'Whether Proprietary or Partnership or Pvt. Ltd., or public Ltd.
               (Copy of Income Tax Returns for 3 years in case of Proprietary Firm,
               Partnership Deed in case of Partnership Firm and Memorandum and article of Association in case of
               Company)'}}</h2>
@@ -276,7 +293,7 @@
               </ng-select>
               <control-messages [control]="vendorRegistrationForm.get('incomeTaxDetails')">
               </control-messages>
-            </div>
+            </div> -->
           </div>
           <div class="row">
             <h2>{{'Name of the Proprietor / Partners / Directors'}}</h2>
@@ -479,7 +496,7 @@
 
           <div class="row">
 
-            <h2>{{'Whether the factory is owned by the firm (docuemntory evidence of Ownership must be produced). In
+            <!-- <h2>{{'Whether the factory is owned by the firm (docuemntory evidence of Ownership must be produced). In
               case firm does not own factory but utilize the facility for manufacturing / fabrication of
               equipments/stores for which firm has applied on live & licence or other basis, the Firm should furnish
               valid legal agreement that factory of(here indicate the name of the firm whose factory is being
@@ -494,7 +511,30 @@
               </ng-select>
               <control-messages [control]="vendorRegistrationForm.get('manufacturingOwnedDetails').get('code')">
               </control-messages>
+            </div> -->
+
+            <div class="col-md-12">
+
+              <div class="mb-4 mt-12">
+                <mat-label> <h2>Whether the factory is owned by the firm (docuemntory evidence of Ownership must be produced). In
+                  case firm does not own factory but utilize the facility for manufacturing / fabrication of
+                  equipments/stores for which firm has applied on live & licence or other basis, the Firm should furnish
+                  valid legal agreement that factory of(here indicate the name of the firm whose factory is being
+                  utilized)
+                  has been put at the firms disposal for the equipments / stores for which the firms disposal for the
+                  equipments/stores for which the firms have applied.</h2></mat-label>
+              </div>
+              <div formGroupName="manufacturingOwnedDetails">
+              <mat-radio-group formControlName="code"  class="radioGroup">
+                <mat-radio-button *ngFor="let impl of manuFacturDetails" [value]="impl.code"  class="mr-3">
+                  {{impl.name}}
+                </mat-radio-button>
+              </mat-radio-group>
             </div>
+            <control-messages [control]="vendorRegistrationForm.get('manufacturingOwnedDetails').get('code')">
+            </control-messages>
+            </div>
+
           </div>
 
           <div class="row">
@@ -559,7 +599,20 @@
               </control-messages>
             </mat-form-field>
 
-            <div class="col-md-4 ngSelect">
+            <div class="col-md-4">
+              <div>
+                <mat-label> Copy of Latest Income Tax Clearance certifcate.</mat-label>
+              </div>
+              <mat-radio-group formControlName="copyOfITCClearanceCertificate"  class="radioGroup">
+                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code"  class="mr-3">
+                  {{impl.name}}
+                </mat-radio-button>
+              </mat-radio-group>
+              <control-messages [control]="vendorRegistrationForm.get('copyOfITCClearanceCertificate')">
+              </control-messages>
+            </div>
+
+            <!-- <div class="col-md-4 ngSelect">
               <ng-select placeholder="{{'Copy of Latest Income Tax Clearance certifcate.'}}"
                 formControlName="copyOfITCClearanceCertificate">
                 <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
@@ -567,7 +620,7 @@
               </ng-select>
               <control-messages [control]="vendorRegistrationForm.get('copyOfITCClearanceCertificate')">
               </control-messages>
-            </div>
+            </div> -->
 
             <mat-form-field class="col-md-4">
               <input matInput type="text" maxlength="1000" placeholder="{{'Area of land occupied by the factory'}}"
@@ -623,7 +676,7 @@
               </control-messages>
             </mat-form-field>
 
-            <div class="col-md-12 ngSelect">
+            <!-- <div class="col-md-12 ngSelect">
               <ng-select
                 placeholder="{{'If registered under the companies ACT or any other ACT, give registration no. and date of registration etc. along with copy of regsitration office.'}}"
                 formControlName="registrationOfficeACT">
@@ -632,9 +685,36 @@
               </ng-select>
               <control-messages [control]="vendorRegistrationForm.get('registrationOfficeACT')">
               </control-messages>
+            </div> -->
+
+            <div class="col-md-12">
+              <div>
+                <mat-label> If registered under the companies ACT or any other ACT, give registration no. and date of registration etc. along with copy of regsitration office.</mat-label>
+              </div>
+              <mat-radio-group formControlName="registrationOfficeACT"  class="radioGroup">
+                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code"  class="mr-3">
+                  {{impl.name}}
+                </mat-radio-button>
+              </mat-radio-group>
+              <control-messages [control]="vendorRegistrationForm.get('registrationOfficeACT')">
+              </control-messages>
             </div>
 
-            <div class="col-md-12 ngSelect">
+
+            <div class="col-md-12">
+              <div>
+                <mat-label> Whether the product manufactured carry ISI mark (PI. Specify).</mat-label>
+              </div>
+              <mat-radio-group formControlName="productManufacturedISI"  class="radioGroup">
+                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code"  class="mr-3">
+                  {{impl.name}}
+                </mat-radio-button>
+              </mat-radio-group>
+              <control-messages [control]="vendorRegistrationForm.get('productManufacturedISI')">
+              </control-messages>
+            </div>
+
+            <!-- <div class="col-md-12 ngSelect">
               <ng-select placeholder="{{'Whether the product manufactured carry ISI mark (PI. Specify).'}}"
                 formControlName="productManufacturedISI">
                 <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
@@ -642,9 +722,9 @@
               </ng-select>
               <control-messages [control]="vendorRegistrationForm.get('productManufacturedISI')">
               </control-messages>
-            </div>
+            </div> -->
 
-            <div class="col-md-12 ngSelect">
+            <!-- <div class="col-md-12 ngSelect">
               <ng-select
                 placeholder="{{'Whether registered with other central Govt/State Govt./Govt. Undertaking Department and validity thereof. (attach a copy of such registration certificate).'}}"
                 formControlName="registeredByGovt">
@@ -653,7 +733,21 @@
               </ng-select>
               <control-messages [control]="vendorRegistrationForm.get('registeredByGovt')">
               </control-messages>
+            </div> -->
+
+            <div class="col-md-12">
+              <div class="mb-4 mt-11">
+                <mat-label> Whether registered with other central Govt/State Govt./Govt. Undertaking Department and validity thereof. (attach a copy of such registration certificate).</mat-label>
+              </div>
+              <mat-radio-group formControlName="registeredByGovt"  class="radioGroup">
+                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code"  class="mr-3">
+                  {{impl.name}}
+                </mat-radio-button>
+              </mat-radio-group>
+              <control-messages [control]="vendorRegistrationForm.get('registeredByGovt')">
+              </control-messages>
             </div>
+
 
             <mat-form-field class="col-md-12">
               <input matInput type="text" maxlength="1000"
@@ -1170,7 +1264,7 @@
 
           <div class="row">
 
-            <h2>{{'B. Please confirm whether your firm is under stop deal/blcklisted by any Central Govt/State Govt.
+            <!-- <h2>{{'B. Please confirm whether your firm is under stop deal/blcklisted by any Central Govt/State Govt.
               or any Govt. undertaking department. Submit details this is must (Affidavit by director required). False
               information may lead legal action and direct ban on product registered in VMC.'}}</h2>
 
@@ -1179,6 +1273,24 @@
                 <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
                 </ng-option>
               </ng-select>
+              <control-messages [control]="vendorRegistrationForm.get('firmUnderDealBlacklisted')">
+              </control-messages>
+            </div> -->
+
+            <div class="col-md-12">
+
+              <div class="mb-4 mt-12">
+                <mat-label> <h2>{{'B. Please confirm whether your firm is under stop deal/blcklisted by any Central Govt/State Govt.
+                  or any Govt. undertaking department. Submit details this is must (Affidavit by director required). False
+                  information may lead legal action and direct ban on product registered in VMC.'}}</h2>
+                </mat-label>
+              </div>
+             
+              <mat-radio-group formControlName="firmUnderDealBlacklisted"  class="radioGroup">
+                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code"  class="mr-3">
+                  {{impl.name}}
+                </mat-radio-button>
+              </mat-radio-group>
               <control-messages [control]="vendorRegistrationForm.get('firmUnderDealBlacklisted')">
               </control-messages>
             </div>
