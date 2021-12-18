@@ -45,7 +45,7 @@
 							</ng-select>
 
 							<mat-error *ngIf="!newDrainageConnectionForm.get('limit').valid && newDrainageConnectionForm.get('limit').touched">
-								Required field, must be between 5 and 10 characters.
+								Within Limit/Out of Limit is required.
 							</mat-error>
 						</div>
 						<div *ngIf="!isOutofLimit" class="col-md-6 ngSelect">
@@ -229,21 +229,21 @@
 				<ng-template mat-tab-label>
 					<div>{{'property-details' | translate:translateKey}}</div>
 				</ng-template>
-
-
-
 				<div class="row">
-					<div class="col-md-4">
-						<mat-form-field>
-							<input matInput appPreventSpace appMaskPropertNumber minlength="16" maxlength="16"
+					<div class="col-md-4">						
+						<mat-form-field >
+							<input  matInput appPreventSpace appMaskPropertNumber minlength="16" maxlength="16"
 								placeholder="{{'property_Number_on_which_connection_required' | translate:translateKey}}"
-								type="text" formControlName="propertyNo">
-								<control-messages [control]="newDrainageConnectionForm.get('propertyNo')">
-								</control-messages>
+								type="text" formControlName="propertyNo" (focusout)="setPropertyNo($event.target.value)">				
+								<!-- <control-messages [control]="newDrainageConnectionForm.get('propertyNo')">
+								</control-messages> -->								
+								<mat-error *ngIf="!isOutofLimit && !newDrainageConnectionForm.get('propertyNo').valid 
+								&& newDrainageConnectionForm.get('propertyNo').touched" style="font-size: 11px">
+									Property No. is required
+								</mat-error>						
 						</mat-form-field>
 					</div>
 					<div class="col-md-4 ngSelect">
-
 						<ng-select placeholder="{{'primary_Property' | translate:translateKey}}"
 							formControlName="primaryProperty">
 							<ng-option [value]=true>
@@ -251,7 +251,7 @@
 							<ng-option [value]=false>
 								NO</ng-option>
 						</ng-select>
-						<control-messages [control]="newDrainageConnectionForm.get('primaryProperty')">
+						<control-messages *ngIf="!isOutofLimit" [control]="newDrainageConnectionForm.get('primaryProperty')">
 						</control-messages>
 					</div>
 					<div class="col-md-4">

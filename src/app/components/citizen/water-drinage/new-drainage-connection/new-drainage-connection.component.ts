@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ValidationService } from 'src/app/shared/services/validation.service';
 import { TranslateService } from 'src/app/shared/modules/translate/translate.service';
@@ -61,7 +61,7 @@ export class NewDrainageConnectionComponent implements OnInit {
   searchPropertyData: any;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: FormBuilder,private CD: ChangeDetectorRef,
     private validationService: ValidationService,
     public translateService: TranslateService,
     private router: Router,
@@ -106,19 +106,38 @@ export class NewDrainageConnectionComponent implements OnInit {
     this.setFormControlToTabIndexMap();
   
   }
+  setPropertyNo(propertyNo?: any) {
+    this.newDrainageConnectionForm.controls["propertyNo"].setValue(propertyNo);
+  }
 
   onChangedLimit(val) {
     if (val) {
       var objLimit = this.limitList.filter(f => f.itemId == val)[0];
+      debugger;
       if (objLimit.itemCode == Constants.ItemCodes.Out_of_Limit) {
         this.isOutofLimit = true;
       this.newDrainageConnectionForm.controls["waterDrainageZoneId"].clearValidators();
       this.newDrainageConnectionForm.controls["waterDrainageWardId"].clearValidators();
-      this.newDrainageConnectionForm.controls["waterDrainageBlockId"].clearValidators();
+      this.newDrainageConnectionForm.controls["waterDrainageBlockId"].clearValidators();  
+      this.newDrainageConnectionForm.controls["propertyNo"].clearValidators();
+      this.newDrainageConnectionForm.controls["primaryProperty"].clearValidators();      
       }
       else {
-        this.isOutofLimit = false;
+        this.isOutofLimit = false;        
+        this.newDrainageConnectionForm.controls["waterDrainageZoneId"].setValidators([Validators.required]); 
+        this.newDrainageConnectionForm.controls["waterDrainageWardId"].setValidators([Validators.required]); 
+        this.newDrainageConnectionForm.controls["waterDrainageBlockId"].setValidators([Validators.required]); 
+        this.newDrainageConnectionForm.controls["propertyNo"].setValidators([Validators.required]); 
+        this.newDrainageConnectionForm.controls["primaryProperty"].setValidators([Validators.required]); 
       }
+      
+      this.newDrainageConnectionForm.controls["waterDrainageZoneId"].updateValueAndValidity(); 
+      this.newDrainageConnectionForm.controls["waterDrainageWardId"].updateValueAndValidity(); 
+      this.newDrainageConnectionForm.controls["waterDrainageBlockId"].updateValueAndValidity(); 
+      this.newDrainageConnectionForm.controls["propertyNo"].updateValueAndValidity(); 
+      this.newDrainageConnectionForm.controls["primaryProperty"].updateValueAndValidity(); 
+      this.newDrainageConnectionForm.controls["propertyNo"].updateValueAndValidity();
+      this.CD.detectChanges();
     }
   }
   onTabChange(evt) {
@@ -343,8 +362,8 @@ export class NewDrainageConnectionComponent implements OnInit {
       connectionUsage: [null, [Validators.required]],
       connectionSubUsage: [null, [Validators.required]],
       plumberId: [null, [Validators.required]],
-      propertyNo: [null,[ValidationService.propertyNoValidator]],
-      primaryProperty: [null],
+      propertyNo: [null,[Validators.required,ValidationService.propertyNoValidator]],
+      primaryProperty: [null,[Validators.required]],
       fpNo: [null ],
       plotPartNo: [null ],
       tpNo: [null ],

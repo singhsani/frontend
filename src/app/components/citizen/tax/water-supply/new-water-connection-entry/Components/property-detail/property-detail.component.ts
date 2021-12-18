@@ -139,7 +139,9 @@ export class PropertyDetailComponent implements OnInit {
   savePropertyAddress(formDetails: NgForm) {
     this.savePropertyAddress1(formDetails,false);
   }
-
+  setPropertyNo(propertyNo?: any) {
+    this.propertyModel.propertyNo = propertyNo
+  }
   savePropertyAddress1(formDetails: NgForm,isSubmit:boolean) {
     if (formDetails.form.valid) {    
       if (!this.model.postalAddressDiff) {
