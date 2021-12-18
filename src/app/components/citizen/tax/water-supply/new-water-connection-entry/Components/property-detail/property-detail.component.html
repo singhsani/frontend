@@ -5,8 +5,8 @@
                 <mat-form-field class="full-width-input">
                     <input mask-property-no-with-occuiper-code trim="blur" matInput required name="propertyNo"
                         [(ngModel)]="propertyModel.propertyNo" #PropertyNo="ngModel"
-                        placeholder="Property Number on which connection required">
-                    <mat-error *ngIf="PropertyNo.invalid">*Property Number is required.</mat-error>
+                        placeholder="Property Number on which connection required" (focusout)="setPropertyNo($event.target.value)">
+                    <mat-error *ngIf="PropertyNo.invalid">Property Number is required.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-4">
@@ -18,7 +18,7 @@
                     </ng-select>
                     <div
                         *ngIf="(propertyDetails.submitted && PrimaryProperty.invalid)  || (PrimaryProperty.invalid && PrimaryProperty.touched)">
-                        <mat-error *ngIf="PrimaryProperty.errors.required">*Primary Property is required.</mat-error>
+                        <mat-error *ngIf="PrimaryProperty.errors.required">Primary Property is required.</mat-error>
                     </div>
                 </div>
             </div>
@@ -71,14 +71,14 @@
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput (input)="onChangeAddress()" name="fpNo" [(ngModel)]="model.fpNo"
                         #FpNo="ngModel" placeholder="FP No." maxlength="100">
-                    <mat-error *ngIf="FpNo.invalid">*FP No is required.</mat-error>
+                    <mat-error *ngIf="FpNo.invalid">FP No is required.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput (input)="onChangeAddress()" name="plotPartNo"
                         [(ngModel)]="model.plotPartNo" #PlotPartNo="ngModel" maxlength="100" placeholder="Plot Part Number">
-                    <mat-error *ngIf="PlotPartNo.invalid">*Plot Part Number is required.</mat-error>
+                    <mat-error *ngIf="PlotPartNo.invalid">Plot Part Number is required.</mat-error>
                 </mat-form-field>
             </div>
 
@@ -88,14 +88,14 @@
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput (input)="onChangeAddress()" name="tpNo" [(ngModel)]="model.tpNo"
                         #TpNo="ngModel" placeholder="TP No." maxlength="100">
-                    <mat-error *ngIf="TpNo.invalid">*TP No is required.</mat-error>
+                    <mat-error *ngIf="TpNo.invalid">TP No is required.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput (input)="onChangeAddress()" name="serveyNo" [(ngModel)]="model.serveyNo"
                         #ServeyNo="ngModel" maxlength="100" placeholder="Servey Number">
-                    <mat-error *ngIf="ServeyNo.invalid">*Servey No is required.</mat-error>
+                    <mat-error *ngIf="ServeyNo.invalid">Servey No is required.</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -104,7 +104,7 @@
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput (input)="onChangeAddress()" name="houseNo" [(ngModel)]="model.houseNo"
                         #HouseNo="ngModel" placeholder="House / Flat Number" maxlength="100">
-                    <mat-error *ngIf="HouseNo.invalid">*House / Flat No is required.</mat-error>
+                    <mat-error *ngIf="HouseNo.invalid">House / Flat No is required.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
@@ -112,7 +112,7 @@
                     <input trim="blur" matInput (input)="onChangeAddress()" name="buildingName"
                         [(ngModel)]="model.buildingName" #BuildingName="ngModel" maxlength="100"
                         placeholder="Building Name">
-                    <mat-error *ngIf="BuildingName.invalid">*Building Name is required.</mat-error>
+                    <mat-error *ngIf="BuildingName.invalid">Building Name is required.</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -122,7 +122,7 @@
                     <input trim="blur" matInput (input)="onChangeAddress()" name="societyName"
                         [(ngModel)]="model.societyName" #SocietyName="ngModel" maxlength="100"
                         placeholder="Society Name">
-                    <mat-error *ngIf="SocietyName.invalid">*Society Name is required.</mat-error>
+                    <mat-error *ngIf="SocietyName.invalid">Society Name is required.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
@@ -130,7 +130,7 @@
                     <input trim="blur" required matInput (input)="onChangeAddress()" name="streetName"
                         [(ngModel)]="model.streetName" #StreetName="ngModel" maxlength="100"
                         placeholder="Name of Street / Road">
-                    <mat-error *ngIf="StreetName.invalid">*Name of Street / Road is required.</mat-error>
+                    <mat-error *ngIf="StreetName.invalid">Name of Street / Road is required.</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -139,14 +139,14 @@
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput (input)="onChangeAddress()" name="landMark" [(ngModel)]="model.landMark"
                         #LandMark="ngModel" maxlength="100" placeholder="Land Mark">
-                    <mat-error *ngIf="LandMark.invalid">*Land Mark is required.</mat-error>
+                    <mat-error *ngIf="LandMark.invalid">Land Mark is required.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput (input)="onChangeAddress()" name="areaName" [(ngModel)]="model.areaName"
                         #AreaName="ngModel" maxlength="100" placeholder="Area Name">
-                    <mat-error *ngIf="AreaName.invalid">*Area Name is required.</mat-error>
+                    <mat-error *ngIf="AreaName.invalid">Area Name is required.</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -156,7 +156,7 @@
                     <input trim="blur" required matInput (input)="onChangeAddress()" name="pincode"
                         [(ngModel)]="model.pincode" #Pincode="ngModel" placeholder="Pin Code" maxlength="6"
                         minlength="6">
-                    <mat-error *ngIf="Pincode.invalid">*Pin Code is invalid.</mat-error>
+                    <mat-error *ngIf="Pincode.invalid">Pin Code is invalid.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
@@ -176,7 +176,7 @@
                 <mat-form-field class="full-width-input">
                     <textarea required matInput name="postalAddress" [(ngModel)]="model.postalAddress"
                         #PostalAddress="ngModel" placeholder="Postal Address"></textarea>
-                    <mat-error *ngIf="PostalAddress.invalid">*Postal Address is required.</mat-error>
+                    <mat-error *ngIf="PostalAddress.invalid">Postal Address is required.</mat-error>
                 </mat-form-field>
             </div>
         </div>

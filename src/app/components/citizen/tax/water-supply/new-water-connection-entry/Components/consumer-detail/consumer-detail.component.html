@@ -71,14 +71,14 @@
                 <mat-form-field class="full-width-input">
                     <input trim="blur" required matInput name="ownerName" [(ngModel)]="model.ownerName" #OwnerName="ngModel"
                         placeholder="Connection Owner Name"  maxlength="255">
-                    <mat-error *ngIf="OwnerName.invalid">*Connection Owner Name is required.</mat-error>
+                    <mat-error *ngIf="OwnerName.invalid">Connection Owner Name is required.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input required matInput number-only [allowDecimals]="false" type="text" maxlength="10"  minlength="10" name="mobileNo"
                         [(ngModel)]="model.mobileNo" #MobileNo="ngModel" placeholder="Mobile Number" (keypress)="numberOnly($event)">
-                    <mat-error *ngIf="MobileNo.invalid">*Mobile Number is invalid.</mat-error>
+                    <mat-error *ngIf="MobileNo.invalid">Mobile Number is invalid.</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -87,7 +87,7 @@
                 <mat-form-field class="full-width-input">
                     <input  matInput number-only [allowDecimals]="false" type="text" name="aadharNo"
                         [(ngModel)]="model.aadharNo" #AadharNo="ngModel" placeholder="Aadhaar Number" maxlength="12"  minlength="12">
-                    <mat-error *ngIf="AadharNo.invalid">*Aadhaar Number is invalid.</mat-error>
+                    <mat-error *ngIf="AadharNo.invalid">Aadhaar Number is invalid.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
@@ -98,7 +98,7 @@
                         [ngClass]="{'ng-invalid ng-touched':  consumerFormDetails.submitted && LimitLookupId.invalid}">
                     </ng-select>
                     <div *ngIf="(consumerFormDetails.submitted && LimitLookupId.invalid)  || (LimitLookupId.invalid && LimitLookupId.touched)">
-                        <mat-error *ngIf="LimitLookupId.errors.required">*Within Limit / Out of Limit is required.</mat-error>
+                        <mat-error *ngIf="LimitLookupId.errors.required">Within Limit / Out of Limit is required.</mat-error>
                     </div>                    
                 </div>
                 
@@ -116,7 +116,7 @@
                             [ngClass]="{'ng-invalid ng-touched':  consumerFormDetails.submitted && Level1Id.invalid}">
                         </ng-select>
                         <div *ngIf="(consumerFormDetails.submitted && Level1Id.invalid)  || (Level1Id.invalid && Level1Id.touched)">
-                            <mat-error *ngIf="Level1Id.errors.required">*{{!wardZoneLevel[0]?'': wardZoneLevel[0].levelName}} is
+                            <mat-error *ngIf="Level1Id.errors.required">{{!wardZoneLevel[0]?'': wardZoneLevel[0].levelName}} is
                                 required.</mat-error>
                         </div>                    
                     </div>
@@ -131,7 +131,7 @@
                             [ngClass]="{'ng-invalid ng-touched':  consumerFormDetails.submitted && Level2Id.invalid}">
                         </ng-select>
                         <div *ngIf="(consumerFormDetails.submitted && Level2Id.invalid)  || (Level2Id.invalid && Level2Id.touched)">
-                            <mat-error *ngIf="Level2Id.errors.required">*{{!wardZoneLevel[1]?'': wardZoneLevel[1].levelName}} is
+                            <mat-error *ngIf="Level2Id.errors.required">{{!wardZoneLevel[1]?'': wardZoneLevel[1].levelName}} is
                                 required.</mat-error>
                         </div>                    
                     </div>
@@ -147,7 +147,7 @@
                             [ngClass]="{'ng-invalid ng-touched':  consumerFormDetails.submitted && Level3Id.invalid}">
                         </ng-select>
                         <div *ngIf="(consumerFormDetails.submitted && Level3Id.invalid)  || (Level3Id.invalid && Level3Id.touched)">
-                            <mat-error *ngIf="Level3Id.errors.required">*{{!wardZoneLevel[2]?'': wardZoneLevel[2].levelName}} is
+                            <mat-error *ngIf="Level3Id.errors.required">{{!wardZoneLevel[2]?'': wardZoneLevel[2].levelName}} is
                                 required.</mat-error>
                         </div> 
                     </div>
@@ -182,7 +182,7 @@
                         [ngClass]="{'ng-invalid ng-touched':  consumerFormDetails.submitted && UsageId.invalid}">
                     </ng-select>
                     <div *ngIf="(consumerFormDetails.submitted && UsageId.invalid)  || (UsageId.invalid && UsageId.touched)">
-                        <mat-error *ngIf="UsageId.errors.required">*Connection Usage is required.</mat-error>
+                        <mat-error *ngIf="UsageId.errors.required">Connection Usage is required.</mat-error>
                     </div>                    
                 </div>
             </div>
@@ -193,7 +193,7 @@
                         [ngClass]="{'ng-invalid ng-touched':  consumerFormDetails.submitted && SubusageId.invalid}">
                     </ng-select>
                     <div *ngIf="(consumerFormDetails.submitted && SubusageId.invalid)  || (SubusageId.invalid && SubusageId.touched)">
-                        <mat-error *ngIf="SubusageId.errors.required">*Connection Sub-Usage is required.</mat-error>
+                        <mat-error *ngIf="SubusageId.errors.required">Connection Sub-Usage is required.</mat-error>
                     </div>                    
                 </div>
             </div>
@@ -206,7 +206,7 @@
                         [ngClass]="{'ng-invalid ng-touched':  consumerFormDetails.submitted && ConnectionSizeId.invalid}">
                     </ng-select>
                     <div *ngIf="(consumerFormDetails.submitted && ConnectionSizeId.invalid)  || (ConnectionSizeId.invalid && ConnectionSizeId.touched)">
-                        <mat-error *ngIf="ConnectionSizeId.errors.required">*Connection Size is required.</mat-error>
+                        <mat-error *ngIf="ConnectionSizeId.errors.required">Connection Size is required.</mat-error>
                     </div>                    
                 </div>
 
@@ -218,7 +218,7 @@
                         [ngClass]="{'ng-invalid ng-touched':  consumerFormDetails.submitted && ConnectionTypeId.invalid}">
                     </ng-select>
                     <div *ngIf="(consumerFormDetails.submitted && ConnectionTypeId.invalid)  || (ConnectionTypeId.invalid && ConnectionTypeId.touched)">
-                        <mat-error *ngIf="ConnectionTypeId.errors.required">*Connection Type is required.</mat-error>
+                        <mat-error *ngIf="ConnectionTypeId.errors.required">Connection Type is required.</mat-error>
                     </div>                    
                 </div>
 
@@ -239,7 +239,7 @@
                         </ng-select>
                         <div
                             *ngIf="(consumerFormDetails.submitted && PlumberId.invalid)  || (PlumberId.invalid && PlumberId.touched)">
-                            <mat-error *ngIf="PlumberId.errors.required">*Plumber Name is required.</mat-error>
+                            <mat-error *ngIf="PlumberId.errors.required">Plumber Name is required.</mat-error>
                         </div>
                     </div>  
             </div>
@@ -248,7 +248,7 @@
                     <input trim="blur" matInput (keypress)="keyPressAlphaNumeric($event)" maxlength="20"
                      name="gasConnectionNo" [(ngModel)]="model.gasConnectionNo"
                         #GasConnectionNo="ngModel" placeholder="Gas Connection Number">
-                    <mat-error *ngIf="GasConnectionNo.invalid">*Gas Connection Number is required.</mat-error>
+                    <mat-error *ngIf="GasConnectionNo.invalid">Gas Connection Number is required.</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -258,7 +258,7 @@
                     <input trim="blur" matInput (keypress)="keyPressAlphaNumeric($event)" maxlength="20" 
                     name="electricityConnectionNo" [(ngModel)]="model.electricityConnectionNo"
                         #ElectricityConnectionNo="ngModel" placeholder="Electricity Connection Number">
-                    <mat-error *ngIf="ElectricityConnectionNo.invalid">*Electricity Connection Number is required.</mat-error>
+                    <mat-error *ngIf="ElectricityConnectionNo.invalid">Electricity Connection Number is required.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
@@ -266,7 +266,7 @@
                     <input trim="blur" matInput (keypress)="keyPressAlphaNumeric($event)" maxlength="20"
                      name="buildingPermissionNo" [(ngModel)]="model.buildingPermissionNo"
                         #BuildingPermissionNo="ngModel" placeholder="Building Permission Number">
-                    <mat-error *ngIf="BuildingPermissionNo.invalid">*Building Permission Number is required.</mat-error>
+                    <mat-error *ngIf="BuildingPermissionNo.invalid">Building Permission Number is required.</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -276,7 +276,7 @@
                     <input trim="blur" matInput (keypress)="keyPressAlphaNumeric($event)" maxlength="20"
                     name="completionCertificateNo" [(ngModel)]="model.completionCertificateNo"
                         #CompletionCertificateNo="ngModel" placeholder="Completion Certificate Number">
-                    <mat-error *ngIf="CompletionCertificateNo.invalid">*Completion Certificate Number is required.</mat-error>
+                    <mat-error *ngIf="CompletionCertificateNo.invalid">Completion Certificate Number is required.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
@@ -284,7 +284,7 @@
                     <input trim="blur"  matInput  (keypress)="keyPressAlphaNumeric($event)" maxlength="20"
                     name="occupancyCertificateNo" [(ngModel)]="model.occupancyCertificateNo"
                         #OccupancyCertificateNo="ngModel" placeholder="Occupancy Certificate Number">
-                    <mat-error *ngIf="OccupancyCertificateNo.invalid">*Occupancy Certificate Number is required.</mat-error>
+                    <mat-error *ngIf="OccupancyCertificateNo.invalid">Occupancy Certificate Number is required.</mat-error>
                 </mat-form-field>
             </div>
         </div>
