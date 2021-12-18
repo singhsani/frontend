@@ -18,7 +18,6 @@ import * as moment from 'moment';
 export class UnitDetailComponent implements OnInit {
 
   @ViewChild('form') myForm: NgForm;
-
   translateKey: string = 'newPropertyTaxScreen';
   subscription: Subscription;
   modelOccupier: any = {};
@@ -49,7 +48,8 @@ export class UnitDetailComponent implements OnInit {
   step = 0;
   measurementForm: FormGroup;
   roomForm: FormGroup;
-  showCarpetAreaError:  boolean = false; 
+  showCarpetAreaError:  boolean = false;
+  
   constructor(private formBuilder: FormBuilder,
     private newNewPropertyEntryAddDataSharingService: NewPropertyEntryAddDataSharingService,
     private commonService: CommonService,
@@ -79,7 +79,7 @@ export class UnitDetailComponent implements OnInit {
       if (data) {
         this.modelOccupier = data;
         this.getUnitListByOccupierId();
-        this.clearUnit();
+       // this.clearUnit();
       }
     });
   }
