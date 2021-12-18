@@ -125,8 +125,8 @@ export class TransferPropertyTableComponent implements OnInit {
           } else {
             this.dataSource = new MatTableDataSource(data.body.data);
             this.dataSource.sort = this.sort;
-            this.totalCount = data.body.data.length;
-            this.resultsLength = data.body.data.length
+            this.totalCount = data.body.totalRecords;
+            this.resultsLength = data.body.totalRecords;
                         // this.totalCount = data.body.totalRecords;
             // this.resultsLength= data.body.totalRecords;
           }    
