@@ -7,6 +7,7 @@ import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { MatStepper } from '@angular/material';
 import { Constants } from 'src/app/vmcshared/Constants';
 import { NewWaterConnectionEntryService } from '../../../new-water-connection-entry/Services/new-water-connection-entry.service';
+import { CommonService as SharedCommonService } from 'src/app/shared/services/common.service';
 
 @Component({
     selector: 'app-application-reconnection-form',
@@ -26,11 +27,13 @@ export class ApplicationReconnectionFormComponent implements OnInit {
     isShowSaveButton: boolean = false;
     outstandingDetail: any = {};
     plumberList: any = [];
+    serviceFormId: any;
 
     constructor(private applicationReconnectionService: ApplicationReconnectionService,
-        private alertService:AlertService,
+        private alertService: AlertService,
         private applicationReconnectionDataSharingService: ApplicationReconnectionDataSharingService,
-         private newNewWaterConnectionEntryService: NewWaterConnectionEntryService) { }
+        private newNewWaterConnectionEntryService: NewWaterConnectionEntryService,
+        private sharedCommonService: SharedCommonService) { }
 
     ngOnInit() {
         this.dataModel = new DataModel();
@@ -87,30 +90,61 @@ export class ApplicationReconnectionFormComponent implements OnInit {
             }
         }
     }
-    getFormDataDocuments(id : any) {
-        if(this.reconnectionDocumentUploadDocs.length == 0){
+    getFormDataDocuments(id: any) {
+        if (this.reconnectionDocumentUploadDocs.length === 0) {
         this.reconnectionDocumentUploadDocs = [];
         this.applicationReconnectionService.getreconnectionDocUpload(id).subscribe(
           (data) => {
+            this.serviceFormId = data[0].id;
             data.forEach(app => {
               this.reconnectionDocumentUploadDocs.push(app);
             });
           },
           (error) => {
-            
+                console.log('Error Occured => ' + error);
           });
       }
       }
-      onSubmitApproved() {
-        this.applicationReconnectionService.submitNewgen(this.reconnectionId).subscribe(
-            (data) => {
-                this.alertService.success(data.message);
-                this.applicationReconnectionDataSharingService.setIsShowApproval(true);
-            },
-            (error) => {
-                this.alertService.error(error.error.message);
-            });
+    onSubmitApproved() {
+        this.mandatoryFileCheck().then(aData => {
+            if (aData.status) {
+                this.applicationReconnectionService.submitNewgen(this.reconnectionId).subscribe(
+                    (data) => {
+                        this.alertService.success(data.message);
+                        this.applicationReconnectionDataSharingService.setIsShowApproval(true);
+                    },
+                    (error) => {
+                        this.alertService.error(error.error.message);
+                    });
+            } else {
+                this.sharedCommonService.openAlert('File Upload', `Please upload file for "${aData.fileName}"`, 'warning');
+                return;
+            }
+        });
     }
+
+    mandatoryFileCheck() {
+        return new Promise<any>((resolve, reject) => {
+            this.applicationReconnectionService.getAttachmentList(this.serviceFormId).subscribe(uploadedDocs => {
+                console.log('Upload docs', uploadedDocs);
+                if (uploadedDocs) {
+                    const tempArray = [];
+                    uploadedDocs.forEach(element => {
+                        tempArray.push(element['fieldIdentifier']);
+                    });
+                    this.reconnectionDocumentUploadDocs.forEach(doc => {
+                        if (doc.mandatory && tempArray.indexOf(doc.fieldIdentifier) === -1) {
+                            resolve({ fileName: doc.documentLabelEn, status: false });
+                        }
+                    });
+                    resolve({ fileName: '', status: true });
+                } else {
+                    resolve({ fileName: '', status: true });
+                }
+            });
+        });
+    }
+
     save(formDetail: NgForm) {
         if (formDetail.form.valid && this.dataModel.plumberId) { 
            if((this.connectionsModel.waterDues + this.connectionsModel.propertyDues) != 0){
