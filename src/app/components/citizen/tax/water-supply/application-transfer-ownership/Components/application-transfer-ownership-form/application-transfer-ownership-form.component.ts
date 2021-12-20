@@ -105,7 +105,7 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
     }
 
     isDueAmount(): boolean {
-        if (this.connectionsModel.hasOwnProperty('propertyDues') && this.connectionsModel.hasOwnProperty('propertyDues')) {
+        if (this.connectionsModel.hasOwnProperty('propertyDues') && this.connectionsModel.hasOwnProperty('waterDues')) {
             return this.connectionsModel.propertyDues + this.connectionsModel.waterDues !== 0;
         }
     }

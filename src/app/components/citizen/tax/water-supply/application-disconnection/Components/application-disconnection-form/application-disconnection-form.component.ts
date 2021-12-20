@@ -141,8 +141,22 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
             }
         });
     }
+
+    isDueAmount(): boolean {
+        if (this.connectionsModel.hasOwnProperty('propertyDues') && this.connectionsModel.hasOwnProperty('waterDues')) {
+            return this.connectionsModel.propertyDues + this.connectionsModel.waterDues !== 0;
+        }
+    }
+
     save(formDetail: NgForm) {
         if (formDetail.form.valid) {
+
+            if (this.isDueAmount()) {
+                this.alertService.warning('Can not proceed further due to remaining outstanding payment.' +
+                    ' Please complete payment of remaining outstanding amount.');
+                return;
+            }
+
             this.dataModel.applicationNumber = this.applicationModel.applicationNumber;
             this.dataModel.connectionDtlId = this.connectionsModel.connectionDetail.connectionDtlId;
             this.dataModel.connectionNumber = this.connectioNo;
