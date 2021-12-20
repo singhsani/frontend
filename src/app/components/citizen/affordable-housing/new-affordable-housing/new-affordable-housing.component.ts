@@ -576,7 +576,7 @@ export class NewAffordableHousingComponent implements OnInit {
 			// /* Second Beneficiary controls End *//
 
 			// /* Bank Details controls Start *//
-			bankAccountNumber: [null, [Validators.required, Validators.maxLength(18)]],
+			bankAccountNumber: [null, [Validators.required, Validators.maxLength(16),Validators.minLength(16)]],
 			bank: this.fb.group({
 				code: [null, [Validators.required]],
 				name: null,
