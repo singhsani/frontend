@@ -942,7 +942,7 @@
 
           <mat-form-field class="col-md-12">
             <input matInput type="text" maxlength="1000"
-              placeholder="{{'ISI / BIS / CE / International Licences Details'}}" formControlName="ISIBISCElicences">
+              placeholder="{{'SI / BIS / CE / International Licences Details'}}" formControlName="ISIBISCElicences">
             <control-messages [control]="vendorRegistrationForm.get('ISIBISCElicences')">
             </control-messages>
           </mat-form-field>
@@ -1226,7 +1226,7 @@
 
                   <td class="text-center">
                     <mat-form-field>
-                      <input matInput autocomplete="off" appDate [formControl]="row.get('orderDate')" [min]="maxDate"
+                      <input matInput autocomplete="off" appDate [formControl]="row.get('orderDate')" [min]="threeYearDate" [max]="fiveYearDate"
                         [matDatepicker]="orderPicker"
                         (dateChange)="onDateChangePurchaseDate('orderDate', $event.value,row)">
                       <mat-datepicker-toggle matSuffix [for]="orderPicker"></mat-datepicker-toggle>
@@ -1239,7 +1239,7 @@
                   <td class="text-center">
                     <mat-form-field>
                       <input matInput autocomplete="off" appDate
-                        [formControl]="row.get('quantitySuppliedCompletionDate')" [min]="maxDate"
+                        [formControl]="row.get('quantitySuppliedCompletionDate')" [min]="threeYearDate" [max]="fiveYearDate"
                         [matDatepicker]="supplierPicker"
                         (dateChange)="onDateChangePurchaseDate('quantitySuppliedCompletionDate', $event.value,row)">
                       <mat-datepicker-toggle matSuffix [for]="supplierPicker"></mat-datepicker-toggle>

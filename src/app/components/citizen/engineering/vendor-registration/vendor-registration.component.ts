@@ -44,6 +44,10 @@ export class VendorRegistrationComponent implements OnInit {
   maxDate: Date = new Date();
   minDate = moment().subtract(2, 'months').format('YYYY-MM-DD');
   minDateNew = moment().subtract(2000, 'months').format('YYYY-MM-DD');
+
+  fiveYearDate = moment(new Date()).add("5", "years").format("YYYY-MM-DD");
+  threeYearDate = moment(new Date()).subtract("3", "years").format("YYYY-MM-DD");
+  
   attachmentList: any = [];
   bankNameArray: any = [];
   vendorTypeFirm: any = [];
