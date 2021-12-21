@@ -25,10 +25,12 @@ export class RenewalPlumberLicenseFormComponent implements OnInit {
     plumberLicenseModel: PlumberLicenseModel;
     applicationModel: ApplicationModel;
     licenseNo: string;
-    isShowSaveButton: boolean = false;
-    minDate = moment(new Date()).format("YYYY-MM-DD");
-    maxDate = moment().add('year', 1).month('March').endOf('month').format("YYYY-MM-DD");
-    
+    isShowSaveButton = false;
+    renewUptoDate: any = {
+        minDate: moment().add(1, 'M').startOf('M').toDate(),
+        maxDate: moment().add(1, 'M').endOf('M').toDate()
+    };
+
     constructor(private renewalPlumberLicenseService: RenewalPlumberLicenseService,
         private renewalPlumberLicenseDataSharingService: RenewalPlumberLicenseDataSharingService,
         private alertService: AlertService,
@@ -54,12 +56,18 @@ export class RenewalPlumberLicenseFormComponent implements OnInit {
                         this.plumberLicenseModel = data.body;
                         this.plumberLicenseModel.birthdate = moment(data.body.birthdate).format('DD-MM-YYYY');
                         this.plumberLicenseModel.licenseValidTill = moment(data.body.licenseValidTill).format('DD-MM-YYYY');
-                        this.minDate = moment(this.plumberLicenseModel.licenseValidTill).add(1, 'day').toISOString();
+                        this.renewUptoDate.maxDate = moment(
+                            moment(this.plumberLicenseModel.licenseValidTill, 'DD-MM-YYYY')
+                            ).add(1, 'y').toDate();
+
+                        this.renewUptoDate.minDate = moment(
+                            moment(this.plumberLicenseModel.licenseValidTill, 'DD-MM-YYYY')
+                            ).add(1, 'd').toDate();
+
                         if (this.plumberLicenseModel.plumberLicenseId == null) {
                             this.isShowSaveButton = false;
                             this.alertService.info('No Data Found!');
-                        }
-                        else {
+                        } else {
                             this.isShowSaveButton = true;
                         }
                     }

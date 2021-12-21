@@ -158,7 +158,7 @@
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input #LicenseRenewUpto="ngModel" matInput required [matDatepicker]="RenewedUpTo" placeholder="Renew Up To Date"
-                        name="licenseRenewUpto" [min]="minDate" [max]="maxDate" [(ngModel)]="plumberLicenseModel.licenseRenewUpto" mask-date>
+                        name="licenseRenewUpto" [min]="renewUptoDate.minDate" [max]="renewUptoDate.maxDate" [(ngModel)]="plumberLicenseModel.licenseRenewUpto" mask-date>
                     <mat-datepicker-toggle matSuffix [for]="RenewedUpTo"></mat-datepicker-toggle>
                     <mat-datepicker #RenewedUpTo disabled="false"></mat-datepicker>
                     <mat-error>{{errorMessage.dateFormateErrorMsg}}</mat-error>
