@@ -63,17 +63,21 @@
             </div>
             <mat-form-field class="col-md-4">
               <input matInput type="text" appValidationFields validationFieldsType='alphanumericWithSpace' required
-                maxlength="150" placeholder="{{'Name of the Firm'}}" formControlName="nameOfTheFirm">
+                maxlength="150" placeholder="{{'Name of the Firm'}}" formControlName="nameOfTheFirm"
+                class="capitalCase">
               <control-messages [control]="vendorRegistrationForm.get('nameOfTheFirm')">
               </control-messages>
             </mat-form-field>
 
-            <mat-form-field class="col-md-4">
-              <input matInput type="text" OnlyNumber maxlength="4" placeholder="{{'Year of Establishment *'}}"
-                formControlName="yearOfEstablishment">
-              <control-messages [control]="vendorRegistrationForm.get('yearOfEstablishment')">
-              </control-messages>
-            </mat-form-field>
+            <app-year-picker class="col-md-3" [max]="maxDate" mode="YEAR" label="Year"
+              formControlName="yearOfEstablishment" required>
+              <mat-error class="mat-error ng-star-inserted"
+                *ngIf="vendorRegistrationForm.get('yearOfEstablishment').invalid && (vendorRegistrationForm.get('yearOfEstablishment').dirty || vendorRegistrationForm.get('yearOfEstablishment').touched)">
+                <div *ngIf="vendorRegistrationForm.get('yearOfEstablishment').errors.required">
+                  Year is Required.
+                </div>
+              </mat-error>
+            </app-year-picker>
 
             <mat-form-field class="col-md-4">
               <input matInput autocomplete="off" appDate formControlName="commencementDate" [max]="maxDate"
@@ -140,7 +144,7 @@
           </div>
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" OnlyNumber required maxlength="11" minlength="11"
+            <input matInput type="text" OnlyNumber required maxlength="11" minlength="10"
               placeholder="{{'Telephone Number'}}" formControlName="officeContactNumber">
             <control-messages [control]="vendorRegistrationForm.get('officeContactNumber')">
             </control-messages>
@@ -168,7 +172,7 @@
           </div>
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" OnlyNumber required maxlength="11" minlength="11"
+            <input matInput type="text" OnlyNumber required maxlength="11" minlength="10"
               placeholder="{{'Telephone Number'}}" formControlName="resContactNumber">
             <control-messages [control]="vendorRegistrationForm.get('resContactNumber')">
             </control-messages>
@@ -197,19 +201,19 @@
               </control-messages>
             </mat-form-field>
             <mat-form-field class="col-md-3">
-              <input matInput type="text" OnlyNumber maxlength="10" placeholder="{{'Alternate Mobile Number'}}"
-                formControlName="branchAlterMobileNumber">
+              <input matInput type="text" OnlyNumber maxlength="10" minlength="10"
+                placeholder="{{'Alternate Mobile Number'}}" formControlName="branchAlterMobileNumber">
               <control-messages [control]="vendorRegistrationForm.get('branchAlterMobileNumber')">
               </control-messages>
             </mat-form-field>
             <mat-form-field class="col-md-3">
-              <input matInput type="text" OnlyNumber maxlength="10" placeholder="{{'STD Number'}}"
+              <input matInput type="text" OnlyNumber maxlength="11" minlength="10" placeholder="{{'STD Number'}}"
                 formControlName="branchSTDNumber">
               <control-messages [control]="vendorRegistrationForm.get('branchSTDNumber')">
               </control-messages>
             </mat-form-field>
             <mat-form-field class="col-md-3">
-              <input matInput type="text" OnlyNumber maxlength="12" placeholder="{{'ISD Number'}}"
+              <input matInput type="text" OnlyNumber maxlength="12" minlength="10" placeholder="{{'ISD Number'}}"
                 formControlName="branchISDNumber">
               <control-messages [control]="vendorRegistrationForm.get('branchISDNumber')">
               </control-messages>
@@ -226,21 +230,21 @@
               </control-messages>
             </mat-form-field>
             <mat-form-field class="col-md-3">
-              <input matInput type="text" OnlyNumber maxlength="10" placeholder="{{'Alternate Mobile Number'}}"
-                formControlName="headAlterMobileNumber">
+              <input matInput type="text" OnlyNumber maxlength="10" minlength="10"
+                placeholder="{{'Alternate Mobile Number'}}" formControlName="headAlterMobileNumber">
               <control-messages [control]="vendorRegistrationForm.get('headAlterMobileNumber')">
               </control-messages>
             </mat-form-field>
             <mat-form-field class="col-md-3">
-              <input matInput type="text" OnlyNumber maxlength="10" placeholder="{{'STD Number'}}"
-                formControlName="headISDNumber">
-              <control-messages [control]="vendorRegistrationForm.get('headISDNumber')">
+              <input matInput type="text" OnlyNumber maxlength="11" minlength="10" placeholder="{{'STD Number'}}"
+                formControlName="headSTDNumber">
+              <control-messages [control]="vendorRegistrationForm.get('headSTDNumber')">
               </control-messages>
             </mat-form-field>
             <mat-form-field class="col-md-3">
-              <input matInput type="text" OnlyNumber maxlength="12" placeholder="{{'ISD Number'}}"
-                formControlName="headSTDNumber">
-              <control-messages [control]="vendorRegistrationForm.get('headSTDNumber')">
+              <input matInput type="text" OnlyNumber maxlength="12" minlength="10" placeholder="{{'ISD Number'}}"
+                formControlName="headISDNumber">
+              <control-messages [control]="vendorRegistrationForm.get('headISDNumber')">
               </control-messages>
             </mat-form-field>
 
@@ -267,13 +271,15 @@
             <div class="col-md-12">
 
               <div class="mb-4 mt-12">
-                <mat-label><h2>Whether Proprietary or Partnership or Pvt. Ltd., or public Ltd.
-                  (Copy of Income Tax Returns for 3 years in case of Proprietary Firm,
-                  Partnership Deed in case of Partnership Firm and Memorandum and article of Association in case of
-                  Company) *</h2></mat-label>
+                <mat-label>
+                  <h2>Whether Proprietary or Partnership or Pvt. Ltd., or public Ltd.
+                    (Copy of Income Tax Returns for 3 years in case of Proprietary Firm,
+                    Partnership Deed in case of Partnership Firm and Memorandum and article of Association in case of
+                    Company) *</h2>
+                </mat-label>
               </div>
-              <mat-radio-group formControlName="incomeTaxDetails"  class="radioGroup">
-                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code"  class="mr-3">
+              <mat-radio-group formControlName="incomeTaxDetails" class="radioGroup">
+                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code" class="mr-3">
                   {{impl.name}}
                 </mat-radio-button>
               </mat-radio-group>
@@ -516,23 +522,26 @@
             <div class="col-md-12">
 
               <div class="mb-4 mt-12">
-                <mat-label> <h2>Whether the factory is owned by the firm (docuemntory evidence of Ownership must be produced). In
-                  case firm does not own factory but utilize the facility for manufacturing / fabrication of
-                  equipments/stores for which firm has applied on live & licence or other basis, the Firm should furnish
-                  valid legal agreement that factory of(here indicate the name of the firm whose factory is being
-                  utilized)
-                  has been put at the firms disposal for the equipments / stores for which the firms disposal for the
-                  equipments/stores for which the firms have applied.</h2></mat-label>
+                <mat-label>
+                  <h2>Whether the factory is owned by the firm (docuemntory evidence of Ownership must be produced). In
+                    case firm does not own factory but utilize the facility for manufacturing / fabrication of
+                    equipments/stores for which firm has applied on live & licence or other basis, the Firm should
+                    furnish
+                    valid legal agreement that factory of(here indicate the name of the firm whose factory is being
+                    utilized)
+                    has been put at the firms disposal for the equipments / stores for which the firms disposal for the
+                    equipments/stores for which the firms have applied.</h2>
+                </mat-label>
               </div>
               <div formGroupName="manufacturingOwnedDetails">
-              <mat-radio-group formControlName="code"  class="radioGroup">
-                <mat-radio-button *ngFor="let impl of manuFacturDetails" [value]="impl.code"  class="mr-3">
-                  {{impl.name}}
-                </mat-radio-button>
-              </mat-radio-group>
-            </div>
-            <control-messages [control]="vendorRegistrationForm.get('manufacturingOwnedDetails').get('code')">
-            </control-messages>
+                <mat-radio-group formControlName="code" class="radioGroup">
+                  <mat-radio-button *ngFor="let impl of manuFacturDetails" [value]="impl.code" class="mr-3">
+                    {{impl.name}}
+                  </mat-radio-button>
+                </mat-radio-group>
+              </div>
+              <control-messages [control]="vendorRegistrationForm.get('manufacturingOwnedDetails').get('code')">
+              </control-messages>
             </div>
 
           </div>
@@ -601,10 +610,10 @@
 
             <div class="col-md-4">
               <div>
-                <mat-label> Copy of Latest Income Tax Clearance certifcate.</mat-label>
+                <mat-label> Copy of Latest Income Tax Clearance certificate.</mat-label>
               </div>
-              <mat-radio-group formControlName="copyOfITCClearanceCertificate"  class="radioGroup">
-                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code"  class="mr-3">
+              <mat-radio-group formControlName="copyOfITCClearanceCertificate" class="radioGroup">
+                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code" class="mr-3">
                   {{impl.name}}
                 </mat-radio-button>
               </mat-radio-group>
@@ -689,10 +698,11 @@
 
             <div class="col-md-12">
               <div>
-                <mat-label> If registered under the companies ACT or any other ACT, give registration no. and date of registration etc. along with copy of regsitration office.</mat-label>
+                <mat-label> If registered under the companies ACT or any other ACT, give registration no. and date of
+                  registration etc. along with copy of regsitration office.</mat-label>
               </div>
-              <mat-radio-group formControlName="registrationOfficeACT"  class="radioGroup">
-                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code"  class="mr-3">
+              <mat-radio-group formControlName="registrationOfficeACT" class="radioGroup">
+                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code" class="mr-3">
                   {{impl.name}}
                 </mat-radio-button>
               </mat-radio-group>
@@ -705,8 +715,8 @@
               <div>
                 <mat-label> Whether the product manufactured carry ISI mark (PI. Specify).</mat-label>
               </div>
-              <mat-radio-group formControlName="productManufacturedISI"  class="radioGroup">
-                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code"  class="mr-3">
+              <mat-radio-group formControlName="productManufacturedISI" class="radioGroup">
+                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code" class="mr-3">
                   {{impl.name}}
                 </mat-radio-button>
               </mat-radio-group>
@@ -737,10 +747,11 @@
 
             <div class="col-md-12">
               <div class="mb-4 mt-11">
-                <mat-label> Whether registered with other central Govt/State Govt./Govt. Undertaking Department and validity thereof. (attach a copy of such registration certificate).</mat-label>
+                <mat-label> Whether registered with other central Govt/State Govt./Govt. Undertaking Department and
+                  validity thereof. (attach a copy of such registration certificate).</mat-label>
               </div>
-              <mat-radio-group formControlName="registeredByGovt"  class="radioGroup">
-                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code"  class="mr-3">
+              <mat-radio-group formControlName="registeredByGovt" class="radioGroup">
+                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code" class="mr-3">
                   {{impl.name}}
                 </mat-radio-button>
               </mat-radio-group>
@@ -942,7 +953,7 @@
 
           <mat-form-field class="col-md-12">
             <input matInput type="text" maxlength="1000"
-              placeholder="{{'SI / BIS / CE / International Licences Details'}}" formControlName="ISIBISCElicences">
+              placeholder="{{'IS / BIS / CE / International Licences Details'}}" formControlName="ISIBISCElicences">
             <control-messages [control]="vendorRegistrationForm.get('ISIBISCElicences')">
             </control-messages>
           </mat-form-field>
@@ -1179,11 +1190,10 @@
 
           <div class="row">
 
-            <h2 class="col-md-6">{{'A. Deatils of order executed indicating quantity, value for each item/materials to
-              be registered
-              for supply, self certified statement to be attached.'}}</h2>
+            <h2>{{'A. Deatils of order executed indicating quantity, value for each item/materials to
+              be registered for supply, self certified statement to be attached.'}}</h2>
 
-            <div class="col-md-6 text-right">
+            <div class="col-md-6 text-left">
               <button mat-raised-button type="button" color="primary" type="button"
                 (click)="addRowVendorDetailsOfOrderIndicationQuantity()">{{'Add New'}}</button>
             </div>
@@ -1226,9 +1236,9 @@
 
                   <td class="text-center">
                     <mat-form-field>
-                      <input matInput autocomplete="off" appDate [formControl]="row.get('orderDate')" [min]="threeYearDate" [max]="fiveYearDate"
-                        [matDatepicker]="orderPicker"
-                        (dateChange)="onDateChangePurchaseDate('orderDate', $event.value,row)">
+                      <input matInput autocomplete="off" appDate [formControl]="row.get('orderDate')"
+                        [min]="threeYearDate" [max]="fiveYearDate" [matDatepicker]="orderPicker"
+                        (dateChange)="onDateChangeOrder('orderDate', $event.value,row)">
                       <mat-datepicker-toggle matSuffix [for]="orderPicker"></mat-datepicker-toggle>
                       <mat-datepicker touchUi="true" #orderPicker></mat-datepicker>
                       <div align="end" class="default-show-hint mat-hint mat-right"></div>
@@ -1239,8 +1249,8 @@
                   <td class="text-center">
                     <mat-form-field>
                       <input matInput autocomplete="off" appDate
-                        [formControl]="row.get('quantitySuppliedCompletionDate')" [min]="threeYearDate" [max]="fiveYearDate"
-                        [matDatepicker]="supplierPicker"
+                        [formControl]="row.get('quantitySuppliedCompletionDate')" [min]="orderMinDate"
+                        [max]="fiveYearDate" [matDatepicker]="supplierPicker"
                         (dateChange)="onDateChangePurchaseDate('quantitySuppliedCompletionDate', $event.value,row)">
                       <mat-datepicker-toggle matSuffix [for]="supplierPicker"></mat-datepicker-toggle>
                       <mat-datepicker touchUi="true" #supplierPicker></mat-datepicker>
@@ -1280,14 +1290,17 @@
             <div class="col-md-12">
 
               <div class="mb-4 mt-12">
-                <mat-label> <h2>{{'B. Please confirm whether your firm is under stop deal/blcklisted by any Central Govt/State Govt.
-                  or any Govt. undertaking department. Submit details this is must (Affidavit by director required). False
-                  information may lead legal action and direct ban on product registered in VMC.'}}</h2>
+                <mat-label>
+                  <h2>{{'B. Please confirm whether your firm is under stop deal/blcklisted by any Central Govt/State
+                    Govt.
+                    or any Govt. undertaking department. Submit details this is must (Affidavit by director required).
+                    False
+                    information may lead legal action and direct ban on product registered in VMC.'}}</h2>
                 </mat-label>
               </div>
-             
-              <mat-radio-group formControlName="firmUnderDealBlacklisted"  class="radioGroup">
-                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code"  class="mr-3">
+
+              <mat-radio-group formControlName="firmUnderDealBlacklisted" class="radioGroup">
+                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code" class="mr-3">
                   {{impl.name}}
                 </mat-radio-button>
               </mat-radio-group>
