@@ -44,10 +44,10 @@ export class VendorRegistrationComponent implements OnInit {
   maxDate: Date = new Date();
   minDate = moment().subtract(2, 'months').format('YYYY-MM-DD');
   minDateNew = moment().subtract(2000, 'months').format('YYYY-MM-DD');
-
+  orderMinDate: Date = new Date();
   fiveYearDate = moment(new Date()).add("5", "years").format("YYYY-MM-DD");
   threeYearDate = moment(new Date()).subtract("3", "years").format("YYYY-MM-DD");
-  
+
   attachmentList: any = [];
   bankNameArray: any = [];
   vendorTypeFirm: any = [];
@@ -176,12 +176,12 @@ export class VendorRegistrationComponent implements OnInit {
       console.log("tresr", res)
       this.vendorRegistrationForm.patchValue(res);
       //this.showButtons = false;
-      
-      if(res.formStatus == 'PAYMENT_RECEIVED'){
+
+      if (res.formStatus == 'PAYMENT_RECEIVED') {
         this.vendorRegistrationForm.get('canEdit').setValue(false);
         this.vendorRegistrationForm.disable();
       }
-      
+
       this.setServiceDetailsOnInit(res);
       //	this.sortedList.push(res);
     });
@@ -377,15 +377,15 @@ export class VendorRegistrationComponent implements OnInit {
       this.attachmentList = _.cloneDeep(res);
 
       this.uploadFilesArray = [];
-			_.forEach(this.attachmentList, (value) => {
-				if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
-					this.uploadFilesArray.push({
-						'labelName': value.documentLabelEn,
-						'fieldIdentifier': value.fieldIdentifier,
-						'documentIdentifier': value.documentIdentifier
-					})
-				}
-			});
+      _.forEach(this.attachmentList, (value) => {
+        if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+          this.uploadFilesArray.push({
+            'labelName': value.documentLabelEn,
+            'fieldIdentifier': value.fieldIdentifier,
+            'documentIdentifier': value.documentIdentifier
+          })
+        }
+      });
     });
   }
 
@@ -405,6 +405,12 @@ export class VendorRegistrationComponent implements OnInit {
 
   onDateChangePurchaseDate(control, date, obj) {
     obj.get(control).setValue(moment(date).format("YYYY-MM-DD"));
+  }
+
+  onDateChangeOrder(fieldName, date, obj) {
+    obj.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
+    this.orderMinDate = date;
+    this.fiveYearDate = moment(date).add("5", "years").format("YYYY-MM-DD");
   }
 
   getAllLocationDetail() {

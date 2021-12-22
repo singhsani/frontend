@@ -67,6 +67,7 @@ import { AppMonthPicker } from './components/month-picker/month-picker.component
 import { CollectionService } from '../components/citizen/tax/water-supply/tax-transaction-history/Services/collection.service';
 import { MaskRegistrationNumVtDirective } from './directives/mask-registration-num-vt.directive';
 import { PropertyOccupierSearchComponent } from '../vmcshared/component/property-occupier-search/property-occupier-search.component';
+import { YearPickerComponent } from './components/year-picker/year-picker.component';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -107,8 +108,9 @@ const COMPONENTS = [
 	OfflinePaymentComponent,
 	BankDetailsBookingComponent,
 	AppMonthPicker,
-	MaskRegistrationNumVtDirective
-	
+	MaskRegistrationNumVtDirective,
+	YearPickerComponent
+
 ]
 
 @NgModule({
@@ -116,7 +118,8 @@ const COMPONENTS = [
 		...COMPONENTS,
 		BankDetailsBookingComponent,
 		MaskRegistrationNumVtDirective,
-		PropertyOccupierSearchComponent
+		PropertyOccupierSearchComponent,
+		YearPickerComponent
 	],
 	imports: [
 		CommonModule,
@@ -129,7 +132,7 @@ const COMPONENTS = [
 		ModalModule.forRoot(),
 		NgxMaskModule.forRoot(),
 		ReactiveFormsModule,
-	    NgxUpperCaseDirectiveModule
+		NgxUpperCaseDirectiveModule
 
 
 	],
@@ -158,7 +161,7 @@ const COMPONENTS = [
 		PaymentNewService,
 		CollectionService
 	],
-	entryComponents: [DialogContentComponent,ApplicantDetailsComponent, OfflinePaymentComponent],
+	entryComponents: [DialogContentComponent, ApplicantDetailsComponent, OfflinePaymentComponent],
 
 })
 export class SharedModule { }
