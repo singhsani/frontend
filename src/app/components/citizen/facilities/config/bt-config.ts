@@ -172,6 +172,9 @@ export class BTConfig extends CitizenConfig {
             if(payData.resourceType == "townhall"){
                 router.navigate([redirectURLAfterPayment]);
             }
+            if(payData.resourceType == "zooanimaladoption"){
+                router.navigate(["citizen/ticketings/my-ticketings"]);
+            }
             // let errHtml = `
 			// 			<div class="alert alert-danger">
 			// 				Please Complete Payment, Otherwise the application will be considered as in-complete
