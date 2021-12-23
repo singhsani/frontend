@@ -121,7 +121,7 @@
 
             <mat-form-field class="col-md-4">
               <mat-label>{{'GST Registration Date'}}</mat-label>
-              <input appDate matInput (dateChange)="onDateChange('gstRegiDate', $event.value)"
+              <input appDate matInput (dateChange)="onDateChange('gstRegiDate', $event.value)" [max]="maxDate"
                 [matDatepicker]="gstRegiDate" formControlName="gstRegiDate">
               <mat-datepicker-toggle matSuffix [for]="gstRegiDate"></mat-datepicker-toggle>
               <mat-datepicker #gstRegiDate touchUi="true"></mat-datepicker>
@@ -745,32 +745,9 @@
               </control-messages>
             </div> -->
 
-            <div class="col-md-12">
-              <div class="mb-4 mt-11">
-                <mat-label> Whether registered with other central Govt/State Govt./Govt. Undertaking Department and
-                  validity thereof. (attach a copy of such registration certificate).</mat-label>
-              </div>
-              <mat-radio-group formControlName="registeredByGovt" class="radioGroup">
-                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code" class="mr-3">
-                  {{impl.name}}
-                </mat-radio-button>
-              </mat-radio-group>
-              <control-messages [control]="vendorRegistrationForm.get('registeredByGovt')">
-              </control-messages>
-            </div>
-
-
             <mat-form-field class="col-md-12">
               <input matInput type="text" maxlength="1000"
-                placeholder="{{'Deatils of Machinery installed with their capacities.'}}"
-                formControlName="detailsMachineryCapacity">
-              <control-messages [control]="vendorRegistrationForm.get('detailsMachineryCapacity')">
-              </control-messages>
-            </mat-form-field>
-
-            <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="1000"
-                placeholder="{{'Deatils of testing equipment with their capacities and details of calibration.'}}"
+                placeholder="{{'Details of testing equipment with their capacities and details of calibration.'}}"
                 formControlName="detailsEquipmentCapacity">
               <control-messages [control]="vendorRegistrationForm.get('detailsEquipmentCapacity')">
               </control-messages>
@@ -778,6 +755,167 @@
 
           </div>
 
+          <div class="row">
+            <h2 class="col-md-9">{{'Whether registered with other central Govt/State Govt./Govt. Undertaking
+              Department
+              and
+              validity thereof. (attach a copy of such registration certificate).'}}</h2>
+            <div *ngIf="isFileView" class="col-md-1">
+              <mat-icon (click)="getFile('CENTRAL_STATE_GOVT_REG_CERTIFICATE')" class="text-info">remove_red_eye
+              </mat-icon>
+            </div>
+            <div class="col-md-2 text-right">
+              <button mat-raised-button type="button" color="primary"
+                (click)="addRowVendorRegisteredGovtDetail()">{{'Add
+                New'}}</button>
+            </div>
+          </div>
+
+          <div>
+            <table class="table table-bordered  table-striped text-center">
+              <tbody>
+                <tr>
+                  <th class="text-center">S.no.</th>
+                  <th class="text-center">Name Of Authority</th>
+                  <th class="text-center">Registration Date </th>
+                  <th class="text-center">Validity From</th>
+                  <th class="text-center">Validity To</th>
+                  <th class="text-center">Action</th>
+                </tr>
+                <tr *ngFor="let row of vendorRegistrationForm.get('registeredGovtDetail')?.controls;let index = index;">
+                  <td>
+                    {{index+1}}
+                  </td>
+                  <td>
+                    <mat-form-field>
+                      <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+                        maxlength="100" [formControl]="row.get('nameOfAuthority')">
+                      <control-messages [control]="row.get('nameOfAuthority')">
+                      </control-messages>
+                    </mat-form-field>
+                  </td>
+
+                  <td>
+                    <mat-form-field>
+                      <input matInput autocomplete="off" appDate [formControl]="row.get('registrationDate')"
+                        [min]="maxDate" [matDatepicker]="registrationDate"
+                        (dateChange)="onDateChangePurchaseDate('registrationDate', $event.value,row)">
+                      <mat-datepicker-toggle matSuffix [for]="registrationDate"></mat-datepicker-toggle>
+                      <mat-datepicker touchUi="true" #registrationDate></mat-datepicker>
+                      <div align="end" class="default-show-hint mat-hint mat-right"></div>
+
+                      <control-messages [control]="row.get('registrationDate')">
+                      </control-messages>
+                    </mat-form-field>
+                  </td>
+
+                  <td>
+                    <mat-form-field>
+
+                      <input matInput autocomplete="off" appDate [formControl]="row.get('validityFrom')" [min]="maxDate"
+                        [matDatepicker]="validityFrom"
+                        (dateChange)="onDateChangePurchaseDate('validityFrom', $event.value,row)">
+                      <mat-datepicker-toggle matSuffix [for]="validityFrom"></mat-datepicker-toggle>
+                      <mat-datepicker touchUi="true" #validityFrom></mat-datepicker>
+                      <div align="end" class="default-show-hint mat-hint mat-right"></div>
+                      <control-messages [control]="row.get('validityFrom')">
+                      </control-messages>
+                    </mat-form-field>
+                  </td>
+
+                  <td>
+                    <mat-form-field>
+
+                      <input matInput autocomplete="off" appDate [formControl]="row.get('validityTo')" [min]="maxDate"
+                        [matDatepicker]="validityTo"
+                        (dateChange)="onDateChangePurchaseDate('validityTo', $event.value,row)">
+                      <mat-datepicker-toggle matSuffix [for]="validityTo"></mat-datepicker-toggle>
+                      <mat-datepicker touchUi="true" #validityTo></mat-datepicker>
+                      <div align="end" class="default-show-hint mat-hint mat-right"></div>
+
+                      <control-messages [control]="row.get('validityTo')">
+                      </control-messages>
+                    </mat-form-field>
+                  </td>
+
+                  <td>
+                    <button mat-raised-button type="button" color="warn" style="margin-top: 22px;"
+                      (click)="onRemoveVendorRegisteredGovtDetail(index)">
+                      <mat-icon title="Cancel">cancel</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+
+          <div class="row">
+            <h2 class="col-md-9">{{'Deatils of Machinery installed with their capacities.'}}</h2>
+            <div *ngIf="isFileView" class="col-md-1">
+              <mat-icon (click)="getFile('LIST_MACHINERIES')" class="text-info">remove_red_eye</mat-icon>
+            </div>
+            <div class="col-md-2 text-right">
+              <button mat-raised-button type="button" color="primary"
+                (click)="addRowVendorMachineInstalledCapacity()">{{'Add
+                New'}}</button>
+            </div>
+          </div>
+
+          <div>
+            <table class="table table-bordered  table-striped text-center">
+              <tbody>
+                <tr>
+                  <th class="text-center">S.no.</th>
+                  <th class="text-center">Name Of Machinery</th>
+                  <th class="text-center">Working / Process Detail </th>
+                  <th class="text-center">Capacity of Production / Workings</th>
+                  <th class="text-center">Action</th>
+                </tr>
+                <tr
+                  *ngFor="let row of vendorRegistrationForm.get('installedMachineCapacities')?.controls;let index = index;">
+                  <td>
+                    {{index+1}}
+                  </td>
+                  <td>
+                    <mat-form-field>
+                      <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+                        maxlength="100" [formControl]="row.get('nameOfMachinery')">
+                      <control-messages [control]="row.get('nameOfMachinery')">
+                      </control-messages>
+                    </mat-form-field>
+                  </td>
+
+                  <td>
+                    <mat-form-field>
+                      <input matInput type="text" appValidationFields
+                        validationFieldsType='appAlphanumericNumberWithDash' maxlength="1000"
+                        [formControl]="row.get('workingProcessDetail')">
+                      <control-messages [control]="row.get('workingProcessDetail')">
+                      </control-messages>
+                    </mat-form-field>
+                  </td>
+
+                  <td>
+                    <mat-form-field>
+                      <input matInput type="text" appValidationFields
+                        validationFieldsType='appAlphanumericNumberWithDash' maxlength="1000"
+                        [formControl]="row.get('productionCapacityWorking')">
+                      <control-messages [control]="row.get('productionCapacityWorking')">
+                      </control-messages>
+                    </mat-form-field>
+                  </td>
+
+                  <td>
+                    <button mat-raised-button type="button" color="warn" style="margin-top: 22px;"
+                      (click)="onRemoveVendorMahcineCapacity(index)">
+                      <mat-icon title="Cancel">cancel</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
           <div class="row">
 

@@ -33,6 +33,10 @@ export class VendorRegistrationComponent implements OnInit {
   academicQualifications: FormArray;
   vendorNameArray: FormArray;
   vendorRegistrationForm: FormGroup;
+
+  vendorMachinesCapacities: FormArray;
+  vendorRegisteredGovtDetail: FormArray;
+
   implYesNorray: Array<any> = [{ name: 'YES', code: true }, { name: 'NO', code: false }];
   locations: any = [];
   //Array<any> = [{ name: 'With in Gujarat', code: 'WITH_IN_GUJARAT' },
@@ -95,6 +99,9 @@ export class VendorRegistrationComponent implements OnInit {
     this.vendorNameAuthorized = this.fb.array([]);
     this.vendorNameholding = this.fb.array([]);
     this.vendorDetailsOfOrderIndicationQuantity = this.fb.array([]);
+    this.vendorMachinesCapacities = this.fb.array([]);
+    this.vendorRegisteredGovtDetail = this.fb.array([]);
+
   }
 
   ngOnInit() {
@@ -106,6 +113,8 @@ export class VendorRegistrationComponent implements OnInit {
     this.vendorRegistrationForm.addControl('vendorNameAuthorized', this.vendorNameAuthorized);
     this.vendorRegistrationForm.addControl('vendorNameholding', this.vendorNameholding);
     this.vendorRegistrationForm.addControl('vendorDetailsOfOrderIndicationQuantity', this.vendorDetailsOfOrderIndicationQuantity);
+    this.vendorRegistrationForm.addControl('vendorMachinesCapacities', this.vendorMachinesCapacities);
+    this.vendorRegistrationForm.addControl('vendorRegisteredGovtDetail', this.vendorRegisteredGovtDetail);
 
     this.activatedRoute.paramMap.subscribe(param => {
       this.formId = Number(param.get('id'));
@@ -246,13 +255,13 @@ export class VendorRegistrationComponent implements OnInit {
 
       branchMobileNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
       branchAlterMobileNumber: [null, [Validators.maxLength(10), Validators.minLength(10)]],
-      branchISDNumber: [null, [Validators.maxLength(11)]],
-      branchSTDNumber: [null, [Validators.maxLength(12)]],
+      branchISDNumber: [null, [Validators.maxLength(12)]],
+      branchSTDNumber: [null, [Validators.maxLength(11)]],
 
       headMobileNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
       headAlterMobileNumber: [null, [Validators.maxLength(10), Validators.minLength(10)]],
-      headISDNumber: [null, [Validators.maxLength(11)]],
-      headSTDNumber: [null, [Validators.maxLength(12)]],
+      headISDNumber: [null, [Validators.maxLength(12)]],
+      headSTDNumber: [null, [Validators.maxLength(11)]],
 
       resContactNumber: [null, [Validators.required]],
       resFaxNumber: [null, [ValidationService.faxValidation]],
@@ -271,6 +280,9 @@ export class VendorRegistrationComponent implements OnInit {
       vendorNameAuthorizedDetails: this.vendorNameAuthorized,
       vendorNameholdingDetails: this.vendorNameholding,
       supplierOrderDetails: this.vendorDetailsOfOrderIndicationQuantity,
+
+      installedMachineCapacities: this.vendorMachinesCapacities,
+      registeredGovtDetail: this.vendorRegisteredGovtDetail,
 
       registrationBank: this.fb.group({
         code: [{ value: null, disabled: true }],
@@ -366,6 +378,8 @@ export class VendorRegistrationComponent implements OnInit {
     this.vendorNameAuthorized.push(this.createItemAuthorized());
     this.vendorNameholding.push(this.createItemHolding());
     this.vendorDetailsOfOrderIndicationQuantity.push(this.createDetailsOfIndicatingQuantity());
+    this.vendorMachinesCapacities.push(this.createDetailsOfMahineInstalledCapacities());
+    this.vendorRegisteredGovtDetail.push(this.createRegisteredGovtDetail());
   }
 
   onTabChange(evt) {
@@ -471,6 +485,31 @@ export class VendorRegistrationComponent implements OnInit {
     });
   }
 
+  createDetailsOfMahineInstalledCapacities(): FormGroup {
+    return this.fb.group({
+      nameOfMachinery: null,
+      workingProcessDetail: null,
+      productionCapacityWorking: null
+    });
+  }
+
+  createRegisteredGovtDetail(): FormGroup {
+    return this.fb.group({
+      nameOfAuthority: null,
+      registrationDate: null,
+      validityFrom: null,
+      validityTo: null
+    });
+  }
+
+  addRowVendorMachineInstalledCapacity() {
+    this.vendorMachinesCapacities.push(this.createDetailsOfMahineInstalledCapacities());
+  }
+
+  addRowVendorRegisteredGovtDetail() {
+    this.vendorRegisteredGovtDetail.push(this.createRegisteredGovtDetail());
+  }
+
   addRowLastThreeYear() {
     this.vendorNameLastYear.push(this.createItemMaterialSupplierLastThreeYear());
   }
@@ -491,6 +530,13 @@ export class VendorRegistrationComponent implements OnInit {
     this.academicQualificationAndExperience.removeAt(rowIndex);
   }
 
+  onRemoveVendorMahcineCapacity(rowIndex: number) {
+    this.vendorMachinesCapacities.removeAt(rowIndex);
+  }
+
+  onRemoveVendorRegisteredGovtDetail(rowIndex: number) {
+    this.vendorRegisteredGovtDetail.removeAt(rowIndex);
+  }
 
   addRowVendorDetailsOfOrderIndicationQuantity() {
     this.vendorDetailsOfOrderIndicationQuantity.push(this.createDetailsOfIndicatingQuantity());
