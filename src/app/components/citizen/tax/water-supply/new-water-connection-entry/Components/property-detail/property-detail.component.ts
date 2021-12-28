@@ -137,13 +137,13 @@ export class PropertyDetailComponent implements OnInit {
   }
 
   savePropertyAddress(formDetails: NgForm) {
-    this.savePropertyAddress1(formDetails,false);
+    this.savePropertyAddress1(formDetails, false);
   }
   setPropertyNo(propertyNo?: any) {
-    this.propertyModel.propertyNo = propertyNo
+    this.propertyModel.propertyNo = propertyNo;
   }
-  savePropertyAddress1(formDetails: NgForm,isSubmit:boolean) {
-    if (formDetails.form.valid) {    
+  savePropertyAddress1(formDetails: NgForm, isSubmit: boolean) {
+    if (formDetails.form.valid) {
       if (!this.model.postalAddressDiff) {
         this.model.postalAddress = this.fullAddress;
       }
@@ -153,12 +153,10 @@ export class PropertyDetailComponent implements OnInit {
           if (data.status === 200) {
             this.alertService.success(data.body.message);
             this.isShowSubmitButton = true;
-            this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(2,1);
+            this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(3, 2);
           }
-          // if(isSubmit) {
-          //   this.finalSubmit();
-          // }
         },
+
         (error) => {
           if (error.status === 400) {
             var errorMessage = '';
