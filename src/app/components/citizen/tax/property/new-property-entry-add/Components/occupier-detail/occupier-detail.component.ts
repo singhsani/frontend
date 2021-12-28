@@ -4,7 +4,7 @@ import { CommonService } from 'src/app/vmcshared/Services/common-service';
 import { NewPropertyEntryAddService } from '../../Services/new-property-entry-add.service';
 import { NewPropertyEntryAddDataSharingService } from '../../Services/new-property-entry-add-data-sharing.service';
 import { Constants } from 'src/app/vmcshared/Constants';
-import { Subscription } from 'rxjs';
+import { Subscriber, Subscription } from 'rxjs';
 import { OccupierModel } from '../../Models/new-property-entry-add.model';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
@@ -121,12 +121,11 @@ export class OccupierDetailComponent implements OnInit {
 
     if (formDetail.form.valid && this.isDuplicateCode == false) {
       this.model.propertyBasicVersionId = this.modelProperty.propertyBasicId
-      this.newNewPropertyEntryAddService.saveOccupier(this.model).subscribe(
+      this.newNewPropertyEntryAddService.searchEmailId(this.model.propertyBasicVersionId, this.model.emailAddress).subscribe(
         (data) => {
           if (data.status === 200) {
-            formDetail.resetForm();
-            this.model = new OccupierModel();
-            this.searchOccupier();
+
+            this.saveOccupierAfterEmail(formDetail);
           }
         },
         (error) => {
@@ -288,5 +287,33 @@ export class OccupierDetailComponent implements OnInit {
       return false;
     }
   }
+
+saveOccupierAfterEmail( formDetail: NgForm){
+
+
+  this.newNewPropertyEntryAddService.saveOccupier(this.model).subscribe(
+    (data) => {
+      if (data.status === 200) {
+        formDetail.resetForm();
+        this.model = new OccupierModel();
+        this.searchOccupier();
+      }
+    },
+    (error) => {
+      if (error.status === 400) {
+        var errorMessage = '';
+        error.error[0].propertyList.forEach(element => {
+          errorMessage = errorMessage + element + "</br>";
+        });
+        this.alertService.error(errorMessage);
+      }
+      else {
+        this.alertService.error(error.error.message);
+      }
+    });
+
+  //  saveOccupier finish
+
+}
 
 }
