@@ -15,7 +15,7 @@ import { CommonService as CommonServiceTwo} from 'src/app/shared/services/common
 })
 export class ApplicantDetailPropertywaterComponent implements OnInit {
 
-	
+
   model = new ApplicantDetailDTO();
   countryListArray: any = [];
   stateListArray:any = [];
@@ -28,7 +28,7 @@ export class ApplicantDetailPropertywaterComponent implements OnInit {
   @Input() showSkipButton = false;
 
 
-  
+
   constructor(
 	  private countryService: CountryService,
 	  private commonService:CommonService,
@@ -89,21 +89,20 @@ export class ApplicantDetailPropertywaterComponent implements OnInit {
 		});
 
   }
-  
+
   /**
 	 * This method is use to get state list using api
 	 * @param name - country name
 	 */
-	getStateLists(country) {
-		this.stateListArray = this.countryListArray.find(con => con.name === country.name).states;
-		this.stateListArray = _.orderBy(this.stateListArray, ['name'],['asc']);
+getStateLists(country) {
+		const ele = country.name || country;
+		this.stateListArray = this.countryListArray.find(con => con.name === ele).states;
+		this.stateListArray = _.orderBy(this.stateListArray, ['name'], ['asc']);
 		setTimeout(() => {
 			if (this.editMode && this.model.citizenAddressDTO.state) {
-				this.getCityLists(this.model.citizenAddressDTO.state);
-			}	
+                this.getCityLists(this.model.citizenAddressDTO.state);
+			}
 		}, 1000);
-		
-
 	}
 
 	/**
@@ -111,8 +110,9 @@ export class ApplicantDetailPropertywaterComponent implements OnInit {
 	 * @param name - state name
 	 */
 	getCityLists(state) {
-		this.cityListArray = this.stateListArray.find(obj => obj.name === state.name).cities;
-		this.cityListArray = _.orderBy(this.cityListArray, ['name'],['asc']);
+        const ele = state.name || state;
+		this.cityListArray = this.stateListArray.find(obj => obj.name === ele).cities;
+		this.cityListArray = _.orderBy(this.cityListArray, ['name'], ['asc']);
 	}
 
 	saveApplicantDetails(form: NgForm) {
@@ -123,7 +123,7 @@ export class ApplicantDetailPropertywaterComponent implements OnInit {
 	}
 
 	onBack(){
-		if (this.serviceType === 'PRO-VAC' || this.serviceType === 'PRO-TAX-REBATE'){
+		if (this.serviceType === 'PRO-VAC' || this.serviceType === 'PRO-TAX-REBATE') {
 			this.stepChange.emit(0);
 		}else{
 			this.stepChange.emit(1);
@@ -151,12 +151,9 @@ export class ApplicantDetailPropertywaterComponent implements OnInit {
 					this.model.citizenAddressDTO.state = userData.state.toUpperCase();
 					this.model.citizenAddressDTO.country = userData.country.toUpperCase();
 					this.getStateListsForDefaltCountry(this.model.citizenAddressDTO.country);
-			
 				}
-				
-			})
+			});
 		}
-		
 	}
 
 	getStateListsForDefaltCountry(country:any) {
@@ -167,7 +164,6 @@ export class ApplicantDetailPropertywaterComponent implements OnInit {
 				this.getCityListsForDefaultState(this.model.citizenAddressDTO.state);
 			}
 		}, 1000);
-		
 	}
 
 	getCityListsForDefaultState(state :any) {
