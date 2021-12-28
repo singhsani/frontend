@@ -151,7 +151,8 @@ export class AnimalAdoptionComponent implements OnInit {
   }
 
   getValues(animal) {
-
+    this.selectedAnimalAnnualBoardingExpenses = null;
+    this.animalAdoptionForm.get('totalAdoptionCost').setValue(null);
     this.animalName = animal;
 
   }
@@ -254,6 +255,11 @@ export class AnimalAdoptionComponent implements OnInit {
 
   submitAnimalAdoptionRequest() {
 
+    let returnArray = this.animalAdoptionForm.get('animalNameList') as FormArray;
+    if(returnArray.length == 0){
+      this.toster.warning('Please add Animal');
+      return false;
+    }
 
     this.ticketingService.animalAdoptionRequest(this.animalAdoptionForm.value).subscribe(resp => {
 

@@ -207,6 +207,9 @@ export class AddressDetailComponent implements OnInit, OnDestroy {
 
   onSubmit(form: NgForm) {
     this.checkIsValidAddress();
+    if(this.addressModel.referencePropertyNo && this.addressModel.referencePropertyNo.length < 13){
+      this.addressModel.referencePropertyNo = '';
+    }
     if (form.form.valid && this.isValidForm) {
       this.addressModel.entryModeLookupCode = Constants.ItemCodes.Application;
       this.addressModel.reasonForCreationItemCode = Constants.ItemCodes.New;
