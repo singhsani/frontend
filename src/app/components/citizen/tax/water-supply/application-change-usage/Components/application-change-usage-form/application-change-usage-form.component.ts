@@ -7,6 +7,8 @@ import { CommonService } from 'src/app/vmcshared/Services/common-service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { Constants } from 'src/app/vmcshared/Constants';
 import { MatStepper } from '@angular/material';
+import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
+import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
 
 @Component({
     selector: 'app-application-change-usage-form',
@@ -33,6 +35,7 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
     constructor(public commonService: CommonService,
         private alertService: AlertService,
         private applicationChangeUsageService: ApplicationChangeUsageService,
+        private addressService: ApplicantAddressService,
         private applicationChangeUsageDataSharingService: ApplicationChangeUsageDataSharingService) { }
 
     ngOnInit() {
@@ -147,7 +150,7 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
                         this.alertService.success(data.body.message);
                         this.dataModel.changeOfUsageId = data.body.data;
                         this.changeOfUsageId = data.body.data;
-                        this.stepper.selectedIndex = 1;
+                        this.stepper.selectedIndex = 2;
                         this.getFormDataDocuments(this.dataModel.changeOfUsageId);
                         this.applicationChangeUsageDataSharingService.setApprovalModel(this.dataModel);
 
@@ -195,7 +198,7 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
             });
 
     }
-    getFormDataDocuments(id : any) {
+    getFormDataDocuments(id: any) {
         if(this.changeOfUsageDocumentUploadDocs.length == 0){
         this.changeOfUsageDocumentUploadDocs = [];
         this.applicationChangeUsageService.getchangeOfUsageIdDocUpload(id).subscribe(
@@ -203,10 +206,10 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
             data.forEach(app => {
               this.changeOfUsageDocumentUploadDocs.push(app);
             });
-            
+
           },
           (error) => {
-            
+
           });
       }
       }
@@ -228,6 +231,21 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
     stepChanged(event, stepper){
         stepper.selected.interacted = false;
     }
+
+    moveStepper(index: number) {
+        this.stepper.selectedIndex = index;
+    }
+
+    saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO) {
+        this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
+             (data) => {
+               this.commonService.applicationNo = data.body.applicationNo;
+               this.moveStepper(1);
+             },
+             (error) => {
+               this.commonService.callErrorResponse(error);
+             });
+       }
 }
 
 
