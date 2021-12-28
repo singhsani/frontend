@@ -216,10 +216,10 @@ export class ConsumerDetailComponent implements OnInit {
           this.model.connectionDtlId = data.body.data;
           this.newNewWaterConnectionEntryDataSharingService.updateDataSourceNewWaterConnectionEntry(this.model);
           if (!this.isOutofLimit) {
-            this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(1);
+            this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(2);
           }
           else {
-            this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(2,0);
+            this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(3, 0);
           }
           if (data.status === 200) {
             this.alertService.success(data.body.message);
