@@ -8,6 +8,8 @@ import { ApplicationDisconnectionDataSharingService } from '../../Services/appli
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { MatStepper } from '@angular/material';
 import { NewWaterConnectionEntryService } from '../../../new-water-connection-entry/Services/new-water-connection-entry.service';
+import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
+import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
 
 @Component({
     selector: 'app-application-disconnection-form',
@@ -34,7 +36,9 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
         private alertService: AlertService,
         private applicationDisconnectionService: ApplicationDisconnectionService,
         private applicationDisconnectionDataSharingService: ApplicationDisconnectionDataSharingService,
-        private newWaterConnectionEntryService : NewWaterConnectionEntryService, private newNewWaterConnectionEntryService: NewWaterConnectionEntryService,
+        private newWaterConnectionEntryService: NewWaterConnectionEntryService,
+        private newNewWaterConnectionEntryService: NewWaterConnectionEntryService,
+        private addressService: ApplicantAddressService
     ) { }
 
     ngOnInit() {
@@ -168,7 +172,7 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
                     if (data.status === 200) {
                         this.alertService.success(data.body.message);
                         this.dataModel.disconncetionId = data.body.data;
-                        this.stepper.selectedIndex = 1;
+                        this.stepper.selectedIndex = 2;
                         this.disconncetionId = data.body.data;
                         this.getFormDataDocuments(this.dataModel.disconncetionId);
                         this.applicationDisconnectionDataSharingService.setApprovalModel(this.dataModel);
@@ -187,15 +191,14 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
                         error.error[0].propertyList.forEach(element => {
                             errorMessage = errorMessage + element + "</br>";
                         });
-                    }
-                    else {
+                    } else {
                         errorMessage = error.error.message;
                     }
                     this.alertService.error(errorMessage);
                 });
         }
     }
-    
+
     onWaterDetailClick() {
         this.applicationDisconnectionDataSharingService.setWaterBillDetail(this.outstandingDetail.waterOutstandingDTO.billWiseOutstandings);
         this.applicationDisconnectionDataSharingService.setIsShowWaterBillDetail(true);
@@ -227,7 +230,7 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
         })
       }
 
-    onBackClick(){
+    onBackClick() {
         this.stepper.selectedIndex = 0;
     }
 
@@ -240,6 +243,21 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
           },
           (error) => {
             this.alertService.error(error.error.message);
-          })
-      }
+        });
+    }
+
+    moveStepper(index: number) {
+        this.stepper.selectedIndex = index;
+    }
+
+    saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
+        this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
+             (data) => {
+               this.commonService.applicationNo = data.body.applicationNo;
+               this.moveStepper(1);
+             },
+             (error) => {
+               this.commonService.callErrorResponse(error);
+             });
+       }
 }
