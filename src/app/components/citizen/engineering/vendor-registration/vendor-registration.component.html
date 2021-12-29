@@ -631,14 +631,14 @@
             </div> -->
 
             <mat-form-field class="col-md-4">
-              <input matInput type="text" maxlength="1000" placeholder="{{'Area of land occupied by the factory'}}"
+              <input matInput type="text" appValidationFields validationFieldsType='appAlphanumericNumberWithDashAndComa' maxlength="1000" placeholder="{{'Area of land occupied by the factory'}}"
                 formControlName="areaOfLandFactory">
               <control-messages [control]="vendorRegistrationForm.get('areaOfLandFactory')">
               </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-8">
-              <input matInput type="text" maxlength="1000"
+              <input matInput type="text" maxlength="1000" appValidationFields validationFieldsType='appAlphanumericNumberWithDashAndComa'
                 placeholder="{{'Product Manufactured with complete description'}}"
                 formControlName="productManufacturedDescription">
               <control-messages [control]="vendorRegistrationForm.get('productManufacturedDescription')">
@@ -662,14 +662,14 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-3">
-              <input matInput type="text" maxlength="20" placeholder="{{'Factory licence No. (Notarized copy)'}}"
+              <input matInput type="text" maxlength="20" appValidationFields validationFieldsType='appAlphanumericNumberWithDashAndComa' placeholder="{{'Factory licence No. (Notarized copy)'}}"
                 formControlName="factoryLicenceNumber">
               <control-messages [control]="vendorRegistrationForm.get('factoryLicenceNumber')">
               </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-6">
-              <input matInput type="text" maxlength="20"
+              <input matInput type="text" maxlength="20" appValidationFields validationFieldsType='appAlphanumericNumberWithDashAndComa'
                 placeholder="{{'MSME,NSIC and SSI Certificate No.(Notarized copy)'}}"
                 formControlName="sscNSICCertificateNumber">
               <control-messages [control]="vendorRegistrationForm.get('sscNSICCertificateNumber')">
@@ -677,7 +677,7 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="1000"
+              <input matInput type="text" maxlength="1000" appValidationFields validationFieldsType='appAlphanumericNumberWithDashAndComa' 
                 placeholder="{{'Value of plant and Machinery certified by SSI in case of SSI units, alongwith the date of assessment of said value.'}}"
                 formControlName="valueOfPlantAndMachinery">
               <control-messages [control]="vendorRegistrationForm.get('valueOfPlantAndMachinery')">
@@ -745,7 +745,7 @@
             </div> -->
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="1000"
+              <input matInput type="text" maxlength="1000" appValidationFields validationFieldsType='appAlphanumericNumberWithDashAndComa'
                 placeholder="{{'Details of testing equipment with their capacities and details of calibration.'}}"
                 formControlName="detailsEquipmentCapacity">
               <control-messages [control]="vendorRegistrationForm.get('detailsEquipmentCapacity')">
@@ -963,7 +963,7 @@
                       </control-messages>
                     </mat-form-field>
                   </td>
-
+  
                   <td>
                     <mat-form-field>
                       <input matInput type="text" appValidationFields validationFieldsType='alphanumericWithSpace'
@@ -1024,7 +1024,7 @@
           </div>
 
           <mat-form-field class="col-md-12">
-            <input matInput type="text" maxlength="1000"
+            <input matInput type="text" maxlength="1000" appValidationFields validationFieldsType='appAlphanumericNumberWithDashAndComa'
               placeholder="{{'Details of land documents occupied by the factory.'}}"
               formControlName="detailsOfLandDocumentsFactory">
             <control-messages [control]="vendorRegistrationForm.get('detailsOfLandDocumentsFactory')">
@@ -1032,7 +1032,7 @@
           </mat-form-field>
 
           <mat-form-field class="col-md-12">
-            <input matInput type="text" maxlength="1000" placeholder="{{'Building permission detail.'}}"
+            <input matInput type="text" maxlength="1000" appValidationFields validationFieldsType='appAlphanumericNumberWithDashAndComa' placeholder="{{'Building permission detail.'}}"
               formControlName="buildingPermissionDetail">
             <control-messages [control]="vendorRegistrationForm.get('buildingPermissionDetail')">
             </control-messages>
@@ -1089,7 +1089,7 @@
           </mat-form-field>
 
           <mat-form-field class="col-md-12">
-            <input matInput type="text" maxlength="1000"
+            <input matInput type="text" maxlength="1000" appValidationFields validationFieldsType='appAlphanumericNumberWithDashAndComa'
               placeholder="{{'IS / BIS / CE / International Licences Details'}}" formControlName="ISIBISCElicences">
             <control-messages [control]="vendorRegistrationForm.get('ISIBISCElicences')">
             </control-messages>
@@ -1118,7 +1118,7 @@
           <div class="row">
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="1000"
+              <input matInput type="text" maxlength="1000" appValidationFields validationFieldsType='appAlphanumericNumberWithDashAndComa'
                 placeholder="{{'Is testing record maintained and if so, since when'}}"
                 formControlName="testingRecordMaintainedDetail">
               <control-messages [control]="vendorRegistrationForm.get('testingRecordMaintainedDetail')">
@@ -1126,7 +1126,7 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="1000"
+              <input matInput type="text" maxlength="1000" appValidationFields validationFieldsType='appAlphanumericNumberWithDashAndComa'
                 placeholder="{{'Type of tests as per Standards (This is must for registration) MTC as well as govt. Lab or Approved govt.Lab.'}}"
                 formControlName="testStandardGovtLabApproved">
               <control-messages [control]="vendorRegistrationForm.get('testStandardGovtLabApproved')">
@@ -1134,7 +1134,7 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="1000" placeholder="{{'Method adopted for Quality Control'}}"
+              <input matInput type="text" maxlength="1000" appValidationFields validationFieldsType='appAlphanumericNumberWithDashAndComa' placeholder="{{'Method adopted for Quality Control'}}"
                 formControlName="adoptedForQualityControl">
               <control-messages [control]="vendorRegistrationForm.get('adoptedForQualityControl')">
               </control-messages>
@@ -1142,7 +1142,7 @@
 
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="1000"
+              <input matInput type="text" maxlength="1000" appValidationFields validationFieldsType='appAlphanumericNumberWithDashAndComa'
                 placeholder="{{'Distinguished marks or method employed to identify, materials, if any.'}}"
                 formControlName="personInChargeProductionControl">
               <control-messages [control]="vendorRegistrationForm.get('personInChargeProductionControl')">
@@ -1158,7 +1158,7 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="1000"
+              <input matInput type="text" maxlength="1000" appValidationFields validationFieldsType='appAlphanumericNumberWithDashAndComa'
                 placeholder="{{'Source of supply of Raw materials (with address).'}}"
                 formControlName="sourceOfRawMaterialAddress">
               <control-messages [control]="vendorRegistrationForm.get('sourceOfRawMaterialAddress')">
@@ -1166,14 +1166,14 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="1000" placeholder="{{'Production capacity per annum (quantity).'}}"
+              <input matInput type="text" maxlength="1000" appValidationFields validationFieldsType='appAlphanumericNumberWithDashAndComa' placeholder="{{'Production capacity per annum (quantity).'}}"
                 formControlName="productionCapacityPerAnnum">
               <control-messages [control]="vendorRegistrationForm.get('productionCapacityPerAnnum')">
               </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="1000"
+              <input matInput type="text" maxlength="1000" appValidationFields validationFieldsType='appAlphanumericNumberWithDashAndComa'
                 placeholder="{{'Maximum production per annum (in qty. as well as value) acheived so far.'}}"
                 formControlName="maximumProductionPerAnnum">
               <control-messages [control]="vendorRegistrationForm.get('maximumProductionPerAnnum')">
@@ -1446,7 +1446,7 @@
             </div>
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="1000"
+              <input matInput type="text" maxlength="1000" appValidationFields validationFieldsType='appAlphanumericNumberWithDashAndComa'
                 placeholder="{{'Estimation of Stocks of raw material held and the estimated production on single shift basis from the stock so available.'}}"
                 formControlName="estimationOfStocks">
               <control-messages [control]="vendorRegistrationForm.get('estimationOfStocks')">
@@ -1454,7 +1454,7 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="1000"
+              <input matInput type="text" maxlength="1000" appValidationFields validationFieldsType='appAlphanumericNumberWithDashAndComa'
                 placeholder="{{'Results of Sample Testing (Latest factory Lab Report / Material Testing Report).'}}"
                 formControlName="resultSampleTesting">
               <control-messages [control]="vendorRegistrationForm.get('resultSampleTesting')">
@@ -1524,7 +1524,7 @@
 
 
             <mat-form-field class="col-md-12">
-              <input matInput type="text" maxlength="1000" placeholder="{{'Remarks'}}" formControlName="remarks">
+              <input matInput type="text" maxlength="1000" appValidationFields validationFieldsType='appAlphanumericNumberWithDashAndComa' placeholder="{{'Remarks'}}" formControlName="remarks">
               <control-messages [control]="vendorRegistrationForm.get('remarks')">
               </control-messages>
             </mat-form-field>
