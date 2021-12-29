@@ -200,4 +200,10 @@ export class NewPropertyEntryAddService {
     .pipe(map((response: any) => response)) 
   }
 
+  searchEmailId(propertyBasicVersionId: number,emailAddress: any) {
+    return this.http.get(`${Constants.assessmentModuleApiUrl}occupier/searchEmailId?propertyBasicVersionId=${propertyBasicVersionId}&&emailAddress=${emailAddress}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
 }
