@@ -597,18 +597,18 @@
                                             <mat-error *ngIf="formRoom.breadth.errors">
                                                 <div *ngIf="formRoom.breadth.errors.required">*Breadth is
                                                     required.</div>
-                                            </mat-error>
-                                        </mat-form-field>
-                                    </div>
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <mat-form-field class="full-width-input">
-                                            <input matInput disabled formControlName="carpetAreaRoom" number-only
+                                            <input matInput [readonly]="isReadOnly" formControlName="carpetAreaRoom" number-only
                                                 name="carpetAreaRoom" [(ngModel)]="roomModel.carpetArea"
                                                 placeholder="Carpet Area (Sq.Meter)">
-                                                <mat-error *ngIf="showCarpetAreaError">
-                                                    <div *ngIf="showCarpetAreaError">
+                                                <mat-error *ngIf="formRoom.carpetAreaRoom.errors">
+                                                    <div *ngIf="formRoom.carpetAreaRoom.errors.isCarpetAreaValid">
                                                         *Carpet Area
                                                         must be smaller than Built-­Up Area.</div>
                                                 </mat-error>

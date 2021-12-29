@@ -49,6 +49,9 @@ export class UnitDetailComponent implements OnInit {
   measurementForm: FormGroup;
   roomForm: FormGroup;
   showCarpetAreaError:  boolean = false;
+  carpetDisabled: boolean = true ;
+  isDisabled: boolean = true;
+  isReadOnly: boolean = true;
   
   constructor(private formBuilder: FormBuilder,
     private newNewPropertyEntryAddDataSharingService: NewPropertyEntryAddDataSharingService,
@@ -483,6 +486,8 @@ export class UnitDetailComponent implements OnInit {
 
     if(this.roomModel.builtUpArea<this.roomModel.carpetArea){
       this.showCarpetAreaError = true;
+
+      console.log("this.showCarpetAreaError - > ", this.showCarpetAreaError);
     }
 
   }
@@ -574,6 +579,25 @@ export class UnitDetailComponent implements OnInit {
     };
   }
 
+
+
+  checkIsValidCarpetArea(firstControlName: string, secondControlName: string) {
+    return (formGroup: FormGroup) => {
+      const control1 = formGroup.controls[firstControlName];
+      const control2 = formGroup.controls[secondControlName];
+      if (control2.errors && !control2.errors.isCarpetAreaValid) {
+        return;
+      }
+
+      if (parseFloat(control1.value) < parseFloat(control2.value)) {
+        control2.setErrors({ isCarpetAreaValid: true });
+      } else {
+        control2.setErrors(null);
+      }
+    };
+  }
+
+
   initRoomForm() {
     this.roomForm = this.formBuilder.group({
       builtUpAreaRoom: new FormControl(null, Validators.required),
@@ -581,11 +605,12 @@ export class UnitDetailComponent implements OnInit {
       length: new FormControl(null, Validators.required),
       breadth: new FormControl(null, Validators.required),
       exemptedAreaRoom: new FormControl(null, Validators.required),
-      carpetAreaRoom: new FormControl({ value: null, disabled: true }),
+      carpetAreaRoom: new FormControl({ value: null }),
       assessableAreaRoom: new FormControl({ value: null, disabled: true }),
       valuation: new FormControl({ value: null, disabled: true }),
     }, {
-        validator: [this.checkIsValidRoomBuildUpCarpetArea('builtUpAreaRoom', 'carpetAreaRoom'), this.checkIsValidExempteArea('carpetAreaRoom', 'exemptedAreaRoom')]
+        validator: [this.checkIsValidRoomBuildUpCarpetArea('builtUpAreaRoom', 'carpetAreaRoom'), this.checkIsValidExempteArea('carpetAreaRoom', 'exemptedAreaRoom'),
+        this.checkIsValidCarpetArea('builtUpAreaRoom', 'carpetAreaRoom')]
       });
   }
 
