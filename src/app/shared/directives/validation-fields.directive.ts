@@ -116,9 +116,7 @@ export class ValidationFieldsDirective {
           return;
         }
 
-        if (e.keyCode != 189 && e.keyCode != 32 && e.keyCode != 188 && (e.keyCode < 65 || e.keyCode > 96) && (e.keyCode < 48 || e.keyCode > 57)) {
-          e.preventDefault();
-        }
+        
         break; 
 
       case "appAddressAllowed":
