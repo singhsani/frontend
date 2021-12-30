@@ -381,7 +381,7 @@ export class BookPermissionComponent implements OnInit {
                   this.commonService.openAlert("Error", err.error[0].message, "warning")
               })
           }, rA => {
-             // this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
+             this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
           })
       }
       }, (err) => {
