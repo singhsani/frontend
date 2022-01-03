@@ -55,6 +55,7 @@ export class VendorRegistrationComponent implements OnInit {
   attachmentList: any = [];
   bankNameArray: any = [];
   vendorTypeFirm: any = [];
+  vendorTypeFirmUpdate: any = [];
   academicQualificationDes: any = [];
   public serverUploadFilesArray: Array<any> = [];
 
@@ -226,6 +227,7 @@ export class VendorRegistrationComponent implements OnInit {
       this.manuFacturDetails = res.VENDOR_MANUFACTURING_OWNED;
       this.academicQualificationDes = res.ACEDEMIC_QUALIFICATION_DESC;
       this.vendorTypeFirm = res.VENDOR_TYPE_FIRM;
+      this.vendorTypeFirmUpdate = res.VENDOR_TYPE_FIRM;
     });
   }
 
@@ -441,6 +443,11 @@ export class VendorRegistrationComponent implements OnInit {
   }
 
   typeOfFirmChange(event) {
+   
+    this.vendorTypeFirm = [...this.vendorTypeFirmUpdate];
+    this.vendorRegistrationForm.get('vendorNameDetails').reset();
+    this.vendorTypeFirm = this.vendorTypeFirm.filter(o => o.code === event.value);
+    
     if (event.value == 'PROPRIETORSHIP') {
       this.vendorArrayNameButtons = true;
     } else {
