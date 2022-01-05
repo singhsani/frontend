@@ -455,9 +455,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     modalRef: BsModalRef;
     apiType: string;
     /**
-	* Minimum start date.
-	*/
-	minDate = moment(new Date()).add(0, 'day').toISOString();
+    * Minimum start date.
+    */
+    minDate = moment(new Date()).add(0, 'day').toISOString();
 
     // Select id for edit marriage form
     formId: number;
@@ -841,15 +841,15 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     }
 
     controlName() {
-		this.appointmentForm = this.fb.group({
-			resources: this.fb.group({
-				code: [null, Validators.required],
-				id: null,
-				name: null
-			}),
-			appointmentdate: [null, Validators.required]
-		})
-	}
+        this.appointmentForm = this.fb.group({
+            resources: this.fb.group({
+                code: [null, Validators.required],
+                id: null,
+                name: null
+            }),
+            appointmentdate: [null, Validators.required]
+        })
+    }
 
     setFormControlToTabIndexMap() {
         //step one tab index
@@ -1845,6 +1845,21 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             // this.marriageFormGroup.get(ischeck).get('code').setValue("NO");
             this.setValue(ischeck, 'NO');
         }
+        this.marriageFormGroup.controls.groomParentsAddress.valueChanges.subscribe(data => {
+            if (this.marriageFormGroup.get('isGroomParResAddressSame').get('code').value == "YES") {
+                this.addressPatchValue({ checked: true });
+            }
+        });
+        this.marriageFormGroup.controls.brideParentsAddress.valueChanges.subscribe(data => {
+            if (this.marriageFormGroup.get('isBrideParResAddressSame').get('code').value == "YES") {
+                this.addressPatchValue({ checked: true });
+            }
+        });
+        this.marriageFormGroup.controls.priestAddress.valueChanges.subscribe(data => {
+            if (this.marriageFormGroup.get('isPriestParResAddressSame').get('code').value == "YES") {
+                this.addressPatchValue({ checked: true });
+            }
+        });
     }
 
 
@@ -2024,68 +2039,72 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     }
 
     /**
-	* This method use for get available slot 
-	*/
-	onSubmit() {
-		if (this.appointmentForm.invalid) {
-			this.config.getAllErrors(this.appointmentForm);
-			this.commonService.openAlert("Error", this.config.ALL_FEILD_REQUIRED_MESSAGE, "warning");
-		} else {
-			this.getSlot();
-		}
-	}
-
-    	/**
-	* This method is get available slots 
-	*/
-	getSlot() {
-		let resourcecode = this.appointmentForm.controls.resources.get('code').value;
-		let startdate = this.appointmentForm.get('appointmentdate').value;
-		this.appointmentService.getSlots(resourcecode, startdate, this.formSlotId).subscribe(slot => {
-			this.slotDataSource.data = slot.data.filter(s => s.slotStatus == 'AVAILABLE') as SlotDetails[];
-			this.slotDataSource.paginator = this.paginator;
-			this.paginator.pageSize = 5;
-			this.paginator.pageIndex = 0;
-			this.isLoadingResults = false;
-		},
-			err => {
-				if (err.error[0])
-					this.commonService.openAlert("error", err.error[0].message, "error");
-			});
-	}
+    * This method use for get available slot 
+    */
+    onSubmit() {
+        if (this.appointmentForm.invalid) {
+            this.config.getAllErrors(this.appointmentForm);
+            this.commonService.openAlert("Error", this.config.ALL_FEILD_REQUIRED_MESSAGE, "warning");
+        } else {
+            this.getSlot();
+        }
+    }
 
     /**
-	 * This method is use for open modal.
-	 */
-	openModal(template: TemplateRef<any>) {
-		this.modalRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
-	}
+* This method is get available slots 
+*/
+    getSlot() {
+        let resourcecode = this.appointmentForm.controls.resources.get('code').value;
+        let startdate = this.appointmentForm.get('appointmentdate').value;
+        this.appointmentService.getSlots(resourcecode, startdate, this.formSlotId).subscribe(slot => {
+            this.slotDataSource.data = slot.data.filter(s => s.slotStatus == 'AVAILABLE') as SlotDetails[];
+            this.slotDataSource.paginator = this.paginator;
+            this.paginator.pageSize = 5;
+            this.paginator.pageIndex = 0;
+            this.isLoadingResults = false;
+        },
+            err => {
+                if (err.error[0])
+                    this.commonService.openAlert("error", err.error[0].message, "error");
+            });
+    }
 
     /**
-	* This method is get available resource list 
-	*/
-	getResources() {
-		this.appointmentService.getResources().subscribe((resp) => {
-			this.resources = resp.data;
-		}, (err) => {
-			if (err.error[0])
-				this.commonService.openAlert("Error", err.error[0].message, "warning");
-		})
-	}
+     * This method is use for open modal.
+     */
+    openModal(template: TemplateRef<any>) {
+        this.modalRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
+    }
+
+    /**
+    * This method is get available resource list 
+    */
+    getResources() {
+        this.appointmentService.getResources().subscribe((resp) => {
+            this.resources = resp.data;
+        }, (err) => {
+            if (err.error[0])
+                this.commonService.openAlert("Error", err.error[0].message, "warning");
+        })
+    }
 
     disableSunday(d: Date) {
-		if(d.getDay() != 0) {
-		  return d;
-		}
-	  }
+        if (d.getDay() != 0) {
+            return d;
+        }
+    }
 
-     /**
-	 * This method is change date format 
-	 */
-	dateFormateOne(date, controlType) {
-		this.appointmentForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+    /**
+    * This method is change date format 
+    */
+    dateFormateOne(date, controlType) {
+        this.appointmentForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
 
-	}
+    }
 
-
+    addressPatchValue(event) {
+        this.marriageFormGroup.get('groomParentsAddressResidence').setValue(this.marriageFormGroup.get('groomParentsAddress').value);
+        this.marriageFormGroup.get('brideParentsAddressResidence').setValue(this.marriageFormGroup.get('brideParentsAddress').value);
+        this.marriageFormGroup.get('priestAddressResidence').setValue(this.marriageFormGroup.get('priestAddress').value);
+    }
 }
