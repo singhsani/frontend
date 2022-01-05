@@ -155,7 +155,6 @@ export class CommonPaybleComponent implements OnInit {
    * @param payData - json data as payment data.
    */
   makePayment(payData) {
-    
     if (this.paymentsForm.get('amount').value < 0 || !this.paymentsForm.get('amount').value) {
       this.commonService.openAlert("Warning", "Insufficient amount", "warning");
       return;
@@ -175,6 +174,9 @@ export class CommonPaybleComponent implements OnInit {
     if (payData.module.code == 'PROPERTY-TAX' || payData.module.code == 'WATER-TAX') {
       updateAmount = this.model;
       updatePayableServiceType = payData.payableServices.code;
+    } else if (payData.module.code == 'PROFESSIONAL') {
+      updateAmount = payData.amount;
+      updatePayableServiceType = payData.payableServices.code;
     } else {
       updateAmount = payData.amount;
       updatePayableServiceType = payData.module.code
@@ -189,7 +191,7 @@ export class CommonPaybleComponent implements OnInit {
       paymentMode: "NETBANKING",
       returnUrl: retUrl,
       searchable: false,
-      txtadditionalInfo1 :payData.payableServices.code
+      txtadditionalInfo1: payData.payableServices.code
     }
 
     if (payData.payableServices.code == 'PAY-PRO-TAX') {
