@@ -59,6 +59,7 @@ export class BookPermissionComponent implements OnInit {
    * resources
    */
   SHOOTING_PERMISSION: Array<any> = [];
+  wardZoneLevel1List=[];
   /*
    * Datepicker with max validation
    */
@@ -96,7 +97,8 @@ export class BookPermissionComponent implements OnInit {
     private TranslateService: TranslateService,
     private CD: ChangeDetectorRef,
 		protected formService: FormsActionsService,
-		protected toaster: ToastrService) {
+		protected toaster: ToastrService,
+    ) {
       this.bookingUtils = new BookingUtils(formService, toster);
     this.bookingService.resourceType = this.bookingConstants.SHOOTING_PERMISSION_PLACE;
   }
@@ -114,8 +116,8 @@ export class BookPermissionComponent implements OnInit {
     this.createPermissionAvailiblityForm();
     this.createPermissionApplicationForm();
     this.getLookUpData();
-    this.getResourceList();
-
+    // this.getResourceList();
+    this.getWardZoneFirstLevel();
     		/**
 		     * Update Permanent Address If 'officeResidentialAddressSame' is checked.
 		     */
@@ -175,7 +177,9 @@ export class BookPermissionComponent implements OnInit {
         name: null
       }),
       startDate: [moment(new Date()).add(1, 'day').format('YYYY-MM-DD'), Validators.required],
-      endDate: [null, Validators.required]
+      endDate: [null, Validators.required],
+      waterDrainageZoneId: [null,Validators.required],
+
     });
     this.maxEndDate = moment(new Date()).add(moment.duration(1, 'M')).format('YYYY-MM-DD');
 
@@ -502,4 +506,21 @@ export class BookPermissionComponent implements OnInit {
     }
   }
 
+  getWardZoneFirstLevel() {
+		this.bookingService.getZoneListForShooting().subscribe(
+			(data) => {
+        if (data) {
+					this.wardZoneLevel1List = data.data;
+        }
+			},
+			(error) => {
+				console.log('error', error);
+			})
+	}
+
+  onChangedWardZone(event){
+    this.bookingService.getGardenList(event).subscribe(resp => {
+      this.SHOOTING_PERMISSION = resp.data;
+    })
+  }
 }
