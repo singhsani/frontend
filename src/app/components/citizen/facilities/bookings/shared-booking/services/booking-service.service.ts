@@ -442,4 +442,14 @@ export class BookingService {
       this.requestURL = `api/${this.moduleName}/${this.resourceType}/availlableSlots?resource=${filterData}`;
       return this.http.get(this.requestURL);
     }
+
+    getGardenList(zone) {
+      this.requestURL = `api/${this.moduleName}/${this.resourceType}/listOfGarden?zone=${zone}`;
+      return this.http.get(this.requestURL);
+    }
+
+    getZoneListForShooting() {
+      this.requestURL = `api/${this.moduleName}/${this.resourceType}/zoneListForShooting`;
+      return this.http.get(this.requestURL);
+    }
 }
