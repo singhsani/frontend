@@ -50,8 +50,8 @@
 					  <ng-select 
 								placeholder="Zone No.*"
 								formControlName="waterDrainageZoneId" (change)="onChangedWardZone($event,2)">
-								<ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone">
-									{{zone}}</ng-option>
+								<ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.zoneName">
+									{{zone.zoneName}}</ng-option>
 							</ng-select>
 							<!-- <control-messages [control]="shopLicNewForm.get('waterDrainageZoneId')"> -->
 							<!-- </control-messages> -->
