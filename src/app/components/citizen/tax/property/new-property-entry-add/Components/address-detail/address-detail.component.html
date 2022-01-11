@@ -43,7 +43,7 @@
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                 <input trim="blur" matInput placeholder="{{'reference_property_no' | translate:translateKey }} " name="referencePropertyNo"
-                        #ReferencePropertyNo="ngModel"
+                        number-only minlength="12" #ReferencePropertyNo="ngModel"
                         [(ngModel)]="addressModel.referencePropertyNo" maxlength="255" mask-property-no>
                     <mat-error *ngIf="ReferencePropertyNo.invalid">*Invalid Reference Property No.</mat-error>
                 </mat-form-field>
