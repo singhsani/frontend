@@ -142,7 +142,8 @@
 						<!-- <button type="button" mat-raised-button color="warn" (click)="resetForm()">{{'clear' | translate: actionBarKey}}</button> -->
 					</div>
 					<div class="col-sm-12 col-md-12" *ngIf="!vehicleRegistrationForm.get('canEdit').value">
-						<button type="button" class=" pull-right" mat-raised-button color="primary" (click)="tabIndex = 1">{{'Next' |
+						<button type="button" class=" pull-right" mat-raised-button color="primary"
+							(click)="tabIndex = 1">{{'Next' |
 							translate:actionBarKey}}</button>
 					</div>
 				</div>
@@ -278,12 +279,12 @@
 						<control-messages [control]="vehicleRegistrationForm.get('adminFees')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+					<!-- <mat-form-field class="col-md-4">
 						<input type="text" matInput autocomplete="off" maxlength="10" OnlyNumber
 							formControlName="dishonorCharges"
 							placeholder="{{'dishonor_charges' | translate: translateKey }}">
 						<control-messages [control]="vehicleRegistrationForm.get('dishonorCharges')"></control-messages>
-					</mat-form-field>
+					</mat-form-field> -->
 
 					<mat-form-field class="col-md-4">
 						<input type="text" matInput autocomplete="off" maxlength="50" OnlyNumber
@@ -329,6 +330,13 @@
 				<ng-template mat-tab-label>
 					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
+
+				<div class="alert alert-warning">
+					{{'Note' | translate:translateKey}} :
+					{{'File size not exist more than 2 MB, Upload only JPG,PNG JPEG and PDF file.' |
+					translate:translateKey}}
+				</div>
+
 				<div class="row">
 					<div class="col-md-4" *ngFor="let doc of attachmentList">
 						<div *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButton">

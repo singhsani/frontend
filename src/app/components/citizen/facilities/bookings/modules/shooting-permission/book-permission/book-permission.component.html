@@ -44,7 +44,21 @@
     <div class="pageTitle">{{'screen_title'| translate: translateKey}}</div>
     <div class="p-15">
       <form [formGroup]="bookPermissionSearchForm" (ngSubmit)="searchBooking()" autocomplete="off" ngNativeValidate>
+       
         <div class="row mt-3 mb-3">
+					<div class="col-md-6 ngSelect">
+					  <ng-select 
+								placeholder="Zone No.*"
+								formControlName="waterDrainageZoneId" (change)="onChangedWardZone($event,2)">
+								<ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.zoneName">
+									{{zone.zoneName}}</ng-option>
+							</ng-select>
+							<!-- <control-messages [control]="shopLicNewForm.get('waterDrainageZoneId')"> -->
+							<!-- </control-messages> -->
+					
+					</div>
+      
+        
           <div class="col-md-6 ngSelect">
             <ng-select placeholder="{{'select_place'| translate: translateKey}}" formControlName="code">
               <ng-option *ngFor="let bookPermission of SHOOTING_PERMISSION" [value]="bookPermission.code">

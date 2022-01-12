@@ -23,7 +23,7 @@
       </div>
 
       <!-- This is input for other services search-->
-      <mat-form-field class="col-md-4" *ngIf = "!isProfessionalTax">
+      <mat-form-field class="col-md-4" *ngIf="!isProfessionalTax">
         <input matInput placeholder="{{placeholder}}" formControlName="refNumber" required>
         <mat-error *ngIf="placeHolderMessage !== null">{{placeHolderMessage}}</mat-error>
         <!-- <control-messages [control]="paymentsForm.get('refNumber')"></control-messages> -->
@@ -33,20 +33,18 @@
       <mat-form-field class="col-md-4" *ngIf="isProfessionalTax">
         <input matInput appAlphaNumeric maxlength="12" placeholder="{{placeholder}}" formControlName="refNumber"
           required>
-          <mat-error *ngIf="placeHolderMessage !== null">{{placeHolderMessage}}</mat-error>
+        <mat-error *ngIf="placeHolderMessage !== null">{{placeHolderMessage}}</mat-error>
         <!-- <control-messages [control]="paymentsForm.get('refNumber')"></control-messages> -->
       </mat-form-field>
 
       <div class="col-md-8 text-left">
-        <button mat-raised-button color="accent" 
-          (click)="getServices()">
+        <button mat-raised-button color="accent" (click)="getServices()">
           <mat-icon>search</mat-icon>
           Search
         </button>
-      <!-- </div>
+        <!-- </div>
       <div class="col-md-8 text-right"> -->
-        <button mat-raised-button color="accent" *ngIf="isShowSearchButton(paymentsForm)"
-          (click)="onSearchProperty()">
+        <button mat-raised-button color="accent" *ngIf="isShowSearchButton(paymentsForm)" (click)="onSearchProperty()">
           <mat-icon>search</mat-icon>
           Search Property
         </button>
@@ -54,110 +52,115 @@
     </div>
 
     <div>
-    <div class="row" style="margin-left: -30px;" *ngIf="isRecordExists && responseData">
-      <div class="col-md-12 mb-sm-0 mb-4">
-        <label class="col-md-2 font16 font-weight-bold">Name :</label>
-        <span class="font16 col">{{responseData?.applicantFullName}}</span>
-      </div>
-      <div class="col-md-12 mb-sm-0 mb-4">
-        <label class="col-md-2 font16 font-weight-bold">Commencement Date :</label>
-        <span class="font16 col">{{responseData?.commencementDate | date: 'dd/MM/yyyy'}}</span>
-      </div>
-      <div class="col-md-12 mb-sm-0 mb-4">
-        <label class="col-md-2 font16 font-weight-bold">Establishment Name :</label>
-        <span class="font16 col">{{responseData?.establishmentName}}</span>
-      </div>
-      <div class="col-md-12 mb-sm-0 mb-4">
-        <label class="col-md-2 font16 font-weight-bold">Contact No :</label>
-        <span class="font16 col">{{responseData?.contactNo}}</span>
-      </div>
-      <div class="col-md-12 mb-sm-0 mb-4">
-        <label class="col-md-2 font16 font-weight-bold">Address :</label>
-        <span class="font16 col d-sm-inline d-inline-block">{{responseData?.officeAddress?.buildingName}}, {{responseData?.officeAddress?.area}},
-          {{responseData?.officeAddress?.city}},
-          {{responseData?.officeAddress?.state | titlecase}}, {{responseData?.officeAddress?.country | titlecase}},
-          {{responseData?.officeAddress?.pincode}}</span>
-      </div>
-    </div>
-
-    <div class="row mt-4" *ngIf="isRecordExists">
-      <ng-container *ngIf="isECRCSearch">
-        <div class="table-responsive">
-          <table class="table" style="border: 1px solid #dee2e6;">
-            <thead>
-              <tr>
-                <th class="pl-4">S.No.</th>
-                <th>REG. NO.</th>
-                <th>MONTH</th>
-                <th>YEAR</th>
-                <th>PROF. TAX</th>
-                <th>INTEREST</th>
-                <th>PENALTY</th>
-                <th>COMP. FEE</th>
-                <th>TOTAL FEE</th>
-                <th>CREDIT AMT</th>
-                <th>FIN. YEAR</th>
-                <th>DUE DATE</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngIf="duesDetailsArr.length == 0">
-                <td colspan="12" class="noRecord">
-                  <h5 class="text-center">No record found !</h5>
-                </td>
-              </tr>
-              <ng-container *ngFor="let dues of duesDetailsArr;let i=index">
-                <tr>
-                  <td width="50" [class.pl-4]="!dues.children">
-                    <mat-icon class="pull-left arrowCls" (click)="toggleRow(dues)" *ngIf="dues.children && dues.children.length > 0">
-                      <span *ngIf="!dues.hidden">chevron_right</span>
-                      <span *ngIf="dues.hidden">expand_more</span>
-                    </mat-icon>{{i+1}}
-                  </td>
-                  <td>{{responseData.ecrcNo}}</td>
-                  <td>{{dues.month}}</td>
-                  <td>{{dues.financialYear}}</td>
-                  <td>{{dues.remainingProfessionalTax}}</td>
-                  <td>{{dues.interest}}</td>
-                  <td>{{dues.penaltyFee}}</td>
-                  <td>{{dues.compFee}}</td>
-                  <td>{{dues.remainingProfessionalTax + dues.interest + dues.penaltyFee }}</td>
-                  <td>{{dues.creditAmount ? dues.creditAmount: 0}}</td>
-                  <td>{{dues.financialYearSlab}}</td>
-                  <td>{{dues.dueDate ? (dues.dueDate | date: 'dd/MM/yyyy'): '-'}}</td>
-                </tr>
-                <ng-container *ngIf="dues.children && dues.children.length > 0">
-                  <tr *ngFor="let child of dues.children" class="bgEEE" [hidden]="!dues.hidden">
-                    <td></td>
-                    <td>{{responseData.ecrcNo}}</td>
-                    <td>{{child.month}}</td>
-                    <td>{{child.financialYear}}</td>
-                    <td>{{child.professionalTax}}</td>
-                    <td>{{child.interest}}</td>
-                    <td>{{child.penaltyFee}}</td>
-                    <td>{{child.compFee}}</td>
-                    <td>{{child.professionalTax + child.interest + child.penaltyFee }}</td>
-                    <td>{{child.creditAmount ? child.creditAmount: 0}}</td>
-                    <td>{{child.financialYearSlab}}</td>
-                    <td>{{child.dueDate ? (child.dueDate | date: 'dd/MM/yyyy'): '-'}}</td>
-                  </tr>
-                </ng-container>
-              </ng-container>
-            </tbody>
-          </table>
+      <div class="row" style="margin-left: -30px;" *ngIf="isRecordExists && responseData">
+        <div class="col-md-12 mb-sm-0 mb-4">
+          <label class="col-md-2 font16 font-weight-bold">Name :</label>
+          <span class="font16 col">{{responseData?.applicantFullName}}</span>
         </div>
-      </ng-container>
+        <div class="col-md-12 mb-sm-0 mb-4">
+          <label class="col-md-2 font16 font-weight-bold">Commencement Date :</label>
+          <span class="font16 col">{{responseData?.commencementDate | date: 'dd/MM/yyyy'}}</span>
+        </div>
+        <div class="col-md-12 mb-sm-0 mb-4">
+          <label class="col-md-2 font16 font-weight-bold">Establishment Name :</label>
+          <span class="font16 col">{{responseData?.establishmentName}}</span>
+        </div>
+        <div class="col-md-12 mb-sm-0 mb-4">
+          <label class="col-md-2 font16 font-weight-bold">Contact No :</label>
+          <span class="font16 col">{{responseData?.contactNo}}</span>
+        </div>
+        <div class="col-md-12 mb-sm-0 mb-4">
+          <label class="col-md-2 font16 font-weight-bold">Address :</label>
+          <span class="font16 col d-sm-inline d-inline-block">{{responseData?.officeAddress?.buildingName}},
+            {{responseData?.officeAddress?.area}},
+            {{responseData?.officeAddress?.city}},
+            {{responseData?.officeAddress?.state | titlecase}}, {{responseData?.officeAddress?.country | titlecase}},
+            {{responseData?.officeAddress?.pincode}}</span>
+        </div>
+      </div>
 
-      
-        <div class="col-md-3 mt-4 mb-2 font16 font-weight-bold">Amount Payable : <span style="color: #ff0000;">{{paymentsForm.get('amount').value}}</span> Rs. Only</div>
+      <div class="row mt-4" *ngIf="isRecordExists">
+        <ng-container *ngIf="isECRCSearch">
+          <div class="table-responsive">
+            <table class="table" style="border: 1px solid #dee2e6;">
+              <thead>
+                <tr>
+                  <th class="pl-4">S.No.</th>
+                  <th>REG. NO.</th>
+                  <th>MONTH</th>
+                  <th>YEAR</th>
+                  <th>PROF. TAX</th>
+                  <th>INTEREST</th>
+                  <th>PENALTY</th>
+                  <th>COMP. FEE</th>
+                  <th>TOTAL TAX</th>
+                  <th>CREDIT AMT</th>
+                  <th>FIN. YEAR</th>
+                  <th>DUE DATE</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="duesDetailsArr.length == 0">
+                  <td colspan="12" class="noRecord">
+                    <h5 class="text-center">No record found !</h5>
+                  </td>
+                </tr>
+                <ng-container *ngFor="let dues of duesDetailsArr;let i=index">
+                  <tr>
+                    <td width="50" [class.pl-4]="!dues.children">
+                      <mat-icon class="pull-left arrowCls" (click)="toggleRow(dues)"
+                        *ngIf="dues.children && dues.children.length > 0">
+                        <span *ngIf="!dues.hidden">chevron_right</span>
+                        <span *ngIf="dues.hidden">expand_more</span>
+                      </mat-icon>{{i+1}}
+                    </td>
+                    <td>{{responseData.ecrcNo}}</td>
+                    <td>{{dues.month}}</td>
+                    <td>{{dues.financialYear}}</td>
+                    <td>{{dues.remainingProfessionalTax}}</td>
+                    <td>{{dues.interest}}</td>
+                    <td>{{dues.penaltyFee}}</td>
+                    <td>{{dues.compFee}}</td>
+                    <td>{{dues.remainingProfessionalTax + dues.interest + dues.penaltyFee }}</td>
+                    <td>{{dues.creditAmount ? dues.creditAmount: 0}}</td>
+                    <td>{{dues.financialYearSlab}}</td>
+                    <td>{{dues.dueDate ? (dues.dueDate | date: 'dd/MM/yyyy'): '-'}}</td>
+                  </tr>
+                  <ng-container *ngIf="dues.children && dues.children.length > 0">
+                    <tr *ngFor="let child of dues.children" class="bgEEE" [hidden]="!dues.hidden">
+                      <td></td>
+                      <td>{{responseData.ecrcNo}}</td>
+                      <td>{{child.month}}</td>
+                      <td>{{child.financialYear}}</td>
+                      <td>{{child.professionalTax}}</td>
+                      <td>{{child.interest}}</td>
+                      <td>{{child.penaltyFee}}</td>
+                      <td>{{child.compFee}}</td>
+                      <td>{{child.professionalTax + child.interest + child.penaltyFee }}</td>
+                      <td>{{child.creditAmount ? child.creditAmount: 0}}</td>
+                      <td>{{child.financialYearSlab}}</td>
+                      <td>{{child.dueDate ? (child.dueDate | date: 'dd/MM/yyyy'): '-'}}</td>
+                    </tr>
+                  </ng-container>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </ng-container>
+
+
+        <div class="col-md-3 mt-4 mb-2 font16 font-weight-bold">Amount Payable : Rs. <span
+            style="color: #ff0000;">{{paymentsForm.get('amount').value}}</span> Only</div>
         <div class="col mt-3 mb-3">
-          <button mat-raised-button class="paymentButton" color="primary" type="submit" (click)="makePayment(paymentsForm.value)">
-          Proceed for Payment
-        </button></div>
-   
+          <button mat-raised-button class="paymentButton" color="primary" type="submit"
+            (click)="makePayment(paymentsForm.value)">
+            Proceed for Payment
+          </button>
+        </div>
 
 
-      <!-- <div class="row mt-4">
+
+        <!-- <div class="row mt-4">
         <div class="col-md-12">
           <label class="col-md-6 font16 font-weight-bold">Amount Payable :</label>
           <span class="font16" style="color: #ff0000;">{{paymentsForm.get('amount').value}}</span>
@@ -172,7 +175,7 @@
           </span>
         </div> -->
 
-      <!-- </div>
+        <!-- </div>
 
       <div class="col-md-6 pt-3 mt-4" style="margin-left: 92px;">
         <button mat-raised-button class="paymentButton" color="primary" type="submit" (click)="makePayment(paymentsForm.value)">
@@ -180,210 +183,217 @@
         </button>
       </div> -->
 
+      </div>
+
     </div>
+    <div *ngIf="isPropertyRecordExists">
+      <div *ngIf="isPropertyTax">
 
-  </div>
-<div *ngIf="isPropertyRecordExists">
-  <div *ngIf="isPropertyTax">
+        <div class="row" style="margin-left: -30px;">
 
-    <div class="row" style="margin-left: -30px;">
-    
-      <div class="col-md-12">
-        <label class="col-md-2 font16 font-weight-bold">Property No :</label>
-        <span class="font16">{{collectionModel?.propertyNo}}</span>
-      </div>
+          <div class="col-md-12">
+            <label class="col-md-2 font16 font-weight-bold">Property No :</label>
+            <span class="font16">{{collectionModel?.propertyNo}}</span>
+          </div>
 
-      <div class="col-md-12">
-        <label class="col-md-2 font16 font-weight-bold">Census No :</label>
-        <span class="font16">{{collectionModel?.censuseNo}}</span>
-      </div>
+          <div class="col-md-12">
+            <label class="col-md-2 font16 font-weight-bold">Census No :</label>
+            <span class="font16">{{collectionModel?.censuseNo}}</span>
+          </div>
 
-      <div class="col-md-12">
-        <label class="col-md-2 font16 font-weight-bold">Owner Name :</label>
-        <span class="font16">{{collectionModel?.ownerName}}</span>
-      </div>
-      <div class="col-md-12">
-        <label class="col-md-2 font16 font-weight-bold">Occupier Name :</label>
-        <span class="font16">{{collectionModel?.occupierName}}</span>
-      </div>
-      <div class="col-md-12">
-        <label class="col-md-2 font16 font-weight-bold">Mobile Number :</label>
-        <span class="font16">{{collectionModel?.mobileNo}}</span>
-      </div>
-      <div class="col-md-12">
-        <label class="col-md-2 font16 font-weight-bold">Property Address :</label>
-        <span class="font16">{{collectionModel?.address}}</span>
-      </div>
-    </div>
-
-    <div class="row mt-4" >
-      <ng-container >
-        <div class="table-responsive">
-          <table class="table" style="border: 1px solid #dee2e6;">
-            <thead>
-              <tr class="text-center">
-                <th class="pl-4">S.No.</th>
-                <th>Financial Year</th>
-                <th>Bill No</th>
-                <th>Bill Date </th>
-                <th>Bill Due Date</th>
-                <th>Due Amount</th>
-                <!-- <th>Rebate</th> -->
-                <th>Interest/Penalty Amount	</th>
-                <th>Payable Amount</th>
-                <th>Payment Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngIf="collectionModel?.billWiseDetails?.length == 0">
-                <td colspan="12" class="noRecord">
-                  <h5 class="text-center">No record found !</h5>
-                </td>
-              </tr>
-              <ng-container *ngFor="let dues of collectionModel?.billWiseDetails;let i=index">
-                <tr class="text-center">
-                  <td width="50" [class.pl-4]="!dues.children">
-                    <mat-icon class="pull-left arrowCls" (click)="toggleRow(dues)" *ngIf="dues.children && dues.children.length > 0">
-                      <span *ngIf="!dues.hidden">chevron_right</span>
-                      <span *ngIf="dues.hidden">expand_more</span>
-                    </mat-icon>{{i+1}}
-                  </td>
-                  <td>{{dues?.financialYear}}</td>
-                  <td>{{dues?.billNo}}</td>
-                  <td>{{dues?.billDate}}</td>
-                  <td>{{dues?.billDueDate}}</td>
-                  <td>{{dues?.billAmount}}</td>
-                
-                  <!-- <td>{{collectionModel?.rebateAmount}}</td> -->
-                  <td>{{dues.intrestOrPenaltyAmount}}</td>
-                  <!-- <td OnlyNumber [textContent]="model" (input)="model=$event.target.textContent" contentEditable>{{collectionModel?.payableAmount}}</td>  -->
-                  <!-- <td>{{collectionModel?.payableAmount}} </td> -->
-                  <td>{{dues?.totalTaxWiseBillAmount}} </td>
-                  <td>{{dues.totalTaxWiseBillAmount == 0 ? "Paid" : "Unpaid"}}</td>
-                  <td>
-                    <button mat-button title="Detail" class="btn-width-auto" color="accent" type="button" (click)="onDetailClick(dues)">
-                      <mat-icon>details</mat-icon>
-                    </button>
-                  </td>
-                </tr>
-                
-              </ng-container>
-            </tbody>
-          </table>
+          <div class="col-md-12">
+            <label class="col-md-2 font16 font-weight-bold">Owner Name :</label>
+            <span class="font16">{{collectionModel?.ownerName}}</span>
+          </div>
+          <div class="col-md-12">
+            <label class="col-md-2 font16 font-weight-bold">Occupier Name :</label>
+            <span class="font16">{{collectionModel?.occupierName}}</span>
+          </div>
+          <div class="col-md-12">
+            <label class="col-md-2 font16 font-weight-bold">Mobile Number :</label>
+            <span class="font16">{{collectionModel?.mobileNo}}</span>
+          </div>
+          <div class="col-md-12">
+            <label class="col-md-2 font16 font-weight-bold">Property Address :</label>
+            <span class="font16">{{collectionModel?.address}}</span>
+          </div>
         </div>
-      </ng-container>
-    </div>
-      <div class="row">
-        <div class="col-md-4">
-          <strong class="font20"> Rebate Amount :</strong> <span class="greenBox">{{collectionModel?.rebateAmount}}</span>
-        </div>     
+
+        <div class="row mt-4">
+          <ng-container>
+            <div class="table-responsive">
+              <table class="table" style="border: 1px solid #dee2e6;">
+                <thead>
+                  <tr class="text-center">
+                    <th class="pl-4">S.No.</th>
+                    <th>Financial Year</th>
+                    <th>Bill No</th>
+                    <th>Bill Date </th>
+                    <th>Bill Due Date</th>
+                    <th>Due Amount</th>
+                    <!-- <th>Rebate</th> -->
+                    <th>Interest/Penalty Amount </th>
+                    <th>Payable Amount</th>
+                    <th>Payment Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="collectionModel?.billWiseDetails?.length == 0">
+                    <td colspan="12" class="noRecord">
+                      <h5 class="text-center">No record found !</h5>
+                    </td>
+                  </tr>
+                  <ng-container *ngFor="let dues of collectionModel?.billWiseDetails;let i=index">
+                    <tr class="text-center">
+                      <td width="50" [class.pl-4]="!dues.children">
+                        <mat-icon class="pull-left arrowCls" (click)="toggleRow(dues)"
+                          *ngIf="dues.children && dues.children.length > 0">
+                          <span *ngIf="!dues.hidden">chevron_right</span>
+                          <span *ngIf="dues.hidden">expand_more</span>
+                        </mat-icon>{{i+1}}
+                      </td>
+                      <td>{{dues?.financialYear}}</td>
+                      <td>{{dues?.billNo}}</td>
+                      <td>{{dues?.billDate}}</td>
+                      <td>{{dues?.billDueDate}}</td>
+                      <td>{{dues?.billAmount}}</td>
+
+                      <!-- <td>{{collectionModel?.rebateAmount}}</td> -->
+                      <td>{{dues.intrestOrPenaltyAmount}}</td>
+                      <!-- <td OnlyNumber [textContent]="model" (input)="model=$event.target.textContent" contentEditable>{{collectionModel?.payableAmount}}</td>  -->
+                      <!-- <td>{{collectionModel?.payableAmount}} </td> -->
+                      <td>{{dues?.totalTaxWiseBillAmount}} </td>
+                      <td>{{dues.totalTaxWiseBillAmount == 0 ? "Paid" : "Unpaid"}}</td>
+                      <td>
+                        <button mat-button title="Detail" class="btn-width-auto" color="accent" type="button"
+                          (click)="onDetailClick(dues)">
+                          <mat-icon>details</mat-icon>
+                        </button>
+                      </td>
+                    </tr>
+
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </ng-container>
         </div>
-      
-      <div class="row m-0">
-        <div class="col-mg-4">
-          <strong class="font20"> Amount Payable :</strong> <span class="redBox">{{model}}</span> <strong class="font20"> Rs. Only</strong>
+        <div class="row">
+          <div class="col-md-4">
+            <strong class="font20"> Rebate Amount :</strong> <span
+              class="greenBox">{{collectionModel?.rebateAmount}}</span>
+          </div>
         </div>
-        <div class="col-md-4">
-          <button mat-raised-button class="paymentButton" color="primary" type="submit"
-            (click)="makePayment(paymentsForm.value)">
-            Proceed for Payment
-          </button>
+
+        <div class="row m-0">
+          <div class="col-mg-4">
+            <strong class="font20"> Amount Payable : Rs.</strong> <span class="redBox">{{model}}</span> <strong
+              class="font20"> Only</strong>
+          </div>
+          <div class="col-md-4">
+            <button mat-raised-button class="paymentButton" color="primary" type="submit"
+              (click)="makePayment(paymentsForm.value)">
+              Proceed for Payment
+            </button>
+          </div>
         </div>
-      </div>
-      
-      
 
-  </div>
-</div>
 
-<div *ngIf="isWaterRecordExists">
-  <div *ngIf="isWaterTax">
-    <div class="row" style="margin-left: -30px;">
-    
-      <div class="col-md-12">
-        <label class="col-md-2 font16 font-weight-bold">Connection No :</label>
-        <span class="font16">{{collectionWaterModel?.connectionNo}}</span>
-      </div>
 
-      <div class="col-md-12">
-        <label class="col-md-2 font16 font-weight-bold">Owner Name :</label>
-        <span class="font16">{{collectionWaterModel?.ownerName}}</span>
-      </div>
-
-      <div class="col-md-12">
-        <label class="col-md-2 font16 font-weight-bold">Address :</label>
-        <span class="font16">{{collectionWaterModel?.address}}</span>
       </div>
     </div>
 
-    <div class="row mt-4" >
-      <ng-container >
-        <div class="table-responsive">
-          <table class="table" style="border: 1px solid #dee2e6;">
-            <thead>
-              <tr>
-                <th class="pl-4">S.No.</th>
-                <th>Financial Year</th>
-                <th>Bill No</th>
-                <th>Bill Date </th>
-                <th>Collected Amount</th>
-                <th>Interest/Penalty Amount	</th>
-                <th>Payable Amount</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngIf="collectionWaterModel?.billWiseOutstandings?.length == 0">
-                <td colspan="12" class="noRecord">
-                  <h5 class="text-center">No record found !</h5>
-                </td>
-              </tr>
-              <ng-container *ngFor="let dues of collectionWaterModel?.billWiseOutstandings;let i=index">
-                <tr>
-                  <td width="50" [class.pl-4]="!dues.children">
-                    <mat-icon class="pull-left arrowCls" (click)="toggleRow(dues)" *ngIf="dues.children && dues.children.length > 0">
-                      <span *ngIf="!dues.hidden">chevron_right</span>
-                      <span *ngIf="dues.hidden">expand_more</span>
-                    </mat-icon>{{i+1}}
-                  </td>
-                  <td>{{dues.financialYear}}</td>
-                  <td>{{dues.billNo}}</td>
-                  <td>{{dues.billDate}}</td>
-                  <td>{{dues.billPaidAmount}}</td>
-                  <td>{{dues.intrestOrPenaltyAmount}}</td>
-                  <td>{{dues.totalTaxWiseBillAmount}}</td>
-                  <!-- <td OnlyNumber [textContent]="model" (input)="model=$event.target.textContent" contentEditable>{{collectionWaterModel?.outstandingAmount}}</td>  -->
+    <div *ngIf="isWaterRecordExists">
+      <div *ngIf="isWaterTax">
+        <div class="row" style="margin-left: -30px;">
 
-                  <td>
-                    <button mat-button title="Detail" class="btn-width-auto" color="accent" type="button" (click)="onDetailClick(dues)">
-                      <mat-icon>details</mat-icon>
-                    </button>
-                  </td>
-                </tr>
-                
-              </ng-container>
-            </tbody>
-          </table>
-        </div>
-      </ng-container>
+          <div class="col-md-12">
+            <label class="col-md-2 font16 font-weight-bold">Connection No :</label>
+            <span class="font16">{{collectionWaterModel?.connectionNo}}</span>
+          </div>
 
-      <div class="row m-0">
-        <div class="col-mg-4">
-          <strong class="font20"> Amount Payable :</strong> <span class="redBox">{{model}}</span> <strong class="font20"> Rs. Only</strong>
+          <div class="col-md-12">
+            <label class="col-md-2 font16 font-weight-bold">Owner Name :</label>
+            <span class="font16">{{collectionWaterModel?.ownerName}}</span>
+          </div>
+
+          <div class="col-md-12">
+            <label class="col-md-2 font16 font-weight-bold">Address :</label>
+            <span class="font16">{{collectionWaterModel?.address}}</span>
+          </div>
         </div>
-        <div class="col-md-4">
-          <button mat-raised-button class="paymentButton" color="primary" type="submit"
-            (click)="makePayment(paymentsForm.value)">
-            Proceed for Payment
-          </button>
+
+        <div class="row mt-4">
+          <ng-container>
+            <div class="table-responsive">
+              <table class="table" style="border: 1px solid #dee2e6;">
+                <thead>
+                  <tr>
+                    <th class="pl-4">S.No.</th>
+                    <th>Financial Year</th>
+                    <th>Bill No</th>
+                    <th>Bill Date </th>
+                    <th>Collected Amount</th>
+                    <th>Interest/Penalty Amount </th>
+                    <th>Payable Amount</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="collectionWaterModel?.billWiseOutstandings?.length == 0">
+                    <td colspan="12" class="noRecord">
+                      <h5 class="text-center">No record found !</h5>
+                    </td>
+                  </tr>
+                  <ng-container *ngFor="let dues of collectionWaterModel?.billWiseOutstandings;let i=index">
+                    <tr>
+                      <td width="50" [class.pl-4]="!dues.children">
+                        <mat-icon class="pull-left arrowCls" (click)="toggleRow(dues)"
+                          *ngIf="dues.children && dues.children.length > 0">
+                          <span *ngIf="!dues.hidden">chevron_right</span>
+                          <span *ngIf="dues.hidden">expand_more</span>
+                        </mat-icon>{{i+1}}
+                      </td>
+                      <td>{{dues.financialYear}}</td>
+                      <td>{{dues.billNo}}</td>
+                      <td>{{dues.billDate}}</td>
+                      <td>{{dues.billPaidAmount}}</td>
+                      <td>{{dues.intrestOrPenaltyAmount}}</td>
+                      <td>{{dues.totalTaxWiseBillAmount}}</td>
+                      <!-- <td OnlyNumber [textContent]="model" (input)="model=$event.target.textContent" contentEditable>{{collectionWaterModel?.outstandingAmount}}</td>  -->
+
+                      <td>
+                        <button mat-button title="Detail" class="btn-width-auto" color="accent" type="button"
+                          (click)="onDetailClick(dues)">
+                          <mat-icon>details</mat-icon>
+                        </button>
+                      </td>
+                    </tr>
+
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </ng-container>
+
+          <div class="row m-0">
+            <div class="col-mg-4">
+              <strong class="font20"> Amount Payable : Rs.</strong> <span class="redBox">{{model}}</span> <strong
+                class="font20"> Only</strong>
+            </div>
+            <div class="col-md-4">
+              <button mat-raised-button class="paymentButton" color="primary" type="submit"
+                (click)="makePayment(paymentsForm.value)">
+                Proceed for Payment
+              </button>
+            </div>
+          </div>
+
         </div>
+
       </div>
-      
-      </div>
-
-  </div>
-</div>
+    </div>
 
   </form>
   <select-payment-gateway #paymentGateway></select-payment-gateway>
@@ -391,8 +401,12 @@
 
 <app-my-applications [inputData]="inputData" [fromOtherModule]=true></app-my-applications>
 
-<app-property-tax-detail *ngIf = "isShowTaxDetailTable" [taxDetailData]="propertyTaxDetailData" (showPayable)=showHidePaybleScreen($event) (showTaxDetail)=showHideTaxDetailScreen($event)></app-property-tax-detail>
+<app-property-tax-detail *ngIf="isShowTaxDetailTable" [taxDetailData]="propertyTaxDetailData"
+  (showPayable)=showHidePaybleScreen($event) (showTaxDetail)=showHideTaxDetailScreen($event)></app-property-tax-detail>
 
-<app-water-tax-detail *ngIf = "isShowWaterTaxDetailTable" [taxDetailData]="waterTaxDetailData" (showPayable)=showHidePaybleScreen($event) (showTaxDetail)=showHideWaterTaxDetailScreen($event)></app-water-tax-detail>
+<app-water-tax-detail *ngIf="isShowWaterTaxDetailTable" [taxDetailData]="waterTaxDetailData"
+  (showPayable)=showHidePaybleScreen($event) (showTaxDetail)=showHideWaterTaxDetailScreen($event)>
+</app-water-tax-detail>
 
-<app-property-occupier-search *ngIf = "isShowPropertySearchForm" (showPayable)=showHidePaybleScreen($event)></app-property-occupier-search>
+<app-property-occupier-search *ngIf="isShowPropertySearchForm" (showPayable)=showHidePaybleScreen($event)>
+</app-property-occupier-search>

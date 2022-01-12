@@ -185,6 +185,7 @@ export class VendorRegistrationComponent implements OnInit {
     this.formService.getFormData(id).subscribe(res => {
       console.log("tresr", res)
       this.vendorRegistrationForm.patchValue(res);
+      this.locationChange(res.applyingFor);
       //this.showButtons = false;
 
       if (res.formStatus == 'PAYMENT_RECEIVED') {
@@ -280,7 +281,7 @@ export class VendorRegistrationComponent implements OnInit {
       vendorNameDetails: this.vendorNameArray,
       vendorNameLastYearDetails: this.vendorNameLastYear,
       vendorNameAuthorizedDetails: this.vendorNameAuthorized,
-      vendorNameholdingDetails: this.vendorNameholding,
+      vendorNameHoldingDetails: this.vendorNameholding,
       supplierOrderDetails: this.vendorDetailsOfOrderIndicationQuantity,
 
       installedMachineCapacities: this.vendorMachinesCapacities,
@@ -311,11 +312,11 @@ export class VendorRegistrationComponent implements OnInit {
       buildingPermissionDetail: null,
       factoryLicenseStartDate: [null],
       factoryLicenseEndDate: [null],
-      MSMENSICSSICertificateStartDate: [null],
-      MSMENSICSSICertificateEndDate: [null],
+      certificateMSMENSISSIStartDate: [null],
+      certificateMSMENSISSIEndDate: [null],
 
       productManufacturedISI: [null],
-      ISIBISCElicences: null,
+      licencesISIBISCE: null,
       totalInvestmentDetail: [null],
       lastThreeYearsCopies: [null],
       copyOfITCClearanceCertificate: [null],
@@ -325,7 +326,6 @@ export class VendorRegistrationComponent implements OnInit {
       personInChargeProductionControl: [null],
       firmUnderDealBlacklisted: [null],
       resultSampleTesting: [null],
-      MSMENSICSSIcertificateEndDate: null,
 
       totalTurnoverLastThreeYears: null,
       loanCapitalWithBankLimit: null,
@@ -443,11 +443,11 @@ export class VendorRegistrationComponent implements OnInit {
   }
 
   typeOfFirmChange(event) {
-   
+
     this.vendorTypeFirm = [...this.vendorTypeFirmUpdate];
     this.vendorRegistrationForm.get('vendorNameDetails').reset();
     this.vendorTypeFirm = this.vendorTypeFirm.filter(o => o.code === event.value);
-    
+
     if (event.value == 'PROPRIETORSHIP') {
       this.vendorArrayNameButtons = true;
     } else {
@@ -839,7 +839,7 @@ export class VendorRegistrationComponent implements OnInit {
       "headAlterMobileNumber": "7485967485",
       "headISDNumber": "7485967485",
       "headSTDNumber": "7485967485",
-      "ISIBISCElicences": "7485967485"
+      "licencesISIBISCE": "7485967485"
 
     }
 
