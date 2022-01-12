@@ -68,6 +68,14 @@
       </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="bookingType">
+      <mat-header-cell class="wMatCell250" *matHeaderCellDef>
+        {{'booking_type' | translate:translateKey}}
+      </mat-header-cell>
+      <mat-cell class="wMatCell250" *matCellDef="let element;">
+        {{element.bookingType}}
+      </mat-cell>
+    </ng-container>
 
     <ng-container matColumnDef="refNumber">
       <mat-header-cell *matHeaderCellDef> {{'booking_number' | translate:translateKey}}</mat-header-cell>
