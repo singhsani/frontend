@@ -49,7 +49,9 @@ export class MyBookingComponent implements OnInit {
 	 * Display Column
 	 * 'start', 'end',
 	 */
-	displayedColumns: Array<string> = ['id', 'applicantName','refNumber', 'bookingDate', 'status', 'action'];
+	displayedColumns: Array<string> = [];
+  other_displayedColumns: Array<string> = ['id','applicantName', 'refNumber', 'bookingDate', 'status', 'action'];
+  atithigruh_displayedColumns: Array<string> = ['id','applicantName', 'bookingType', 'refNumber', 'bookingDate', 'status', 'action'];
 
 
 	/**
@@ -84,6 +86,7 @@ export class MyBookingComponent implements OnInit {
 	resultsLength: number = 0;
 	isLoadingResults: boolean = true;
 	isAmphi:boolean = false;
+	selectedResourceType: string = null;
 
 	constructor(
 		private fb: FormBuilder,
@@ -329,7 +332,11 @@ export class MyBookingComponent implements OnInit {
 	 * Get All Bookings Using API.
 	 */
 	getAllBooking() {
-
+    if(this.selectedResourceType == this.bookingConstant.ATITHIGRUH_RESOURCE_TYPE){
+        this.displayedColumns = this.atithigruh_displayedColumns;
+    }else{
+        this.displayedColumns = this.other_displayedColumns;
+    }
 		this.paginator.pageSize = 5;
 		this.paginator.pageIndex = 0
 		this.isAmphiCancellation = false;
@@ -835,5 +842,6 @@ export class MyBookingComponent implements OnInit {
     }else if(event == this.bookingConstant.AMPHI_RESOURCE_TYPE){
         this.isAmphi = true;
     }
+    this.selectedResourceType = this.searchBookingsForm.get('resourceType').value;
   }
 }
