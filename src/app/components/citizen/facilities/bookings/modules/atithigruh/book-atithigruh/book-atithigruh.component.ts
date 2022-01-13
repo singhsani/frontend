@@ -350,7 +350,6 @@ export class BookAtithigruhComponent implements OnInit {
 		this.bookingService.generateReference(shortListData).subscribe(resp => {
 			if (resp) {
 				this.atithigruhForm.patchValue(resp.data);
-        this.atithigruhForm.get('bookingDate').setValue(moment(resp.data.bookingDate).format("YYYY-MM-DD"));
 				if(resp.data.bookingPurposeMaster.code == 'SAMUH_LAGAN'){
 					this.atithigruhForm.addControl('samuhLaganCoupleCount',new FormControl(5, [Validators.required, Validators.max(25),Validators.min(5)]));
 				  }
@@ -405,7 +404,6 @@ export class BookAtithigruhComponent implements OnInit {
 
 				this.showSearchForm = false;
 				this.atithigruhForm.patchValue(resp.data);
-				this.atithigruhForm.get('bookingDate').setValue(moment(resp.data.bookingDate).format("YYYY-MM-DD"));
 				if(resp.data.bookingPurposeMaster.code == 'SAMUH_LAGAN'){
 					this.atithigruhForm.addControl('samuhLaganCoupleCount',new FormControl(5, [Validators.required, Validators.max(25),Validators.min(5)]));
 				  }
