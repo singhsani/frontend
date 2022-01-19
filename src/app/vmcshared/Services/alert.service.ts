@@ -124,7 +124,8 @@ export class AlertService {
 
 
     propertyConfirm(message?: string, title?: string) {
-        title = title ? title : 'Do you want to print receipt ? click yes';
+      //  title = title ? title : 'Do you want to print receipt ? click yes';
+          message = "Application submitted successfully and your application number is "+"'"+ message+"'"+". Do you want to print receipt ? click yes ";
         swal({
             title: title,
             html: message,
@@ -145,4 +146,31 @@ export class AlertService {
             }
         })
     }
+
+
+    propertyConfirmForTransfer(message?: string, title?: string) {
+        //  title = title ? title : 'Do you want to print receipt ? click yes';
+          swal({
+              title: title,
+              html: message,
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              imageUrl: this.imageUrls('question'),
+              imageClass: 'doneIcon',
+              confirmButtonText: 'Yes',
+              cancelButtonText: 'No',
+          }).then((result) => {
+              if (result.value) {
+                  this.isConfirm.next(true);
+              }
+              else {
+                  this.isConfirm.next(false);
+              }
+          })
+      }
+
+
+
 }
