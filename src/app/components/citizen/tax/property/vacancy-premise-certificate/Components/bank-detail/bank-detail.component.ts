@@ -311,7 +311,7 @@ submit(){
 
       if (this.commonservice2.fromAdmin()) {
       
-        this.alertService.propertyConfirm(data.message);
+        this.alertService.propertyConfirmForTransfer(data.message);
         var subConfirm = this.alertService.getConfirm().subscribe(isConfirm => {
           if (isConfirm) {
 

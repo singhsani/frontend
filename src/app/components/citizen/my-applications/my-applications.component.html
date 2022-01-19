@@ -359,6 +359,16 @@
                                 Remark
                             </button>
 
+                             <!-- print ack for admin  -->
+                             
+                            <button mat-menu-item *ngIf="(row.fileStatus === 'PAYMENT' && row.fromAdmin == true)" color="primary"
+                            (click)="printPaymentReceipt(row.serviceDetail.code,row.serviceFormId)">
+                            <mat-icon class="m-1"
+                                title="{{'print_acknolowdgement_receipt' | translate:translateKey}}">print
+                            </mat-icon>
+                            {{'print_acknolowdgement_receipt' | translate:translateKey}}
+                            </button>
+
                         </mat-menu>
 
                     </ng-container>

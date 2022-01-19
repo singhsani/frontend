@@ -114,7 +114,6 @@ export class AssessmentCertificateComponent implements OnInit {
              (data) => {
                this.commonService.applicationNo = data.body.applicationNo;
                this.commonService.serviceFormId = data.body.id;
-               debugger
                this.moveStepper(1);
              },
              (error) => {
