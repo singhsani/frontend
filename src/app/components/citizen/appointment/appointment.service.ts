@@ -31,6 +31,11 @@ export class AppointmentServices {
     return this.http.get(requestURL);
   }
 
+  getAvailableSlots(resourcecode: string, startdate:string):Observable<any> {
+    let requestURL = `api/form/${this.apiType}/availableSlots?resourceCode=${resourcecode}&startDate=${startdate}`;
+    return this.http.get(requestURL);
+  }
+
   /**
    * Method is used to book slot.
    * @param formId - service form id.
