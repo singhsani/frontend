@@ -135,7 +135,7 @@ export class TransferDocumentUploadComponent implements OnInit {
         (data) => {
           this.transferPropertyDataSharingService.updateDataSourceMoveStepper(0); 
           if (this.commonService.fromAdmin()) {
-            this.alertService.propertyConfirm(data.body.message);
+            this.alertService.propertyConfirmForTransfer(data.body.message);
             var subConfirm = this.alertService.getConfirm().subscribe(isConfirm => {
 
               if (isConfirm) {
