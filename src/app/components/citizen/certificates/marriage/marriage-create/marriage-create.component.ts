@@ -444,6 +444,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         "email": "shantanu.sangewar@nascentinfo.com",
     };
 
+    isSearch = false;
     translateKey: string = 'marriageRegScreen';
     marriageFormGroup: FormGroup;
     appointmentForm: FormGroup;
@@ -451,7 +452,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
     resources: any = [];
     isLoadingResults: boolean = true;
-    displayedColumns = ['sno', 'date', 'start_time', 'end_time', 'status'];
+    // displayedColumns = ['sno', 'date', 'start_time', 'end_time', 'status'];
     modalRef: BsModalRef;
     apiType: string;
     /**
@@ -651,7 +652,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             groomParentsMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             groomParentsLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             groomParentsBirthDate: [null],
-            groomParentsAge: [null, Validators.required],
+            groomParentsAge: [null, [Validators.required , Validators.min(18)]],
             groomParentsAadharNumber: ['', Validators.maxLength(12)],
             groomParentsAddress: this.fb.group(this.addrComponent.addressControls()),
             groomParentsAddressResidence: this.fb.group(this.addrComponent.addressControls()),
@@ -667,7 +668,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             brideParentsMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             brideParentsLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             brideParentsBirthDate: [null],
-            brideParentsAge: [null, Validators.required],
+            brideParentsAge: [null, [Validators.required , Validators.min(18)]],
             brideParentsAadharNumber: ['', Validators.maxLength(12)],
             brideParentsAddress: this.fb.group(this.addrComponent.addressControls()),
             brideParentsAddressResidence: this.fb.group(this.addrComponent.addressControls()),
@@ -683,7 +684,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             priestMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             priestLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             priestBirthDate: [null],
-            priestAge: [null, Validators.required],
+            priestAge: [null, [Validators.required , Validators.min(18)]],
             priestAadharNumber: ['', Validators.maxLength(12)],
             priestAddress: this.fb.group(this.addrComponent.addressControls()),
             priestAddressResidence: this.fb.group(this.addrComponent.addressControls()),
@@ -696,7 +697,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             firstWitnessMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             firstWitnessLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             firstWitnessBirthDate: [null],
-            firstWitnessAge: [null, Validators.required],
+            firstWitnessAge: [null, [Validators.required , Validators.min(18)]],
             firstWitnessAadharNumber: ['', Validators.maxLength(12)],
             firstWitnessAddress: this.fb.group(this.addrComponent.addressControls()),
 
@@ -705,7 +706,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             secondWitnessMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             secondWitnessLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             secondWitnessBirthDate: [null],
-            secondWitnessAge: [null, Validators.required],
+            secondWitnessAge: [null, [Validators.required , Validators.min(18)]],
             secondWitnessAadharNumber: ['', Validators.maxLength(12)],
             secondWitnessAddress: this.fb.group(this.addrComponent.addressControls()),
 
@@ -1782,6 +1783,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      */
     changeReset(controlName: string) {
 
+        this.marriageFormGroup.get('nriGroomParentsAddress').clearValidators();
+        this.marriageFormGroup.get('nriBrideParentsAddress').clearValidators();
         this.marriageFormGroup.get(controlName).reset();
 
         if (this.marriageFormGroup.get('applicantRelation').get('code').valid) {
@@ -2051,22 +2054,15 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     }
 
     /**
-* This method is get available slots 
-*/
+     * This method is get available slots 
+     */
+
+    resetFormValue(){
+        this.isSearch = false;    
+    }
+
     getSlot() {
-        let resourcecode = this.appointmentForm.controls.resources.get('code').value;
-        let startdate = this.appointmentForm.get('appointmentdate').value;
-        this.appointmentService.getSlots(resourcecode, startdate, this.formSlotId).subscribe(slot => {
-            this.slotDataSource.data = slot.data.filter(s => s.slotStatus == 'AVAILABLE') as SlotDetails[];
-            this.slotDataSource.paginator = this.paginator;
-            this.paginator.pageSize = 5;
-            this.paginator.pageIndex = 0;
-            this.isLoadingResults = false;
-        },
-            err => {
-                if (err.error[0])
-                    this.commonService.openAlert("error", err.error[0].message, "error");
-            });
+        this.isSearch = true;
     }
 
     /**
@@ -2099,7 +2095,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     */
     dateFormateOne(date, controlType) {
         this.appointmentForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
-
+        this.resetFormValue();
     }
 
     addressPatchValue(event) {
