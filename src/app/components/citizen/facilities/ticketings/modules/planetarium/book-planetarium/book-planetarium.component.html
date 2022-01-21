@@ -33,14 +33,14 @@
           <li>
             Planetarium Show timings:
             <ul>
-              <li>Special Show: 1. 03:00 PM to 03:30 PM (Gujarati) 2. 03:00 PM to 03:30 PM (Hindi)</li>
-              <li>General Show 1. 04:00 PM to 04:30 PM (Gujarati) 2. 05:00 PM to 05:30 PM (Hindi) 3. 06:00 PM to 06:30 PM</li>
+              <li>Special Show: 1. 03:00 PM to 03:30 PM (Gujarati) 2. 03:00 PM to 03:30 PM (Hindi).</li>
+              <li>General Show 1. 04:00 PM to 04:30 PM (Gujarati) 2. 05:00 PM to 05:30 PM (Hindi) 3. 06:00 PM to 06:30 PM.</li>
             </ul>
           </li>
           <li>
             Charge: Per Seat 10 Rs.
           </li>
-          <li>Seating Capacity: For Special Show citizen can book 156 seats and for General Show one user can book 4 seats</li>
+          <li>Seating Capacity: For Special Show citizen can book 156 seats and for General Show one user can book 4 seats.</li>
         </ol>
       </mat-card-content>
     </mat-card>
@@ -226,7 +226,7 @@
                   </mat-form-field>
 
                   <mat-form-field class="col-md-4 mb-5" *ngIf="!isVisibleIdNumber">
-                        <input matInput minlength="4" appAlphaNumeric maxlength="4" formControlName="idNumber"
+                        <input matInput minlength="4" appAlphaNumeric maxlength="4" formControlName="idNumber"  class="capitalCase"
                             placeholder="{{'id_number' | translate: translateKey}} *">
                         <control-messages [control]="ticketBookingForm.get('idNumber')"></control-messages>
                         <mat-hint class="mt-3 font-weight-bold fsLarge">
