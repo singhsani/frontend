@@ -18,6 +18,7 @@ export class MarriageAvailableSlotsComponent implements OnInit {
   @Input() search: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  resultsLength : any;
   slotDataSource = new MatTableDataSource();
   appointmentForm: FormGroup;
   translateKey: string = 'marrstiageRateMaster';
