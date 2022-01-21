@@ -64,7 +64,7 @@
                     <div formGroupName="showCategory" class="col-md-4 ngSelect">
                         <ng-select placeholder="{{'show_category'| translate: translateKey}} *"
                             (change)="setValidationForSpecialShow($event);savePlanetariumTickets();"
-                            formControlName="code">
+                            formControlName="code" required>
                             <ng-option *ngFor="let cat of FINAL_PLANETARIUM_SHOW_CATEGORY" [value]="cat.code">
                                 {{ cat.name }}
                             </ng-option>
@@ -99,9 +99,9 @@
 
                     <div formGroupName="planetariumShowTiming"
                         [hidden]="ticketBookingForm.get('showCategory').get('code').value == 'PLANETARIUM_SPECIAL_SHOW'"
-                        class="col-md-4 ngSelect">
+                        class="col-md-4 ngSelect" >
                         <ng-select placeholder="{{'planetarium_shows_timing'| translate: translateKey}} *"
-                            formControlName="code" (change)="setShiftType()">
+                            formControlName="code" (change)="setShiftType()" required>
                             <ng-option *ngFor="let cat of PLANETARIUM_SHOWS_TIMING" [value]="cat.code">
                                 {{ cat.name }}
                             </ng-option>
@@ -130,9 +130,9 @@
                         <div class="row">
 
                             <div formGroupName="visitors" class="col-md-4 ngSelect"
-                                *ngIf="ticketBookingForm.get('showCategory').get('code').value != 'PLANETARIUM_SPECIAL_SHOW'">
+                                *ngIf="ticketBookingForm.get('showCategory').get('code').value != 'PLANETARIUM_SPECIAL_SHOW'" >
                                 <ng-select OnlyNumber placeholder="{{'visitors'| translate: translateKey}} *" formControlName="code"
-                                    (change)="setVisitors();computeTotalAndVisitors(); getPlanetariumGeneralShowAvailability()">
+                                    (change)="setVisitors();computeTotalAndVisitors(); getPlanetariumGeneralShowAvailability()" required>
                                     <ng-option *ngFor="let num of PLANETARIUM_VISITOR" [value]="num.code">
                                         {{ num.name }}
                                     </ng-option>
@@ -153,12 +153,12 @@
 
                             <mat-form-field class="col-md-4">
                                 <input matInput OnlyNumber placeholder="{{ 'rate'| translate:translateKey}}"
-                                    formControlName="rate">
+                                    formControlName="rate" required readonly>
                             </mat-form-field>
 
                             <mat-form-field class="col-md-4">
                                 <input matInput OnlyNumber
-                                    placeholder="{{ 'total_amount'| translate:translateKey}}" formControlName="amount">
+                                    placeholder="{{ 'total_amount'| translate:translateKey}}" formControlName="amount" readonly>
                             </mat-form-field>
 
                             <!-- <mat-form-field class="col-md-4">
@@ -195,7 +195,7 @@
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
-                        <input matInput maxlength="50" required formControlName="lastName"
+                        <input matInput maxlength="50"  formControlName="lastName"
                             placeholder="{{'last_name' | translate: translateKey}}" appValidationFields
                             [validationFieldsType]="'onlyNameWithOutSpace'" required>
                         <control-messages [control]="ticketBookingForm.get('lastName')"></control-messages>
@@ -297,13 +297,13 @@
                 <div class="row fotButtonBar">
                     <div class="col-sm-12 col-md-12 text-right" *ngIf="showFotButtonBar">
 
-                        <button mat-raised-button color="primary" type="submit" (click)="redirecToPayment()"
+                        <button  [disabled]="ticketBookingForm.invalid" mat-raised-button color="primary" type="submit" (click)="redirecToPayment()"
                             *ngIf="ticketBookingForm.get('showCategory').get('code').value != 'PLANETARIUM_SPECIAL_SHOW'">
                             <!-- <mat-icon>payment</mat-icon> -->
                             {{'pay_and_print_ticket'| translate: translateKey}}
                         </button>
 
-                        <button mat-raised-button color="primary" type="submit"  (click)="submitForVarification()"
+                        <button [disabled]="ticketBookingForm.invalid" mat-raised-button color="primary" type="submit"  (click)="submitForVarification()"
                             *ngIf="ticketBookingForm.get('showCategory').get('code').value == 'PLANETARIUM_SPECIAL_SHOW' && seatAvailable == true">
                             <!-- <mat-icon>check_circle</mat-icon> -->
                             {{'submit'| translate: translateKey}}
