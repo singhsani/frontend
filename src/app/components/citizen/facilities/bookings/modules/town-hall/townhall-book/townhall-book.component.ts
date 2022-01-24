@@ -13,6 +13,7 @@ import { FormsActionsService } from '../../../../../../../core/services/citizen/
 export interface BookingDetails {
 	administrationCharges: string
 	bookingDate: string
+	bookingDateTime: string
 	electricCharges: any
 	endTime: string
 	gstAmount: any
@@ -103,7 +104,7 @@ export class TownHallBookComponent implements OnInit {
 	 */
 
 	availableStots: Array<any> = [];
-	displayedColumns: Array<string> = ['id', 'shiftType', 'bookingDate', 'startTime', 'endTime', 'rent', 'electricCharges', 'administrationCharges', 'showTax', 'subTotal', 'gstAmount', 'total'];
+	displayedColumns: Array<string> = ['id', 'bookingDate', 'shiftType', 'startTime', 'endTime', 'rent', 'electricCharges', 'administrationCharges', 'showTax', 'subTotal', 'gstAmount', 'total'];
 
 	bookingDetailsDataSource = new MatTableDataSource<BookingDetails>([]);
 
@@ -123,6 +124,7 @@ export class TownHallBookComponent implements OnInit {
 	showPaymentReciept: boolean = false;
 	isLoadingResults: boolean = false;
 	show:boolean = false;
+	shortlistData: BookingDetails[];
 
 	constructor(
 		private fb: FormBuilder,
@@ -216,8 +218,8 @@ export class TownHallBookComponent implements OnInit {
 			applicantName: [null, [Validators.required]],
 			applicantMobile: [null, [Validators.required]],
 			confirmMobile: [null, [Validators.required]],
-			emailID: [null, [Validators.required, ValidationService.emailValidator]],
-			confirmEmailID: [null, [Validators.required, ValidationService.emailValidator]],
+			emailID: [null, [Validators.required, ValidationService.emailValidator, Validators.maxLength(50)]],
+			confirmEmailID: [null, [Validators.required, ValidationService.emailValidator, Validators.maxLength(50)]],
 			relationshipWithOrg: [null, [Validators.required]],
 			applicantAddress: this.fb.group(this.appAddressComp.addressControls()),
 			/**
@@ -372,7 +374,11 @@ export class TownHallBookComponent implements OnInit {
 				if (resp.data.status == this.bookingConstants.DRAFT) {
 					this.bookingService.searchPayment(resp.data.refNumber).subscribe(payResp => {
 						this.paymentObject = payResp.data;
-						this.bookingDetailsDataSource.data = payResp.data.bookingDetails as BookingDetails[];
+						// this.bookingDetailsDataSource.data = payResp.data.bookingDetails as BookingDetails[];
+						this.shortlistData = payResp.data.bookingDetails as BookingDetails[];
+            			this.bookingDetailsDataSource.data = this.shortlistData.sort((a, b) => {
+             		 	return (<any>new Date(a.bookingDateTime) - (<any>new Date(b.bookingDateTime))) 
+            			});
 						this.CD.detectChanges();
 						this.showPaymentReciept = true;
 						this.CD.detectChanges();
