@@ -194,11 +194,12 @@ export class MyBookingComponent implements OnInit {
       		this.cancellationType = null;
       		this.element = element;
       		this.CancelSlotList = scheduleList.sort((a, b) => {
-      			if ((new Date(a.bookingDate).getTime()) <= (new Date(b.bookingDate).getTime())) {
-      				return 1;
-      			} else {
-      				return -1;
-      			}
+				return (<any>new Date(a.bookingDateTime) - (<any>new Date(b.bookingDateTime)));
+      			// if ((new Date(a.bookingDate).getTime()) <= (new Date(b.bookingDate).getTime())) {
+      			// 	return 1;
+      			// } else {
+      			// 	return -1;
+      			// }
       		});
       		this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
       		if (element.resourceType == "AMPHI_THEATER" || element.resourceType == "TOWNHALL" || element.resourceType == "STADIUM" || element.resourceType =="CHILDREN_THEATER" || element.resourceType == "ATITHIGRUH") {

@@ -302,7 +302,7 @@
                             {{paymentObject.refNumber}}
                         </td>
                         <td scope="col">
-                            {{bookingUtils.returnProperDate(paymentObject.bookingDate)}}
+                            {{paymentObject.bookingDate}}
                         </td>
                         <td scope="col">
                             {{paymentObject.rentAmount}}
@@ -329,19 +329,19 @@
                     </td>
                 </ng-container>
 
+                <ng-container matColumnDef="bookingDate">
+                    <th mat-header-cell *matHeaderCellDef>
+                        {{'date_of_programme'| translate: translateKey}}
+                    </th>
+                    <td mat-cell class="fullWidth" *matCellDef="let element;"> {{element.bookingDate}}
+                    </td>
+                </ng-container>
+
                 <ng-container matColumnDef="shiftType">
                     <th mat-header-cell *matHeaderCellDef>
                         {{'shift_type'| translate: translateKey}}
                     </th>
                     <td mat-cell class="fullWidth" *matCellDef="let element;"> {{element.shiftType}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="bookingDate">
-                    <th mat-header-cell *matHeaderCellDef>
-                        {{'date_of_programme'| translate: translateKey}}
-                    </th>
-                    <td mat-cell class="fullWidth" *matCellDef="let element;"> {{bookingUtils.returnProperDate(element.bookingDate)}}
-                    </td>
                 </ng-container>
 
                 <ng-container matColumnDef="startTime">
@@ -529,13 +529,13 @@
 
 
                         <mat-form-field class="col-md-4">
-                            <input matInput type="email" formControlName="emailID" placeholder="{{'applicant_email' | translate: translateKey}}" required>
+                            <input matInput type="email" maxlength="50" formControlName="emailID" placeholder="{{'applicant_email' | translate: translateKey}}" required>
                             <control-messages [control]="townHallApplicationForm.get('emailID')"></control-messages>
                         </mat-form-field>
 
                         <div class="col-md-4">
                             <mat-form-field>
-                                <input matInput type="email" formControlName="confirmEmailID" placeholder="{{'confirm_email' | translate: translateKey}}"
+                                <input matInput type="email" maxlength="50" formControlName="confirmEmailID" placeholder="{{'confirm_email' | translate: translateKey}}"
                                     required>
                                 <control-messages [control]="townHallApplicationForm.get('confirmEmailID')"></control-messages>
                             </mat-form-field>
