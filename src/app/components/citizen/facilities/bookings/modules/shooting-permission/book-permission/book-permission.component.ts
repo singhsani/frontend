@@ -34,6 +34,8 @@ export class BookPermissionComponent implements OnInit {
   translateKey: string = "bookPermissionScreen";
   guideLineFlag: boolean = true;
   head_lines: string;
+  endDate:any;
+
 
   isFileUploaded: boolean = false;
   /**
@@ -163,6 +165,7 @@ export class BookPermissionComponent implements OnInit {
   getResourceList() {
     this.bookingService.getResourceList().subscribe(resp => {
       this.SHOOTING_PERMISSION = resp.data;
+      // this.getAvaillableSlot(resp.data);
     })
   }
 
@@ -522,5 +525,15 @@ export class BookPermissionComponent implements OnInit {
     this.bookingService.getGardenList(event).subscribe(resp => {
       this.SHOOTING_PERMISSION = resp.data;
     })
+  }
+
+  getAvaillableSlot(data){
+    this.bookingService.getAvailableStots(data).subscribe(respData => {
+      this.endDate = moment(respData.data.endDate, "DD-MM-YYYY").toDate();
+    })
+  }
+
+  maxDateForSlot(event){
+    this.getAvaillableSlot(event)
   }
 }
