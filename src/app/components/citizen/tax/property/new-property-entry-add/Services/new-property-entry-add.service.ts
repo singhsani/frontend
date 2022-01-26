@@ -206,4 +206,10 @@ export class NewPropertyEntryAddService {
       .pipe(map((response: any) => response))
   }
 
+  saveMeasurementTax(measurementVersionId: Number) {
+    return this.http.post(`${Constants.assessmentModuleApiUrl}measurement/calculateTax?measurementVersionId=${measurementVersionId}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
 }
