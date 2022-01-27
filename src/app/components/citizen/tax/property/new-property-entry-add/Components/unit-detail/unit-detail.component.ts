@@ -525,7 +525,9 @@ export class UnitDetailComponent implements OnInit {
         if (data.status === 200) {
           this.measurementModel.propertyMeasurementId = data.body.data;
           this.getUnitListByOccupierId();
-          this.viewMeasurement();
+          // this.viewMeasurement();
+          const tempMeasurementId = data.body.data;
+          this.saveMeasurementTax(tempMeasurementId);
           }
       },
       (error) => {
@@ -646,4 +648,31 @@ export class UnitDetailComponent implements OnInit {
     }
     event2.updateValueAndValidity();
   }
+
+  saveMeasurementTax(Id:Number){
+    if(!Id){
+      return;
+    }
+    this.newNewPropertyEntryAddService.saveMeasurementTax(Id).subscribe(
+      (data) => {
+        if (data) {
+          // this.getUnitListByOccupierId();
+          this.viewMeasurement();
+        }
+      },
+      (error) => {
+        if (error.status === 400) {
+          var errorMessage = '';
+          error.error[0].propertyList.forEach(element => {
+            errorMessage = errorMessage + element + "</br>";
+          });
+          this.alertService.error(errorMessage);
+        }
+        else {
+          this.alertService.error(error.error.message);
+        }
+      });
+
+  }
+
 }

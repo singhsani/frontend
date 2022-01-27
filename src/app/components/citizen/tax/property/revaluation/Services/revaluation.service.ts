@@ -180,4 +180,10 @@ export class RevaluationService {
   getAttachmentList(serviceFormId) {
     return this.http.get<Array<Object>>(`${Constants.assessmentModuleApiUrl}revaluation/attachments?serviceFormId=${serviceFormId}`);
   }
+
+  saveMeasurementTax(measurementVersionId: Number) {
+    return this.http.post(`${Constants.assessmentModuleApiUrl}measurement/calculateTax?measurementVersionId=${measurementVersionId}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
 }
