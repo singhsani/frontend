@@ -452,7 +452,6 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
     resources: any = [];
     isLoadingResults: boolean = true;
-    // displayedColumns = ['sno', 'date', 'start_time', 'end_time', 'status'];
     modalRef: BsModalRef;
     apiType: string;
     /**
