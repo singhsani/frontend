@@ -239,7 +239,7 @@
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">{{'event_date'| translate: translateKey}}</th>
+            <th scope="col">{{'booking_date'| translate: translateKey}}</th>
             <th scope="col">{{'rate_amount'| translate: translateKey}}</th>
             <!-- <th scope="col">{{'deposit_amount'| translate: translateKey}}</th>
             <th scope="col">{{'GST'| translate: translateKey}}</th> -->
@@ -338,7 +338,7 @@
             <div class="col-md-4">
               <mat-form-field>
                 <input matInput type="email" formControlName="confirmEmailId"
-                  placeholder="{{'confirm_email' | translate: translateKey}}" required>
+                  placeholder="{{'confirm_email' | translate: translateKey}}" required maxlength="50">
                 <control-messages [control]="bookPermissionApplicationForm.get('confirmEmailId')"></control-messages>
               </mat-form-field>
               <!-- <mat-error *ngIf="!emailMatcher() && bookPermissionApplicationForm.get('emailId').touched && bookPermissionApplicationForm.get('confirmEmailId').touched">
