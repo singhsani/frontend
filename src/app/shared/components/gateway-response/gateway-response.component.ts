@@ -26,6 +26,9 @@ export class GatewayResponseComponent implements OnInit {
 	isSearchanble: string = "";
 	resourceType: String;
 	serviceType : any;
+	paidAmount: number;
+	balanceAmount: number;
+
 	/**
 	 * Common for all bookings
 	 */
@@ -123,6 +126,7 @@ export class GatewayResponseComponent implements OnInit {
 				//this.responseObj = this.responseObj[this.responseObj.length - 1];
 				if (this.responseObj.order_status == 'Success') {
 					this.paymentStatus = _.upperCase(this.responseObj.order_status);
+					this.paidAmount = Math.floor(this.responseObj.mer_amount);
 					this.postSessionData(this.dispData, 'CCAVENUE', this.responseObj);
 				} else {
 					this.paymentStatus = _.upperCase(this.responseObj.order_status);
@@ -212,7 +216,7 @@ export class GatewayResponseComponent implements OnInit {
 		} else if (data.payableServiceType == 'PAY-WTR-TAX') {
 
 			this.waterPostPayment(payData,data);
-			
+
 
 		} else {
 			if (this.isSearchanble == "true") {
@@ -320,22 +324,22 @@ export class GatewayResponseComponent implements OnInit {
 
 	redirectToHome() {
 		if (this.dispData.payableServiceType == "PROFESSIONAL_TAX") {
-			
+
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS')]);
-			
+
 		}else if((this.dispData.payableServiceType  == "STADIUM_FEES") || (this.dispData.payableServiceType == "STADIUM_DEPOSIT")|| (this.dispData.payableServiceType == "SWIMMING_POOL_FEES")){
-			
+
 				this.router.navigate([this.bookingConstant.MY_BOOKINGS_URL]);
-			
+
 		}else if((this.dispData.resourceType =="townhall") || (this.dispData.resourceType =="amphiTheater") || (this.dispData.resourceType == "stadium") || (this.dispData.resourceType == "childrenTheater") || (this.dispData.resourceType == "atithigruh") || (this.dispData.resourceType == "shootingPermission")){
-			
+
 			this.router.navigate([this.bookingConstant.MY_BOOKINGS_URL]);
-		
+
 	}
 		else if (this.serviceType == "ZOO_TICKETING_FEES"|| this.serviceType =="ZOO_ANIMAL_ADOPTION_FEES" || this.serviceType == "PLANETARIUM_TICKETING_FEES") {
-			
+
 				this.router.navigate([this.bookingConstant.MY_TICKETINGS_URL]);
-			
+
 		}
 		else {
 			setTimeout(() => {
