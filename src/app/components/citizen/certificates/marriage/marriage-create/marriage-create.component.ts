@@ -457,7 +457,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     /**
     * Minimum start date.
     */
-    minDate = moment(new Date()).add(0, 'day').toISOString();
+    minDate = moment(new Date()).add(1, 'day').toISOString();
 
     // Select id for edit marriage form
     formId: number;
