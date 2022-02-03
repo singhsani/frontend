@@ -50,6 +50,7 @@ export class OfflinePaymentComponent implements OnInit, OnChanges {
 		private session: SessionStorageService,
 		private offlinePaymentService: OfflinePaymentService,
 		private fb: FormBuilder,
+		private router: Router,
 		@Inject(MAT_DIALOG_DATA) data,
 		private dialogRef: MatDialogRef<OfflinePaymentComponent>,
 		private commonService: CommonService) {
@@ -327,6 +328,7 @@ export class OfflinePaymentComponent implements OnInit, OnChanges {
 
 	cancel() {
 		this.dialogRef.close(null);
+		this.router.navigate(['citizen/my-applications']);
 	}
 
 

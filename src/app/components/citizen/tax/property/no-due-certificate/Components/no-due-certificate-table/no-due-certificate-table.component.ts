@@ -297,12 +297,25 @@ export class NoDueCertificateTableComponent implements OnInit {
 
               if (this.commonNascentService.fromAdmin()) {
                   if (resData.isPaymentReceipt) {
+                    this.alertService.propertyConfirm(resData.refNumber);
+                    var subConfirm = this.alertService.getConfirm().subscribe(isConfirm => {
+                    if (isConfirm) {
+
+
                   const url = '/citizen/my-applications' +
                     '?printPaymentReceipt=' + resData.isPaymentReceipt +
                     '&apiCode=' + resData.serviceCode +
                     '&id=' + resData.serviceFormId;
 
                   this.router.navigateByUrl(url);
+
+                } else {
+                  this.router.navigateByUrl('/citizen/my-applications');
+                } 
+                  subConfirm.unsubscribe();
+              });
+
+
                 } else {
                   //  this.openOfflinePaymentComponent(payData,retUrl,data.serviceCode,data.serviceFormId);
                 }

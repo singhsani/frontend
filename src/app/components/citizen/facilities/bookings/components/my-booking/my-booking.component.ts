@@ -49,7 +49,9 @@ export class MyBookingComponent implements OnInit {
 	 * Display Column
 	 * 'start', 'end',
 	 */
-	displayedColumns: Array<string> = ['id', 'applicantName','refNumber', 'bookingDate', 'status', 'action'];
+	displayedColumns: Array<string> = [];
+  other_displayedColumns: Array<string> = ['id','applicantName', 'refNumber', 'bookingDate', 'status', 'action'];
+  atithigruh_displayedColumns: Array<string> = ['id','applicantName', 'bookingType', 'refNumber', 'bookingDate', 'status', 'action'];
 
 
 	/**
@@ -84,6 +86,7 @@ export class MyBookingComponent implements OnInit {
 	resultsLength: number = 0;
 	isLoadingResults: boolean = true;
 	isAmphi:boolean = false;
+	selectedResourceType: string = null;
 
 	constructor(
 		private fb: FormBuilder,
@@ -191,11 +194,12 @@ export class MyBookingComponent implements OnInit {
       		this.cancellationType = null;
       		this.element = element;
       		this.CancelSlotList = scheduleList.sort((a, b) => {
-      			if ((new Date(a.bookingDate).getTime()) <= (new Date(b.bookingDate).getTime())) {
-      				return 1;
-      			} else {
-      				return -1;
-      			}
+				return (<any>new Date(a.bookingDateTime) - (<any>new Date(b.bookingDateTime)));
+      			// if ((new Date(a.bookingDate).getTime()) <= (new Date(b.bookingDate).getTime())) {
+      			// 	return 1;
+      			// } else {
+      			// 	return -1;
+      			// }
       		});
       		this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
       		if (element.resourceType == "AMPHI_THEATER" || element.resourceType == "TOWNHALL" || element.resourceType == "STADIUM" || element.resourceType =="CHILDREN_THEATER" || element.resourceType == "ATITHIGRUH") {
@@ -329,7 +333,11 @@ export class MyBookingComponent implements OnInit {
 	 * Get All Bookings Using API.
 	 */
 	getAllBooking() {
-
+    if(this.selectedResourceType == this.bookingConstant.ATITHIGRUH_RESOURCE_TYPE){
+        this.displayedColumns = this.atithigruh_displayedColumns;
+    }else{
+        this.displayedColumns = this.other_displayedColumns;
+    }
 		this.paginator.pageSize = 5;
 		this.paginator.pageIndex = 0
 		this.isAmphiCancellation = false;
@@ -835,5 +843,6 @@ export class MyBookingComponent implements OnInit {
     }else if(event == this.bookingConstant.AMPHI_RESOURCE_TYPE){
         this.isAmphi = true;
     }
+    this.selectedResourceType = this.searchBookingsForm.get('resourceType').value;
   }
 }

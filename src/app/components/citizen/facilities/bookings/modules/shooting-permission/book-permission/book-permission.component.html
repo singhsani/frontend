@@ -50,8 +50,8 @@
 					  <ng-select 
 								placeholder="Zone No.*"
 								formControlName="waterDrainageZoneId" (change)="onChangedWardZone($event,2)">
-								<ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone">
-									{{zone}}</ng-option>
+								<ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.zoneName">
+									{{zone.zoneName}}</ng-option>
 							</ng-select>
 							<!-- <control-messages [control]="shopLicNewForm.get('waterDrainageZoneId')"> -->
 							<!-- </control-messages> -->
@@ -60,7 +60,7 @@
       
         
           <div class="col-md-6 ngSelect">
-            <ng-select placeholder="{{'select_place'| translate: translateKey}}" formControlName="code">
+            <ng-select placeholder="{{'select_place'| translate: translateKey}}" formControlName="code" (change)="maxDateForSlot($event)">
               <ng-option *ngFor="let bookPermission of SHOOTING_PERMISSION" [value]="bookPermission.code">
                 {{ bookPermission.name }}
               </ng-option>
@@ -82,7 +82,7 @@
             <mat-label>
               {{'choose_start_date'| translate: translateKey}}
             </mat-label>
-            <input matInput [min]="disablefutureDate" [matDatepicker]="bookPermissionBookingfromPicker"
+            <input matInput [min]="disablefutureDate" [max]="endDate" [matDatepicker]="bookPermissionBookingfromPicker"
               formControlName="startDate" placeholder="" (dateChange)="onDateChange($event.value)">
             <mat-datepicker-toggle matSuffix [for]="bookPermissionBookingfromPicker"></mat-datepicker-toggle>
             <mat-datepicker #bookPermissionBookingfromPicker touchUi="true"></mat-datepicker>
@@ -97,7 +97,7 @@
             </mat-label>
             <input matInput [min]="bookPermissionSearchForm.get('startDate').value"
               [matDatepicker]="bookPermissionBookingtoPicker" formControlName="endDate" placeholder=""
-              [max]="maxEndDate">
+              [max]="endDate">
             <mat-datepicker-toggle matSuffix [for]="bookPermissionBookingtoPicker"></mat-datepicker-toggle>
             <mat-datepicker #bookPermissionBookingtoPicker touchUi="true"></mat-datepicker>
             <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
@@ -188,7 +188,7 @@
         <thead class="customthead">
           <tr>
             <th scope="col" width="56">{{'s_no'| translate: translateKey}}</th>
-            <th scope="col">{{'booking_date'| translate: translateKey}}</th>
+            <th scope="col">{{'event_date'| translate: translateKey}}</th>
             <!-- <th scope="col">{{'end_date'| translate: translateKey}}</th> -->
             <th scope="col">{{'slot_status'| translate: translateKey}}</th>
             <!-- <th scope="col">{{'occupancy'| translate: translateKey}}</th> -->
@@ -331,14 +331,14 @@
 
             <mat-form-field class="col-md-4">
               <input matInput type="email" formControlName="emailId"
-                placeholder="{{'applicant_email' | translate: translateKey}}" required>
+                placeholder="{{'applicant_email' | translate: translateKey}}" required maxlength="50">
               <control-messages [control]="bookPermissionApplicationForm.get('emailId')"></control-messages>
             </mat-form-field>
 
             <div class="col-md-4">
               <mat-form-field>
                 <input matInput type="email" formControlName="confirmEmailId"
-                  placeholder="{{'confirm_email' | translate: translateKey}}" required>
+                  placeholder="{{'confirm_email' | translate: translateKey}}" required maxlength="50">
                 <control-messages [control]="bookPermissionApplicationForm.get('confirmEmailId')"></control-messages>
               </mat-form-field>
               <!-- <mat-error *ngIf="!emailMatcher() && bookPermissionApplicationForm.get('emailId').touched && bookPermissionApplicationForm.get('confirmEmailId').touched">

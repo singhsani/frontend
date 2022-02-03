@@ -99,8 +99,12 @@
     max-width: 150px !important;
 }
 
-.mat-header-cell {padding: 0 10px;}
-.mat-table .mat-cell {padding: 0 10px; word-break: break-all;}
+.wMatCell190 {
+    max-width: 190px;
+}
+
+.mat-header-cell {padding: 0 2px;}
+.mat-table .mat-cell {padding: 0 2px; word-break: break-all; font-size: 12px;}
 
 
 

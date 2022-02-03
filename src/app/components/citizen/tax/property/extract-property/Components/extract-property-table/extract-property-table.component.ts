@@ -231,8 +231,7 @@ export class ExtractPropertyTableComponent implements OnInit {
           console.log(res);
           let data = res;
           this.formService.submitFormData(res.data.serviceFormId).subscribe(res => {
-            console.log('in res is:');
-            console.log(res);
+            console.log('In res is : ---> ', res);
             if(this.commonNascentService.isGuestUser()){
               this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENDASHBOARD"));
             }else{
@@ -244,15 +243,28 @@ export class ExtractPropertyTableComponent implements OnInit {
             if (err.status === 402) {
               const resData = err.error.data;
               let payData = this.commonNascentService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
-              
+
                 if (this.commonNascentService.fromAdmin()) {
 							 	if(resData.isPaymentReceipt) {
+
+                  // this.alertService.propertyConfirm("Application submitted successfully and your application number is "+"'"+ resData.refNumber+"'"+". Do you want to print receipt ? click yes  ");
+                  this.alertService.propertyConfirm(resData.refNumber);
+                  var subConfirm = this.alertService.getConfirm().subscribe(isConfirm => {
+                    if (isConfirm) {
+
 									const url = '/citizen/my-applications' + 
 									'?printPaymentReceipt=' + resData.isPaymentReceipt + 
 									'&apiCode=' + resData.serviceCode +
-									'&id=' + resData.serviceFormId;
+									'&id=' + resData.serviceFormId;			
 
-									this.router.navigateByUrl(url);
+                   this.router.navigateByUrl(url);
+
+              } else {
+                this.router.navigateByUrl('/citizen/my-applications');
+              } 
+                subConfirm.unsubscribe();
+            });
+
 								} else {		
                 //  this.openOfflinePaymentComponent(payData,retUrl,data.serviceCode,data.serviceFormId);
                 }

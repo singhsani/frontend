@@ -23,10 +23,10 @@ export class BookAtithigruhComponent implements OnInit {
 	translateKey: string = "atithigruhScreen";
 	stadiumTranslateKey: string = "citizenStadiumScreen";
 
-	
+
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
-	
+
 	@ViewChild("paymentGateway") paymentGateway: TemplateRef<any>;
 	@ViewChild("confirmationModel") confirmationModel: TemplateRef<any>;
 	@ViewChild('address') addressComp: any;
@@ -110,7 +110,7 @@ export class BookAtithigruhComponent implements OnInit {
 
 	createAtithigruhForm(): void {
 		this.atithigruhForm = this.fb.group({
-			
+
 
 			/**
 			 * Applicant Details
@@ -121,7 +121,7 @@ export class BookAtithigruhComponent implements OnInit {
 			applicantMobileNo: [{value: '', disabled: true}, Validators.required],
 			// confirmMobile: [null, Validators.required],
 			applicantName: [{value: '', disabled: true}, Validators.required],
-			
+
 			applicantEmailID:[{value: '', disabled: true}, Validators.required],
 
 			gstNo:[null,ValidationService.gstNoValidator],
@@ -248,7 +248,7 @@ export class BookAtithigruhComponent implements OnInit {
 			this.BookingTypeForm.get('bookingFrom').setValidators(Validators.required);
 			this.BookingTypeForm.get('bookingTo').setValidators(Validators.required);
 		} else if (event === 'Advance booking') {
-			
+
 			 if (this.formatAMPM()) {
 				//dable
 				this.toaster.warning('Booking Not available after 2 PM ');
@@ -275,15 +275,16 @@ export class BookAtithigruhComponent implements OnInit {
 		var now = moment();
 		var hourToCheck = (now.day() !== 0)?14:0;
 		var dateToCheck = now.hour(hourToCheck).minute(0);
-		
+
 		return moment().isAfter(dateToCheck);
-		
-		
+
+
 	}
 
 
 	onDateChange(fieldName, date) {
 		this.BookingTypeForm.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
+		this.Dates = [];
 	}
 
 	/**
@@ -349,7 +350,7 @@ export class BookAtithigruhComponent implements OnInit {
 		this.bookingService.generateReference(shortListData).subscribe(resp => {
 			if (resp) {
 				this.atithigruhForm.patchValue(resp.data);
-
+        //this.atithigruhForm.get('bookingDate').setValue(moment(resp.data.bookingDate).format("DD-MM-YYYY"));
 				if(resp.data.bookingPurposeMaster.code == 'SAMUH_LAGAN'){
 					this.atithigruhForm.addControl('samuhLaganCoupleCount',new FormControl(5, [Validators.required, Validators.max(25),Validators.min(5)]));
 				  }
@@ -404,6 +405,7 @@ export class BookAtithigruhComponent implements OnInit {
 
 				this.showSearchForm = false;
 				this.atithigruhForm.patchValue(resp.data);
+				//this.atithigruhForm.get('bookingDate').setValue(moment(resp.data.bookingDate).format("DD-MM-YYYY"));
 				if(resp.data.bookingPurposeMaster.code == 'SAMUH_LAGAN'){
 					this.atithigruhForm.addControl('samuhLaganCoupleCount',new FormControl(5, [Validators.required, Validators.max(25),Validators.min(5)]));
 				  }
@@ -432,7 +434,7 @@ export class BookAtithigruhComponent implements OnInit {
 	 * This method is use to search submit booking details
 	 */
 	submit(): void {
-		
+
 		let errCount = this.bookingUtils.getAllErrors(this.atithigruhForm);
 		if (this.atithigruhForm.invalid) {
 			this.handleErrorsOnSubmit();
@@ -447,7 +449,7 @@ export class BookAtithigruhComponent implements OnInit {
 			return;
 		} else {
 			if (this.bookingForRegular) {
-				
+
 				this.bookingService.commonBookSlot(this.atithigruhForm.getRawValue()).subscribe(resp => {
 				}, (err) => {
 					if (err.status == 402) {
@@ -464,7 +466,7 @@ export class BookAtithigruhComponent implements OnInit {
 				});
 				return;
 			} else {
-				
+
 				let ifscCode = this.atithigruhForm.get('ifscCode').value;
 				this.atithigruhForm.get('ifscCode').setValue(ifscCode.toUpperCase());
 
@@ -535,7 +537,7 @@ export class BookAtithigruhComponent implements OnInit {
 		});
 	}
 
-	setDefaultValue(){  
+	setDefaultValue(){
 		this.atithigruhForm.get('applicantName').setValue(this.profileObj.firstName);
 		this.atithigruhForm.get('applicantEmailID').setValue(this.profileObj.email);
 		this.atithigruhForm.get('applicantMobileNo').setValue(this.profileObj.cellNo);
@@ -578,7 +580,7 @@ export class BookAtithigruhComponent implements OnInit {
 		this.formControlNameToTabIndex.set('applicantEmailID', 1)
 		this.formControlNameToTabIndex.set('applicantAddress', 1)
 		// second tab
-		
+
 		this.formControlNameToTabIndex.set('bankName', 2)
 		this.formControlNameToTabIndex.set('accountHolderName', 2)
 		this.formControlNameToTabIndex.set('accountNo', 2)

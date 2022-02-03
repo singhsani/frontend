@@ -1,249 +1,256 @@
 <!-- My Bookings Title Bar -->
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
-<!-- Search Bookings By providing filter details -->
-<mat-card class="mb-4">
-  <form [formGroup]="searchBookingsForm" (ngSubmit)="getAllBooking()" autocomplete="off" ngNativeValidate>
-    <div class="row">
-      <div class="col-md-4 ngSelect">
-        <ng-select placeholder="{{'select_booking_resources' | translate:translateKey}}" formControlName="resourceType" (change)="selectBookingResource($event)">
-          <ng-option *ngFor="let resource of resources" [value]="resource.type">
-            {{ resource.name }}
-          </ng-option>
-        </ng-select>
-        <control-messages [control]="searchBookingsForm.get('resourceType')">
-        </control-messages>
-      </div>
-      <mat-form-field class="col-md-4">
-        <input matInput maxlength="50" type="text" formControlName="refNumber"
-               placeholder="{{'ref_number' | translate: translateKey}}"
-               trim="blur">
-        <control-messages [control]="searchBookingsForm.get('refNumber')"></control-messages>
-      </mat-form-field>
-      <div class="col-md-4">
-        <button mat-stroked-button color="primary" class="w-100 mt-2" type="submit">
-          {{'search' | translate:translateKey}}
-        </button>
-      </div>
-    </div>
-  </form>
-</mat-card>
-
-<!-- If Bookings Not Found -->
-<div class="noApplication" *ngIf="resultsLength==0 && !isLoadingResults">
-  <img src="assets/icons/no-application-found.png" alt="">
-  <br> {{'no_bookings_found' | translate:translateKey}}
-  <!--<span class="noActi">{{'no_activity' | translate:translateKey}}</span>
-  <a mat-stroked-button class="mat-primary" routerLink="../../dashboard">
-    {{'create_bookings' | translate:translateKey}}
-  </a>-->
-</div>
-
-<!-- My Bookings data table -->
-<div class="hideOnPrint" [hidden]="resultsLength==0">
-
-  <!-- <div class="example-loading-shade" *ngIf="isLoadingResults">
-    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-  </div> -->
-
-  <table mat-table class="myBookings" [dataSource]="bookingList" matSort matSortActive="created" matSortDisableClear
-         matSortDirection="asc">
-
-    <ng-container matColumnDef="id">
-      <mat-header-cell class="wMatCell80" *matHeaderCellDef>{{'s_no' | translate:translateKey}}</mat-header-cell>
-      <mat-cell class="wMatCell80" *matCellDef="let element;let indx=index;">
-        <div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
-        <div class="mobile-label1">:</div>
-        <div class="row-inside"> {{(paginator.pageIndex * paginator.pageSize) + (indx+1)}}</div>
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="applicantName">
-      <mat-header-cell class="wMatCell150"  *matHeaderCellDef>
-        {{ (isAmphi == true ? 'schoolAndOrg_name' : 'applicant_name') | translate: translateKey}}
-          <!-- {{'applicant_name' | translate:translateKey}} -->
-      </mat-header-cell>
-      <mat-cell class="wMatCell150"  *matCellDef="let element;">
-          {{element.applicantName}}
-      </mat-cell>
-    </ng-container>
-
-
-    <ng-container matColumnDef="refNumber">
-      <mat-header-cell *matHeaderCellDef> {{'booking_number' | translate:translateKey}}</mat-header-cell>
-      <mat-cell *matCellDef="let element;">
-        <div class="mobile-label">{{'booking_number' | translate:translateKey}}</div>
-        <div class="mobile-label1">:</div>
-        <div class="row-inside">{{element.refNumber}}</div>
-
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="bookingDate">
-      <mat-header-cell  *matHeaderCellDef> {{'date_of_booking' | translate:translateKey}}</mat-header-cell>
-      <mat-cell *matCellDef="let element;">
-        <div class="mobile-label">{{'date_of_booking' | translate:translateKey}}</div>
-        <div class="mobile-label1">:</div>
-        <div class="row-inside">
-          {{element.bookingDate}}
+  <!-- Search Bookings By providing filter details -->
+  <mat-card class="mb-4">
+    <form [formGroup]="searchBookingsForm" (ngSubmit)="getAllBooking()" autocomplete="off" ngNativeValidate>
+      <div class="row">
+        <div class="col-md-4 ngSelect">
+          <ng-select placeholder="{{'select_booking_resources' | translate:translateKey}}" formControlName="resourceType" (change)="selectBookingResource($event)">
+            <ng-option *ngFor="let resource of resources" [value]="resource.type">
+              {{ resource.name }}
+            </ng-option>
+          </ng-select>
+          <control-messages [control]="searchBookingsForm.get('resourceType')">
+          </control-messages>
         </div>
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="status">
-      <mat-header-cell  *matHeaderCellDef> {{'booking_status' | translate:translateKey}}</mat-header-cell>
-      <mat-cell  *matCellDef="let element;">
-        <div class="mobile-label">{{'booking_status' | translate:translateKey}}</div>
-        <div class="mobile-label1">:</div>
-        <div class="row-inside">
-          {{bookingUtils.getProperErrorMessage(element.status)}}
+        <mat-form-field class="col-md-4">
+          <input matInput maxlength="50" type="text" formControlName="refNumber"
+                 placeholder="{{'ref_number' | translate: translateKey}}"
+                 trim="blur">
+          <control-messages [control]="searchBookingsForm.get('refNumber')"></control-messages>
+        </mat-form-field>
+        <div class="col-md-4">
+          <button mat-stroked-button color="primary" class="mt-2 w-100" type="submit">
+            {{'search' | translate:translateKey}}
+          </button>
         </div>
-      </mat-cell>
-    </ng-container>
+      </div>
+    </form>
+  </mat-card>
 
-    <ng-container matColumnDef="action">
-      <mat-header-cell class="wMatCell180 cellLast" *matHeaderCellDef> {{'actions' | translate:translateKey}}</mat-header-cell>
-      <mat-cell class="wMatCell185 cellLast" *matCellDef="let element;">
-        <div class="mobile-label">{{'actions' | translate:translateKey}}</div>
-        <div class="mobile-label1">:</div>
-        <button *ngIf="enableMoreAction(element)"
-                mat-button [matMenuTriggerFor]="menu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
+  <!-- If Bookings Not Found -->
+  <div class="noApplication" *ngIf="resultsLength==0 && !isLoadingResults">
+    <img src="assets/icons/no-application-found.png" alt="">
+    <br> {{'no_bookings_found' | translate:translateKey}}
+    <!--<span class="noActi">{{'no_activity' | translate:translateKey}}</span>
+    <a mat-stroked-button class="mat-primary" routerLink="../../dashboard">
+      {{'create_bookings' | translate:translateKey}}
+    </a>-->
+  </div>
 
-          <div *ngIf="(element.status != bookingConstant.SUBMITTED)">
+  <!-- My Bookings data table -->
+  <div class="hideOnPrint" [hidden]="resultsLength==0">
 
-            <button *ngIf="element.status == bookingConstant.PAYMENT_REQUIRED" mat-menu-item color="primary"
-                    (click)="paymentRequest(element)">
-              <mat-icon title="Print Receipt" color="primary">print</mat-icon>
-              {{'make_payment' | translate:translateKey}}
-            </button>
+    <!-- <div class="example-loading-shade" *ngIf="isLoadingResults">
+      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div> -->
+    <div class="table-responsive">
+    <table mat-table class="myBookings" [dataSource]="bookingList" matSort matSortActive="created" matSortDisableClear
+           matSortDirection="asc">
 
-            <button mat-menu-item *ngIf="(element.status === 'SCRUTINY' && element.payableServiceType !== 'STADIUM_DEPOSIT')" color="primary"
-                        (click)="loiPayments(element)">
-                        <mat-icon title="Make Payment" color="primary">print</mat-icon>
-							{{'make_payment' | translate:translateKey}}
-                    	</button>
+      <ng-container matColumnDef="id">
+        <mat-header-cell class="wMatCell80" *matHeaderCellDef>{{'s_no' | translate:translateKey}}</mat-header-cell>
+        <mat-cell class="wMatCell80" *matCellDef="let element;let indx=index;">
+          <div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
+          <div class="mobile-label1">:</div>
+          <div class="row-inside"> {{(paginator.pageIndex * paginator.pageSize) + (indx+1)}}</div>
+        </mat-cell>
+      </ng-container>
 
-            <!-- Deposit Payment Call -->
-            <button *ngIf="element.status == bookingConstant.DEPOSIT_REQUIRED || (element.payableServiceType== 'STADIUM_DEPOSIT' && element.status === 'SCRUTINY')" mat-menu-item color="primary" (click)="loiPayments(element)">
-              <mat-icon title="Deposit Payment" color="primary">payment</mat-icon>
-              {{'deposit_payment' | translate:translateKey}}
-            </button>
+      <ng-container matColumnDef="applicantName">
+        <mat-header-cell class="wMatCell150"  *matHeaderCellDef>
+          {{ (isAmphi == true ? 'schoolAndOrg_name' : 'applicant_name') | translate: translateKey}}
+            <!-- {{'applicant_name' | translate:translateKey}} -->
+        </mat-header-cell>
+        <mat-cell class="wMatCell150"  *matCellDef="let element;">
+            {{element.applicantName}}
+        </mat-cell>
+      </ng-container>
 
-            <button *ngIf="showRecieptReprint(element)" mat-menu-item color="primary"
-                    (click)="printReceipt(element, element.payableServiceType)">
-              <mat-icon title="Print Receipt" color="primary">print</mat-icon>
-              {{'receipt_reprint' | translate:translateKey}}
-            </button>
+      <ng-container matColumnDef="bookingType">
+        <mat-header-cell class="wMatCell250" *matHeaderCellDef>
+          {{'booking_type' | translate:translateKey}}
+        </mat-header-cell>
+        <mat-cell class="wMatCell250" *matCellDef="let element;">
+          {{element.bookingType}}
+        </mat-cell>
+      </ng-container>
 
-            <!-- Recepit Re-print Call -->
-            <!-- TODO We'll changes AS PER REQUIREMENT-->
-            <div *ngIf="element.resourceType!= (bookingConstant.TOWNHALL_RESOURCE_TYPE | uppercase)">
-            <button
-              *ngIf="element.resourceType == (bookingConstant.TOWNHALL_RESOURCE_TYPE | uppercase) && element.status != bookingConstant.DEPOSIT_REQUIRED && element.status != bookingConstant.PPL_REQUIRED && element.status != bookingConstant.PAYMENT_REQUIRED && element.status != bookingConstant.CANCELLATION_REQUEST"
-              mat-menu-item color="primary" (click)="printReceipt(element, bookingConstant.TOWNHALL_DEPOSIT)">
-              <mat-icon title="Print Receipt" color="primary">print</mat-icon>
-              {{'deposit_receipt' | translate:translateKey}}
-            </button>
-            </div>
+      <ng-container matColumnDef="refNumber">
+        <mat-header-cell *matHeaderCellDef> {{'booking_number' | translate:translateKey}}</mat-header-cell>
+        <mat-cell *matCellDef="let element;">
+          <div class="mobile-label">{{'booking_number' | translate:translateKey}}</div>
+          <div class="mobile-label1">:</div>
+          <div class="row-inside">{{element.refNumber}}</div>
 
-            <div *ngIf="showStadiumDepositReceiptBtn(element)">
-              <button  mat-menu-item color="primary"
-                       (click)="printReceipt(element, bookingConstant.STADIUM_DEPOSIT)">
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="bookingDate">
+        <mat-header-cell  class="wMatCell180" *matHeaderCellDef> {{'date_of_booking' | translate:translateKey}}</mat-header-cell>
+        <mat-cell class="wMatCell180" *matCellDef="let element;">
+          <div class="mobile-label">{{'date_of_booking' | translate:translateKey}}</div>
+          <div class="mobile-label1">:</div>
+          <div class="row-inside">
+            {{element.bookingDate}}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <mat-header-cell class="wMatCell190"  *matHeaderCellDef> {{'booking_status' | translate:translateKey}}</mat-header-cell>
+        <mat-cell class="wMatCell190"  *matCellDef="let element;">
+          <div class="mobile-label">{{'booking_status' | translate:translateKey}}</div>
+          <div class="mobile-label1">:</div>
+          <div class="row-inside">
+            {{bookingUtils.getProperErrorMessage(element.status)}}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <mat-header-cell class="wMatCell200 cellLast" *matHeaderCellDef> {{'actions' | translate:translateKey}}</mat-header-cell>
+        <mat-cell class="wMatCell200 cellLast" *matCellDef="let element;">
+          <div class="mobile-label">{{'actions' | translate:translateKey}}</div>
+          <div class="mobile-label1">:</div>
+          <button *ngIf="enableMoreAction(element)"
+                  mat-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+
+            <div *ngIf="(element.status != bookingConstant.SUBMITTED)">
+
+              <button *ngIf="element.status == bookingConstant.PAYMENT_REQUIRED" mat-menu-item color="primary"
+                      (click)="paymentRequest(element)">
+                <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+                {{'make_payment' | translate:translateKey}}
+              </button>
+
+              <button mat-menu-item *ngIf="(element.status === 'SCRUTINY' && element.payableServiceType !== 'STADIUM_DEPOSIT')" color="primary"
+                          (click)="loiPayments(element)">
+                          <mat-icon title="Make Payment" color="primary">print</mat-icon>
+                {{'make_payment' | translate:translateKey}}
+                        </button>
+
+              <!-- Deposit Payment Call -->
+              <button *ngIf="element.status == bookingConstant.DEPOSIT_REQUIRED || (element.payableServiceType== 'STADIUM_DEPOSIT' && element.status === 'SCRUTINY')" mat-menu-item color="primary" (click)="loiPayments(element)">
+                <mat-icon title="Deposit Payment" color="primary">payment</mat-icon>
+                {{'deposit_payment' | translate:translateKey}}
+              </button>
+
+              <button *ngIf="showRecieptReprint(element)" mat-menu-item color="primary"
+                      (click)="printReceipt(element, element.payableServiceType)">
+                <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+                {{'receipt_reprint' | translate:translateKey}}
+              </button>
+
+              <!-- Recepit Re-print Call -->
+              <!-- TODO We'll changes AS PER REQUIREMENT-->
+              <div *ngIf="element.resourceType!= (bookingConstant.TOWNHALL_RESOURCE_TYPE | uppercase)">
+              <button
+                *ngIf="element.resourceType == (bookingConstant.TOWNHALL_RESOURCE_TYPE | uppercase) && element.status != bookingConstant.DEPOSIT_REQUIRED && element.status != bookingConstant.PPL_REQUIRED && element.status != bookingConstant.PAYMENT_REQUIRED && element.status != bookingConstant.CANCELLATION_REQUEST"
+                mat-menu-item color="primary" (click)="printReceipt(element, bookingConstant.TOWNHALL_DEPOSIT)">
                 <mat-icon title="Print Receipt" color="primary">print</mat-icon>
                 {{'deposit_receipt' | translate:translateKey}}
               </button>
-            </div>
+              </div>
 
-            <div *ngIf="element.resourceType == 'SWIMMING_POOL'">
-              <button *ngIf="element.resourceType == 'SWIMMING_POOL' && element.status == bookingConstant.PAYMENT_REQUIRED && element.showDownloadLOI"
-              mat-menu-item color="primary" (click)="printReceiptSwimming(element)">
-              <mat-icon title="Print Receipt" color="primary">print</mat-icon>Download LOI
+              <div *ngIf="showStadiumDepositReceiptBtn(element)">
+                <button  mat-menu-item color="primary"
+                         (click)="printReceipt(element, bookingConstant.STADIUM_DEPOSIT)">
+                  <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+                  {{'deposit_receipt' | translate:translateKey}}
+                </button>
+              </div>
+
+              <div *ngIf="element.resourceType == 'SWIMMING_POOL'">
+                <button *ngIf="element.resourceType == 'SWIMMING_POOL' && element.status == bookingConstant.PAYMENT_REQUIRED && element.showDownloadLOI"
+                mat-menu-item color="primary" (click)="printReceiptSwimming(element)">
+                <mat-icon title="Print Receipt" color="primary">print</mat-icon>Download LOI
+              </button>
+              </div>
+
+                <!-- Recepit Re-print For Atithi Deposit -->
+              <!-- Hide deposit receipt for Atithigruh as there is no separate payment for Atithigruh deposit payment in citizen -->
+
+              <!-- <button *ngIf="showAtithiDepositReceiptBtn(element)" mat-menu-item color="primary"
+                (click)="printReceipt(element, bookingConstant.ATITHIGURH_DEPOSIT)">
+                <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+                {{'deposit_receipt' | translate:translateKey}}
+              </button> -->
+
+              <button
+                *ngIf="element.status == bookingConstant.PPL_REQUIRED && element.status != bookingConstant.CANCELLATION_REQUEST && element.status != bookingConstant.PAYMENT_REQUIRED"
+                mat-menu-item color="primary" (click)="printPolicePerformanceLicense(element)">
+                <mat-icon title="Police Performance license" color="primary">print</mat-icon>
+                {{'police_performance_license' | translate:translateKey}}
+              </button>
+
+              <button *ngIf="showCancelBtn(element)" mat-menu-item data-toggle="modal"
+                      color="primary" (click)="openModal(templateRequestModel, element.scheduleList, element.refNumber,element);">
+                <mat-icon title="View Booking Details" color="primary">cancel</mat-icon>
+                {{'cancel_booking' | translate:translateKey}}
+              </button>
+
+              <!-- Make Cancelation Call for Advance booking-->
+              <button *ngIf="showCancelAdvanceBooking(element)" mat-menu-item color="primary" (click)="cancelAdvanceBooking(element)">
+                <mat-icon title="Print Receipt" color="primary">payment</mat-icon>
+                {{'cancel_advance_booking' | translate:translateKey}}
+              </button>
+
+              <!-- -->
+              <button *ngIf="checkingBookingDateWithCurrentDate(element)" mat-menu-item color="primary" (click)="depositRefundRequest(element)">
+                <mat-icon title="send" color="primary">send</mat-icon>
+                {{'refund_request' | translate:translateKey}}
+              </button>
+
+              <button mat-menu-item *ngIf="element.status == bookingConstant.CANCELLATION_APPROVED" data-toggle="modal" color="primary" (click)="cancellationApproveReport(element.refNumber)">
+                <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+                {{'approved_receipt_reprint' | translate:translateKey}}
+              </button>
+
+              <button mat-menu-item *ngIf="element.status == 'REJECTED' && (element.resourceType === 'STADIUM' || element.resourceType === 'SHOOTING_PERMISSION' || element.resourceType === 'CHILDREN_THEATER')" data-toggle="modal" color="primary" (click)="openRejectedModel(templateRejectModel, element, element.refNumber);">
+                <mat-icon title="View Booking Details" color="primary">details</mat-icon>
+                {{'details' | translate:translateKey}}
             </button>
             </div>
 
-              <!-- Recepit Re-print For Atithi Deposit -->
-            <!-- Hide deposit receipt for Atithigruh as there is no separate payment for Atithigruh deposit payment in citizen -->
-
-            <!-- <button *ngIf="showAtithiDepositReceiptBtn(element)" mat-menu-item color="primary"
-              (click)="printReceipt(element, bookingConstant.ATITHIGURH_DEPOSIT)">
+            <button *ngIf="acknowledgmentReceipt(element)" mat-menu-item color="primary" (click)="printAcknowledge(element.refNumber)">
               <mat-icon title="Print Receipt" color="primary">print</mat-icon>
-              {{'deposit_receipt' | translate:translateKey}}
-            </button> -->
+              {{'acknowledgement_reprint' | translate:translateKey}}
+            </button>
+
+            <button *ngIf="element.status == bookingConstant.SCRUTINY && (element.resourceType == 'STADIUM' || element.resourceType == 'CHILDREN_THEATER')" mat-menu-item color="primary" (click)="printLOIReceipt(element.refNumber)">
+              <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+              {{'loi_download' | translate:translateKey}}
+            </button>
 
             <button
-              *ngIf="element.status == bookingConstant.PPL_REQUIRED && element.status != bookingConstant.CANCELLATION_REQUEST && element.status != bookingConstant.PAYMENT_REQUIRED"
-              mat-menu-item color="primary" (click)="printPolicePerformanceLicense(element)">
-              <mat-icon title="Police Performance license" color="primary">print</mat-icon>
-              {{'police_performance_license' | translate:translateKey}}
-            </button>
+              *ngIf="(element.resourceType == 'STADIUM' || element.resourceType == 'CHILDREN_THEATER') && element.status == 'REFUND_APPROVED'"
+                mat-menu-item color="primary" (click)="refundAcknowledgemnt(element.refNumber,element.resourceType)">
+                <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+                {{'refund_acknowledgment' | translate:translateKey}}
+              </button>
 
-            <button *ngIf="showCancelBtn(element)" mat-menu-item data-toggle="modal"
-                    color="primary" (click)="openModal(templateRequestModel, element.scheduleList, element.refNumber,element);">
-              <mat-icon title="View Booking Details" color="primary">cancel</mat-icon>
-              {{'cancel_booking' | translate:translateKey}}
-            </button>
+              <!-- <button mat-menu-item color="primary" (click)="openJSONModal(template);jsonDisplay(element)">
+              <mat-icon class="m-1" title="{{'application_json' | translate:translateKey}}">center_focus_weak</mat-icon>
+              {{'application_json' | translate:translateKey}}
+            </button> -->
 
-            <!-- Make Cancelation Call for Advance booking-->
-            <button *ngIf="showCancelAdvanceBooking(element)" mat-menu-item color="primary" (click)="cancelAdvanceBooking(element)">
-              <mat-icon title="Print Receipt" color="primary">payment</mat-icon>
-              {{'cancel_advance_booking' | translate:translateKey}}
-            </button>
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
 
-            <!-- -->
-            <button *ngIf="checkingBookingDateWithCurrentDate(element)" mat-menu-item color="primary" (click)="depositRefundRequest(element)">
-              <mat-icon title="send" color="primary">send</mat-icon>
-              {{'refund_request' | translate:translateKey}}
-            </button>
-
-            <button mat-menu-item *ngIf="element.status == bookingConstant.CANCELLATION_APPROVED" data-toggle="modal" color="primary" (click)="cancellationApproveReport(element.refNumber)">
-              <mat-icon title="Print Receipt" color="primary">print</mat-icon>
-              {{'approved_receipt_reprint' | translate:translateKey}}
-            </button>
-
-            <button mat-menu-item *ngIf="element.status == 'REJECTED' && (element.resourceType === 'STADIUM' || element.resourceType === 'SHOOTING_PERMISSION' || element.resourceType === 'CHILDREN_THEATER')" data-toggle="modal" color="primary" (click)="openRejectedModel(templateRejectModel, element, element.refNumber);">
-              <mat-icon title="View Booking Details" color="primary">details</mat-icon>
-              {{'details' | translate:translateKey}}
-          </button>
-          </div>
-
-          <button *ngIf="acknowledgmentReceipt(element)" mat-menu-item color="primary" (click)="printAcknowledge(element.refNumber)">
-            <mat-icon title="Print Receipt" color="primary">print</mat-icon>
-            {{'acknowledgement_reprint' | translate:translateKey}}
-          </button>
-
-          <button *ngIf="element.status == bookingConstant.SCRUTINY && (element.resourceType == 'STADIUM' || element.resourceType == 'CHILDREN_THEATER')" mat-menu-item color="primary" (click)="printLOIReceipt(element.refNumber)">
-            <mat-icon title="Print Receipt" color="primary">print</mat-icon>
-            {{'loi_download' | translate:translateKey}}
-          </button>
-
-          <button
-            *ngIf="(element.resourceType == 'STADIUM' || element.resourceType == 'CHILDREN_THEATER') && element.status == 'REFUND_APPROVED'"
-              mat-menu-item color="primary" (click)="refundAcknowledgemnt(element.refNumber,element.resourceType)">
-              <mat-icon title="Print Receipt" color="primary">print</mat-icon>
-              {{'refund_acknowledgment' | translate:translateKey}}
-            </button>
-
-            <!-- <button mat-menu-item color="primary" (click)="openJSONModal(template);jsonDisplay(element)">
-            <mat-icon class="m-1" title="{{'application_json' | translate:translateKey}}">center_focus_weak</mat-icon>
-            {{'application_json' | translate:translateKey}}
-          </button> -->
-
-        </mat-menu>
-      </mat-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </table>
-
-
-  <mat-paginator showFirstLastButtons [hidden]="resultsLength==0" [pageSizeOptions]="[5, 10, 25, 100]"
-                 [length]="resultsLength">
-  </mat-paginator>
-</div>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </table>
+    </div>
+    <mat-paginator showFirstLastButtons [hidden]="resultsLength==0" [pageSizeOptions]="[5, 10, 25, 100]"
+                   [length]="resultsLength">
+    </mat-paginator>
+  </div>
 
 
 <!-- The Cancel Request Modal -->
@@ -442,7 +449,7 @@
       </div>
       <div class="row">
         <mat-form-field class="col-md-12">
-          <input matInput OnlyNumber maxlength="16" minlength="16" type="text"
+          <input matInput OnlyNumber maxlength="16" minlength="9" type="text"
                  placeholder="{{'account_no' | translate: translateKey}}" required
                  formControlName="accountNumber">
           <control-messages [control]="refundBankDetailsForm.get('accountNumber')"></control-messages>
