@@ -368,8 +368,8 @@
 
                   <td>
                     <!-- <div class="col-sm-12 col-md-12 text-right"> -->
-                    <button mat-raised-button type="button" color="warn" style="margin-top: 22px;"
-                      (click)="onRemoveRowVendorType(index)">
+                    <button [hidden]="isPreviewVendorNameDetail" mat-raised-button type="button" color="warn"
+                      style="margin-top: 22px;" (click)="onRemoveRowVendorType(index)">
                       <mat-icon title="Cancel">cancel</mat-icon>
                     </button>
                     <!-- </div> -->
@@ -444,8 +444,8 @@
 
                       <td>
                         <!-- <div class="col-sm-12 col-md-12 text-right"> -->
-                        <button mat-raised-button type="button" color="warn" style="margin-top: 22px;"
-                          (click)="onRemoveRowItemMaterial(index)">
+                        <button [hidden]="isListOfItemMaterial" mat-raised-button type="button" color="warn"
+                          style="margin-top: 22px;" (click)="onRemoveRowItemMaterial(index)">
                           <mat-icon title="Cancel">cancel</mat-icon>
                         </button>
                         <!-- </div> -->
@@ -844,8 +844,8 @@
                   </td>
 
                   <td>
-                    <button mat-raised-button type="button" color="warn" style="margin-top: 22px;"
-                      (click)="onRemoveVendorRegisteredGovtDetail(index)">
+                    <button [hidden]="isRegisteredGovtDetail" mat-raised-button type="button" color="warn"
+                      style="margin-top: 22px;" (click)="onRemoveVendorRegisteredGovtDetail(index)">
                       <mat-icon title="Cancel">cancel</mat-icon>
                     </button>
                   </td>
@@ -912,8 +912,8 @@
                   </td>
 
                   <td>
-                    <button mat-raised-button type="button" color="warn" style="margin-top: 22px;"
-                      (click)="onRemoveVendorMahcineCapacity(index)">
+                    <button [hidden]="isInstalledMachineCapacities" mat-raised-button type="button" color="warn"
+                      style="margin-top: 22px;" (click)="onRemoveVendorMahcineCapacity(index)">
                       <mat-icon title="Cancel">cancel</mat-icon>
                     </button>
                   </td>
@@ -989,8 +989,8 @@
 
                   <td>
                     <!-- <div class="col-sm-12 col-md-12 text-right"> -->
-                    <button mat-raised-button type="button" color="warn" style="margin-top: 22px;"
-                      (click)="onRemoveacademicQualificationAndExperience(index)">
+                    <button [hidden]="isQualificationDetails" mat-raised-button type="button" color="warn"
+                      style="margin-top: 22px;" (click)="onRemoveacademicQualificationAndExperience(index)">
                       <mat-icon title="Cancel">cancel</mat-icon>
                     </button>
                     <!-- </div> -->
@@ -1253,8 +1253,8 @@
 
                   <td>
                     <!-- <div class="col-sm-12 col-md-12 text-right"> -->
-                    <button mat-raised-button type="button" color="warn" style="margin-top: 22px;"
-                      (click)="onRemovevendorNameAuthorized(index)">
+                    <button [hidden]="isVendorNameAuthorizedDetails" mat-raised-button type="button" color="warn"
+                      style="margin-top: 22px;" (click)="onRemovevendorNameAuthorized(index)">
                       <mat-icon title="Cancel">cancel</mat-icon>
                     </button>
                     <!-- </div> -->
@@ -1328,8 +1328,8 @@
 
                   <td>
                     <!-- <div class="col-sm-12 col-md-12 text-right"> -->
-                    <button mat-raised-button type="button" color="warn" style="margin-top: 22px;"
-                      (click)="onRemoveRowVendorTypeLastYear(index)">
+                    <button [hidden]="isVendorNameLastYearDetails" mat-raised-button type="button" color="warn"
+                      style="margin-top: 22px;" (click)="onRemoveRowVendorTypeLastYear(index)">
                       <mat-icon title="Cancel">cancel</mat-icon>
                     </button>
                     <!-- </div> -->
@@ -1415,8 +1415,8 @@
 
 
                   <td>
-                    <button mat-raised-button type="button" color="warn" style="margin-top: 22px;"
-                      (click)="onRemoveVendorDetailsOfOrderIndicationQuantity(index)">
+                    <button [hidden]="isSupplierOrderDetails" mat-raised-button type="button" color="warn"
+                      style="margin-top: 22px;" (click)="onRemoveVendorDetailsOfOrderIndicationQuantity(index)">
                       <mat-icon title="Cancel">cancel</mat-icon>
                     </button>
                   </td>
@@ -1528,8 +1528,8 @@
 
                     <td>
                       <!-- <div class="col-sm-12 col-md-12 text-right"> -->
-                      <button mat-raised-button color="warn" type="button" style="margin-top: 22px;"
-                        (click)="onRemovevendorNameholding(index)">
+                      <button [hidden]="isVendorNameHoldingDetails" mat-raised-button color="warn" type="button"
+                        style="margin-top: 22px;" (click)="onRemovevendorNameholding(index)">
                         <mat-icon title="Cancel">cancel</mat-icon>
                       </button>
                       <!-- </div> -->
