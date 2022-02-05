@@ -186,11 +186,10 @@ export class VendorRegistrationComponent implements OnInit {
       console.log("tresr", res)
       this.vendorRegistrationForm.patchValue(res);
       this.locationChange(res.applyingFor);
+      this.vendorRegistrationForm.disable();
       //this.showButtons = false;
-
       if (res.formStatus == 'PAYMENT_RECEIVED') {
         this.vendorRegistrationForm.get('canEdit').setValue(false);
-        this.vendorRegistrationForm.disable();
       }
 
       this.setServiceDetailsOnInit(res);
