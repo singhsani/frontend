@@ -198,49 +198,49 @@ export class VendorRegistrationComponent implements OnInit {
         this.vendorRegistrationForm.get('canEdit').setValue(false);
       }
 
-      res.vendorNameDetails.forEach(app => {
-        (<FormArray>this.vendorRegistrationForm.get('vendorNameDetails')).push(this.createFormGroupVendor('vendorNameDetails', app));
-      });
+      // res.vendorNameDetails.forEach(app => {
+      //   (<FormArray>this.vendorRegistrationForm.get('vendorNameDetails')).push(this.createFormGroupVendor('vendorNameDetails', app));
+      // });
       this.isPreviewVendorNameDetail = true;
 
-      res.vendorNameDetails.forEach(app => {
-        (<FormArray>this.vendorRegistrationForm.get('listOfItemMaterial')).push(this.createFormGroupVendor('listOfItemMaterial', app));
-      });
+      // res.vendorNameDetails.forEach(app => {
+      //   (<FormArray>this.vendorRegistrationForm.get('listOfItemMaterial')).push(this.createFormGroupVendor('listOfItemMaterial', app));
+      // });
       this.isListOfItemMaterial = true;
 
-      res.vendorNameDetails.forEach(app => {
-        (<FormArray>this.vendorRegistrationForm.get('vendorNameHoldingDetails')).push(this.createFormGroupVendor('vendorNameHoldingDetails', app));
-      });
+      // res.vendorNameDetails.forEach(app => {
+      //   (<FormArray>this.vendorRegistrationForm.get('vendorNameHoldingDetails')).push(this.createFormGroupVendor('vendorNameHoldingDetails', app));
+      // });
       this.isVendorNameHoldingDetails = true;
 
-      res.vendorNameDetails.forEach(app => {
-        (<FormArray>this.vendorRegistrationForm.get('vendorNameAuthorizedDetails')).push(this.createFormGroupVendor('vendorNameAuthorizedDetails', app));
-      });
+      // res.vendorNameDetails.forEach(app => {
+      //   (<FormArray>this.vendorRegistrationForm.get('vendorNameAuthorizedDetails')).push(this.createFormGroupVendor('vendorNameAuthorizedDetails', app));
+      // });
       this.isVendorNameAuthorizedDetails = true;
 
-      res.vendorNameDetails.forEach(app => {
-        (<FormArray>this.vendorRegistrationForm.get('vendorNameLastYearDetails')).push(this.createFormGroupVendor('vendorNameLastYearDetails', app));
-      });
+      // res.vendorNameDetails.forEach(app => {
+      //   (<FormArray>this.vendorRegistrationForm.get('vendorNameLastYearDetails')).push(this.createFormGroupVendor('vendorNameLastYearDetails', app));
+      // });
       this.isVendorNameLastYearDetails = true;
 
-      res.vendorNameDetails.forEach(app => {
-        (<FormArray>this.vendorRegistrationForm.get('supplierOrderDetails')).push(this.createFormGroupVendor('supplierOrderDetails', app));
-      });
+      // res.vendorNameDetails.forEach(app => {
+      //   (<FormArray>this.vendorRegistrationForm.get('supplierOrderDetails')).push(this.createFormGroupVendor('supplierOrderDetails', app));
+      // });
       this.isSupplierOrderDetails = true;
 
-      res.vendorNameDetails.forEach(app => {
-        (<FormArray>this.vendorRegistrationForm.get('qualificationDetails')).push(this.createFormGroupVendor('qualificationDetails', app));
-      });
+      // res.vendorNameDetails.forEach(app => {
+      //   (<FormArray>this.vendorRegistrationForm.get('qualificationDetails')).push(this.createFormGroupVendor('qualificationDetails', app));
+      // });
       this.isQualificationDetails = true;
 
-      res.vendorNameDetails.forEach(app => {
-        (<FormArray>this.vendorRegistrationForm.get('installedMachineCapacities')).push(this.createFormGroupVendor('installedMachineCapacities', app));
-      });
+      // res.vendorNameDetails.forEach(app => {
+      //   (<FormArray>this.vendorRegistrationForm.get('installedMachineCapacities')).push(this.createFormGroupVendor('installedMachineCapacities', app));
+      // });
       this.isInstalledMachineCapacities = true;
 
-      res.vendorNameDetails.forEach(app => {
-        (<FormArray>this.vendorRegistrationForm.get('registeredGovtDetail')).push(this.createFormGroupVendor('registeredGovtDetail', app));
-      });
+      // res.vendorNameDetails.forEach(app => {
+      //   (<FormArray>this.vendorRegistrationForm.get('registeredGovtDetail')).push(this.createFormGroupVendor('registeredGovtDetail', app));
+      // });
       this.isRegisteredGovtDetail = true;
 
 
