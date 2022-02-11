@@ -55,6 +55,7 @@ export class VendorRegistrationComponent implements OnInit {
   attachmentList: any = [];
   bankNameArray: any = [];
   vendorTypeFirm: any = [];
+  vendorTypeFirmUpdate: any = [];
   academicQualificationDes: any = [];
   public serverUploadFilesArray: Array<any> = [];
 
@@ -67,15 +68,20 @@ export class VendorRegistrationComponent implements OnInit {
   formId: number;
   showButtons: boolean = true;
   vendorArrayNameButtons: boolean = false;
+  isPreviewVendorNameDetail = false;
+  isListOfItemMaterial = false;
+  isVendorNameHoldingDetails = false;
+  isVendorNameAuthorizedDetails = false;
+  isVendorNameLastYearDetails = false;
+  isSupplierOrderDetails = false;
+  isQualificationDetails = false;
+  isInstalledMachineCapacities = false;
+  isRegisteredGovtDetail = false;
 
   vendorNameLastYear: FormArray;
-
   vendorNameAuthorized: FormArray;
-
   vendorNameholding: FormArray;
-
   academicQualificationAndExperience: FormArray;
-
   vendorDetailsOfOrderIndicationQuantity: FormArray;
 
   constructor(
@@ -184,16 +190,155 @@ export class VendorRegistrationComponent implements OnInit {
     this.formService.getFormData(id).subscribe(res => {
       console.log("tresr", res)
       this.vendorRegistrationForm.patchValue(res);
-      //this.showButtons = false;
+      this.locationChange(res.applyingFor);
 
-      if (res.formStatus == 'PAYMENT_RECEIVED') {
-        this.vendorRegistrationForm.get('canEdit').setValue(false);
+      //this.showButtons = false;
+      if (res.formStatus == 'PAYMENT_RECEIVED' || res.formStatus == 'SUBMITTED') {
         this.vendorRegistrationForm.disable();
+        this.vendorRegistrationForm.get('canEdit').setValue(false);
       }
+
+      // res.vendorNameDetails.forEach(app => {
+      //   (<FormArray>this.vendorRegistrationForm.get('vendorNameDetails')).push(this.createFormGroupVendor('vendorNameDetails', app));
+      // });
+      this.isPreviewVendorNameDetail = true;
+
+      // res.vendorNameDetails.forEach(app => {
+      //   (<FormArray>this.vendorRegistrationForm.get('listOfItemMaterial')).push(this.createFormGroupVendor('listOfItemMaterial', app));
+      // });
+      this.isListOfItemMaterial = true;
+
+      // res.vendorNameDetails.forEach(app => {
+      //   (<FormArray>this.vendorRegistrationForm.get('vendorNameHoldingDetails')).push(this.createFormGroupVendor('vendorNameHoldingDetails', app));
+      // });
+      this.isVendorNameHoldingDetails = true;
+
+      // res.vendorNameDetails.forEach(app => {
+      //   (<FormArray>this.vendorRegistrationForm.get('vendorNameAuthorizedDetails')).push(this.createFormGroupVendor('vendorNameAuthorizedDetails', app));
+      // });
+      this.isVendorNameAuthorizedDetails = true;
+
+      // res.vendorNameDetails.forEach(app => {
+      //   (<FormArray>this.vendorRegistrationForm.get('vendorNameLastYearDetails')).push(this.createFormGroupVendor('vendorNameLastYearDetails', app));
+      // });
+      this.isVendorNameLastYearDetails = true;
+
+      // res.vendorNameDetails.forEach(app => {
+      //   (<FormArray>this.vendorRegistrationForm.get('supplierOrderDetails')).push(this.createFormGroupVendor('supplierOrderDetails', app));
+      // });
+      this.isSupplierOrderDetails = true;
+
+      // res.vendorNameDetails.forEach(app => {
+      //   (<FormArray>this.vendorRegistrationForm.get('qualificationDetails')).push(this.createFormGroupVendor('qualificationDetails', app));
+      // });
+      this.isQualificationDetails = true;
+
+      // res.vendorNameDetails.forEach(app => {
+      //   (<FormArray>this.vendorRegistrationForm.get('installedMachineCapacities')).push(this.createFormGroupVendor('installedMachineCapacities', app));
+      // });
+      this.isInstalledMachineCapacities = true;
+
+      // res.vendorNameDetails.forEach(app => {
+      //   (<FormArray>this.vendorRegistrationForm.get('registeredGovtDetail')).push(this.createFormGroupVendor('registeredGovtDetail', app));
+      // });
+      this.isRegisteredGovtDetail = true;
+
 
       this.setServiceDetailsOnInit(res);
       //	this.sortedList.push(res);
     });
+  }
+
+  createFormGroupVendor(key: string, data: any): FormGroup {
+
+    let formGroupData: FormGroup;
+    switch (key) {
+      case 'vendorNameDetails':
+        formGroupData = this.fb.group({
+          ownerType: this.fb.group({
+            code: [{ value: data.ownerType.code ? data.ownerType.code : null, disabled: true }],
+            name: [{ value: data.ownerType.name ? data.ownerType.name : null, disabled: true }]
+          }),
+          ownerName: [{ value: data.ownerName ? data.ownerName : null, disabled: true }],
+          ownerAddress: [{ value: data.ownerAddress ? data.ownerAddress : null, disabled: true }],
+        })
+        break;
+
+      case 'listOfItemMaterial':
+        formGroupData = this.fb.group({
+          itemsMaterial: [{ value: data.itemsMaterial ? data.itemsMaterial : null, disabled: true }],
+          rating: [{ value: data.rating ? data.rating : null, disabled: true }],
+          description: [{ value: data.description ? data.description : null, disabled: true }],
+          isNumber: [{ value: data.isNumber ? data.isNumber : null, disabled: true }],
+        })
+        break;
+
+      case 'vendorNameHoldingDetails':
+        formGroupData = this.fb.group({
+          itemName: [{ value: data.itemName ? data.itemName : null, disabled: true }],
+          certificateDetail: [{ value: data.certificateDetail ? data.certificateDetail : null, disabled: true }],
+        })
+        break;
+
+      case 'vendorNameAuthorizedDetails':
+        formGroupData = this.fb.group({
+          authorized: [{ value: data.authorized ? data.authorized : null, disabled: true }],
+          contactNumber: [{ value: data.contactNumber ? data.contactNumber : null, disabled: true }],
+          address: [{ value: data.address ? data.address : null, disabled: true }]
+        })
+        break;
+
+      case 'vendorNameLastYearDetails':
+        formGroupData = this.fb.group({
+          companyName: [{ value: data.companyName ? data.companyName : null, disabled: true }],
+          purchasingItem: [{ value: data.purchasingItem ? data.purchasingItem : null, disabled: true }],
+          purchasingDate: [{ value: data.purchasingDate ? data.purchasingDate : null, disabled: true }],
+        })
+        break;
+
+      case 'supplierOrderDetails':
+        formGroupData = this.fb.group({
+          purchaserName: [{ value: data.purchaserName ? data.purchaserName : null, disabled: true }],
+          orderNumber: [{ value: data.orderNumber ? data.orderNumber : null, disabled: true }],
+          orderDate: [{ value: data.orderDate ? data.orderDate : null, disabled: true }],
+          quantitySuppliedCompletionDate:
+            [{ value: data.quantitySuppliedCompletionDate ? data.quantitySuppliedCompletionDate : null, disabled: true }],
+        })
+        break;
+
+      case 'qualificationDetails':
+        formGroupData = this.fb.group({
+          fullName: [{ value: data.fullName ? data.fullName : null, disabled: true }],
+          qualification: [{ value: data.qualification ? data.qualification : null, disabled: true }],
+          designation: this.fb.group({
+            code: [{ value: data.designation.code ? data.designation.code : null, disabled: true }],
+            name: [{ value: data.designation.name ? data.designation.name : null, disabled: true }]
+          }),
+          experienceInYears: [{ value: data.experienceInYears ? data.experienceInYears : null, disabled: true }]
+        })
+        break;
+
+      case 'installedMachineCapacities':
+        formGroupData = this.fb.group({
+          nameOfMachinery: [{ value: data.nameOfMachinery ? data.nameOfMachinery : null, disabled: true }],
+          workingProcessDetail: [{ value: data.workingProcessDetail ? data.workingProcessDetail : null, disabled: true }],
+          productionCapacityWorking: [{ value: data.productionCapacityWorking ? data.productionCapacityWorking : null, disabled: true }],
+        })
+        break;
+
+      case 'registeredGovtDetail':
+        formGroupData = this.fb.group({
+          nameOfAuthority: [{ value: data.nameOfAuthority ? data.nameOfAuthority : null, disabled: true }],
+          registrationDate: [{ value: data.registrationDate ? data.registrationDate : null, disabled: true }],
+          validityFrom: [{ value: data.validityFrom ? data.validityFrom : null, disabled: true }],
+          validityTo: [{ value: data.validityTo ? data.validityTo : null, disabled: true }],
+        })
+        break;
+
+      default:
+        break;
+    }
+    return formGroupData;
   }
 
   setServiceDetailsOnInit(res) {
@@ -226,6 +371,7 @@ export class VendorRegistrationComponent implements OnInit {
       this.manuFacturDetails = res.VENDOR_MANUFACTURING_OWNED;
       this.academicQualificationDes = res.ACEDEMIC_QUALIFICATION_DESC;
       this.vendorTypeFirm = res.VENDOR_TYPE_FIRM;
+      this.vendorTypeFirmUpdate = res.VENDOR_TYPE_FIRM;
     });
   }
 
@@ -278,7 +424,7 @@ export class VendorRegistrationComponent implements OnInit {
       vendorNameDetails: this.vendorNameArray,
       vendorNameLastYearDetails: this.vendorNameLastYear,
       vendorNameAuthorizedDetails: this.vendorNameAuthorized,
-      vendorNameholdingDetails: this.vendorNameholding,
+      vendorNameHoldingDetails: this.vendorNameholding,
       supplierOrderDetails: this.vendorDetailsOfOrderIndicationQuantity,
 
       installedMachineCapacities: this.vendorMachinesCapacities,
@@ -309,11 +455,11 @@ export class VendorRegistrationComponent implements OnInit {
       buildingPermissionDetail: null,
       factoryLicenseStartDate: [null],
       factoryLicenseEndDate: [null],
-      MSMENSICSSICertificateStartDate: [null],
-      MSMENSICSSICertificateEndDate: [null],
+      certificateMSMENSISSIStartDate: [null],
+      certificateMSMENSISSIEndDate: [null],
 
       productManufacturedISI: [null],
-      ISIBISCElicences: null,
+      licencesISIBISCE: null,
       totalInvestmentDetail: [null],
       lastThreeYearsCopies: [null],
       copyOfITCClearanceCertificate: [null],
@@ -323,7 +469,6 @@ export class VendorRegistrationComponent implements OnInit {
       personInChargeProductionControl: [null],
       firmUnderDealBlacklisted: [null],
       resultSampleTesting: [null],
-      MSMENSICSSIcertificateEndDate: null,
 
       totalTurnoverLastThreeYears: null,
       loanCapitalWithBankLimit: null,
@@ -441,6 +586,11 @@ export class VendorRegistrationComponent implements OnInit {
   }
 
   typeOfFirmChange(event) {
+
+    this.vendorTypeFirm = [...this.vendorTypeFirmUpdate];
+    this.vendorRegistrationForm.get('vendorNameDetails').reset();
+    this.vendorTypeFirm = this.vendorTypeFirm.filter(o => o.code === event.value);
+
     if (event.value == 'PROPRIETORSHIP') {
       this.vendorArrayNameButtons = true;
     } else {
@@ -499,6 +649,38 @@ export class VendorRegistrationComponent implements OnInit {
       registrationDate: null,
       validityFrom: null,
       validityTo: null
+    });
+  }
+
+  createEducationQualification(): FormGroup {
+    return this.fb.group({
+      fullName: null,
+      qualification: null,
+      designation: this.fb.group({
+        code: null,
+        name: null
+      }),
+      experienceInYears: null,
+    });
+  }
+
+  createVendorNameArray(): FormGroup {
+    return this.fb.group({
+      ownerType: this.fb.group({
+        code: null,
+        name: null
+      }),
+      ownerName: null,
+      ownerAddress: null
+    });
+  }
+
+  createDetailsOfIndicatingQuantity(): FormGroup {
+    return this.fb.group({
+      purchaserName: null,
+      orderNumber: null,
+      orderDate: null,
+      quantitySuppliedCompletionDate: null
     });
   }
 
@@ -563,18 +745,6 @@ export class VendorRegistrationComponent implements OnInit {
     this.listOfItemMaterialSupplier.removeAt(rowIndex);
   }
 
-  createEducationQualification(): FormGroup {
-    return this.fb.group({
-      fullName: null,
-      qualification: null,
-      designation: this.fb.group({
-        code: null,
-        name: null
-      }),
-      experienceInYears: null,
-    });
-  }
-
   addRowVendorName() {
     this.vendorNameArray.push(this.createVendorNameArray());
   }
@@ -582,27 +752,6 @@ export class VendorRegistrationComponent implements OnInit {
   onRemoveRowVendorName(rowIndex: number) {
     this.vendorNameArray.removeAt(rowIndex);
   }
-
-  createVendorNameArray(): FormGroup {
-    return this.fb.group({
-      ownerType: this.fb.group({
-        code: null,
-        name: null
-      }),
-      ownerName: null,
-      ownerAddress: null
-    });
-  }
-
-  createDetailsOfIndicatingQuantity(): FormGroup {
-    return this.fb.group({
-      purchaserName: null,
-      orderNumber: null,
-      orderDate: null,
-      quantitySuppliedCompletionDate: null
-    });
-  }
-
 
   onRemoveRowVendorType(rowIndex: number) {
     this.vendorNameArray.removeAt(rowIndex);
@@ -832,7 +981,7 @@ export class VendorRegistrationComponent implements OnInit {
       "headAlterMobileNumber": "7485967485",
       "headISDNumber": "7485967485",
       "headSTDNumber": "7485967485",
-      "ISIBISCElicences": "7485967485"
+      "licencesISIBISCE": "7485967485"
 
     }
 

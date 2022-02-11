@@ -14,6 +14,7 @@ import { MarriageCreateComponent } from './marriage-create/marriage-create.compo
 import { MarriageDuplicateComponent } from './marriage-duplicate/marriage-duplicate.component';
 /* Import marriage certificate components end */
 import { FilterAttachmentMRPipe } from './filter-attachment-MR.pipe';
+import { MarriageAvailableSlotsComponent } from './marriage-available-slots/marriage-available-slots.component';
 
 const routes: Routes = [
 	{ path: '', component: MarriageCreateComponent },
@@ -33,7 +34,8 @@ const routes: Routes = [
 	declarations: [
 		MarriageCreateComponent,
 		MarriageDuplicateComponent,
-		FilterAttachmentMRPipe
+		FilterAttachmentMRPipe,
+		MarriageAvailableSlotsComponent
 	]
 })
 export class MarriageModule { }

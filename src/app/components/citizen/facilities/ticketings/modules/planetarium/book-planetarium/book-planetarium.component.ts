@@ -401,7 +401,7 @@ export class BookPlanetariumComponent implements OnInit {
       status: null,
       refNumber: null,
       bookingFormId : null,
-      remainSeats:[{value: null, disabled: true}],
+      remainSeats:[{value: null}],
       resourceType: null,
       payableServiceType: null,
       resourceCode: 'SARDAR_PATEL_PLANETARIUM',
@@ -411,12 +411,12 @@ export class BookPlanetariumComponent implements OnInit {
       }),
       visitingDate: [moment().format('YYYY-MM-DD'), [Validators.required]],
       showCategory: this._fb.group({
-        name: [null, [Validators.required]],
-        code: ['PLANETARIUM_GENERAL_SHOW', [Validators.required]]
+        name: [null],
+        code: ['PLANETARIUM_GENERAL_SHOW']
       }),
       planetariumShowTiming: this._fb.group({
         name: null,
-        code: [null, Validators.required]
+        code: [null]
       }),
       specialShowLanguage: this._fb.group({
         name: null,
@@ -426,16 +426,16 @@ export class BookPlanetariumComponent implements OnInit {
       totalVisitor: [null],
       visitors: this._fb.group({
         name: null,
-        code: [null, Validators.required]
+        code: [null]
       }),
-      rate: [{ value: null, disabled: true }],
-      amount: [{ value: null, disabled: true }],
+      rate: [{ value: null }],
+      amount: [null],
 
       showStartTime: null,
       showEndTime: null,
 
       schoolName: null,
-      schoolMobileNumber: [null, Validators.required],
+      schoolMobileNumber: [null],
       schoolEmailId: [null],
 
       shiftType: null,
@@ -517,6 +517,8 @@ export class BookPlanetariumComponent implements OnInit {
       this.ticketBookingForm.get('planetariumShowTiming.code').clearValidators();
       this.ticketBookingForm.get('idType.code').clearValidators();
       this.ticketBookingForm.get('idNumber').clearValidators();
+      this.ticketBookingForm.controls['applicantMobile'].setErrors(null); 
+      this.ticketBookingForm.controls['totalVisitor'].setErrors(null);
 
       //visitor rate chart
       this.visitorRateChartCall();
@@ -538,11 +540,13 @@ export class BookPlanetariumComponent implements OnInit {
       this.ticketBookingForm.get('planetariumShowTiming.code').setValidators([Validators.required]);
       this.ticketBookingForm.get('idType.code').setValidators([Validators.required]);
       this.ticketBookingForm.get('idNumber').setValidators([Validators.required, Validators.maxLength(4), Validators.minLength(4)]);
-
+      this.ticketBookingForm.get('schoolMobileNumber').clearValidators();
       this.ticketBookingForm.get('schoolName').clearValidators();
       this.ticketBookingForm.get('schoolEmailId').clearValidators();
       this.ticketBookingForm.get('specialShowLanguage.code').clearValidators();
       this.ticketBookingForm.get('totalVisitor').clearValidators();
+      this.ticketBookingForm.controls['schoolMobileNumber'].setErrors(null);
+
       //visitor rate chart
       this.visitorRateChartCall();
     }
@@ -678,6 +682,8 @@ export class BookPlanetariumComponent implements OnInit {
       this.commonService.openAlert('Field Error', this.ticketingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning');
       this.markFormGroupTouched(this.ticketBookingForm);
     }
+    this.printFormInvalidControl(this.ticketBookingForm," ");
+
   }
 
   /**
@@ -742,6 +748,7 @@ export class BookPlanetariumComponent implements OnInit {
           }
         });
     }
+    this.printFormInvalidControl(this.ticketBookingForm," ");
 
   }
 
@@ -753,5 +760,18 @@ export class BookPlanetariumComponent implements OnInit {
     }
   }
 
+  printFormInvalidControl(form,indent) {
+    for (const field in form.controls) { // 'field' is a string
+      if (!form.get(field).valid) {
+        console.log(indent + field);
+        const innerForm =form.get(field) as FormGroup;
+        if(innerForm && innerForm.controls ) {
+          this.printFormInvalidControl(innerForm, indent + " ");	
+        } 	
+        
+      }; // 'control' is a FormControl  
+
+    }
+  }
 
 }

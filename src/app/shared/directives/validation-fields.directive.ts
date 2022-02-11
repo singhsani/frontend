@@ -96,6 +96,29 @@ export class ValidationFieldsDirective {
         }
         break;
 
+        case "appAlphanumericNumberWithDashAndComa":
+        // if ([8, 9, 13, 27, 46].indexOf(e.keyCode) !== -1) {
+        //   return;
+        // }
+
+        if ([8, 9, 13, 27, 46].indexOf(e.keyCode) !== -1 ||
+          // Allow: Ctrl+A
+          (e.keyCode === 65 && (e.ctrlKey || e.metaKey)) ||
+          // Allow: Ctrl+C
+          (e.keyCode === 67 && (e.ctrlKey || e.metaKey)) ||
+          // Allow: Ctrl+V
+          (e.keyCode === 86 && (e.ctrlKey || e.metaKey)) ||
+          // Allow: Ctrl+X
+          (e.keyCode === 88 && (e.ctrlKey || e.metaKey)) ||
+          // Allow: home, end, left, right
+          (e.keyCode >= 35 && e.keyCode <= 39)) {
+          // let it happen, don't do anything
+          return;
+        }
+
+        
+        break; 
+
       case "appAddressAllowed":
         // if ([8, 9, 13, 27, 46].indexOf(e.keyCode) !== -1) {
         //   return;
@@ -179,6 +202,11 @@ export class ValidationFieldsDirective {
           this.el.nativeElement.value = this.el.nativeElement.value.replace(/[^A-Za-z0-9]/g, '')
           event.preventDefault();
           break;
+
+          case "appAlphanumericNumberWithDashAndComa":
+            this.el.nativeElement.value = this.el.nativeElement.value.replace(/[^_.()0-9a-zA-Z\s,-]+$/g, '')
+            event.preventDefault();
+            break;  
 
         case "appAddressAllowed":
           this.el.nativeElement.value = this.el.nativeElement.value.replace(/[^#.0-9a-zA-Z\s,-]+$/g, '')

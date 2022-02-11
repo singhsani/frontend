@@ -34,6 +34,7 @@ export class ValidationService {
             invalidPinCode: `Pin Code Not Valid`,
             invalidAadhar: `Invalid Aadhar Number`,
             invalidNumber: `Invalid Mobile Number`,
+            invalidNumberVehcile: `Maximum Length is 10 digit`,
             invalidFaxNumber: `Invalid Fax Number`,
             invalidpregnanceTime: 'Pregnancy duration between 25 to 40',
             invalidbirthRegNumber: 'Invalid Birth Registration Date',
@@ -184,6 +185,16 @@ export class ValidationService {
         if (control.value) {
             const matches = control.value.match(/^[0-9]{10,10}$/);
             return matches ? null : { 'invalidNumber': true };
+        } else {
+            return null;
+        }
+    }
+
+    static mobileNumberValidationVehicle(control: AbstractControl) {
+        // RFC 2822 compliant regex
+        if (control.value) {
+            const matches = control.value.match(/^[0-9]{10,10}$/);
+            return matches ? null : { 'invalidNumberVehcile': true };
         } else {
             return null;
         }

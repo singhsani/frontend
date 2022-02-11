@@ -12,7 +12,7 @@
 		</h4>
 
 		<!-- <h6 class="mt-4">
-			Order ID: {{responseObj.order_id}} | Transaction ID: {{responseObj.bank_ref_no}} <br> 
+			Order ID: {{responseObj.order_id}} | Transaction ID: {{responseObj.bank_ref_no}} <br>
 			Payment Type : {{responseObj.payment_method_type == 'netbanking' ? 'Online' : 'Offline'}} | Service Name : {{resourceType}}
 		</h6> -->
 	</div>
@@ -31,7 +31,7 @@
 			</div>
 			<div class="row">
 				<div class="col mb-2">
-					Amount Paid : &#8377; &nbsp;{{responseObj.mer_amount}}
+					Amount Paid : &#8377; &nbsp;{{paidAmount}}
 				</div>
 				<div class="col">
 					<!-- Reference Number : &nbsp;{{responseObj.bank_ref_no}} -->
@@ -40,7 +40,7 @@
 			</div>
 			<div class="row">
 				<div class="col mb-2">
-					Balance Amount : &#8377; &nbsp;{{responseObj.mer_amount}}
+					Balance Amount : &#8377; &nbsp;{{paidAmount}}
 				</div>
 				<div class="col">
 					Transaction Date : &nbsp;{{responseObj.trans_date}}
@@ -104,7 +104,7 @@
 					Amount Paid : &#8377; &nbsp;{{responseObj.txnAmount}}
 				</div>
 				<div class="col">
-					Transaction ID: &nbsp; {{responseObj.transactionid}} 
+					Transaction ID: &nbsp; {{responseObj.transactionid}}
 					<!-- Transaction Number : &nbsp;{{responseObj.transactionid}} -->
 				</div>
 			</div>
@@ -125,7 +125,7 @@
 					Order ID: &nbsp; {{responseObj.order_id}}
 				</div>
 			</div>
-			
+
 			<div class="row">
 				<div class="col mb-3">
 					Transaction Failed Detail: {{responseObj.transaction_error_desc}}
@@ -161,7 +161,7 @@
 			Order ID: {{responseObj.order_id}} | Transaction ID: {{responseObj.transactionid}} <br>
 			Payment Type : {{responseObj.payment_method_type == 'netbanking' ? 'Online' :'Offline'}}
 		</h6> -->
-	
+
 		<div>
 			<h5 class="payDetails">Payment Details</h5>
 			<mat-card class="cardDetail">
@@ -170,7 +170,7 @@
 						Amount Paid : &#8377; &nbsp;{{responseObj.txnAmount}}
 					</div>
 					<div class="col">
-						Transaction ID: &nbsp; {{responseObj.transactionid}} 
+						Transaction ID: &nbsp; {{responseObj.transactionid}}
 						<!-- Transaction Number : &nbsp;{{responseObj.transactionid}} -->
 					</div>
 				</div>
@@ -182,7 +182,7 @@
 						Transaction Date : &nbsp;{{responseObj.trans_date}}
 					</div>
 				</div>
-	
+
 				<div class="row">
 					<div class="col mb-2">
 						Payment Type : &nbsp; {{responseObj.payment_method_type == 'netbanking' ? 'Online' :'Offline'}}
@@ -191,7 +191,7 @@
 						Order ID: &nbsp; {{responseObj.order_id}}
 					</div>
 				</div>
-				
+
 				<div class="row">
 					<div class="col mb-3">
 						Transaction Detail: {{responseObj.transaction_error_desc}}
@@ -228,7 +228,7 @@
 				Order ID: {{responseObj.order_id}} | Transaction ID: {{responseObj.transactionid}} <br>
 				Payment Type : {{responseObj.payment_method_type == 'netbanking' ? 'Online' :'Offline'}}
 			</h6> -->
-		
+
 			<div>
 				<h5 class="payDetails">Payment Details</h5>
 				<mat-card class="cardDetail">
@@ -237,7 +237,7 @@
 							Amount Paid : &#8377; &nbsp;{{responseObj.txnAmount}}
 						</div>
 						<div class="col">
-							Transaction ID: &nbsp; {{responseObj.transactionid}} 
+							Transaction ID: &nbsp; {{responseObj.transactionid}}
 							<!-- Transaction Number : &nbsp;{{responseObj.transactionid}} -->
 						</div>
 					</div>
@@ -249,7 +249,7 @@
 							Transaction Date : &nbsp;{{responseObj.trans_date}}
 						</div>
 					</div>
-		
+
 					<div class="row">
 						<div class="col mb-2">
 							Payment Type : &nbsp; {{responseObj.payment_method_type == 'netbanking' ? 'Online' :'Offline'}}
@@ -258,7 +258,7 @@
 							Order ID: &nbsp; {{responseObj.order_id}}
 						</div>
 					</div>
-					
+
 					<div class="row">
 						<div class="col mb-3">
 							Transaction Detail: {{responseObj.transaction_error_desc}}
@@ -286,7 +286,7 @@
 		<mat-icon class="failedIcon">error</mat-icon>
 		<h1 class="errorMessage">Your payment failed</h1>
 		<h4>Please try after some time</h4>
-	
+
 		<div>
 			<h5 class="payDetails">Payment Details</h5>
 			<mat-card class="cardDetail">
@@ -322,17 +322,17 @@
 			</p>
 		</div>
 
-		
+
 
 	</div>
 	<ng-template #elseCondition>
 		<div *ngIf="responseObj.order_status != 'Success'">
 		<div class="conatiner text-center">
-			
+
 		<mat-icon class="failedIcon">error</mat-icon>
 		<h1 class="errorMessage">Your payment failed</h1>
 		<h4>Please try after some time</h4>
-	
+
 		<div>
 			<h5 class="payDetails">Payment Details</h5>
 			<mat-card class="cardDetail">
@@ -357,7 +357,7 @@
 						Reason : {{responseObj.failure_message}}
 					</div>
 				</div>
-			</mat-card>	
+			</mat-card>
 		</div>
 		<div class="mt-4">
 			<p style="font-size: 14px;">You will be automatically redirect to home page after

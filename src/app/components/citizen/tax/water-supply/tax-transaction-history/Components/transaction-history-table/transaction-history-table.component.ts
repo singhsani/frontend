@@ -16,7 +16,7 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 export class TransactionHistoryTableComponent implements OnInit {
 
   subscription: Subscription;
-  displayedColumns: string[] = ['date', 'transactionType', 'applicationNo', 'approvalDate'];
+  displayedColumns: string[] = ['date', 'transactionType', 'applicationNo', 'approvalDate', 'isObjectionalRevaluation'];
   dataSource: any = [];
   @ViewChild(MatSort) sort: MatSort;
 
