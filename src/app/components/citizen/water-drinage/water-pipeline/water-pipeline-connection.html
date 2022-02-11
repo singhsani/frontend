@@ -3,12 +3,20 @@
 		Patch Value
 	</button> -->
 </app-title-bar>
-
 <mat-card class="formClass cardBorder">
 	<form [formGroup]="waterPipeliConnectionForm">
 
 		<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
-
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>Applicant Details</div>
+				</ng-template>
+				<app-applicant-detail-drainagewater (applicantDetails)="saveApplicantDetails($event)"
+					[serviceType]="'HEL_WTR_PIPELINE'">
+				</app-applicant-detail-drainagewater>
+				<app-action-bar [form]="waterPipeliConnectionForm" (tabIndex)="onTabChange($event)"
+					[stepInfo]="{step: 'step1', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+			</mat-tab>
 			<!-- step 1 Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
@@ -140,7 +148,7 @@
 
 				</div>
 				<app-action-bar [form]="waterPipeliConnectionForm" (tabIndex)="onTabChange($event)"
-					[stepInfo]="{step: 'step1', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					[stepInfo]="{step: 'step2', next: 2, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 			</mat-tab>
 			<!-- step 1 Ends -->
 
@@ -205,7 +213,7 @@
 					</mat-form-field>
 				</div>
 				<app-action-bar [form]="waterPipeliConnectionForm" (tabIndex)="onTabChange($event)"
-					[stepInfo]="{step: 'step2', next: 2, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					[stepInfo]="{step: 'step3', next: 3, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 			</mat-tab>
 			<!-- step 2 Ends -->
 
@@ -321,7 +329,7 @@
 					
 				</div>
 				<app-action-bar [form]="waterPipeliConnectionForm" (tabIndex)="onTabChange($event)"
-					[stepInfo]="{step: 'step3', next: 3, back: 1}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					[stepInfo]="{step: 'step4', next: 4, back: 1}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 			</mat-tab>
 			<!-- step 3 Ends -->
 
@@ -346,7 +354,7 @@
 				</div>
 				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray"
 					[form]="waterPipeliConnectionForm" (tabIndex)="onTabChange($event)"
-					[stepInfo]="{step: 'final', next: 4, back: 2}" (handleErrors)="handleErrorsOnSubmit($event)">
+					[stepInfo]="{step: 'final', next: 5, back: 2}" (handleErrors)="handleErrorsOnSubmit($event)">
 				</app-action-bar>
 			</mat-tab>
 			<!-- Tab 4 End -->

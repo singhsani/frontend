@@ -68,6 +68,7 @@ import { CollectionService } from '../components/citizen/tax/water-supply/tax-tr
 import { MaskRegistrationNumVtDirective } from './directives/mask-registration-num-vt.directive';
 import { PropertyOccupierSearchComponent } from '../vmcshared/component/property-occupier-search/property-occupier-search.component';
 import { YearPickerComponent } from './components/year-picker/year-picker.component';
+import { ApplicantDetailDrainagewaterComponent } from './components/applicant-detail-drainagewater/applicant-detail-drainagewater.component';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -109,8 +110,8 @@ const COMPONENTS = [
 	BankDetailsBookingComponent,
 	AppMonthPicker,
 	MaskRegistrationNumVtDirective,
-	YearPickerComponent
-
+	YearPickerComponent,
+	ApplicantDetailDrainagewaterComponent
 ]
 
 @NgModule({

@@ -333,33 +333,6 @@ export class WaterPipelineConnection implements OnInit {
     this.requiredDocumentList();
   }
 
-
-  // setValidatonForbusinessCategorie() {
-
-  //   if (this.waterPipeliConnectionForm.get('regLicType').get('code').value === 'FOOD_REG_LIC_MULTIPLE' && this.waterPipeliConnectionForm.get('businessTurnOver').get('code').value === 'LESS_THAN_12LK' && this.waterPipeliConnectionForm.get('businessType').get('code').value === 'FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE') {
-  //     this.waterPipeliConnectionForm.get('businessCategories').setValidators(Validators.required);
-  //     this.waterPipeliConnectionForm.get('businessCategories').markAsTouched();
-  //     this.waterPipeliConnectionForm.get('singleBusinessCategorie').clearValidators();
-  //   }
-  //   if (this.waterPipeliConnectionForm.get('regLicType').get('code').value === 'FOOD_REG_LIC_SINGLE' && this.waterPipeliConnectionForm.get('businessTurnOver').get('code').value === 'LESS_THAN_12LK' && this.waterPipeliConnectionForm.get('businessType').get('code').value === 'FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE') {
-  //     this.waterPipeliConnectionForm.get('singleBusinessCategorie').setValidators(Validators.required);
-  //     this.waterPipeliConnectionForm.get('singleBusinessCategorie').markAsTouched();
-  //     this.waterPipeliConnectionForm.get('businessCategories').clearValidators();
-  //   }
-  //   if (this.waterPipeliConnectionForm.get('regLicType').get('code').value === 'FOOD_REG_LIC_MULTIPLE' && this.waterPipeliConnectionForm.get('businessTurnOver').get('code').value === 'LESS_THAN_12LK' && this.waterPipeliConnectionForm.get('businessType').get('code').value === 'FOOD_OTHER') {
-  //     this.waterPipeliConnectionForm.get('businessCategories').setValidators(Validators.required);
-  //     this.waterPipeliConnectionForm.get('businessCategories').markAsTouched();
-  //     this.waterPipeliConnectionForm.get('singleBusinessCategorie').clearValidators();
-  //   }
-  //   if (this.waterPipeliConnectionForm.get('regLicType').get('code').value === 'FOOD_REG_LIC_SINGLE' && this.waterPipeliConnectionForm.get('businessTurnOver').get('code').value === 'LESS_THAN_12LK' && this.waterPipeliConnectionForm.get('businessType').get('code').value === 'FOOD_OTHER') {
-  //     this.waterPipeliConnectionForm.get('singleBusinessCategorie').setValidators(Validators.required);
-  //     this.waterPipeliConnectionForm.get('singleBusinessCategorie').markAsTouched();
-  //     this.waterPipeliConnectionForm.get('businessCategories').clearValidators();
-  //   }
-  //   this.waterPipeliConnectionForm.get('singleBusinessCategorie').updateValueAndValidity();
-  //   this.waterPipeliConnectionForm.get('businessCategories').updateValueAndValidity();
-  // }
-
   /**
    * This method required for final form submition.
    * @param flag - flag of invalid control.
@@ -367,40 +340,14 @@ export class WaterPipelineConnection implements OnInit {
   handleErrorsOnSubmit(flag) {
 
     const key = this.bookingUtils.getInvalidFormControlKey(this.waterPipeliConnectionForm);
-		const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 1;
-		if (index) {
-			this.tabIndex = index - 1;
-			return false;
-		}
-    // console.log("flag", flag);
-    // let step0 = 12;
-    // let step1 = 18;
-    // let step2 = 28;
-
-    // if (flag != null) {
-    //   //Check validation for step by step
-    //   let count = flag;
-
-    //   if (count <= step0) {
-    //     this.tabIndex = 0;
-    //     return false;
-    //   } else if (count <= step1) {
-    //     this.tabIndex = 1;
-    //     return false;
-    //   }
-    //   else if (count <= step2) {
-    //     this.tabIndex = 2;
-    //     //	this.checkReligion();
-    //     return false;
-    //   }
-    //   else {
-    //     console.log("else condition");
-    //   }
-
-    // }
+    const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 1;
+    if (index) {
+      this.tabIndex = index - 1;
+      return false;
+    }
   }
 
-	/**
+  /**
 	 * This method use to get output event of tab change
 	 * @param evt - Tab index
 	 */
@@ -481,8 +428,7 @@ export class WaterPipelineConnection implements OnInit {
         return { range: true }
       }
     }
-    
-  };
+  }
 
 
   getWardZoneLevel() {
@@ -553,34 +499,34 @@ export class WaterPipelineConnection implements OnInit {
       },
       (error) => {
         console.log('error', error);
-      })
+      });
   }
 
   setFormControlToTabIndexMap() {
     // tab 1
-    this.formControlNameToTabIndex.set('schemeName', 1)
-    this.formControlNameToTabIndex.set('societyName', 1)
-    this.formControlNameToTabIndex.set('propertyAddress', 1)
-    this.formControlNameToTabIndex.set('waterPipelineZoneId', 1)
-    this.formControlNameToTabIndex.set('waterPipelineWardId', 1)
-    this.formControlNameToTabIndex.set('pinCode', 1)
-    
+    this.formControlNameToTabIndex.set('schemeName', 2);
+    this.formControlNameToTabIndex.set('societyName', 2);
+    this.formControlNameToTabIndex.set('propertyAddress', 2);
+    this.formControlNameToTabIndex.set('waterPipelineZoneId', 2);
+    this.formControlNameToTabIndex.set('waterPipelineWardId', 2);
+    this.formControlNameToTabIndex.set('pinCode', 1);
+
     // tab 2
-    this.formControlNameToTabIndex.set('developerFullName', 2)
-    this.formControlNameToTabIndex.set('developerAddress', 2)
-    this.formControlNameToTabIndex.set('developerMobileNo', 2)
-    this.formControlNameToTabIndex.set('reraRegNo', 2)
-    this.formControlNameToTabIndex.set('reraRegistrationDate', 2)
+    this.formControlNameToTabIndex.set('developerFullName', 3);
+    this.formControlNameToTabIndex.set('developerAddress', 3);
+    this.formControlNameToTabIndex.set('developerMobileNo', 3);
+    this.formControlNameToTabIndex.set('reraRegNo', 3);
+    this.formControlNameToTabIndex.set('reraRegistrationDate', 3);
 
     // tab 3
-    this.formControlNameToTabIndex.set('contractorFullName', 3)
-    this.formControlNameToTabIndex.set('contractorMobileNo', 3)
-    this.formControlNameToTabIndex.set('contractorAddress', 3)
-    this.formControlNameToTabIndex.set('registrationNumber', 3)
-    this.formControlNameToTabIndex.set('registrationDate', 3)
-    this.formControlNameToTabIndex.set('registrationClass', 3)
-    this.formControlNameToTabIndex.set('workExecutionFromAmount', 3)
-    this.formControlNameToTabIndex.set('workExecutionToAmount', 3)
+    this.formControlNameToTabIndex.set('contractorFullName', 4);
+    this.formControlNameToTabIndex.set('contractorMobileNo', 4);
+    this.formControlNameToTabIndex.set('contractorAddress', 4);
+    this.formControlNameToTabIndex.set('registrationNumber', 4);
+    this.formControlNameToTabIndex.set('registrationDate', 4);
+    this.formControlNameToTabIndex.set('registrationClass', 4);
+    this.formControlNameToTabIndex.set('workExecutionFromAmount', 4);
+    this.formControlNameToTabIndex.set('workExecutionToAmount', 4);
 
   }
 
