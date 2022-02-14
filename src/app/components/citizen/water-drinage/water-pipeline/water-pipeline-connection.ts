@@ -14,6 +14,9 @@ import { TaxRebateApplicationService } from '../../tax/property/tax-rebate-appli
 import { Constants } from '../../../../vmcshared/Constants';
 import { BookingUtils } from '../../facilities/bookings/config/booking-config';
 import { ToastrService } from 'ngx-toastr';
+import { ApplicantDetailDTO } from '../../tax/Models/applicant-details.model';
+import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
+import { CommonService } from 'src/app/vmcshared/Services/common-service';
 
 @Component({
   selector: 'water-pipeline-connection',
@@ -80,6 +83,8 @@ export class WaterPipelineConnection implements OnInit {
     private formService: FormsActionsService,
     private taxRebateApplicationService: TaxRebateApplicationService,
     private toaster: ToastrService,
+    private addressService: ApplicantAddressService,
+    private commonService: CommonService
   ) { 
     this.bookingUtils = new BookingUtils(formService, toaster);
   }
@@ -503,22 +508,22 @@ export class WaterPipelineConnection implements OnInit {
   }
 
   setFormControlToTabIndexMap() {
-    // tab 1
+    // tab 2
     this.formControlNameToTabIndex.set('schemeName', 2);
     this.formControlNameToTabIndex.set('societyName', 2);
     this.formControlNameToTabIndex.set('propertyAddress', 2);
     this.formControlNameToTabIndex.set('waterPipelineZoneId', 2);
     this.formControlNameToTabIndex.set('waterPipelineWardId', 2);
-    this.formControlNameToTabIndex.set('pinCode', 1);
+    this.formControlNameToTabIndex.set('pinCode', 2);
 
-    // tab 2
+    // tab 3
     this.formControlNameToTabIndex.set('developerFullName', 3);
     this.formControlNameToTabIndex.set('developerAddress', 3);
     this.formControlNameToTabIndex.set('developerMobileNo', 3);
     this.formControlNameToTabIndex.set('reraRegNo', 3);
     this.formControlNameToTabIndex.set('reraRegistrationDate', 3);
 
-    // tab 3
+    // tab 4
     this.formControlNameToTabIndex.set('contractorFullName', 4);
     this.formControlNameToTabIndex.set('contractorMobileNo', 4);
     this.formControlNameToTabIndex.set('contractorAddress', 4);
@@ -530,5 +535,14 @@ export class WaterPipelineConnection implements OnInit {
 
   }
 
+  saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
+    this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
+         (data) => {
+           this.commonService.applicationNo = data.body.applicationNo;
+         },
+         (error) => {
+           this.commonService.callErrorResponse(error);
+         });
+   }
 
 }

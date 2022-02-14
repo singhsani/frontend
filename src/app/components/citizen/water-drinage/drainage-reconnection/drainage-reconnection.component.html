@@ -8,6 +8,19 @@
 			<!-- step 1 Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
+					<div>Applicant Details</div>
+				</ng-template>
+				<app-applicant-detail-drainagewater (applicantDetails)="saveApplicantDetails($event)"
+					[serviceType]="'HEL-WTR-DRAINAGE-RECONNECTION'">
+				</app-applicant-detail-drainagewater>
+				<app-action-bar [form]="drainageReconnectionForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
+					[stepInfo]="{step: 'step0', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+			</mat-tab>
+			<!-- step 1 Ends -->
+
+			<!-- step 2 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
 					<div>{{'drainage_reconnection' | translate:translateKey}}</div>
 				</ng-template>
 
@@ -43,9 +56,9 @@
 					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 
 			</mat-tab>
-			<!-- step 1 Ends -->
+			<!-- step 2 Ends -->
 
-			<!-- step 4 Attachment Starts -->
+			<!-- step 3 Attachment Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>{{'upload' | translate: translateKey}}</div>
@@ -67,6 +80,7 @@
 				</app-action-bar>
 
 			</mat-tab>
+			<!-- step 3 Ends -->
 		
 		</mat-tab-group>
 	</form>

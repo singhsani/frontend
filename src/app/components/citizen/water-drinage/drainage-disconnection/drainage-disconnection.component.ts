@@ -14,6 +14,8 @@ import { Constants } from 'src/app/vmcshared/Constants';
 import * as _ from 'lodash';
 import { WaterDrinageConfig} from '../water-drinage-config';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
+import { ApplicantDetailDTO } from '../../tax/Models/applicant-details.model';
+import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
 
 @Component({
 	selector: 'app-drainage-disconnection',
@@ -46,7 +48,8 @@ export class DrainageDisconnectionComponent implements OnInit {
 		private toastrService: ToastrService,
 		public translateService: TranslateService,
 		public drainageService: DrainageService,
-		private alertService: AlertService
+		private alertService: AlertService,
+		private addressService: ApplicantAddressService
 
 	) { }
 
@@ -174,6 +177,7 @@ export class DrainageDisconnectionComponent implements OnInit {
 	handleErrorsOnSubmit(flag) {
 		let step0 = 7;
 		let step1 = 6;
+		let step2 = 5;
 
 		switch (true) {
 			case flag <= step0:
@@ -181,6 +185,9 @@ export class DrainageDisconnectionComponent implements OnInit {
 				break;
 			case flag <= step1:
 				this.licenseConfiguration.currentTabIndex = 1;
+				break;
+			case flag <= step2:
+				this.licenseConfiguration.currentTabIndex = 2;
 				break;
 
 			default:
@@ -190,7 +197,15 @@ export class DrainageDisconnectionComponent implements OnInit {
 
 	}
 
-
+    saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
+		this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
+			 (data) => {
+			   this.commonService.applicationNo = data.body.applicationNo;
+			 },
+			 (error) => {
+			   this.commonService.callErrorResponse(error);
+			 });
+	   }
 
 
 }

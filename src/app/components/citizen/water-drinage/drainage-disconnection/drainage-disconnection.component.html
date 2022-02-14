@@ -5,8 +5,20 @@
 	<form [formGroup]="drainageDisconnectionForm">
 		<mat-tab-group [(selectedIndex)]="licenseConfiguration.currentTabIndex" dynamicHeight="true" mat-stretch-tabs 
 			class="stepperNav">
-
 			<!-- step 1 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>Applicant Details</div>
+				</ng-template>
+				<app-applicant-detail-drainagewater (applicantDetails)="saveApplicantDetails($event)"
+					[serviceType]="'HEL-WTR-DRA-CON'">
+				</app-applicant-detail-drainagewater>
+				<app-action-bar [form]="drainageDisconnectionForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
+					[stepInfo]="{step: 'step0', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+			</mat-tab>
+			<!-- step 1 Ends -->
+
+			<!-- step 2 Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>{{'consumer-details' | translate:translateKey}}</div>
@@ -41,7 +53,7 @@
 				</div>
 				
 				
-<!-- 
+				<!-- 
 				<div class="row">
 					<mat-form-field class="col-md-5">
 						<input matInput type="text"  maxlength="30" placeholder="{{'property_dues' | translate:translateKey}}"
@@ -80,12 +92,12 @@
 				</div>
 
 				<app-action-bar [form]="drainageDisconnectionForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
-					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+					[stepInfo]="{step: 'step1', next: 2, back: 1}"></app-action-bar>
 
 			</mat-tab>
-			<!-- step 1 Ends -->
+			<!-- step 2 Ends -->
 
-			<!-- step 4 Attachment Starts -->
+			<!-- step 3 Attachment Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>{{'upload' | translate: translateKey}}</div>
@@ -102,7 +114,7 @@
 				</div>
 
 					<app-action-bar [uploadFiles]="uploadFilesArray" [form]="drainageDisconnectionForm"
-					 [stepInfo]="{step: 'final', next: 2, back: 0}"
+					 [stepInfo]="{step: 'final', next: 3, back: 1}"
 					(handleErrors)="handleErrorsOnSubmit($event)">
 				</app-action-bar>
 

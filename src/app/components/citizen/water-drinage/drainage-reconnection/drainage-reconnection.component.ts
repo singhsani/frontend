@@ -13,6 +13,9 @@ import * as _ from 'lodash';
 import { WaterDrinageConfig } from '../water-drinage-config';
 import { DrainageService } from '../service/drainage.service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
+import { ApplicantDetailDTO } from '../../tax/Models/applicant-details.model';
+import { CommonService as CommonService1 } from 'src/app/vmcshared/Services/common-service';
+import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
 
 @Component({
   selector: 'app-drainage-reconnection',
@@ -49,7 +52,9 @@ export class DrainageReconnectionComponent implements OnInit {
 		private toastrService: ToastrService,
 		public translateService: TranslateService,
 		public drainageService: DrainageService,
-		private alertService: AlertService
+		private alertService: AlertService,
+		private commonService1: CommonService1,
+		private addressService: ApplicantAddressService
 	) { }
 
  /**
@@ -168,5 +173,16 @@ export class DrainageReconnectionComponent implements OnInit {
 		}
 	
 	}
+
+
+	saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
+		this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
+			 (data) => {
+			   this.commonService1.applicationNo = data.body.applicationNo;
+			 },
+			 (error) => {
+			   this.commonService1.callErrorResponse(error);
+			 });
+	   }
    
 }

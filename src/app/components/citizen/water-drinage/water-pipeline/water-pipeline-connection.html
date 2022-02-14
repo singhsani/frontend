@@ -7,6 +7,8 @@
 	<form [formGroup]="waterPipeliConnectionForm">
 
 		<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+
+			<!-- step 1 Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>Applicant Details</div>
@@ -17,7 +19,9 @@
 				<app-action-bar [form]="waterPipeliConnectionForm" (tabIndex)="onTabChange($event)"
 					[stepInfo]="{step: 'step1', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 			</mat-tab>
-			<!-- step 1 Starts -->
+			<!-- step 1 Ends -->
+
+			<!-- step 2 Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>{{'application-details' | translate:translateKey}}</div>
@@ -150,9 +154,9 @@
 				<app-action-bar [form]="waterPipeliConnectionForm" (tabIndex)="onTabChange($event)"
 					[stepInfo]="{step: 'step2', next: 2, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 			</mat-tab>
-			<!-- step 1 Ends -->
+			<!-- step 2 Ends -->
 
-			<!-- step 2 Starts -->
+			<!-- step 3 Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>{{'applicant-developer-details' | translate:translateKey}}</div>
@@ -215,12 +219,12 @@
 				<app-action-bar [form]="waterPipeliConnectionForm" (tabIndex)="onTabChange($event)"
 					[stepInfo]="{step: 'step3', next: 3, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 			</mat-tab>
-			<!-- step 2 Ends -->
+			<!-- step 3 Ends -->
 
 
 
 
-			<!-- step 3 Starts -->
+			<!-- step 4 Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>{{'contractor-details' | translate:translateKey}}</div>
@@ -331,9 +335,9 @@
 				<app-action-bar [form]="waterPipeliConnectionForm" (tabIndex)="onTabChange($event)"
 					[stepInfo]="{step: 'step4', next: 4, back: 1}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 			</mat-tab>
-			<!-- step 3 Ends -->
-
 			<!-- step 4 Ends -->
+
+			<!-- step 5 Ends -->
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>{{'Attachment' | translate: translateKey}}</div>
@@ -357,7 +361,7 @@
 					[stepInfo]="{step: 'final', next: 5, back: 2}" (handleErrors)="handleErrorsOnSubmit($event)">
 				</app-action-bar>
 			</mat-tab>
-			<!-- Tab 4 End -->
+			<!-- Tab 5 End -->
 			<select-payment-gateway #paymentGateway></select-payment-gateway>
 		</mat-tab-group>
 	</form>
