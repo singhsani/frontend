@@ -261,4 +261,10 @@ export class AddressDetailComponent implements OnInit, OnDestroy {
   onBackClick() {
     this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(0);
   }
+  
+  onBlurReferenceProperty(inValid){
+    if(inValid){
+      this.addressModel.referencePropertyNo = '';
+    }
+  }
 }
