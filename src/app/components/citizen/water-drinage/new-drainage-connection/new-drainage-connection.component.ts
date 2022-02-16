@@ -14,6 +14,8 @@ import * as _ from 'lodash';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
 import { BookingUtils } from '../../facilities/bookings/config/booking-config';
 import { ToastrService } from 'ngx-toastr';
+import { ApplicantDetailDTO } from '../../tax/Models/applicant-details.model';
+import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
 
 
  
@@ -72,6 +74,7 @@ export class NewDrainageConnectionComponent implements OnInit {
     private alertService: AlertService,
     private commonService: CommonService,
     private toaster: ToastrService,
+    private addressService: ApplicantAddressService
   ) { 
     this.bookingUtils = new BookingUtils(formService, toaster);
   }
@@ -113,7 +116,6 @@ export class NewDrainageConnectionComponent implements OnInit {
   onChangedLimit(val) {
     if (val) {
       var objLimit = this.limitList.filter(f => f.itemId == val)[0];
-      debugger;
       if (objLimit.itemCode == Constants.ItemCodes.Out_of_Limit) {
         this.isOutofLimit = true;
       this.newDrainageConnectionForm.controls["waterDrainageZoneId"].clearValidators();
@@ -600,20 +602,30 @@ export class NewDrainageConnectionComponent implements OnInit {
 
   setFormControlToTabIndexMap() {
 		// First tab
-		this.formControlNameToTabIndex.set('limit', 1)
-		this.formControlNameToTabIndex.set('waterDrainageZoneId', 1)
-		this.formControlNameToTabIndex.set('waterDrainageWardId', 1)
-		this.formControlNameToTabIndex.set('waterDrainageBlockId', 1)
+		this.formControlNameToTabIndex.set('limit', 2)
+		this.formControlNameToTabIndex.set('waterDrainageZoneId', 2)
+		this.formControlNameToTabIndex.set('waterDrainageWardId', 2)
+		this.formControlNameToTabIndex.set('waterDrainageBlockId', 2)
 
-    this.formControlNameToTabIndex.set('ownerName', 1)
-    this.formControlNameToTabIndex.set('ownerMobileNo', 1)
-    this.formControlNameToTabIndex.set('connectionUsage', 1)
-    this.formControlNameToTabIndex.set('connectionSubUsage', 1)
+    this.formControlNameToTabIndex.set('ownerName', 2)
+    this.formControlNameToTabIndex.set('ownerMobileNo', 2)
+    this.formControlNameToTabIndex.set('connectionUsage', 2)
+    this.formControlNameToTabIndex.set('connectionSubUsage', 2)
    	// second tab
 		
-		this.formControlNameToTabIndex.set('pincode', 2)
-		this.formControlNameToTabIndex.set('streetName', 2)
+		this.formControlNameToTabIndex.set('pincode', 3)
+		this.formControlNameToTabIndex.set('streetName', 3)
 	
 	  }
+
+    saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
+      this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
+           (data) => {
+             this.commonService.applicationNo = data.body.applicationNo;
+           },
+           (error) => {
+             this.commonService.callErrorResponse(error);
+           });
+     }
 
 }

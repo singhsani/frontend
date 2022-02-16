@@ -9,6 +9,8 @@ import { NewPlumberLicenseDataSharingService } from '../../Services/new-plumber-
 import { MatStepper } from '@angular/material';
 import { C } from '@angular/core/src/render3';
 import { CommonService as CommonService2} from 'src/app/shared/services/common.service';
+import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
+import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
 
 
 @Component({
@@ -26,7 +28,7 @@ export class NewPlumberLicenseFormComponent implements OnInit {
     @ViewChild('stepper') stepper: MatStepper;
     plumberLicenseDocumentUploadDocs : Array<any> = [];
     plumberLicenseId = 0;
-    
+
     licenseForList = [];
     educationalQualificationList = [];
     minDate = new Date();
@@ -36,6 +38,7 @@ export class NewPlumberLicenseFormComponent implements OnInit {
         private newPlumberLicenseService: NewPlumberLicenseService,
         private newPlumberLicenseDataSharingService: NewPlumberLicenseDataSharingService,
         private alertService: AlertService,
+        private addressService: ApplicantAddressService,
         private commonService2: CommonService2) { }
 
     ngOnInit() {
@@ -148,7 +151,7 @@ export class NewPlumberLicenseFormComponent implements OnInit {
                         this.alertService.success(data.body.message);
                         this.model.plumberLicenseId = data.body.data;
                         this.plumberLicenseId = data.body.data;
-                        this.stepper.selectedIndex = 1;
+                        this.stepper.selectedIndex = 2;
                         this.getFormDataDocuments(this.model.plumberLicenseId);
                         this.newPlumberLicenseDataSharingService.setApprovalModel(this.model);
                         // this.model = new PlumberLicenseModel();
@@ -209,16 +212,16 @@ export class NewPlumberLicenseFormComponent implements OnInit {
 
         } else {
             this.commonService2.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
-                    return
+                    return;
           }
 
-        })
+        });
     }
 
     onBackClick(){
         this.stepper.selectedIndex = 0;
       }
-    
+
       mandatoryFileCheck() {
         return new Promise<any>((resolve, reject) => {
           this.newPlumberLicenseService.getAttachmentList(this.serviceFormId).subscribe(uploadedDocs => {
@@ -234,14 +237,25 @@ export class NewPlumberLicenseFormComponent implements OnInit {
               });
               resolve({ fileName: "", status: true });
             } else {
-              resolve({ fileName: "", status: true })
+              resolve({ fileName: "", status: true });
             }
-          })
-        })
+          });
+        });
       }
 
+    moveStepper(index: number) {
+        this.stepper.selectedIndex = index;
+    }
 
-
-
+    saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO) {
+        this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
+             (data) => {
+               this.commonService.applicationNo = data.body.applicationNo;
+               this.moveStepper(1);
+             },
+             (error) => {
+               this.commonService.callErrorResponse(error);
+             });
+       }
 }
 

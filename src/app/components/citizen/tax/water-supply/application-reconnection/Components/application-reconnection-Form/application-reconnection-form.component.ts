@@ -8,6 +8,9 @@ import { MatStepper } from '@angular/material';
 import { Constants } from 'src/app/vmcshared/Constants';
 import { NewWaterConnectionEntryService } from '../../../new-water-connection-entry/Services/new-water-connection-entry.service';
 import { CommonService as SharedCommonService } from 'src/app/shared/services/common.service';
+import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
+import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
+import { CommonService } from 'src/app/vmcshared/Services/common-service';
 
 @Component({
     selector: 'app-application-reconnection-form',
@@ -16,7 +19,7 @@ import { CommonService as SharedCommonService } from 'src/app/shared/services/co
 })
 
 export class ApplicationReconnectionFormComponent implements OnInit {
-    
+
     @ViewChild('stepper') stepper: MatStepper;
     reconnectionDocumentUploadDocs : Array<any> = [];
     reconnectionId : any;
@@ -33,6 +36,8 @@ export class ApplicationReconnectionFormComponent implements OnInit {
         private alertService: AlertService,
         private applicationReconnectionDataSharingService: ApplicationReconnectionDataSharingService,
         private newNewWaterConnectionEntryService: NewWaterConnectionEntryService,
+        private addressService: ApplicantAddressService,
+        private commonService: CommonService,
         private sharedCommonService: SharedCommonService) { }
 
     ngOnInit() {
@@ -66,12 +71,12 @@ export class ApplicationReconnectionFormComponent implements OnInit {
                                 this.connectionsModel = new ConnectionsModel();
                                 this.connectionsModel.connectionDetail = new ConnectionDetail();
                                 this.dataModel = new DataModel();
-                            }
-                            else {
+                            } else {
                                 this.isShowSaveButton = true;
                                 this.connectionsModel = data.body;
-                                this.connectionsModel.address = data.body.propertyDetails ?data.body.propertyDetails[0].address:this.connectionsModel.address
-                                this.outstandingDetail=data.body;
+                                this.connectionsModel.address =
+                                        data.body.propertyDetails ? data.body.propertyDetails[0].address : this.connectionsModel.address;
+                                this.outstandingDetail = data.body;
                             }
                         }
                     },
@@ -160,7 +165,7 @@ export class ApplicationReconnectionFormComponent implements OnInit {
                         this.alertService.success(data.body.message);
                         this.dataModel.reconnectionId = data.body.data;
                         this.reconnectionId = data.body.data;
-                        this.stepper.selectedIndex = 1;
+                        this.stepper.selectedIndex = 2;
                         this.getFormDataDocuments(this.dataModel.reconnectionId);
                         this.applicationReconnectionDataSharingService.setApprovalModel(this.dataModel);
                         // this.dataModel = new DataModel();
@@ -185,7 +190,7 @@ export class ApplicationReconnectionFormComponent implements OnInit {
                 });
         }
     }
-    
+
     onWaterDetailClick() {
         this.applicationReconnectionDataSharingService.setWaterBillDetail(this.outstandingDetail.waterOutstandingDTO.billWiseOutstandings);
         this.applicationReconnectionDataSharingService.setIsShowWaterBillDetail(true);
@@ -208,7 +213,7 @@ export class ApplicationReconnectionFormComponent implements OnInit {
           },
           (error) => {
             this.alertService.error(error.error.message);
-          })
+          });
       }
       clear(aForm: NgForm) {
         this.connectioNo = '';
@@ -217,6 +222,21 @@ export class ApplicationReconnectionFormComponent implements OnInit {
         this.connectionsModel.connectionDetail = new ConnectionDetail();
         aForm.resetForm();
     }
+
+    moveStepper(index: number) {
+        this.stepper.selectedIndex = index;
+    }
+
+    saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO) {
+        this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
+             (data) => {
+               this.commonService.applicationNo = data.body.applicationNo;
+               this.moveStepper(1);
+             },
+             (error) => {
+               this.commonService.callErrorResponse(error);
+             });
+       }
 }
 
 

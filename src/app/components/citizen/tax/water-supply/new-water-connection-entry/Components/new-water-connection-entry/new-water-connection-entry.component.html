@@ -1,25 +1,19 @@
 <app-title-bar [title]="'New Water Connection Entry'"></app-title-bar>
-  <!-- <mat-card class="cardH1">
-    <h1>New Water Connection Entry</h1>
-  </mat-card> -->
 <mat-horizontal-stepper #stepper (selectionChange)="stepChanged($event, stepper);" class="stepperToTab">
-  <mat-step >
+  <mat-step>
+    <ng-template matStepLabel>Applicant Details</ng-template>
+    <app-applicant-detail-propertywater (stepChange)="stepChangedEvent($event)" (applicantDetails)="saveApplicantDetails($event)"  [serviceType]="'WTR-NEW'"></app-applicant-detail-propertywater>
+  </mat-step>
+  <mat-step>
     <ng-template matStepLabel>Consumer Details</ng-template>
     <app-consumer-detail></app-consumer-detail>
   </mat-step>
-  <mat-step >
+  <mat-step>
     <ng-template matStepLabel>Property Details</ng-template>
     <app-property-detail></app-property-detail>
   </mat-step>
-  <mat-step >
+  <mat-step>
     <ng-template matStepLabel>Attachment</ng-template>
-    <app-document-upload ></app-document-upload>
+    <app-document-upload></app-document-upload>
   </mat-step>
-  
-  <!-- <mat-step>
-    <ng-template matStepLabel>Approval</ng-template>
-    <app-property-approval></app-property-approval>
-  </mat-step> -->
 </mat-horizontal-stepper>
-
-

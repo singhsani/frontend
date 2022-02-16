@@ -8,6 +8,8 @@ import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
 import { MatStepper } from '@angular/material';
 import * as moment from 'moment';
+import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
+import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
 
 @Component({
     selector: 'app-renewal-plumber-license-form',
@@ -34,6 +36,7 @@ export class RenewalPlumberLicenseFormComponent implements OnInit {
     constructor(private renewalPlumberLicenseService: RenewalPlumberLicenseService,
         private renewalPlumberLicenseDataSharingService: RenewalPlumberLicenseDataSharingService,
         private alertService: AlertService,
+        private addressService: ApplicantAddressService,
         private commonService: CommonService, ) { }
 
     ngOnInit() {
@@ -124,7 +127,7 @@ export class RenewalPlumberLicenseFormComponent implements OnInit {
                         this.alertService.success(data.body.message);
                         this.plumberLicenseModel.plumberLicenseId = data.body.data;
                         this.plumberLicenseId = data.body.data;
-                        this.stepper.selectedIndex = 1;
+                        this.stepper.selectedIndex = 2;
                         this.getFormDataDocuments(this.plumberLicenseModel.plumberLicenseId);
                         this.renewalPlumberLicenseDataSharingService.setApprovalModel(this.plumberLicenseModel);
 
@@ -152,4 +155,19 @@ export class RenewalPlumberLicenseFormComponent implements OnInit {
     onBackClick(){
         this.stepper.selectedIndex = 0;
       }
+
+    moveStepper(index: number) {
+        this.stepper.selectedIndex = index;
+    }
+
+    saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO) {
+        this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
+            (data) => {
+                this.commonService.applicationNo = data.body.applicationNo;
+                this.moveStepper(1);
+            },
+            (error) => {
+                this.commonService.callErrorResponse(error);
+            });
+    }
 }

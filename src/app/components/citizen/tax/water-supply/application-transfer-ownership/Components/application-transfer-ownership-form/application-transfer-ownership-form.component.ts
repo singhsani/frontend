@@ -8,6 +8,8 @@ import { ApplicationTransferOwnershipDataSharingService } from '../../Services/a
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { MatStepper } from '@angular/material';
 import { CommonService as SharedCommonService } from 'src/app/shared/services/common.service';
+import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
+import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
 
 @Component({
     selector: 'app-application-transfer-ownership-form',
@@ -35,6 +37,7 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
         private alertService: AlertService,
         private applicationTransferOwnershipService: ApplicationTransferOwnershipService,
         private applicationTransferOwnershipDataSharingService: ApplicationTransferOwnershipDataSharingService,
+        private addressService: ApplicantAddressService,
         private sharedCommonService: SharedCommonService) { }
 
 
@@ -52,14 +55,13 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
         this.applicationModel.emailID = "test@test.com";
 
         this.getLookups();
-
-
     }
 
     getLookups() {
         let lookupcode = `lookup_codes=${Constants.LookupCodes.Water_Transfer_Reason}`;
         this.commonService.getLookupValuesAccordingToScreen(lookupcode).subscribe(data => {
-            this.reasonList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.Water_Transfer_Reason))[0].items;
+            this.reasonList = Object.assign([], data).filter(f =>
+                f.lookupCode.includes(Constants.LookupCodes.Water_Transfer_Reason))[0].items;
         });
     }
 
@@ -128,7 +130,7 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
                         this.alertService.success(data.body.message);
                         this.dataModel.transferOfOwnershipId = data.body.data;
                         this.transferOfOwnershipId = data.body.data;
-                        this.stepper.selectedIndex = 1;
+                        this.stepper.selectedIndex = 2;
                         this.getFormDataDocuments(this.dataModel.transferOfOwnershipId);
                         this.applicationTransferOwnershipDataSharingService.setApprovalModel(this.dataModel);
                         // this.dataModel = new DataModel();
@@ -171,7 +173,7 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
                         this.alertService.error(error.error.message);
                     });
             } else {
-                this.sharedCommonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
+                this.sharedCommonService.openAlert('File Upload', `Please upload file for "${data.fileName}"`, "warning");
                 return
             }
         })
@@ -196,7 +198,8 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
 
 
     onWaterDetailClick() {
-        this.applicationTransferOwnershipDataSharingService.setWaterBillDetail(this.outstandingDetail.waterOutstandingDTO.billWiseOutstandings);
+        this.applicationTransferOwnershipDataSharingService.setWaterBillDetail(
+            this.outstandingDetail.waterOutstandingDTO.billWiseOutstandings);
         this.applicationTransferOwnershipDataSharingService.setIsShowWaterBillDetail(true);
     }
 
@@ -208,7 +211,7 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
     mandatoryFileCheck() {
         return new Promise<any>((resolve, reject) => {
             this.applicationTransferOwnershipService.getAttachmentList(this.serviceFormId).subscribe(uploadedDocs => {
-                console.log("Upload docs", uploadedDocs);
+                console.log('Upload docs', uploadedDocs);
                 if (uploadedDocs) {
                     let tempArray = [];
                     uploadedDocs.forEach(element => {
@@ -223,8 +226,8 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
                 } else {
                     resolve({ fileName: "", status: true })
                 }
-            })
-        })
+            });
+        });
     }
 
     onBackClick() {
@@ -232,7 +235,7 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
     }
     numberOnly(event): boolean {
         const charCode = (event.which) ? event.which : event.keyCode;
-        return charCode > 31 && (charCode < 48 || charCode > 57) ? false : true
+        return charCode > 31 && (charCode < 48 || charCode > 57) ? false : true;
     }
 
     clear(aForm: NgForm) {
@@ -241,6 +244,22 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
         this.connectionsModel.connectionDetail = new ConnectionDetail();
         aForm.resetForm();
     }
+
+
+    moveStepper(index: number) {
+        this.stepper.selectedIndex = index;
+    }
+
+    saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO) {
+        this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
+             (data) => {
+               this.commonService.applicationNo = data.body.applicationNo;
+               this.moveStepper(1);
+             },
+             (error) => {
+               this.commonService.callErrorResponse(error);
+             });
+       }
 }
 
 
