@@ -49,6 +49,10 @@ export class NewWaterConnectionEntryComponent implements AfterViewInit {
     stepper.selected.interacted = false;
   }
 
+  stepChangedEvent(event){
+    this.moveStepper(1);
+  }
+
   saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
     this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
          (data) => {

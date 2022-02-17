@@ -227,6 +227,10 @@ export class ApplicationReconnectionFormComponent implements OnInit {
         this.stepper.selectedIndex = index;
     }
 
+    stepChangedEvent(event){
+        this.moveStepper(1);
+    }
+
     saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO) {
         this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
              (data) => {

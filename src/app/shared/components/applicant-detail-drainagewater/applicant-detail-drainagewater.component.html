@@ -1,0 +1,118 @@
+<form #form="ngForm" (ngSubmit)="saveApplicantDetails(form)">
+  <mat-card>
+    <div class="row">
+      <mat-form-field class="full-width-input col-md-4">
+        <input matInput required placeholder="First Name" name="firstName" maxlength="255" #firstName="ngModel"
+          [(ngModel)]="model.firstName">
+        <mat-error *ngIf="firstName.invalid">*First Name is invalid.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input col-md-4">
+        <input matInput placeholder="Middle Name" name="middleName" maxlength="255" #middleName="ngModel"
+          [(ngModel)]="model.middleName">
+        <mat-error *ngIf="middleName.invalid">*Middle Name is invalid.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input col-md-4">
+        <input matInput required placeholder="Last Name" name="lastName" maxlength="255" #lastName="ngModel"
+          [(ngModel)]="model.lastName">
+        <mat-error *ngIf="lastName.invalid">*Last Name is invalid.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input col-md-4">
+        <input matInput required number-only maxlength="10" minlength="10" placeholder="Mobile Number" name="mobileNo"
+          #mobileNo="ngModel" [(ngModel)]="model.mobileNo">
+        <mat-error *ngIf="mobileNo.invalid">*Mobile No. is invalid.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input col-md-4">
+        <input matInput required email placeholder="Email ID" name="email" maxlength="255" #email="ngModel"
+          [(ngModel)]="model.email">
+        <mat-error *ngIf="email.invalid">*Email Id is invalid.</mat-error>
+      </mat-form-field>
+    </div><br><br>
+
+    <h2>Applicant Address</h2>
+
+    <div class="row">
+      <mat-form-field class="full-width-input col-md-4">
+        <input matInput required placeholder="Block/Flat/House Number" name="buildingName" #buildingName="ngModel"
+          [(ngModel)]="model.citizenAddressDTO.buildingName">
+        <mat-error *ngIf="buildingName.invalid">Building Name is invalid.</mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input col-md-4">
+        <input matInput placeholder="Name of Society/Building" name="streetName" #streetName="ngModel"
+          [(ngModel)]="model.citizenAddressDTO.streetName">
+        <mat-error *ngIf="streetName.invalid">Street Name is invalid.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input col-md-4">
+        <input matInput placeholder="Address Line 1/Street Name/Landmark" name="landmark" #landmark="ngModel"
+          [(ngModel)]="model.citizenAddressDTO.landmark">
+        <mat-error *ngIf="landmark.invalid">Landmark is invalid.</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="full-width-input col-md-4">
+        <input matInput required placeholder="Area" name="area" #area="ngModel"
+          [(ngModel)]="model.citizenAddressDTO.area">
+        <mat-error *ngIf="area.invalid">Area is invalid.</mat-error>
+      </mat-form-field>
+
+      <div class="col-md-4 ngSelect">
+        <ng-select required placeholder="Country*" name="country" #country="ngModel"
+          [(ngModel)]="model.citizenAddressDTO.country" [items]="countryListArray" bindValue="name" bindLabel="name"
+          (change)="onCountryChange($event)">
+        </ng-select>
+        <div *ngIf="(form.submitted && country.invalid)  || (country.invalid && country.touched)">
+          <mat-error *ngIf="country.invalid">Country is invalid.</mat-error>
+        </div>
+      </div>
+
+      <div class="col-md-4 ngSelect">
+        <ng-select required placeholder="State*" name="state" #state="ngModel"
+          [(ngModel)]="model.citizenAddressDTO.state" [items]="stateListArray" bindValue="name" bindLabel="name"
+          (change)="onStateChange($event)">
+        </ng-select>
+        <div *ngIf="(form.submitted && state.invalid)  || (state.invalid && state.touched)">
+          <mat-error *ngIf="state.invalid">State is invalid.</mat-error>
+        </div>
+      </div>
+
+      <div class="col-md-6 ngSelect">
+        <ng-select required placeholder="City/District*" name="city" #city="ngModel"
+          [(ngModel)]="model.citizenAddressDTO.city" [items]="cityListArray" bindValue="name" bindLabel="name">
+        </ng-select>
+        <div *ngIf="(form.submitted && city.invalid)  || (city.invalid && city.touched)">
+          <mat-error *ngIf="city.invalid">City is invalid.</mat-error>
+        </div>
+      </div>
+
+      <mat-form-field class="full-width-input col-md-6">
+        <input matInput required maxlength="6" minlength="6" placeholder="Pincode" name="pincode" #pincode="ngModel"
+          number-only [(ngModel)]="model.citizenAddressDTO.pincode">
+        <mat-error *ngIf="pincode.invalid">PinCode is invalid.</mat-error>
+      </mat-form-field>
+
+    </div>
+  </mat-card>
+<!--   <div class="fotButtonBar clearfix" *ngIf="!showSkipButton">
+    <div class="col-sm-12 col-md-12">
+      <button mat-raised-button color="primary" class="pull-right" type="submit">
+        Next<mat-icon>skip_next</mat-icon>
+      </button>
+    </div>
+  </div> -->
+  <!-- <div class="button-row cusmt-5" *ngIf="showSkipButton">
+    <button mat-raised-button class="ml-3" color="primary" type="button" (click)="onBack()">
+      <mat-icon>skip_previous</mat-icon>Back
+    </button>
+    <button mat-raised-button class="btn" style="float:right" color="primary" type="submit">
+      Next<mat-icon>skip_next</mat-icon>
+    </button>
+  </div> -->
+</form>
