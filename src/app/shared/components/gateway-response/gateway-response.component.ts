@@ -76,16 +76,20 @@ export class GatewayResponseComponent implements OnInit {
 
 					if (this.responseObj.authStatus == '0300') {
 						this.responseObj.mer_amount = this.responseObj.txnAmount;
+						this.paidAmount = Math.floor(this.responseObj.mer_amount);
+
 						this.responseObj.order_id = this.responseObj.order_id;
 						this.responseObj.bank_ref_no = this.responseObj.transactionid;
-						this.responseObj.trans_date = moment(this.responseObj.trans_date).format('YYYY-MM-DD');
+						this.responseObj.trans_date = moment(this.responseObj.trans_date).format('DD-MM-YYYY');
 						this.paymentStatus = "SUCCESS";
 						this.postSessionData(this.dispData, 'BILLDESK', this.responseObj);
 					} else {
 						this.responseObj.mer_amount = this.responseObj.txnAmount;
+						this.paidAmount = Math.floor(this.responseObj.mer_amount);
+
 						this.responseObj.order_id = this.responseObj.order_id;
 						this.responseObj.bank_ref_no = this.responseObj.transactionid;
-						this.responseObj.trans_date = moment(this.responseObj.trans_date).format('YYYY-MM-DD');
+						this.responseObj.trans_date = moment(this.responseObj.trans_date).format('DD-MM-YYYY');
 						// this.redirectToHome();
 						setTimeout(() => {
 							this.redirectToHomeFail();
