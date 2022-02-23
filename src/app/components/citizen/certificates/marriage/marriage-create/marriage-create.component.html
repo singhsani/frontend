@@ -384,6 +384,21 @@
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
+							<input matInput type="text" maxlength="100" formControlName="groomCompanyName"
+								appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
+								placeholder="{{ 'company_name' | translate:translateKey }}">
+							<control-messages [control]="marriageFormGroup.get('groomCompanyName')"></control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-md-4">
+							<input matInput OnlyNumber maxlength="10" minlength="10" type="tel"
+								formControlName="groomCompanyPhoneNumber"
+								placeholder="{{'company_contact_number' | translate:translateKey }}">
+							<control-messages [control]="marriageFormGroup.get('groomCompanyPhoneNumber')">
+							</control-messages>
+						</mat-form-field>
+						
+						<mat-form-field class="col-md-4">
 							<input matInput OnlyNumber required placeholder="{{'mobile_no' | translate:translateKey}}"
 								formControlName="groomPhoneNumber" type="tel" maxlength="10" minlength="10">
 							<control-messages [control]="marriageFormGroup.get('groomPhoneNumber')"></control-messages>
@@ -401,21 +416,6 @@
 								formControlName="nriGroomAddress"
 								placeholder="{{ 'foreign_address' | translate:translateKey }}"> </textarea>
 							<control-messages [control]="marriageFormGroup.get('nriGroomAddress')"></control-messages>
-						</mat-form-field>
-
-						<mat-form-field class="col-md-4">
-							<input matInput type="text" maxlength="100" formControlName="groomCompanyName"
-								appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
-								placeholder="{{ 'company_name' | translate:translateKey }}">
-							<control-messages [control]="marriageFormGroup.get('groomCompanyName')"></control-messages>
-						</mat-form-field>
-
-						<mat-form-field class="col-md-4">
-							<input matInput OnlyNumber maxlength="10" minlength="10" type="tel"
-								formControlName="groomCompanyPhoneNumber"
-								placeholder="{{'company_contact_number' | translate:translateKey }}">
-							<control-messages [control]="marriageFormGroup.get('groomCompanyPhoneNumber')">
-							</control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">

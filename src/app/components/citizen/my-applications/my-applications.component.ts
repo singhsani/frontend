@@ -226,6 +226,13 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 		this.formService.printReceipt(id).subscribe(
 			receiptResponse => {
+				
+				if(receiptResponse == null || receiptResponse == ""){
+					console.log('into response is nulll.......');
+					this.commonService.openAlert('Error!', "Print Receipt Not Available !!!", 'error');
+					return false;
+				}
+
 				let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
 				sectionToPrintReceipt.innerHTML = receiptResponse;
 				setTimeout(() => {
@@ -487,7 +494,8 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 
 	isPrintReceipt(row) {
 		const printReceiptServiceTypeArr = ['FS_FINAL_FIRE_NOC', 'FS_REVISED_FIRE_NOC', 'FS_RENEWAL_NOC', 'FS_TEMP_STRUCT_NOC', 'FS_TEMP_FIREWORKSHOP_NOC',
-			'FS_FIRE_CERTIFICATE', 'FS_FINAL_HOSPITAL_NOC', 'FS_ELECTRIC_CONNECTION_NOC', 'FS_NAVARATRI_NOC', 'FS_GAS_CONNECTION_NOC']
+			'FS_FINAL_HOSPITAL_NOC', 'FS_NAVARATRI_NOC']
+			
 		if (row.fileStatus == 'SUBMITTED' && printReceiptServiceTypeArr.indexOf(row.serviceType) > 0) {
 			return false
 		}
@@ -499,6 +507,16 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}
 		if ((row.fileStatus == 'SUBMITTED' || row.fileStatus == 'APPROVED' || row.fileStatus == 'REJECTED') && row.serviceType == 'FS_PROVISIONAL_NOC') {
 			return false;
+		}
+
+		if(row.fileStatus == "SUBMITTED" && row.serviceType == "FS_FIRE_CERTIFICATE"){
+			return true;
+		}
+		if(row.fileStatus == "SUBMITTED" && row.serviceType == "FS_ELECTRIC_CONNECTION_NOC"){
+			return true;
+		}
+		if(row.fileStatus == "SUBMITTED" && row.serviceType == "FS_GAS_CONNECTION_NOC"){
+			return true;
 		}
 
 		const printReceiptServiceTypeForShopArr = ['SHOP_ESTAB_APPLICATION', 'SHOP_ESTAB_TRANSFER']
