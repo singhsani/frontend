@@ -228,7 +228,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			receiptResponse => {
 				
 				if(receiptResponse == null || receiptResponse == ""){
-					console.log('into response is nulll.......');
 					this.commonService.openAlert('Error!', "Print Receipt Not Available !!!", 'error');
 					return false;
 				}
