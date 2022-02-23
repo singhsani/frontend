@@ -545,6 +545,41 @@ export class ActionBarComponent implements OnInit, OnChanges {
 
 	getUserDetailsAndPayAndScheduleMeeting() {
 		console.log("Action Bar Component")
+
+		if(this.form.get('isNriMarriage').value == false){
+
+            this.form.get('groomPassportNumber').clearValidators();
+            this.form.get('groomCountryName').clearValidators();
+            this.form.get('groomVisaNumber').clearValidators();
+            this.form.get('groomVisaFrom').clearValidators();
+            this.form.get('groomVisaTo').clearValidators();
+            this.form.get('groomSocialSecurityNumber').clearValidators();
+            this.form.get('groomEligibility').clearValidators();
+            this.form.get('groomDesignation').clearValidators();
+            this.form.get('groomCompanyName').clearValidators();
+            this.form.get('groomCompanyPhoneNumber').clearValidators();
+            this.form.get('groomPhoneNumber').clearValidators();
+            this.form.get('groomEmail').clearValidators();
+            this.form.get('nriGroomAddress').clearValidators();
+            this.form.get('groomCompanyAddress').clearValidators();
+            
+			this.form.get('groomNriStatus').clearValidators();
+			this.form.get('groomNriFirstWitnessFirstName').clearValidators();
+			this.form.get('groomNriFirstWitnessLastName').clearValidators();
+			this.form.get('groomNriFirstWitnessAddress').clearValidators();
+			this.form.get('groomNriFirstWitnessBirthDate').clearValidators();
+			this.form.get('groomNriSecondWitnessFirstName').clearValidators();
+			this.form.get('groomNriSecondWitnessLastName').clearValidators();
+			this.form.get('groomNriSecondWitnessAddress').clearValidators();
+			this.form.get('groomNriSecondWitnessBirthDate').clearValidators();
+
+            this.form.get('groomParentsAddress').clearValidators();
+            this.form.get('groomParentsAddressResidence').clearValidators();
+            this.form.get('brideParentsAddress').clearValidators();
+            this.form.get('brideParentsAddressResidence').clearValidators();
+            this.form.get('priestAddressResidence').clearValidators();
+        }
+
 		if (this.checkForIAgress()) {
 			if (this.form.valid && (this.commonService.isGuestUser() || this.commonService.fromAdmin())) {
 				this.openDialogBox().subscribe(details => {
