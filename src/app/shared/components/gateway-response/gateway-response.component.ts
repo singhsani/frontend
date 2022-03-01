@@ -34,6 +34,7 @@ export class GatewayResponseComponent implements OnInit {
 	 */
 	bookingConstant = BookingConstants;
 	bookingUtils: BookingUtils = new BookingUtils();
+	refNumber: any;
 
 	constructor(
 		private formService: FormsActionsService,
@@ -83,6 +84,7 @@ export class GatewayResponseComponent implements OnInit {
 						this.responseObj.trans_date = moment(this.responseObj.trans_date).format('DD-MM-YYYY');
 						this.paymentStatus = "SUCCESS";
 						this.postSessionData(this.dispData, 'BILLDESK', this.responseObj);
+						this.sendMail(this.refNumber , "PAYMENT");
 					} else {
 						this.responseObj.mer_amount = this.responseObj.txnAmount;
 						this.paidAmount = Math.floor(this.responseObj.mer_amount);
@@ -132,6 +134,7 @@ export class GatewayResponseComponent implements OnInit {
 					this.paymentStatus = _.upperCase(this.responseObj.order_status);
 					this.paidAmount = Math.floor(this.responseObj.mer_amount);
 					this.postSessionData(this.dispData, 'CCAVENUE', this.responseObj);
+					this.sendMail(this.refNumber , "PAYMENT");
 				} else {
 					this.paymentStatus = _.upperCase(this.responseObj.order_status);
 					// this.redirectToHome();
@@ -159,6 +162,7 @@ export class GatewayResponseComponent implements OnInit {
 	 */
 	postSessionData(data, payGateway, responseObj?) {
 		this.resourceType = data.resourceType;
+		this.refNumber = data.refNumber;
 		let payData = {
 			id: null,
 			uniqueId: null,
