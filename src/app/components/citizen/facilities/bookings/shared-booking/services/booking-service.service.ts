@@ -452,4 +452,10 @@ export class BookingService {
       this.requestURL = `api/${this.moduleName}/${this.resourceType}/zoneListForShooting`;
       return this.http.get(this.requestURL);
     }
+
+    getSwimmingPoolRejectedStatusData(id:any) {
+      this.requestURL = `api/booking/swimming/getRejectedById?id=${id}`;
+      return this.http.get(this.requestURL);
+    }
+
 }

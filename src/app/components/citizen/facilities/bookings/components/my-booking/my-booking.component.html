@@ -165,6 +165,12 @@
                 </button>
               </div>
 
+              <div *ngIf="showRejectionMessage(element)">
+                <button mat-menu-item color="primary" (click)="changeStatusForRejection(element)">
+                    Rejection Reason
+                </button>
+              </div>
+
               <div *ngIf="element.resourceType == 'SWIMMING_POOL'">
                 <button *ngIf="element.resourceType == 'SWIMMING_POOL' && element.status == bookingConstant.PAYMENT_REQUIRED && element.showDownloadLOI"
                 mat-menu-item color="primary" (click)="printReceiptSwimming(element)">

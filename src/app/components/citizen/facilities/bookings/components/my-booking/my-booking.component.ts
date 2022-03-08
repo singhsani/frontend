@@ -87,6 +87,7 @@ export class MyBookingComponent implements OnInit {
 	isLoadingResults: boolean = true;
 	isAmphi:boolean = false;
 	selectedResourceType: string = null;
+	swimmingPoolRemarks : string = null;
 
 	constructor(
 		private fb: FormBuilder,
@@ -375,6 +376,26 @@ export class MyBookingComponent implements OnInit {
 		}
 	}
 
+	changeStatusForRejection(element){
+
+		this.bookingService.getSwimmingPoolRejectedStatusData(element.id).subscribe(data => {
+			if(data.data.fileStatus == "REJECTED"){
+				this.swimmingPoolRemarks = data.data.remarks;
+				this.commonService.openAlert("Rejection Information", this.swimmingPoolRemarks, "info");
+			}else{
+				this.commonService.openAlert("Rejection Information", "Error while getting swimming pool application rejection.", "warning");
+			}
+		})
+	}
+
+	showRejectionMessage(element){
+		if(element.status == "REJECTED"){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 	/**
 	 * Used to get difference
 	 * @param date- date
