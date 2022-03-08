@@ -211,7 +211,7 @@
                 {{'approved_receipt_reprint' | translate:translateKey}}
               </button>
 
-              <button mat-menu-item *ngIf="element.status == 'REJECTED' && (element.resourceType === 'STADIUM' || element.resourceType === 'SHOOTING_PERMISSION' || element.resourceType === 'CHILDREN_THEATER')" data-toggle="modal" color="primary" (click)="openRejectedModel(templateRejectModel, element, element.refNumber);">
+              <button mat-menu-item *ngIf="element.status == 'REJECTED' && (element.resourceType === 'SWIMMING_POOL' || element.resourceType === 'STADIUM' || element.resourceType === 'SHOOTING_PERMISSION' || element.resourceType === 'CHILDREN_THEATER')" data-toggle="modal" color="primary" (click)="openRejectedModel(templateRejectModel, element, element.refNumber);">
                 <mat-icon title="View Booking Details" color="primary">details</mat-icon>
                 {{'details' | translate:translateKey}}
             </button>
