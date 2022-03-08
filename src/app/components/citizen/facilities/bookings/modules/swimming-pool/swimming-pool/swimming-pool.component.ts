@@ -647,7 +647,7 @@ export class SwimmingPoolComponent implements OnInit {
       this.swimmimgPoolBookingForm.get('isRenewalForm').setValue(true);
       // this.swimmimgPoolBookingForm.get('remarks').enable();
       this.filterAsperBatchName(this.swimmimgPoolBookingForm.get('category').get('code').value);
-    },(error: any) => { 
+    },(error: any) => {
       this.commonService.openAlert("Error", "Membership Number is not Expire", "warning")
     })
   }  
