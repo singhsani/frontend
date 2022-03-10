@@ -130,6 +130,7 @@ export class MyBookingComponent implements OnInit {
 		this.route.queryParams.subscribe(d => {
 			if (d.refNumber && d.resourceType && d.serviceType) {
 				this.bookingService.resourceType = d.resourceType;
+				debugger;
 				this.printReceipt({ refNumber: d.refNumber }, d.serviceType);
 				setTimeout(() => {
 					this.location.go(this.router.url.split('?')[0]);
