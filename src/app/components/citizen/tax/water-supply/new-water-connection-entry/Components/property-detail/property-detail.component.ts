@@ -202,7 +202,7 @@ export class PropertyDetailComponent implements OnInit {
 
 
   onBackClick(){
-    this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(0);
+    this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(1);
   }
 
   onChangeAddress() {
