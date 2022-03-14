@@ -452,4 +452,5 @@ export class BookingService {
       this.requestURL = `api/${this.moduleName}/${this.resourceType}/zoneListForShooting`;
       return this.http.get(this.requestURL);
     }
+
 }

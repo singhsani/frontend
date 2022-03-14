@@ -771,7 +771,11 @@ export class MyBookingComponent implements OnInit {
       }
 
 	  openRejectedModel(template: TemplateRef<any>, responseData, refNumber) {
-		this.rejectedMessage = responseData.newgenRemarks;
+		  if(responseData.resourceType == "SWIMMING_POOL"){
+			  this.rejectedMessage = responseData.remarks;
+		  }else{
+			  this.rejectedMessage = responseData.newgenRemarks;
+		  }
 		this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-mg' }));
 	  }
 
