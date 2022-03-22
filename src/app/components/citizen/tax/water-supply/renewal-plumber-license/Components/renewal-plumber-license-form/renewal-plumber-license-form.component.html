@@ -156,11 +156,19 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="button-row text-right p-4">
-                    <button *ngIf="isShowSaveButton" class="ml-3" mat-raised-button color="primary" type="submit">
+
+                <div class="col-sm-12 col-md-12 p-4 mt-3" *ngIf="isShowSaveButton">
+                    <button mat-raised-button class="ml-3 pull-left" color="primary" type="button" (click)="moveStepper(0)">
+                        <mat-icon>skip_previous</mat-icon>Back
+                    </button>
+                    <button class="ml-3 pull-right" mat-raised-button color="primary" type="submit">
                         <mat-icon>save</mat-icon> Save & Next
                     </button>
+                    <!-- <button class="ml-3 pull-right" mat-raised-button color="warn" type="button" (click)="clear()">
+                        <mat-icon>clear_all</mat-icon> Clear
+                    </button> -->
                 </div>
+
             </form>
         </mat-card>
     </mat-step>
@@ -176,15 +184,14 @@
                     </div>
                 </ng-container>
             </div>
-            <div class="button-row text-right mt-3">
-                <button mat-raised-button class="ml-3" color="primary" type="button" (click)="onBackClick()">
+            <div class="col-sm-12 col-md-12">
+                <button mat-raised-button class="ml-3 pull-left" color="primary" type="button" (click)="moveStepper(1)">
                     <mat-icon>skip_previous</mat-icon>Back
                 </button>
-                <button mat-raised-button class="ml-3" color="primary" (click)="onSubmitApproved()" type="button">
+                <button mat-raised-button class="ml-3 pull-right" color="primary" (click)="onSubmitApproved()" type="button">
                     <mat-icon>save</mat-icon>Submit
                 </button>
             </div>
-
         </mat-card>
     </mat-step>
 </mat-horizontal-stepper>
