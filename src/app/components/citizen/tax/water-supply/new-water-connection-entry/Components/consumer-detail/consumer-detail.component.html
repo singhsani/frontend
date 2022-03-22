@@ -293,11 +293,12 @@
     
     <div class="fotButtonBar clearfix mt-0">
         <div class="col-sm-12 col-md-12">
-            <div class="pull-right">
-            <button mat-raised-button color="primary" type="submit">
+            <button mat-raised-button class="ml-3 pull-left" color="primary" type="button" (click)="onBackClick()">
+                <mat-icon>skip_previous</mat-icon>Back
+            </button>
+            <button mat-raised-button class="ml-3 pull-right" color="primary" type="submit">
                 Next<mat-icon>skip_next</mat-icon>
             </button>
-            </div> 
         </div>
     </div>
 </form>

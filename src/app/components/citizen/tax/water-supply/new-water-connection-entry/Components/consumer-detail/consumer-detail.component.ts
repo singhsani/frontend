@@ -249,6 +249,10 @@ export class ConsumerDetailComponent implements OnInit {
     }
   }
 
+  onBackClick(){
+    this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(0);
+  }
+
   getPlumberList() {
     this.newNewWaterConnectionEntryService.getPlumberList({ licenseFor: Constants.ItemCodes.License_Water,activeOnly:true }).subscribe(
       (data) => {
