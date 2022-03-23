@@ -203,7 +203,7 @@ export class WaterTankerAppComponent implements OnInit {
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			mobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
-			email: [null, [Validators.required, Validators.maxLength(50)]],
+			email: [null, [Validators.required, Validators.maxLength(50),Validators.email, ValidationService.emailValidator]],
 			applicationDate: [null, [Validators.required]],//not now
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'FS-WATER',
@@ -226,7 +226,7 @@ export class WaterTankerAppComponent implements OnInit {
 			}),
 			totalTankRequired: [null, [Validators.required, Validators.maxLength(1)]],
 			totalAmount: [null, [Validators.maxLength(5)]],
-			tankDeliveryAddress: [null, [Validators.required, Validators.maxLength(200)]],
+			tankDeliveryAddress: [null, [Validators.required, Validators.maxLength(500)]],
 
 			// loinumber: [null]
 
