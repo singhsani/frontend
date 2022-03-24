@@ -398,7 +398,7 @@ export class BookingService {
      * @param eventType
      */
     sendMailForSwimming(refNumber: any,eventType: any){
-      this.requestURL = `api/booking/${this.resourceType}/sendMail?refNumber=${refNumber}&eventType=${eventType}`;
+      this.requestURL = `api/booking/${this.resourceType}?refNumber=${refNumber}&eventType=${eventType}`;
       return this.http.get(this.requestURL);
 
     }

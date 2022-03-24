@@ -241,9 +241,9 @@ export class GatewayResponseComponent implements OnInit {
 					//  discussed with B A team.It can be applied for all module letter.
 					if (payRespData.payableServiceType == "AMPHI_FEES") {
 						// For SMS
-						this.sendSms(this.dispData.refNumber, this.bookingConstant.SUBMIT);
+						// this.sendSms(this.dispData.refNumber, this.bookingConstant.SUBMIT);
 						// For Email
-						this.sendMail(this.dispData.refNumber, this.bookingConstant.SUBMIT);
+						// this.sendMail(this.dispData.refNumber, this.bookingConstant.SUBMIT);
 					}
 					if (payRespData.fileStatus == "PAYMENT_RECEIVED") {
 						this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(payRespData.serviceDetail.code);
