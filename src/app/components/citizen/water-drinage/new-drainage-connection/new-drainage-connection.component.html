@@ -15,7 +15,7 @@
 					[serviceType]="'HEL-WTR-DRA-CON'">
 				</app-applicant-detail-drainagewater>
 				<app-action-bar [form]="newDrainageConnectionForm" (tabIndex)="onTabChange($event)"
-					[stepInfo]="{step: 'step0', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					[stepInfo]="{step: 'step1', next: 1}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 			</mat-tab>
 			<!-- step 1 Ends -->
 
@@ -231,7 +231,7 @@
 				</mat-card>
 
 				<app-action-bar [form]="newDrainageConnectionForm" (tabIndex)="onTabChange($event)"
-					[stepInfo]="{step: 'step1', next: 2, back: 1}" (handleErrors)="handleErrorsOnSubmit($event)">
+					[stepInfo]="{step: 'step2', next: 2, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)">
 				</app-action-bar>
 
 			</mat-tab>
@@ -399,7 +399,7 @@
 
 
 				<app-action-bar [form]="newDrainageConnectionForm" (tabIndex)="onTabChange($event)"
-					[stepInfo]="{step: 'step2', next: 3, back: 1}" (handleErrors)="handleErrorsOnSubmit($event)">
+					[stepInfo]="{step: 'step3', next: 3, back: 1}" (handleErrors)="handleErrorsOnSubmit($event)">
 				</app-action-bar>
 
 			</mat-tab>
@@ -426,13 +426,11 @@
 					</ng-container>
 				</div>
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="newDrainageConnectionForm"
-					(tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next: 4, back: 2}"
+					(tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', back: 2}"
 					(handleErrors)="handleErrorsOnSubmit($event)">
 				</app-action-bar>
 			</mat-tab>
 			<!-- Tab 4 End -->
-
-
 		</mat-tab-group>
 	</form>
 

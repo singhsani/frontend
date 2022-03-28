@@ -119,8 +119,7 @@ export class NewDrainageConnectionComponent implements OnInit {
       this.newDrainageConnectionForm.controls["waterDrainageBlockId"].clearValidators();  
       this.newDrainageConnectionForm.controls["propertyNo"].clearValidators();
       this.newDrainageConnectionForm.controls["primaryProperty"].clearValidators();      
-      }
-      else {
+      } else {
         this.isOutofLimit = false;        
         this.newDrainageConnectionForm.controls["waterDrainageZoneId"].setValidators([Validators.required]); 
         this.newDrainageConnectionForm.controls["waterDrainageWardId"].setValidators([Validators.required]); 
