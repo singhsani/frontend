@@ -199,11 +199,12 @@ export class WaterTankerAppComponent implements OnInit {
 	* 'Guj' control is consider as a Gujarati fields
 	*/
 	waterTankerAppFormControls() {
+		let emailRejex = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$';
 		this.waterTankerAppForm = this.fb.group({
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			mobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
-			email: [null, [Validators.required, Validators.maxLength(50)]],
+			email: [null, [Validators.required, Validators.maxLength(50),Validators.pattern(emailRejex)]],
 			applicationDate: [null, [Validators.required]],//not now
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'FS-WATER',
@@ -226,7 +227,7 @@ export class WaterTankerAppComponent implements OnInit {
 			}),
 			totalTankRequired: [null, [Validators.required, Validators.maxLength(1)]],
 			totalAmount: [null, [Validators.maxLength(5)]],
-			tankDeliveryAddress: [null, [Validators.required, Validators.maxLength(200)]],
+			tankDeliveryAddress: [null, [Validators.required, Validators.maxLength(500)]],
 
 			// loinumber: [null]
 

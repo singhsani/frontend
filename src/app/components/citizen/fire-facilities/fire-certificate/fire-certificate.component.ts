@@ -101,6 +101,7 @@ export class FireCertificateComponent implements OnInit {
 	 * define all gas connection form controls
 	 */
   fireCertificateFormControls() {
+    let emailRejex = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$';
     this.fireCertificateForm = this.fb.group({
       apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
       serviceCode: 'FS_FIRE_CERTIFICATE',
@@ -120,10 +121,10 @@ export class FireCertificateComponent implements OnInit {
       firePlaceType: this.fb.group({
         code: [null, [Validators.required]]
       }),
-      fireLossAmount: [null, [Validators.required, Validators.maxLength(50)]],
+      fireLossAmount: [null, [Validators.required, Validators.maxLength(10)]],
       contactNo : [null, [Validators.required, Validators.maxLength(10)]],
       mobileNo : [null, [Validators.required, Validators.maxLength(10)]],
-      email : [null, [Validators.required, Validators.maxLength(50)]],
+      email : [null, [Validators.required, Validators.maxLength(50),Validators.email, Validators.pattern(emailRejex)]],
       attachments: []
     });
   }

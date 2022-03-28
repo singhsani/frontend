@@ -610,7 +610,7 @@
 
 						<mat-form-field class="col-md-4">
 							<input matInput type="text" formControlName="brideCountryName" appValidationFields
-								[validationFieldsType]="'onlyNameWithSpace'"
+								[validationFieldsType]="'onlyNameWithSpace'" maxlength="50"
 								placeholder="{{ 'foreign_country' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.get('brideCountryName')"></control-messages>
 						</mat-form-field>
@@ -802,7 +802,7 @@
 
 					<div formGroupName='isParentsAddressSameAsGroomAddress'
 						[hidden]="marriageFormGroup.get('isNriMarriage').value == true">
-						<mat-checkbox type="checkbox" class="col-md-4" [checked]="addObject.checkedPar4"
+						<mat-checkbox type="checkbox" class="col-md-4" [checked]="addObject.checkedPar4" [disabled]="checkFlag1"
 							(change)="checkBox($event,'isParentsAddressSameAsGroomAddress','groomParentsAddress','groomAddress','4')">
 							{{'is_present_address_same_as_groom_address'
 							| translate:translateKey}}</mat-checkbox>
@@ -828,7 +828,7 @@
 
 
 					<div formGroupName='isGroomParResAddressSame'>
-						<mat-checkbox type="checkbox" class="col-md-4" [checked]="addObject.checkedPar1"
+						<mat-checkbox type="checkbox" class="col-md-4" [checked]="addObject.checkedPar1"  [disabled]="checkFlag2"
 							(change)="checkBox($event,'isGroomParResAddressSame','groomParentsAddressResidence','groomParentsAddress','1')">
 							{{'is_permanent_address_same_as_present_address'
 							| translate:translateKey}}</mat-checkbox>
@@ -927,7 +927,7 @@
 					</mat-form-field>
 
 					<div formGroupName='isParentsAddressSameAsBrideAddress' [hidden]="marriageFormGroup.get('isNriMarriage').value == true">
-						<mat-checkbox type="checkbox" class="col-md-4" [checked]="addObject.checkedPar5"
+						<mat-checkbox type="checkbox" class="col-md-4" [checked]="addObject.checkedPar5" [disabled]="checkFlag3"
 							(change)="checkBox($event,'isParentsAddressSameAsBrideAddress','brideParentsAddress','brideAddress','5')">{{'is_present_address_same_as_bride_address'
 							| translate:translateKey}}</mat-checkbox>
 					</div>
@@ -951,7 +951,7 @@
 
 
 					<div formGroupName='isBrideParResAddressSame'>
-						<mat-checkbox type="checkbox" class="col-md-4" [checked]="addObject.checkedPar2"
+						<mat-checkbox type="checkbox" class="col-md-4" [checked]="addObject.checkedPar2" [disabled]="checkFlag4"
 							(change)="checkBox($event,'isBrideParResAddressSame','brideParentsAddressResidence','brideParentsAddress','2')">{{'is_permanent_address_same_as_present_address'
 							| translate:translateKey}}</mat-checkbox>
 					</div>
@@ -1051,7 +1051,7 @@
 						[addressFormGroup]="marriageFormGroup.get('priestAddress')"></app-address>
 
 					<div class="col-md-4" formGroupName='isPriestParResAddressSame'>
-						<mat-checkbox type="checkbox" [checked]="addObject.checkedPar3"
+						<mat-checkbox type="checkbox" [checked]="addObject.checkedPar3" [disabled]="checkFlag5"
 							(change)="checkBox($event,'isPriestParResAddressSame','priestAddressResidence','priestAddress','3')">{{'is_permanent_address_same_as_present_address'
 							| translate:translateKey}}</mat-checkbox>
 					</div>

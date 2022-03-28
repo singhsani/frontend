@@ -399,6 +399,12 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		if (row.serviceType === 'PEC_REG' && row.serviceType === 'PRC_REG' || row.serviceType ===
 			'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE')
 			return false;
+		else if (row.serviceType === 'FS_FIRE_CERTIFICATE' && row.fileStatus === 'REJECTED')
+			return false;
+		else if (row.serviceType === 'FS_GAS_CONNECTION_NOC' && row.fileStatus === 'REJECTED')
+			return false;
+		else if (row.serviceType === 'MARRIAGE_REGISTRATION' && row.fileStatus === 'REJECTED')
+			return false;
 		else if (row.serviceType == "AFFORD_HOUSE" && row.fileStatus != "PAYMENT_RECEIVED") {
 			return true;
 		}
@@ -461,6 +467,13 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	
 		if (row.serviceType == "AFFORD_HOUSE" && row.fileStatus == "PAYMENT_RECEIVED"){
 			return true;
+		}
+
+		if (row.serviceType === 'FS_FIRE_CERTIFICATE' && row.fileStatus === 'REJECTED' ||
+			 row.serviceType === 'FS_GAS_CONNECTION_NOC' && row.fileStatus === 'REJECTED' || 
+			 row.serviceType === 'FS_ELECTRIC_CONNECTION_NOC' && row.fileStatus === 'REJECTED' || 
+			 row.serviceType === 'FS_WATER_TANKER' && row.fileStatus === 'REJECTED'){
+			return false;
 		}
 
 		if ((row.fileStatus == 'SUBMITTED' || row.fileStatus == 'APPROVED' || row.fileStatus == 'PAYMENT_RECEIVED') || row.fileStatus == 'PAYMENT' || row.fileStatus == 'SCRUTINY' && printViewServiceTypeArr.indexOf(row.serviceType) > -1) {
@@ -587,6 +600,12 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	}
 	isPrintReceiptPayment(row) {
 		if (row.fileStatus == 'PAYMENT' && row.serviceType == 'MARRIAGE_REGISTRATION') {
+			return false;
+		}
+		else if (row.serviceType === 'FS_FIRE_CERTIFICATE' && row.fileStatus === 'PAYMENT' ||
+			 row.serviceType === 'FS_GAS_CONNECTION_NOC' && row.fileStatus === 'PAYMENT' || 
+			 row.serviceType === 'FS_ELECTRIC_CONNECTION_NOC' && row.fileStatus === 'PAYMENT' || 
+			 row.serviceType === 'FS_WATER_TANKER' && row.fileStatus === 'PAYMENT'){
 			return false;
 		}
 		else if (row.serviceType == "AFFORD_HOUSE") {

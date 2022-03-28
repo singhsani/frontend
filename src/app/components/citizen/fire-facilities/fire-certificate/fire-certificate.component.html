@@ -125,7 +125,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput OnlyNumber maxlength="50" required formControlName="fireLossAmount" placeholder="{{ 'fire_loss_amount' | translate:translateKey }}" type="tel">
+						<input matInput OnlyNumber maxlength="10" required formControlName="fireLossAmount" placeholder="{{ 'fire_loss_amount' | translate:translateKey }}" type="tel">
 						<control-messages [control]="fireCertificateForm.get('fireLossAmount')"></control-messages>
 					</mat-form-field>
 

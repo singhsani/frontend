@@ -16,6 +16,7 @@ import { AppointmentServices } from '../../../appointment/appointment.service';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { SlotDetails } from '../../../appointment/schedule-appointment/slot-booking/slot-booking.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { FireFacilityConfig } from '../../../fire-facilities/config/FireFacilityConfig';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     @ViewChild('templateMyAppointmentModel') templateMyAppointmentModel: TemplateRef<any>;
     @ViewChild(MatSort) sort: MatSort;
     slotDataSource = new MatTableDataSource<SlotDetails>([]);
+    fireFacilityConfig: FireFacilityConfig = new FireFacilityConfig();
 
     //Mandatory attachments Array
     public uploadFilesArray: Array<any> = [];
@@ -536,6 +538,12 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
     message: string = `Welcome to Vadodara Municipal Corporation's Virtual Civic Center, which is simple and convenient way for citizens to access various services from anywhere at anytime.
     The services of Virtual Civic Center can be accessed without paying any additional charge.`;
+    checkFlag1: boolean;
+    checkFlag2: boolean;
+    checkFlag3: boolean;
+    checkFlag4: boolean;
+    checkFlag5: boolean;
+
 
     /**
      * @param fb - Declare FormBuilder property.
@@ -761,8 +769,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             groomSocialSecurityNumber: ['', [Validators.maxLength(9)]],
             groomEligibility: ['', [Validators.maxLength(50)]],
             groomDesignation: ['', [Validators.maxLength(50)]],
-            groomPhoneNumber: ['', [Validators.maxLength(10)]],
-            groomEmail: ['', [Validators.maxLength(50), ValidationService.emailValidator]],
+            groomPhoneNumber: [''],
+            groomEmail: [''],
             nriGroomAddress: ['', [Validators.maxLength(500)]],
             groomCompanyName: ['', [Validators.maxLength(100)]],
             groomCompanyPhoneNumber: ['', [Validators.maxLength(10)]],
@@ -1067,6 +1075,12 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 //     return Number(a.fieldIdentifier) - Number(b.fieldIdentifier);
                 //   });
 
+                this.checkFlag1 = res.isParentsAddressSameAsGroomAddress.code == "YES"?true:false;
+                this.checkFlag2 = res.isGroomParResAddressSame.code == "YES"?true:false;
+                this.checkFlag3 = res.isParentsAddressSameAsBrideAddress.code == "YES"?true:false;
+                this.checkFlag4 = res.isBrideParResAddressSame.code == "YES"?true:false;
+                this.checkFlag5 = res.isPriestParResAddressSame.code == "YES"?true:false;
+                
                 res.serviceDetail.serviceUploadDocuments.forEach(app => {
                     (<FormArray>this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
                 });
@@ -1395,7 +1409,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * @param person : Groom or Bride (Change Event).
      */
     changeReflection(person: string) {
-
+        let emailRejex = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$';
         this.marriageFormGroup.get(`${person}PassportNumber`).reset();
         this.marriageFormGroup.get(`${person}NriStatus`).reset();
         this.marriageFormGroup.get(`${person}CountryName`).reset();
@@ -1427,11 +1441,11 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             this.marriageFormGroup.get(`${person}SocialSecurityNumber`).setValidators([Validators.required, Validators.maxLength(9)]);
             this.marriageFormGroup.get(`${person}Eligibility`).setValidators([Validators.required, Validators.maxLength(50)]);
             this.marriageFormGroup.get(`${person}Designation`).setValidators([Validators.required, Validators.maxLength(50)]);
-            this.marriageFormGroup.get(`${person}PhoneNumber`).setValidators([Validators.required, Validators.maxLength(10)]);
-            this.marriageFormGroup.get(`${person}Email`).setValidators([Validators.required, Validators.maxLength(50), ValidationService.emailValidator]);
+            this.marriageFormGroup.get(`${person}PhoneNumber`).setValidators([Validators.required, Validators.maxLength(10),Validators.minLength(10)]);
+            this.marriageFormGroup.get(`${person}Email`).setValidators([Validators.required, Validators.maxLength(50),Validators.email, Validators.pattern(emailRejex)]);
             this.marriageFormGroup.get(`${person}CompanyName`).setValidators([Validators.maxLength(100)]);
             this.marriageFormGroup.get(`${person}CompanyAddress`).setValidators([Validators.maxLength(500)]);
-            this.marriageFormGroup.get(`${person}CompanyPhoneNumber`).setValidators([Validators.maxLength(10)]);
+            this.marriageFormGroup.get(`${person}CompanyPhoneNumber`).setValidators([Validators.maxLength(10),Validators.minLength(10)]);
 
             this.marriageFormGroup.get(`nri${getName}Address`).setValidators(Validators.required);
             this.marriageFormGroup.get(`nri${getName}ParentsAddress`).setValidators(Validators.required);
