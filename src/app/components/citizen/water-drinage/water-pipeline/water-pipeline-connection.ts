@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, ValidatorFn } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -14,9 +13,9 @@ import { TaxRebateApplicationService } from '../../tax/property/tax-rebate-appli
 import { Constants } from '../../../../vmcshared/Constants';
 import { BookingUtils } from '../../facilities/bookings/config/booking-config';
 import { ToastrService } from 'ngx-toastr';
-import { ApplicantDetailDTO } from '../../tax/Models/applicant-details.model';
 import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
+import { CommonService as CommonServiceTwo } from 'src/app/shared/services/common.service';
 
 @Component({
   selector: 'water-pipeline-connection',
@@ -42,14 +41,6 @@ export class WaterPipelineConnection implements OnInit {
   FOOD_BUSINESS_CATE_OTH: Array<any> = [];
   LOOKUP: any;
   City_ZONE: Array<any> = [];
-
-  // FOOD_BUSINESS_TYPES: Array<any> = [];
-  // FOOD_IS_REG_OR_LIC: Array<any> = [];
-
-
-
-
-
   FOOD_PAYMENT_MODE: Array<any> = [];
 
   config: WaterDrinageConfig = new WaterDrinageConfig();
@@ -67,7 +58,6 @@ export class WaterPipelineConnection implements OnInit {
 	public formControlNameToTabIndex = new Map();
 
   bookingUtils: BookingUtils;
-
   /**
    * @param fb - Declare FormBuilder property.
    * @param validationError - Declare validation service property
@@ -84,7 +74,8 @@ export class WaterPipelineConnection implements OnInit {
     private taxRebateApplicationService: TaxRebateApplicationService,
     private toaster: ToastrService,
     private addressService: ApplicantAddressService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private commonServcie2: CommonServiceTwo
   ) { 
     this.bookingUtils = new BookingUtils(formService, toaster);
   }
@@ -93,6 +84,7 @@ export class WaterPipelineConnection implements OnInit {
 	 * This method call initially required methods.
 	 */
   ngOnInit() {
+
     this.route.paramMap.subscribe(param => {
       this.formId = Number(param.get('id'));
       this.apiCode = param.get('apiCode');
@@ -102,8 +94,8 @@ export class WaterPipelineConnection implements OnInit {
 
     if (!this.formId) {
       this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
-    }
-    else {
+    } else {
+      this.getUserProfile();
       this.getWardZoneLevel();
       this.getLookupData();
       this.getAnimalPondLicNewData();
@@ -155,57 +147,6 @@ export class WaterPipelineConnection implements OnInit {
   }
 
 	/**
-	 * Method is used for get registration type or License type as per business turn over selection
-	 * @param event : selected ward code
-	 */
-  // onChangeRegOrLicType(event) {
-  //   if (event == 'LESS_THAN_12LK') {
-  //     this.waterPipeliConnectionForm.get('regOrLic').setValue('Registration');
-  //     this.waterPipeliConnectionForm.get('regOrLic').disable();
-  //   }
-  //   if (event == 'GREATER_THAN_12LK') {
-  //     this.waterPipeliConnectionForm.get('regOrLic').setValue('License');
-  //     this.waterPipeliConnectionForm.get('regOrLic').disable();
-
-  //   }
-  // }
-
-  // updateCatArray(event: any) {
-  //   console.log(event);
-  //   const catArray = <FormArray>this.waterPipeliConnectionForm.controls.businessCategories;
-  //   if (event) {
-  //     event.forEach(catValue => {
-  //       (catArray.push(this.pushItem(catValue)));
-  //     });
-  //   }
-  //   else {
-  //     let index = catArray.controls.findIndex(x => x.value == event)
-  //     catArray.removeAt(index);
-  //   }
-  // }
-
-  // pushItem(data?: any) {
-  //   return this.fb.group({
-  //     categoryCode: [data ? data : '']
-  //   });
-  // }
-
-
-  // set business turnover fields and registrastion type(disble mode) 
-  // setDependedFields(event: any) {
-  //   console.log(event);
-  //   let catValue = event;
-  //   let sliptvalue = catValue.split('_');
-  //   console.log(sliptvalue);
-  //   if (sliptvalue[0] = 'LT12L') {
-  //     this.waterPipeliConnectionForm.get('businessTurnOver').value.code.setValue('LESS_THAN_12LK');
-  //   }
-  //   else if(sliptvalue[0] = 'MT12L'){
-  //     this.waterPipeliConnectionForm.get('businessTurnOver').value.code.setValue('GREATER_THAN_12LK');
-  //   }
-  // }
-
-	/**
 	*  Method is used get selected data from lookup when change dropdown in grid.
 	* @param lookups : Array
 	* @param code : String
@@ -232,28 +173,22 @@ export class WaterPipelineConnection implements OnInit {
       propertyAddress: [null, [Validators.required, Validators.maxLength(250)]],
       contractorAddress: [null, [Validators.required, Validators.maxLength(200)]],
       mobileNo: [null, [Validators.maxLength(10)]],
-      // waterPipelineZone: this.fb.group({
-      //   code: [null, Validators.required]
-      // }),
-      // waterPipelineWard: this.fb.group({
-      //   code: [null, Validators.required]
-      // }),
       waterPipelineZoneId: [null, [Validators.required]],
       waterPipelineWardId: [null, [Validators.required]],
       pinCode: [null, Validators.required],
-      //firmCity: [null, [Validators.required, Validators.maxLength(10)]],
       tpNo: [null,[Validators.maxLength(10)]],
       fpNo: [null],
       revenueSurveyNo: [null],
       citySurveyNo: [null],
       buildingPermissionNo: [null],
       buildingPermissionDate: [null],
+      /* Step 2 controls start */
       developerFullName: [null, [Validators.required, Validators.maxLength(250)]],
       developerAddress: [null, [Validators.required, Validators.maxLength(200)]],
       developerMobileNo: [null, [Validators.maxLength(10)]],
       developerEmailId: [null,[ValidationService.emailValidator]],
       reraRegNo: [null, [Validators.required]],
-       contractorFullName: [null, [Validators.required, Validators.maxLength(250)]],
+      contractorFullName: [null, [Validators.required, Validators.maxLength(250)]],
       contractorMobileNo: [null, [Validators.maxLength(10)]],
       contractorEmailId: [null,[ValidationService.emailValidator]],
       registrationNumber: [null, [Validators.required]],
@@ -271,11 +206,6 @@ export class WaterPipelineConnection implements OnInit {
       workOrderDate: [null],
       estimateAmount: [0],
       connectionStatus: [null]
-      // loinumber: [null]
-
-      /* Step 4 controls start*/
-      // attachments: ['']
-      /* Step 4 controls end */
     }, { validator: this.myAwesomeRangeValidator }
     );
   }
@@ -302,37 +232,7 @@ export class WaterPipelineConnection implements OnInit {
         })
       }
     });
-    console.log("uploadFileArray", this.uploadFilesArray);
-    //check for attachment is mandatory
-    //	this.dependentAttachment(this.waterPipeliConnectionForm.get('undergroundWatertankMapApproved').value, 'UNDERGROUND_WATER_TANK_MAP');
-    //this.dependentAttachment(this.waterPipeliConnectionForm.get('overgroundWatertankMapApproved').value, 'OVERHEAD_WATER_TANK_MAP');
   }
-
-  // dependentAttachment(eventValue: any, dependedKey: string) {
-
-  // 	var control = (<FormArray>this.waterPipeliConnectionForm.get('serviceDetail').get('serviceUploadDocuments')).controls
-  // 	var fields = control.find((data) => data.get('documentIdentifier').value === dependedKey);
-
-  // 	if (eventValue && fields) {
-  // 		fields.get('mandatory').setValue(true);
-  // 		if (fields.get('isActive').value && fields.get('requiredOnCitizenPortal').value) {
-  // 			this.uploadFilesArray.push({
-  // 				'labelName': fields.get('documentLabelEn').value,
-  // 				'fieldIdentifier': fields.get('fieldIdentifier').value,
-  // 				'documentIdentifier': dependedKey
-  // 			})
-  // 		}
-  // 	} else {
-  // 		if (fields) {
-  // 			fields.get('mandatory').setValue(false);
-  // 			var indewx = this.uploadFilesArray.findIndex((data) => data.documentIdentifier === dependedKey)
-  // 			if (indewx != -1) {
-  // 				this.uploadFilesArray.splice(indewx, 1);
-  // 			}
-  // 		}
-  // 	}
-
-  // }
 
   handleOnSaveAndNext(res) {
     this.requiredDocumentList();
@@ -422,9 +322,6 @@ export class WaterPipelineConnection implements OnInit {
   myAwesomeRangeValidator: ValidatorFn = (fg: FormGroup) => {
     const start = Number(fg.get('workExecutionFromAmount').value);
     const end = Number(fg.get('workExecutionToAmount').value);
-    // return start != 0 && end != 0 && start < end
-    //   ? null
-    //   : { range: true };
     if(start != 0 && end != 0) {
       if(start < end) {
         return null;
@@ -466,7 +363,6 @@ export class WaterPipelineConnection implements OnInit {
 
   onChangedWardZone(value, level) {
     if (level == 2) {
-      //this.waterPipeliConnectionForm.controls.waterPipelineWard.setValue();
       this.wardZoneLevel2List = [];
       this.wardZoneLevel3List = [];
       this.wardZoneLevel4List = [];
@@ -509,40 +405,48 @@ export class WaterPipelineConnection implements OnInit {
 
   setFormControlToTabIndexMap() {
     // tab 2
-    this.formControlNameToTabIndex.set('schemeName', 2);
-    this.formControlNameToTabIndex.set('societyName', 2);
-    this.formControlNameToTabIndex.set('propertyAddress', 2);
-    this.formControlNameToTabIndex.set('waterPipelineZoneId', 2);
-    this.formControlNameToTabIndex.set('waterPipelineWardId', 2);
-    this.formControlNameToTabIndex.set('pinCode', 2);
+    this.formControlNameToTabIndex.set('schemeName', 1);
+    this.formControlNameToTabIndex.set('societyName', 1);
+    this.formControlNameToTabIndex.set('propertyAddress', 1);
+    this.formControlNameToTabIndex.set('waterPipelineZoneId', 1);
+    this.formControlNameToTabIndex.set('waterPipelineWardId', 1);
+    this.formControlNameToTabIndex.set('pinCode', 1);
 
     // tab 3
-    this.formControlNameToTabIndex.set('developerFullName', 3);
-    this.formControlNameToTabIndex.set('developerAddress', 3);
-    this.formControlNameToTabIndex.set('developerMobileNo', 3);
-    this.formControlNameToTabIndex.set('reraRegNo', 3);
-    this.formControlNameToTabIndex.set('reraRegistrationDate', 3);
+    this.formControlNameToTabIndex.set('developerFullName', 2);
+    this.formControlNameToTabIndex.set('developerAddress', 2);
+    this.formControlNameToTabIndex.set('developerMobileNo', 2);
+    this.formControlNameToTabIndex.set('reraRegNo', 2);
+    this.formControlNameToTabIndex.set('reraRegistrationDate', 2);
 
     // tab 4
-    this.formControlNameToTabIndex.set('contractorFullName', 4);
-    this.formControlNameToTabIndex.set('contractorMobileNo', 4);
-    this.formControlNameToTabIndex.set('contractorAddress', 4);
-    this.formControlNameToTabIndex.set('registrationNumber', 4);
-    this.formControlNameToTabIndex.set('registrationDate', 4);
-    this.formControlNameToTabIndex.set('registrationClass', 4);
-    this.formControlNameToTabIndex.set('workExecutionFromAmount', 4);
-    this.formControlNameToTabIndex.set('workExecutionToAmount', 4);
+    this.formControlNameToTabIndex.set('contractorFullName', 3);
+    this.formControlNameToTabIndex.set('contractorMobileNo', 3);
+    this.formControlNameToTabIndex.set('contractorAddress', 3);
+    this.formControlNameToTabIndex.set('registrationNumber', 3);
+    this.formControlNameToTabIndex.set('registrationDate', 3);
+    this.formControlNameToTabIndex.set('registrationClass', 3);
+    this.formControlNameToTabIndex.set('workExecutionFromAmount', 3);
+    this.formControlNameToTabIndex.set('workExecutionToAmount', 3);
 
   }
 
-  saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
-    this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
-         (data) => {
-           this.commonService.applicationNo = data.body.applicationNo;
-         },
-         (error) => {
-           this.commonService.callErrorResponse(error);
-         });
-   }
+  getUserProfile() {
+		if (!this.commonServcie2.fromAdmin()) {
+			this.commonService.getUserProfile().subscribe(res => {
+				const userData = res['data'];
+				if (userData) {
+          setTimeout(() => {
+            this.waterPipeliConnectionForm.patchValue({
+              developerFullName: `${userData.firstName} ${userData.middleName} ${userData.lastName}`,
+              developerAddress: `${userData.buildingName.trim()} ${userData.city.trim()} ${userData.district.trim()} ${userData.country.trim()}`,
+              developerMobileNo: userData.cellNo,
+              developerEmailId: userData.email,
+            });
+          }, 1000);
+				}
+			});
+		}
+	}
 
 }

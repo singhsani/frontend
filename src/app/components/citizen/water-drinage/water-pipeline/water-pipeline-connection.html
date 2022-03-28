@@ -11,19 +11,6 @@
 			<!-- step 1 Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
-					<div>Applicant Details</div>
-				</ng-template>
-				<app-applicant-detail-drainagewater (applicantDetails)="saveApplicantDetails($event)"
-					[serviceType]="'HEL_WTR_PIPELINE'">
-				</app-applicant-detail-drainagewater>
-				<app-action-bar [form]="waterPipeliConnectionForm" (tabIndex)="onTabChange($event)"
-					[stepInfo]="{step: 'step1', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
-			</mat-tab>
-			<!-- step 1 Ends -->
-
-			<!-- step 2 Starts -->
-			<mat-tab>
-				<ng-template mat-tab-label>
 					<div>{{'application-details' | translate:translateKey}}</div>
 				</ng-template>
 				<div class="row">
@@ -74,7 +61,6 @@
 					<mat-form-field class="col-md-6">
 						<input matInput rows="1" cols="50" maxlength="250" formControlName="landmark"
 							placeholder="{{ 'landmark' | translate:translateKey }}" > 
-						<!-- <control-messages [control]="waterPipeliConnectionForm.get('landmark')"></control-messages> -->
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
@@ -84,12 +70,6 @@
 							Address is required
 						  </mat-error>
 					</mat-form-field>
-					<!-- <mat-form-field class="col-md-4">
-						<input matInput formControlName="firmCity" appValidationFields
-							validationFieldsType='onlyNameWithOutSpace'
-							placeholder="{{'firm_city' | translate:translateKey}}" maxlength="10" required>
-						<control-messages [control]="waterPipeliConnectionForm.get('firmCity')"></control-messages>
-					</mat-form-field> -->
 				</div>
 
 				<div class="row">
@@ -103,40 +83,26 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="tel"  formControlName="tpNo"
 							placeholder="{{'tp-no' | translate: translateKey }}" maxlength="10">
-						<!-- <control-messages [control]="waterPipeliConnectionForm.get('tpNo')"></control-messages> -->
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput   maxlength="10" formControlName="fpNo"
 							placeholder="{{'fp-no' | translate:translateKey}}">
-						<!-- <control-messages [control]="waterPipeliConnectionForm.get('fpNo')"></control-messages> -->
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput  maxlength="10"  formControlName="revenueSurveyNo" 
 							placeholder="{{'revenue-survey-no' | translate:translateKey}}">
-						<!-- <control-messages [control]="waterPipeliConnectionForm.get('revenueSurveyNo')">
-						</control-messages> -->
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput  appPreventSpace  maxlength="40"
 							placeholder="{{'city-survey-no' | translate:translateKey}}" type="text"
 							formControlName="citySurveyNo" >
-						<!-- <control-messages [control]="waterPipeliConnectionForm.get('citySurveyNo')"></control-messages> -->
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput  appPreventSpace maxlength="40"
 							placeholder="{{'building-permission-no' | translate:translateKey}}" type="text"
 							formControlName="buildingPermissionNo">
-						<!-- <control-messages [control]="waterPipeliConnectionForm.get('buildingPermissionNo')">
-						</control-messages> -->
 					</mat-form-field>
-
-					<!-- <mat-form-field class="col-md-4">
-						<input matInput required appPreventSpace
-							placeholder="{{'city_SurveyNo' | translate:translateKey}}" type="text"
-							formControlName="citySurveyNo" required>
-						<control-messages [control]="waterPipeliConnectionForm.get('citySurveyNo')"></control-messages>
-					</mat-form-field> -->
 
 					<mat-form-field class="col-md-4">
 						<input  matInput appDate [max]="disablefutureDate" [matDatepicker]="picker1"
@@ -146,17 +112,15 @@
 						<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
 						<mat-datepicker #picker1 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
-						<!-- <control-messages [control]="waterPipeliConnectionForm.get('buildingPermissionDate')">
-						</control-messages> -->
 					</mat-form-field>
 
 				</div>
 				<app-action-bar [form]="waterPipeliConnectionForm" (tabIndex)="onTabChange($event)"
-					[stepInfo]="{step: 'step2', next: 2, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					[stepInfo]="{step: 'step1', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 			</mat-tab>
-			<!-- step 2 Ends -->
+			<!-- step 1 Ends -->
 
-			<!-- step 3 Starts -->
+			<!-- step 2 Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>{{'applicant-developer-details' | translate:translateKey}}</div>
@@ -187,7 +151,7 @@
 						  </mat-error>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput  appPreventSpace
+						<input matInput appPreventSpace
 							placeholder="{{'developer-email-id' | translate:translateKey}}" type="text"
 							formControlName="developerEmailId" >
 						<control-messages [control]="waterPipeliConnectionForm.get('developerEmailId')">
@@ -217,14 +181,11 @@
 					</mat-form-field>
 				</div>
 				<app-action-bar [form]="waterPipeliConnectionForm" (tabIndex)="onTabChange($event)"
-					[stepInfo]="{step: 'step3', next: 3, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					[stepInfo]="{step: 'step2', next: 2, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 			</mat-tab>
-			<!-- step 3 Ends -->
+			<!-- step 2 Ends -->
 
-
-
-
-			<!-- step 4 Starts -->
+			<!-- step 3 Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>{{'contractor-details' | translate:translateKey}}</div>
@@ -306,7 +267,6 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<!-- [max]="disablefutureDate" -->
 						<input matInput appDate  [matDatepicker]="picker4"
 							formControlName="registrationValidity"
 							(dateChange)="dateFormate($event.value,'registrationValidity');"
@@ -314,8 +274,6 @@
 						<mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
 						<mat-datepicker #picker4 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
-						<!-- <control-messages [control]="waterPipeliConnectionForm.get('registrationValidity')">
-						</control-messages> -->
 					</mat-form-field>
 
 					<mat-form-field [hidden]="true">
@@ -333,19 +291,15 @@
 					
 				</div>
 				<app-action-bar [form]="waterPipeliConnectionForm" (tabIndex)="onTabChange($event)"
-					[stepInfo]="{step: 'step4', next: 4, back: 1}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					[stepInfo]="{step: 'step3', next: 3, back: 1}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 			</mat-tab>
-			<!-- step 4 Ends -->
+			<!-- step 3 Ends -->
 
-			<!-- step 5 Ends -->
+			<!-- step 4 Ends -->
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>{{'Attachment' | translate: translateKey}}</div>
 				</ng-template>
-				<!-- <div class="alert alert-warning">
-					{{'note' | translate:translateKey}} :
-					{{'submit_hard_copy_at_saradar_market' | translate:translateKey}}
-				</div> -->
 				<div class="row">
 					<!-- fieldIdentifier -->
 					<ng-container
@@ -358,10 +312,10 @@
 				</div>
 				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray"
 					[form]="waterPipeliConnectionForm" (tabIndex)="onTabChange($event)"
-					[stepInfo]="{step: 'final', next: 5, back: 2}" (handleErrors)="handleErrorsOnSubmit($event)">
+					[stepInfo]="{step: 'final', next: 4, back: 2}" (handleErrors)="handleErrorsOnSubmit($event)">
 				</app-action-bar>
 			</mat-tab>
-			<!-- Tab 5 End -->
+			<!-- Tab 4 End -->
 			<select-payment-gateway #paymentGateway></select-payment-gateway>
 		</mat-tab-group>
 	</form>
