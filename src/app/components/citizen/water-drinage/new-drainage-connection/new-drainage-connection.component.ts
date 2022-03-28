@@ -16,8 +16,6 @@ import { BookingUtils } from '../../facilities/bookings/config/booking-config';
 import { ToastrService } from 'ngx-toastr';
 import { ApplicantDetailDTO } from '../../tax/Models/applicant-details.model';
 import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
-
-
  
 @Component({
   selector: 'app-new-drainage-connection',
@@ -28,7 +26,6 @@ export class NewDrainageConnectionComponent implements OnInit {
 
   formId: number;
   apiCode: string;
-
   
   newDrainageConnectionForm: FormGroup;
   translateKey: string = 'newDrainageConnectionKey';
@@ -92,7 +89,6 @@ export class NewDrainageConnectionComponent implements OnInit {
     }else{
       this.newDrainageConnectionFormControls();
       this.getFormsArray();
-      //this.newDrainageConnectionForm.get('waterDrainageConnPropertyDetailsDTOList').setValue(null);
       this.getWardZoneLevel();
       this.getUsageList();
       this.getDrainageConnectionNewData();
@@ -173,124 +169,103 @@ export class NewDrainageConnectionComponent implements OnInit {
 		if (index) {
 			this.tabIndex = index - 1;
 			return false;
-		}
-    // console.log("flag", flag);
-    // let step0 = 11;
-    // let step1 = 26;
-
-    // if (flag != null) {
-    //   //Check validation for step by step
-    //   let count = flag;
-
-    //   if (count <= step0) {
-    //     this.tabIndex = 0;
-    //     return false;
-    //   } else if (count <= step1) {
-    //     this.tabIndex = 1;
-    //     return false;
-    //   }
-    //   else {
-    //     console.log("else condition");
-    //   }
-
-    
+		}    
   }
 
-  deleteProperty(index: number){
+  deleteProperty(index: number) {
 
     this.dataSource.splice(index, 1);
     this.dataSource = this.dataSource.slice();
 
-    if(this.dataSource.length == 0) {
+    if (this.dataSource.length == 0) {
       this.isShowPropertyGrid = false;
-      this.waterDrainageConnPropertyDetailsDTOList=[];
+      this.waterDrainageConnPropertyDetailsDTOList = [];
       this.isprimaryProperty = false;
       this.newDrainageConnectionForm.reset();
     }
-
   }
+
   getPropertyAddressDetail() {
-    // if(this.newDrainageConnectionForm.get('primaryProperty').value && this.newDrainageConnectionForm.get('propertyNo').value)
-    if(this.newDrainageConnectionForm.get('primaryProperty').value!=null && this.newDrainageConnectionForm.get('propertyNo').value)
-    this.newWaterConnectionEntryService.getPropertyAddress(this.newDrainageConnectionForm.get('propertyNo').value).subscribe(
-      (data) => {
-        if (data.status === 200) {
-          if(this.newDrainageConnectionForm.get('primaryProperty').value === this.isprimaryProperty){
-            let temojbNonPrimary :any= { 'propertyNo' :  this.newDrainageConnectionForm.get('propertyNo').value ,
-          'ownerName' :  data.body.propertyOwners[0].firstName , 
-           'address' :data.body.propertyBasic.propertyAddressDTO.propertyAddress }           
-           if(this.dataSource.length === 0){
-              this.dataSource.push(temojbNonPrimary)
-              this.isShowPropertyGrid = true;
-           }else if(this.dataSource.length > 0 && this.dataSource.filter(x=>x.propertyNo === temojbNonPrimary.propertyNo).length===0){
-            this.dataSource.push(temojbNonPrimary)
-            this.dataSource = this.dataSource.slice();
-           }else{
-             if(this.isprimaryProperty){
+    if (this.newDrainageConnectionForm.get('primaryProperty').value != null && this.newDrainageConnectionForm.get('propertyNo').value)
+      this.newWaterConnectionEntryService.getPropertyAddress(this.newDrainageConnectionForm.get('propertyNo').value).subscribe(
+        (data) => {
+          if (data.status === 200) {
+            if (this.newDrainageConnectionForm.get('primaryProperty').value === this.isprimaryProperty) {
+              let temojbNonPrimary: any = {
+                'propertyNo': this.newDrainageConnectionForm.get('propertyNo').value,
+                'ownerName': data.body.propertyOwners[0].firstName,
+                'address': data.body.propertyBasic.propertyAddressDTO.propertyAddress
+              }
+              if (this.dataSource.length === 0) {
+                this.dataSource.push(temojbNonPrimary)
+                this.isShowPropertyGrid = true;
+              } else if (this.dataSource.length > 0 && this.dataSource.filter(x => x.propertyNo === temojbNonPrimary.propertyNo).length === 0) {
+                this.dataSource.push(temojbNonPrimary)
+                this.dataSource = this.dataSource.slice();
+              } else {
+                if (this.isprimaryProperty) {
+                  this.alertService.info("you can add only one primary property");
+                  return;
+                } else {
+                  this.alertService.info("Recode Already Exist");
+                }
+
+              }
+            }
+            else if (this.newDrainageConnectionForm.get('primaryProperty').value != this.isprimaryProperty) {
+              this.isprimaryProperty = true;
+              this.searchPropertyData = data.body.propertyBasic.propertyAddressDTO;
+              this.getPropertyValues(data.body.propertyBasic.propertyAddressDTO);
+
+              let temojb = {
+                'propertyNo': this.newDrainageConnectionForm.get('propertyNo').value,
+                'ownerName': data.body.propertyOwners[0].firstName,
+                'address': data.body.propertyBasic.propertyAddressDTO.propertyAddress
+              }
+              this.waterDrainageConnPropertyDetailsDTOList.push(temojb);
+              let propertyObj = { 'primaryProperty': this.newDrainageConnectionForm.get('primaryProperty').value, 'propertyNo': this.newDrainageConnectionForm.get('propertyNo').value };
+              this.propertyaryy.push(propertyObj);
+
+              if (this.dataSource.length === 0) {
+                this.dataSource.push(temojb);
+                this.isShowPropertyGrid = true;
+              } else if (this.dataSource.length > 0 && this.dataSource.filter(x => x.propertyNo === temojb.propertyNo).length === 0) {
+                this.dataSource.push(temojb);
+                this.dataSource = this.dataSource.slice();
+                this.isShowPropertyGrid = true;
+              } else {
+                if (this.isprimaryProperty && !this.newDrainageConnectionForm.get('primaryProperty').value) {
+                  this.alertService.info("Recode Already Exist");
+                  return;
+                } else {
+                  this.alertService.info("you can add only one primary property");
+                }
+              }    
+              this.getFormsArray().push(this.createFormGroup("waterDrainageConnPropertyDetailsDTOList", {}));
+
+              this.newDrainageConnectionForm.get('waterDrainageConnPropertyDetailsDTOList').setValue(this.propertyaryy);
+
+              if (this.newDrainageConnectionForm.get('primaryProperty').value) {
+                this.newDrainageConnectionForm.get('primaryProperty').setValue(this.newDrainageConnectionForm.get('primaryProperty').value);
+                this.newDrainageConnectionForm.get('propertyNo').setValue(this.newDrainageConnectionForm.get('propertyNo').value)
+              } else {
+                this.newDrainageConnectionForm.get('primaryProperty').reset();
+                this.newDrainageConnectionForm.get('propertyNo').reset();
+
+              }
+
+              if (this.dataSource.length == 0) {
+                this.isShowPropertyGrid = false;
+              }
+
+            } else {
               this.alertService.info("you can add only one primary property");
-              return;
-             }else{
-              this.alertService.info("Recode Already Exist");
-             }
-           
-           }        
-          }        
-          else if(this.newDrainageConnectionForm.get('primaryProperty').value != this.isprimaryProperty){
-            this.isprimaryProperty = true;
-            this.searchPropertyData = data.body.propertyBasic.propertyAddressDTO;
-          this.getPropertyValues(data.body.propertyBasic.propertyAddressDTO);
-          
-          let temojb = { 'propertyNo' :  this.newDrainageConnectionForm.get('propertyNo').value ,
-          'ownerName' :  data.body.propertyOwners[0].firstName , 
-           'address' :data.body.propertyBasic.propertyAddressDTO.propertyAddress }
-          this.waterDrainageConnPropertyDetailsDTOList.push(temojb);
-          let propertyObj = {'primaryProperty': this.newDrainageConnectionForm.get('primaryProperty').value , 'propertyNo':this.newDrainageConnectionForm.get('propertyNo').value};
-          this.propertyaryy.push(propertyObj);
-          
-          // this.dataSource = [];
-          if(this.dataSource.length === 0){
-            this.dataSource.push(temojb);
-            this.isShowPropertyGrid = true;
-         }else if(this.dataSource.length > 0 && this.dataSource.filter(x=>x.propertyNo === temojb.propertyNo).length===0){
-          this.dataSource.push(temojb);
-          this.dataSource = this.dataSource.slice();
-          this.isShowPropertyGrid = true;
-         }else{
-          if(this.isprimaryProperty && !this.newDrainageConnectionForm.get('primaryProperty').value){
-            this.alertService.info("Recode Already Exist");
-            return;
-           }else{
-            this.alertService.info("you can add only one primary property");            
-           }
-         }              
-          // this.dataSource.push(this.waterDrainageConnPropertyDetailsDTOList);
-          // this.dataSource = this.dataSource.slice();
-          // this.isShowPropertyGrid = true;          
-          this.getFormsArray().push(this.createFormGroup("waterDrainageConnPropertyDetailsDTOList", {}));
-          
-          this.newDrainageConnectionForm.get('waterDrainageConnPropertyDetailsDTOList').setValue(this.propertyaryy);
-          
-          if(this.newDrainageConnectionForm.get('primaryProperty').value){
-            this.newDrainageConnectionForm.get('primaryProperty').setValue(this.newDrainageConnectionForm.get('primaryProperty').value);
-            this.newDrainageConnectionForm.get('propertyNo').setValue(this.newDrainageConnectionForm.get('propertyNo').value)
-          }else{
-            this.newDrainageConnectionForm.get('primaryProperty').reset();
-            this.newDrainageConnectionForm.get('propertyNo').reset();
-            
+            }
           }
-        
-        if(this.dataSource.length == 0) {
-          this.isShowPropertyGrid = false;
-        }
-      
-        }else{
-          this.alertService.info("you can add only one primary property");
-        }
-      }
-      },
-      (error) => {
-        this.alertService.error(error.error.message);
-      });
+        },
+        (error) => {
+          this.alertService.error(error.error.message);
+        });
   }
 
   createFormGroup(key: string, data: any): FormGroup {
@@ -332,10 +307,6 @@ export class NewDrainageConnectionComponent implements OnInit {
         })
       }
     });
-    console.log("uploadFileArray", this.uploadFilesArray);
-    //check for attachment is mandatory
-    //	this.dependentAttachment(this.waterPipeliConnectionForm.get('undergroundWatertankMapApproved').value, 'UNDERGROUND_WATER_TANK_MAP');
-    //this.dependentAttachment(this.waterPipeliConnectionForm.get('overgroundWatertankMapApproved').value, 'OVERHEAD_WATER_TANK_MAP');
   }
 
   newDrainageConnectionFormControls() {
@@ -436,8 +407,6 @@ export class NewDrainageConnectionComponent implements OnInit {
     }
     if (fullAddress != '' && address2 != '')
       fullAddress = fullAddress.substring(0, fullAddress.length - 2);
-    
-      // this.newDrainageConnectionForm.get('postalAddress').setValue(fullAddress);
       this.newDrainageConnectionForm.get('correspondenceAddress').setValue(fullAddress);
     
   }
@@ -481,7 +450,6 @@ export class NewDrainageConnectionComponent implements OnInit {
 
   onChangedWardZone(value, level) {
     if (level == 2) {
-      //this.waterPipeliConnectionForm.controls.waterPipelineWard.setValue();
       this.wardZoneLevel2List = [];
       this.wardZoneLevel3List = [];
       this.wardZoneLevel4List = [];
@@ -510,13 +478,6 @@ export class NewDrainageConnectionComponent implements OnInit {
        if (data.status === 200 && data.body.length) {
           this.plumberList = data.body;
           this.shortDropdown(this.plumberList,'nameOfApplicant');
-          //TODO Ask to nikulbhai about filter plumber list
-
-          // this.filteredPlumerList = this.plumerCtrl.valueChanges
-          //   .pipe(
-          //     startWith(''),
-          //     map(f => f ? this.filterPlumber(f) : this.plumberList.slice())
-          //   );
         }
       },
       (error) => {
@@ -615,17 +576,16 @@ export class NewDrainageConnectionComponent implements OnInit {
 		
 		this.formControlNameToTabIndex.set('pincode', 3)
 		this.formControlNameToTabIndex.set('streetName', 3)
-	
 	  }
 
-    saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
-      this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
-           (data) => {
-             this.commonService.applicationNo = data.body.applicationNo;
-           },
-           (error) => {
-             this.commonService.callErrorResponse(error);
-           });
-     }
+  saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO) {
+    this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
+      (data) => {
+        this.commonService.applicationNo = data.body.applicationNo;
+      },
+      (error) => {
+        this.commonService.callErrorResponse(error);
+      });
+  }
 
 }
