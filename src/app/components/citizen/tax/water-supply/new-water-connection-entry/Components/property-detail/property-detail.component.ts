@@ -5,7 +5,6 @@ import { NewWaterConnectionEntryDataSharingService } from '../../Services/new-wa
 import { PropertyAddressModel, PropertyModel } from '../../Models/new-water-connection-entry.model';
 import { Subscription } from 'rxjs';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
-import { ManageRoutes } from 'src/app/config/routes-conf';
 import { Router } from '@angular/router';
 
 @Component({
@@ -174,31 +173,6 @@ export class PropertyDetailComponent implements OnInit {
   onSubmit(formDetails: NgForm) {
     this.savePropertyAddress1(formDetails,true);
   }
-
-  // finalSubmit() {
-  //   this.newNewWaterConnectionEntryService.submit(this.connectionDtlId).subscribe(
-  //     (data) => {
-  //       if (data.status === 200) {
-  //         this.alertService.success(data.body.message);
-  //         this.newNewWaterConnectionEntryDataSharingService.updateDataSourceIsShowDocument(true);
-  //         //this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(2);
-  //         this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
-  //       }
-  //     },
-  //     (error) => {
-  //       if (error.status === 400) {
-  //         var errorMessage = '';
-  //         error.error[0].propertyList.forEach(element => {
-  //           errorMessage = errorMessage + element + "</br>";
-  //         });
-  //         this.alertService.error(errorMessage);
-  //       }
-  //       else {
-  //         this.alertService.error(error.error.message);
-  //       }
-  //     });
-
-  // }
 
 
   onBackClick(){

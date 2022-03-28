@@ -101,6 +101,11 @@ export class DocumentUploadComponent implements OnInit {
         this.newNewWaterConnectionEntryDataSharingService.updateDataSourceBackMoveStepper();     
     }
 
+    moveStepper(index: number) {
+      this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(index);
+    }
+    
+
   mandatoryFileCheck() {
     return new Promise<any>((resolve, reject) => {
       this.newNewWaterConnectionEntryService.getAttachmentList(this.serviceFormId).subscribe(uploadedDocs => {
