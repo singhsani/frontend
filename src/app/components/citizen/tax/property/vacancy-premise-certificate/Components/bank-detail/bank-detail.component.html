@@ -6,11 +6,11 @@
         <h4>Bank Details</h4>
       </div>
     </div> -->
-    <div class="col-md-12 text-right">
+    <!-- <div class="col-md-12 text-right">
       <button mat-raised-button class="ml-3" color="primary" type="button" (click)="cancelForm()">
         <mat-icon>skip_previous</mat-icon> Back
       </button>
-    </div>
+    </div> -->
     <hr class="margin-top-10">
   </div>
 </div>
@@ -181,16 +181,21 @@
               </div>
             </div>
             <div class="row" *ngIf="!isShaved">
-              <div class="col-md-12 text-right">
-                <button class="ml-3" mat-raised-button color="primary" type="submit">
-                  <mat-icon>save</mat-icon> Save & Next
+               <div class="col-md-12">
+                <button mat-raised-button class="ml-3" class="pull-left" color="primary" type="button" (click)="cancelForm()">
+                  <mat-icon>skip_previous</mat-icon> Back
                 </button>
-                <button mat-raised-button class=" ml-3" type="button" color="warn" (click)="onClear()">
+                <button mat-raised-button class=" ml-3" type="button" class="pull-right" color="warn" (click)="onClear()">
                   <mat-icon>clear_all</mat-icon> Clear
                 </button>
+                <button class="ml-3" mat-raised-button  class="pull-right" color="primary" type="submit">
+                  <mat-icon>save</mat-icon> Save & Next
+                </button>
+               
               </div>
-            </div>
-          </form>
+             </div>
+            
+          </form>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     `
         </div>
       </div>
     </mat-step>
@@ -215,14 +220,21 @@
           </ng-container>
         </div>
 
-
-        <div class="button-row text-right mt-3">
-          <button mat-raised-button class="ml-3" color="primary" (click)="onSubmitApproved()"
+               
+        <div class="button-row mt-3">
+          <div class="col-md-12">
+            <button mat-raised-button class="ml-3" class="pull-left" color="primary" type="button" (click)="cancelForm()">
+              <mat-icon>skip_previous</mat-icon> Back
+            </button>
+          </div>
+            
+          <div class="col-md-12 text-right">
+          <button mat-raised-button class="ml-3" class="pull-right" color="primary" (click)="onSubmitApproved()"
             type="button">
             <mat-icon>save</mat-icon>Submit
           </button>
         </div>
-
+      </div>
       </mat-card>
     </mat-step>
 
