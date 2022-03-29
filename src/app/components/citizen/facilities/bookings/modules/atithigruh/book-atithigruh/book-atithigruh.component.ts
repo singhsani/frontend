@@ -82,6 +82,7 @@ export class BookAtithigruhComponent implements OnInit {
 		private modalService: BsModalService,
 		private router: Router,
 		protected formService: FormsActionsService,
+		private toastr: ToastrService,
 	) {
 		this.bookingUtils = new BookingUtils(formService, toaster);
 		this.bookingService.resourceType = this.bookingConstants.ATITHIGRUH_RESOURCE_TYPE;
@@ -449,10 +450,14 @@ export class BookAtithigruhComponent implements OnInit {
 			return;
 		} else {
 			if (this.bookingForRegular) {
-
+				debugger
 				this.bookingService.commonBookSlot(this.atithigruhForm.getRawValue()).subscribe(resp => {
 				}, (err) => {
 					if (err.status == 402) {
+						let refNumber = this.atithigruhForm.get("refNumber").value;
+						debugger
+						// this.sendSms(refNumber, "SUBMIT");
+						this.sendMail(refNumber, "SUBMIT");
 						// this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService,this.atithigruhForm, this.router);
 						this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway ,this.atithigruhForm, this.router);
 						return;
@@ -587,4 +592,26 @@ export class BookAtithigruhComponent implements OnInit {
 		this.formControlNameToTabIndex.set('ifscCode', 2)
 	  }
 
+	  sendSms(refNumber:any,eventType:any){
+
+		if(refNumber){
+			this.bookingService.sendSms(refNumber,eventType).subscribe(resp=>{
+			},err => {
+				this.toastr.error("Something went wrong");            })
+		}else{
+			this.toastr.error("Invalid request");
+		}
+	}
+
+	sendMail(refNumber: any, eventType: any) {
+		if (refNumber) {
+		  this.bookingService.sendMail(refNumber, eventType).subscribe(resp => {
+		  }, err => {
+			this.toastr.error("Something went wrong");
+		  })
+		} else {
+		  this.toastr.error("Invalid request");
+		}
+	  }
+	
 }
