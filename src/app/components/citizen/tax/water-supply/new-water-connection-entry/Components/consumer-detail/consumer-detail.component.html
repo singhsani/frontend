@@ -201,7 +201,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="ngSelect">
-                    <ng-select required placeholder="Connection Size *" [items]="connectionSizeList" bindValue="waterConnSizeId" bindLabel="connectionSize"
+                    <ng-select required placeholder="Connection Size *" [items]="connectionSizeList" bindValue="waterConnSizeId" bindLabel="connectionSizeLabel"
                         name="connectionSizeId" [(ngModel)]="model.connectionSizeId" #ConnectionSizeId="ngModel"
                         [ngClass]="{'ng-invalid ng-touched':  consumerFormDetails.submitted && ConnectionSizeId.invalid}">
                     </ng-select>
