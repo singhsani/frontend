@@ -263,5 +263,14 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
              (error) => {
                this.commonService.callErrorResponse(error);
              });
-       }
+    }
+    //Added Clear Button Method
+    clear(form : NgForm){
+        this.connectioNo = null;
+        this.connectionsModel.connectionDetail = new ConnectionDetail();
+        this.connectionsModel.address = null;
+        this.connectionsModel.propertyDues = null;
+        this.connectionsModel.waterDues = null;
+        form.resetForm();
+    }
 }
