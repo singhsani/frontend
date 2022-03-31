@@ -27,7 +27,8 @@
     </mat-form-field>
 
     <mat-form-field class="col-md-4">
-        <input matInput  appPreventSpace placeholder="{{'applicant_email' | translate:translateKey}}" type="email" formControlName="email" required>
+        <input matInput  appPreventSpace maxlength="50" placeholder="{{'applicant_email' | translate:translateKey}}"
+        type="email" formControlName="email" pattern='(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,3}))$' required>
         <control-messages [control]="basicFormGroup.get('email')"></control-messages>
     </mat-form-field>
 </div>
