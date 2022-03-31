@@ -97,6 +97,7 @@ export class GasConnectionNocComponent implements OnInit {
 	 * define all gas connection form controls
 	 */
 	gasConnectionFormControls() {
+		let emailRejex = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$';
 		this.gasConnectionForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'FS-GAS',

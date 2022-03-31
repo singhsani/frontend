@@ -764,8 +764,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             groomSocialSecurityNumber: ['', [Validators.maxLength(9)]],
             groomEligibility: ['', [Validators.maxLength(50)]],
             groomDesignation: ['', [Validators.maxLength(50)]],
-            groomPhoneNumber: ['', [Validators.maxLength(10)]],
-            groomEmail: ['', [Validators.maxLength(50), ValidationService.emailValidator]],
+            groomPhoneNumber: [''],
+            groomEmail: [''],
             nriGroomAddress: ['', [Validators.maxLength(500)]],
             groomCompanyName: ['', [Validators.maxLength(100)]],
             groomCompanyPhoneNumber: ['', [Validators.maxLength(10)]],
@@ -1400,7 +1400,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * @param person : Groom or Bride (Change Event).
      */
     changeReflection(person: string) {
-
+        let emailRejex = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$';
         this.marriageFormGroup.get(`${person}PassportNumber`).reset();
         this.marriageFormGroup.get(`${person}NriStatus`).reset();
         this.marriageFormGroup.get(`${person}CountryName`).reset();

@@ -199,6 +199,7 @@ export class WaterTankerAppComponent implements OnInit {
 	* 'Guj' control is consider as a Gujarati fields
 	*/
 	waterTankerAppFormControls() {
+		let emailRejex = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$';
 		this.waterTankerAppForm = this.fb.group({
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
