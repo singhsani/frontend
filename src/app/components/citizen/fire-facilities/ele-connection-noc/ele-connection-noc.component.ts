@@ -12,6 +12,7 @@ import * as moment from 'moment';
 import { TranslateService } from '../../../../shared/modules/translate/translate.service';
 import { FireFacilitiesService } from '../common/services/fire-facilities.service';
 import { constants } from 'os';
+import { ValidatorService } from 'src/app/vmcshared/data-table/validator.service';
 
 @Component({
 	selector: 'app-ele-connection-noc',
@@ -108,7 +109,7 @@ export class EleConnectionNocComponent implements OnInit {
 			applicationDate: [{ value: null, disabled: true }],
 			contactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			mobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
-			email: [null, [Validators.required, Validators.maxLength(50)]],
+			email: [null, [Validators.required, Validators.maxLength(50),Validators.email, ValidationService.emailValidator]],
 
 			/* Step 2 controls start */
 			electricityConnectionNo: [null, [Validators.required, Validators.maxLength(20)]],

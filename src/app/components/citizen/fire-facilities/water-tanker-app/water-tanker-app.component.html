@@ -33,7 +33,7 @@
 	
 						<mat-form-field class="col-md-8">
 							<input matInput appPreventSpace placeholder="{{'email_id' | translate:translateKey}}" type="email"
-							 formControlName="email" required maxlength="50">
+							 formControlName="email" required>
 							<control-messages [control]="waterTankerAppForm.get('email')"></control-messages>
 						</mat-form-field>
 						<mat-form-field class="col-md-4">
@@ -166,7 +166,7 @@
 					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="waterTankerAppForm.get('permanantAddress').value"
 					 [addressFormGroup]="waterTankerAppForm.get('permanantAddress')"></app-address> -->
 					<mat-form-field class="col-md-6">
-						<textarea matInput rows="3" cols="50" maxlength="500" formControlName="tankDeliveryAddress" placeholder="{{ 'tank_delivery_address' | translate:translateKey }}"
+						<textarea matInput rows="3" cols="50" formControlName="tankDeliveryAddress" placeholder="{{ 'tank_delivery_address' | translate:translateKey }}"
 						 required> </textarea>
 						<control-messages [control]="waterTankerAppForm.get('tankDeliveryAddress')"></control-messages>
 					</mat-form-field>

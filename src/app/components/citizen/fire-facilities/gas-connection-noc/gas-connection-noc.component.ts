@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import { TranslateService } from '../../../../shared/modules/translate/translate.service';
 import { FireFacilitiesService } from '../common/services/fire-facilities.service';
+import { ValidationService } from 'src/app/shared/services/validation.service';
 
 @Component({
 	selector: 'app-gas-connection-noc',
@@ -108,7 +109,7 @@ export class GasConnectionNocComponent implements OnInit {
 			applicationDate: [null, Validators.required],
 			contactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), , Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			mobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
-			email: [null, [Validators.required, Validators.maxLength(50)]],
+			email: [null, [Validators.required, Validators.maxLength(50),Validators.email, ValidationService.emailValidator]],
 
 			/* Step 2 controls start */
 			gasConnectionNo: [null, [Validators.required, Validators.maxLength(15)]],
@@ -130,7 +131,7 @@ export class GasConnectionNocComponent implements OnInit {
 			wardNo: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			firePlaceAddress: [null, [Validators.required, Validators.maxLength(300)]],
+			firePlaceAddress: [null, [Validators.required, Validators.maxLength(100)]],
 			firePlaceAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
 			fireLossAmount: [null, [Validators.maxLength(10)]],
 			highRiseFireNOCTaken: [null],
