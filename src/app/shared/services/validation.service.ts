@@ -55,8 +55,7 @@ export class ValidationService {
             invalidElectionCard: 'Enter valid Election Card Number e.g. ABC1234567',
             invalidPassport: 'Enter valid Passport number e,g, A1234567 or AB1234567',
             invalidPropertyNo: 'Please enter valid property no. with occupier code',
-            invalidMemberNo: 'Please enter valid member no.',
-            pattern: 'Invalid email address',
+            invalidMemberNo: 'Please enter valid member no.'
         }
 
         return config[validatorName];
