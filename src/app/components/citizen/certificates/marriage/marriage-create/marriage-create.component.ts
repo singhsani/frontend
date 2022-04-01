@@ -1400,7 +1400,6 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * @param person : Groom or Bride (Change Event).
      */
     changeReflection(person: string) {
-        let emailRejex = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$';
         this.marriageFormGroup.get(`${person}PassportNumber`).reset();
         this.marriageFormGroup.get(`${person}NriStatus`).reset();
         this.marriageFormGroup.get(`${person}CountryName`).reset();
