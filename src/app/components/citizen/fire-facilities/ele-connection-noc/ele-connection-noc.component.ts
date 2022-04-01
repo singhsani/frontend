@@ -98,7 +98,6 @@ export class EleConnectionNocComponent implements OnInit {
 
 
 	electricConnectionFormControls() {
-		let emailRejex = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$';
 		this.electricConnectionForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'FS-ELE',
