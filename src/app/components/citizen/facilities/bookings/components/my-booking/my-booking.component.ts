@@ -442,7 +442,7 @@ export class MyBookingComponent implements OnInit {
 				this.isLoadingResults = false;
 				// if (err.status == 402) {
 				// this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService);
-				if (element.resourceType == 'SWIMMING_POOL') {
+				if (element.resourceType == 'SWIMMING_POOL' || element.resourceType == 'ATITHIGRUH') {
 					this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway, null, null, null, {gatewayCustomerId: err.error.data.id, txtadditionalInfo1: element.resourceType, payableServiceType: element.payableServiceType});
 				} else {
 					this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway);
@@ -520,14 +520,6 @@ export class MyBookingComponent implements OnInit {
 				//this.modalResRef = this.modalService.show(this.templateResponseModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }))
 				this.modalResRef.hide();
 				this.commonService.successAlert("Success", "Applied For Cancellation", "success");
-				if (this.bookingService.resourceType == 'amphiTheater') {
-					//This method is used to send SMS during cancellation request of booking
-					this.sendSms(this.refNumber, this.bookingConstant.CANCEL);
-
-					//This method is used to send Email during cancellation request of booking
-					this.sendMail(this.refNumber, this.bookingConstant.CANCEL);
-				}
-
 			}, err => {
 				this.toster.error(err.error.message);
 			});
