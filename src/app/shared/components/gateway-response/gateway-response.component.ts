@@ -35,6 +35,7 @@ export class GatewayResponseComponent implements OnInit {
 	bookingConstant = BookingConstants;
 	bookingUtils: BookingUtils = new BookingUtils();
 	refNumber: any;
+	paybleServiceType : any;
 
 	constructor(
 		private formService: FormsActionsService,
@@ -84,7 +85,7 @@ export class GatewayResponseComponent implements OnInit {
 						this.responseObj.trans_date = moment(this.responseObj.trans_date).format('DD-MM-YYYY');
 						this.paymentStatus = "SUCCESS";
 						this.postSessionData(this.dispData, 'BILLDESK', this.responseObj);
-						this.sendMail(this.refNumber , "PAYMENT");
+						this.sendEventForMail(this.refNumber ,this.paybleServiceType);
 					} else {
 						this.responseObj.mer_amount = this.responseObj.txnAmount;
 						this.paidAmount = Math.floor(this.responseObj.mer_amount);
@@ -134,7 +135,7 @@ export class GatewayResponseComponent implements OnInit {
 					this.paymentStatus = _.upperCase(this.responseObj.order_status);
 					this.paidAmount = Math.floor(this.responseObj.mer_amount);
 					this.postSessionData(this.dispData, 'CCAVENUE', this.responseObj);
-					this.sendMail(this.refNumber , "PAYMENT");
+					this.sendEventForMail(this.refNumber ,this.paybleServiceType);
 				} else {
 					this.paymentStatus = _.upperCase(this.responseObj.order_status);
 					// this.redirectToHome();
@@ -163,6 +164,7 @@ export class GatewayResponseComponent implements OnInit {
 	postSessionData(data, payGateway, responseObj?) {
 		this.resourceType = data.resourceType;
 		this.refNumber = data.refNumber;
+		this.paybleServiceType = data.payableServiceType;
 		let payData = {
 			id: null,
 			uniqueId: null,
@@ -412,6 +414,16 @@ export class GatewayResponseComponent implements OnInit {
 			})
 		} else {
 			this.toastr.error("Invalid request");
+		}
+	}
+
+	sendEventForMail(refNumber: any, serviceType: any){
+		 if(serviceType=='ATITHIGRUH_FEES'){
+			this.sendMail(refNumber, "PAYMENT");
+		}else if(serviceType=='FORM_CHARGES'){
+			this.sendMail(refNumber, "FORMCHARGES");
+		}else{
+			this.sendMail(refNumber, "PAYMENT");
 		}
 	}
 }
