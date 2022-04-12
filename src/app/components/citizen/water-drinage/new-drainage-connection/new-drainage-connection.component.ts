@@ -260,8 +260,6 @@ export class NewDrainageConnectionComponent implements OnInit {
             } else {
               this.alertService.info("You can add only one primary property");
             }
-          }else{
-            this.alertService.warning(data.body.message);
           }
         },
         (error) => {
@@ -580,7 +578,6 @@ export class NewDrainageConnectionComponent implements OnInit {
 	  }
 
   saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO) {
-    debugger;
     this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
       (data) => {
         this.commonService.applicationNo = data.body.applicationNo;
