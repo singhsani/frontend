@@ -203,7 +203,7 @@ export class NewDrainageConnectionComponent implements OnInit {
                 this.dataSource = this.dataSource.slice();
               } else {
                 if (this.isprimaryProperty) {
-                  this.alertService.info("you can add only one primary property");
+                  this.alertService.info("You can add only one primary property");
                   return;
                 } else {
                   this.alertService.info("Recode Already Exist");
@@ -237,7 +237,7 @@ export class NewDrainageConnectionComponent implements OnInit {
                   this.alertService.info("Recode Already Exist");
                   return;
                 } else {
-                  this.alertService.info("you can add only one primary property");
+                  this.alertService.info("You can add only one primary property");
                 }
               }    
               this.getFormsArray().push(this.createFormGroup("waterDrainageConnPropertyDetailsDTOList", {}));
@@ -258,7 +258,7 @@ export class NewDrainageConnectionComponent implements OnInit {
               }
 
             } else {
-              this.alertService.info("you can add only one primary property");
+              this.alertService.info("You can add only one primary property");
             }
           }
         },
