@@ -138,6 +138,7 @@ export class DrainagePipelineConnectionComponent implements OnInit {
       registrationValidity: [null],
       reraRegistrationDate: [null, Validators.required],
       attachments: [],
+      acceptterms:[null, Validators.required],
       paymentMode: this.fb.group({
         code: [null]
       }),
@@ -436,6 +437,7 @@ export class DrainagePipelineConnectionComponent implements OnInit {
     this.formControlNameToTabIndex.set('registrationClass', 3)
     this.formControlNameToTabIndex.set('workExecutionFromAmount', 3)
     this.formControlNameToTabIndex.set('workExecutionToAmount', 3)
+    this.formControlNameToTabIndex.set('acceptterms', 4)
 
   }
   

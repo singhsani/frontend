@@ -360,6 +360,16 @@
 						</div>
 					</ng-container>
 				</div>
+				<div class="row">
+					<div>						
+						<mat-checkbox class="col accept-terms" required formControlName="acceptterms">
+							<control-messages [control]="drainagePipeliConnectionForm.get('acceptterms')">
+							</control-messages>
+						</mat-checkbox>
+						
+					</div>
+					<a style="margin-left: -10px; margin-top: -3px;">I Applicant Name guarantee that the information provided above is correct and if any wrong inforamtion is found VMC can take action </a>
+				</div>
 				<app-action-bar [uploadFiles]="uploadFilesArray"
 					[form]="drainagePipeliConnectionForm" (tabIndex)="onTabChange($event)"[paymentGateway]="paymentGateway"
 					[stepInfo]="{step: 'final', next: 4, back: 2}" (handleErrors)="handleErrorsOnSubmit($event)">
