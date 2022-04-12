@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import { AmazingTimePickerService } from 'amazing-time-picker';
 import * as _ from 'lodash';
 import { TranslateService } from '../../../../shared/modules/translate/translate.service';
+import { ValidationService } from 'src/app/shared/services/validation.service';
 
 @Component({
   selector: 'app-fire-certificate',
@@ -120,10 +121,10 @@ export class FireCertificateComponent implements OnInit {
       firePlaceType: this.fb.group({
         code: [null, [Validators.required]]
       }),
-      fireLossAmount: [null, [Validators.required, Validators.maxLength(50)]],
+      fireLossAmount: [null, [Validators.required, Validators.maxLength(10)]],
       contactNo : [null, [Validators.required, Validators.maxLength(10)]],
       mobileNo : [null, [Validators.required, Validators.maxLength(10)]],
-      email : [null, [Validators.required, Validators.maxLength(50)]],
+      email : [null, [Validators.required, Validators.maxLength(50),Validators.email,ValidationService.emailValidator]],
       attachments: []
     });
   }

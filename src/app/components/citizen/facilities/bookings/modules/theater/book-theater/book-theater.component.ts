@@ -371,6 +371,10 @@ export class BookTheaterComponent implements OnInit {
             this.bookingService.commonBookSlot(this.theaterBookingForm.value).subscribe(resp => {
             }, (err) => {
                 if (err.status == 402) {
+                    
+                    let refNumber = this.theaterBookingForm.get("refNumber").value;
+                    this.sendMail(refNumber,"SUBMIT");
+                    
                     // this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService, this.theaterBookingForm, this.router);
                     this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway ,this.theaterBookingForm, this.router);
                     this.router.navigate(['../../my-bookings'], {relativeTo: this.route});
@@ -439,4 +443,21 @@ export class BookTheaterComponent implements OnInit {
             this.maxEndDate = moment(respData.data.endDate, "DD-MM-YYYY").toDate();
         })
       }
+
+        /**
+          * Method is used to send mail on submit
+          * @param refNumber 
+          * @param eventType 
+          * 
+          */
+  sendMail(refNumber: any, eventType: any) {
+    if (refNumber) {
+      this.bookingService.sendMail(refNumber, eventType).subscribe(resp => {
+      }, err => {
+        this.toster.error("Something went wrong");
+      })
+    } else {
+      this.toster.error("Invalid request");
+    }
+  }
 }

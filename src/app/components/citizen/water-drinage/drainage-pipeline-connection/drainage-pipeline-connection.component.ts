@@ -12,6 +12,8 @@ import { TaxRebateApplicationService } from '../../tax/property/tax-rebate-appli
 import { Constants } from '../../../../vmcshared/Constants';
 import { BookingUtils } from '../../facilities/bookings/config/booking-config';
 import { ToastrService } from 'ngx-toastr';
+import { CommonService } from 'src/app/vmcshared/Services/common-service';
+import { CommonService as CommonServiceTwo } from 'src/app/shared/services/common.service';
 
 @Component({
   selector: 'app-drainage-pipeline-connection',
@@ -36,11 +38,8 @@ export class DrainagePipelineConnectionComponent implements OnInit {
   WARD: Array<any> = [];
   LOOKUP: any;
   City_ZONE: Array<any> = [];
-  
   config: WaterDrinageConfig = new WaterDrinageConfig();
-
   disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
-  
   wardZoneLevel = [];
   wardZoneLevel1List = [];
   wardZoneLevel2List = [];
@@ -66,21 +65,25 @@ export class DrainagePipelineConnectionComponent implements OnInit {
     private formService: FormsActionsService,
     private taxRebateApplicationService: TaxRebateApplicationService,
     private toaster: ToastrService,
+    private commonService: CommonService,
+    private commonService2: CommonServiceTwo
   ) { 
     this.bookingUtils = new BookingUtils(formService, toaster);
   }
 
   ngOnInit() {
+
     this.route.paramMap.subscribe(param => {
       this.formId = Number(param.get('id'));
       this.apiCode = param.get('apiCode');
       this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
     });
+
     this.setFormControlToTabIndexMap();
     if (!this.formId) {
       this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
-    }
-    else {
+    } else {
+      this.getUserProfile();
       this.getWardZoneLevel();
       this.getLookupData();
       this.getDrainagePipelineConnectionNewData();
@@ -106,16 +109,9 @@ export class DrainagePipelineConnectionComponent implements OnInit {
       propertyAddress: [null, [Validators.required, Validators.maxLength(250)]],
       contractorAddress: [null, [Validators.required, Validators.maxLength(250)]],
       mobileNo: [null, [Validators.maxLength(10)]],
-      // drainagePipelineZone: this.fb.group({
-      //   code: [null, Validators.required]
-      // }),
-      // drainagePipelineWard: this.fb.group({
-      //   code: [null, Validators.required]
-      // }),
       drainagePipelineZoneId: [null, [Validators.required]],
       drainagePipelineWardId: [null, [Validators.required]],
       pinCode: [null, Validators.required],
-      //firmCity: [null, [Validators.required, Validators.maxLength(10)]],
       tpNo: [null],
       fpNo: [null],
       revenueSurveyNo: [null],
@@ -234,32 +230,6 @@ export class DrainagePipelineConnectionComponent implements OnInit {
 			this.tabIndex = index - 1;
 			return false;
 		}
-    // console.log("flag", flag);
-    // let step0 = 12;
-    // let step1 = 18;
-    // let step2 = 28;
-
-    // if (flag != null) {
-    //   //Check validation for step by step
-    //   let count = flag;
-
-    //   if (count <= step0) {
-    //     this.tabIndex = 0;
-    //     return false;
-    //   } else if (count <= step1) {
-    //     this.tabIndex = 1;
-    //     return false;
-    //   }
-    //   else if (count <= step2) {
-    //     this.tabIndex = 2;
-    //     //	this.checkReligion();
-    //     return false;
-    //   }
-    //   else {
-    //     console.log("else condition");
-    //   }
-
-    // }
   }
 
 	/**
@@ -371,7 +341,6 @@ export class DrainagePipelineConnectionComponent implements OnInit {
 
   onChangedWardZone(value, level) {
     if (level == 2) {
-      //this.drainagePipeliConnectionForm.controls.drainagePipelineWard.setValue({code: ''});
       this.wardZoneLevel2List = [];
       this.wardZoneLevel3List = [];
       this.wardZoneLevel4List = [];
@@ -440,5 +409,23 @@ export class DrainagePipelineConnectionComponent implements OnInit {
     this.formControlNameToTabIndex.set('acceptterms', 4)
 
   }
+
+  getUserProfile() {
+		if (!this.commonService2.fromAdmin()) {
+			this.commonService.getUserProfile().subscribe(res => {
+				const userData = res['data'];
+				if (userData) {
+          setTimeout(() => {
+            this.drainagePipeliConnectionForm.patchValue({
+              developerFullName: `${userData.firstName} ${userData.middleName} ${userData.lastName}`,
+              developerAddress: `${userData.buildingName.trim()} ${userData.city.trim()} ${userData.district.trim()} ${userData.country.trim()}`,
+              developerMobileNo: userData.cellNo,
+              developerEmailId: userData.email,
+            });
+          }, 1000);
+				}
+			});
+		}
+	}
   
 }

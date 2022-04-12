@@ -468,8 +468,8 @@ export class SwimmingPoolComponent implements OnInit {
       this.swimmingPoolService.submitData(this.swimmimgPoolBookingForm.getRawValue(), this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value).subscribe(
         res => {
           let refNumber = this.swimmimgPoolBookingForm.get("refNumber").value;
-          this.sendSms(refNumber, "SUBMIT");
-          this.sendMail(refNumber, "SUBMIT");
+          // this.sendSms(refNumber, "SUBMIT");
+          // this.sendMail(refNumber, "SUBMIT");
           this.swimmingPoolService.printAcknowledgeReceipt(res.refNumber).subscribe(data => {
             let sectionToPrint: any = document.getElementById('sectionToPrint');
             sectionToPrint.innerHTML = data;

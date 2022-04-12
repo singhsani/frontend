@@ -362,6 +362,7 @@
                         <th scope="col">{{'rent_amount'| translate: stadiumTranslateKey}}</th>
                         <th scope="col">Administration Charges</th>
                         <th scope="col">{{'deposit_amount'| translate: stadiumTranslateKey}}</th>
+                        <th scope="col" *ngIf='paymentObject.bookingType=="Advance booking"'>{{'form_charges'| translate: stadiumTranslateKey}}</th>
                         <th scope="col">{{'GST'| translate: stadiumTranslateKey}}</th>
                     </tr>
                 </thead>
@@ -371,6 +372,7 @@
                         <td scope="col">{{paymentObject.RENT_FEES-paymentObject.RENT_CONCESSION}}</td>
                         <td scope="col">{{paymentObject.ADMINISTRATION_CHARGES}}</td>
                         <td scope="col">{{paymentObject.DEPOSIT_FEES-paymentObject.DEPOSIT_CONCESSION}}</td>
+                        <td scope="col" *ngIf='paymentObject.bookingType=="Advance booking"'>{{paymentObject.FORM_CHARGES}}</td>
                         <td scope="col">{{paymentObject.GST}}</td>
                     </tr>
                 </tbody>
@@ -451,10 +453,10 @@
 
                     </div>
 
-                    <div class="col-md-4" *ngIf = "atithigruhForm.contains('samuhLaganCoupleCount')"> 
+                    <div class="col-md-4" *ngIf = "atithigruhForm.contains('samuhLaganCoupleCount')">
                         <mat-form-field>
-                          <input matInput OnlyNumber formControlName="samuhLaganCoupleCount" maxlength="2" 
-                          
+                          <input matInput OnlyNumber formControlName="samuhLaganCoupleCount" maxlength="2"
+
                             placeholder="{{'samuh_lagan_couple_count' | translate: translateKey}}" required>
                           <control-messages [control]="atithigruhForm.get('samuhLaganCoupleCount')"></control-messages>
                         </mat-form-field>

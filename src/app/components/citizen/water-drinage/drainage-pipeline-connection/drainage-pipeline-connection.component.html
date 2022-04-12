@@ -1,8 +1,3 @@
-<!-- <p>
-  drainage-pipeline-connection works!
-</p> -->
-
-
 <app-title-bar [title]="'screen_title' | translate: translateKey">
 	<!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
 		Patch Value
@@ -31,7 +26,6 @@
 					<mat-form-field class="col-md-6">
 						<input matInput type="text" required maxlength="250"
 							placeholder="{{'society-name' | translate:translateKey}}" formControlName="societyName">
-						<!-- <control-messages [control]="drainagePipeliConnectionForm.get('societyName')"></control-messages> -->
 						<mat-error *ngIf="drainagePipeliConnectionForm.get('societyName')" style="font-size: 11px;">
 							Society Name / Apartment Name is required
 						  </mat-error>
@@ -44,8 +38,6 @@
 								(change)="onChangedWardZone($event,2)">
 								<ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.parentWardzoneId">{{zone.wardzoneName}}</ng-option>
 							</ng-select>
-							<!-- <control-messages [control]="drainagePipeliConnectionForm.get('drainagePipelineZoneId')">
-							</control-messages> -->
 							<mat-error *ngIf="drainagePipeliConnectionForm.get('drainagePipelineZoneId').touched && !drainagePipeliConnectionForm.get('drainagePipelineZoneId').value" style="font-size: 11px;">
 								Zone is required
 							  </mat-error>
@@ -58,8 +50,6 @@
 								(change)="onChangedWardZone($event,3)">
 								<ng-option *ngFor="let zone of wardZoneLevel2List" [value]="zone.wardzoneId">{{zone.wardzoneName}}</ng-option>
 							</ng-select>
-							<!-- <control-messages [control]="drainagePipeliConnectionForm.get('drainagePipelineWardId')">
-							</control-messages> -->
 							<mat-error *ngIf="drainagePipeliConnectionForm.get('drainagePipelineWardId').touched && !drainagePipeliConnectionForm.get('drainagePipelineWardId').value" style="font-size: 11px;">
 								Ward is required
 							  </mat-error>
@@ -71,23 +61,15 @@
 					<mat-form-field class="col-md-6">
 						<input matInput rows="1" cols="50" maxlength="100" formControlName="landmark"
 							placeholder="{{ 'landmark' | translate:translateKey }}" >
-						<!-- <control-messages [control]="drainagePipeliConnectionForm.get('landmark')"></control-messages> -->
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
 						<textarea matInput rows="1" cols="50" maxlength="250" formControlName="propertyAddress"
 							placeholder="{{ 'property-address' | translate:translateKey }}" required> </textarea>
-						<!-- <control-messages [control]="drainagePipeliConnectionForm.get('propertyAddress')"></control-messages> -->
 						<mat-error *ngIf="drainagePipeliConnectionForm.get('propertyAddress')" style="font-size: 11px;">
 							Address is required
 						  </mat-error>
 					</mat-form-field>
-					<!-- <mat-form-field class="col-md-4">
-						<input matInput formControlName="firmCity" appValidationFields
-							validationFieldsType='onlyNameWithOutSpace'
-							placeholder="{{'firm_city' | translate:translateKey}}" maxlength="10" required>
-						<control-messages [control]="drainagePipeliConnectionForm.get('firmCity')"></control-messages>
-					</mat-form-field> -->
 				</div>
 
 				<div class="row">
@@ -101,43 +83,28 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="tel"  formControlName="tpNo"
 							placeholder="{{'tp-no' | translate: translateKey }} " minlength="10" maxlength="10">
-						<!-- <control-messages [control]="drainagePipeliConnectionForm.get('tpNo')"></control-messages> -->
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput   maxlength="10" formControlName="fpNo"
 							placeholder="{{'fp-no' | translate:translateKey}}">
-						<!-- <control-messages [control]="drainagePipeliConnectionForm.get('fpNo')"></control-messages> -->
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput  maxlength="10"  formControlName="revenueSurveyNo" 
 							placeholder="{{'revenue-survey-no' | translate:translateKey}}">
-						<!-- <control-messages [control]="drainagePipeliConnectionForm.get('revenueSurveyNo')">
-						</control-messages> -->
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput  appPreventSpace maxlength="50"
 							placeholder="{{'city-survey-no' | translate:translateKey}}" type="text"
 							formControlName="citySurveyNo" >
-						<!-- <control-messages [control]="drainagePipeliConnectionForm.get('citySurveyNo')"></control-messages> -->
 					</mat-form-field>
  
 					<mat-form-field class="col-md-4">
 						<input matInput  appPreventSpace  maxlength="50"
 							placeholder="{{'building-permissin-no' | translate:translateKey}}" type="text"
 							formControlName="buildingPermissionNo">
-						<!-- <control-messages [control]="drainagePipeliConnectionForm.get('buildingPermissionNo')">
-						</control-messages> -->
 					</mat-form-field>
 
-					<!-- <mat-form-field class="col-md-4">
-						<input matInput required appPreventSpace
-							placeholder="{{'city_SurveyNo' | translate:translateKey}}" type="text"
-							formControlName="citySurveyNo" required>
-						<control-messages [control]="drainagePipeliConnectionForm.get('citySurveyNo')"></control-messages>
-					</mat-form-field> -->
-
 					<mat-form-field class="col-md-4">
-						<!-- [max]="disablefutureDate" -->
 						<input  matInput appDate  [matDatepicker]="picker1" [max]="disablefutureDate"
 							formControlName="buildingPermissionDate"
 							(dateChange)="dateFormate($event.value,'buildingPermissionDate');"
@@ -145,8 +112,6 @@
 						<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
 						<mat-datepicker #picker1 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
-						<!-- <control-messages [control]="drainagePipeliConnectionForm.get('buildingPermissionDate')">
-						</control-messages> -->
 					</mat-form-field>
 
 				</div>
@@ -181,8 +146,6 @@
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber required maxlength="10" minlength="10" formControlName="developerMobileNo"
 							placeholder="{{'developer-mobile-no' | translate:translateKey}}">
-						<!-- <control-messages [control]="drainagePipeliConnectionForm.get('developerMobileNo')">
-						</control-messages> -->
 						<mat-error *ngIf="drainagePipeliConnectionForm.get('developerMobileNo')" style="font-size: 11px;">
 							Developer Mobile No. is required
 						  </mat-error>
@@ -197,7 +160,6 @@
 					<mat-form-field class="col-md-4">
 						<input matInput required maxlength="10" formControlName="reraRegNo"
 							placeholder="{{'rera-reg-no' | translate:translateKey}}">
-						<!-- <control-messages [control]="drainagePipeliConnectionForm.get('reraRegNo')"></control-messages> -->
 						<mat-error *ngIf="drainagePipeliConnectionForm.get('reraRegNo')" style="font-size: 11px;">
 							RERA Registration No. is required
 						  </mat-error>
@@ -213,8 +175,6 @@
 						<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
 						<mat-datepicker #picker2 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
-						<!-- <control-messages [control]="drainagePipeliConnectionForm.get('reraRegistrationDate')">
-						</control-messages> -->
 						<mat-error *ngIf="drainagePipeliConnectionForm.get('reraRegistrationDate')" style="font-size: 11px;">
 							RERA Registration Date is required
 						  </mat-error>
@@ -224,9 +184,6 @@
 					[stepInfo]="{step: 'step2', next: 2, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 			</mat-tab>
 			<!-- step 2 Ends -->
-
-
-
 
 			<!-- step 3 Starts -->
 			<mat-tab>
@@ -254,8 +211,6 @@
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber required maxlength="10" minlength="10" formControlName="contractorMobileNo"
 							placeholder="{{'contractor-mobile-no' | translate:translateKey}}">
-						<!-- <control-messages [control]="drainagePipeliConnectionForm.get('contractorMobileNo')">
-						</control-messages> -->
 						<mat-error *ngIf="drainagePipeliConnectionForm.get('contractorMobileNo')" style="font-size: 11px;">
 							Contractor Mobile No. is required
 						  </mat-error>
@@ -295,7 +250,6 @@
 						</control-messages>
 					</mat-form-field>
 
-
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber required maxlength="10" formControlName="workExecutionFromAmount"
 							placeholder="{{'work-execution-from-amount' | translate:translateKey}}">
@@ -318,8 +272,6 @@
 						<mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
 						<mat-datepicker #picker4 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
-						<!-- <control-messages [control]="drainagePipeliConnectionForm.get('registrationValidity')">
-						</control-messages> -->
 					</mat-form-field>
 
 					<mat-form-field [hidden]="true">
@@ -346,10 +298,6 @@
 				<ng-template mat-tab-label>
 					<div>{{'Attachment' | translate: translateKey}}</div>
 				</ng-template>
-				<!-- <div class="alert alert-warning">
-					{{'note' | translate:translateKey}} :
-					{{'submit_hard_copy_at_saradar_market' | translate:translateKey}}
-				</div> -->
 				<div class="row">
 					<!-- fieldIdentifier -->
 					<ng-container
@@ -381,6 +329,5 @@
 			
 		</mat-tab-group>
 	</form>
-
 	<!-- {{ drainagePipeliConnectionForm.value | json }} -->
 </mat-card>
