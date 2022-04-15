@@ -376,9 +376,10 @@
 					</mat-form-field>
 
 					<div class="col-md-6">
-						<mat-checkbox (change)="eventCheck($event)" class="example-margin"
-							formControlName="postalAddressDiff" name="postalAddressDiff">Postal
+							<mat-checkbox (change)="eventCheck($event)" class="example-margin"
+							formControlName="postalAddressDiff" name="postalAddressDiff" [checked]="ispostalAddressDiff" >Postal
 							Address is different than Property Address</mat-checkbox>
+						
 					</div>
 
 				</div>
