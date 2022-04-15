@@ -2,10 +2,25 @@
 </app-title-bar>
 <mat-card class="formClass cardBorder">
 	<form [formGroup]="drainageTransferconnectionForm">
-		<mat-tab-group [(selectedIndex)]="licenseConfiguration.currentTabIndex" dynamicHeight="true" mat-stretch-tabs 
+		<mat-tab-group [(selectedIndex)]="licenseConfiguration.currentTabIndex" dynamicHeight="true" mat-stretch-tabs
 			class="stepperNav">
 
 			<!-- step 1 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>Applicant Details</div>
+				</ng-template>
+				<app-applicant-detail-drainagewater (applicantDetails)="saveApplicantDetails($event)"
+					[serviceType]="'HEL-WTR-DRAINAGE-TRANS-CONNECTION'">
+				</app-applicant-detail-drainagewater>
+				<app-action-bar [form]="drainageTransferconnectionForm"
+					(tabIndex)="licenseConfiguration.onFormTabChange($event)"
+					[stepInfo]="{step: 'step0', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)">
+				</app-action-bar>
+			</mat-tab>
+			<!-- step 1 Ends -->
+
+			<!-- step 2 Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>{{'drainage_transferconnection' | translate:translateKey}}</div>
@@ -13,74 +28,86 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput type="text"  maxlength="30" placeholder="{{'connection_no' | translate:translateKey}}"
-							formControlName="drainageConnectionNo" >
-						<control-messages [control]="drainageTransferconnectionForm.get('drainageConnectionNo')"></control-messages>
+						<input matInput type="text" maxlength="30"
+							placeholder="{{'connection_no' | translate:translateKey}}"
+							formControlName="drainageConnectionNo">
+						<control-messages [control]="drainageTransferconnectionForm.get('drainageConnectionNo')">
+						</control-messages>
 					</mat-form-field>
 					<div class="col-md-1">
-					    <button class="mat-button_cust" mat-raised-button color="primary" type="button" (click)="searchByConnectionNo()"> Go </button>
-                    </div>
+						<button class="mat-button_cust" mat-raised-button color="primary" type="button"
+							(click)="searchByConnectionNo()"> Go </button>
+					</div>
 					<mat-form-field class="col-md-5">
 						<input matInput type="text" readonly placeholder="{{'owner_name' | translate:translateKey}}"
-							formControlName="ownerName" >
-						<control-messages [control]="drainageTransferconnectionForm.get('ownerName')"></control-messages>
+							formControlName="ownerName">
+						<control-messages [control]="drainageTransferconnectionForm.get('ownerName')">
+						</control-messages>
 					</mat-form-field>
-					
+
 				</div>
 
-			
+
 				<div class="row">
 					<mat-form-field class="col-md-10">
 						<input matInput type="text" readonly placeholder="{{'address' | translate:translateKey}}"
-							formControlName="address" >
+							formControlName="address">
 						<control-messages [control]="drainageTransferconnectionForm.get('address')"></control-messages>
 					</mat-form-field>
 				</div>
-				
-				
+
+
 
 				<div class="row">
 					<mat-form-field class="col-md-5">
-						<input matInput type="text" readonly maxlength="30" placeholder="{{'property_dues' | translate:translateKey}}"
-							formControlName="property_dues" >
-						<control-messages [control]="drainageTransferconnectionForm.get('property_dues')"></control-messages>
+						<input matInput type="text" readonly maxlength="30"
+							placeholder="{{'property_dues' | translate:translateKey}}" formControlName="property_dues">
+						<control-messages [control]="drainageTransferconnectionForm.get('property_dues')">
+						</control-messages>
 					</mat-form-field>
 
-				
+
 
 					<mat-form-field class="col-md-5">
 						<input matInput type="text" readonly placeholder="{{'water_dues' | translate:translateKey}}"
-							formControlName="water_dues" >
-						<control-messages [control]="drainageTransferconnectionForm.get('water_dues')"></control-messages>
+							formControlName="water_dues">
+						<control-messages [control]="drainageTransferconnectionForm.get('water_dues')">
+						</control-messages>
 					</mat-form-field>
 				</div>
 
 				<div class="row">
 					<mat-form-field class="col-md-5">
-						<input matInput type="text"  maxlength="30" placeholder="{{'new_owner_name' | translate:translateKey}}"
-							formControlName="newOwnerName" required>
-						<control-messages [control]="drainageTransferconnectionForm.get('newOwnerName')"></control-messages>
+						<input matInput type="text" maxlength="30"
+							placeholder="{{'new_owner_name' | translate:translateKey}}" formControlName="newOwnerName"
+							required>
+						<control-messages [control]="drainageTransferconnectionForm.get('newOwnerName')">
+						</control-messages>
 					</mat-form-field>
 
-				
+
 
 					<mat-form-field class="col-md-5">
-						<input matInput type="text" OnlyNumber minlength="10" maxlength="10" placeholder="{{'mobile_no' | translate:translateKey}}"
-							formControlName="mobileNo" required>
+						<input matInput type="text" OnlyNumber minlength="10" maxlength="10"
+							placeholder="{{'mobile_no' | translate:translateKey}}" formControlName="mobileNo" required>
 						<control-messages [control]="drainageTransferconnectionForm.get('mobileNo')"></control-messages>
 					</mat-form-field>
 				</div>
 
 				<div class="row">
 					<mat-form-field class="col-md-5">
-						<input matInput type="text" OnlyNumber minlength="12" maxlength="12" placeholder="{{'aadhaar_no' | translate:translateKey}}"
-							formControlName="aadhaarNo"  required>
-						<control-messages [control]="drainageTransferconnectionForm.get('aadhaarNo')"></control-messages>
+						<input matInput type="text" OnlyNumber minlength="12" maxlength="12"
+							placeholder="{{'aadhaar_no' | translate:translateKey}}" formControlName="aadhaarNo"
+							required>
+						<control-messages [control]="drainageTransferconnectionForm.get('aadhaarNo')">
+						</control-messages>
 					</mat-form-field>
 
 					<div class="col-md-5 ngSelect">
-						<ng-select placeholder="{{'reason_for_disconnection' | translate:translateKey}} *" formControlName="reasonForTransfer">
-							<ng-option *ngFor="let reasonForDisconnection of reasonList" [value]="reasonForDisconnection.itemId">{{reasonForDisconnection.itemName}}
+						<ng-select placeholder="{{'reason_for_disconnection' | translate:translateKey}} *"
+							formControlName="reasonForTransfer">
+							<ng-option *ngFor="let reasonForDisconnection of reasonList"
+								[value]="reasonForDisconnection.itemId">{{reasonForDisconnection.itemName}}
 							</ng-option>
 						</ng-select>
 						<control-messages [control]="drainageTransferconnectionForm.get('reasonForTransfer')">
@@ -88,13 +115,14 @@
 					</div>
 				</div>
 
-				<app-action-bar [form]="drainageTransferconnectionForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
+				<app-action-bar [form]="drainageTransferconnectionForm"
+					(tabIndex)="licenseConfiguration.onFormTabChange($event)"
 					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 
 			</mat-tab>
-			<!-- step 1 Ends -->
+			<!-- step 2 Ends -->
 
-			<!-- step 4 Attachment Starts -->
+			<!-- step 3 Attachment Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>{{'upload' | translate: translateKey}}</div>
@@ -103,19 +131,18 @@
 					<ng-container
 						*ngFor="let doc of drainageTransferconnectionForm.get('serviceDetail').get('serviceUploadDocuments').value">
 						<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive">
-							<label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}<span
-									*ngIf="doc.mandatory">*</span> </label>
+							<label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn :
+								doc.documentLabelGuj }}<span *ngIf="doc.mandatory">*</span> </label>
 							<file-upload [form]="drainageTransferconnectionForm" [uploadModel]="doc"></file-upload>
 						</div>
 					</ng-container>
 				</div>
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="drainageTransferconnectionForm"
-					 [stepInfo]="{step: 'final', next: 2, back: 0}"
-					(handleErrors)="handleErrorsOnSubmit($event)">
+					[stepInfo]="{step: 'final', next: 2, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)">
 				</app-action-bar>
 
 			</mat-tab>
-		
+
 		</mat-tab-group>
 	</form>
 </mat-card>
