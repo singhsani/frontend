@@ -44,6 +44,7 @@ export class PropertyAddressModel {
     pincode: string;
     postalAddress: string;
     postalAddressDiff: boolean;
+    isPostalAddressDiff: boolean;
     serveyNo: string;
     societyName: string;
     streetName: string;
