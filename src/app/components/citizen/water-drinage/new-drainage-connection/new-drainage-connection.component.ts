@@ -365,7 +365,7 @@ export class NewDrainageConnectionComponent implements OnInit {
     this.newDrainageConnectionForm.get('pincode').setValue(data.pincode);
     this.newDrainageConnectionForm.get('postalAddress').setValue(data.postalAddress);
     this.newDrainageConnectionForm.get('correspondenceAddress').setValue(data.propertyAddress);
-    this.ispostalAddressDiff = true;
+    this.ispostalAddressDiff = data.isPostalAddressDiff;
   }
 
   onChangeAddress() {
