@@ -108,7 +108,7 @@ export class TicketingsService {
 
   // METHODS FOR ANIMAL ADOPTION MODULE OF ZOO MODULE
   animalAdoptionRequest(animalAdoptionRequestForm) {
-    this.requestURL = `api/${this.moduleName}/${this.resourceType}/adoptionRequest/?resourceCode=SARDARBAUGHZOO_ANIMALADOPTION`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/adoptionRequest/?resourceCode=SAYAJIBAUGHZOO_ANIMALADOPTION`;
     return this.http.post(this.requestURL, animalAdoptionRequestForm);
   }
 
