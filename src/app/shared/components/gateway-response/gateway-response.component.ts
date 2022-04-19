@@ -25,7 +25,7 @@ export class GatewayResponseComponent implements OnInit {
 	dispData: any;
 	isSearchanble: string = "";
 	resourceType: String;
-	serviceType : any;
+	serviceType: any;
 	paidAmount: number;
 	balanceAmount: number;
 
@@ -35,7 +35,7 @@ export class GatewayResponseComponent implements OnInit {
 	bookingConstant = BookingConstants;
 	bookingUtils: BookingUtils = new BookingUtils();
 	refNumber: any;
-	paybleServiceType : any;
+	paybleServiceType: any;
 
 	constructor(
 		private formService: FormsActionsService,
@@ -73,7 +73,7 @@ export class GatewayResponseComponent implements OnInit {
 			this.formService.getBillDeskTransactionDetails(txtRefNo).subscribe(res => {
 				console.log(res);
 				this.responseObj = res.data;
-				 this.responseObj['getway']= "BILLDESK";
+				this.responseObj['getway'] = "BILLDESK";
 				if (res.success) {
 
 					if (this.responseObj.authStatus == '0300') {
@@ -85,7 +85,7 @@ export class GatewayResponseComponent implements OnInit {
 						this.responseObj.trans_date = moment(this.responseObj.trans_date).format('DD-MM-YYYY');
 						this.paymentStatus = "SUCCESS";
 						this.postSessionData(this.dispData, 'BILLDESK', this.responseObj);
-						this.sendEventForMail(this.refNumber ,this.paybleServiceType);
+						this.sendEventForMail(this.refNumber, this.paybleServiceType);
 					} else {
 						this.responseObj.mer_amount = this.responseObj.txnAmount;
 						this.paidAmount = Math.floor(this.responseObj.mer_amount);
@@ -127,7 +127,7 @@ export class GatewayResponseComponent implements OnInit {
 
 		this.formService.getCCAvenuePaymentResponse(token).subscribe(res => {
 			this.responseObj = res.data[0];
-			this.responseObj['getway']= "CCAVENUE";
+			this.responseObj['getway'] = "CCAVENUE";
 			console.log(res);
 			if (res.success) {
 				//this.responseObj = this.responseObj[this.responseObj.length - 1];
@@ -135,7 +135,7 @@ export class GatewayResponseComponent implements OnInit {
 					this.paymentStatus = _.upperCase(this.responseObj.order_status);
 					this.paidAmount = Math.floor(this.responseObj.mer_amount);
 					this.postSessionData(this.dispData, 'CCAVENUE', this.responseObj);
-					this.sendEventForMail(this.refNumber ,this.paybleServiceType);
+					this.sendEventForMail(this.refNumber, this.paybleServiceType);
 				} else {
 					this.paymentStatus = _.upperCase(this.responseObj.order_status);
 					// this.redirectToHome();
@@ -225,7 +225,7 @@ export class GatewayResponseComponent implements OnInit {
 
 		} else if (data.payableServiceType == 'PAY-WTR-TAX') {
 
-			this.waterPostPayment(payData,data);
+			this.waterPostPayment(payData, data);
 
 
 		} else {
@@ -251,20 +251,20 @@ export class GatewayResponseComponent implements OnInit {
 						this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(payRespData.serviceDetail.code);
 						this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
 							if (res) {
-									if(this.formService.apiType == 'APLicense'){
-										setTimeout(() => {
-											const url = '/citizen/my-applications' +'?id=' +payRespData.serviceFormId+ '&apiCode=' +payRespData.serviceDetail.code
-											this.router.navigateByUrl(url);
-										}, 10000);
+								if (this.formService.apiType == 'APLicense') {
+									setTimeout(() => {
+										const url = '/citizen/my-applications' + '?id=' + payRespData.serviceFormId + '&apiCode=' + payRespData.serviceDetail.code
+										this.router.navigateByUrl(url);
+									}, 10000);
 
-										this.interVal();
-									}else{
-										setTimeout(() => {
-											this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
-										}, 10000);
+									this.interVal();
+								} else {
+									setTimeout(() => {
+										this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
+									}, 10000);
 
-										this.interVal();
-									}
+									this.interVal();
+								}
 							}
 						});
 					}
@@ -286,7 +286,7 @@ export class GatewayResponseComponent implements OnInit {
 		}
 	}
 
-	waterPostPayment(payData,data) {
+	waterPostPayment(payData, data) {
 		payData.amount = Number(data.amount);
 		this.formService.saveWaterTaxPaymentDetails(payData).subscribe(res => {
 			if (res) {
@@ -318,14 +318,14 @@ export class GatewayResponseComponent implements OnInit {
 	}
 
 	redirectToHomeFail() {
-		if (this.paymentStatus != "SUCCESS"){
-			if(this.dispData.resourceType == "zoo" || this.dispData.resourceType == "zooanimaladoption" || this.dispData.resourceType == "planetarium"){
+		if (this.paymentStatus != "SUCCESS") {
+			if (this.dispData.resourceType == "zoo" || this.dispData.resourceType == "zooanimaladoption" || this.dispData.resourceType == "planetarium") {
 				this.router.navigate([this.bookingConstant.MY_TICKETINGS_URL]);
-			}else if((this.dispData.resourceType =="townhall") || (this.dispData.resourceType =="amphiTheater") || (this.dispData.resourceType == "stadium") || (this.dispData.resourceType == "childrenTheater") || (this.dispData.resourceType == "atithigruh") || (this.dispData.resourceType == "shootingPermission")){
+			} else if ((this.dispData.resourceType == "townhall") || (this.dispData.resourceType == "amphiTheater") || (this.dispData.resourceType == "stadium") || (this.dispData.resourceType == "childrenTheater") || (this.dispData.resourceType == "atithigruh") || (this.dispData.resourceType == "shootingPermission")) {
 				this.router.navigate([this.bookingConstant.MY_BOOKINGS_URL]);
-			}else {
+			} else {
 				// setTimeout(() => {
-					this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
+				this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
 				// }, 10000);
 			}
 			this.interVal();
@@ -335,20 +335,20 @@ export class GatewayResponseComponent implements OnInit {
 	redirectToHome() {
 		if (this.dispData.payableServiceType == "PROFESSIONAL_TAX") {
 
-				this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS')]);
+			this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS')]);
 
-		}else if((this.dispData.payableServiceType  == "STADIUM_FEES") || (this.dispData.payableServiceType == "STADIUM_DEPOSIT")|| (this.dispData.payableServiceType == "SWIMMING_POOL_FEES")){
-
-				this.router.navigate([this.bookingConstant.MY_BOOKINGS_URL]);
-
-		}else if((this.dispData.resourceType =="townhall") || (this.dispData.resourceType =="amphiTheater") || (this.dispData.resourceType == "stadium") || (this.dispData.resourceType == "childrenTheater") || (this.dispData.resourceType == "atithigruh") || (this.dispData.resourceType == "shootingPermission")){
+		} else if ((this.dispData.payableServiceType == "STADIUM_FEES") || (this.dispData.payableServiceType == "STADIUM_DEPOSIT") || (this.dispData.payableServiceType == "SWIMMING_POOL_FEES")) {
 
 			this.router.navigate([this.bookingConstant.MY_BOOKINGS_URL]);
 
-	}
-		else if (this.serviceType == "ZOO_TICKETING_FEES"|| this.serviceType =="ZOO_ANIMAL_ADOPTION_FEES" || this.serviceType == "PLANETARIUM_TICKETING_FEES") {
+		} else if ((this.dispData.resourceType == "townhall") || (this.dispData.resourceType == "amphiTheater") || (this.dispData.resourceType == "stadium") || (this.dispData.resourceType == "childrenTheater") || (this.dispData.resourceType == "atithigruh") || (this.dispData.resourceType == "shootingPermission")) {
 
-				this.router.navigate([this.bookingConstant.MY_TICKETINGS_URL]);
+			this.router.navigate([this.bookingConstant.MY_BOOKINGS_URL]);
+
+		}
+		else if (this.serviceType == "ZOO_TICKETING_FEES" || this.serviceType == "ZOO_ANIMAL_ADOPTION_FEES" || this.serviceType == "PLANETARIUM_TICKETING_FEES") {
+
+			this.router.navigate([this.bookingConstant.MY_TICKETINGS_URL]);
 
 		}
 		else {
@@ -408,21 +408,29 @@ export class GatewayResponseComponent implements OnInit {
 		   */
 	sendMail(refNumber: any, eventType: any) {
 		if (refNumber) {
-			this.formService.sendMail(refNumber, this.resourceType, eventType).subscribe(resp => {
-			}, err => {
-				this.toastr.error("Something went wrong");
-			})
+			if (this.resourceType == "zoo" || this.resourceType == "zooanimaladoption" || this.resourceType == "planetarium") {
+				this.formService.sendMailTicketing(refNumber, this.resourceType, eventType).subscribe(resp => {
+				}, err => {
+					this.toastr.error("Something went wrong");
+				})
+			} else {
+				this.formService.sendMailBooking(refNumber, this.resourceType, eventType).subscribe(resp => {
+				}, err => {
+					this.toastr.error("Something went wrong");
+				})
+			}
+
 		} else {
 			this.toastr.error("Invalid request");
 		}
 	}
 
-	sendEventForMail(refNumber: any, serviceType: any){
-		 if(serviceType=='ATITHIGRUH_FEES'){
+	sendEventForMail(refNumber: any, serviceType: any) {
+		if (serviceType == 'ATITHIGRUH_FEES') {
 			this.sendMail(refNumber, "PAYMENT");
-		}else if(serviceType=='FORM_CHARGES'){
+		} else if (serviceType == 'FORM_CHARGES') {
 			this.sendMail(refNumber, "FORMCHARGES");
-		}else{
+		} else {
 			this.sendMail(refNumber, "PAYMENT");
 		}
 	}
