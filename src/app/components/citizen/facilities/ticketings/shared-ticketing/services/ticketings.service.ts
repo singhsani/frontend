@@ -37,7 +37,7 @@ export class TicketingsService {
 	 * This method is used to book zoo tickets
 	*/
   bookZooTickets(ticketingInfo) {
-    this.requestURL = `api/${this.moduleName}/${this.resourceType}/book/?resourceCode=SARDARBAUGHZOO`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/book/?resourceCode=SAYAJIBAUGHZOO`;
     return this.http.post(this.requestURL, ticketingInfo);
   }
 
