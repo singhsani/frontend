@@ -138,7 +138,6 @@ export class MyTicketingsComponent implements OnInit {
     }else{
       this.rejectedMessage = responseData.rejectMessage;
     }
-    this.rejectedMessage = responseData.rejectMessage;
     this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-mg' }));
   }
 
