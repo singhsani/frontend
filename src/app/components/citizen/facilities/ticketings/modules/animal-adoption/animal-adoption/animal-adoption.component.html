@@ -9,7 +9,7 @@
         <table mat-table [dataSource]="dataSourceForPricing" class="myTicketPricingTabel">
 
           <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef>Sr. No.</mat-header-cell>
             <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
               <div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
               <div class="mobile-label1">:</div>
@@ -235,7 +235,7 @@
 
 
         <mat-form-field class="col-md-12 labelLonger">
-          <textarea matInput type="text" formControlName="message"
+          <textarea matInput type="text" formControlName="message" maxlength="500"
             placeholder="{{'adoption_msg' | translate: translateKey}}"></textarea>
           <!-- <control-messages [control]="animalAdoptionForm.get('message')"></control-messages> -->
         </mat-form-field>

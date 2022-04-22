@@ -129,7 +129,7 @@
             </div>
             <!--Print Receipt for Atithigruh Form Charges 150-->
             <div>
-              <button *ngIf="(element.status == bookingConstant.BOOKED && element.formCharges !== null || (element.status == bookingConstant.SUBMITTED && element.bookingType == 'Advance booking' && element.formCharges !== null))" mat-menu-item color="primary" (click)="printReceipt(element, bookingConstant.FORM_CHARGES)">
+              <button *ngIf="(element.resourceType == 'ATITHIGRUH' && element.status == bookingConstant.BOOKED && element.formCharges !== null || (element.status == bookingConstant.SUBMITTED && element.bookingType == 'Advance booking' && element.formCharges !== null))" mat-menu-item color="primary" (click)="printReceipt(element, bookingConstant.FORM_CHARGES)">
                 <mat-icon title="Print Receipt" color="primary">print</mat-icon>
                 {{'form_charges_receipt' | translate:translateKey}}
               </button>
@@ -137,7 +137,7 @@
 
             <div *ngIf="(element.status != bookingConstant.SUBMITTED)">
 
-              <button *ngIf="element.status == bookingConstant.PAYMENT_REQUIRED" mat-menu-item color="primary"
+              <button *ngIf="element.status == bookingConstant.PAYMENT_REQUIRED || (element.resourceType === 'TOWNHALL' && element.status == bookingConstant.DEPOSIT_REQUIRED)" mat-menu-item color="primary"
                       (click)="paymentRequest(element)">
                 <mat-icon title="Print Receipt" color="primary">print</mat-icon>
                 {{'make_payment' | translate:translateKey}}
@@ -150,7 +150,7 @@
                         </button>
 
               <!-- Deposit Payment Call -->
-              <button *ngIf="element.status == bookingConstant.DEPOSIT_REQUIRED || (element.payableServiceType== 'STADIUM_DEPOSIT' && element.status === 'SCRUTINY')" mat-menu-item color="primary" (click)="loiPayments(element)">
+              <button *ngIf="element.resourceType === 'STADIUM' && element.status == bookingConstant.DEPOSIT_REQUIRED || (element.payableServiceType== 'STADIUM_DEPOSIT' && element.status === 'SCRUTINY')" mat-menu-item color="primary" (click)="loiPayments(element)">
                 <mat-icon title="Deposit Payment" color="primary">payment</mat-icon>
                 {{'deposit_payment' | translate:translateKey}}
               </button>
@@ -175,6 +175,14 @@
               <div *ngIf="showStadiumDepositReceiptBtn(element)">
                 <button  mat-menu-item color="primary"
                          (click)="printReceipt(element, bookingConstant.STADIUM_DEPOSIT)">
+                  <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+                  {{'deposit_receipt' | translate:translateKey}}
+                </button>
+              </div>
+
+              <div *ngIf="showTownhallDepositReceiptBtn(element)">
+                <button  mat-menu-item color="primary"
+                         (click)="printReceipt(element, bookingConstant.TOWNHALL_DEPOSIT)">
                   <mat-icon title="Print Receipt" color="primary">print</mat-icon>
                   {{'deposit_receipt' | translate:translateKey}}
                 </button>

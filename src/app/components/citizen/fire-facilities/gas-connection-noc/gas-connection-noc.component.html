@@ -156,7 +156,7 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-6">
-						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'fire_Place_Address' | translate:translateKey}}"
+						<textarea matInput rows="3" cols="50" required placeholder="{{'fire_Place_Address' | translate:translateKey}}"
 						 formControlName="firePlaceAddress" appGujInputSource targetElement="firePlaceAddressGuj" [form]="gasConnectionForm"></textarea>
 						<control-messages [control]="gasConnectionForm.get('firePlaceAddress')"></control-messages>
 					</mat-form-field>
@@ -186,7 +186,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber placeholder="{{'fire_Loss_Amount' | translate:translateKey}}" type="tel" maxlength="10"
-						 formControlName="fireLossAmount">
+						 formControlName="fireLossAmount" maxlength="5">
 						<control-messages [control]="gasConnectionForm.get('fireLossAmount')"></control-messages>
 					</mat-form-field>
 

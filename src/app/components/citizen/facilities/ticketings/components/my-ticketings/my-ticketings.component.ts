@@ -133,7 +133,11 @@ export class MyTicketingsComponent implements OnInit {
 	 * This method is use for open modal.
 	 */
   openModal(template: TemplateRef<any>, responseData, refNumber) {
-    this.rejectedMessage = responseData.newgenRemarks;
+    if(responseData.resourceType == "PLANETARIUM_TICKETING"){
+      this.rejectedMessage = responseData.newgenRemarks;
+    }else{
+      this.rejectedMessage = responseData.rejectMessage;
+    }
     this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-mg' }));
   }
 
