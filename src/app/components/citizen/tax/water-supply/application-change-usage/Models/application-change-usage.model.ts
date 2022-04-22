@@ -19,6 +19,8 @@ export class ConnectionDetail {
     connectionDtlId: number;
     subusageName: string;
     usageName: string;
+    usageId:number;
+    subusageId:number;
 }
 
 

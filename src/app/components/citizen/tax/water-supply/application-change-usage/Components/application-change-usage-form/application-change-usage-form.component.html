@@ -105,6 +105,7 @@
                             <ng-select required placeholder="Connection Sub-Usage *" [items]="connectionSubUsageList"
                                 bindValue="subUsageId" bindLabel="subUsage" name="subusageId"
                                 [(ngModel)]="dataModel.subusageId" #SubusageId="ngModel"
+                                (ngModelChange)="onCheckConnectionUsageAndSubUsage($event)"
                                 [ngClass]="{'ng-invalid ng-touched':  form.submitted && SubusageId.invalid}">
                             </ng-select>
                             <div
