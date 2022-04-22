@@ -74,8 +74,8 @@ export class ApplicationReconnectionFormComponent implements OnInit {
                             } else {
                                 this.isShowSaveButton = true;
                                 this.connectionsModel = data.body;
-                                this.connectionsModel.address =
-                                        data.body.propertyDetails ? data.body.propertyDetails[0].address : this.connectionsModel.address;
+                                this.connectionsModel.address = this.connectionsModel.address
+                                    //    data.body.propertyDetails ? data.body.propertyDetails[0].address : this.connectionsModel.address;
                                 this.outstandingDetail = data.body;
                             }
                         }
