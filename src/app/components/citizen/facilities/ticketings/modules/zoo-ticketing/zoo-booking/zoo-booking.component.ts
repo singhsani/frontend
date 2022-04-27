@@ -30,8 +30,8 @@ export class ZooBookingComponent implements OnInit {
   */
   translateKey = 'citizenZooTicketingScreen';
   /**
-	  * displayColumns are used for display the columns in material table.
-	*/
+    * displayColumns are used for display the columns in material table.
+  */
   displayedColumnsForPricingTable: string[] = [
     'id',
     'description',
@@ -149,14 +149,14 @@ export class ZooBookingComponent implements OnInit {
   bankDetailsForm: FormGroup;
 
   /**
-	 * LookUps & Arrays.
-	*/
+   * LookUps & Arrays.
+  */
 
   BANKS: Array<any> = [];
 
   /**
-	 * Minimum start date.
-	*/
+   * Minimum start date.
+  */
   startMinDate = moment(new Date()).toISOString();
 
   // Contact Details
@@ -180,7 +180,7 @@ export class ZooBookingComponent implements OnInit {
     private toster: ToastrService,
     protected formService: FormsActionsService
   ) {
-    this.ticketingUtils = new TicketingUtils(formService,toster);
+    this.ticketingUtils = new TicketingUtils(formService, toster);
     this.ticketingService.resourceType = 'zoo';
   }
 
@@ -199,8 +199,8 @@ export class ZooBookingComponent implements OnInit {
   }
 
   /**
-	  * Get all booking category list from api.
-	*/
+    * Get all booking category list from api.
+  */
   getLookUps() {
     this.ticketingService.getDataFromLookups().subscribe((respData) => {
       this.BANKS = respData.BANK;
@@ -209,17 +209,17 @@ export class ZooBookingComponent implements OnInit {
   }
 
   /**
-	  * disble thursday for vistior date.
-	*/
+    * disble thursday for vistior date.
+  */
   disableThursday(d: Date) {
-    if(d.getDay() != 4) {
+    if (d.getDay() != 4) {
       return d;
     }
   }
 
   /**
-	  * Get Zoo Visiting Rates from api.
-	*/
+    * Get Zoo Visiting Rates from api.
+  */
   getZooVisitingRates() {
     this.ticketingService.getZooVisitingRates().subscribe((respRates) => {
       this.zooVisitingRates = respRates.data;
@@ -258,8 +258,8 @@ export class ZooBookingComponent implements OnInit {
       }),
       idNumber: [null, [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
       visitingDate: [, Validators.required],
-      totalChild: [0, Validators.max(100)],
-      totalAdult: [0, Validators.max(100)],
+      totalChild: [0, Validators.max(30)],
+      totalAdult: [0, Validators.max(30)],
       totalCamera: [0, Validators.max(100)],
       totalVideoCamera: [0, Validators.max(100)],
       bankName: this.fb.group({
@@ -296,7 +296,7 @@ export class ZooBookingComponent implements OnInit {
     this.ticketBookingForm.get('amount').setValue(this.totalAmount);
     this.ticketBookingForm.get('totalAmount').setValue(this.totalAmount);
     this.ticketBookingForm.get('personSubTotal').setValue(this.numberOfVisitors);
-    if(this.numberOfVisitors>30){
+    if (this.numberOfVisitors > 30) {
       this.toster.error("Please Enter Total Limited Person(30)");
     }
   }
@@ -320,14 +320,14 @@ export class ZooBookingComponent implements OnInit {
           // console.log(data);
           // this.ticketBookingForm.get('totalAmount').setValue(err.error.data.TOTAL);
           // this.ticketingUtils.redirectToPayment(err, this.commonService, this.ticketingService, this.ticketBookingForm, this.router);
-             this.ticketingUtils.redirectToCCAvenuePayment(err, this.commonService, this.ticketingService, this.paymentGateway ,this.ticketBookingForm, this.router);
-             
+          this.ticketingUtils.redirectToCCAvenuePayment(err, this.commonService, this.ticketingService, this.paymentGateway, this.ticketBookingForm, this.router);
+
           // return;
           // });
         }
-          if(err.status === 400){
-            this.commonService.openAlert('Error', err.error[0].code, 'warning');
-          }
+        if (err.status === 400) {
+          this.commonService.openAlert('Error', err.error[0].code, 'warning');
+        }
       });
   }
 
@@ -338,22 +338,22 @@ export class ZooBookingComponent implements OnInit {
     this.totalAmount = 0;
   }
 
-  CheckType(idCode){
+  CheckType(idCode) {
     this.isVisibleIdNumber = false;
     this.isPanCardVisibleIdNumber = false;
-    if(idCode === 'AADHARCARD'){
+    if (idCode === 'AADHARCARD') {
       this.isVisibleIdNumber = true;
       this.isPanCardVisibleIdNumber = false;
       this.ticketBookingForm.controls['idNumber'].setValue('');
       this.ticketBookingForm.controls['idNumber'].setValidators([Validators.required]);
       this.ticketBookingForm.controls['idNumber'].updateValueAndValidity();
-    }else if(idCode === 'PANCARD'){
+    } else if (idCode === 'PANCARD') {
       this.isPanCardVisibleIdNumber = true;
       this.isVisibleIdNumber = false;
       this.ticketBookingForm.controls['idNumber'].setValidators([Validators.required, ValidationService.panValidatorforlastfour]);
       this.ticketBookingForm.controls['idNumber'].updateValueAndValidity();
-    }else if(idCode === 'VOTINGCARD' || idCode === 'PASSPORT'){
-      this.isVisibleIdNumber = false;
+    } else if (idCode === 'VOTINGCARD' || idCode === 'PASSPORT') {
+      this.isVisibleIdNumber = true;
       this.isPanCardVisibleIdNumber = false;
       this.ticketBookingForm.controls['idNumber'].setValue('');
       this.ticketBookingForm.controls['idNumber'].setValidators([Validators.required]);

@@ -296,7 +296,7 @@
 			<!-- step 4 Ends -->
 			<mat-tab>
 				<ng-template mat-tab-label>
-					<div>{{'Attachment' | translate: translateKey}}</div>
+					<div>{{'Upload Documents' | translate: translateKey}}</div>
 				</ng-template>
 				<div class="row">
 					<!-- fieldIdentifier -->
@@ -307,6 +307,16 @@
 							<file-upload [form]="drainagePipeliConnectionForm" [uploadModel]="doc"></file-upload>
 						</div>
 					</ng-container>
+				</div>
+				<div class="row">
+					<div>						
+						<mat-checkbox class="col accept-terms" required formControlName="acceptterms">
+							<control-messages [control]="drainagePipeliConnectionForm.get('acceptterms')">
+							</control-messages>
+						</mat-checkbox>
+						
+					</div>
+					<a style="margin-left: -10px; margin-top: -3px;">I Applicant Name guarantee that the information provided above is correct and if any wrong inforamtion is found VMC can take action </a>
 				</div>
 				<app-action-bar [uploadFiles]="uploadFilesArray"
 					[form]="drainagePipeliConnectionForm" (tabIndex)="onTabChange($event)"[paymentGateway]="paymentGateway"

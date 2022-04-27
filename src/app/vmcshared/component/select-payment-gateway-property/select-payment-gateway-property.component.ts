@@ -31,7 +31,7 @@ export class SelectPaymentGatewayPropertyComponent implements OnInit {
 
   paymentGatewayArr: any = [
     { name: 'BillDesk', code: 'BILLDESK' },
-    { name: 'CC Avenue', code: 'CC_AVENUE' },
+    // { name: 'CC Avenue', code: 'CC_AVENUE' },
   ];
 
   constructor(

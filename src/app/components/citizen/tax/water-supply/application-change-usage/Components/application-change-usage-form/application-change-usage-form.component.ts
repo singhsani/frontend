@@ -61,6 +61,13 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
             this.getSubUsageList(val);
     }
 
+    onCheckConnectionUsageAndSubUsage(val) {
+        if( this.dataModel.usageId==this.connectionsModel.connectionDetail.usageId && val ==this.connectionsModel.connectionDetail.subusageId){
+            this.alertService.error("Please do not select same as before, do the changes and submit");
+            return;
+        }
+    }
+
     getUsageList() {
         this.applicationChangeUsageService.getUsageList({active:true}).subscribe(
             (data) => {
@@ -139,6 +146,10 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
             if (this.totalDues > 0 ) {
                 this.alertService.warning('Can not proceed further due to remaining outstanding payment.' +
                                         ' Please complete payment of remaining outstanding amount.');
+                return;
+            }
+            if( this.dataModel.usageId==this.connectionsModel.connectionDetail.usageId && this.dataModel.subusageId ==this.connectionsModel.connectionDetail.subusageId){
+                this.alertService.error("Please do not select same as before, do the changes and submit");
                 return;
             }
             this.dataModel.applicationNumber = this.applicationModel.applicationNumber;
