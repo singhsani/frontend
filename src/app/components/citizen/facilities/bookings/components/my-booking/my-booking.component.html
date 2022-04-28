@@ -135,6 +135,13 @@
               </button>
             </div>
 
+            <div>
+              <button *ngIf="(element.resourceType == 'SWIMMING_POOL'  && (element.status == bookingConstant.SUBMITTED || element.status == bookingConstant.BOOKED || (element.status == bookingConstant.PAYMENT_REQUIRED && element.bookingType == 'Advance booking')) && element.formCharges !== null)" mat-menu-item color="primary" (click)="printReceipt(element, bookingConstant.FORM_CHARGES)">
+                <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+                {{'form_charges_receipt' | translate:translateKey}}
+              </button>
+            </div>
+
             <div *ngIf="(element.status != bookingConstant.SUBMITTED)">
 
               <button *ngIf="element.status == bookingConstant.PAYMENT_REQUIRED || (element.resourceType === 'TOWNHALL' && element.status == bookingConstant.DEPOSIT_REQUIRED)" mat-menu-item color="primary"
@@ -245,7 +252,7 @@
               {{'acknowledgement_reprint' | translate:translateKey}}
             </button>
 
-            <button *ngIf="element.status == bookingConstant.SCRUTINY && (element.resourceType == 'STADIUM' || element.resourceType == 'CHILDREN_THEATER')" mat-menu-item color="primary" (click)="printLOIReceipt(element.refNumber)">
+            <button *ngIf="element.status == bookingConstant.SCRUTINY && (element.resourceType == 'STADIUM' || element.resourceType == 'CHILDREN_THEATER' || element.resourceType == 'SHOOTING_PERMISSION')" mat-menu-item color="primary" (click)="printLOIReceipt(element.refNumber)">
               <mat-icon title="Print Receipt" color="primary">print</mat-icon>
               {{'loi_download' | translate:translateKey}}
             </button>
