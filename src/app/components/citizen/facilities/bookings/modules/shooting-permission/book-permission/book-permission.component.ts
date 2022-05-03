@@ -534,6 +534,8 @@ export class BookPermissionComponent implements OnInit {
   }
 
   maxDateForSlot(event){
+    if(event != undefined){
     this.getAvaillableSlot(event)
+  }
   }
 }
