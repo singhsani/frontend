@@ -60,7 +60,7 @@
       
         
           <div class="col-md-6 ngSelect">
-            <ng-select placeholder="Select Place *" formControlName="code" (change)="maxDateForSlot($event)">
+            <ng-select placeholder="{{'select_place'| translate: translateKey}}" formControlName="code" (change)="maxDateForSlot($event)">
               <ng-option *ngFor="let bookPermission of SHOOTING_PERMISSION" [value]="bookPermission.code">
                 {{ bookPermission.name }}
               </ng-option>
@@ -69,7 +69,7 @@
           </div>
 
           <div formGroupName="purpose" class="col-md-6 ngSelect">
-            <ng-select placeholder="Purpose of Booking *" formControlName="code">
+            <ng-select placeholder="{{'purpose_of_booking'| translate: translateKey}}" formControlName="code">
               <ng-option *ngFor="let purpose of PURPOSES" [value]="purpose.code">
                 {{ purpose.name }}
               </ng-option>
@@ -80,7 +80,7 @@
 
           <mat-form-field class="col-md-6">
             <mat-label>
-              Choose Start Date *
+              {{'choose_start_date'| translate: translateKey}}
             </mat-label>
             <input matInput [min]="disablefutureDate" [max]="endDate" [matDatepicker]="bookPermissionBookingfromPicker"
               formControlName="startDate" placeholder="" (dateChange)="onDateChange($event.value)">
@@ -93,7 +93,7 @@
 
           <mat-form-field class="col-md-6">
             <mat-label>
-              Choose End Date *
+              {{'choose_end_date'| translate: translateKey}}
             </mat-label>
             <input matInput [min]="bookPermissionSearchForm.get('startDate').value"
               [matDatepicker]="bookPermissionBookingtoPicker" formControlName="endDate" placeholder=""
@@ -187,7 +187,7 @@
       <table class="table">
         <thead class="customthead">
           <tr>
-            <th scope="col" width="56">Sr.No.</th>
+            <th scope="col" width="56">>{{'s_no'| translate: translateKey}}</th>
             <th scope="col">{{'Event Date'}}</th>
             <!-- <th scope="col">{{'end_date'| translate: translateKey}}</th> -->
             <th scope="col">{{'slot_status'| translate: translateKey}}</th>
