@@ -252,6 +252,11 @@
               {{'acknowledgement_reprint' | translate:translateKey}}
             </button>
 
+            <button *ngIf="(element.status == bookingConstant.PAYMENT_REQUIRED && element.resourceType == 'SWIMMING_POOL')" mat-menu-item color="primary" (click)="printAcknowledge(element.refNumber)">
+              <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+              {{'acknowledgement_reprint' | translate:translateKey}}
+          </button>
+
             <button *ngIf="element.status == bookingConstant.SCRUTINY && (element.resourceType == 'STADIUM' || element.resourceType == 'CHILDREN_THEATER' || element.resourceType == 'SHOOTING_PERMISSION')" mat-menu-item color="primary" (click)="printLOIReceipt(element.refNumber)">
               <mat-icon title="Print Receipt" color="primary">print</mat-icon>
               {{'loi_download' | translate:translateKey}}
