@@ -142,7 +142,7 @@ export class LoiPaymentComponentBooking implements OnInit {
 		}, err => {
 			if (err.status == 402) {
 				  if(err.error.data.payableServiceType == "STADIUM_FEES" || err.error.data.payableServiceType == "STADIUM_DEPOSIT"){
-				    this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway, null, null, null, {gatewayCustomerId: err.error.data.refNumber, txtadditionalInfo1: err.error.resourceType, payableServiceType: err.error.data.payableServiceType});
+				    this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway, null, null, null, {gatewayCustomerId: err.error.data.id, txtadditionalInfo1: err.error.resourceType, payableServiceType: err.error.data.payableServiceType});
 				  }else{
 				    this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway);
 				  }
