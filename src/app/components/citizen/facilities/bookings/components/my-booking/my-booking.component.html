@@ -136,7 +136,7 @@
             </div>
 
             <div>
-              <button *ngIf="(element.resourceType == 'SWIMMING_POOL'  && (element.status == bookingConstant.SUBMITTED || element.status == bookingConstant.BOOKED || (element.status == bookingConstant.PAYMENT_REQUIRED && element.bookingType == 'Advance booking')) && element.formCharges !== null)" mat-menu-item color="primary" (click)="printReceipt(element, bookingConstant.FORM_CHARGES)">
+              <button *ngIf="(element.resourceType == 'SWIMMING_POOL'  && (element.status == bookingConstant.SUBMITTED || element.status == bookingConstant.BOOKED || (element.status == bookingConstant.PAYMENT_REQUIRED && element.bookingType == 'Advance booking')) && element.formCharges !== null)" mat-menu-item color="primary" (click)="printReceipt(element, bookingConstant.SWIMMING_POOL_ADMISSION_FEES)">
                 <mat-icon title="Print Receipt" color="primary">print</mat-icon>
                 {{'form_charges_receipt' | translate:translateKey}}
               </button>
@@ -251,6 +251,11 @@
               <mat-icon title="Print Receipt" color="primary">print</mat-icon>
               {{'acknowledgement_reprint' | translate:translateKey}}
             </button>
+
+            <button *ngIf="(element.status == bookingConstant.PAYMENT_REQUIRED && element.resourceType == 'SWIMMING_POOL')" mat-menu-item color="primary" (click)="printAcknowledge(element.refNumber)">
+              <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+              {{'acknowledgement_reprint' | translate:translateKey}}
+          </button>
 
             <button *ngIf="element.status == bookingConstant.SCRUTINY && (element.resourceType == 'STADIUM' || element.resourceType == 'CHILDREN_THEATER' || element.resourceType == 'SHOOTING_PERMISSION')" mat-menu-item color="primary" (click)="printLOIReceipt(element.refNumber)">
               <mat-icon title="Print Receipt" color="primary">print</mat-icon>
