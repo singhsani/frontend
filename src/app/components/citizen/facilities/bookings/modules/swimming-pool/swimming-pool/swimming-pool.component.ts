@@ -633,7 +633,7 @@ export class SwimmingPoolComponent implements OnInit {
       return;
       
     this.bookingService.searchRenewSwimmingPool(this.memberNumber.value).subscribe(
-      (res: any) => {
+      res => {
       res = res.data;
       if (res && res.bookingFormId) 
       this.swimmimgPoolBookingForm.patchValue({'serviceFormId': res.bookingFormId});
@@ -649,7 +649,7 @@ export class SwimmingPoolComponent implements OnInit {
       // this.swimmimgPoolBookingForm.get('remarks').enable();
       this.filterAsperBatchName(this.swimmimgPoolBookingForm.get('category').get('code').value);
     },(error: any) => {
-      this.commonService.openAlert("Error", "Membership Number is not Expire", "warning")
+      this.commonService.openAlert("Error", error.error[0].message, "warning")
     })
   }  
 }
