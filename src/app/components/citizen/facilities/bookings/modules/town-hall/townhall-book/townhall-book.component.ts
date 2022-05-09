@@ -98,6 +98,7 @@ export class TownHallBookComponent implements OnInit {
 	Dates: Array<any> = [];
 	//endMaxDate:any = new Date();
 	endMinDate :any = new Date;
+	maxEndDate:any;
 
 	/**
 	 * Bank Lookups
@@ -377,7 +378,7 @@ export class TownHallBookComponent implements OnInit {
 						// this.bookingDetailsDataSource.data = payResp.data.bookingDetails as BookingDetails[];
 						this.shortlistData = payResp.data.bookingDetails as BookingDetails[];
             			this.bookingDetailsDataSource.data = this.shortlistData.sort((a, b) => {
-             		 	return (<any>new Date(a.bookingDateTime) - (<any>new Date(b.bookingDateTime))) 
+             		 	return (<any>new Date(a.bookingDateTime) - (<any>new Date(b.bookingDateTime)))
             			});
 						this.CD.detectChanges();
 						this.showPaymentReciept = true;
@@ -398,24 +399,24 @@ export class TownHallBookComponent implements OnInit {
 	}
 
 	onChangePurposeOfBooking(event){
-   
+
 		if(event=='NATAK'){
 		  this.show=true;
 		  this.townHallApplicationForm.get('programmeName').setValidators([Validators.required]);
 		}else{
 		  this.show = false;
 		}
-	
+
 	  }
 
 
-	  
+
 	/**
 	 * Method is used to submit townhall application form.
 	 */
 	submitTownhallApplication() {
-		
-		
+
+
 		if (this.townHallApplicationForm.invalid) {
 			this.handleErrorsOnSubmit();
 			this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
@@ -468,10 +469,10 @@ export class TownHallBookComponent implements OnInit {
 
 		const key = this.bookingUtils.getInvalidFormControlKey(this.townHallApplicationForm);
 		const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 0;
-		
+
 		this.tabIndex = index;
 		return false;
-		
+
 
 	}
 
@@ -498,7 +499,7 @@ export class TownHallBookComponent implements OnInit {
 		this.formControlNameToTabIndex.set('ifscCode', 2)
 		this.formControlNameToTabIndex.set('programShortDetails', 2)
 		this.formControlNameToTabIndex.set('programPurpose', 2)
-	
+
 	}
   /**
    * Get user data
@@ -521,12 +522,17 @@ export class TownHallBookComponent implements OnInit {
     // debugger;
     let shiftCount = shift.length;
     let availableCount = shift.filter(s => s.slotStatus === "AVAILABLE").length;
-    let bookedCount = shift.filter(s => s.slotStatus === "BOOKED").length;   
+    let bookedCount = shift.filter(s => s.slotStatus === "BOOKED").length;
     let reservedCount = shift.filter(s => s.slotStatus === "RESERVED").length;
     let temporaryBlockCount = shift.filter(s => s.slotStatus === "TEMPORARY_BLOCKED").length;
 
-    return shiftCount === reservedCount || shiftCount === temporaryBlockCount || shiftCount === bookedCount  ? 'bookDate'  : '';   
+    return shiftCount === reservedCount || shiftCount === temporaryBlockCount || shiftCount === bookedCount  ? 'bookDate'  : '';
   }
 
+  onChangeTownHalls(data){
+    this.bookingService.getAvailableStots(data).subscribe(respData => {
+    this.maxEndDate = moment(respData.data.endDate, "DD-MM-YYYY").toDate();
+    })
+  }
 
 }

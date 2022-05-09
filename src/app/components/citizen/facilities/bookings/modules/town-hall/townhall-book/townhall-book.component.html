@@ -16,11 +16,11 @@
                         Mahatma Gandhi Nagar Gruh, Sir Sayaji Rao Nagar Gruh,Pandit Dindayal Upadhyay Nagar,Deepak Open Air theater
                     </a>)
                 </li> -->
-                
+
                 <li>
                     <h4>અનામત પેટે ₹ ૧૦,૦૦૦/- તથા પોલીસ પરફેૉન્સ લાયસન્સ નગર ગૃહની કચેરીમાં કાર્યક્રમની તારીખ પૂર્વે જમા કરાવવું ફરજીયાત છે.</h4>
                 </li>
-                
+
                 <li>
                     <h4>પ્રેક્ષકોની સુરક્ષા માટે મેટલ ડીટેક્ટર અને ડ્રેસ કોડ સહિત સિક્યુરિટી સ્ટાફની વ્યવસ્થા કરવી ફરજીયાત છે.</h4>
                 </li>
@@ -28,7 +28,7 @@
                 <li>
                     <h4>કોઈ પણ સંજોગોમાં ૯૧૧ થી વધુ દર્શકોને  આમંત્રિત કરવા પર પ્રતિબંધ છે.</h4>
                 </li>
-                    
+
                 <li>
                     <h4>નગર ગૃહ સંકુલમાં અગ્નિની જવાળાઓ થાય તેવા પ્રયોગો તથા સ્ફોટક ઘડાકાવાળા પ્રયોગો તેમજ ધુમાડો થાય તેવા ધૂપ-દીપ કરવા પ્રતિબંધિત છે.</h4>
                 </li>
@@ -36,7 +36,7 @@
                 <li>
                     <h4>કાર્યક્રમની રજુઆત માટે તૈયાર કરવામાં આવતા બેનરો તથા નિમંત્રણ કાર્ડ અથવા ટીકીટમાં અરજદારનું નામ અને સંસ્થાનું નામ લખવું ફરજીયાત છે.</h4>
                 </li>
-                
+
                 <li>
                     <h4>જાહેર જનતાની સુરક્ષાને ધ્યાનમાં લેતા કોઈપણ સંજોગોમાં પ્રથમ અને બીજી શીફ્ટમાં નિયત સમયમાં પ્રોગ્રામ શરૂ કરવો તેમજ પૂરો કરવાનો રહેશે   તથા ત્રીજી શીફ્ટ પણ રાત્રે ૧-૦૦ વાગ્યા બાદ કાર્યક્રમ બંધ કરવો ફરજીયાત છે.</h4>
                     <h4>પ્રથમ શીફ્ટ	 -    સવારે   ૦૯-૦૦ થી	૧૨-૩૦	કલાકે</h4>
@@ -53,11 +53,11 @@
         <mat-card-content class="p-4">
             <h3>{{'Important instructions'| translate: translateKey}}</h3>
             <ol class="olList">
-               
+
                 <li>
                     <h5>It is compulsory to deposit ₹ 10,000 / - in reserve and Police Performance License in the town house office before the date of the program.</h5>
                 </li>
-                
+
                 <li>
                     <h5>Arranging metal detectors and dress code security staff is mandatory for the safety of the spectators.</h5>
                 </li>
@@ -65,7 +65,7 @@
                 <li>
                     <h5>In any case, inviting more than 911 spectators is prohibited.</h5>
                 </li>
-                    
+
                 <li>
                     <h5>Experiments with flames and explosives, as well as incense-burning incense, are prohibited in the town hall complex.</h5>
                 </li>
@@ -77,7 +77,7 @@
                 <li>
                     <h5>In any case, considering the safety of the public, the program must be started and completed within the stipulated time in the first and second shifts and it is also mandatory to close the program after 1:00 pm in the third shift.</h5>
                 </li>
-                
+
                 <li>
                         <h5>First shift - 09-00 to 12-30 hours in the morning</h5>
                         <h5>Second shift - 03-00 to 6-30 hours</h5>
@@ -109,7 +109,7 @@
             <form [formGroup]="searchTownHallForm" (ngSubmit)="searchBooking()" autocomplete="off" ngNativeValidate>
                 <div class="row mt-3 mb-3">
                     <div class="col-md-6 ngSelect">
-                        <ng-select placeholder="{{'select_town_hall'| translate: translateKey}}" formControlName="code">
+                        <ng-select placeholder="{{'select_town_hall'| translate: translateKey}}" formControlName="code" (change)="onChangeTownHalls($event)">
                             <ng-option *ngFor="let townHall of townHalls" [value]="townHall.code">
                                 {{ townHall.name }}
                             </ng-option>
@@ -130,7 +130,7 @@
 
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'choose_start_date'| translate: translateKey}}</mat-label>
-                        <input appDate matInput [min]="startMinDate" [max]="endMaxDate" (dateChange)="onDateChange($event.value)" [matDatepicker]="townHallBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
+                        <input appDate matInput [min]="startMinDate" [max]="maxEndDate" (dateChange)="onDateChange($event.value)" [matDatepicker]="townHallBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
                         <mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker"></mat-datepicker-toggle>
                         <mat-datepicker #townHallBookingfromPicker touchUi="true"></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
@@ -140,7 +140,7 @@
 
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'choose_end_date'| translate: translateKey}}</mat-label>
-                        <input appDate matInput  [min]="endMinDate" [max]="endMaxDate" [matDatepicker]="townHallBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
+                        <input appDate matInput  [min]="endMinDate" [max]="maxEndDate" [matDatepicker]="townHallBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
                         <mat-datepicker-toggle matSuffix [for]="townHallBookingtoPicker"></mat-datepicker-toggle>
                         <mat-datepicker #townHallBookingtoPicker touchUi="true"></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
@@ -473,7 +473,7 @@
                             <input matInput maxlength="100" formControlName="programmeName"
                             appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text"
                                    placeholder="{{'programme_name' | translate: translateKey}} *">
-                            <control-messages [control]="townHallApplicationForm.get('programmeName')"></control-messages>   
+                            <control-messages [control]="townHallApplicationForm.get('programmeName')"></control-messages>
                         </mat-form-field>
                     </div>
 
@@ -584,7 +584,7 @@
 
                     <!-- <bank-details [form]="townHallApplicationForm"></bank-details> -->
                     <bank-details [form]="townHallApplicationForm"></bank-details>
-                    
+
 
                     <h2>
                         {{'booking_details' | translate:translateKey}}
