@@ -285,7 +285,7 @@ export class BookStadiumComponent implements OnInit {
                             let sectionToPrint: any = document.getElementById('sectionToPrint');
                             sectionToPrint.innerHTML = acknowledgementHTML;
                             let refNumber = this.stadiumApplicationForm.get('refNumber').value;
-                            this.sendSms(refNumber, "SUBMIT");
+                          
                             setTimeout(() => {
                                 window.print();
                                 this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
@@ -384,17 +384,7 @@ export class BookStadiumComponent implements OnInit {
         }
     }
 
-    sendSms(refNumber:any, eventType:any){
-        if(refNumber){
-            this.bookingService.sendSms(refNumber, eventType).subscribe(res =>{
-            },err => {
-                this.toastr.error("Something went wrong"); })
-        }else{
-            this.toastr.error("Invalid request");
-        }
-    }
-
-    /**
+      /**
        * Get user data
        */
       getUserProfile() {
