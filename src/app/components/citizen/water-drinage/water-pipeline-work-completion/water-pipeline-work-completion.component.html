@@ -10,7 +10,7 @@
 <form [formGroup]="waterPipelineWorkCompletionSearchForm">
   <div class="row">
     <mat-form-field class="col-lg-3">
-      <input matInput formControlName="workCompletionWorkOrderNo" placeholder="{{'work-order-no' | translate:translateKey}}">
+      <input matInput formControlName="workCompletionWorkOrderNo" required placeholder="{{'work-order-no' | translate:translateKey}}">
     </mat-form-field>
 
     <mat-form-field class="col-lg-3">
@@ -18,8 +18,8 @@
     </mat-form-field>
 
     <div class="col-lg-2">
-      <button mat-raised-button color="primary" type="button" (click)="searchInWtrPipeline(waterPipelineWorkCompletionSearchForm)"> Go </button>
-    </div>
+      <button mat-raised-button color="primary" type="button" [disabled]="waterPipelineWorkCompletionSearchForm.invalid" (click)="searchInWtrPipeline(waterPipelineWorkCompletionSearchForm)">Search</button>
+    </div> 
   </div>
 </form>
 
