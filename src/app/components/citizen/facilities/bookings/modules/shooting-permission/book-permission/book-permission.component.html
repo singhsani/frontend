@@ -44,23 +44,20 @@
     <div class="pageTitle">{{'screen_title'| translate: translateKey}}</div>
     <div class="p-15">
       <form [formGroup]="bookPermissionSearchForm" (ngSubmit)="searchBooking()" autocomplete="off" ngNativeValidate>
-       
+
         <div class="row mt-3 mb-3">
-					<div class="col-md-6 ngSelect">
-					  <ng-select 
-								placeholder="Zone No.*"
-								formControlName="waterDrainageZoneId" (change)="onChangedWardZone($event,2)">
-								<ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.zoneName">
-									{{zone.zoneName}}</ng-option>
-							</ng-select>
-							<!-- <control-messages [control]="shopLicNewForm.get('waterDrainageZoneId')"> -->
-							<!-- </control-messages> -->
-					
-					</div>
-      
-        
           <div class="col-md-6 ngSelect">
-            <ng-select placeholder="{{'select_place'| translate: translateKey}}" formControlName="code" (change)="maxDateForSlot($event)">
+            <ng-select placeholder="Zone No.*" formControlName="waterDrainageZoneId"
+              (change)="onChangedWardZone($event,2); bookPermissionSearchForm.get('code').reset()">
+              <ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.zoneName">
+                {{zone.zoneName}}</ng-option>
+            </ng-select>
+            <!-- <control-messages [control]="shopLicNewForm.get('waterDrainageZoneId')"> -->
+            <!-- </control-messages> -->
+          </div>
+          <div class="col-md-6 ngSelect">
+            <ng-select placeholder="{{'select_place'| translate: translateKey}}" formControlName="code"
+              (change)="maxDateForSlot($event)">
               <ng-option *ngFor="let bookPermission of SHOOTING_PERMISSION" [value]="bookPermission.code">
                 {{ bookPermission.name }}
               </ng-option>
@@ -96,8 +93,7 @@
               {{'choose_end_date'| translate: translateKey}}
             </mat-label>
             <input matInput [min]="bookPermissionSearchForm.get('startDate').value"
-              [matDatepicker]="bookPermissionBookingtoPicker" formControlName="endDate" placeholder=""
-              [max]="endDate">
+              [matDatepicker]="bookPermissionBookingtoPicker" formControlName="endDate" placeholder="" [max]="endDate">
             <mat-datepicker-toggle matSuffix [for]="bookPermissionBookingtoPicker"></mat-datepicker-toggle>
             <mat-datepicker #bookPermissionBookingtoPicker touchUi="true"></mat-datepicker>
             <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
@@ -203,8 +199,7 @@
             <td>{{days.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : days.slotStatus }}</td>
             <!-- <td>{{days.occupancy}}</td> -->
             <td>
-              <button mat-icon-button 
-                [disabled]="selectedShift.length == 1" (click)="removeSelectedShift(days, i)">
+              <button mat-icon-button [disabled]="selectedShift.length == 1" (click)="removeSelectedShift(days, i)">
                 <mat-icon color="warn">delete</mat-icon>
               </button>
             </td>
@@ -281,7 +276,7 @@
 
           <div class="row">
             <mat-form-field class="col-md-4">
-              <input matInput maxlength="50" appValidationFields  [validationFieldsType]="'onlyNameWithSpace'"
+              <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
                 type="text" formControlName="orgName" placeholder="{{'organization_name' | translate: translateKey}}"
                 required>
               <control-messages [control]="bookPermissionApplicationForm.get('orgName')"></control-messages>
@@ -405,9 +400,10 @@
 
           <div class="row mt-4 fotButtonBar">
             <div class="col-sm-12 col-md-12 justify-content-between d-flex">
-              <button type="button" mat-raised-button  color="primary" (click)="tabIndex= tabIndex -1; ">{{'back' |
+              <button type="button" mat-raised-button color="primary" (click)="tabIndex= tabIndex -1; ">{{'back' |
                 translate:translateKey}}</button>
-              <button mat-raised-button color="primary" type="submit" [disabled] = "bookPermissionApplicationForm.invalid">
+              <button mat-raised-button color="primary" type="submit"
+                [disabled]="bookPermissionApplicationForm.invalid">
                 {{'submit_application'| translate: translateKey}}
               </button>
             </div>
