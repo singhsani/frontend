@@ -102,7 +102,7 @@
           </mat-form-field>
 
         </div>
-        <div class="row fotButtonBar">
+        <div class="row fotButtonBar mt-0">
           <div class="col-sm-12 col-md-12 text-right">
             <button mat-raised-button color="primary" [disabled]="bookPermissionSearchForm.invalid" type="submit">
               {{'search'| translate: translateKey}}
@@ -304,22 +304,26 @@
 
             <mat-form-field class="col-md-4">
               <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobile"
-                placeholder="{{'applicant_mobile' | translate: translateKey}}" required>
+                placeholder="{{'applicant_mobile' | translate: translateKey}}" required >
               <control-messages [control]="bookPermissionApplicationForm.get('applicantMobile')"></control-messages>
             </mat-form-field>
 
             <div class="col-md-4">
               <mat-form-field>
                 <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile"
-                  placeholder="{{'confirm_mobile' | translate: translateKey}}" required>
+                  placeholder="{{'confirm_mobile' | translate: translateKey}}" required (focus)="onConfirmMobileNumber($event)">
                 <control-messages [control]="bookPermissionApplicationForm.get('confirmMobile')"></control-messages>
               </mat-form-field>
               <!-- <mat-error *ngIf="!mobileNumberMatcher() && bookPermissionApplicationForm.get('applicantMobile').touched && bookPermissionApplicationForm.get('confirmMobile').touched">
                 {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
               </mat-error> -->
 
-              <mat-error
+              <!-- <mat-error
                 *ngIf="!bookingUtils.matcher(bookPermissionApplicationForm, 'applicantMobile', 'confirmMobile') && bookPermissionApplicationForm.get('applicantMobile').touched && bookPermissionApplicationForm.get('confirmMobile').touched">
+                {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
+              </mat-error> -->
+              <mat-error
+                *ngIf="isConfirmMobileNumber == true && !bookingUtils.matcher(bookPermissionApplicationForm, 'applicantMobile', 'confirmMobile') && bookPermissionApplicationForm.get('applicantMobile').touched && bookPermissionApplicationForm.get('confirmMobile').touched">
                 {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
               </mat-error>
             </div>

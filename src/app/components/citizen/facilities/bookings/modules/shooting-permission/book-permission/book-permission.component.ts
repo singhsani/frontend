@@ -35,7 +35,7 @@ export class BookPermissionComponent implements OnInit {
   guideLineFlag: boolean = true;
   head_lines: string;
   endDate:any;
-
+  isConfirmMobileNumber = false
 
   isFileUploaded: boolean = false;
   /**
@@ -546,4 +546,11 @@ export class BookPermissionComponent implements OnInit {
       this.Dates = []
     }
   }
+
+  onConfirmMobileNumber(event){
+    if(event.target.value != '' )
+    this.isConfirmMobileNumber = true
+ 
+  }
+  
 }
