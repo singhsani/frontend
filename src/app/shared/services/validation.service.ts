@@ -28,7 +28,7 @@ export class ValidationService {
             min: `Minimum value should be ${validatorValue.min}`,
             minlength: `Minimum length ${validatorValue.requiredLength} characters`,
             maxlength: `Cannot exceed ${validatorValue.requiredLength} characters`,
-            matDatepickerMin: `Date Should not below the CURRENT DATE`,
+            matDatepickerMin: `Date Should not below the ${moment(validatorValue.min).format("DD/MM/YYYY")}`,
             matDatepickerMax: `Date Should not exceed ${moment(validatorValue.max).format("DD/MM/YYYY")}`,
             invalidName: `${_.startCase(controlName)} Is Not Valid`,
             invalidPinCode: `Pin Code Not Valid`,
