@@ -523,6 +523,9 @@ export class BookPermissionComponent implements OnInit {
 
   onChangedWardZone(event){
     if (event != undefined) {
+      if(event){
+        this.Dates = []
+      }
       this.bookingService.getGardenList(event).subscribe(resp => {
         this.SHOOTING_PERMISSION = resp.data;
       })
