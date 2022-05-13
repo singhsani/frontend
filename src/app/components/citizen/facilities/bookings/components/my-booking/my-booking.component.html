@@ -146,7 +146,7 @@
 
               <button *ngIf="element.status == bookingConstant.PAYMENT_REQUIRED || (element.resourceType === 'TOWNHALL' && element.status == bookingConstant.DEPOSIT_REQUIRED)" mat-menu-item color="primary"
                       (click)="paymentRequest(element)">
-                <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+                <mat-icon title="Print Receipt" color="primary">payment</mat-icon>
                 {{'make_payment' | translate:translateKey}}
               </button>
 
