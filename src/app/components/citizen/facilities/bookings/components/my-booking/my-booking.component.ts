@@ -609,7 +609,7 @@ export class MyBookingComponent implements OnInit {
 			) {
 			return false;
 		}else if(element.status === this.bookingConstant.SCRUTINY){
-         if((element.resourceType === "STADIUM" && element.payableServiceType !== 'STADIUM_DEPOSIT') || element.resourceType === "CHILDREN_THEATER"){
+         if((element.resourceType === "STADIUM" && element.payableServiceType !== 'STADIUM_DEPOSIT') ){
              return true;
          }else{
              return false;
