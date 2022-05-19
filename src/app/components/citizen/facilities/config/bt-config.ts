@@ -133,7 +133,7 @@ export class BTConfig extends CitizenConfig {
     }
 
     redirectToCCAvenuePayment(err: any, commonService: CommonService, btService: BookingService | TicketingsService, paymentGateway, form?: FormGroup, router?: Router, applicationrouter?: any, extraParams?: any) {
-       
+
         let redirectURLAfterPayment = (btService instanceof TicketingsService) ? BTConstants.MY_TICKETINGS_URL : BTConstants.MY_BOOKINGS_URL
 
         let payData = this.storePaymentInfo(err.error.data, redirectURLAfterPayment, btService.resourceType, extraParams);
@@ -167,12 +167,12 @@ export class BTConfig extends CitizenConfig {
             // })
 
         }, rj => {
-            
-            
+
+
             if(payData.resourceType == "townhall"){
                 router.navigate([redirectURLAfterPayment]);
             }
-            if(payData.resourceType == "zooanimaladoption"){
+            if((payData.resourceType == "zooanimaladoption") || (payData.resourceType == "planetarium")){
                 router.navigate(["citizen/ticketings/my-ticketings"]);
             }
             // let errHtml = `
