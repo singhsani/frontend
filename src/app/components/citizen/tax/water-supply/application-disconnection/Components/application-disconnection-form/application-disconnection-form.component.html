@@ -109,6 +109,11 @@
                     <button mat-raised-button class="ml-3 pull-right" color="primary" type="submit">
                         <mat-icon>save</mat-icon> Save & Next
                     </button>
+                       <!-- Added Clear Button Starts -->
+                    <button class="ml-3" mat-raised-button class="ml-3 pull-right" color="warn" type="button" (click)="clear(form)">
+                        <mat-icon>clear_all</mat-icon> Clear
+                    </button>
+                    <!-- Clear Button Ends -->
                 </div>
             </form>
         </mat-card>

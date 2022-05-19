@@ -41,7 +41,8 @@ export class SwimmingPoolComponent implements OnInit {
   formId: number;
   apiCode: string;
   public tabIndex: number = 0;
-  disableDate = new Date(moment().subtract(1, 'd').format('YYYY-MM-DD'));
+  disableDate = new Date(moment().subtract(1, 'm').format('YYYY-MM-DD'));
+  disableBirthDate = new Date(moment().subtract(1, 'y').format('YYYY-MM-DD'));
   minBirthDate = new Date(1900, 0, 1);
   isFileUploaded1: boolean = false;
   isFileUploaded2: boolean = false;
@@ -633,7 +634,7 @@ export class SwimmingPoolComponent implements OnInit {
       return;
       
     this.bookingService.searchRenewSwimmingPool(this.memberNumber.value).subscribe(
-      (res: any) => {
+      res => {
       res = res.data;
       if (res && res.bookingFormId) 
       this.swimmimgPoolBookingForm.patchValue({'serviceFormId': res.bookingFormId});
@@ -649,7 +650,7 @@ export class SwimmingPoolComponent implements OnInit {
       // this.swimmimgPoolBookingForm.get('remarks').enable();
       this.filterAsperBatchName(this.swimmimgPoolBookingForm.get('category').get('code').value);
     },(error: any) => {
-      this.commonService.openAlert("Error", "Membership Number is not Expire", "warning")
+      this.commonService.openAlert("Error", error.error[0].message, "warning")
     })
   }  
 }

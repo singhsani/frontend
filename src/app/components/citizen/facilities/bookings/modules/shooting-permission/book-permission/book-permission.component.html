@@ -44,23 +44,20 @@
     <div class="pageTitle">{{'screen_title'| translate: translateKey}}</div>
     <div class="p-15">
       <form [formGroup]="bookPermissionSearchForm" (ngSubmit)="searchBooking()" autocomplete="off" ngNativeValidate>
-       
+
         <div class="row mt-3 mb-3">
-					<div class="col-md-6 ngSelect">
-					  <ng-select 
-								placeholder="Zone No.*"
-								formControlName="waterDrainageZoneId" (change)="onChangedWardZone($event,2)">
-								<ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.zoneName">
-									{{zone.zoneName}}</ng-option>
-							</ng-select>
-							<!-- <control-messages [control]="shopLicNewForm.get('waterDrainageZoneId')"> -->
-							<!-- </control-messages> -->
-					
-					</div>
-      
-        
           <div class="col-md-6 ngSelect">
-            <ng-select placeholder="{{'select_place'| translate: translateKey}}" formControlName="code" (change)="maxDateForSlot($event)">
+            <ng-select placeholder="Zone No.*" formControlName="waterDrainageZoneId"
+              (change)="onChangedWardZone($event,2); bookPermissionSearchForm.get('code').reset()">
+              <ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.zoneName">
+                {{zone.zoneName}}</ng-option>
+            </ng-select>
+            <!-- <control-messages [control]="shopLicNewForm.get('waterDrainageZoneId')"> -->
+            <!-- </control-messages> -->
+          </div>
+          <div class="col-md-6 ngSelect">
+            <ng-select placeholder="{{'select_place'| translate: translateKey}}" formControlName="code"
+              (change)="maxDateForSlot($event)">
               <ng-option *ngFor="let bookPermission of SHOOTING_PERMISSION" [value]="bookPermission.code">
                 {{ bookPermission.name }}
               </ng-option>
@@ -96,8 +93,7 @@
               {{'choose_end_date'| translate: translateKey}}
             </mat-label>
             <input matInput [min]="bookPermissionSearchForm.get('startDate').value"
-              [matDatepicker]="bookPermissionBookingtoPicker" formControlName="endDate" placeholder=""
-              [max]="endDate">
+              [matDatepicker]="bookPermissionBookingtoPicker" formControlName="endDate" placeholder="" [max]="endDate">
             <mat-datepicker-toggle matSuffix [for]="bookPermissionBookingtoPicker"></mat-datepicker-toggle>
             <mat-datepicker #bookPermissionBookingtoPicker touchUi="true"></mat-datepicker>
             <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
@@ -106,7 +102,7 @@
           </mat-form-field>
 
         </div>
-        <div class="row fotButtonBar">
+        <div class="row fotButtonBar mt-0">
           <div class="col-sm-12 col-md-12 text-right">
             <button mat-raised-button color="primary" [disabled]="bookPermissionSearchForm.invalid" type="submit">
               {{'search'| translate: translateKey}}
@@ -187,7 +183,7 @@
       <table class="table">
         <thead class="customthead">
           <tr>
-            <th scope="col" width="56">{{'s_no'| translate: translateKey}}</th>
+            <th scope="col" width="56">Sr. No.</th>
             <th scope="col">{{'Event Date'}}</th>
             <!-- <th scope="col">{{'end_date'| translate: translateKey}}</th> -->
             <th scope="col">{{'slot_status'| translate: translateKey}}</th>
@@ -203,8 +199,7 @@
             <td>{{days.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : days.slotStatus }}</td>
             <!-- <td>{{days.occupancy}}</td> -->
             <td>
-              <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}"
-                [disabled]="selectedShift.length == 1" (click)="removeSelectedShift(days, i)">
+              <button mat-icon-button [disabled]="selectedShift.length == 1" (click)="removeSelectedShift(days, i)">
                 <mat-icon color="warn">delete</mat-icon>
               </button>
             </td>
@@ -281,7 +276,7 @@
 
           <div class="row">
             <mat-form-field class="col-md-4">
-              <input matInput maxlength="50" appValidationFields  [validationFieldsType]="'onlyNameWithSpace'"
+              <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
                 type="text" formControlName="orgName" placeholder="{{'organization_name' | translate: translateKey}}"
                 required>
               <control-messages [control]="bookPermissionApplicationForm.get('orgName')"></control-messages>
@@ -309,22 +304,26 @@
 
             <mat-form-field class="col-md-4">
               <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobile"
-                placeholder="{{'applicant_mobile' | translate: translateKey}}" required>
+                placeholder="{{'applicant_mobile' | translate: translateKey}}" required >
               <control-messages [control]="bookPermissionApplicationForm.get('applicantMobile')"></control-messages>
             </mat-form-field>
 
             <div class="col-md-4">
               <mat-form-field>
                 <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile"
-                  placeholder="{{'confirm_mobile' | translate: translateKey}}" required>
+                  placeholder="{{'confirm_mobile' | translate: translateKey}}" required (focus)="onConfirmMobileNumber($event)">
                 <control-messages [control]="bookPermissionApplicationForm.get('confirmMobile')"></control-messages>
               </mat-form-field>
               <!-- <mat-error *ngIf="!mobileNumberMatcher() && bookPermissionApplicationForm.get('applicantMobile').touched && bookPermissionApplicationForm.get('confirmMobile').touched">
                 {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
               </mat-error> -->
 
-              <mat-error
+              <!-- <mat-error
                 *ngIf="!bookingUtils.matcher(bookPermissionApplicationForm, 'applicantMobile', 'confirmMobile') && bookPermissionApplicationForm.get('applicantMobile').touched && bookPermissionApplicationForm.get('confirmMobile').touched">
+                {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
+              </mat-error> -->
+              <mat-error
+                *ngIf="isConfirmMobileNumber == true && !bookingUtils.matcher(bookPermissionApplicationForm, 'applicantMobile', 'confirmMobile') && bookPermissionApplicationForm.get('applicantMobile').touched && bookPermissionApplicationForm.get('confirmMobile').touched">
                 {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
               </mat-error>
             </div>
@@ -405,9 +404,10 @@
 
           <div class="row mt-4 fotButtonBar">
             <div class="col-sm-12 col-md-12 justify-content-between d-flex">
-              <button type="button" mat-raised-button  color="primary" (click)="tabIndex= tabIndex -1; ">{{'back' |
+              <button type="button" mat-raised-button color="primary" (click)="tabIndex= tabIndex -1; ">{{'back' |
                 translate:translateKey}}</button>
-              <button mat-raised-button color="primary" type="submit" [disabled] = "bookPermissionApplicationForm.invalid">
+              <button mat-raised-button color="primary" type="submit"
+                [disabled]="bookPermissionApplicationForm.invalid">
                 {{'submit_application'| translate: translateKey}}
               </button>
             </div>

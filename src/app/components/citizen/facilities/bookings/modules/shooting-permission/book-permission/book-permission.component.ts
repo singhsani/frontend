@@ -35,7 +35,7 @@ export class BookPermissionComponent implements OnInit {
   guideLineFlag: boolean = true;
   head_lines: string;
   endDate:any;
-
+  isConfirmMobileNumber = false
 
   isFileUploaded: boolean = false;
   /**
@@ -522,9 +522,17 @@ export class BookPermissionComponent implements OnInit {
 	}
 
   onChangedWardZone(event){
-    this.bookingService.getGardenList(event).subscribe(resp => {
-      this.SHOOTING_PERMISSION = resp.data;
-    })
+    if (event != undefined) {
+      if(event){
+        this.Dates = []
+      }
+      this.bookingService.getGardenList(event).subscribe(resp => {
+        this.SHOOTING_PERMISSION = resp.data;
+      })
+    }
+    else {
+      this.Dates = []
+    }
   }
 
   getAvaillableSlot(data){
@@ -534,6 +542,18 @@ export class BookPermissionComponent implements OnInit {
   }
 
   maxDateForSlot(event){
-    this.getAvaillableSlot(event)
+    if (event != undefined) {
+      this.getAvaillableSlot(event)
+    }
+    else {
+      this.Dates = []
+    }
   }
+
+  onConfirmMobileNumber(event){
+    if(event.target.value != '' )
+    this.isConfirmMobileNumber = true
+ 
+  }
+  
 }
