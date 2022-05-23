@@ -107,7 +107,7 @@
 
 <div class="mt-4">
   <div class="example-container mat-elevation-z8" *ngIf="isShowTable">
-    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 width100">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 width100" (matSortChange)="sortData($event)">
 
       <ng-container matColumnDef="propertyNo">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Property No </th>
