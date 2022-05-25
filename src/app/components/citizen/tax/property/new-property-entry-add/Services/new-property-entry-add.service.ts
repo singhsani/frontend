@@ -197,15 +197,18 @@ export class NewPropertyEntryAddService {
   saveApplicantDetails(data:any){
     return this.http.post(`${Constants.commonApiUrl}api/form/propertyAssessment/saveApplicantDetails`,data,
     { observe: 'response' })
-    .pipe(map((response: any) => response)) 
+    .pipe(map((response: any) => response))
   }
-
-  searchEmailId(propertyBasicVersionId: number,emailAddress: any) {
-    return this.http.get(`${Constants.assessmentModuleApiUrl}occupier/searchEmailIdOccupier?propertyBasicVersionId=${propertyBasicVersionId}&&emailAddress=${emailAddress}`,
+  searchEmailIdOccupier(propertyBasicVersionId: number,emailAddress: any,propertyOccupierId) {
+    return this.http.get(`${Constants.assessmentModuleApiUrl}occupier/searchEmailIdOccupier?propertyBasicVersionId=${propertyBasicVersionId}&&emailAddress=${emailAddress}&&propertyOccupierId=${propertyOccupierId}`,
       { observe: 'response' })
       .pipe(map((response: any) => response))
   }
-
+  searchEmailIdOwner(propertyBasicVersionId: number,emailAddress: any,propertyOwnerId) {
+    return this.http.get(`${Constants.assessmentModuleApiUrl}owner/searchEmailIdOwner?propertyBasicVersionId=${propertyBasicVersionId}&&emailAddress=${emailAddress}&&propertyOwnerId=${propertyOwnerId}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
   saveMeasurementTax(measurementVersionId: Number) {
     return this.http.post(`${Constants.assessmentModuleApiUrl}measurement/calculateTax?measurementVersionId=${measurementVersionId}`,
       { observe: 'response' })
