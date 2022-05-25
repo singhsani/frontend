@@ -194,17 +194,11 @@ export class BookPlanetariumComponent implements OnInit {
       this.isVisibleIdNumber = false;
       this.ticketBookingForm.controls['idNumber'].setValidators([Validators.required, ValidationService.panValidatorforlastfour]);
       this.ticketBookingForm.controls['idNumber'].updateValueAndValidity();
-    }else if(idCode === 'VOTINGCARD'  ){
-      this.isVisibleIdNumber = false;
+    }else if(idCode === 'VOTINGCARD' || idCode === 'PASSPORT'){
+      this.isVisibleIdNumber = true;
       this.isPanCardVisibleIdNumber = false;
       this.ticketBookingForm.controls['idNumber'].setValue('');
-      this.ticketBookingForm.controls['idNumber'].setValidators([Validators.required,ValidationService.electionCardValidator]);
-      this.ticketBookingForm.controls['idNumber'].updateValueAndValidity();
-    }else if( idCode === 'PASSPORT'){
-      this.isVisibleIdNumber = false;
-      this.isPanCardVisibleIdNumber = false;
-      this.ticketBookingForm.controls['idNumber'].setValue('');
-      this.ticketBookingForm.controls['idNumber'].setValidators([Validators.required,ValidationService.passportValidator]);
+      this.ticketBookingForm.controls['idNumber'].setValidators([Validators.required]);
       this.ticketBookingForm.controls['idNumber'].updateValueAndValidity();
     }
 

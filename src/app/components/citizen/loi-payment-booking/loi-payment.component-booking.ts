@@ -118,7 +118,6 @@ export class LoiPaymentComponentBooking implements OnInit {
 
 	}
 	makePayment(loiNumber: any) {
-
 		if(this.resourceTypes=='CHILDREN_THEATER'){
 			this.bookingService.resourceType = 'childrenTheater';
 			this.paymentRequestBooking(this.uniqueId);
