@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Constants } from 'src/app/vmcshared/Constants';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
-import { MatSort, MatTableDataSource, MatPaginator, Sort } from '@angular/material';
+import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
 import { PropertySearchSharingService } from './property-search-sharing.service';
 import { PropertySearchService } from './property-search.service';
 import { CommonService } from '../../Services/common-service';
@@ -25,15 +25,14 @@ export class PropertySearchComponent implements OnInit {
   propertyNo: string;
 
   displayedColumns: string[] = ['propertyNo', 'propertyAddress', 'ownerNames', 'serialNo', 'select'];
-  dataSource: any = [];
+  dataSource = new MatTableDataSource([]);
   selectedItem: any = null;
   isSearchByPropertyNo: boolean = false;
   isShowTable: boolean = false;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort) sort:MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   pageRecord = Constants.pageRecord;
   resultsLength: number = 0;
-  desserts: any; 
 
   constructor(
     private propertySearchSharingService: PropertySearchSharingService,
@@ -166,7 +165,6 @@ export class PropertySearchComponent implements OnInit {
   }
 
   searchPropertyList() {
-
     merge(this.paginator.page)
       .pipe( startWith({}), switchMap(() => {
 
@@ -191,16 +189,15 @@ export class PropertySearchComponent implements OnInit {
         if (data.status === 200) {
           if (data.body.length === 0) {
             this.alertService.info('No Data Found!');
-            if (!this.isSearchByPropertyNo || (this.isSearchByPropertyNo && this.dataSource.length === 0)) {
+            if (!this.isSearchByPropertyNo || (this.isSearchByPropertyNo && data.length === 0)) {
               this.isShowTable = false;
             }
             this.resultsLength = 0;
           } else {
             this.isShowTable = true;
             this.dataSource = new MatTableDataSource(data.body.data);
-            this.dataSource.sort = this.sort;
             this.resultsLength = data.body.totalRecords;
-            this.desserts =  data.body.data;
+            this.dataSource.sort = this.sort;
           }
         }
       },
@@ -217,30 +214,4 @@ export class PropertySearchComponent implements OnInit {
   onBackFromSearch() {
     this.propertySearchSharingService.setIsOpenSearchForm(false);
   }
-  sortData(sort: Sort) {
-    const data = this.desserts.slice();
-    if (!sort.active || sort.direction === '') {
-      this.dataSource = data;
-      return;
-    }
-
-    this.dataSource = data.sort((a, b) => {
-      const isAsc = sort.direction === 'asc';
-      switch (sort.active) {
-        case 'propertyNo':
-          return compare(a.propertyNo, b.propertyNo, isAsc);
-        case 'propertyAddress':
-          return compare(a.propertyAddress, b.propertyAddress, isAsc);
-        case 'ownerNames':
-          return compare(a.ownerNames, b.ownerNames, isAsc);
-          case 'serialNo':
-          return compare(a.serialNo, b.serialNo, isAsc);
-        default:
-          return 0;
-      }
-    });
-  }
-}
-function compare(a: number | string, b: number | string, isAsc: boolean) {
-  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
