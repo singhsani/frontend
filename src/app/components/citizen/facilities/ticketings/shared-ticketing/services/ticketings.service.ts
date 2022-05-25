@@ -217,4 +217,8 @@ export class TicketingsService {
 
   }
 
+  getBase64StringURL(refNumber: string) {
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/getLoiDocument/${refNumber}`;
+    return this.http.get(this.requestURL);
+  }
 }
