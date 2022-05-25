@@ -92,7 +92,7 @@
 					<div class="mobile-label">{{'actions' | translate:translateKey}}</div>
 					<div class="mobile-label1">:</div>
 
-					<button
+				<button
 						*ngIf="(element.status != ticketingConstants.DRAFT) && (element.status != ticketingConstants.EXPIRED) && (element.status != ticketingConstants.TRANSACTION_PENDING) || (element.resourceType == 'Zoo Animal Adoption')"
 						mat-button [matMenuTriggerFor]="menu" class="p-0" style="min-width: 50px;">
 						<mat-icon>more_vert</mat-icon>
@@ -126,9 +126,14 @@
 
 							<button mat-menu-item *ngIf="(element.status === 'SCRUTINY')" color="primary"
 								(click)="loiPayments(element)">
-								<mat-icon title="Make Payment" color="primary">print</mat-icon>
+								<mat-icon title="Make Payment" color="primary">payment</mat-icon>
 								{{'make_payment' | translate:translateKey}}
 							</button>
+
+							<button *ngIf="element.status == bookingConstant.SCRUTINY && (element.resourceType == 'PLANETARIUM_TICKETING')" mat-menu-item color="primary" (click)="printLOIReceipt(element.refNumber)">
+								<mat-icon title="Print Receipt" color="primary">print</mat-icon>
+								{{'loi_download' | translate:translateKey}}
+							  </button>
 
               <button *ngIf="element.status == ticketingConstants.REJECTED" mat-menu-item data-toggle="modal" color="primary" (click)="openModal(templateRequestModel, element, element.refNumber);">
                 <mat-icon title="View Booking Details" color="primary">details</mat-icon>
