@@ -71,7 +71,7 @@
                             [(ngModel)]="ownerModel.mobileNo">
                         <mat-error *ngIf="MobileNo.invalid">*Mobile No. is invalid.</mat-error>
                     </mat-form-field>
-    
+
                 </div>
                 <div class="col-md-3">
                     <mat-form-field class="full-width-input">
@@ -81,7 +81,7 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="ngSelect">
                         <ng-select [(ngModel)]="ownerModel.isPrimaryOwner" name="isPrimaryOwner" required
                             placeholder="{{'is_primary_owner' | translate:translateKey }}*" #PrimaryOwner="ngModel">
@@ -149,7 +149,7 @@
                 </ng-container>
                 <ng-container matColumnDef="isPrimaryOwner">
                     <th mat-header-cell *matHeaderCellDef>Is Primary Owner</th>
-                    <td mat-cell *matCellDef="let element"> {{element.isPrimaryOwner}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.isPrimaryOwner == true ? 'Yes' : 'No'}} </td>
                 </ng-container>
                 <ng-container matColumnDef="action">
                     <th mat-header-cell *matHeaderCellDef>Action</th>
