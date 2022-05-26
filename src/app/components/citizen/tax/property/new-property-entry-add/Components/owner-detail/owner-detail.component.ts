@@ -83,7 +83,7 @@ export class OwnerDetailComponent implements OnInit {
       (data) => {
         if (data.status === 200 && data.body.length) {
           this.propertyTypeList = data.body;
-          this.propertyTypeList.sort((a, b) => 
+          this.propertyTypeList.sort((a, b) =>
           (a.propertyType < b.propertyType ? -1 : 1));
         }
       },
@@ -97,7 +97,7 @@ export class OwnerDetailComponent implements OnInit {
       (data) => {
         if (data.status === 200 && data.body.length) {
           this.propertySubTypeList = data.body;
-          this.propertySubTypeList.sort((a, b) => 
+          this.propertySubTypeList.sort((a, b) =>
           (a.subPropertyType < b.subPropertyType ? -1 : 1));
 
         }
@@ -112,7 +112,7 @@ export class OwnerDetailComponent implements OnInit {
       (data) => {
         if (data.status === 200 && data.body.length) {
           this.landClassList = data.body;
-          this.landClassList.sort((a, b) => 
+          this.landClassList.sort((a, b) =>
           (a.locationName < b.locationName ? -1 : 1));
         }
       },
@@ -147,12 +147,10 @@ export class OwnerDetailComponent implements OnInit {
   saveOwner(form: NgForm) {
     if (form.form.valid) {
       this.ownerModel.propertyBasicVersionId = this.modelProperty.propertyBasicId
-      this.newNewPropertyEntryAddService.saveOwner(this.ownerModel).subscribe(
+      this.newNewPropertyEntryAddService.searchEmailIdOwner(this.ownerModel.propertyBasicVersionId, this.ownerModel.emailAddress, this.ownerModel.propertyOwnerId==undefined ? '':this.ownerModel.propertyOwnerId).subscribe(
         (data) => {
           if (data.status === 200) {
-            form.resetForm();
-            this.ownerModel = new OwnerModel();
-            this.searchOwner();
+            this.saveOwnerAfterEmailCheck(form);
           }
         },
         (error) => {
@@ -265,6 +263,33 @@ export class OwnerDetailComponent implements OnInit {
   clearPropertyOwner(form: NgForm){
     console.log("Successfully Cleared.");
     form.resetForm();
+  }
+  saveOwnerAfterEmailCheck( form: NgForm){
+
+
+    this.newNewPropertyEntryAddService.saveOwner(this.ownerModel).subscribe(
+      (data) => {
+        if (data.status === 200) {
+          form.resetForm();
+          this.ownerModel = new OwnerModel();
+          this.searchOwner();
+        }
+      },
+      (error) => {
+        if (error.status === 400) {
+          var errorMessage = '';
+          error.error[0].propertyList.forEach(element => {
+            errorMessage = errorMessage + element + "</br>";
+          });
+          this.alertService.error(errorMessage);
+        }
+        else {
+          this.alertService.error(error.error.message);
+        }
+      });
+
+    //  saveOccupier finish
+
   }
 
 }

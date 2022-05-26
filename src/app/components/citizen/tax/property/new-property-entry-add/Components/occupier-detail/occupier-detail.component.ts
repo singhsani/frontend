@@ -121,7 +121,7 @@ export class OccupierDetailComponent implements OnInit {
 
     if (formDetail.form.valid && this.isDuplicateCode == false) {
       this.model.propertyBasicVersionId = this.modelProperty.propertyBasicId
-      this.newNewPropertyEntryAddService.searchEmailId(this.model.propertyBasicVersionId, this.model.emailAddress).subscribe(
+      this.newNewPropertyEntryAddService.searchEmailIdOccupier(this.model.propertyBasicVersionId, this.model.emailAddress, this.model.propertyOccupierId==undefined ? '':this.model.propertyOccupierId).subscribe(
         (data) => {
           if (data.status === 200) {
 
