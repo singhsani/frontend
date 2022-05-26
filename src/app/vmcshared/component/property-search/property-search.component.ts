@@ -25,11 +25,11 @@ export class PropertySearchComponent implements OnInit {
   propertyNo: string;
 
   displayedColumns: string[] = ['propertyNo', 'propertyAddress', 'ownerNames', 'serialNo', 'select'];
-  dataSource: any = [];
+  dataSource = new MatTableDataSource([]);
   selectedItem: any = null;
   isSearchByPropertyNo: boolean = false;
   isShowTable: boolean = false;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort) sort:MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   pageRecord = Constants.pageRecord;
   resultsLength: number = 0;
@@ -165,7 +165,6 @@ export class PropertySearchComponent implements OnInit {
   }
 
   searchPropertyList() {
-
     merge(this.paginator.page)
       .pipe( startWith({}), switchMap(() => {
 
@@ -190,15 +189,15 @@ export class PropertySearchComponent implements OnInit {
         if (data.status === 200) {
           if (data.body.length === 0) {
             this.alertService.info('No Data Found!');
-            if (!this.isSearchByPropertyNo || (this.isSearchByPropertyNo && this.dataSource.length === 0)) {
+            if (!this.isSearchByPropertyNo || (this.isSearchByPropertyNo && data.length === 0)) {
               this.isShowTable = false;
             }
             this.resultsLength = 0;
           } else {
             this.isShowTable = true;
             this.dataSource = new MatTableDataSource(data.body.data);
-            this.dataSource.sort = this.sort;
             this.resultsLength = data.body.totalRecords;
+            this.dataSource.sort = this.sort;
           }
         }
       },

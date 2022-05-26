@@ -144,7 +144,7 @@
                                     #EFD="ngModel" required mask-date>
                                 <mat-datepicker-toggle matSuffix [for]="EffectiveFromDate"></mat-datepicker-toggle>
                                 <mat-datepicker #EffectiveFromDate disabled="false"></mat-datepicker>
-                                <mat-error *ngIf="EFD.invalid">*Effective from Date is required.</mat-error>
+                                <mat-error *ngIf="EFD.invalid">*Effective From Date is required.</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="col-md-6">
@@ -154,7 +154,7 @@
                                     placeholder="{{'effective_to_date' | translate:translateKey }}" name="effectiveToDate" mask-date>
                                 <mat-datepicker-toggle matSuffix [for]="EffectiveToDate"></mat-datepicker-toggle>
                                 <mat-datepicker #EffectiveToDate disabled="false"></mat-datepicker>
-                                <mat-error *ngIf="ETD.invalid">*Effective to Date must be greater than Effective from
+                                <mat-error *ngIf="ETD.invalid">*Effective To Date must be greater than Effective from
                                     Date.</mat-error>
                             </mat-form-field>
                         </div>
