@@ -396,6 +396,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	 * @param row - Table row oject
 	 */
 	isEditOptDisplay(row) {
+	   if(row.canEdit)
+	   {
+		   return true;
+	   }
 		if (row.serviceType === 'PEC_REG' && row.serviceType === 'PRC_REG' || row.serviceType ===
 			'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE')
 			return false;
