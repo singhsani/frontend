@@ -66,7 +66,7 @@ export class SlotBookingComponent implements OnInit {
 	 * pagination instance variables.
 	 */
 	resultsLength: number = 0;
-	isLoadingResults: boolean = true;
+	isLoadingResults: boolean = false;
 	appointmentLength: number = 0;
 	/**
 	* @param formService - Declare form service property .
