@@ -229,7 +229,8 @@
                         <div *ngIf="selectedShift.length > 1">
 
                         <td>
-                            <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" [disabled]="selectedShift.length == 1" (click)="selectedShift = bookingUtils.removeSelectedShift(shifts,selectedShift,  i)">
+                            <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" 
+                            (click)="selectedShift = bookingUtils.removeSelectedShift(shifts,selectedShift,  i)">
                                 <mat-icon color="warn">delete</mat-icon>
                             </button>
                         </td>
