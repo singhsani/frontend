@@ -624,7 +624,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return false;
 	}
 	getInnerHTML() {
-		debugger;
 		return `<b>Remarks :</b> ${this.rejectRemarks}`;
 	}
 	/**
