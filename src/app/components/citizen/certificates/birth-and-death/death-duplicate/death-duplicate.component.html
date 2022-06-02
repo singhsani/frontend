@@ -36,7 +36,7 @@
                         </div>
 
                         <mat-form-field class="col-md-6">
-                            <input matInput maxlength="2" type="number" [min]="0" OnlyNumber
+                            <input matInput [max]="50" type="number" [min]="1 " onkeypress="return false" OnlyNumber
                                 placeholder="{{'total_copies' | translate:translateKey}}" formControlName="totalCopies">
                             <control-messages [control]="deathDuplicateForm.get('totalCopies')"></control-messages>
                         </mat-form-field>

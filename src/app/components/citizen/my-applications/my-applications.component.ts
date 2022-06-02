@@ -418,7 +418,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		else if (row.canEdit || row.fileStatus === 'QUERIED' || row.fileStatus === 'QUERY_RAISED')
 			return true;
 		else if (row.fileStatus === 'REJECTED')
-			return true;
+			return false;
 	}
 	/**
 	 * This method is use for delete option
@@ -561,7 +561,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'MARRIAGE_REGISTRATION') {
 			return true;
 		}
-
+		if(row.fileStatus === 'REJECTED'){
+			return false;
+		}
 		else if ((row.serviceType === 'DUPLICATE_BIRTH_REGISTRATION' && (row.fileStatus === 'SUBMITTED' || row.fileStatus === 'REJECTED')) ||
 			(row.serviceType === 'DUPLICATE_DEATH_REGISTRATION' && (row.fileStatus === 'SUBMITTED' || row.fileStatus === 'REJECTED')) ||
 			(row.serviceType === 'BIRTH_CORRECTION_REGISTRATION' && (row.fileStatus === 'SUBMITTED' || row.fileStatus === 'REJECTED')) ||
