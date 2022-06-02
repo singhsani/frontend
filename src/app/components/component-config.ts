@@ -157,20 +157,20 @@ export class ComponentConfig {
      * to get proper day
      * @param date - pass date
      */
-    public getDay(date: string): string {
+        getDay(date: string): string {
+            const convert_Date_into_YYYY_MM_DD = moment(date, 'YYYY-MM-DD');
+            let Days: Array<any> = [
+                { day: 'Sunday', code: 0 },
+                { day: 'Monday', code: 1 },
+                { day: 'Tuesday', code: 2 },
+                { day: 'Wednesday', code: 3 },
+                { day: 'Thursday', code: 4 },
+                { day: 'Friday', code: 5 },
+                { day: 'Saturday', code: 6 },
+            ];
+            return Days.find(day => day.code == moment(convert_Date_into_YYYY_MM_DD).day()).day;
 
-        let Days: Array<any> = [
-            { day: 'Sunday', code: 0 },
-            { day: 'Monday', code: 1 },
-            { day: 'Tuesday', code: 2 },
-            { day: 'Wednesday', code: 3 },
-            { day: 'Thursday', code: 4 },
-            { day: 'Friday', code: 5 },
-            { day: 'Saturday', code: 6 },
-        ];
-
-        return Days.find(day => day.code == moment(date).day()).day;
-    }
+        }
 
     /**
 	 * Method is used to return Date in format (DD-MM-YYYY)
