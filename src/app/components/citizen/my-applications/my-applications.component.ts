@@ -740,7 +740,11 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		console.log("Download LOI", row);
 	}
 	loiPayments(row) {
-		this.router.navigate(['/citizen/loi-payments', row.uniqueId, row.id, row.serviceDetail.code]);
+		if(row.serviceType == 'MEAT_FISH_LICENCE' || row.serviceType == 'APL_LICENCE' ){
+			this.router.navigate(['/citizen/loi-payments', row.fileNumber, row.id, row.serviceDetail.code]);
+		}else{
+			this.router.navigate(['/citizen/loi-payments', row.uniqueId, row.id, row.serviceDetail.code]);
+		}
 	}
 	openOfflinePaymentComponent(payData, retUrl, apiCode, id) {
 		const dialogConfig = new MatDialogConfig();
