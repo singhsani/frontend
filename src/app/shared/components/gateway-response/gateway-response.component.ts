@@ -47,6 +47,19 @@ export class GatewayResponseComponent implements OnInit {
 		this.dispData = JSON.parse(this.sessionStore.get('paymentData'));
 		console.log('this.dispData', this.dispData);
 	}
+	Tickting:String[]=[
+		'zoo',
+		'zooanimaladoption',
+		'planetarium'
+	];
+	Booking:String[]=[
+		'townhall',
+		'amphiTheater',
+		'stadium',
+		'childrenTheater',
+		'atithigruh',
+		'shootingPermission'
+	];
 
 	ngOnInit() {
 
@@ -408,16 +421,18 @@ export class GatewayResponseComponent implements OnInit {
 		   */
 	sendMail(refNumber: any, eventType: any) {
 		if (refNumber) {
-			if (this.resourceType == "zoo" || this.resourceType == "zooanimaladoption" || this.resourceType == "planetarium") {
+			if (this.Tickting.includes(this.resourceType)) {
 				this.formService.sendMailTicketing(refNumber, this.resourceType, eventType).subscribe(resp => {
 				}, err => {
 					this.toastr.error("Something went wrong");
 				})
-			} else {
+			} else if (this.Booking.includes(this.resourceType)) {
 				this.formService.sendMailBooking(refNumber, this.resourceType, eventType).subscribe(resp => {
 				}, err => {
 					this.toastr.error("Something went wrong");
 				})
+			} else{
+				return;
 			}
 
 		} else {

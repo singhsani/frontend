@@ -337,13 +337,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			}
 		);
 	}
-	/**
-	 * This method is use to show reject remarks.
-	 */
-	// remarksDisplay(data) {
-	// 	this.rejectRemarks = data.remarks;
-	// 	this.reason = data.reason;
-	// }
+	
+	 remarksDisplay(data) {
+	 	this.rejectRemarks = data.remarks;
+	}
 	/**
 	 * This method is use for copy text.
 	 */
@@ -629,7 +626,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return false;
 	}
 	getInnerHTML() {
-		return `<b>Remarks :</b> ${this.rejectRemarks} <br> <b>Reason :</b> ${this.reason}`;
+		return `<b>Remarks :</b> ${this.rejectRemarks}`;
 	}
 	/**
 	 * This method is used to redirect on payment.
@@ -743,7 +740,11 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		console.log("Download LOI", row);
 	}
 	loiPayments(row) {
-		this.router.navigate(['/citizen/loi-payments', row.uniqueId, row.id, row.serviceDetail.code]);
+		if(row.serviceType == 'MEAT_FISH_LICENCE' || row.serviceType == 'APL_LICENCE' ){
+			this.router.navigate(['/citizen/loi-payments', row.fileNumber, row.id, row.serviceDetail.code]);
+		}else{
+			this.router.navigate(['/citizen/loi-payments', row.uniqueId, row.id, row.serviceDetail.code]);
+		}
 	}
 	openOfflinePaymentComponent(payData, retUrl, apiCode, id) {
 		const dialogConfig = new MatDialogConfig();
