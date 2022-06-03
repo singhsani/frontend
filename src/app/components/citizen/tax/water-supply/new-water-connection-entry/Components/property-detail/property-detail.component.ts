@@ -6,6 +6,8 @@ import { PropertyAddressModel, PropertyModel } from '../../Models/new-water-conn
 import { Subscription } from 'rxjs';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { Router } from '@angular/router';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-property-detail',
@@ -21,14 +23,14 @@ export class PropertyDetailComponent implements OnInit {
   connectionDtlId: number;
   isShowSubmitButton: boolean = false;
   fullAddress: string;
+  dataSource = new MatTableDataSource([]);
+  @ViewChild(MatSort) sort: MatSort;
   constructor(private newNewWaterConnectionEntryDataSharingService: NewWaterConnectionEntryDataSharingService,
     private alertService: AlertService,private router: Router,
     private newNewWaterConnectionEntryService: NewWaterConnectionEntryService) {
   }
-
   primaryPropertyList = [{ itemId: true, itemName: "Yes" }, { itemId: false, itemName: "No" }];
-  displayedColumns = ['propertyNo', 'ownerName', 'address', "actions"];
-  dataSource = [];
+  displayedColumns = ['propertyNo', 'ownerName', 'primaryProperty','address', "actions"];
   isShowPropertyGrid = false;
 
   ngOnInit() {
@@ -76,10 +78,13 @@ export class PropertyDetailComponent implements OnInit {
     this.newNewWaterConnectionEntryService.getPropertyList(this.connectionDtlId).subscribe(
       (data) => {
         if (data.status === 200) {
-          this.dataSource = data.body;
+          // this.dataSource = data.body;
+          this.dataSource = new MatTableDataSource(data.body);
+          this.dataSource.sort=this.sort;
           this.isShowPropertyGrid = true;
         }
-        if(this.dataSource.length == 0) {
+        // if(this.dataSource.length == 0) {
+        else{  
           this.isShowPropertyGrid = false;
         }
       },

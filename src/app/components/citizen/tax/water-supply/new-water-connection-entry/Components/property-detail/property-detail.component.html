@@ -31,28 +31,33 @@
     </form>
 </mat-card>
 <mat-card class="mt-4" *ngIf="isShowPropertyGrid">
-    <mat-table class="table-margin-bottom" #table [dataSource]="dataSource">
+    <mat-table class="table-margin-bottom" #table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="propertyNo">
-            <mat-header-cell *matHeaderCellDef> Property No </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Property No </mat-header-cell>
             <mat-cell *matCellDef="let row">
                 <label>{{row.propertyNo}}</label>
             </mat-cell>
         </ng-container>
         <ng-container matColumnDef="ownerName">
-            <mat-header-cell *matHeaderCellDef> Owner Name </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Owner Name </mat-header-cell>
             <mat-cell *matCellDef="let row">
                 <label>{{row.ownerName}}</label>
             </mat-cell>
         </ng-container>
+        <ng-container matColumnDef="primaryProperty">
+            <mat-header-cell *matHeaderCellDef> Primary Property </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <label>{{row.primaryProperty?'Yes':'No'}}</label>
+            </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="address">
-            <mat-header-cell *matHeaderCellDef> Address </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef > Address </mat-header-cell>
             <mat-cell *matCellDef="let row">
                 <label>{{row.address}}</label>
             </mat-cell>
         </ng-container>
         <ng-container matColumnDef="actions">
-            <mat-header-cell *matHeaderCellDef>
-            </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
             <mat-cell *matCellDef="let row">
                 <button mat-icon-button color="warn" title="Remove" focusable="false" (click)="deleteProperty(row)">
                     <mat-icon>clear</mat-icon>
