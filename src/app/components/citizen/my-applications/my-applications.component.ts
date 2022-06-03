@@ -337,13 +337,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			}
 		);
 	}
-	/**
-	 * This method is use to show reject remarks.
-	 */
-	// remarksDisplay(data) {
-	// 	this.rejectRemarks = data.remarks;
-	// 	this.reason = data.reason;
-	// }
+	
+	 remarksDisplay(data) {
+	 	this.rejectRemarks = data.remarks;
+	}
 	/**
 	 * This method is use for copy text.
 	 */
@@ -629,7 +626,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return false;
 	}
 	getInnerHTML() {
-		return `<b>Remarks :</b> ${this.rejectRemarks} <br> <b>Reason :</b> ${this.reason}`;
+		return `<b>Remarks :</b> ${this.rejectRemarks}`;
 	}
 	/**
 	 * This method is used to redirect on payment.

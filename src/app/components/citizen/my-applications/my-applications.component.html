@@ -287,6 +287,11 @@
                                 {{'print_receipt' | translate:translateKey}}
                             </button>
 
+                            <button mat-menu-item *ngIf="row.serviceType == 'VEHICLE' && isRejectNoteOptDisplay(row)" color="primary"
+                            (click)="openModal(rejectTemplate);remarksDisplay(row)">
+                            <mat-icon class="m-1" title="Why Rejected?">help_outline</mat-icon>
+                            Why Rejected
+                        </button>
 
                         </mat-menu>
                     </ng-container>
