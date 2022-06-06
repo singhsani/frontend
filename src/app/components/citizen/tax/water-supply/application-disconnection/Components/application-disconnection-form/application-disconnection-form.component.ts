@@ -10,6 +10,8 @@ import { MatStepper } from '@angular/material';
 import { NewWaterConnectionEntryService } from '../../../new-water-connection-entry/Services/new-water-connection-entry.service';
 import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
 import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
+import { ManageRoutes } from 'src/app/config/routes-conf';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-application-disconnection-form',
@@ -38,7 +40,8 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
         private applicationDisconnectionDataSharingService: ApplicationDisconnectionDataSharingService,
         private newWaterConnectionEntryService: NewWaterConnectionEntryService,
         private newNewWaterConnectionEntryService: NewWaterConnectionEntryService,
-        private addressService: ApplicantAddressService
+        private addressService: ApplicantAddressService,
+        private router:Router
     ) { }
 
     ngOnInit() {
@@ -135,6 +138,8 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
                     (data) => {
                         this.alertService.success(data.message);
                         this.applicationDisconnectionDataSharingService.setIsShowApproval(true);
+                        this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
+
                     },
                     (error) => {
                         this.alertService.error(error.error.message);

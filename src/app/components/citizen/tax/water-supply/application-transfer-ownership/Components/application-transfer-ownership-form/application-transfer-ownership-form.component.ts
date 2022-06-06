@@ -10,6 +10,8 @@ import { MatStepper } from '@angular/material';
 import { CommonService as SharedCommonService } from 'src/app/shared/services/common.service';
 import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
 import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
+import { ManageRoutes } from 'src/app/config/routes-conf';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-application-transfer-ownership-form',
@@ -38,7 +40,8 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
         private applicationTransferOwnershipService: ApplicationTransferOwnershipService,
         private applicationTransferOwnershipDataSharingService: ApplicationTransferOwnershipDataSharingService,
         private addressService: ApplicantAddressService,
-        private sharedCommonService: SharedCommonService) { }
+        private sharedCommonService: SharedCommonService,
+        private router:Router) { }
 
 
     ngOnInit() {
@@ -167,6 +170,7 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
 
                         this.alertService.success(data.message);
                         this.applicationTransferOwnershipDataSharingService.setIsShowApproval(true);
+                        this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
 
                     },
                     (error) => {
