@@ -356,6 +356,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 									// })
 
 								}, rj => {
+									this.router.navigate(['citizen/my-applications']);
 									this.form.get('canEdit').setValue(false);
 									this.isSubmitBtnDisabled = false;
 									this.isBtnsDisabled = false;
