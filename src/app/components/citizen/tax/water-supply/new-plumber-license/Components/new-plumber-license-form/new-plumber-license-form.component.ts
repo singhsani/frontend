@@ -11,6 +11,8 @@ import { C } from '@angular/core/src/render3';
 import { CommonService as CommonService2} from 'src/app/shared/services/common.service';
 import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
 import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
+import { ManageRoutes } from 'src/app/config/routes-conf';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -39,7 +41,8 @@ export class NewPlumberLicenseFormComponent implements OnInit {
         private newPlumberLicenseDataSharingService: NewPlumberLicenseDataSharingService,
         private alertService: AlertService,
         private addressService: ApplicantAddressService,
-        private commonService2: CommonService2) { }
+        private commonService2: CommonService2,
+        private router:Router) { }
 
     ngOnInit() {
         this.model = new PlumberLicenseModel();
@@ -196,13 +199,14 @@ export class NewPlumberLicenseFormComponent implements OnInit {
 
         this.mandatoryFileCheck().then( data => {
 
-            if(data.status) {
+        if(data.status) {
         this.newPlumberLicenseService.submitNewgen(this.plumberLicenseId).subscribe(
             (data) => {
 
                 this.alertService.success(data.message);
                 this.newPlumberLicenseDataSharingService.setIsShowForm(false);
                 this.newPlumberLicenseDataSharingService.setIsShowApproval(true);
+                this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
 
             },
             (error) => {

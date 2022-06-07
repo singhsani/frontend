@@ -10,6 +10,8 @@ import { MatStepper } from '@angular/material';
 import * as moment from 'moment';
 import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
 import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
+import { ManageRoutes } from 'src/app/config/routes-conf';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-renewal-plumber-license-form',
@@ -37,7 +39,8 @@ export class RenewalPlumberLicenseFormComponent implements OnInit {
         private renewalPlumberLicenseDataSharingService: RenewalPlumberLicenseDataSharingService,
         private alertService: AlertService,
         private addressService: ApplicantAddressService,
-        private commonService: CommonService, ) { }
+        private commonService: CommonService,
+        private router: Router ) { }
 
     ngOnInit() {
         this.plumberLicenseModel = new PlumberLicenseModel();
@@ -101,7 +104,7 @@ export class RenewalPlumberLicenseFormComponent implements OnInit {
                 this.alertService.success(data.message);
                 this.renewalPlumberLicenseDataSharingService.setIsShowForm(false);
                 this.renewalPlumberLicenseDataSharingService.setIsShowApproval(true);
-
+                this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
             },
             (error) => {
                 this.alertService.error(error.error.message);
