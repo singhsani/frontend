@@ -29,7 +29,7 @@
                     </control-messages>
                 </mat-form-field>
                 <mat-form-field class="col-md-6">
-                    <input matInput [max]="50" type="number" [min]="1 " onkeypress="return false" OnlyNumber
+                    <input matInput [max]="100"  type="number" [min]="1 "  OnlyNumber (keydown)="getvalidnumber($event)" (keypress)="getlength($event)"
                         placeholder="{{'total_copies' | translate:translateKey}} *" formControlName="totalCopies">
                     <control-messages [control]="birthDuplicateForm.get('totalCopies')"></control-messages>
                 </mat-form-field>

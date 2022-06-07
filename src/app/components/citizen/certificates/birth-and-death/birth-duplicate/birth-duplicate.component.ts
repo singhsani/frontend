@@ -285,4 +285,20 @@ export class BirthDuplicateComponent implements OnInit {
 		});
 	}
 
+	getvalidnumber(event){
+		console.log("event", event);
+		if(event.target.value.length === 0 && event.key === "0" ){
+			event.preventDefault();
+		}
+	}
+
+	getlength(event){
+		var value = event.target.value
+		if(value<=10){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 }
