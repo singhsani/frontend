@@ -9,6 +9,8 @@ import { Constants } from 'src/app/vmcshared/Constants';
 import { MatStepper } from '@angular/material';
 import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
 import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
+import { Router } from '@angular/router';
+import { ManageRoutes } from 'src/app/config/routes-conf';
 
 @Component({
     selector: 'app-application-change-usage-form',
@@ -36,7 +38,8 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
         private alertService: AlertService,
         private applicationChangeUsageService: ApplicationChangeUsageService,
         private addressService: ApplicantAddressService,
-        private applicationChangeUsageDataSharingService: ApplicationChangeUsageDataSharingService) { }
+        private applicationChangeUsageDataSharingService: ApplicationChangeUsageDataSharingService,
+        private router: Router) { }
 
     ngOnInit() {
         this.dataModel = new DataModel();
@@ -196,13 +199,13 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
     }
 
     onSubmitApproved() {
-
+        // this.getFormDataDocuments(this.dataModel.changeOfUsageId);
         this.applicationChangeUsageService.submitNewgen(this.changeOfUsageId).subscribe(
             (data) => {
 
                 this.alertService.success(data.message);
                 this.applicationChangeUsageDataSharingService.setIsShowApproval(true);
-
+                this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
             },
             (error) => {
                 this.alertService.error(error.error.message);

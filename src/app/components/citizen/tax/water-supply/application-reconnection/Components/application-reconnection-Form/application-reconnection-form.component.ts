@@ -11,6 +11,9 @@ import { CommonService as SharedCommonService } from 'src/app/shared/services/co
 import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
 import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
+import { ManageRoutes } from 'src/app/config/routes-conf';
+import { Router } from '@angular/router';
+
 
 @Component({
     selector: 'app-application-reconnection-form',
@@ -38,7 +41,8 @@ export class ApplicationReconnectionFormComponent implements OnInit {
         private newNewWaterConnectionEntryService: NewWaterConnectionEntryService,
         private addressService: ApplicantAddressService,
         private commonService: CommonService,
-        private sharedCommonService: SharedCommonService) { }
+        private sharedCommonService: SharedCommonService,
+        private router:Router) { }
 
     ngOnInit() {
         this.dataModel = new DataModel();
@@ -117,6 +121,7 @@ export class ApplicationReconnectionFormComponent implements OnInit {
                     (data) => {
                         this.alertService.success(data.message);
                         this.applicationReconnectionDataSharingService.setIsShowApproval(true);
+                        this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
                     },
                     (error) => {
                         this.alertService.error(error.error.message);
