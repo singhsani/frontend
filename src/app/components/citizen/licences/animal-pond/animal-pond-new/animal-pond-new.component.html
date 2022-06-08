@@ -344,7 +344,7 @@
 									[formGroupName]="indx">
 
 									<td>
-										<div class="d-md-none">#</div>
+										<div class="d-md-none">S.No.</div>
 										{{indx+1}}
 									</td>
 
@@ -383,7 +383,7 @@
 											(click)="editRecord(item)">
 											<mat-icon title="Edit">edit</mat-icon>
 										</button>
-										<button type="submit" [disabled]="item.invalid" *ngIf="item.isEditMode"
+										<button type="submit" [disabled]="item.invalid" *ngIf="item.isEditMode && item.get('animalCount').value !=0"
 											(click)="saveRecord(item)" mat-icon-button color="primary">
 											<mat-icon title="save">save</mat-icon>
 										</button>

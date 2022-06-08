@@ -226,8 +226,8 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 		this.formService.printReceipt(id).subscribe(
 			receiptResponse => {
-				
-				if(receiptResponse == null || receiptResponse == ""){
+
+				if (receiptResponse == null || receiptResponse == "") {
 					this.commonService.openAlert('Message!', "Print Receipt Not Available !!!", 'warning');
 					return false;
 				}
@@ -337,9 +337,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			}
 		);
 	}
-	
-	 remarksDisplay(data) {
-	 	this.rejectRemarks = data.remarks;
+
+	remarksDisplay(data) {
+		this.rejectRemarks = data.remarks;
 	}
 	/**
 	 * This method is use for copy text.
@@ -393,21 +393,20 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	 * @param row - Table row oject
 	 */
 	isEditOptDisplay(row) {
-	   if(row.canEdit)
-	   {
-		   return true;
-	   }
+		if (row.canEdit) {
+			return true;
+		}
 		if (row.serviceType === 'PEC_REG' && row.serviceType === 'PRC_REG' || row.serviceType ===
 			'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE')
 			return false;
 
 		if (row.fileStatus === 'REJECTED' && row.serviceType === 'FS_FIRE_CERTIFICATE' ||
-			row.serviceType === 'FS_GAS_CONNECTION_NOC' || 
-			row.serviceType === 'FS_ELECTRIC_CONNECTION_NOC' || 
+			row.serviceType === 'FS_GAS_CONNECTION_NOC' ||
+			row.serviceType === 'FS_ELECTRIC_CONNECTION_NOC' ||
 			row.serviceType === 'FS_WATER_TANKER' ||
-			row.serviceType === 'MARRIAGE_REGISTRATION'){
-		   return false;
-	   	}
+			row.serviceType === 'MARRIAGE_REGISTRATION') {
+			return false;
+		}
 
 		else if (row.serviceType == "AFFORD_HOUSE" && row.fileStatus != "PAYMENT_RECEIVED") {
 			return true;
@@ -468,15 +467,15 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 
 		const printViewServiceTypeArr = ['FS_FINAL_FIRE_NOC', 'FS_PROVISIONAL_NOC', 'FS_REVISED_FIRE_NOC', 'FS_RENEWAL_NOC', 'FS_TEMP_STRUCT_NOC', 'FS_TEMP_FIREWORKSHOP_NOC',
 			'FS_FIRE_CERTIFICATE', 'FS_WATER_TANKER', 'FS_FINAL_HOSPITAL_NOC', 'FS_ELECTRIC_CONNECTION_NOC', 'FS_NAVARATRI_NOC', 'FS_GAS_CONNECTION_NOC', 'CREMATION_REGISTRATION']
-	
-		if (row.serviceType == "AFFORD_HOUSE" && row.fileStatus == "PAYMENT_RECEIVED"){
+
+		if (row.serviceType == "AFFORD_HOUSE" && row.fileStatus == "PAYMENT_RECEIVED") {
 			return true;
 		}
 
 		if (row.fileStatus === 'REJECTED' && row.serviceType === 'FS_FIRE_CERTIFICATE' ||
-			 row.serviceType === 'FS_GAS_CONNECTION_NOC' || 
-			 row.serviceType === 'FS_ELECTRIC_CONNECTION_NOC' || 
-			 row.serviceType === 'FS_WATER_TANKER'){
+			row.serviceType === 'FS_GAS_CONNECTION_NOC' ||
+			row.serviceType === 'FS_ELECTRIC_CONNECTION_NOC' ||
+			row.serviceType === 'FS_WATER_TANKER') {
 			return false;
 		}
 
@@ -503,15 +502,15 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		else if (row.fileStatus != 'DRAFT') {
 			return true;
 		}
-		
-		
-		
+
+
+
 	}
 
 	isPrintReceipt(row) {
 		const printReceiptServiceTypeArr = ['FS_FINAL_FIRE_NOC', 'FS_REVISED_FIRE_NOC', 'FS_RENEWAL_NOC', 'FS_TEMP_STRUCT_NOC', 'FS_TEMP_FIREWORKSHOP_NOC',
 			'FS_FINAL_HOSPITAL_NOC', 'FS_NAVARATRI_NOC']
-			
+
 		if (row.fileStatus == 'SUBMITTED' && printReceiptServiceTypeArr.indexOf(row.serviceType) > 0) {
 			return false
 		}
@@ -525,13 +524,13 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return false;
 		}
 
-		if(row.fileStatus == "SUBMITTED" && row.serviceType == "FS_FIRE_CERTIFICATE"){
+		if (row.fileStatus == "SUBMITTED" && row.serviceType == "FS_FIRE_CERTIFICATE") {
 			return true;
 		}
-		if(row.fileStatus == "SUBMITTED" && row.serviceType == "FS_ELECTRIC_CONNECTION_NOC"){
+		if (row.fileStatus == "SUBMITTED" && row.serviceType == "FS_ELECTRIC_CONNECTION_NOC") {
 			return true;
 		}
-		if(row.fileStatus == "SUBMITTED" && row.serviceType == "FS_GAS_CONNECTION_NOC"){
+		if (row.fileStatus == "SUBMITTED" && row.serviceType == "FS_GAS_CONNECTION_NOC") {
 			return true;
 		}
 
@@ -558,7 +557,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'MARRIAGE_REGISTRATION') {
 			return true;
 		}
-		if(row.fileStatus === 'REJECTED'){
+		if (row.fileStatus === 'REJECTED') {
 			return false;
 		}
 		else if ((row.serviceType === 'DUPLICATE_BIRTH_REGISTRATION' && (row.fileStatus === 'SUBMITTED' || row.fileStatus === 'REJECTED')) ||
@@ -567,8 +566,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			(row.serviceType === 'DEATH_CORRECTION_REGISTRATION' && (row.fileStatus === 'SUBMITTED'))) {
 			return true;
 		}
-		else if(row.serviceType === 'DEATH_CORRECTION_REGISTRATION' && (row.fileStatus === 'REJECTED'))
-		{
+		else if (row.serviceType === 'DEATH_CORRECTION_REGISTRATION' && (row.fileStatus === 'REJECTED')) {
 			return false;
 		}
 
@@ -613,9 +611,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return false;
 		}
 		else if (row.fileStatus === 'PAYMENT' && row.serviceType === 'FS_FIRE_CERTIFICATE' ||
-			 row.serviceType === 'FS_GAS_CONNECTION_NOC' || 
-			 row.serviceType === 'FS_ELECTRIC_CONNECTION_NOC' || 
-			 row.serviceType === 'FS_WATER_TANKER'){
+			row.serviceType === 'FS_GAS_CONNECTION_NOC' ||
+			row.serviceType === 'FS_ELECTRIC_CONNECTION_NOC' ||
+			row.serviceType === 'FS_WATER_TANKER') {
 			return false;
 		}
 		else if (row.serviceType == "AFFORD_HOUSE") {
@@ -712,21 +710,21 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	}
 	getInnerHTMLForRemark() {
 		return `<b>Remarks :</b> ${this.queryrraiseRemarks}`;
-	}	
-	copyInnerHTMLForRemark(val: string){
-		let selBox = document.createElement('textarea');
-		  selBox.style.position = 'fixed';
-		  selBox.style.left = '0';
-		  selBox.style.top = '0';
-		  selBox.style.opacity = '0';
-		  selBox.value = this.queryrraiseRemarks;
-		  document.body.appendChild(selBox);
-		  selBox.focus();
-		  selBox.select();
-		  document.execCommand('copy');
-		  document.body.removeChild(selBox);
 	}
-		
+	copyInnerHTMLForRemark(val: string) {
+		let selBox = document.createElement('textarea');
+		selBox.style.position = 'fixed';
+		selBox.style.left = '0';
+		selBox.style.top = '0';
+		selBox.style.opacity = '0';
+		selBox.value = this.queryrraiseRemarks;
+		document.body.appendChild(selBox);
+		selBox.focus();
+		selBox.select();
+		document.execCommand('copy');
+		document.body.removeChild(selBox);
+	}
+
 	isQueryRaiseDisplay(row) {
 		if (row.fileStatus === 'QUERY_RAISED' || row.fileStatus === 'REJECTED') {
 			return true;
@@ -744,12 +742,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		console.log("Download LOI", row);
 	}
 	loiPayments(row) {
-		if(row.serviceType == 'MEAT_FISH_LICENCE' || row.serviceType == 'APL_LICENCE' ){
-			this.router.navigate(['/citizen/loi-payments', row.fileNumber, row.id, row.serviceDetail.code]);
-		}else{
-			this.router.navigate(['/citizen/loi-payments', row.uniqueId, row.id, row.serviceDetail.code]);
-		}
+		this.router.navigate(['/citizen/loi-payments', row.uniqueId, row.id, row.serviceDetail.code]);
 	}
+
 	openOfflinePaymentComponent(payData, retUrl, apiCode, id) {
 		const dialogConfig = new MatDialogConfig();
 		const data = { payData: payData }
@@ -832,11 +827,11 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}
 	}
 
-	printPropertyACKReceipt(applicationNum,dept) {		
-		let url = "";		
-		if(dept === "WATER-SUPPLY"){
-			url = "/water/ackReceipt?applicationNo="+ applicationNum;
-		}else{
+	printPropertyACKReceipt(applicationNum, dept) {
+		let url = "";
+		if (dept === "WATER-SUPPLY") {
+			url = "/water/ackReceipt?applicationNo=" + applicationNum;
+		} else {
 			url = "/property/ack?applicationNo=" + applicationNum;
 		}
 		this.paymentService.downloadFile(url).subscribe(
