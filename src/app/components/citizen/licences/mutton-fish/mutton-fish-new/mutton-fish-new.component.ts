@@ -659,8 +659,8 @@ export class MuttonFishNewComponent implements OnInit {
 			"cityGuj": "વડોદરા",
 			"countryGuj": "ભારત"
 		},
-		"holderTelephoneNo": "435345345435",
-		"holderMobileNo": "4235435435",
+		"holderTelephoneNo": "08962749073",
+		"holderMobileNo": "8962749073",
 		"holderFaxNo": "435435435435",
 		"holderAadharNo": "435435435435",
 		"holderPanNo": "ABCDE1234T",
