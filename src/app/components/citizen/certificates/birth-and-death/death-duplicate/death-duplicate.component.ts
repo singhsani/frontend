@@ -286,4 +286,8 @@ export class DeathDuplicateComponent implements OnInit {
 			});
 		}
     }
+
+	getlength(event){
+		return false
+	}
 }

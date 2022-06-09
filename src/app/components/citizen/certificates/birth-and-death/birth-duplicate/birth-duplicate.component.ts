@@ -284,5 +284,8 @@ export class BirthDuplicateComponent implements OnInit {
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode)
 		});
 	}
+	getlength(event){
+		return false
+	}
 
 }
