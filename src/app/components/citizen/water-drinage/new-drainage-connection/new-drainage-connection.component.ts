@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ValidationService } from 'src/app/shared/services/validation.service';
 import { TranslateService } from 'src/app/shared/modules/translate/translate.service';
@@ -16,6 +16,7 @@ import { BookingUtils } from '../../facilities/bookings/config/booking-config';
 import { ToastrService } from 'ngx-toastr';
 import { ApplicantDetailDTO } from '../../tax/Models/applicant-details.model';
 import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
+import { MatSort, MatTableDataSource } from '@angular/material';
  
 @Component({
   selector: 'app-new-drainage-connection',
@@ -58,6 +59,10 @@ export class NewDrainageConnectionComponent implements OnInit {
   public formControlNameToTabIndex = new Map();
   bookingUtils: BookingUtils;
   searchPropertyData: any;
+  dataSourceTable = new MatTableDataSource([]);
+  @ViewChild(MatSort) sort : MatSort
+
+
 
   constructor(
     private fb: FormBuilder,private CD: ChangeDetectorRef,
@@ -201,6 +206,8 @@ export class NewDrainageConnectionComponent implements OnInit {
               } else if (this.dataSource.length > 0 && this.dataSource.filter(x => x.propertyNo === temojbNonPrimary.propertyNo).length === 0) {
                 this.dataSource.push(temojbNonPrimary)
                 this.dataSource = this.dataSource.slice();
+                this.dataSourceTable = new MatTableDataSource(this.dataSource)
+                this.dataSourceTable.sort = this.sort;
               } else {
                 if (this.isprimaryProperty) {
                   this.alertService.info("You can add only one primary property");
@@ -227,10 +234,14 @@ export class NewDrainageConnectionComponent implements OnInit {
 
               if (this.dataSource.length === 0) {
                 this.dataSource.push(temojb);
+                this.dataSourceTable = new MatTableDataSource(this.dataSource)
+                this.dataSourceTable.sort = this.sort;
                 this.isShowPropertyGrid = true;
               } else if (this.dataSource.length > 0 && this.dataSource.filter(x => x.propertyNo === temojb.propertyNo).length === 0) {
                 this.dataSource.push(temojb);
                 this.dataSource = this.dataSource.slice();
+                this.dataSourceTable = new MatTableDataSource(this.dataSource)
+                this.dataSourceTable.sort = this.sort;
                 this.isShowPropertyGrid = true;
               } else {
                 if (this.isprimaryProperty && !this.newDrainageConnectionForm.get('primaryProperty').value) {
