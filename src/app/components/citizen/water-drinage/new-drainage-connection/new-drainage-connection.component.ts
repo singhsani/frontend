@@ -62,8 +62,6 @@ export class NewDrainageConnectionComponent implements OnInit {
   dataSourceTable = new MatTableDataSource([]);
   @ViewChild(MatSort) sort : MatSort
 
-
-
   constructor(
     private fb: FormBuilder,private CD: ChangeDetectorRef,
     private validationService: ValidationService,
