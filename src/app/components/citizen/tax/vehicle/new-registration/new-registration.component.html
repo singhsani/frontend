@@ -205,7 +205,7 @@
 							</ng-option>
 						</ng-select>
 						<mat-error *ngIf="vehicleRegistrationForm.get('wardZoneMst').touched && vehicleRegistrationForm.get('wardZoneMst').get('wardzoneId').value == null">
-							{{"Enter the Ward Number"}}
+							{{"Ward is Required"}}
 						</mat-error>
 						<!-- <control-messages [control]="vehicleRegistrationForm.get('wardZoneMst').get('wardzoneId')">
 						</control-messages> -->
