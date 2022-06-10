@@ -68,7 +68,7 @@
 							placeholder="{{'vehicle_no' | translate: translateKey}}">
 						<control-messages [control]="vehicleRegistrationForm.get('vehicleNo')"></control-messages>
 					</mat-form-field>
-					
+
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" type="text" maxlength="50" formControlName="registrationNo"
 							appMaskRegistrationNumVt #registrationNo [value]="registrationNo.value.toUpperCase()"
@@ -204,8 +204,11 @@
 								{{wardNo.wardzoneName}}
 							</ng-option>
 						</ng-select>
-						<control-messages [control]="vehicleRegistrationForm.get('wardZoneMst').get('wardzoneId')">
-						</control-messages>
+						<mat-error *ngIf="vehicleRegistrationForm.get('wardZoneMst').touched && vehicleRegistrationForm.get('wardZoneMst').get('wardzoneId').value == null">
+							{{"Enter the Ward Number"}}
+						</mat-error>
+						<!-- <control-messages [control]="vehicleRegistrationForm.get('wardZoneMst').get('wardzoneId')">
+						</control-messages> -->
 					</div>
 
 
