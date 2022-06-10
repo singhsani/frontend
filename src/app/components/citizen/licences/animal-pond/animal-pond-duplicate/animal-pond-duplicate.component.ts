@@ -43,7 +43,7 @@ export class AnimalPondDuplicateComponent implements OnInit {
 	// serach api variable
 	serachLicenceObj = {
 		isDisplayDuplicateLicenceForm: <boolean>false,
-		searchLicenceNumber:""
+		searchLicenceNumber: ""
 	}
 
 	/**
@@ -67,14 +67,14 @@ export class AnimalPondDuplicateComponent implements OnInit {
 			})
 	}
 
-    /**
-     * @param fb - Declare FormBuilder property.
-     * @param validationError - Declare validation service property
-     * @param formService - Declare form service property 
-     * @param uploadFileService - Declare upload file service property.
-     * @param commonService - Declare sweet alert.
+	/**
+	 * @param fb - Declare FormBuilder property.
+	 * @param validationError - Declare validation service property
+	 * @param formService - Declare form service property 
+	 * @param uploadFileService - Declare upload file service property.
+	 * @param commonService - Declare sweet alert.
 	* @param toastrService - Show massage with timer.
-     */
+	 */
 	constructor(
 		private fb: FormBuilder,
 		private validationService: ValidationService,
@@ -112,9 +112,9 @@ export class AnimalPondDuplicateComponent implements OnInit {
 	}
 
 	/**
-     * This method is use to create new record for citizen.
-     * @param searchData: exciting licence number data
-     */
+	 * This method is use to create new record for citizen.
+	 * @param searchData: exciting licence number data
+	 */
 	createRecordPatchSerachData(searchData: any) {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		this.formService.createFormData().subscribe(res => {
@@ -214,10 +214,10 @@ export class AnimalPondDuplicateComponent implements OnInit {
 				code: [null]
 			}),
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30)]],
-			holderMiddleName: [null,[Validators.maxLength(30)]],
+			holderMiddleName: [null, [Validators.maxLength(30)]],
 			holderLastName: [null, [Validators.required, Validators.maxLength(30)]],
 			holderFirstNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
-			holderMiddleNameGuj: [null,[Validators.maxLength(30)]],
+			holderMiddleNameGuj: [null, [Validators.maxLength(30)]],
 			holderLastNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
 
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
@@ -237,7 +237,7 @@ export class AnimalPondDuplicateComponent implements OnInit {
 			noOfCopies: [1, [Validators.required]],
 			/* Step 4 controls start*/
 			attachments: [],
-			businessType:this.fb.group({
+			businessType: this.fb.group({
 				code: [null, Validators.required]
 			})
 			/* Step 4 controls end */
@@ -245,12 +245,12 @@ export class AnimalPondDuplicateComponent implements OnInit {
 	}
 
 	/**
-     * Method is used to set data value to upload method.
-     * @param indentifier - file identifier
-     * @param labelName - file label name.
-     * @param formPart - file form part
-     * @param variableName - file variable name.
-     */
+	 * Method is used to set data value to upload method.
+	 * @param indentifier - file identifier
+	 * @param labelName - file label name.
+	 * @param formPart - file form part
+	 * @param variableName - file variable name.
+	 */
 	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
 		this.uploadModel = {
 			fieldIdentifier: indentifier.toString(),
@@ -262,10 +262,10 @@ export class AnimalPondDuplicateComponent implements OnInit {
 		return this.uploadModel;
 	}
 
-    /**
-     * This method required for final form submition.
-     * @param flag - flag of invalid control.
-     */
+	/**
+	 * This method required for final form submition.
+	 * @param flag - flag of invalid control.
+	 */
 	handleErrorsOnSubmit(flag) {
 
 		let step0 = 23;
@@ -293,7 +293,14 @@ export class AnimalPondDuplicateComponent implements OnInit {
 		this.tabIndex = evt;
 	}
 
-
+	changeNoOfCopies(event) {
+		debugger;
+		if (event.target.value < 1) {
+			this.animalPondDuplicateForm.get('noOfCopies').setValue(1);
+			this.commonService.openAlert('Warning', 'No. Of Copies Zero Not allowed', 'warning');
+			return;
+		}
+	}
 
 }
 

@@ -2,9 +2,11 @@
 
 <mat-card [hidden]="serachLicenceObj.isDisplayDuplicateLicenceForm" class="mt-4 formClass">
   <mat-form-field class="col-md-10">
-    <input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}" [(ngModel)]="serachLicenceObj.searchLicenceNumber">
+    <input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}"
+      [(ngModel)]="serachLicenceObj.searchLicenceNumber">
   </mat-form-field>
-  <button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary" (click)="searchLicence()">{{'search'
+  <button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary"
+    (click)="searchLicence()">{{'search'
     |
     translate:translateKey}}</button>
 </mat-card>
@@ -21,7 +23,8 @@
 
         <div class="row">
           <mat-form-field class="col-md-4">
-            <input matInput readonly required placeholder="{{'license_no' | translate:translateKey}}" formControlName="refNumber">
+            <input matInput readonly required placeholder="{{'license_no' | translate:translateKey}}"
+              formControlName="refNumber">
             <control-messages [control]="animalPondDuplicateForm.get('refNumber')"></control-messages>
           </mat-form-field>
           <!-- <mat-form-field class="col-md-4">
@@ -29,17 +32,15 @@
             <control-messages [control]="animalPondDuplicateForm.get('licenseIssueDate')"></control-messages>
           </mat-form-field> -->
           <mat-form-field class="col-md-4">
-						<input matInput  disabled readonly autocomplete="off" appDate
-							[matDatepicker]="DateOflicenseIssueDate" formControlName="licenseIssueDate"
-							
-							placeholder="{{ 'issue_date' | translate:translateKey }}">
-						<mat-datepicker-toggle matSuffix [for]="DateOflicenseIssueDate"></mat-datepicker-toggle>
-						<mat-datepicker touchUi="true" #DateOflicenseIssueDate></mat-datepicker>
-						<div align="end" class="default-show-hint mat-hint mat-right">
-							{{licenseConfiguration.DATE_HINT_MSG}}</div>
-						<control-messages [control]="animalPondDuplicateForm.get('licenseIssueDate')">
-						</control-messages>
-					</mat-form-field>
+            <input matInput disabled readonly autocomplete="off" appDate [matDatepicker]="DateOflicenseIssueDate"
+              formControlName="licenseIssueDate" placeholder="{{ 'issue_date' | translate:translateKey }}">
+            <mat-datepicker-toggle matSuffix [for]="DateOflicenseIssueDate"></mat-datepicker-toggle>
+            <mat-datepicker touchUi="true" #DateOflicenseIssueDate></mat-datepicker>
+            <div align="end" class="default-show-hint mat-hint mat-right">
+              {{licenseConfiguration.DATE_HINT_MSG}}</div>
+            <control-messages [control]="animalPondDuplicateForm.get('licenseIssueDate')">
+            </control-messages>
+          </mat-form-field>
         </div>
 
         <div class="row">
@@ -50,21 +51,23 @@
             <control-messages [control]="animalPondDuplicateForm.get('personType').get('code')"></control-messages>
           </div>
           <mat-form-field class="col-md-2">
-            <input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
-              placeholder="{{'holder_firstname' | translate:translateKey}}" formControlName="holderFirstName"
-              appGujInputSource targetElement="holderFirstNameGuj" [form]="animalPondDuplicateForm">
+            <input matInput type="text" required maxlength="30" appValidationFields
+              validationFieldsType='onlyNameWithOutSpace' placeholder="{{'holder_firstname' | translate:translateKey}}"
+              formControlName="holderFirstName" appGujInputSource targetElement="holderFirstNameGuj"
+              [form]="animalPondDuplicateForm">
             <control-messages [control]="animalPondDuplicateForm.get('holderFirstName')"></control-messages>
           </mat-form-field>
           <mat-form-field class="col-md-4">
-            <input matInput type="text"  maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
+            <input matInput type="text" maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
               placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleName"
               appGujInputSource targetElement="holderMiddleNameGuj" [form]="animalPondDuplicateForm">
             <control-messages [control]="animalPondDuplicateForm.get('holderMiddleName')"></control-messages>
           </mat-form-field>
           <mat-form-field class="col-md-4">
-            <input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
-              placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastName"
-              appGujInputSource targetElement="holderLastNameGuj" [form]="animalPondDuplicateForm">
+            <input matInput type="text" required maxlength="30" appValidationFields
+              validationFieldsType='onlyNameWithOutSpace' placeholder="{{'holder_lastname' | translate:translateKey}}"
+              formControlName="holderLastName" appGujInputSource targetElement="holderLastNameGuj"
+              [form]="animalPondDuplicateForm">
             <control-messages [control]="animalPondDuplicateForm.get('holderLastName')"></control-messages>
           </mat-form-field>
         </div>
@@ -77,24 +80,27 @@
             <control-messages [control]="animalPondDuplicateForm.get('holderFirstNameGuj')"></control-messages>
           </mat-form-field>
           <mat-form-field class="col-md-4">
-            <input matInput type="text"  maxlength="90" placeholder="{{'holder_middlename' | translate:translateKey:'gu'}}"
-              formControlName="holderMiddleNameGuj" appGujInputTarget [form]="animalPondDuplicateForm">
+            <input matInput type="text" maxlength="90"
+              placeholder="{{'holder_middlename' | translate:translateKey:'gu'}}" formControlName="holderMiddleNameGuj"
+              appGujInputTarget [form]="animalPondDuplicateForm">
             <control-messages [control]="animalPondDuplicateForm.get('holderMiddleNameGuj')"></control-messages>
           </mat-form-field>
           <mat-form-field class="col-md-4">
-            <input matInput type="text" required maxlength="90" placeholder="{{'holder_lastname' | translate:translateKey:'gu'}}"
-              formControlName="holderLastNameGuj" appGujInputTarget [form]="animalPondDuplicateForm">
+            <input matInput type="text" required maxlength="90"
+              placeholder="{{'holder_lastname' | translate:translateKey:'gu'}}" formControlName="holderLastNameGuj"
+              appGujInputTarget [form]="animalPondDuplicateForm">
             <control-messages [control]="animalPondDuplicateForm.get('holderLastNameGuj')"></control-messages>
           </mat-form-field>
           <div class="col-md-4 ngSelect" formGroupName="businessType">
-						
 
-						<ng-select placeholder="{{'business_type' | translate:translateKey}} *" formControlName="code">
-							<ng-option *ngFor="let type of ANIMAL_POND_STATUS_OF_BUSINESS" [value]="type.code">{{type.name}}</ng-option>
-						</ng-select>
-						<control-messages [control]="animalPondDuplicateForm.get('businessType').get('code')">
-						</control-messages>
-					</div>
+
+            <ng-select placeholder="{{'business_type' | translate:translateKey}} *" formControlName="code">
+              <ng-option *ngFor="let type of ANIMAL_POND_STATUS_OF_BUSINESS" [value]="type.code">{{type.name}}
+              </ng-option>
+            </ng-select>
+            <control-messages [control]="animalPondDuplicateForm.get('businessType').get('code')">
+            </control-messages>
+          </div>
         </div>
         <!-- /gujarati -->
 
@@ -110,31 +116,38 @@
         </div>
 
         <mat-form-field class="col-md-4">
-          <input matInput OnlyNumber minlength="11" maxlength="11" formControlName="holderTelephoneNo" placeholder="{{'holder_telephone_no' | translate:translateKey}}">
+          <input matInput OnlyNumber minlength="11" maxlength="11" formControlName="holderTelephoneNo"
+            placeholder="{{'holder_telephone_no' | translate:translateKey}}">
           <control-messages [control]="animalPondDuplicateForm.get('holderTelephoneNo')"></control-messages>
         </mat-form-field>
         <mat-form-field class="col-md-4">
-          <input matInput OnlyNumber maxlength="10" formControlName="holderMobileNo" placeholder="{{'holder_mobile_no' | translate:translateKey}}">
+          <input matInput OnlyNumber maxlength="10" formControlName="holderMobileNo"
+            placeholder="{{'holder_mobile_no' | translate:translateKey}}">
           <control-messages [control]="animalPondDuplicateForm.get('holderMobileNo')"></control-messages>
         </mat-form-field>
         <mat-form-field class="col-md-4">
-          <input matInput OnlyNumber maxlength="12" formControlName="holderFaxNo" placeholder="{{'holder_fax_no' | translate:translateKey}}">
+          <input matInput OnlyNumber maxlength="12" formControlName="holderFaxNo"
+            placeholder="{{'holder_fax_no' | translate:translateKey}}">
           <control-messages [control]="animalPondDuplicateForm.get('holderFaxNo')"></control-messages>
         </mat-form-field>
         <mat-form-field class="col-md-4">
-          <input matInput OnlyNumber maxlength="12" formControlName="holderAadharNo" placeholder="{{'holder_aadhar_no' | translate:translateKey}}">
+          <input matInput OnlyNumber maxlength="12" formControlName="holderAadharNo"
+            placeholder="{{'holder_aadhar_no' | translate:translateKey}}">
           <control-messages [control]="animalPondDuplicateForm.get('holderAadharNo')"></control-messages>
         </mat-form-field>
         <mat-form-field class="col-md-4">
-          <input matInput appAlphaNumeric maxlength="10" formControlName="holderPanNo" placeholder="{{'holder_pan_no' | translate:translateKey}}">
+          <input matInput appAlphaNumeric maxlength="10" formControlName="holderPanNo"
+            placeholder="{{'holder_pan_no' | translate:translateKey}}">
           <control-messages [control]="animalPondDuplicateForm.get('holderPanNo')"></control-messages>
         </mat-form-field>
         <mat-form-field class="col-md-4">
-          <input matInput required maxlength="2" OnlyNumber placeholder="{{'no_of_copies' | translate:translateKey}}" formControlName="noOfCopies">
+          <input matInput required maxlength="2" OnlyNumber placeholder="{{'no_of_copies' | translate:translateKey}}"
+            formControlName="noOfCopies" (change)="changeNoOfCopies($event)">
           <control-messages [control]="animalPondDuplicateForm.get('noOfCopies')"></control-messages>
         </mat-form-field>
 
-        <app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFileArray" [form]="animalPondDuplicateForm" (handleErrors)="handleErrorsOnSubmit($event)"
+        <app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFileArray"
+          [form]="animalPondDuplicateForm" (handleErrors)="handleErrorsOnSubmit($event)"
           (tabIndex)="onTabChange($event) " [stepInfo]="{step: 'final', next:0, back:0} "></app-action-bar>
 
       </mat-tab>
