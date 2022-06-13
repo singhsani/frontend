@@ -393,7 +393,7 @@
                             </button>
 
                             <button mat-menu-item *ngIf="(isDownloadLOI(row) && isDownloadDisplay(row))" color="primary"
-                                (click)="getLoi(row)">
+                                (click)="printLOIReceipt(row.serviceDetail.code,row.fileNumber)">
                                 <mat-icon class="m-1" title="Download">cloud_download</mat-icon>
                                 Download
                             </button>
