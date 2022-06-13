@@ -447,6 +447,11 @@ export class FormsActionsService {
 		return this.http.get(`api/loidetail/list?appId=${appId}`);
 	}
 
+	getBase64StringURL(refNumber: string) {
+        this.requestURL = `api/form/${this.apiType}/getLoiDocument/${refNumber}`;
+        return this.http.get(this.requestURL);
+    }
+	
 	saveOfflinePayment(serviceId, paymentData) {
 		this.requestURL = `api/form/${this.apiType}/offlinePayment/${serviceId}`;
 		return this.http.post(this.requestURL, paymentData);

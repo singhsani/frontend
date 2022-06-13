@@ -741,6 +741,30 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	getLoi(row) {
 		console.log("Download LOI", row);
 	}
+
+	printLOIReceipt(apiCode: string, refNumber: string) {
+		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+		this.formService.getBase64StringURL(refNumber).subscribe(res => {
+			if (res.success && res.displayForm) {
+				this.viewBase64File(res.data);
+			} else {
+				this.toastr.error("You will get LOI after department process will be complete");
+			}
+		});
+	}
+
+	viewBase64File(url) {
+		var iframe = "<iframe allowfullscreen border='0' style='margin:-8px' width='100%' height='100%' src='" + url + "'></iframe>"
+		var x = window.open();
+		if (!x || x.closed || typeof x.closed == 'undefined') {
+			this.commonService.openAlert('Pop-up!', 'Please disable your Pop-up blocker and try again.', 'warning');
+			return false;
+		}
+		x.document.open();
+		x.document.write(iframe);
+		x.document.close();
+	}
+
 	loiPayments(row) {
 		this.router.navigate(['/citizen/loi-payments', row.uniqueId, row.id, row.serviceDetail.code]);
 	}
