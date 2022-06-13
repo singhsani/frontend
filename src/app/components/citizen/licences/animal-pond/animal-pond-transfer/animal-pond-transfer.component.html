@@ -134,8 +134,9 @@
 						placeholder="{{'holder_telephone_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="10" formControlName="holderMobileNo"
-						placeholder="{{'holder_mobile_no' | translate:translateKey}}">
+					<input matInput OnlyNumber minlength="10" maxlength="10" formControlName="holderMobileNo"
+						placeholder="{{'holder_mobile_no' | translate:translateKey}} *">
+						<control-messages [control]="animalPondTransferForm.get('holderMobileNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber maxlength="12" formControlName="holderFaxNo"
@@ -143,11 +144,13 @@
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber maxlength="12" formControlName="holderAadharNo"
-						placeholder="{{'holder_aadhar_no' | translate:translateKey}}">
+						placeholder="{{'holder_aadhar_no' | translate:translateKey}} *">
+						<control-messages [control]="animalPondTransferForm.get('holderAadharNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput appAlphaNumeric maxlength="10" formControlName="holderPanNo"
-						placeholder="{{'holder_pan_no' | translate:translateKey}}">
+						placeholder="{{'holder_pan_no' | translate:translateKey}}*">
+						<control-messages [control]="animalPondTransferForm.get('holderPanNo')"></control-messages>
 				</mat-form-field>
 
 				<app-action-bar [form]="animalPondTransferForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="onChangeStatusOfBusiness()"
@@ -302,7 +305,7 @@
 												(click)="editRecord(item)">
 												<mat-icon title="Edit">edit</mat-icon>
 											</button>
-											<button type="submit" [disabled]="item.invalid" *ngIf="item.isEditMode"
+											<button type="submit" [disabled]="item.invalid" *ngIf="item.isEditMode && item.get('animalCount').value !=0"
 												(click)="saveRecord(item)" mat-icon-button color="primary">
 												<mat-icon title="save">save</mat-icon>
 											</button>

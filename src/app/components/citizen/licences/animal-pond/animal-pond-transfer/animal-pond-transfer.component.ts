@@ -384,7 +384,7 @@ export class AnimalPondTransferComponent implements OnInit {
 			holderMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
 			holderAadharNo: [null, [Validators.required, Validators.maxLength(12), Validators.minLength(12)]],
-			holderPanNo: [null, [Validators.required, Validators.maxLength(10)]],
+			holderPanNo: [null, [ValidationService.panValidator, Validators.maxLength(10)]],
 			/* Step 1 controls end */
 
 			/* Step 2 controls start */
