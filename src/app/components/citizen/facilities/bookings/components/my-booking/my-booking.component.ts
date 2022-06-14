@@ -613,9 +613,11 @@ export class MyBookingComponent implements OnInit {
 		}else if(element.status === this.bookingConstant.SCRUTINY){
          if((element.resourceType === "STADIUM" && element.payableServiceType !== 'STADIUM_DEPOSIT') ){
              return true;
+         }else if(element.resourceType === "CHILDREN_THEATER"){
+             return true;
          }else{
-             return false;
-         }
+			 return false;
+		 }
     }
 	// -------------hide cancel button for swimming pool----------
 	if(element.resourceType==="SWIMMING_POOL"){

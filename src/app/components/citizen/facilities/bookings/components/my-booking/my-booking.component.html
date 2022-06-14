@@ -262,11 +262,6 @@
               {{'loi_download' | translate:translateKey}}
             </button>
 
-            <button *ngIf="element.status == bookingConstant.SCRUTINY && ( element.resourceType == 'CHILDREN_THEATER')" mat-menu-item color="primary" (click)="openModal(templateRequestModel, element.scheduleList, element.refNumber,element);">
-              <mat-icon title="Print Receipt" color="primary">cancel</mat-icon>
-              {{'cancel_booking' | translate:translateKey}}
-            </button>
-
             <button
               *ngIf="(element.resourceType == 'STADIUM' || element.resourceType == 'CHILDREN_THEATER') && element.status == 'REFUND_APPROVED'"
                 mat-menu-item color="primary" (click)="refundAcknowledgemnt(element.refNumber,element.resourceType)">
