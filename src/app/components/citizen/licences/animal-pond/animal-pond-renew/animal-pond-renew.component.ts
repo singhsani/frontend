@@ -385,7 +385,7 @@ export class AnimalPondRenewComponent implements OnInit {
 			holderMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
 			holderAadharNo: [null, [Validators.required, Validators.maxLength(12), Validators.minLength(12)]],
-			holderPanNo: [null, [Validators.required, Validators.maxLength(10)]],
+			holderPanNo: [null, [ValidationService.panValidator, Validators.maxLength(10)]],
 			/* Step 1 controls end */
 
 			/* Step 2 controls start */
@@ -693,7 +693,7 @@ export class AnimalPondRenewComponent implements OnInit {
 	 * this method is use for check validate dynamic attachment for employee family list , person occupying list and Partner list
 	 */
 	checkDynamicTableValidate(): void {
-
+		
 		try {
 			this.addItem("animalDetails").controls.forEach(animalelement => {
 				if (animalelement.invalid) {
