@@ -249,7 +249,7 @@
 							[hidden] ="animalPondTransferForm.get('relationshipId').value.code === 'DIRECTOR' || animalPondTransferForm.get('relationshipId').value.code === 'AUTHORIZEDSIGNATORY'">
 							<thead>
 								<tr class="mo-d-none">
-									<th *ngIf="animalPondTransferForm.get('canEdit').value">#</th>
+									<th *ngIf="animalPondTransferForm.get('canEdit').value">Sr.No.</th>
 									<th>{{'name' | translate:translateKey}}</th>
 									<th>{{'address' | translate:translateKey}}</th>
 									<th>{{'mobile_no' | translate:translateKey}}</th>
@@ -262,7 +262,7 @@
 									[formGroupName]="indx">
 
 									<td>
-										<div class="d-md-none">#</div>
+										<div class="d-md-none">Sr. No.</div>
 										{{indx+1}}
 									</td>
 
@@ -270,7 +270,7 @@
 										<!-- <div class="d-md-none">{{'name' | translate:translateKey}}</div> -->
 										<div *ngIf="!item.isEditMode">{{item.get('name').value}}</div>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="100" appValidationFields
+											<input matInput maxlength="50" appValidationFields
 												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
 												placeholder="{{'name' | translate:translateKey}}">
 											<control-messages [control]="item.get('name')"></control-messages>
@@ -281,7 +281,7 @@
 										<!-- <div class="d-md-none">{{'address' | translate:translateKey}}</div> -->
 										<div *ngIf="!item.isEditMode">{{item.get('address').value}}</div>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="150" formControlName="address"
+											<input matInput maxlength="100" formControlName="address"
 												placeholder="{{'address' | translate:translateKey}}">
 											<control-messages [control]="item.get('address')">
 											</control-messages>
@@ -362,12 +362,12 @@
 								</tr>
 							</thead>
 
-							<tbody formArrayName="animalDetails">
+							<tbody formArrayName="animalDetails" class="tbody-scroll">
 								<tr *ngFor="let item of animalPondTransferForm.get('animalDetails')['controls']; let indx = index;"
 									[formGroupName]="indx">
 
 									<td>
-										<div class="d-md-none">#</div>
+										<div class="d-md-none">Sr. No.</div>
 										{{indx+1}}
 									</td>
 
