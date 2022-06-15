@@ -98,7 +98,7 @@ export class GatewayResponseComponent implements OnInit {
 						this.responseObj.trans_date = moment(this.responseObj.trans_date).format('DD-MM-YYYY');
 						this.paymentStatus = "SUCCESS";
 						this.postSessionData(this.dispData, 'BILLDESK', this.responseObj);
-						this.sendEventForMail(this.refNumber, this.paybleServiceType);
+						//this.sendEventForMail(this.refNumber, this.responseObj.payableServiceType);
 					} else {
 						this.responseObj.mer_amount = this.responseObj.txnAmount;
 						this.paidAmount = Math.floor(this.responseObj.mer_amount);
@@ -252,6 +252,7 @@ export class GatewayResponseComponent implements OnInit {
 				this.formService.createPayment(payData).subscribe(payResp => {
 					const payRespData = payResp.data.responseData;
 					this.serviceType = payResp.data.responseData.payableServiceType;
+					debugger;
 					//	This methods are used to send SMS and Email ater booking payment for Amphi Theater as
 					//  discussed with B A team.It can be applied for all module letter.
 					if (payRespData.payableServiceType == "AMPHI_FEES") {
@@ -263,6 +264,7 @@ export class GatewayResponseComponent implements OnInit {
 					if (payRespData.fileStatus == "PAYMENT_RECEIVED") {
 						this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(payRespData.serviceDetail.code);
 						this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
+						  debugger;
 							if (res) {
 								if (this.formService.apiType == 'APLicense') {
 									setTimeout(() => {
@@ -279,7 +281,9 @@ export class GatewayResponseComponent implements OnInit {
 									this.interVal();
 								}
 							}
+
 						});
+
 					}
 					// if (payRespData.status == "DEPOSIT_REQUIRED") { //for booking module
 					else {
@@ -289,6 +293,8 @@ export class GatewayResponseComponent implements OnInit {
 
 						this.interVal();
 					}
+					/* EMAIL */
+          this.sendEventForMail(this.refNumber, this.serviceType);
 				},
 					err => {
 						this.toastr.error('Internal server error');
@@ -441,11 +447,14 @@ export class GatewayResponseComponent implements OnInit {
 	}
 
 	sendEventForMail(refNumber: any, serviceType: any) {
+	  debugger;
 		if (serviceType == 'ATITHIGRUH_FEES') {
 			this.sendMail(refNumber, "PAYMENT");
 		} else if (serviceType == 'FORM_CHARGES') {
 			this.sendMail(refNumber, "FORMCHARGES");
-		} else {
+		}else if (serviceType == 'ATITHIGURH_DEPOSIT') {
+		  this.sendMail(refNumber, "ATITHIGURHDEPOSIT");
+		}else {
 			this.sendMail(refNumber, "PAYMENT");
 		}
 	}
