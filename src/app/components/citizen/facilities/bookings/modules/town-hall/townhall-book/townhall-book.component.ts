@@ -509,7 +509,9 @@ export class TownHallBookComponent implements OnInit {
         this.townHallApplicationForm.get('applicantName').setValue(resp.data.firstName + ' ' + resp.data.lastName);
         this.townHallApplicationForm.get('emailID').setValue(resp.data.email);
         this.townHallApplicationForm.get('applicantMobile').setValue(resp.data.cellNo);
-      },
+		this.townHallApplicationForm.get('confirmMobile').setValue(resp.data.cellNo);
+		this.townHallApplicationForm.get('confirmEmailID').setValue(resp.data.email);
+	},
       err => {
         this.toster.error("Server Error");
       });
