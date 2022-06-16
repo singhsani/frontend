@@ -535,8 +535,12 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}
 
 		const printReceiptServiceTypeForShopArr = ['SHOP_ESTAB_APPLICATION', 'SHOP_ESTAB_TRANSFER']
-		if ((row.fileStatus == 'SUBMITTED' || row.fileStatus == 'APPROVED' || row.fileStatus == 'REJECTED' || row.fileStatus == 'CANCELLED') && printReceiptServiceTypeForShopArr.indexOf(row.serviceType) >= 0) {
+		if ((row.fileStatus == 'SUBMITTED' || row.fileStatus == 'APPROVED' || row.fileStatus == 'CANCELLED') && printReceiptServiceTypeForShopArr.indexOf(row.serviceType) >= 0) {
 			return true;
+		}
+		if(row.fileStatus == 'REJECTED' && row.serviceType == 'SHOP_ESTAB_TRANSFER')
+		{
+			return false;
 		}
 
 		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'FS_TEMP_STRUCT_NOC') {
