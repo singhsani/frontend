@@ -157,7 +157,7 @@ export class ZooBookingComponent implements OnInit {
   /**
    * Minimum start date.
   */
-  startMinDate = moment(new Date()).toISOString();
+   startMinDate: Date = moment(new Date()).add(1, 'day').toDate();
 
   // Contact Details
 
