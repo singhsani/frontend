@@ -50,7 +50,7 @@ export class NewDrainageConnectionComponent implements OnInit {
   plumberList: any = [];
   limitList = [];
   isOutofLimit: boolean = false;
-  displayedColumns = ['propertyNo', 'ownerName', 'address', "actions"];
+  displayedColumns = ['propertyNo', 'ownerName','primaryProperty', 'address', "actions"];
   dataSource = [];
   isShowPropertyGrid = false;
   waterDrainageConnPropertyDetailsDTOList = [];
@@ -196,6 +196,7 @@ export class NewDrainageConnectionComponent implements OnInit {
               let temojbNonPrimary: any = {
                 'propertyNo': this.newDrainageConnectionForm.get('propertyNo').value,
                 'ownerName': data.body.propertyOwners[0].firstName,
+                'primaryProperty':this.newDrainageConnectionForm.get('primaryProperty').value,
                 'address': data.body.propertyBasic.propertyAddressDTO.propertyAddress
               }
               if (this.dataSource.length === 0) {
@@ -224,6 +225,7 @@ export class NewDrainageConnectionComponent implements OnInit {
               let temojb = {
                 'propertyNo': this.newDrainageConnectionForm.get('propertyNo').value,
                 'ownerName': data.body.propertyOwners[0].firstName,
+                'primaryProperty':this.newDrainageConnectionForm.get('primaryProperty').value,
                 'address': data.body.propertyBasic.propertyAddressDTO.propertyAddress
               }
               this.waterDrainageConnPropertyDetailsDTOList.push(temojb);
@@ -359,6 +361,8 @@ export class NewDrainageConnectionComponent implements OnInit {
       correspondenceAddress: [null],
       waterDrainageConnPropertyDetailsDTOList: this.fb.array([]),
       attachments: [''],
+      landMark: [null],
+      areaName :[null]
     }, {});
   }
 
@@ -371,6 +375,8 @@ export class NewDrainageConnectionComponent implements OnInit {
     this.newDrainageConnectionForm.get('buildingName').setValue(data.buildingName);
     this.newDrainageConnectionForm.get('societyName').setValue(data.societyName);
     this.newDrainageConnectionForm.get('streetName').setValue(data.streetName);
+    this.newDrainageConnectionForm.get('landMark').setValue(data.landMark);
+    this.newDrainageConnectionForm.get('areaName').setValue(data.areaName);
     this.newDrainageConnectionForm.get('pincode').setValue(data.pincode);
     this.newDrainageConnectionForm.get('postalAddress').setValue(data.postalAddress);
     this.newDrainageConnectionForm.get('correspondenceAddress').setValue(data.propertyAddress);
@@ -388,11 +394,20 @@ export class NewDrainageConnectionComponent implements OnInit {
     if (this.newDrainageConnectionForm.get('societyName').value) {
       fullAddress = fullAddress + this.newDrainageConnectionForm.get('societyName').value +',';
     }
+    // if (this.newDrainageConnectionForm.get('streetName').value) {
+    //   fullAddress = fullAddress + this.newDrainageConnectionForm.get('streetName').value + ','+this.searchPropertyData.landMark + ',' + this.searchPropertyData.areaName+",";
+    // }
     if (this.newDrainageConnectionForm.get('streetName').value) {
-      fullAddress = fullAddress + this.newDrainageConnectionForm.get('streetName').value + ','+this.searchPropertyData.landMark + ',' + this.searchPropertyData.areaName+",";
+      fullAddress = fullAddress + this.newDrainageConnectionForm.get('streetName').value +',';
+    }
+    if (this.newDrainageConnectionForm.get('landMark').value) {
+      fullAddress = fullAddress + this.newDrainageConnectionForm.get('landMark').value +',';
+    }
+    if (this.newDrainageConnectionForm.get('areaName').value) {
+      fullAddress = fullAddress + this.newDrainageConnectionForm.get('areaName').value +',';
     }
     if (this.newDrainageConnectionForm.get('pincode').value) {
-      fullAddress = fullAddress+' Pincode: '+ this.newDrainageConnectionForm.get('pincode').value +',';
+      fullAddress = fullAddress+' Pincode: '+ this.newDrainageConnectionForm.get('pincode').value;
     }
     
 
@@ -414,7 +429,8 @@ export class NewDrainageConnectionComponent implements OnInit {
       fullAddress =  address2 + '\n' + fullAddress;
     }
     if (fullAddress != '' && address2 != '')
-      fullAddress = fullAddress.substring(0, fullAddress.length - 2);
+      // fullAddress = fullAddress.substring(0, fullAddress.length - 2);
+      fullAddress = fullAddress.substring(0, fullAddress.length);
       this.newDrainageConnectionForm.get('correspondenceAddress').setValue(fullAddress);
     
   }
