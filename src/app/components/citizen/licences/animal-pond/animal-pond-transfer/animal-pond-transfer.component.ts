@@ -431,8 +431,8 @@ export class AnimalPondTransferComponent implements OnInit {
 		return this.fb.group({
 			serviceFormId: this.formId,
 			id: data.id ? data.id : null,
-			name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(100)]],
-			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(150)]],
+			name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(50)]],
+			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(100)]],
 			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.maxLength(10), Validators.minLength(10)]],
 			personType: "APL_PERSON"
 		})

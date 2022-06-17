@@ -196,7 +196,7 @@ export class FileUploadComponent implements OnInit {
 						this.uploadFileService.processFileToDMSServer(formData, setProgressBar => {
 							this.progress.percentage = setProgressBar;
 						}, successResponse => {
-							this.tostr.success(this.uploadModel.labelName ? this.uploadModel.labelName : this.uploadModel.documentLabelEn + " successfully uploaded", "File Uploaded");
+							this.tostr.success(this.uploadModel.labelName ? this.uploadModel.labelName : this.uploadModel.documentLabelEn + " uploaded successfully ", "File Uploaded");
 							this.canUpload = true;
 							this.id = successResponse.data.id;
 							this.type = successResponse.data.mimeType;
@@ -209,7 +209,7 @@ export class FileUploadComponent implements OnInit {
 						this.uploadFileService.processFileToServer(formData, setProgressBar => {
 							this.progress.percentage = setProgressBar;
 						}, successResponse => {
-							this.tostr.success(this.uploadModel.labelName ? this.uploadModel.labelName : this.uploadModel.documentLabelEn + " successfully uploaded", "File Uploaded");
+							this.tostr.success(this.uploadModel.labelName ? this.uploadModel.labelName : this.uploadModel.documentLabelEn + " uploaded successfully ", "File Uploaded");
 							this.canUpload = true;
 							this.id = successResponse.data.id;
 							this.type = successResponse.data.mimeType;
@@ -256,7 +256,7 @@ export class FileUploadComponent implements OnInit {
 						this.uploadFileService.processFileToDMSServer(formData, setProgressBar => {
 							this.progress.percentage = setProgressBar;
 						}, successres => {
-							this.tostr.success(this.uploadModel.labelName ? this.uploadModel.labelName : this.uploadModel.documentLabelEn + " successfully uploaded", "File Uploaded");
+							this.tostr.success(this.uploadModel.labelName ? this.uploadModel.labelName : this.uploadModel.documentLabelEn + " uploaded successfully ", "File Uploaded");
 							this.canUpload = true;
 							this.id = successres.data.id;
 							this.type = successres.data.mimeType;
@@ -419,7 +419,7 @@ export class FileUploadComponent implements OnInit {
 				this.uploadFileService.deleteFile(this.uploadModel.serviceFormId.toString(), this.id).subscribe(
 					(respData: any) => {
 						if (respData.body) {
-							this.tostr.success(this.uploadModel.documentLabelEn + " successfully deleted", "File Deleted");
+							this.tostr.success(this.uploadModel.documentLabelEn + " successfully deleted ", "File Deleted");
 							this.canUpload = false;
 							this.fileName = '';
 							this.getFile = '';
@@ -432,7 +432,7 @@ export class FileUploadComponent implements OnInit {
 				this.uploadFileService.deleteFile(this.form.get('serviceFormId').value.toString(), this.id).subscribe(
 					(respData: any) => {
 						if (respData.body) {
-							this.commonService.successAlert("File Deleted", this.uploadModel.documentLabelEn + " successfully deleted", "success");
+							this.commonService.successAlert("File Deleted", this.uploadModel.documentLabelEn + " deleted successfully ", "success");
 							this.canUpload = false;
 							this.fileName = '';
 							this.getFile = '';

@@ -521,7 +521,6 @@ export class TownHallBookComponent implements OnInit {
   }
 
   getClass(shift) {
-    // debugger;
     let shiftCount = shift.length;
     let availableCount = shift.filter(s => s.slotStatus === "AVAILABLE").length;
     let bookedCount = shift.filter(s => s.slotStatus === "BOOKED").length;

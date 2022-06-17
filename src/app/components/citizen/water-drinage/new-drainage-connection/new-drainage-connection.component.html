@@ -287,6 +287,12 @@
 								<label>{{row.ownerName}}</label>
 							</mat-cell>
 						</ng-container>
+						<ng-container matColumnDef="primaryProperty">
+							<mat-header-cell *matHeaderCellDef> Primary Property</mat-header-cell>
+							<mat-cell *matCellDef="let row">
+								<label>{{row.primaryProperty?'YES':'NO'}}</label>
+							</mat-cell>
+						</ng-container>
 						<ng-container matColumnDef="address">
 							<mat-header-cell *matHeaderCellDef mat-header-cell mat-sort-header> Address </mat-header-cell>
 							<mat-cell *matCellDef="let row">
@@ -294,8 +300,7 @@
 							</mat-cell>
 						</ng-container>
 						<ng-container matColumnDef="actions">
-							<mat-header-cell *matHeaderCellDef>
-							</mat-header-cell>
+							<mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
 							<mat-cell *matCellDef="let row;let i = index;">
 								<button mat-icon-button color="warn" focusable="false" (click)="deleteProperty(i)">
 									<mat-icon>clear</mat-icon>
@@ -366,7 +371,21 @@
 						</control-messages>
 					</mat-form-field>
 				</div>
-
+				<!--Landmark and  Area-->
+				<div class="row">
+					<mat-form-field class="col-md-6">
+						<input matInput formControlName="landMark" (input)="onChangeAddress()"
+						required placeholder="{{'land_Mark' | translate:translateKey}}">
+						<control-messages [control]="newDrainageConnectionForm.get('landMark')">
+						</control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-6">
+						<input matInput required placeholder="{{'area_name' | translate:translateKey}}"
+							type="text" formControlName="areaName" (input)="onChangeAddress()">
+						<control-messages [control]="newDrainageConnectionForm.get('areaName')">
+						</control-messages>
+					</mat-form-field>
+				</div> 
 				<div class="row">
 					<mat-form-field class="col-md-6">
 						<input matInput OnlyNumber required maxlength="6" formControlName="pincode"
@@ -409,7 +428,7 @@
 			<!-- step 4 Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
-					<div>{{'upload' | translate: translateKey}}</div>
+					<div>{{'uploadDocument' | translate:translateKey}}</div>
 				</ng-template>
 				<!-- <div class="alert alert-warning">
 								{{'note' | translate:translateKey}} :

@@ -400,8 +400,8 @@ export class AnimalPondNewComponent implements OnInit {
 		return this.fb.group({
 			serviceFormId: this.formId,
 			id: data.id ? data.id : null,
-			name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(100)]],
-			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(150)]],
+			name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(50)]],
+			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(100)]],
 			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.maxLength(10), Validators.minLength(10)]],
 			personType: "APL_PERSON"
 		})
@@ -419,7 +419,7 @@ export class AnimalPondNewComponent implements OnInit {
 			animalType: this.fb.group({
 				code: [data.animalType ? (data.animalType.code ? data.animalType.code : null) : null, Validators.required]
 			}),
-			animalCount: [data.animalCount ? data.animalCount : 0, [Validators.minLength(1), Validators.required]],
+			animalCount: [data.animalCount ? data.animalCount : 1, [Validators.minLength(1), Validators.required]],
 		})
 	}
 
@@ -587,6 +587,7 @@ export class AnimalPondNewComponent implements OnInit {
 	* @param row: row index
 	*/
 	saveRecord(row: any) {
+		console.log("saveR",row.valid);
 		if (row.valid) {
 			row.isEditMode = false;
 			row.newRecordAdded = false;
@@ -720,6 +721,15 @@ export class AnimalPondNewComponent implements OnInit {
         this.onChangeStatusOfBusiness();
 	}
 
+	validateNo(e) {
+		debugger
+		console.log(e.target.value);
+		if (e.charCode < 49 || e.charCode > 57){
+			return true;
+	}
+	return false
+	}
+
 
 
 	dummyJSON:any= {
@@ -773,7 +783,7 @@ export class AnimalPondNewComponent implements OnInit {
 		  "cityGuj": "વડોદરા",
 		  "countryGuj": "ભારત"
 		},
-		"holderTelephoneNo": "4354354354",
+		"holderTelephoneNo": "43543543541",
 		"holderMobileNo": "4354354354",
 		"holderFaxNo": null,
 		"holderAadharNo": "435443543543",

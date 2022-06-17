@@ -15,6 +15,7 @@ import { ProfessionalTaxService } from '../../../../../core/services/citizen/dat
 
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
 
 @Component({
 	selector: 'app-prc-registration',
@@ -68,6 +69,9 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	tabIndex: number = 0;
 	modalRef: BsModalRef;
 
+	apiCode: string = '';
+	serviceFormId: number;
+
 	constructor(
 		private fb: FormBuilder,
 		private router: Router,
@@ -75,13 +79,21 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 		private toastr: ToastrService,
 		private modalService: BsModalService,
 		private profeService: ProfessionalTaxService,
-		private commonService: CommonService
+		private commonService: CommonService,
+		private formService: FormsActionsService,
 	) {
 	}
 
 	ngOnInit() {
-
 		this.prcRegFormControls();
+
+		// this.route.paramMap.subscribe(param => {
+		// 	this.apiCode = param.get('apiCode');
+		// 	this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+		// 	this.serviceFormId = Number(param.get('id'));
+		// 	this.forPreview();
+		// });
+
 		this.getDataFromLookups();
 		this.getEmployeeSlabRate();
 		this.getAllConstitution();
@@ -89,6 +101,25 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 		this.getAllWardNos();
 
 		this.searchInput.focus();
+	}
+
+	forPreview() {
+		this.formService.getFormData(this.serviceFormId).subscribe(res => {
+			this.prcRegForm.patchValue(res);
+			this.prcRegForm.get('rcDate').disable();
+			this.empDetailsListArray = _.orderBy(res.employeeSalarySummary, ['year', (el) => (this.monthArray.indexOf(el.month))], ["asc", "asc"]);
+
+			/* Set the slab name in outer object i.e slabDetails*/
+			if (this.empDetailsListArray.length > 0) {
+				for (let i = 0; i < this.empDetailsListArray.length; i++) {
+					for (let k = 0; k < this.empDetailsListArray[i].slabDetails.length; k++) {
+						this.empDetailsListArray[i].slabDetails[k].name = this.empDetailsListArray[i].slabDetails[k].slab.name;
+					}
+				}
+			}
+			this.isPRCExist = true;
+			this.prcRegForm.disable();
+		});
 	}
 
 	ngOnDestroy() {
