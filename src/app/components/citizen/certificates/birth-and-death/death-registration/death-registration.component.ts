@@ -180,7 +180,6 @@ export class DeathRegistrationComponent implements OnInit {
 			/**
 		     * if appId not found navigate to dashboard
 		     */
-        // debugger;
 			if (!this.appId) {
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 			} else {

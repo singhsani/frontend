@@ -294,7 +294,6 @@ export class AnimalPondDuplicateComponent implements OnInit {
 	}
 
 	changeNoOfCopies(event) {
-		debugger;
 		if (event.target.value < 1) {
 			this.animalPondDuplicateForm.get('noOfCopies').setValue(1);
 			this.commonService.openAlert('Warning', 'No. Of Copies Zero Not allowed', 'warning');

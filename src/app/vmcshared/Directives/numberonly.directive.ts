@@ -82,7 +82,6 @@ export class NumberOnlyDirective {
       allowedKeys.push('-');
     }
 
-    //debugger;
     // allow some non-numeric characters
     if (allowedKeys.indexOf(key) != -1 ||
       // Allow: Ctrl+A and Command+A
@@ -94,7 +93,6 @@ export class NumberOnlyDirective {
       // Allow: Ctrl+X and Command+X
       (key == 'x' && controlOrCommand)) {
       // let it happen, don't do anything
-      // debugger;
       return;
     }
 
@@ -102,7 +100,6 @@ export class NumberOnlyDirective {
     this.previousValue = originalValue;
 
     // allow number characters only
-    //  debugger;
     if (this.onlyTwoDecimal) {
       let current: string = this.hostElement.nativeElement.value;
       let next: string = current.concat(e.key);
