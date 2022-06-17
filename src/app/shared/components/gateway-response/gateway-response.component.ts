@@ -203,7 +203,7 @@ export class GatewayResponseComponent implements OnInit {
 			payData.amount = data.txnAmount;
 		}
 
-		if (data.payableServiceType == "PROFESSIONAL_TAX") {
+		if (data.payableServiceType == "PAY_PROF_TAX") {
 			payData.amount = Number(data.amount);
 			this.formService.saveTaxPaymentDetails(payData).subscribe(res => {
 				if (res && res.data) {
