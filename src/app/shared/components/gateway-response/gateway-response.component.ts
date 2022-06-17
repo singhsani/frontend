@@ -252,7 +252,6 @@ export class GatewayResponseComponent implements OnInit {
 				this.formService.createPayment(payData).subscribe(payResp => {
 					const payRespData = payResp.data.responseData;
 					this.serviceType = payResp.data.responseData.payableServiceType;
-					debugger;
 					//	This methods are used to send SMS and Email ater booking payment for Amphi Theater as
 					//  discussed with B A team.It can be applied for all module letter.
 					if (payRespData.payableServiceType == "AMPHI_FEES") {
@@ -264,7 +263,6 @@ export class GatewayResponseComponent implements OnInit {
 					if (payRespData.fileStatus == "PAYMENT_RECEIVED") {
 						this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(payRespData.serviceDetail.code);
 						this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
-						  debugger;
 							if (res) {
 								if (this.formService.apiType == 'APLicense') {
 									setTimeout(() => {
@@ -447,7 +445,6 @@ export class GatewayResponseComponent implements OnInit {
 	}
 
 	sendEventForMail(refNumber: any, serviceType: any) {
-	  debugger;
 		if (serviceType == 'ATITHIGRUH_FEES') {
 			this.sendMail(refNumber, "PAYMENT");
 		} else if (serviceType == 'FORM_CHARGES') {
