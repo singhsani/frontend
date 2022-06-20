@@ -98,7 +98,7 @@ export class GatewayResponseComponent implements OnInit {
 						this.responseObj.trans_date = moment(this.responseObj.trans_date).format('DD-MM-YYYY');
 						this.paymentStatus = "SUCCESS";
 						this.postSessionData(this.dispData, 'BILLDESK', this.responseObj);
-						this.sendEventForMail(this.refNumber, this.paybleServiceType);
+						//this.sendEventForMail(this.refNumber, this.responseObj.payableServiceType);
 					} else {
 						this.responseObj.mer_amount = this.responseObj.txnAmount;
 						this.paidAmount = Math.floor(this.responseObj.mer_amount);
@@ -279,7 +279,9 @@ export class GatewayResponseComponent implements OnInit {
 									this.interVal();
 								}
 							}
+
 						});
+
 					}
 					// if (payRespData.status == "DEPOSIT_REQUIRED") { //for booking module
 					else {
@@ -289,6 +291,8 @@ export class GatewayResponseComponent implements OnInit {
 
 						this.interVal();
 					}
+					/* EMAIL */
+          this.sendEventForMail(this.refNumber, this.serviceType);
 				},
 					err => {
 						this.toastr.error('Internal server error');
@@ -445,7 +449,9 @@ export class GatewayResponseComponent implements OnInit {
 			this.sendMail(refNumber, "PAYMENT");
 		} else if (serviceType == 'FORM_CHARGES') {
 			this.sendMail(refNumber, "FORMCHARGES");
-		} else {
+		}else if (serviceType == 'ATITHIGURH_DEPOSIT') {
+		  this.sendMail(refNumber, "ATITHIGURHDEPOSIT");
+		}else {
 			this.sendMail(refNumber, "PAYMENT");
 		}
 	}

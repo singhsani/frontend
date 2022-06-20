@@ -144,7 +144,7 @@
 
             <div *ngIf="(element.status != bookingConstant.SUBMITTED)">
 
-              <button *ngIf="element.status == bookingConstant.PAYMENT_REQUIRED || (element.resourceType === 'TOWNHALL' && element.status == bookingConstant.DEPOSIT_REQUIRED)" mat-menu-item color="primary"
+              <button *ngIf="element.status == bookingConstant.PAYMENT_REQUIRED || ((element.resourceType === 'TOWNHALL' || element.resourceType === 'ATITHIGRUH')  && element.status == bookingConstant.DEPOSIT_REQUIRED)" mat-menu-item color="primary"
                       (click)="paymentRequest(element)">
                 <mat-icon title="Print Receipt" color="primary">payment</mat-icon>
                 {{'make_payment' | translate:translateKey}}
@@ -190,6 +190,14 @@
               <div *ngIf="showTownhallDepositReceiptBtn(element)">
                 <button  mat-menu-item color="primary"
                          (click)="printReceipt(element, bookingConstant.TOWNHALL_DEPOSIT)">
+                  <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+                  {{'deposit_receipt' | translate:translateKey}}
+                </button>
+              </div>
+
+              <div *ngIf="showAtithigruhDepositReceiptBtn(element)">
+                <button  mat-menu-item color="primary"
+                         (click)="printReceipt(element, bookingConstant.ATITHIGURH_DEPOSIT)">
                   <mat-icon title="Print Receipt" color="primary">print</mat-icon>
                   {{'deposit_receipt' | translate:translateKey}}
                 </button>
