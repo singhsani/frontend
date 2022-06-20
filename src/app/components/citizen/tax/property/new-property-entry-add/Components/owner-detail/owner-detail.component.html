@@ -116,8 +116,8 @@
         </div>
     </div>
     <div class="row mt-4" *ngIf="isShowOwnerTable">
-        <div class="col-md-12">
-            <div class="table-responsive">
+        <div class="col-md-12" style="overflow:auto;">
+            <div class="table-responsive" >
                 <table mat-table [dataSource]="dataSource" matSort class="width100 w-100">
                 <ng-container matColumnDef="titleName">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
@@ -158,7 +158,7 @@
                             (click)="editOwner(element)">
                             <mat-icon>edit</mat-icon>
                         </button>
-                        <button mat-icon-button title="Delete" color="warn" type="button"
+                        <button mat-icon-button title="Delete" class="btn-width-auto del-btn-style" color="warn" type="button"
                             (click)="deleteOwner(element)">
                             <mat-icon>delete_forever</mat-icon>
                         </button>
