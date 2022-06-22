@@ -705,15 +705,18 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	 * This method is use to show For Query Raise remarks.
 	 */
 	remarksDisplayForQueryRaise(data) {
-
+    
 		this.queryrraiseRemarks = data.remarks;
 		this.statusHeader = data.fileStatusName;
 		//this.queryrraiseRemarks = 'Remark here';
-		// this.queryrraisereason = data.reason;
+		this.queryrraisereason = data.reason;
 		//this.queryrraisereason = 'Remark reason here';
 	}
 	getInnerHTMLForRemark() {
 		return `<b>Remarks :</b> ${this.queryrraiseRemarks}`;
+	}
+	getInnerHTMLForReason() {
+		return `<b>Reason :</b> ${this.queryrraisereason}`;
 	}
 	copyInnerHTMLForRemark(val: string) {
 		let selBox = document.createElement('textarea');
