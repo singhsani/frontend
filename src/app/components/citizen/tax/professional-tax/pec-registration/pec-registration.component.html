@@ -44,7 +44,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" appValidationFields validationFieldsType="onlyNameWithSpace"
+						<input matInput appBlockCopyPaste autocomplete="off" appValidationFields validationFieldsType="onlyNameWithSpace"
 							maxlength="100" formControlName="applicantFullName" type="text"
 							placeholder="{{'applicant_full_name' | translate: translateKey}}" required>
 						<control-messages [control]="pecRegForm.get('applicantFullName')"></control-messages>
