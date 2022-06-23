@@ -298,7 +298,7 @@ export class ValidationService {
     // gst number validation 
     static gstinValidator(control: FormControl) {
         if (control.value) {
-            const matches = control.value.match(/\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/g);
+            const matches = control.value.match(/\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z-0-9]{1}[Z]{1}[A-Z-0-9]{1}/g);
             return matches ? null : { 'invalidGstin': true };
         } else {
             return null;
