@@ -14,7 +14,8 @@ import { PrcRegistrationComponent } from './prc-registration/prc-registration.co
 
 const routes: Routes = [
 	{ path: 'pec-registration/:id/:apiCode', component: PecRegistrationComponent, canActivate: [AuthGuard] },
-	{ path: 'prc-registration', component: PrcRegistrationComponent, canActivate: [AuthGuard] }
+	{ path: 'prc-registration', component: PrcRegistrationComponent, canActivate: [AuthGuard] },
+	{ path: 'prc-registration/:id/:apiCode', component: PrcRegistrationComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
