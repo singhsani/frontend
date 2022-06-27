@@ -174,9 +174,9 @@
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <input trim="blur" mask-census-no maxlength="17" minlength="17" matInput
+                    <input trim="blur"  maxlength="17" minlength="17" matInput
                         placeholder="{{'census_no' | translate:translateKey }} " (input)="onChangeAddress()" name="cityCensusNo"
-                        #CityCensusNo="ngModel" [(ngModel)]="addressModel.propertyAddressDTO.cityCensusNo">
+                        #CityCensusNo="ngModel" [(ngModel)]="addressModel.propertyAddressDTO.cityCensusNo" (keydown)="onKeyDown($event)">
                         <mat-error *ngIf="CityCensusNo.invalid">*Invalid CensusNo.</mat-error>
                 </mat-form-field>
             </div>
