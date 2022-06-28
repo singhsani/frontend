@@ -69,6 +69,7 @@ import { MaskRegistrationNumVtDirective } from './directives/mask-registration-n
 import { PropertyOccupierSearchComponent } from '../vmcshared/component/property-occupier-search/property-occupier-search.component';
 import { YearPickerComponent } from './components/year-picker/year-picker.component';
 import { ApplicantDetailDrainagewaterComponent } from './components/applicant-detail-drainagewater/applicant-detail-drainagewater.component';
+import { GstDirective } from './directives/mask-gst.directive';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -111,7 +112,8 @@ const COMPONENTS = [
 	AppMonthPicker,
 	MaskRegistrationNumVtDirective,
 	YearPickerComponent,
-	ApplicantDetailDrainagewaterComponent
+	ApplicantDetailDrainagewaterComponent,
+	GstDirective
 ]
 
 @NgModule({
@@ -120,7 +122,8 @@ const COMPONENTS = [
 		BankDetailsBookingComponent,
 		MaskRegistrationNumVtDirective,
 		PropertyOccupierSearchComponent,
-		YearPickerComponent
+		YearPickerComponent,
+		GstDirective
 	],
 	imports: [
 		CommonModule,

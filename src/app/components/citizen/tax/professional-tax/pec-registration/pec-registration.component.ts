@@ -180,7 +180,7 @@ export class PecRegistrationComponent implements OnInit {
 			gujaratSalesTax: null,
 			professionalTax: null,
 			companyRegNo: null,
-			gstNo: [null, ValidationService.gstinValidator],
+			gstNo: [null],
 			censusNo: this.fb.array([]),
 
 			// fourth step controls
@@ -312,9 +312,9 @@ export class PecRegistrationComponent implements OnInit {
 		for (let i = 0; i < this.pecRegForm.get('censusNo')['controls'].length; i++) {
 			if (this.pecRegForm.get('censusNo')['controls'][i].invalid) {
 				isValid = false;
-				if(this.isCensusSelected){
+				if (this.isCensusSelected) {
 					this.placeHolderMessage = "Census No is Required";
-				}else{
+				} else {
 					this.placeHolderMessage = "Property No is Required";
 				}
 				this.config.getAllErrors(this.pecRegForm.get('censusNo')['controls'][i]);
@@ -359,6 +359,11 @@ export class PecRegistrationComponent implements OnInit {
 		this.getAllSubEntries(event);
 	}
 
+	onGstNumber(event) {
+		if (event.target.value.length < 15) {
+			this.pecRegForm.get('gstNo').setValue(null);
+		}
+	}
 	/**
 	 * This method is use for set applicable rate from subEnry
 	 * @param event - selected value of subEntry
