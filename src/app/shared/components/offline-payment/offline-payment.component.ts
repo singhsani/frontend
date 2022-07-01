@@ -46,6 +46,7 @@ export class OfflinePaymentComponent implements OnInit, OnChanges {
 
 	wordAmount: any;
 
+	maxDate = new Date();
 	constructor(
 		private session: SessionStorageService,
 		private offlinePaymentService: OfflinePaymentService,

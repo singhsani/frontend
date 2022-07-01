@@ -132,10 +132,11 @@
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber maxlength="11" minlength="11" formControlName="holderTelephoneNo"
 						placeholder="{{'holder_telephone_no' | translate:translateKey}}">
+						<control-messages [control]="animalPondTransferForm.get('holderTelephoneNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber minlength="10" maxlength="10" formControlName="holderMobileNo"
-						placeholder="{{'holder_mobile_no' | translate:translateKey}} *">
+					<input matInput OnlyNumber minlength="10" maxlength="10" required formControlName="holderMobileNo"
+						placeholder="{{'holder_mobile_no' | translate:translateKey}}" >
 						<control-messages [control]="animalPondTransferForm.get('holderMobileNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
@@ -143,13 +144,13 @@
 						placeholder="{{'holder_fax_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="12" formControlName="holderAadharNo"
-						placeholder="{{'holder_aadhar_no' | translate:translateKey}} *">
+					<input matInput OnlyNumber maxlength="12" required formControlName="holderAadharNo"
+						placeholder="{{'holder_aadhar_no' | translate:translateKey}} ">
 						<control-messages [control]="animalPondTransferForm.get('holderAadharNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput appAlphaNumeric maxlength="10" formControlName="holderPanNo"
-						placeholder="{{'holder_pan_no' | translate:translateKey}}*">
+					<input matInput appAlphaNumeric maxlength="10" 	required formControlName="holderPanNo"
+						placeholder="{{'holder_pan_no' | translate:translateKey}} ">
 						<control-messages [control]="animalPondTransferForm.get('holderPanNo')"></control-messages>
 				</mat-form-field>
 
@@ -300,16 +301,16 @@
 										</mat-form-field>
 									</td>
 									<td>
-										<span *ngIf="animalPondTransferForm.get('canEdit').value" class="float-left">
+										 <span *ngIf="animalPondTransferForm.get('canEdit').value" class="float-left">
 											<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
 												(click)="editRecord(item)">
 												<mat-icon title="Edit">edit</mat-icon>
 											</button>
-											<button type="submit" [disabled]="item.invalid" *ngIf="item.isEditMode && item.get('animalCount').value !=0"
+											<button type="submit" [disabled]="item.invalid" *ngIf="item.isEditMode"
 												(click)="saveRecord(item)" mat-icon-button color="primary">
 												<mat-icon title="save">save</mat-icon>
 											</button>
-										</span>
+										</span> 
 										<span *ngIf="animalPondTransferForm.get('canEdit').value">
 											<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
 												(click)="deleteRecord(indx,'relationshipList')">
@@ -355,7 +356,7 @@
 						<table class="table table-striped mb-0 responsiveTableRow">
 							<thead>
 								<tr class="mo-d-none">
-									<th>#</th>
+									<th>Sr. No.</th>
 									<th>{{'animal_type' | translate:translateKey}}</th>
 									<th>{{'animal_count' | translate:translateKey}}</th>
 									<th colspan="2" *ngIf="animalPondTransferForm.get('canEdit').value"></th>

@@ -215,4 +215,10 @@ export class NewPropertyEntryAddService {
       .pipe(map((response: any) => response))
   }
 
+  searchOwnerIsPrimary(propertyBasicVersionId: number,propertyOwnerId,isPrimaryOwner: boolean) {
+    return this.http.get(`${Constants.assessmentModuleApiUrl}owner/checkPropertyOwnerIsPrimary?propertyBasicVersionId=${propertyBasicVersionId}&&propertyOwnerId=${propertyOwnerId}&&isPrimaryOwner=${isPrimaryOwner} `,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
 }

@@ -44,9 +44,9 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" appValidationFields validationFieldsType="onlyNameWithSpace"
-							maxlength="100" formControlName="applicantFullName" type="text"
-							placeholder="{{'applicant_full_name' | translate: translateKey}}" required>
+						<input matInput appBlockCopyPaste autocomplete="off" appValidationFields
+							validationFieldsType="onlyNameWithSpace" maxlength="100" formControlName="applicantFullName"
+							type="text" placeholder="{{'applicant_full_name' | translate: translateKey}}" required>
 						<control-messages [control]="pecRegForm.get('applicantFullName')"></control-messages>
 					</mat-form-field>
 
@@ -158,8 +158,9 @@
 			<mat-tab [label]="stepLable2 | translate: translateKey">
 				<div class="row stepperMinHeight">
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" minlength="9" maxlength="18" OnlyNumber formControlName="bankAccountNo"
-							type="tel" placeholder="{{'bank_account_no' | translate: translateKey}}" required>
+						<input matInput autocomplete="off" minlength="9" maxlength="18" OnlyNumber
+							formControlName="bankAccountNo" type="tel"
+							placeholder="{{'bank_account_no' | translate: translateKey}}" required>
 						<control-messages [control]="pecRegForm.get('bankAccountNo')"></control-messages>
 					</mat-form-field>
 
@@ -200,11 +201,17 @@
 						<control-messages [control]="pecRegForm.get('pancardNo')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-6">
-						<input matInput autocomplete="off" class="capitalCase" maxlength="15" appAlphaNumeric
-							formControlName="gstNo" type="text" placeholder="{{'gst_no' | translate: translateKey}}">
-						<control-messages [control]="pecRegForm.get('gstNo')"></control-messages>
-					</mat-form-field>
+					<div class="col-md-6">
+						<mat-form-field>
+							<input matInput class="capitalCase" autocomplete="off" maxlength="15" appGst
+								formControlName="gstNo" type="text" (change)="onGstNumber($event)"
+								placeholder="{{'gst_no' | translate: translateKey}}">
+							<control-messages [control]="pecRegForm.get('gstNo')"></control-messages>
+						</mat-form-field>
+						<div class="my-mat-hint">
+							<span>GSTIN e.g. 29ABCDE1234F2Z5</span>
+						</div>
+					</div>
 
 					<mat-form-field class="col-md-6">
 						<input matInput autocomplete="off" maxlength="20" appAlphaNumeric

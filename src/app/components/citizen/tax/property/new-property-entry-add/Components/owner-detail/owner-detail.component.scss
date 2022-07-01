@@ -1,6 +1,6 @@
-td.mat-cell {
-  min-width: 118px;
-  padding:  8px 10px 0;
+
+td.mat-cell   {
+  min-width: 150px;
 }
 .mat-horizontal-content-container {
   overflow: inherit !important;
@@ -8,3 +8,8 @@ td.mat-cell {
 
 .mat-expansion-panel.mat-expanded {
   box-shadow: none;}
+
+.del-btn-style{
+  padding: 5px !important;
+  min-width: auto;
+}

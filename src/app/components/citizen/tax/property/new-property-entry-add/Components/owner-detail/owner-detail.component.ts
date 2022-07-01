@@ -150,7 +150,7 @@ export class OwnerDetailComponent implements OnInit {
       this.newNewPropertyEntryAddService.searchEmailIdOwner(this.ownerModel.propertyBasicVersionId, this.ownerModel.emailAddress, this.ownerModel.propertyOwnerId==undefined ? '':this.ownerModel.propertyOwnerId).subscribe(
         (data) => {
           if (data.status === 200) {
-            this.saveOwnerAfterEmailCheck(form);
+            this.saveOwnerAfterIsPrimaryCheck(form);
           }
         },
         (error) => {
@@ -290,6 +290,33 @@ export class OwnerDetailComponent implements OnInit {
 
     //  saveOccupier finish
 
+  }
+
+  saveOwnerAfterIsPrimaryCheck(form: NgForm) {
+    if (form.form.valid) {
+      this.ownerModel.propertyBasicVersionId = this.modelProperty.propertyBasicId
+      const isPrimaryOwner : boolean = this.ownerModel.isPrimaryOwner;
+      this.newNewPropertyEntryAddService.searchOwnerIsPrimary(this.ownerModel.propertyBasicVersionId,this.ownerModel.propertyOwnerId==undefined ? '' : this.ownerModel.propertyOwnerId,isPrimaryOwner).subscribe(
+        (data) => {
+          if (data.status === 200) {
+
+            this.saveOwnerAfterEmailCheck(form);
+          }
+        },
+        (error) => {
+          if (error.status === 400) {
+            var errorMessage = '';
+            error.error[0].propertyList.forEach(element => {
+              errorMessage = errorMessage + element + "</br>";
+            });
+            this.alertService.error(errorMessage);
+          }
+          else {
+            this.alertService.error(error.error.message);
+          }
+        });
+
+    }
   }
 
 }

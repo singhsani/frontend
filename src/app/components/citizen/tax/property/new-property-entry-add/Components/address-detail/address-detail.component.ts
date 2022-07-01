@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NewPropertyEntryAddService } from '../../Services/new-property-entry-add.service';
 import { NewPropertyEntryAddDataSharingService } from '../../Services/new-property-entry-add-data-sharing.service';
@@ -8,6 +8,7 @@ import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { PropertySearchSharingService } from 'src/app/vmcshared/component/property-search/property-search-sharing.service';
 import { Subscription } from 'rxjs';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
+import * as textMask from 'vanilla-text-mask/dist/vanillaTextMask.js';
 
 @Component({
   selector: 'app-address-detail',
@@ -33,19 +34,32 @@ export class AddressDetailComponent implements OnInit, OnDestroy {
   propertyModel: any = {};
   propertyModelSub: Subscription;
   modelProperty: any = {};
-
+  
+  mask = [/\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, /\d/,  '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]; // ##-##-###-###-### 
+  maskedInputController;
+  private specialKeys: Array<string> = ['Backspace', 'Tab', 'End', 'Home'];
+  
   constructor(private newNewPropertyEntryAddDataSharingService: NewPropertyEntryAddDataSharingService,
     private propertySearchSharingService: PropertySearchSharingService,
     private newNewPropertyEntryAddService: NewPropertyEntryAddService,
     private commonService: CommonService,
-    private alertService: AlertService) {
+    private alertService: AlertService,
+    private element: ElementRef) {
     this.addressModel = new AddressModel();
     this.addressModel.propertyAddressDTO = new PropertyAddressDTO();
     this.addressModel.propertyAddressDTO.state = "Gujarat";
     this.addressModel.propertyAddressDTO.district = "Vadodara";
     this.addressModel.propertyAddressDTO.city = 'Vadodara'
     this.isValidForm = true;
-
+    // use for censusNo Masking
+    this.maskedInputController = textMask.maskInput({
+      inputElement: this.element.nativeElement,
+      mask: this.mask,
+      guide: false,
+      placeholderChar: '_',
+      keepCharPositions: true,
+      showMask:true
+    });
   }
 
   ngOnInit() {
@@ -266,5 +280,14 @@ export class AddressDetailComponent implements OnInit, OnDestroy {
     if(inValid){
       this.addressModel.referencePropertyNo = '';
     }
+  }
+
+
+  onKeyDown(event: KeyboardEvent) {
+    if (this.specialKeys.indexOf(event.key) !== -1) {
+      return;
+    }
+    let current: string = this.element.nativeElement.value;
+    this.addressModel.propertyAddressDTO.cityCensusNo = current;
   }
 }

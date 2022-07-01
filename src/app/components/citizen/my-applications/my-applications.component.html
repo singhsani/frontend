@@ -292,6 +292,12 @@
                             <mat-icon class="m-1" title="Why Rejected?">help_outline</mat-icon>
                             Why Rejected
                         </button>
+                   
+                    <button mat-menu-item *ngIf="(row.serviceType == 'PEC_REG' || row.serviceType == 'PRC_REG') && isQueryRaiseDisplay(row)" color="primary"
+                    (click)="openModal(queryRaiseReasonRemarkTemplate);remarksDisplayForQueryRaise(row)">
+                    <mat-icon class="m-1" title="Why Rejected?">help_outline</mat-icon>
+                    Why Rejected
+                </button>
 
                         </mat-menu>
                     </ng-container>
@@ -648,5 +654,38 @@
 
 </ng-template>
 
+<!-- This modal is use for displaying Professional Tax Department application Reason & Remark Raise note-->
+<ng-template #queryRaiseReasonRemarkTemplate>
+    <div class="modal-header">
+        <div class="col-9">
+            <h5 class="modal-title pull-left">{{statusHeader}} Remarks</h5>
+        </div>
+        <div class="col-1">
+            <button class="pull-left mat-icon-button" (click)="copyInnerHTMLForRemark()">
+                <mat-icon title="{{'copy_clipboard' | translate:translateKey}}">content_copy</mat-icon>
+            </button>
+        </div>
+        <div class="col-1">
+            <button title="{{'close' | translate:translateKey}}" class=" mat-icon-button" aria-label="Close"
+                (click)="modalRef.hide()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12 ">
+                <div class="queryraiseremarks">
+                    <div type="text" readonly class="text-left " [innerHtml]="getInnerHTMLForReason()"
+                        #copytext>
+                    </div>
+                <div type="text" readonly class="text-left " [innerHtml]="getInnerHTMLForRemark()"
+                    #copytext>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
 <!-- this div is used for printing the receipt -->
 <div id="sectionToPrint"></div>
