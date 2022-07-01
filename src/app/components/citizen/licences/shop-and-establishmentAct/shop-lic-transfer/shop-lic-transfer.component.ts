@@ -416,8 +416,8 @@ export class ShopLicTransferComponent implements OnInit {
 			waterDrainageBlockId: [null],
 			ownershipType: [null, [Validators.required]],
 
-			pecNumber:[null,Validators.required],
-			prcNumber:[null,Validators.required],
+			pecNumber:[null],
+			prcNumber:[null],
 			censusOrPropertyNumber:[null,Validators.required],
 			number: null,
 			otherAddresses: [null, [Validators.maxLength(100)]],
