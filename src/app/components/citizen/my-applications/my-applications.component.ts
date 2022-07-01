@@ -77,7 +77,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		private route: ActivatedRoute,
 		private location: Location,
 		private paymentService: PaymentService
-			) {
+		) {
 	}
 	ngOnInit() {
 		// If the user changes the sort order, reset back to the first page.
@@ -705,7 +705,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	 * This method is use to show For Query Raise remarks.
 	 */
 	remarksDisplayForQueryRaise(data) {
-		
 		this.queryrraiseRemarks = data.remarks;
 		this.statusHeader = data.fileStatusName;
 		//this.queryrraiseRemarks = 'Remark here';

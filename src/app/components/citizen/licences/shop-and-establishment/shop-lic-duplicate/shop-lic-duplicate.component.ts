@@ -101,8 +101,7 @@ export class ShopLicDuplicateComponent implements OnInit {
 		else {
 			this.serachLicenceObj.isDisplayDuplicateLicenceForm = true;
 			this.getShopDuplicateData();
-
-			// this.shopLicDuplicateForm.disable();
+			this.shopLicDuplicateForm.disable();
 			this.enableFielList();
 		}
 
