@@ -202,7 +202,6 @@ export class ShopLicNewComponent implements OnInit {
 	 * Method is used to get form data
 	 */
 	getShopLicNewData() {
-
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.shopLicNewForm.patchValue(res);
@@ -323,8 +322,8 @@ export class ShopLicNewComponent implements OnInit {
 			waterDrainageBlockId: [null],
 			ownershipType: [null, [Validators.required]],
 
-			pecNumber:[null,Validators.required],
-			prcNumber:[null,Validators.required],
+			pecNumber:[null],
+			prcNumber:[null],
 			censusOrPropertyNumber:[null,Validators.required],
 			oldRegistrationNumber: null,
 			oldRegistrationDate: null,

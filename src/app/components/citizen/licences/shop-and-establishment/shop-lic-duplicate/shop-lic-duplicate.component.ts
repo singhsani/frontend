@@ -102,7 +102,7 @@ export class ShopLicDuplicateComponent implements OnInit {
 			this.serachLicenceObj.isDisplayDuplicateLicenceForm = true;
 			this.getShopDuplicateData();
 
-			this.shopLicDuplicateForm.disable();
+			// this.shopLicDuplicateForm.disable();
 			this.enableFielList();
 		}
 
