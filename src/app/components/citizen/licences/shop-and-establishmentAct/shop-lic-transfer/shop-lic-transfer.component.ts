@@ -169,8 +169,21 @@ export class ShopLicTransferComponent implements OnInit {
 	calculateWorkers(indx) {
 		let men = Number(this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('noOfMen').value);
 		let woman = Number(this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('noOfWomen').value);
+		if(this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('noOfWomen').value != null){
+			if(men == 0 && woman == 0){
+				debugger
+				this.toastrService.warning("please enter woman or men number more than 0")
+				this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('noOfMen').reset();
+				this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('noOfWomen').reset();
+				this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('total').reset();
+			}
+		} 
 		let total = men + woman;
-		this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('total').setValue(total);
+		if(total == 0){
+			this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('total').reset();
+		}else{
+			this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('total').setValue(total);
+		}
 	}
 
 	hideGuideLine(flag: boolean) {
