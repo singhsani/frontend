@@ -86,7 +86,6 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.prcRegFormControls();
-        debugger
 		this.route.paramMap.subscribe(param => {
 			console.log("param", param);
 			this.apiCode = param.get('apiCode');
