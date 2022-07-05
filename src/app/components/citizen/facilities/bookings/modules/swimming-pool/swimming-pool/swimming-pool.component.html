@@ -361,7 +361,7 @@
 								</label>
 								<booking-file-upload (uploaded)="isFileUploaded1 = $event" [attachments]="attachments" [deleteButtonIsDisabled]="isRenewalForm"
 									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'1', labelName:'Photo', formPart:'1.4', refNumber:
-								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'photo'}">
+								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'photo',resourceType:'SWIMMING_POOL'}">
 								</booking-file-upload>
 							</div>
 							<div class="col-md-4">
@@ -369,7 +369,7 @@
 								</label>
 								<booking-file-upload (uploaded)="isFileUploaded2 = $event" [attachments]="attachments" [deleteButtonIsDisabled]="isRenewalForm"
 									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'2', labelName:'Gazettate Officer Letter', formPart:'1.1', refNumber:
-								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'gazettate_officer_letter'}">
+								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'gazettate_officer_letter',resourceType:'SWIMMING_POOL'}">
 								</booking-file-upload>
 
 							</div>
@@ -379,7 +379,7 @@
 								</label>
 								<booking-file-upload (uploaded)="isFileUploaded3 = $event" [attachments]="attachments" [deleteButtonIsDisabled]="isRenewalForm"
 									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'3', labelName:'Parents or Guardians Permission Letter', formPart:'1.2', refNumber:
-								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'gauardians_permission_letter'}">
+								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'gauardians_permission_letter',resourceType:'SWIMMING_POOL'}">
 								</booking-file-upload>
 							</div>
 
