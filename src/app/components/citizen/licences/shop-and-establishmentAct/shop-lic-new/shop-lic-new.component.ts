@@ -172,7 +172,6 @@ export class ShopLicNewComponent implements OnInit {
 		let woman = Number(this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfWomen').value);
 		if(this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfWomen').value != null){
 			if(men == 0 && woman == 0){
-				
 				this.toastrService.warning("please enter woman or men number more than 0")
 				this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfMen').reset();
 				this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfWomen').reset();
