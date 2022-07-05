@@ -12,6 +12,7 @@ import {TranslateService} from 'src/app/shared/modules/translate/translate.servi
 export class SwimmingPoolDashboardComponent implements OnInit {
 
   manageRoutes: any = ManageRoutes;
+  guideLineFlag: boolean = true;
   // Modules List
   modules: Array<any> = [
     {
