@@ -171,7 +171,7 @@ export class ShopLicTransferComponent implements OnInit {
 		let woman = Number(this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('noOfWomen').value);
 		if(this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('noOfWomen').value != null){
 			if(men == 0 && woman == 0){
-				debugger
+				
 				this.toastrService.warning("please enter woman or men number more than 0")
 				this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('noOfMen').reset();
 				this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('noOfWomen').reset();
