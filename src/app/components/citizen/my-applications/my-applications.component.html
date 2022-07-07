@@ -400,12 +400,12 @@
                                 Remark
                             </button>
 
-                            <button mat-menu-item
-                                *ngIf="(row.serviceType == 'APL_LICENCE' || row.serviceType == 'POND_CANCELLATION' || row.serviceType == 'APL_RENEWAL'||row.serviceType == 'POND_TRANSFER'||row.serviceType == 'POND_DUPLICATION') && isRejectNoteOptDisplay(row)"
+                            <!-- <button mat-menu-item
+                                *ngIf="(row.serviceType == 'POND_CANCELLATION' || row.serviceType == 'APL_RENEWAL'||row.serviceType == 'POND_TRANSFER'||row.serviceType == 'POND_DUPLICATION') && isRejectNoteOptDisplay(row)"
                                 color="primary" (click)="openModal(rejectTemplate);remarksDisplay(row)">
                                 <mat-icon class="m-1" title="Why Cancelled?">help_outline</mat-icon>
                                 Remarks
-                            </button>
+                            </button> -->
 
                             <button mat-menu-item *ngIf="(isDownloadLOI(row) && isDownloadDisplay(row))" color="primary"
                                 (click)="printLOIReceipt(row.serviceDetail.code,row.fileNumber)">
