@@ -89,7 +89,7 @@ export class AnimalPondNewComponent implements OnInit {
 		else {
 			this.getAnimalPondLicNewData();
 			this.animalPondNewFormControls();
-		}	
+		}
 	}
 
 	/**
@@ -154,7 +154,7 @@ export class AnimalPondNewComponent implements OnInit {
 	 */
 	getAnimalPondLicNewData() {
 		this.formService.getFormData(this.formId).subscribe(res => {
-                
+
 			try {
 				this.animalPondNewForm.patchValue(res);
 				this.showButtons = true;
@@ -342,7 +342,7 @@ export class AnimalPondNewComponent implements OnInit {
 
 			holderTelephoneNo: [null, [Validators.maxLength(11), Validators.minLength(11)]],
 			holderMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
-			holderFaxNo: [null, [Validators.maxLength(12)]],
+			holderFaxNo: [null, [Validators.maxLength(10), Validators.minLength(10)]],
 			holderAadharNo: [null, [Validators.required, Validators.maxLength(12), Validators.minLength(12)]],
 			holderPanNo: [null, [Validators.required, ValidationService.panValidator, Validators.maxLength(10)]],
 			/* Step 1 controls end */
