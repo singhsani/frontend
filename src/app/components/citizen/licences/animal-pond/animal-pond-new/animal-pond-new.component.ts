@@ -90,6 +90,7 @@ export class AnimalPondNewComponent implements OnInit {
 			this.getAnimalPondLicNewData();
 			this.animalPondNewFormControls();
 		}
+		this.onActivate()
 	}
 
 	/**
@@ -729,6 +730,9 @@ export class AnimalPondNewComponent implements OnInit {
 		return false
 	}
 
+	onActivate() {
+		window.scroll(0,0);
+	}
 
 
 	dummyJSON: any = {
