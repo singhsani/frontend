@@ -141,7 +141,7 @@
 					<control-messages [control]="animalPondRenewForm.get('holderMobileNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber minlength="12" maxlength="12" formControlName="holderFaxNo"
+					<input matInput OnlyNumber maxlength="10" minlength="10" formControlName="holderFaxNo"
 						placeholder="{{'holder_fax_no' | translate:translateKey}}">
 					<control-messages [control]="animalPondRenewForm.get('holderFaxNo')"></control-messages>
 				</mat-form-field>
