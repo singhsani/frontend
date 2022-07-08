@@ -89,7 +89,7 @@
 						[addressFormGroup]="animalPondNewForm.get('permanantAddress')"></app-address>
 				</div>
 				<div class="col-md-4" formGroupName="isSameAsPermanantAddress">
-					<mat-checkbox class="col-md-12 mt-2" [checked]="animalPondNewForm.get('isSameAsPermanantAddress').get('code').value == 'YES'? true : false" (change)="onSameAddressChange($event)">{{'Temporary Address Is Same As Permanent Address ?' | translate: translateKey}}</mat-checkbox>
+					<mat-checkbox class="col-md-12 mt-2 isEditMode"  [checked]="animalPondNewForm.get('isSameAsPermanantAddress').get('code').value == 'YES'? true : false"  [disabled]="!isEditMode" (change)="onSameAddressChange($event)" >{{'Temporary Address Is Same As Permanent Address ?' | translate: translateKey}}</mat-checkbox>
 				</div>
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
@@ -229,7 +229,7 @@
 									[formGroupName]="indx">
 
 									<td>
-										<div class="d-md-none">#</div>
+										<div class="d-md-none">Sr. No.</div>
 										{{indx+1}}
 									</td>
 
@@ -321,7 +321,7 @@
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
 						<button type="button" (click)="addMoreAnimal()"
-							[disabled]="animalPondNewForm.get('animalDetails')['controls'].length >= ANIMAL_TYPE.length"
+							[disabled]="animalPondNewForm.get('animalDetails')['controls'].length >= ANIMAL_TYPE.length || !isEditMode"
 							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary">{{'add'|
 							   translate:translateKey}}</button>
 					</div>
@@ -332,7 +332,7 @@
 						<table class="table table-striped mb-0 responsiveTableRow">
 							<thead>
 								<tr class="mo-d-none">
-									<th>SR No.</th>
+									<th>Sr. No.</th>
 									<th>{{'animal_type' | translate:translateKey}}</th>
 									<th>{{'animal_count' | translate:translateKey}}</th>
 									<th colspan="2" *ngIf="animalPondNewForm.get('canEdit').value"></th>

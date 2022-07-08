@@ -45,6 +45,7 @@ export class AnimalPondNewComponent implements OnInit {
 	WARD: Array<any> = [];
 	BLOCK: Array<any> = [];
 	LOOKUP: any;
+	isEditMode = true
 
 	// required attachment array
 	public uploadFilesArray: Array<any> = [];
@@ -88,7 +89,7 @@ export class AnimalPondNewComponent implements OnInit {
 		else {
 			this.getAnimalPondLicNewData();
 			this.animalPondNewFormControls();
-		}
+		}	
 	}
 
 	/**
@@ -153,10 +154,11 @@ export class AnimalPondNewComponent implements OnInit {
 	 */
 	getAnimalPondLicNewData() {
 		this.formService.getFormData(this.formId).subscribe(res => {
-
+                
 			try {
 				this.animalPondNewForm.patchValue(res);
 				this.showButtons = true;
+				this.isEditMode = res.canEdit;
 				this.onChangeZone(this.animalPondNewForm.get('zoneNo').value.code);
 				this.onChangeWard(this.animalPondNewForm.get('wardNo').value.code);
 
