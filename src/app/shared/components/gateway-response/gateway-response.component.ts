@@ -374,7 +374,7 @@ export class GatewayResponseComponent implements OnInit {
 			}, 10000);
 		}
 
-		this.interVal();
+		// this.interVal();
 	}
 
 	redirectToMyApps() {
