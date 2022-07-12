@@ -849,14 +849,16 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return row.applicantName;
 		}
 	}
-	isShopHideButton(row) {
+	// For Hide Admin side in Citizen Service process payment option
+	 
+	// isShopHideButton(row) {
 
-		if ((this.commonService.fromAdmin() && row.serviceDetail.code == 'SHOP-ESTAB-LIC-NEW') || (this.commonService.fromAdmin() && row.serviceDetail.code == 'SHOP-ESTAB-TRANSFER')) {
-			return false;
-		} else {
-			return true;
-		}
-	}
+	// 	if ((this.commonService.fromAdmin() && row.serviceDetail.code == 'SHOP-ESTAB-LIC-NEW') || (this.commonService.fromAdmin() && row.serviceDetail.code == 'SHOP-ESTAB-TRANSFER')) {
+	// 		return false;
+	// 	} else {
+	// 		return true;
+	// 	}
+	// }
 
 	printPropertyACKReceipt(applicationNum, dept) {
 		let url = "";
