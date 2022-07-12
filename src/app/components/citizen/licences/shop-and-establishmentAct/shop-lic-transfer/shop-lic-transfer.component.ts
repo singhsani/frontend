@@ -1641,7 +1641,7 @@ export class ShopLicTransferComponent implements OnInit {
 			let max = grandTotal - 10;
 			if (max > 0) {
 				this.hideAdd = true;
-				this.commonService.openAlert("Person Occupying", "Maximum 10 person are allowed ", "warning");
+				this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");
 
 			}
 
