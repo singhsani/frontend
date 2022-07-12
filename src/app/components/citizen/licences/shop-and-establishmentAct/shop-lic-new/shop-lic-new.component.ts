@@ -52,6 +52,7 @@ export class ShopLicNewComponent implements OnInit {
 	isIntimation: boolean = false;
 
 	isDisabledBtn: boolean = true;
+	isDisabledOrgType: boolean = false;
 
 	//regiTyep: string[] = ['CERTIFICATION', 'INTIMATION'];
 	regiTyep: Array<any> = [{
@@ -227,6 +228,11 @@ export class ShopLicNewComponent implements OnInit {
 				});
 
 				this.onChangeNoOfHumanWorking(res.registrationType);
+				if(res && res.registrationType){ //disable organization dropdown selection logic
+					this.isDisabledOrgType = true; //preview
+				}else{
+					this.isDisabledOrgType = false; //new reg.
+				}
 
 				this.getSubCategoryDropdownData(this.shopLicNewForm.get('establishmentCategory').value.code);
 
