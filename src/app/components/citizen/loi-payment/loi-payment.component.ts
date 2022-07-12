@@ -25,7 +25,7 @@ export class LoiPaymentComponent implements OnInit {
 	@ViewChild("paymentGateway") paymentGateway: any;
 	loiPaymentForm: FormGroup;
 	applicationNumber;
-	loiDate : any;
+	loiDate: any;
 	uniqueId: string;
 	id: number;
 	code: string;
@@ -36,7 +36,7 @@ export class LoiPaymentComponent implements OnInit {
 	filterData: any;
 	sum = 0;
 	loiRecords: any = [];
-	returnUrl : String = '';
+	returnUrl: String = '';
 
 	constructor(
 		private formService: FormsActionsService,
@@ -55,11 +55,11 @@ export class LoiPaymentComponent implements OnInit {
 		});
 
 		this.router.events
-		.filter(e => e instanceof RoutesRecognized)
-		.pairwise()
-		.subscribe((event: any[]) => {
-		  this.returnUrl = event[0].urlAfterRedirects;
-		});
+			.filter(e => e instanceof RoutesRecognized)
+			.pairwise()
+			.subscribe((event: any[]) => {
+				this.returnUrl = event[0].urlAfterRedirects;
+			});
 	}
 
 	ngOnInit() {
@@ -70,7 +70,7 @@ export class LoiPaymentComponent implements OnInit {
 		this.formService.getLoiPaymentDetails(this.uniqueId).subscribe(res => {
 			if (res.data.length > 0) {
 				this.applicationNumber = res.data[0].applicationId;
-				 this.loiDate = moment(res.data[0].loiDate).format('DD/MM/YYYY');
+				this.loiDate = res.data[0].loiDate;
 				this.loiDetails = res.data;
 				this.loiRecords = this.loiDetails.filter((obj, pos, arr) => {
 					return arr.map(mapObj => mapObj["loiNumber"]).indexOf(obj["loiNumber"]) === pos;
@@ -110,8 +110,8 @@ export class LoiPaymentComponent implements OnInit {
 			},
 			err => {
 				let retUrl = 'citizen/my-applications';
-				if(this.returnUrl && this.returnUrl != ""){
-					retUrl = this.returnUrl + '?apiCode='+ apiCode + '&id=' + id;
+				if (this.returnUrl && this.returnUrl != "") {
+					retUrl = this.returnUrl + '?apiCode=' + apiCode + '&id=' + id;
 				}
 				let retAfterPayment: string = environment.returnUrl;
 
@@ -131,17 +131,17 @@ export class LoiPaymentComponent implements OnInit {
 					</div>
 					`
 					if (this.commonService.fromAdmin()) {
-						this.openOfflinePaymentComponent(payData,retUrl,apiCode,id);
+						this.openOfflinePaymentComponent(payData, retUrl, apiCode, id);
 					} else {
 						this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
 							this.paymentGateway.setPaymentDetailsFromActionBar(payData);
 							this.paymentGateway.openModel();
-	
+
 						}, rj => {
 						});
 						return;
 					}
-					
+
 				} else {
 					this.commonService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
 				}
@@ -149,7 +149,7 @@ export class LoiPaymentComponent implements OnInit {
 	}
 
 
-	openOfflinePaymentComponent(payData,retUrl,apiCode,id) {
+	openOfflinePaymentComponent(payData, retUrl, apiCode, id) {
 		const dialogConfig = new MatDialogConfig();
 		const data = { payData: payData }
 		dialogConfig.disableClose = true;
@@ -163,21 +163,21 @@ export class LoiPaymentComponent implements OnInit {
 				offlinePayData.refNumber = payData.refNumber;
 				offlinePayData.response = payData.response;
 				offlinePayData.paymentStatus = "SUCCESS",
-				offlinePayData.transactionId =  payData.transactionId,
-				offlinePayData.payableServiceType = payData.serviceCode,
-				offlinePayData.amount = payData.amount;
+					offlinePayData.transactionId = payData.transactionId,
+					offlinePayData.payableServiceType = payData.serviceCode,
+					offlinePayData.amount = payData.amount;
 				offlinePayData.payGateway = "OFFLINE"
 
 
 				this.formService.createPayment(offlinePayData).subscribe(resData => {
 					const payRespData = resData.data.responseData;
-					if(resData.paymentStatus = "Paid"){
+					if (resData.paymentStatus = "Paid") {
 						this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
 							if (res) {
-								this.router.navigate([ retUrl.split('?')[0] ], { queryParams: { apiCode: apiCode, id: id } });
+								this.router.navigate([retUrl.split('?')[0]], { queryParams: { apiCode: apiCode, id: id } });
 							}
 						});
-						
+
 					}
 				}, error => {
 					this.openErrorAlert(error);
@@ -191,12 +191,12 @@ export class LoiPaymentComponent implements OnInit {
 
 	}
 
-	openErrorAlert(error){
-		if(error & error.error[0]){
+	openErrorAlert(error) {
+		if (error & error.error[0]) {
 			this.commonService.openAlert("Error", "Error Occured for final submit : "
-					 + error.error[0].message, "warning");
-		}else{
-			this.commonService.openAlert("Error", "Something went wrong","warning");
+				+ error.error[0].message, "warning");
+		} else {
+			this.commonService.openAlert("Error", "Something went wrong", "warning");
 		}
 	}
 }

@@ -450,7 +450,7 @@ export class GatewayResponseComponent implements OnInit {
 		} else if (serviceType == 'FORM_CHARGES') {
 			this.sendMail(refNumber, "FORMCHARGES");
 		}else if (serviceType == 'ATITHIGURH_DEPOSIT') {
-		  this.sendMail(refNumber, "ATITHIGURHDEPOSIT");
+		  this.sendMail(refNumber, "BOOKED");
 		}else {
 			this.sendMail(refNumber, "PAYMENT");
 		}
