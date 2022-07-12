@@ -334,7 +334,7 @@ export class ShopLicNewComponent implements OnInit {
 
 			pecNumber:[null],
 			prcNumber:[null],
-			censusOrPropertyNumber:[null,Validators.required],
+			censusNumber:[null,Validators.required],
 			oldRegistrationNumber: null,
 			oldRegistrationDate: null,
 			number: null,
@@ -1716,7 +1716,7 @@ export class ShopLicNewComponent implements OnInit {
 		"landlineNumber": null,
 		"prcNumber": null,
 		"pecNumber": null,
-		"censusOrPropertyNumber": null,
+		"censusNumber": null,
 		"remarks": null,
 		"oldRegistrationNumber": null,
 		"oldRegistrationDate": null,

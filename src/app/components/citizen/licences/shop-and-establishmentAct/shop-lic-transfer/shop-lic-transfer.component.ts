@@ -243,7 +243,7 @@ export class ShopLicTransferComponent implements OnInit {
 			aadhaarNo: res.aadhaarNo,
 			alternateMobileNumber : res.alternateMobileNumber,
 			businessSubCategory : res.businessSubCategory,
-			censusOrPropertyNumber : res.censusOrPropertyNumber,
+			censusNumber : res.censusNumber,
 			commencementOfBusinessDate : res.commencementOfBusinessDate,
 			contactNo : res.contactNo,
 			email : res.email,
@@ -431,7 +431,7 @@ export class ShopLicTransferComponent implements OnInit {
 
 			pecNumber:[null],
 			prcNumber:[null],
-			censusOrPropertyNumber:[null,Validators.required],
+			censusNumber:[null,Validators.required],
 			number: null,
 			otherAddresses: [null, [Validators.maxLength(100)]],
 			/* Step 1 controls end */
