@@ -233,10 +233,51 @@
 
 
 					<!-- This section is for adding multiple census number-->
+					<div *ngIf="CanEdit == false">
 					<div class="width100p" formArrayName="censusNo">
 						<div class="row" *ngFor="let item of pecRegForm.get('censusNo')['controls']; let i = index;"
 							[formGroupName]="i">
-							<div class="col-md-3">
+							<div class="col-md-6">
+								<mat-form-field>
+									<div  *ngIf="this.censusNo == true">
+										<mat-select style="margin-top: 15px !important;"
+									
+										placeholder="{{'census_no' | translate: translateKey}}" value="CensusNo" disabled>
+										<mat-option value="CensusNo">Census No</mat-option>
+									</mat-select>
+									</div>
+									<div  *ngIf="this.censusNo == false" >
+									<mat-select style="margin-top: 15px !important;"
+										placeholder="{{'census_no' | translate: translateKey}}" value="PropertyNo" disabled>
+										<mat-option value="PropertyNo" >Property No</mat-option>
+									</mat-select>
+								</div>
+								</mat-form-field>
+							</div>
+							<mat-form-field class="col-md-6">
+								<input style="margin-top: 15px !important;" matInput autocomplete="off"
+									appMaskCensusNumber maxlength="21" formControlName="census" type="text" required>
+								<button *ngIf="pecRegForm.get('censusNo')['controls'].length > 1 && isDeleteBtnShow"
+									title="Remove Census" class="deleteBtn pull-right text-right" type="button"
+									mat-icon-button color="warn" (click)="removeCensus(i)">
+									<i class="fa fa-times"></i>
+								</button>
+							</mat-form-field>
+						</div>
+
+						<div class="col-md-12 pt-3" *ngIf="isDeleteBtnShow">
+							<button type="button" mat-raised-button color="primary" (click)="addMoreCenus()"
+								title="{{'add_more_census' | translate:'translateKey'}}">
+								<mat-icon matPrefix>add</mat-icon>Add More Census
+							</button>
+						</div>
+					</div>
+				</div>
+					<div *ngIf="CanEdit == true">
+					<div class="width100p" formArrayName="censusNo">
+						<div class="row" *ngFor="let item of pecRegForm.get('censusNo')['controls']; let i = index;"
+							[formGroupName]="i">
+							<div class="col-md-6">
 								<mat-form-field>
 									<mat-select style="margin-top: 15px !important;"
 										(selectionChange)="selectCensusOrPropertyNo($event);"
@@ -246,7 +287,7 @@
 									</mat-select>
 								</mat-form-field>
 							</div>
-							<mat-form-field class="col-md-3" *ngIf="isCensusNo">
+							<mat-form-field class="col-md-6" *ngIf="isCensusNo">
 								<input style="margin-top: 15px !important;" matInput autocomplete="off"
 									appMaskCensusNumber maxlength="21" formControlName="census" type="text"
 									(focusout)="isExistPropertyNo($event.target.value,i)" required>
@@ -277,6 +318,7 @@
 							</button>
 						</div>
 					</div>
+				</div>
 				</div>
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">
