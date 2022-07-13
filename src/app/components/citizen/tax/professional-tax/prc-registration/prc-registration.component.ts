@@ -86,13 +86,14 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.prcRegFormControls();
-
-		// this.route.paramMap.subscribe(param => {
-		// 	this.apiCode = param.get('apiCode');
-		// 	this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
-		// 	this.serviceFormId = Number(param.get('id'));
-		// 	this.forPreview();
-		// });
+		this.route.paramMap.subscribe(param => {
+			if(param.get('apiCode') != null && param.get('id')){
+			this.apiCode = param.get('apiCode');
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+			this.serviceFormId = Number(param.get('id'));
+				this.forPreview();
+			}
+		});
 
 		this.getDataFromLookups();
 		this.getEmployeeSlabRate();

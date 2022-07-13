@@ -77,7 +77,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		private route: ActivatedRoute,
 		private location: Location,
 		private paymentService: PaymentService
-		) {
+	) {
 	}
 	ngOnInit() {
 		// If the user changes the sort order, reset back to the first page.
@@ -496,7 +496,8 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return false;
 		}
 
-		else if (row.serviceType == 'APL_LICENCE') {
+		else if (row.serviceType == 'APL_LICENCE' || row.serviceType == 'APL_RENEWAL' || row.serviceType == 'POND_TRANSFER'
+			|| row.serviceType == 'POND_CANCELLATION' || row.serviceType == 'POND_DUPLICATION') {
 			return false;
 		}
 		else if (row.fileStatus != 'DRAFT') {
@@ -538,8 +539,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		if ((row.fileStatus == 'SUBMITTED' || row.fileStatus == 'APPROVED' || row.fileStatus == 'CANCELLED') && printReceiptServiceTypeForShopArr.indexOf(row.serviceType) >= 0) {
 			return true;
 		}
-		if(row.fileStatus == 'REJECTED' && row.serviceType == 'SHOP_ESTAB_TRANSFER')
-		{
+		if (row.fileStatus == 'REJECTED' && row.serviceType == 'SHOP_ESTAB_TRANSFER') {
 			return false;
 		}
 
@@ -849,14 +849,16 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return row.applicantName;
 		}
 	}
-	isShopHideButton(row) {
+	// For Hide Admin side in Citizen Service process payment option
+	 
+	// isShopHideButton(row) {
 
-		if ((this.commonService.fromAdmin() && row.serviceDetail.code == 'SHOP-ESTAB-LIC-NEW') || (this.commonService.fromAdmin() && row.serviceDetail.code == 'SHOP-ESTAB-TRANSFER')) {
-			return false;
-		} else {
-			return true;
-		}
-	}
+	// 	if ((this.commonService.fromAdmin() && row.serviceDetail.code == 'SHOP-ESTAB-LIC-NEW') || (this.commonService.fromAdmin() && row.serviceDetail.code == 'SHOP-ESTAB-TRANSFER')) {
+	// 		return false;
+	// 	} else {
+	// 		return true;
+	// 	}
+	// }
 
 	printPropertyACKReceipt(applicationNum, dept) {
 		let url = "";

@@ -400,12 +400,12 @@
                                 Remark
                             </button>
 
-                            <button mat-menu-item
-                                *ngIf="(row.serviceType == 'APL_LICENCE' || row.serviceType == 'POND_CANCELLATION' || row.serviceType == 'APL_RENEWAL'||row.serviceType == 'POND_TRANSFER'||row.serviceType == 'POND_DUPLICATION') && isRejectNoteOptDisplay(row)"
+                            <!-- <button mat-menu-item
+                                *ngIf="(row.serviceType == 'POND_CANCELLATION' || row.serviceType == 'APL_RENEWAL'||row.serviceType == 'POND_TRANSFER'||row.serviceType == 'POND_DUPLICATION') && isRejectNoteOptDisplay(row)"
                                 color="primary" (click)="openModal(rejectTemplate);remarksDisplay(row)">
                                 <mat-icon class="m-1" title="Why Cancelled?">help_outline</mat-icon>
                                 Remarks
-                            </button>
+                            </button> -->
 
                             <button mat-menu-item *ngIf="(isDownloadLOI(row) && isDownloadDisplay(row))" color="primary"
                                 (click)="printLOIReceipt(row.serviceDetail.code,row.fileNumber)">
@@ -500,7 +500,7 @@
                             </button>
 
                             <!-- Note : 'PAYMENT' fileStatus means payment is pandding -->
-                            <button mat-menu-item *ngIf="(row.fileStatus === 'PAYMENT' && isShopHideButton(row))"
+                            <button mat-menu-item *ngIf="(row.fileStatus === 'PAYMENT')"
                                 color="primary" (click)="redirectToPayment(row.serviceDetail.code, row.serviceFormId)">
                                 <!-- <mat-icon class="m-1" title="{{'attach_money' | translate:translateKey}}">&#8377;</mat-icon> -->
                                 <i class="fa fa-inr m-1" title="{{'attach_money' | translate:translateKey}}"

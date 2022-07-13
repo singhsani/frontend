@@ -169,8 +169,21 @@ export class ShopLicTransferComponent implements OnInit {
 	calculateWorkers(indx) {
 		let men = Number(this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('noOfMen').value);
 		let woman = Number(this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('noOfWomen').value);
+		if(this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('noOfWomen').value != null){
+			if(men == 0 && woman == 0){
+				
+				this.toastrService.warning("please enter woman or men number more than 0")
+				this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('noOfMen').reset();
+				this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('noOfWomen').reset();
+				this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('total').reset();
+			}
+		} 
 		let total = men + woman;
-		this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('total').setValue(total);
+		if(total == 0){
+			this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('total').reset();
+		}else{
+			this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('total').setValue(total);
+		}
 	}
 
 	hideGuideLine(flag: boolean) {
@@ -230,7 +243,7 @@ export class ShopLicTransferComponent implements OnInit {
 			aadhaarNo: res.aadhaarNo,
 			alternateMobileNumber : res.alternateMobileNumber,
 			businessSubCategory : res.businessSubCategory,
-			censusOrPropertyNumber : res.censusOrPropertyNumber,
+			censusNumber : res.censusNumber,
 			commencementOfBusinessDate : res.commencementOfBusinessDate,
 			contactNo : res.contactNo,
 			email : res.email,
@@ -418,7 +431,7 @@ export class ShopLicTransferComponent implements OnInit {
 
 			pecNumber:[null],
 			prcNumber:[null],
-			censusOrPropertyNumber:[null,Validators.required],
+			censusNumber:[null,Validators.required],
 			number: null,
 			otherAddresses: [null, [Validators.maxLength(100)]],
 			/* Step 1 controls end */
@@ -1628,7 +1641,7 @@ export class ShopLicTransferComponent implements OnInit {
 			let max = grandTotal - 10;
 			if (max > 0) {
 				this.hideAdd = true;
-				this.commonService.openAlert("Person Occupying", "Maximum 10 person are allowed ", "warning");
+				this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");
 
 			}
 

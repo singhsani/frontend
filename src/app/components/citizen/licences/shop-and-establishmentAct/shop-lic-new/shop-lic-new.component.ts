@@ -168,12 +168,21 @@ export class ShopLicNewComponent implements OnInit {
 	}
 
 	calculateWorkers(indx) {
-		
 		let men = Number(this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfMen').value);
 		let woman = Number(this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfWomen').value);
+		if(this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfWomen').value != null){
+			if(men == 0 && woman == 0){
+				this.toastrService.warning("please enter woman or men number more than 0")
+				this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfMen').reset();
+				this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfWomen').reset();
+			}
+		} 
 		let total = men + woman;
-		this.shopLicNewForm.get('workerCounts')['controls'][indx].get('total').setValue(total);
-
+		if(total == 0){
+			this.shopLicNewForm.get('workerCounts')['controls'][indx].get('total').reset();
+		}else{
+			this.shopLicNewForm.get('workerCounts')['controls'][indx].get('total').setValue(total);
+		}	
 	}
 	
 	hideGuideLine(flag: boolean) {
@@ -324,7 +333,7 @@ export class ShopLicNewComponent implements OnInit {
 
 			pecNumber:[null],
 			prcNumber:[null],
-			censusOrPropertyNumber:[null,Validators.required],
+			censusNumber:[null,Validators.required],
 			oldRegistrationNumber: null,
 			oldRegistrationDate: null,
 			number: null,
@@ -1706,7 +1715,7 @@ export class ShopLicNewComponent implements OnInit {
 		"landlineNumber": null,
 		"prcNumber": null,
 		"pecNumber": null,
-		"censusOrPropertyNumber": null,
+		"censusNumber": null,
 		"remarks": null,
 		"oldRegistrationNumber": null,
 		"oldRegistrationDate": null,

@@ -45,20 +45,21 @@ export class AnimalPondNewComponent implements OnInit {
 	WARD: Array<any> = [];
 	BLOCK: Array<any> = [];
 	LOOKUP: any;
+	isEditMode = true
 
 	// required attachment array
 	public uploadFilesArray: Array<any> = [];
 
-	public serverUploadFilesArray : Array<any> = [];
+	public serverUploadFilesArray: Array<any> = [];
 
-    /**
-     * @param fb - Declare FormBuilder property.
-     * @param validationError - Declare validation service property
-     * @param formService - Declare form service property 
-     * @param uploadFileService - Declare upload file service property.
-     * @param commonService - Declare sweet alert.
+	/**
+	 * @param fb - Declare FormBuilder property.
+	 * @param validationError - Declare validation service property
+	 * @param formService - Declare form service property 
+	 * @param uploadFileService - Declare upload file service property.
+	 * @param commonService - Declare sweet alert.
 	 * @param toastrService - Show massage with timer.
-     */
+	 */
 	constructor(
 		private fb: FormBuilder,
 		private validationService: ValidationService,
@@ -89,11 +90,12 @@ export class AnimalPondNewComponent implements OnInit {
 			this.getAnimalPondLicNewData();
 			this.animalPondNewFormControls();
 		}
+		this.onActivate()
 	}
 
 	/**
-    * Method is add required document  
-    */
+	* Method is add required document  
+	*/
 	requiredDocumentList() {
 		this.uploadFilesArray = [];
 		_.forEach(this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
@@ -126,16 +128,16 @@ export class AnimalPondNewComponent implements OnInit {
 			maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
 			requiredOnAdminPortal: [data.requiredOnAdminPortal],
 			requiredOnCitizenPortal: [data.requiredOnCitizenPortal],
-			dmsEnabled:[data.dmsEnabled],
-			orderSequence:[data.orderSequence ? data.orderSequence : null]
+			dmsEnabled: [data.dmsEnabled],
+			orderSequence: [data.orderSequence ? data.orderSequence : null]
 			// version: [data.version ? data.version : null]
 		});
 	}
 
 	onSameAddressChange(event) {
-		
+
 		if (event.checked) {
-			
+
 			this.animalPondNewForm.get('temporaryAddress').patchValue(this.animalPondNewForm.get('permanantAddress').value);
 			this.animalPondNewForm.get('temporaryAddress.addressType').setValue('APL_TEMPORARY_ADDRESS');
 			this.animalPondNewForm.get('isSameAsPermanantAddress').get('code').setValue("YES");
@@ -145,7 +147,7 @@ export class AnimalPondNewComponent implements OnInit {
 			this.animalPondNewForm.get('temporaryAddress').reset();
 			this.animalPondNewForm.get('isSameAsPermanantAddress').get('code').setValue("NO");
 		}
-	
+
 	}
 
 	/**
@@ -157,6 +159,7 @@ export class AnimalPondNewComponent implements OnInit {
 			try {
 				this.animalPondNewForm.patchValue(res);
 				this.showButtons = true;
+				this.isEditMode = res.canEdit;
 				this.onChangeZone(this.animalPondNewForm.get('zoneNo').value.code);
 				this.onChangeWard(this.animalPondNewForm.get('wardNo').value.code);
 
@@ -190,12 +193,12 @@ export class AnimalPondNewComponent implements OnInit {
 					(<FormArray>this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
 				});
 				this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments').value.sort(
-					(a,b) => a.orderSequence - b.orderSequence);
+					(a, b) => a.orderSequence - b.orderSequence);
 				// this.requiredDocumentList();
 				// selected animal filter
 				this.onChangeStatusOfBusiness();
 				this.getSelectedAnimal();
-				
+
 				this.animalPondNewForm.get('personTypeGuj').setValue(res.personType.gujName);
 				this.animalPondNewForm.controls.permanantAddress.valueChanges.subscribe(data => {
 					if (this.animalPondNewForm.get('isSameAsPermanantAddress').get('code').value == "YES") {
@@ -229,20 +232,20 @@ export class AnimalPondNewComponent implements OnInit {
 	}
 
 	updateServiceUploadDocument(event) {
-		
+
 		let array = (<FormArray>this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments'));
 		for (let i = array.length - 1; i >= 0; i--) {
 			array.removeAt(i)
 		}
 
 		switch (event) {
-			
+
 			case 'RENT':
 				const localUploadArray = [...this.serverUploadFilesArray]
 				for (let file of localUploadArray) {
 					if (file['documentIdentifier'] === 'RENT_AGREEMENT') {
 						file['mandatory'] = true;
-						
+
 					}
 					(<FormArray>this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(file));
 				}
@@ -299,19 +302,19 @@ export class AnimalPondNewComponent implements OnInit {
    * @param controlName - control name of form
    * @param lookupName - passed lookup array
    */
-  getGujNameFromLookup(selectedValue: string, controlName: string, lookupName: Array<any>) {
+	getGujNameFromLookup(selectedValue: string, controlName: string, lookupName: Array<any>) {
 
-    if (lookupName && lookupName.length) {
-        let dataObj = lookupName.find((obj) => obj.code === selectedValue);
-        if (dataObj && dataObj.gujName) {
-          this.animalPondNewForm.get(controlName).setValue(dataObj.gujName);
-        } else {
-          this.animalPondNewForm.get(controlName).setValue('');
-        }
-      }
+		if (lookupName && lookupName.length) {
+			let dataObj = lookupName.find((obj) => obj.code === selectedValue);
+			if (dataObj && dataObj.gujName) {
+				this.animalPondNewForm.get(controlName).setValue(dataObj.gujName);
+			} else {
+				this.animalPondNewForm.get(controlName).setValue('');
+			}
+		}
 
 	}
-	
+
 	/**
 	* Method is used to set form controls
 	* 'Guj' control is consider as a Gujarati fields
@@ -324,15 +327,15 @@ export class AnimalPondNewComponent implements OnInit {
 			personType: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			businessType:this.fb.group({
+			businessType: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			personTypeGuj : [null, [Validators.required]],
+			personTypeGuj: [null, [Validators.required]],
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30)]],
-			holderMiddleName: [null,[Validators.maxLength(30)]],
+			holderMiddleName: [null, [Validators.maxLength(30)]],
 			holderLastName: [null, [Validators.required, Validators.maxLength(30)]],
 			holderFirstNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
-			holderMiddleNameGuj: [null,[Validators.maxLength(30)]],
+			holderMiddleNameGuj: [null, [Validators.maxLength(30)]],
 			holderLastNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
 
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
@@ -340,9 +343,9 @@ export class AnimalPondNewComponent implements OnInit {
 
 			holderTelephoneNo: [null, [Validators.maxLength(11), Validators.minLength(11)]],
 			holderMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
-			holderFaxNo: [null, [Validators.maxLength(12)]],
+			holderFaxNo: [null, [Validators.maxLength(10), Validators.minLength(10)]],
 			holderAadharNo: [null, [Validators.required, Validators.maxLength(12), Validators.minLength(12)]],
-			holderPanNo: [null, [Validators.required, ValidationService.panValidator , Validators.maxLength(10)]],
+			holderPanNo: [null, [Validators.required, ValidationService.panValidator, Validators.maxLength(10)]],
 			/* Step 1 controls end */
 
 			/* Step 2 controls start */
@@ -492,7 +495,7 @@ export class AnimalPondNewComponent implements OnInit {
 	onChangeRelationWithOrg() {
 		try {
 			(<FormArray>this.animalPondNewForm.get('relationshipList')).controls = [];
-				this.animalPondNewForm.get('relationshipList').setValue([]);
+			this.animalPondNewForm.get('relationshipList').setValue([]);
 			let relationshipId = this.animalPondNewForm.get('relationshipId').value.code;
 			if (relationshipId == 'PROPRIETOR') {
 				if ((<FormArray>this.animalPondNewForm.get('relationshipList')).length == 0) {
@@ -587,7 +590,6 @@ export class AnimalPondNewComponent implements OnInit {
 	* @param row: row index
 	*/
 	saveRecord(row: any) {
-		console.log("saveR",row.valid);
 		if (row.valid) {
 			row.isEditMode = false;
 			row.newRecordAdded = false;
@@ -699,43 +701,44 @@ export class AnimalPondNewComponent implements OnInit {
 		this.tabIndex = evt;
 	}
 
-	patchValue(){
+	patchValue() {
 		this.animalPondNewForm.patchValue(this.dummyJSON);
 	}
 
-	onCardChange(event,cardName){
-		if(event.target.value === "" ||  this.animalPondNewForm.get(cardName).invalid){
+	onCardChange(event, cardName) {
+		if (event.target.value === "" || this.animalPondNewForm.get(cardName).invalid) {
 			this.animalPondNewForm.get(cardName).setValue(null);
 		}
 	}
 
-	onChangeStatusOfBusiness(){
+	onChangeStatusOfBusiness() {
 		const subject = this.animalPondNewForm.get('businessType').get('code').value
 		const documents = this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments').value;
-		const formName =  this.animalPondNewForm;
-		this.animalPondService.changeStatusOfBusinessAccordingAtatchment(subject,documents,formName);
+		const formName = this.animalPondNewForm;
+		this.animalPondService.changeStatusOfBusinessAccordingAtatchment(subject, documents, formName);
 		this.requiredDocumentList();
 	}
 
 	handleOnSaveAndNext(res) {
-        this.onChangeStatusOfBusiness();
+		this.onChangeStatusOfBusiness();
 	}
 
 	validateNo(e) {
-		debugger
-		console.log(e.target.value);
-		if (e.charCode < 49 || e.charCode > 57){
+		if (e.charCode < 49 || e.charCode > 57) {
 			return true;
+		}
+		return false
 	}
-	return false
+
+	onActivate() {
+		window.scroll(0,0);
 	}
 
 
-
-	dummyJSON:any= {
+	dummyJSON: any = {
 
 		"personType": {
-		  "code": "MR"
+			"code": "MR"
 		},
 		"holderFirstName": "sdfsdf",
 		"holderMiddleName": "sdfsdfsdf",
@@ -744,44 +747,44 @@ export class AnimalPondNewComponent implements OnInit {
 		"holderMiddleNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
 		"holderLastNameGuj": "દ્સ્ફ્સ્દ્ફ્સ્દ્ફ",
 		"permanantAddress": {
-		  "addressType": "APL_PERMANENT_ADDRESS",
-		  "buildingName": "sdfsdf",
-		  "streetName": "sdfsdfsdf",
-		  "landmark": "sdfsdfsdf",
-		  "area": "dsfsdfsdfsdf",
-		  "state": "GUJARAT",
-		  "district": null,
-		  "city": "Vadodara",
-		  "country": "INDIA",
-		  "pincode": "242342",
-		  "buildingNameGuj": "સ્દ્ફ્સ્દ્ફ",
-		  "streetNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
-		  "landmarkGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
-		  "areaGuj": "દ્સ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
-		  "stateGuj": "ગુજરાત",
-		  "districtGuj": null,
-		  "cityGuj": "વડોદરા",
-		  "countryGuj": "ભારત"
+			"addressType": "APL_PERMANENT_ADDRESS",
+			"buildingName": "sdfsdf",
+			"streetName": "sdfsdfsdf",
+			"landmark": "sdfsdfsdf",
+			"area": "dsfsdfsdfsdf",
+			"state": "GUJARAT",
+			"district": null,
+			"city": "Vadodara",
+			"country": "INDIA",
+			"pincode": "242342",
+			"buildingNameGuj": "સ્દ્ફ્સ્દ્ફ",
+			"streetNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+			"landmarkGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+			"areaGuj": "દ્સ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+			"stateGuj": "ગુજરાત",
+			"districtGuj": null,
+			"cityGuj": "વડોદરા",
+			"countryGuj": "ભારત"
 		},
 		"temporaryAddress": {
-		  "addressType": "APL_TEMPORARY_ADDRESS",
-		  "buildingName": "dsf",
-		  "streetName": "sdfsdfdsf",
-		  "landmark": "fsdfsdfsdfsdf",
-		  "area": "sdfsdfsd",
-		  "state": "GUJARAT",
-		  "district": null,
-		  "city": "Vadodara",
-		  "country": "INDIA",
-		  "pincode": "234234",
-		  "buildingNameGuj": "દ્સ્ફ",
-		  "streetNameGuj": "સ્દ્ફ્સ્દ્ફ્દ્સ્ફ",
-		  "landmarkGuj": "ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
-		  "areaGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ",
-		  "stateGuj": "ગુજરાત",
-		  "districtGuj": null,
-		  "cityGuj": "વડોદરા",
-		  "countryGuj": "ભારત"
+			"addressType": "APL_TEMPORARY_ADDRESS",
+			"buildingName": "dsf",
+			"streetName": "sdfsdfdsf",
+			"landmark": "fsdfsdfsdfsdf",
+			"area": "sdfsdfsd",
+			"state": "GUJARAT",
+			"district": null,
+			"city": "Vadodara",
+			"country": "INDIA",
+			"pincode": "234234",
+			"buildingNameGuj": "દ્સ્ફ",
+			"streetNameGuj": "સ્દ્ફ્સ્દ્ફ્દ્સ્ફ",
+			"landmarkGuj": "ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+			"areaGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ",
+			"stateGuj": "ગુજરાત",
+			"districtGuj": null,
+			"cityGuj": "વડોદરા",
+			"countryGuj": "ભારત"
 		},
 		"holderTelephoneNo": "43543543541",
 		"holderMobileNo": "4354354354",
@@ -789,56 +792,56 @@ export class AnimalPondNewComponent implements OnInit {
 		"holderAadharNo": "435443543543",
 		"holderPanNo": "ABCDE1234T",
 		"zoneNo": {
-		  "code": "NORTH_ZONE"
+			"code": "NORTH_ZONE"
 		},
 		"wardNo": {
-		  "code": "WARD_7"
+			"code": "WARD_7"
 		},
 		"blockNo": {
-		  "code": "BLOCK_9"
+			"code": "BLOCK_9"
 		},
 		"businessAddress": {
-		  "addressType": "APL_BUSINESS_ADDRESS",
-		  "buildingName": "dfgfdg",
-		  "streetName": "fdgfd",
-		  "landmark": "fdgfdg",
-		  "area": "fdgfdgfdg",
-		  "state": "GUJARAT",
-		  "district": null,
-		  "city": "Vadodara",
-		  "country": "INDIA",
-		  "pincode": "435435",
-		  "buildingNameGuj": "દ્ફ્ગ્ફ્દ્ગ",
-		  "streetNameGuj": "ફ્દ્ગ્ફ્દ",
-		  "landmarkGuj": "ફ્દ્ગ્ફ્દ્ગ",
-		  "areaGuj": "ફ્દ્ગ્ફ્દ્ગ્ફ્દ્ગ",
-		  "stateGuj": "ગુજરાત",
-		  "districtGuj": null,
-		  "cityGuj": "વડોદરા",
-		  "countryGuj": "ભારત"
+			"addressType": "APL_BUSINESS_ADDRESS",
+			"buildingName": "dfgfdg",
+			"streetName": "fdgfd",
+			"landmark": "fdgfdg",
+			"area": "fdgfdgfdg",
+			"state": "GUJARAT",
+			"district": null,
+			"city": "Vadodara",
+			"country": "INDIA",
+			"pincode": "435435",
+			"buildingNameGuj": "દ્ફ્ગ્ફ્દ્ગ",
+			"streetNameGuj": "ફ્દ્ગ્ફ્દ",
+			"landmarkGuj": "ફ્દ્ગ્ફ્દ્ગ",
+			"areaGuj": "ફ્દ્ગ્ફ્દ્ગ્ફ્દ્ગ",
+			"stateGuj": "ગુજરાત",
+			"districtGuj": null,
+			"cityGuj": "વડોદરા",
+			"countryGuj": "ભારત"
 		},
 		"extraDetailsOfBusiness": "fdgfdgfdgfdgfdg",
 		"relationshipId": {
-		  "code": "PROPRIETOR"
+			"code": "PROPRIETOR"
 		},
 		"statusOfBusinessId": {
-		  "code": "PARTNERSHIPFIRM"
+			"code": "PARTNERSHIPFIRM"
 		},
 		"relationshipList": [
-		  {
-			"name": "sfdfsdfsdfsd",
-			"address": "fsdfsdfsd",
-			"mobileNo": "2423423423",
-			"personType": "APL_PERSON"
-		  }
+			{
+				"name": "sfdfsdfsdfsd",
+				"address": "fsdfsdfsd",
+				"mobileNo": "2423423423",
+				"personType": "APL_PERSON"
+			}
 		],
 		"animalDetails": [
-		  {
-			"animalType": {
-			  "code": "COW"
-			},
-			"animalCount": "11"
-		  }
+			{
+				"animalType": {
+					"code": "COW"
+				},
+				"animalCount": "11"
+			}
 		],
 		"totalAnimal": 11,
 		"licenseIssueDate": null,
@@ -856,11 +859,11 @@ export class AnimalPondNewComponent implements OnInit {
 		"canDelete": true,
 		"canSubmit": true,
 		"serviceDetail": {
-		  "code": "APL-LIC",
-		  "name": "Pond License",
-		  "gujName": "Pond License",
-		  "feesOnScrutiny": false,
-		  "appointmentRequired": false
+			"code": "APL-LIC",
+			"name": "Pond License",
+			"gujName": "Pond License",
+			"feesOnScrutiny": false,
+			"appointmentRequired": false
 		}
-	  };
+	};
 }

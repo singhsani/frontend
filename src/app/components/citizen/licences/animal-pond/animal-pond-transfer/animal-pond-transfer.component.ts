@@ -53,8 +53,8 @@ export class AnimalPondTransferComponent implements OnInit {
 		searchLicenceNumber: ""
 	}
 
-	checkBox =  false;
-	
+	checkBox = false;
+
 
 	/**
 	 * This method for serach licence using licence number.
@@ -80,15 +80,15 @@ export class AnimalPondTransferComponent implements OnInit {
 			})
 	}
 
-    /**
-     * @param fb - Declare FormBuilder property.
-     * @param validationError - Declare validation service property
-     * @param formService - Declare form service property 
-     * @param uploadFileService - Declare upload file service property.
-     * @param commonService - Declare sweet alert.
+	/**
+	 * @param fb - Declare FormBuilder property.
+	 * @param validationError - Declare validation service property
+	 * @param formService - Declare form service property 
+	 * @param uploadFileService - Declare upload file service property.
+	 * @param commonService - Declare sweet alert.
 	 * @param toastrService - Show massage with timer.
 	 * @param animalPondService - Call only shop licence api.
-     */
+	 */
 	constructor(
 		private fb: FormBuilder,
 		private validationService: ValidationService,
@@ -126,12 +126,12 @@ export class AnimalPondTransferComponent implements OnInit {
 			this.enableFielList();
 		}
 		this.disableField();
-		
+
 	}
 
 	/**
-    * Method is add required document  
-    */
+	* Method is add required document  
+	*/
 	requiredDocumentList() {
 		this.uploadFilesArray = [];
 		_.forEach(this.animalPondTransferForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
@@ -164,14 +164,14 @@ export class AnimalPondTransferComponent implements OnInit {
 			maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
 			requiredOnAdminPortal: [data.requiredOnAdminPortal],
 			requiredOnCitizenPortal: [data.requiredOnCitizenPortal],
-			dmsEnabled:[data.dmsEnabled],
-			orderSequence:[data.orderSequence ? data.orderSequence : null]
+			dmsEnabled: [data.dmsEnabled],
+			orderSequence: [data.orderSequence ? data.orderSequence : null]
 			// version: [data.version ? data.version : null]
 		});
 	}
 	/**
- 	 * This method use for edit some fiels.
- 	 */
+	   * This method use for edit some fiels.
+	   */
 	enableFielList() {
 		this.animalPondTransferForm.get('relationshipList').enable();
 		this.animalPondTransferForm.get('animalDetails').enable();
@@ -250,13 +250,19 @@ export class AnimalPondTransferComponent implements OnInit {
 				(<FormArray>this.animalPondTransferForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
 			});
 			this.animalPondTransferForm.get('serviceDetail').get('serviceUploadDocuments').value.sort(
-				(a,b) => a.orderSequence - b.orderSequence);
+				(a, b) => a.orderSequence - b.orderSequence);
 			// this.requiredDocumentList();
 			this.onChangeStatusOfBusiness();
 		});
 
 	}
 
+	validateNo(e) {
+		if (e.charCode < 49 || e.charCode > 57) {
+			return true;
+		}
+		return false
+	}
 
 	/**
 	 * Method is used to get form data
@@ -371,10 +377,10 @@ export class AnimalPondTransferComponent implements OnInit {
 				code: [null, Validators.required]
 			}),
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30)]],
-			holderMiddleName: [null,[Validators.maxLength(30)]],
+			holderMiddleName: [null, [Validators.maxLength(30)]],
 			holderLastName: [null, [Validators.required, Validators.maxLength(30)]],
 			holderFirstNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
-			holderMiddleNameGuj: [null,[Validators.maxLength(30)]],
+			holderMiddleNameGuj: [null, [Validators.maxLength(30)]],
 			holderLastNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
 
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
@@ -416,7 +422,7 @@ export class AnimalPondTransferComponent implements OnInit {
 			attachments: [],
 			/* Step 4 controls end */
 
-			businessType:this.fb.group({
+			businessType: this.fb.group({
 				code: [null, Validators.required],
 			}),
 		});
@@ -562,12 +568,12 @@ export class AnimalPondTransferComponent implements OnInit {
 	}
 
 	/**
-     * Method is used to set data value to upload method.
-     * @param indentifier - file identifier
-     * @param labelName - file label name.
-     * @param formPart - file form part
-     * @param variableName - file variable name.
-     */
+	 * Method is used to set data value to upload method.
+	 * @param indentifier - file identifier
+	 * @param labelName - file label name.
+	 * @param formPart - file form part
+	 * @param variableName - file variable name.
+	 */
 	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
 		this.uploadModel = {
 			fieldIdentifier: indentifier.toString(),
@@ -661,10 +667,10 @@ export class AnimalPondTransferComponent implements OnInit {
 		}
 	}
 
-    /**
-     * This method required for final form submition.
-     * @param flag - flag of invalid control.
-     */
+	/**
+	 * This method required for final form submition.
+	 * @param flag - flag of invalid control.
+	 */
 	handleErrorsOnSubmit(flag) {
 
 		let step0 = 17;
@@ -723,35 +729,35 @@ export class AnimalPondTransferComponent implements OnInit {
 		this.tabIndex = evt;
 	}
 
-	onChangeStatusOfBusiness(){
+	onChangeStatusOfBusiness() {
 
 		const subject = this.animalPondTransferForm.get('businessType').get('code').value
 		const documents = this.animalPondTransferForm.get('serviceDetail').get('serviceUploadDocuments').value;
-		const transferFormValue =  this.animalPondTransferForm;
-		this.animalPondService.changeStatusOfBusinessAccordingAtatchment(subject,documents,transferFormValue);
+		const transferFormValue = this.animalPondTransferForm;
+		this.animalPondService.changeStatusOfBusinessAccordingAtatchment(subject, documents, transferFormValue);
 		this.requiredDocumentList();
 	}
 
-	onSameAddressChange(event){
-		if(event.checked){
+	onSameAddressChange(event) {
+		if (event.checked) {
 			this.animalPondTransferForm.get('temporaryAddress').patchValue(this.animalPondTransferForm.get('permanantAddress').value);
 			this.animalPondTransferForm.get('temporaryAddress').disable();
 			this.checkBox = true;
-		}else{
+		} else {
 			this.animalPondTransferForm.get('temporaryAddress').enable();
 			this.animalPondTransferForm.get('temporaryAddress').reset();
 			this.checkBox = false;
 		}
 	}
 
-	
-	valueChangeOnPermantAddress(){
-		if(this.checkBox){
+
+	valueChangeOnPermantAddress() {
+		if (this.checkBox) {
 			this.animalPondTransferForm.get('temporaryAddress').patchValue(this.animalPondTransferForm.get('permanantAddress').value);
 		}
 	}
 
-	disableField(){
+	disableField() {
 		this.animalPondTransferForm.get('refNumber').disable();
 		this.animalPondTransferForm.get('licenseIssueDate').disable();
 	}
