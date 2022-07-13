@@ -41,6 +41,7 @@ export class PecRegistrationComponent implements OnInit {
 	genderArray: any = [];
 	professionArray: any = [];
 	wardNoArray: any = [];
+	blockNoArray: any = [];
 	constitutionArray: any = [];
 	bankNameArray: any = [];
 	entryNoArray: any = [];
@@ -157,6 +158,10 @@ export class PecRegistrationComponent implements OnInit {
 			contactNo: null,
 			email: [null, ValidationService.emailValidator],
 			ward: this.fb.group({
+				wardzoneId: null,
+				wardzoneName: null
+			}),
+			block: this.fb.group({
 				wardzoneId: null,
 				wardzoneName: null
 			}),
@@ -697,6 +702,12 @@ export class PecRegistrationComponent implements OnInit {
 	getAllWardNos() {
 		this.profeService.getAllWardNos().subscribe(res => {
 			this.wardNoArray = res;
+		});
+	}
+
+	getAllBlockNos(event) {
+		this.profeService.getAllBlockNos(event).subscribe(res => {
+			this.blockNoArray = res;
 		});
 	}
 

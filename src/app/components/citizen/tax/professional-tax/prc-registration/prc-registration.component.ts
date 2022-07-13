@@ -40,6 +40,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	genderArray: any = [];
 	professionArray: any = [];
 	wardNoArray: any = [];
+	blockNoArray: any = [];
 	constitutionArray: any = [];
 
 	maxDate: Date = new Date();
@@ -87,10 +88,10 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.prcRegFormControls();
 		this.route.paramMap.subscribe(param => {
-			if(param.get('apiCode') != null && param.get('id')){
-			this.apiCode = param.get('apiCode');
-			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
-			this.serviceFormId = Number(param.get('id'));
+			if (param.get('apiCode') != null && param.get('id')) {
+				this.apiCode = param.get('apiCode');
+				this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+				this.serviceFormId = Number(param.get('id'));
 				this.forPreview();
 			}
 		});
@@ -176,6 +177,10 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 			email: ['', ValidationService.emailValidator],
 			rcDate: null,
 			ward: this.fb.group({
+				wardzoneId: null,
+				wardzoneName: null
+			}),
+			block: this.fb.group({
 				wardzoneId: null,
 				wardzoneName: null
 			}),
@@ -783,6 +788,12 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	getAllWardNos() {
 		this.profeService.getAllWardNos().subscribe(res => {
 			this.wardNoArray = res;
+		});
+	}
+
+	getAllBlockNos(event) {
+		this.profeService.getAllBlockNos(event).subscribe(res => {
+			this.blockNoArray = res;
 		});
 	}
 

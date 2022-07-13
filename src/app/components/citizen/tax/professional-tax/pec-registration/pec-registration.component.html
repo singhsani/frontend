@@ -91,11 +91,28 @@
 
 					<div class="col-md-4 ngSelect" formGroupName="ward">
 						<ng-select placeholder="{{'ward_no' | translate: translateKey}} *" required
-							formControlName="wardzoneId">
+							formControlName="wardzoneId" (change)="getAllBlockNos($event)">
 							<ng-option *ngFor="let ward of wardNoArray" [value]="ward.wardzoneId">{{ward.wardzoneName}}
 							</ng-option>
 						</ng-select>
-						<control-messages [control]="pecRegForm.get('ward').get('wardzoneId')"></control-messages>
+						<mat-error
+							*ngIf="pecRegForm.get('ward').touched && pecRegForm.get('ward').get('wardzoneId').value == null">
+							{{"Ward is Required"}}
+						</mat-error>
+						<!-- <control-messages [control]="pecRegForm.get('ward').get('wardzoneId')"></control-messages> -->
+					</div>
+
+					<div class="col-md-4 ngSelect" formGroupName="block">
+						<ng-select placeholder="{{'block_no' | translate: translateKey}} *" formControlName="wardzoneId"
+							required>
+							<ng-option *ngFor="let block of blockNoArray" [value]="block.wardzoneId">
+								{{block.wardzoneName}}</ng-option>
+						</ng-select>
+						<mat-error
+							*ngIf="pecRegForm.get('block').touched && pecRegForm.get('block').get('wardzoneId').value == null">
+							{{"Block is Required"}}
+						</mat-error>
+						<!-- <control-messages [control]="pecRegForm.get('block').get('wardzoneId')"></control-messages> -->
 					</div>
 
 					<mat-form-field class="col-md-4">
