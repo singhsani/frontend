@@ -62,6 +62,8 @@ export class PecRegistrationComponent implements OnInit {
 	selectedCensusNo: any = "CensusNo";
 	isCensusSelected: boolean = true;
 	placeHolderMessage = null;
+	CanEdit :boolean = true
+	censusNo :boolean = true
 
 	constructor(
 		private fb: FormBuilder,
@@ -512,6 +514,17 @@ export class PecRegistrationComponent implements OnInit {
 		} else {
 			this.formService.getFormData(this.serviceFormId).subscribe(res => {
 				this.setValuesInForm(res, fromPRC);
+				// console.log("res", res);
+				this.CanEdit = res.canEditForm
+				//console.log(res.censusNo[0].census.length);
+				if(res.censusNo[0].census.length > 16){
+                    this.censusNo = true;
+				}
+				else{
+					this.censusNo = false;
+				}
+				
+				
 			});
 		}
 
