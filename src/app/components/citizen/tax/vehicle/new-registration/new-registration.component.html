@@ -20,15 +20,17 @@
 <mat-card class="formClass cardBorder">
 	<!--Start  form  -->
 	<form [formGroup]="vehicleRegistrationForm">
-
+		
 		<mat-tab-group mat-stretch-tabs class="stepperNav" (selectedTabChange)="calculateTax($event)"
-			[(selectedIndex)]="tabIndex" dynamicHeight="true">
-
-			<!-- first step start-->
+		[(selectedIndex)]="tabIndex" dynamicHeight="true">
+		
+		<!-- first step start-->
 			<mat-tab [label]="stepLable1 | translate: translateKey">
 
-				<div class="row stepperMinHeight">
-
+				<h6 class="text-left pl-1"><span class="">Note:-</span> Need to Ensure that the 'Basic Value' which you have to enter is without GST.</h6>
+				<h6 class="text-left pl-5">તમારે એ સુનિશ્ચિત કરવાની જરૂર છે કે તમારે જે 'મૂળભૂત મૂલ્ય' દાખલ કરવાનું છે તે GST વગરનું છે.</h6>
+				<hr>
+					<div class="row stepperMinHeight">
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" #engineNo [value]="engineNo.value.toUpperCase()"
 							appAlphaNumeric type="text" maxlength="20" formControlName="engineNo"
