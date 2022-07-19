@@ -37,7 +37,7 @@ export class MyBookingComponent implements OnInit {
 	isAmphiCancellation: boolean = false;
 	element: any;
 	isBookingNoSlotNo = false;
-	rejectedMessage : any;
+	rejectedMessage: any;
 
 	/**
 	 * Common for all bookings
@@ -50,8 +50,8 @@ export class MyBookingComponent implements OnInit {
 	 * 'start', 'end',
 	 */
 	displayedColumns: Array<string> = [];
-  other_displayedColumns: Array<string> = ['id','applicantName', 'refNumber', 'bookingDate', 'status', 'action'];
-  atithigruh_displayedColumns: Array<string> = ['id','applicantName', 'bookingType', 'refNumber', 'bookingDate', 'status', 'action'];
+	other_displayedColumns: Array<string> = ['id', 'applicantName', 'refNumber', 'bookingDate', 'status', 'action'];
+	atithigruh_displayedColumns: Array<string> = ['id', 'applicantName', 'bookingType', 'refNumber', 'bookingDate', 'status', 'action'];
 
 
 	/**
@@ -85,7 +85,7 @@ export class MyBookingComponent implements OnInit {
 	 */
 	resultsLength: number = 0;
 	isLoadingResults: boolean = true;
-	isAmphi:boolean = false;
+	isAmphi: boolean = false;
 	selectedResourceType: string = null;
 
 	constructor(
@@ -148,65 +148,65 @@ export class MyBookingComponent implements OnInit {
 		})
 	}
 
-	checkedBookingCancelorNot(scheduleList, element){
-	  if(element.resourceType === "CHILDREN_THEATER"){
-        if(element.scheduleList.length > 0){
-          var eventDate = element.scheduleList[0].bookingDate
-          var minDate= moment(eventDate).subtract(10, 'days').format('YYYY-MM-DD');
-          var currentDate = moment(new Date()).format('YYYY-MM-DD');
-          if(currentDate >= minDate){
-            return true;
-          }
-        }
-      }
+	checkedBookingCancelorNot(scheduleList, element) {
+		if (element.resourceType === "CHILDREN_THEATER") {
+			if (element.scheduleList.length > 0) {
+				var eventDate = element.scheduleList[0].bookingDate
+				var minDate = moment(eventDate).subtract(10, 'days').format('YYYY-MM-DD');
+				var currentDate = moment(new Date()).format('YYYY-MM-DD');
+				if (currentDate >= minDate) {
+					return true;
+				}
+			}
+		}
 	}
 
 	/**
 	 * This method is use for open modal.
 	 */
 	openModal(template: TemplateRef<any>, scheduleList, refNumber, element) {
-	  if(this.checkedBookingCancelorNot(scheduleList, element)){
-	     this.toster.error("Applicant can cancel booking before 10 days of event");
-	    return;
-	  }
-	  if(element.status === this.bookingConstant.SCRUTINY){
-	    this.commonService.confirmAlert('Are you sure to cancel?', "You won't be able to revert this!", 'warning', '', performDelete => {
-                     let object = {
-                       refNumber: element.refNumber,
-                       cancellationType: "BY_FORCE"
-                     }
-                     this.bookingService.cancelTownHall(object).subscribe(res => {
-                      if(res.success){
-                          this.toster.success('Successfully Cancelled');
-                      }
-                      this.getAllBooking();
-                     });
-              });
-	  }else{
-	    // We have changed AS PER REQUIREMENT ONLY FOR AMPHITHEATER FROM BA TEAM(Prashant).
-      		if (this.bookingService.resourceType == 'amphiTheater') {
-      			this.isBookingNoSlotNo = true;
-      		} else {
-      			this.isBookingNoSlotNo = false;
-      		}
-      		this.CancelRequestList = [];
-      		this.refNumber = refNumber;
-      		this.cancellationType = null;
-      		this.element = element;
-      		this.CancelSlotList = scheduleList.sort((a, b) => {
+		if (this.checkedBookingCancelorNot(scheduleList, element)) {
+			this.toster.error("Applicant can cancel booking before 10 days of event");
+			return;
+		}
+		if (element.status === this.bookingConstant.SCRUTINY) {
+			this.commonService.confirmAlert('Are you sure to cancel?', "You won't be able to revert this!", 'warning', '', performDelete => {
+				let object = {
+					refNumber: element.refNumber,
+					cancellationType: "BY_FORCE"
+				}
+				this.bookingService.cancelTownHall(object).subscribe(res => {
+					if (res.success) {
+						this.toster.success('Successfully Cancelled');
+					}
+					this.getAllBooking();
+				});
+			});
+		} else {
+			// We have changed AS PER REQUIREMENT ONLY FOR AMPHITHEATER FROM BA TEAM(Prashant).
+			if (this.bookingService.resourceType == 'amphiTheater') {
+				this.isBookingNoSlotNo = true;
+			} else {
+				this.isBookingNoSlotNo = false;
+			}
+			this.CancelRequestList = [];
+			this.refNumber = refNumber;
+			this.cancellationType = null;
+			this.element = element;
+			this.CancelSlotList = scheduleList.sort((a, b) => {
 				return (<any>new Date(a.bookingDateTime) - (<any>new Date(b.bookingDateTime)));
-      			// if ((new Date(a.bookingDate).getTime()) <= (new Date(b.bookingDate).getTime())) {
-      			// 	return 1;
-      			// } else {
-      			// 	return -1;
-      			// }
-      		});
-      		this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
-      		if (element.resourceType == "AMPHI_THEATER" || element.resourceType == "TOWNHALL" || element.resourceType == "STADIUM" || element.resourceType =="CHILDREN_THEATER" || element.resourceType == "ATITHIGRUH") {
-      			this.allSlotDefualtSelected();
-      			this.isAmphiCancellation = true;
-      		}
-	  }
+				// if ((new Date(a.bookingDate).getTime()) <= (new Date(b.bookingDate).getTime())) {
+				// 	return 1;
+				// } else {
+				// 	return -1;
+				// }
+			});
+			this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
+			if (element.resourceType == "AMPHI_THEATER" || element.resourceType == "TOWNHALL" || element.resourceType == "STADIUM" || element.resourceType == "CHILDREN_THEATER" || element.resourceType == "ATITHIGRUH") {
+				this.allSlotDefualtSelected();
+				this.isAmphiCancellation = true;
+			}
+		}
 	}
 
 	/**
@@ -333,11 +333,11 @@ export class MyBookingComponent implements OnInit {
 	 * Get All Bookings Using API.
 	 */
 	getAllBooking() {
-    if(this.selectedResourceType == this.bookingConstant.ATITHIGRUH_RESOURCE_TYPE){
-        this.displayedColumns = this.atithigruh_displayedColumns;
-    }else{
-        this.displayedColumns = this.other_displayedColumns;
-    }
+		if (this.selectedResourceType == this.bookingConstant.ATITHIGRUH_RESOURCE_TYPE) {
+			this.displayedColumns = this.atithigruh_displayedColumns;
+		} else {
+			this.displayedColumns = this.other_displayedColumns;
+		}
 		this.paginator.pageSize = 5;
 		this.paginator.pageIndex = 0
 		this.isAmphiCancellation = false;
@@ -423,6 +423,22 @@ export class MyBookingComponent implements OnInit {
 	 * @param element - json object for receipt.
 	 */
 	printReceipt(element, serviceType: string) {
+		if (serviceType == 'SWIMMING_POOL_FEES') {
+			serviceType = 'SWIMMING_POOL_ADMISSION_FEES'
+		}
+		this.bookingService.printReceipt(element.refNumber, serviceType).subscribe(response => {
+			let sectionToPrint: any = document.getElementById('sectionToPrint');
+			sectionToPrint.innerHTML = response;
+			setTimeout(() => {
+				window.print();
+			});
+
+		}, err => {
+			this.commonService.openAlert('Error', err.message, 'warning');
+		});
+	}
+
+	printReceiptSwimmingFees(element, serviceType: string) {
 		this.bookingService.printReceipt(element.refNumber, serviceType).subscribe(response => {
 			let sectionToPrint: any = document.getElementById('sectionToPrint');
 			sectionToPrint.innerHTML = response;
@@ -443,7 +459,7 @@ export class MyBookingComponent implements OnInit {
 				// if (err.status == 402) {
 				// this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService);
 				if (element.resourceType == 'SWIMMING_POOL' || element.resourceType == 'ATITHIGRUH') {
-					this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway, null, null, null, {gatewayCustomerId: err.error.data.id, txtadditionalInfo1: element.resourceType, payableServiceType: element.payableServiceType});
+					this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway, null, null, null, { gatewayCustomerId: err.error.data.id, txtadditionalInfo1: element.resourceType, payableServiceType: element.payableServiceType });
 				} else {
 					this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway);
 				}
@@ -511,10 +527,10 @@ export class MyBookingComponent implements OnInit {
 			}
 			console.log(object);
 			this.bookingService.cancelTownHall(object).subscribe(res => {
-				if(res.success == false && res.statusCode == "401"){
-           this.toster.error(res.message);
-           return;
-        }
+				if (res.success == false && res.statusCode == "401") {
+					this.toster.error(res.message);
+					return;
+				}
 				this.CancelResponseList = res.data.detail;
 				this.getAllBooking();
 				//this.modalResRef = this.modalService.show(this.templateResponseModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }))
@@ -542,7 +558,7 @@ export class MyBookingComponent implements OnInit {
 				name: [null]
 			}),
 			slotBookingNo: [''],
-			reasonForCancellation:['']
+			reasonForCancellation: ['']
 		});
 	}
 	/*
@@ -576,7 +592,8 @@ export class MyBookingComponent implements OnInit {
 			|| element.status === this.bookingConstant.WAITINGLIST
 			|| element.status === this.bookingConstant.SCRUTINY
 			|| element.status === this.bookingConstant.REJECTED
-			|| (element.resourceType === 'SWIMMING_POOL' && element.status === this.bookingConstant.APPROVED)) {
+			|| (element.resourceType == 'SWIMMING_POOL' && element.status === this.bookingConstant.BOOKED)
+		) {
 			return false;
 		}
 
@@ -585,13 +602,13 @@ export class MyBookingComponent implements OnInit {
 	}
 
 	showCancelBtn(element) {
-// 	  if(element.resourceType === "CHILDREN_THEATER"){
-//       if(element.scheduleList.length > 0){
-//         var eventDate = element.scheduleList[0].bookingDate
-//         var minDate= moment(eventDate).subtract(10, 'days').format('YYYY-MM-DD');
-//         var currentDate = moment(new Date()).format('YYYY-MM-DD');
-//       }
-// 	  }
+		// 	  if(element.resourceType === "CHILDREN_THEATER"){
+		//       if(element.scheduleList.length > 0){
+		//         var eventDate = element.scheduleList[0].bookingDate
+		//         var minDate= moment(eventDate).subtract(10, 'days').format('YYYY-MM-DD');
+		//         var currentDate = moment(new Date()).format('YYYY-MM-DD');
+		//       }
+		// 	  }
 		this.slotBookingList.pop();
 		if (element.status === this.bookingConstant.PAYMENT_REQUIRED
 			|| element.status === this.bookingConstant.CANCELLED
@@ -606,24 +623,24 @@ export class MyBookingComponent implements OnInit {
 			|| element.status === this.bookingConstant.COMPLETED
 			|| (element.resourceType === 'ATITHIGRUH' && element.status === this.bookingConstant.CANCELLATION_APPROVED)
 			|| element.status === this.bookingConstant.PPL_REQUIRED
-      || element.status === this.bookingConstant.DEPOSIT_REQUIRED
+			|| element.status === this.bookingConstant.DEPOSIT_REQUIRED
 			//|| (element.resourceType === "CHILDREN_THEATER" && currentDate >= minDate)
-			) {
+		) {
 			return false;
-		}else if(element.status === this.bookingConstant.SCRUTINY){
-         if((element.resourceType === "STADIUM" && element.payableServiceType !== 'STADIUM_DEPOSIT') ){
-             return true;
-         }else if(element.resourceType === "CHILDREN_THEATER"){
-             return true;
-         }else{
-			 return false;
-		 }
-    }
-	// -------------hide cancel button for swimming pool----------
-	if(element.resourceType==="SWIMMING_POOL"){
-		return false;
-	}
-	// ----------------------------------------------------------
+		} else if (element.status === this.bookingConstant.SCRUTINY) {
+			if ((element.resourceType === "STADIUM" && element.payableServiceType !== 'STADIUM_DEPOSIT')) {
+				return true;
+			} else if (element.resourceType === "CHILDREN_THEATER") {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		// -------------hide cancel button for swimming pool----------
+		if (element.resourceType === "SWIMMING_POOL") {
+			return false;
+		}
+		// ----------------------------------------------------------
 		return true;
 	}
 
@@ -712,156 +729,153 @@ export class MyBookingComponent implements OnInit {
 		});
 	}
 
-	checkingBookingDateWithCurrentDate(element){
-	  if(element.status==='COMPLETED' && element.resourceType == "STADIUM"){
-	    return true;
-    }
-    return false;
+	checkingBookingDateWithCurrentDate(element) {
+		if (element.status === 'COMPLETED' && element.resourceType == "STADIUM") {
+			return true;
+		}
+		return false;
 	}
 
- 	depositRefundRequest(element){
- 	  this.bookingService.depositRefundRequest(element.refNumber).subscribe(response=>{
- 	    if(response.success){
-          this.toster.success("Refund Request Generated");
-      }
-      this.getAllBooking();
- 	  }, err => {
-    			this.commonService.openAlert('Error', err.message, 'warning');
-    });
- 	}
-
- 	/*use cancellation Approve Report in VM file amphitheater*/
-  cancellationApproveReport(refNumber: any){
-    this.bookingService.cancellationApproveReport(refNumber).subscribe(resp => {
-      this.print(resp);
-    });
-  }
-
-  print(response) {
-      let sectionToPrint: any = document.getElementById('sectionToPrint');
-      sectionToPrint.innerHTML = response;
-      setTimeout(() => {
-          window.print();
-      });
-  }
-
-
-  enableMoreAction(element){
-    if(element.status == this.bookingConstant.DRAFT || element.status == this.bookingConstant.TRANSACTION_PENDING ||element.status == this.bookingConstant.EXPIRED || (element.resourceType == 'SWIMMING_POOL' && element.status == this.bookingConstant.APPROVED) || (element.status == this.bookingConstant.APPROVED && element.resourceType == 'STADIUM')){
-        return false;
-    }
-        return true;
-    }
-
-    printAcknowledge(refNumber:string){
-        this.bookingService.printAcknowledgementReceipt(refNumber).subscribe(response => {
-          let sectionToPrint: any = document.getElementById('sectionToPrint');
-          sectionToPrint.innerHTML = response;
-          setTimeout(() => {
-            window.print();
-          });
-
-        }, err => {
-          this.commonService.openAlert('Error', err.message, 'warning');
-        });
-      }
-
-	  openRejectedModel(template: TemplateRef<any>, responseData, refNumber) {
-		  if(responseData.resourceType == "SWIMMING_POOL"){
-			  this.rejectedMessage = responseData.remarks;
-		  }else{
-			  this.rejectedMessage = responseData.newgenRemarks;
-		  }
-		this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-mg' }));
-	  }
-
-	  acknowledgmentReceipt(element){
-		  if((element.status == this.bookingConstant.SUBMITTED || element.status == this.bookingConstant.CANCELLED && (element.resourceType == 'STADIUM' || element.resourceType == 'CHILDREN_THEATER'))){
-			  return true;
-		  }
-		  else if((element.status == this.bookingConstant.SUBMITTED || element.status == this.bookingConstant.CANCELLED || element.status == this.bookingConstant.WAITINGLIST)&& element.resourceType == 'ATITHIGRUH'){
-				return true;
-		  }
-// 		  else if(element.status == this.bookingConstant.CANCELLED && element.resourceType == 'STADIUM'){
-// 			  return true;
-// 		  }
-	  }
-	printLOIReceipt(refNumber:string){
-    this.bookingService.getBase64StringURL(refNumber).subscribe(res => {
-          if(res.success && res.displayForm){
-            this.viewBase64File(res.data);
-          }else{
-            this.toster.error("You will get LOI after department process will be complete");
-          }
-    });
-  }
-
-  viewBase64File(url) {
-      var iframe = "<iframe allowfullscreen border='0' style='margin:-8px' width='100%' height='100%' src='" + url + "'></iframe>"
-      var x = window.open();
-      if (!x || x.closed || typeof x.closed == 'undefined') {
-          this.commonService.openAlert('Pop-up!', 'Please disable your Pop-up blocker and try again.', 'warning');
-          return false;
-      }
-      x.document.open();
-      x.document.write(iframe);
-      x.document.close();
-  }
-
-  showStadiumDepositReceiptBtn(element){
-      if(element.resourceType == 'STADIUM' && (element.status == this.bookingConstant.BOOKED || element.status == this.bookingConstant.COMPLETED
-      || element.status == this.bookingConstant.REFUND_APPROVED || element.status == this.bookingConstant.CANCELLATION_REQUEST
-      || element.status == this.bookingConstant.REFUND_REQUEST))
-       {
-           return true;
-       }else{
-           return false;
-       }
+	depositRefundRequest(element) {
+		this.bookingService.depositRefundRequest(element.refNumber).subscribe(response => {
+			if (response.success) {
+				this.toster.success("Refund Request Generated");
+			}
+			this.getAllBooking();
+		}, err => {
+			this.commonService.openAlert('Error', err.message, 'warning');
+		});
 	}
 
-  refundAcknowledgemnt(refNumber: string,serviceType: string){
-	  this.bookingService.cancelAcknowledgement(refNumber,serviceType).subscribe(response => {
+	/*use cancellation Approve Report in VM file amphitheater*/
+	cancellationApproveReport(refNumber: any) {
+		this.bookingService.cancellationApproveReport(refNumber).subscribe(resp => {
+			this.print(resp);
+		});
+	}
+
+	print(response) {
 		let sectionToPrint: any = document.getElementById('sectionToPrint');
 		sectionToPrint.innerHTML = response;
 		setTimeout(() => {
-		  window.print();
+			window.print();
+		});
+	}
+
+
+	enableMoreAction(element) {
+		if (element.status == this.bookingConstant.DRAFT || element.status == this.bookingConstant.TRANSACTION_PENDING || element.status == this.bookingConstant.EXPIRED || (element.resourceType == 'SWIMMING_POOL' && element.status == this.bookingConstant.APPROVED) || (element.status == this.bookingConstant.APPROVED && element.resourceType == 'STADIUM')) {
+			return false;
+		}
+		return true;
+	}
+
+	printAcknowledge(refNumber: string) {
+		this.bookingService.printAcknowledgementReceipt(refNumber).subscribe(response => {
+			let sectionToPrint: any = document.getElementById('sectionToPrint');
+			sectionToPrint.innerHTML = response;
+			setTimeout(() => {
+				window.print();
+			});
+
+		}, err => {
+			this.commonService.openAlert('Error', err.message, 'warning');
+		});
+	}
+
+	openRejectedModel(template: TemplateRef<any>, responseData, refNumber) {
+		if (responseData.resourceType == "SWIMMING_POOL") {
+			this.rejectedMessage = responseData.remarks;
+		} else {
+			this.rejectedMessage = responseData.newgenRemarks;
+		}
+		this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-mg' }));
+	}
+
+	acknowledgmentReceipt(element) {
+		if ((element.status == this.bookingConstant.SUBMITTED || element.status == this.bookingConstant.CANCELLED && (element.resourceType == 'STADIUM' || element.resourceType == 'CHILDREN_THEATER'))) {
+			return true;
+		}
+		else if ((element.status == this.bookingConstant.SUBMITTED || element.status == this.bookingConstant.CANCELLED || element.status == this.bookingConstant.WAITINGLIST) && element.resourceType == 'ATITHIGRUH') {
+			return true;
+		}
+		// 		  else if(element.status == this.bookingConstant.CANCELLED && element.resourceType == 'STADIUM'){
+		// 			  return true;
+		// 		  }
+	}
+	printLOIReceipt(refNumber: string) {
+		this.bookingService.getBase64StringURL(refNumber).subscribe(res => {
+			if (res.success && res.displayForm) {
+				this.viewBase64File(res.data);
+			} else {
+				this.toster.error("You will get LOI after department process will be complete");
+			}
+		});
+	}
+
+	viewBase64File(url) {
+		var iframe = "<iframe allowfullscreen border='0' style='margin:-8px' width='100%' height='100%' src='" + url + "'></iframe>"
+		var x = window.open();
+		if (!x || x.closed || typeof x.closed == 'undefined') {
+			this.commonService.openAlert('Pop-up!', 'Please disable your Pop-up blocker and try again.', 'warning');
+			return false;
+		}
+		x.document.open();
+		x.document.write(iframe);
+		x.document.close();
+	}
+
+	showStadiumDepositReceiptBtn(element) {
+		if (element.resourceType == 'STADIUM' && (element.status == this.bookingConstant.BOOKED || element.status == this.bookingConstant.COMPLETED
+			|| element.status == this.bookingConstant.REFUND_APPROVED || element.status == this.bookingConstant.CANCELLATION_REQUEST
+			|| element.status == this.bookingConstant.REFUND_REQUEST)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	refundAcknowledgemnt(refNumber: string, serviceType: string) {
+		this.bookingService.cancelAcknowledgement(refNumber, serviceType).subscribe(response => {
+			let sectionToPrint: any = document.getElementById('sectionToPrint');
+			sectionToPrint.innerHTML = response;
+			setTimeout(() => {
+				window.print();
+			});
+
+		}, err => {
+			this.commonService.openAlert('Error', err.message, 'warning');
 		});
 
-	  }, err => {
-		this.commonService.openAlert('Error', err.message, 'warning');
-	  });
+	}
 
-  }
+	selectBookingResource(event) {
+		this.isAmphi = false;
+		this.resultsLength = 0;
+		this.isLoadingResults = false;
+		if (!event) {
+			this.resultsLength = 0;
+			this.isLoadingResults = false;
+		} else if (event == this.bookingConstant.AMPHI_RESOURCE_TYPE) {
+			this.isAmphi = true;
+		}
+		this.selectedResourceType = this.searchBookingsForm.get('resourceType').value;
+	}
+	showTownhallDepositReceiptBtn(element) {
+		if ((element.resourceType == 'TOWNHALL' && element.userType != 'Citizen')
+			&& (element.status == this.bookingConstant.BOOKED || element.status == this.bookingConstant.COMPLETED || element.status == this.bookingConstant.CANCELLATION_REQUEST || element.status == this.bookingConstant.REFUND_REQUEST)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
-  selectBookingResource(event){
-    this.isAmphi = false;
-    this.resultsLength = 0;
-    this.isLoadingResults = false;
-    if(!event){
-        this.resultsLength = 0;
-        this.isLoadingResults = false;
-    }else if(event == this.bookingConstant.AMPHI_RESOURCE_TYPE){
-        this.isAmphi = true;
-    }
-    this.selectedResourceType = this.searchBookingsForm.get('resourceType').value;
-  }
-  showTownhallDepositReceiptBtn(element){
-      if((element.resourceType == 'TOWNHALL' && element.userType != 'Citizen')
-      && (element.status == this.bookingConstant.BOOKED || element.status == this.bookingConstant.COMPLETED || element.status == this.bookingConstant.CANCELLATION_REQUEST || element.status == this.bookingConstant.REFUND_REQUEST))
-       {
-           return true;
-       }else{
-           return false;
-       }
-  }
-
-  showAtithigruhDepositReceiptBtn(element){
-        if((element.resourceType == 'ATITHIGRUH' )
-        && (element.status == this.bookingConstant.BOOKED || element.status == this.bookingConstant.COMPLETED || element.status == this.bookingConstant.CANCELLATION_REQUEST || element.status == this.bookingConstant.REFUND_REQUEST))
-         {
-             return true;
-         }else{
-             return false;
-         }
-    }
+	showAtithigruhDepositReceiptBtn(element) {
+		if ((element.resourceType == 'ATITHIGRUH')
+			&& (element.status == this.bookingConstant.BOOKED || element.status == this.bookingConstant.COMPLETED || element.status == this.bookingConstant.CANCELLATION_REQUEST || element.status == this.bookingConstant.REFUND_REQUEST)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
