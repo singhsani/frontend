@@ -189,7 +189,7 @@ export class ConsumerDetailComponent implements OnInit {
         if (data.status === 200 && data.body.length) {
           if (level == 2) {
             this.wardZoneLevel2List = data.body;
-            this.shortDropdown(this.wardZoneLevel2List,'wardzoneName');
+           this.wardZoneLevel2List,'wardzoneName';
           }
           else if (level == 3) {
             this.wardZoneLevel3List = data.body;
