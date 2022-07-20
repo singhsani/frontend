@@ -423,9 +423,6 @@ export class MyBookingComponent implements OnInit {
 	 * @param element - json object for receipt.
 	 */
 	printReceipt(element, serviceType: string) {
-		if (serviceType == 'SWIMMING_POOL_FEES') {
-			serviceType = 'SWIMMING_POOL_ADMISSION_FEES'
-		}
 		this.bookingService.printReceipt(element.refNumber, serviceType).subscribe(response => {
 			let sectionToPrint: any = document.getElementById('sectionToPrint');
 			sectionToPrint.innerHTML = response;
