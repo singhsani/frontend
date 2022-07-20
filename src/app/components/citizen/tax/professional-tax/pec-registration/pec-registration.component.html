@@ -315,7 +315,7 @@
 								</button>
 								<mat-error *ngIf="placeHolderMessage !== null">{{placeHolderMessage}}</mat-error>
 							</mat-form-field>
-							<mat-form-field class="col-md-3" *ngIf="!isCensusNo">
+							<mat-form-field class="col-md-6" *ngIf="!isCensusNo">
 								<input style="margin-top: 15px !important;" matInput autocomplete="off"
 									appMaskPropertNumber maxlength="21" formControlName="census" type="text"
 									(focusout)="isExistPropertyNo($event.target.value,i)" required>
