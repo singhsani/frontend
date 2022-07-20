@@ -34,11 +34,11 @@ export class AddressDetailComponent implements OnInit, OnDestroy {
   propertyModel: any = {};
   propertyModelSub: Subscription;
   modelProperty: any = {};
-  
-  mask = [/\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, /\d/,  '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]; // ##-##-###-###-### 
+
+  mask = [/\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, /\d/,  '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]; // ##-##-###-###-###
   maskedInputController;
   private specialKeys: Array<string> = ['Backspace', 'Tab', 'End', 'Home'];
-  
+
   constructor(private newNewPropertyEntryAddDataSharingService: NewPropertyEntryAddDataSharingService,
     private propertySearchSharingService: PropertySearchSharingService,
     private newNewPropertyEntryAddService: NewPropertyEntryAddService,
@@ -208,7 +208,7 @@ export class AddressDetailComponent implements OnInit, OnDestroy {
         address2 = address2.substring(0, address2.length - 2);
       fullAddress = address2 + '\n' + fullAddress;
     }
-    
+
     this.addressModel.propertyAddressDTO.propertyAddress = fullAddress;
     if (!this.addressModel.propertyAddressDTO.isPostalAddressDiff) {
       this.addressModel.propertyAddressDTO.postalAddress = fullAddress;
@@ -275,7 +275,7 @@ export class AddressDetailComponent implements OnInit, OnDestroy {
   onBackClick() {
     this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(0);
   }
-  
+
   onBlurReferenceProperty(inValid){
     if(inValid){
       this.addressModel.referencePropertyNo = '';
@@ -288,6 +288,6 @@ export class AddressDetailComponent implements OnInit, OnDestroy {
       return;
     }
     let current: string = this.element.nativeElement.value;
-    this.addressModel.propertyAddressDTO.cityCensusNo = current;
+    this.addressModel.oldPropertyNo = current;
   }
 }
