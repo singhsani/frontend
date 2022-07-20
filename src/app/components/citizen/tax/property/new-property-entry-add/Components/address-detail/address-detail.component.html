@@ -12,7 +12,7 @@
             <div class="col-md-6">
                 <mat-form-field class="full-width-input" hidden>
                     <mat-label>Application Number</mat-label>
-                    <input trim="blur" matInput  name="applicationNumber" 
+                    <input trim="blur" matInput  name="applicationNumber"
                         #ApplicationNumber="ngModel" [(ngModel)]="addressModel.applicationNumber">
                     <mat-error *ngIf="ApplicationNumber.invalid">*Application No. is required.</mat-error>
                 </mat-form-field>
@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="ngSelect">
-                    <ng-select required placeholder="{{ 'reason_for_property_creation' | translate:translateKey }} *" [items]="subReasonPropertyCreationList" 
+                    <ng-select required placeholder="{{ 'reason_for_property_creation' | translate:translateKey }} *" [items]="subReasonPropertyCreationList"
                         bindValue="itemId" bindLabel="itemName" name="subReasonForCreationItemId"
                         [(ngModel)]="addressModel.subReasonForCreationItemId" #SubReasonForCreationItem="ngModel"
                         [ngClass]="{'ng-invalid ng-touched':  form.submitted && SubReasonForCreationItem.invalid}">
@@ -38,6 +38,13 @@
                 <input trim="blur" matInput name="propertyNo" placeholder="{{'property_no' | translate:translateKey }} " [(ngModel)]="addressModel.propertyNo" disabled>
                 </mat-form-field>
             </div>
+            <div class="col-md-6">
+              <mat-form-field class="full-width-input">
+                  <mat-label>Old Property No / Census No</mat-label>
+                  <input trim="blur" minlength="17" maxlength="17" matInput class="oldPropertyNo" name="oldPropertyNo" [(ngModel)]="addressModel.oldPropertyNo" #oldPropertyNo="ngModel" (keydown)="onKeyDown($event)">
+                  <mat-error *ngIf="oldPropertyNo.invalid">*Invalid Old Property No / Census No.</mat-error>
+              </mat-form-field>
+          </div>
         </div>
         <div class="row">
             <div class="col-md-6">
@@ -57,7 +64,7 @@
             <div class="col-md-2">
                 <div class="button-row text-right">
                     <button mat-raised-button type="button" class="pl-15 pr-15" color="primary" (click)="onSearchSRNo()">
-                        <mat-icon>search</mat-icon>{{'search_sr_no' | translate:translateKey }} 
+                        <mat-icon>search</mat-icon>{{'search_sr_no' | translate:translateKey }}
                     </button>
                 </div>
             </div>
@@ -172,14 +179,13 @@
                         maxlength="10">
                 </mat-form-field>
             </div>
-            <div class="col-md-6">
-                <mat-form-field class="full-width-input">
-                    <input trim="blur"  maxlength="17" minlength="17" matInput
-                        placeholder="{{'census_no' | translate:translateKey }} " (input)="onChangeAddress()" name="cityCensusNo"
-                        #CityCensusNo="ngModel" [(ngModel)]="addressModel.propertyAddressDTO.cityCensusNo" (keydown)="onKeyDown($event)">
-                        <mat-error *ngIf="CityCensusNo.invalid">*Invalid CensusNo.</mat-error>
-                </mat-form-field>
-            </div>
+           <div class="col-md-6">
+              <mat-form-field class="full-width-input">
+                  <mat-label>City Survey Number</mat-label>
+                  <input mask-census-no trim="blur" maxlength="21" minlength="21" matInput (input)="onChangeAddress()" name="cityCensusNo" #CityCensusNo="ngModel" [(ngModel)]="addressModel.propertyAddressDTO.cityCensusNo">
+                  <mat-error *ngIf="CityCensusNo.invalid">*Invalid CensusNo.</mat-error>
+              </mat-form-field>
+          </div>
         </div>
 
         <div class="row">
