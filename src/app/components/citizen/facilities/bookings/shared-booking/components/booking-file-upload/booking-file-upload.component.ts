@@ -14,9 +14,9 @@ export class BookingFileUploadComponent implements OnInit, OnChanges {
     @Input() uploadModel: any;
     @Input() form: any;
     @Output() uploaded: EventEmitter<any> = new EventEmitter<any>()
-	/**
-	 * File Upload related variables
-	 */
+    /**
+     * File Upload related variables
+     */
     selectedFiles: FileList
     selectedId: string;
     currentFileUpload: File
@@ -33,14 +33,14 @@ export class BookingFileUploadComponent implements OnInit, OnChanges {
     fromAdmin: boolean = false;
     getFile: any = null
     @Input() attachments: any[];
-    @Input() deleteButtonIsDisabled : boolean = false;
+    @Input() deleteButtonIsDisabled: boolean = false;
     bookingConstants = BookingConstants;
 
-	/**
-	 *
-	 * @param uploadFileService - for common upload file service
-	 * @param commonService - common service for alerts
-	 */
+    /**
+     *
+     * @param uploadFileService - for common upload file service
+     * @param commonService - common service for alerts
+     */
     constructor(
         private uploadFileService: UploadFileService,
         private commonService: CommonService,
@@ -49,15 +49,15 @@ export class BookingFileUploadComponent implements OnInit, OnChanges {
         this.uploadFileService.uploadFileUrl = this.bookingConstants.BOOKINGS_FILE_UPLOAD_URL;
     }
 
-	/**
-	 * Initialize first component loads.
-	 */
+    /**
+     * Initialize first component loads.
+     */
     ngOnInit() { }
 
-    ngOnChanges(changes: SimpleChanges){
-        if(changes && changes.attachments){
-            if(this.attachments && this.attachments.length){
-                for(const attachment of this.attachments){
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes && changes.attachments) {
+            if (this.attachments && this.attachments.length) {
+                for (const attachment of this.attachments) {
                     this.getFile = attachment;
                     this.canUpload = true;
                     this.id = attachment.id;
@@ -66,10 +66,10 @@ export class BookingFileUploadComponent implements OnInit, OnChanges {
             }
         }
     }
-	/**
-	 * This method is use for select the file
-	 * @param event - get selected file event
-	 */
+    /**
+     * This method is use for select the file
+     * @param event - get selected file event
+     */
     selectFile(event) {
         if (event) {
             this.selectedFiles = event.target.files;
@@ -88,13 +88,14 @@ export class BookingFileUploadComponent implements OnInit, OnChanges {
         }
     }
 
-	/**
-	 * This method is use for upload attachments on server using API
-	 */
+    /**
+     * This method is use for upload attachments on server using API
+     */
     upload() {
         if (!this.selectedFiles) {
             this.commonService.openAlert("Warning", "Please Select File to Upload", "warning");
         } else {
+            let photoFileTypes: String[] = ['image/jpg', 'image/jpeg', 'image/png'];
             let fileTypes: string[] = ['application/pdf', 'image/jpg', 'image/jpeg'];
             let size = this.uploadModel.maxFileSizeInMB ? Math.floor(this.uploadModel.maxFileSizeInMB * 1000000) : 5000000;
             if (this.selectedFiles[0].size > size) {
@@ -111,7 +112,15 @@ export class BookingFileUploadComponent implements OnInit, OnChanges {
                 this.commonService.openAlert("Warning", `File must have some contents and size should not be 0 MB `, "warning");
                 this.fileInput.nativeElement.value = "";
                 return;
-            } else if (!fileTypes.includes(this.selectedFiles[0].type)) {
+            } else if (this.uploadModel.resourceType == 'SWIMMING_POOL' && this.uploadModel.variableName == 'photo' && !photoFileTypes.includes(this.selectedFiles[0].type)) {
+                this.fileName = ''
+                this.uploaded.emit(false);
+                this.canUpload = false;
+                this.commonService.openAlert("Warning", `File Type "${this.selectedFiles[0].type}" not valid, please select jpg/jpeg/png`, 'warning');
+                this.fileInput.nativeElement.value = "";
+                return;
+            }
+            else if (this.uploadModel.resourceType != 'SWIMMING_POOL' && !fileTypes.includes(this.selectedFiles[0].type)) {
                 this.fileName = ''
                 this.uploaded.emit(false);
                 this.canUpload = false;
@@ -128,7 +137,7 @@ export class BookingFileUploadComponent implements OnInit, OnChanges {
                 this.progress.percentage = 0;
                 this.currentFileUpload = this.selectedFiles.item(0);
                 formData.append('file', this.currentFileUpload);
-                if(this.uploadModel.dmsUpload){
+                if (this.uploadModel.dmsUpload) {
                     formData.append('serviceFormId', this.uploadModel.bookingFormId);
                     this.uploadFileService.processFileToDMSServerBooking(formData, setProgressBar => {
                         this.progress.percentage = setProgressBar;
@@ -142,29 +151,29 @@ export class BookingFileUploadComponent implements OnInit, OnChanges {
                         this.fileInput.nativeElement.value = "";
                         this.uploaded.emit(true);
                     });
-                }else{
+                } else {
 
-                this.uploadFileService.processFileToServer(formData, setProgressBar => {
-                    this.progress.percentage = setProgressBar;
-                }, successResponse => {
-                    this.tostr.success("Your file uploaded successfully");
-                    this.canUpload = true;
-                    this.id = successResponse.data.id;
-                    this.type = successResponse.data.mimeType;
-                    this.currentFileUpload = undefined;
-                    this.selectedFiles = undefined;
-                    this.fileInput.nativeElement.value = "";
-                    this.uploaded.emit(true);
-                });
+                    this.uploadFileService.processFileToServer(formData, setProgressBar => {
+                        this.progress.percentage = setProgressBar;
+                    }, successResponse => {
+                        this.tostr.success("Your file uploaded successfully");
+                        this.canUpload = true;
+                        this.id = successResponse.data.id;
+                        this.type = successResponse.data.mimeType;
+                        this.currentFileUpload = undefined;
+                        this.selectedFiles = undefined;
+                        this.fileInput.nativeElement.value = "";
+                        this.uploaded.emit(true);
+                    });
 
+                }
             }
-        }
         }
     }
 
-	/**
-	 * Method is used to view or download the file
-	 */
+    /**
+     * Method is used to view or download the file
+     */
     view() {
         this.uploadFileService.getFileFromServiceForBookings(this.uploadModel.refNumber.toString(), this.id).subscribe(respData => {
             this.downLoadFile(respData, this.type);
@@ -174,11 +183,11 @@ export class BookingFileUploadComponent implements OnInit, OnChanges {
         });
     }
 
-	/**
-	 * Method is use to download file.
-	 * @param data - Array Buffer data
-	 * @param type - type of the document.
-	 */
+    /**
+     * Method is use to download file.
+     * @param data - Array Buffer data
+     * @param type - type of the document.
+     */
     downLoadFile(data: any, type: string) {
         var blob = new Blob([data], { type: type.toString() });
         var url = window.URL.createObjectURL(blob);
@@ -188,9 +197,9 @@ export class BookingFileUploadComponent implements OnInit, OnChanges {
         }
     }
 
-	/**
-	 * Method is used to delete file using service form id.
-	 */
+    /**
+     * Method is used to delete file using service form id.
+     */
     deleteFile() {
         if (this.uploadModel.refNumber) { //for common file upload
             this.commonService.deleteAlert('Are you sure?', '', 'warning', '', performDelete => {

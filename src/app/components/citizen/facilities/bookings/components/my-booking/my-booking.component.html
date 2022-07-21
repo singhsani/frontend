@@ -179,7 +179,7 @@
                 {{'receipt_reprint' | translate:translateKey}}
               </button>
 
-              <button *ngIf="element.resourceType == 'SWIMMING_POOL'" mat-menu-item color="primary"
+              <button *ngIf="element.resourceType == 'SWIMMING_POOL' && element.status != this.bookingConstant.PAYMENT_REQUIRED" mat-menu-item color="primary"
                 (click)="printReceiptSwimmingFees(element, 'SWIMMING_POOL_FEES')">
                 <mat-icon title="Print Receipt" color="primary">print</mat-icon>
                 {{'receipt_reprint' | translate:translateKey}}
