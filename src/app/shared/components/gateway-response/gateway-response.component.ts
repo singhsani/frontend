@@ -358,6 +358,11 @@ export class GatewayResponseComponent implements OnInit {
 
 			this.router.navigate([this.bookingConstant.MY_BOOKINGS_URL]);
 
+		}else if(this.dispData.payableServiceType == "SHOP-ESTAB-LIC-NEW" || this.paybleServiceType == "SHOP-ESTAB-TRANSFER") {
+
+        	this.redirectToMyApplication(this.dispData.myApplicationUrl,undefined,undefined,undefined);
+
+			
 		} else if ((this.dispData.resourceType == "townhall") || (this.dispData.resourceType == "amphiTheater") || (this.dispData.resourceType == "stadium") || (this.dispData.resourceType == "childrenTheater") || (this.dispData.resourceType == "atithigruh") || (this.dispData.resourceType == "shootingPermission")) {
 
 			this.router.navigate([this.bookingConstant.MY_BOOKINGS_URL]);
