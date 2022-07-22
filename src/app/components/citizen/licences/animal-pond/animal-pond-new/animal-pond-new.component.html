@@ -430,7 +430,7 @@
 						</div>
 					</div> -->
 				<!-- end table -->
-				<app-action-bar [form]="animalPondNewForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="animalPondNewForm" (tabIndex)="onTabChange($event)"  (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
 					[stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
 			</mat-tab>
 			<!-- step 3 end -->
@@ -443,6 +443,7 @@
 
 				<div class="row">
 					<div class="col-md-4"
+					
 						*ngFor="let doc of animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments').value">
 						<div *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
 							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn :
