@@ -57,7 +57,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	mode: string = 'add';
 	apiType = 'prcForm';
 
-	empSlabId: number = 0;
+	empSlabId: number = 1;
 	yearArray: Array<any>;
 	monthArray: any = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
 		"JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
@@ -664,6 +664,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 
 		this.mode = 'edit';
 		this.empDetailObj = obj;
+		console.log(this.empDetailObj);
 		this.totalEmployees = obj.totEmpCount;
 		this.empDetailMonth = obj.month;
 		this.empDetailYear = obj.year;
@@ -682,19 +683,19 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 			this.commonService.openAlert("Warning", "Please select month", "warning");
 			return;
 		}
-
+		
 		if (!this.empDetailYear) {
 			this.commonService.openAlert("Warning", "Please select year", "warning");
 			return;
 		}
-
+		
 		if (this.totalEmployees <= 0) {
 			this.commonService.openAlert("Warning", "Enter employee details", "warning");
 			return;
 		}
-
+		
 		if (this.mode === 'add') {
-
+			
 			/*set slabDetails object*/
 			for (let i = 0; i < this.employeeSlabArr.length; i++) {
 				this.employeeSlabArr[i].empCount = this.employeeSlabArr[i].empCount == '' ? 0 : Number(this.employeeSlabArr[i].empCount)
@@ -703,29 +704,30 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 					isActive: true, validFrom: this.employeeSlabArr[i].validFrom, validTo: this.employeeSlabArr[i].validTo
 				};
 			}
-
+			
 			/*set outer object*/
 			let obj = {
 				id: null, tempId: this.empSlabId++, year: this.empDetailYear, month: this.empDetailMonth, totEmpCount: this.totalEmployees,
 				formId: null, taxFee: null, slabDetails: _.cloneDeep(this.employeeSlabArr)
 			};
-
+			
 			/* Check if selected month and year is already present in array or not */
 			let isMonthAndYearExist = 0;
 			isMonthAndYearExist = _.findIndex(this.empDetailsListArray, (arr) => { return arr.month == obj.month && arr.year == obj.year; });
-
+			
 			if (isMonthAndYearExist >= 0) {
 				this.toastr.warning(`Record for ${_.capitalize(obj.month)} ${obj.year} is already exist`);
 			} else {
 				this.empDetailsListArray.push(obj);
 			}
-
+			
 			this.empDetailsListArray = _.orderBy(this.empDetailsListArray, ['year', (el) => (this.monthArray.indexOf(el.month))], ["asc", "asc"]);
-
+			
 		} else {
-
+			
 			_.forEach(this.empDetailsListArray, (element) => {
 				/** Without PRC number search update the list */
+				debugger
 				if ((element.tempId && this.empDetailObj.tempId) && (element.tempId == this.empDetailObj.tempId)) {
 
 					element.totEmpCount = this.totalEmployees;
