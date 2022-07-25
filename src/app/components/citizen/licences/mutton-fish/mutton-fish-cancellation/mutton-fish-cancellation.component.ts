@@ -182,7 +182,7 @@ export class MuttonFishCancellationComponent implements OnInit {
 			try {
 				this.muttonFishCancellationForm.patchValue(res);
 				this.muttonFishCancellationForm.disable();
-				this.enableFielList();
+				//this.enableFielList();
 			} catch (error) {
 				console.log(error.message);
 			}
