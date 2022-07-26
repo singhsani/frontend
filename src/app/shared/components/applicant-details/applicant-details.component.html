@@ -5,7 +5,7 @@
 		<div class="row">
 			<mat-form-field class="iconMat col-md-6">
 				<mat-icon matPrefix>face</mat-icon>
-				<input matInput type="text" placeholder="Applicant Name"  formControlName="applicantName"
+				<input matInput OnlyNameWithSpace type="text" placeholder="Applicant Name"  formControlName="applicantName"
 				 required #firstname="matInput">
 				<control-messages [control]="applicantDetailsForm.get('applicantName')"></control-messages>
 			</mat-form-field>
