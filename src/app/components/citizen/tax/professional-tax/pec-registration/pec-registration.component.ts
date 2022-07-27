@@ -63,8 +63,8 @@ export class PecRegistrationComponent implements OnInit {
 	selectedCensusNo: any = "CensusNo";
 	isCensusSelected: boolean = true;
 	placeHolderMessage = null;
-	CanEdit :boolean = true
-	censusNo :boolean = true
+	CanEdit: boolean = true
+	censusNo: boolean = true
 
 	constructor(
 		private fb: FormBuilder,
@@ -503,7 +503,6 @@ export class PecRegistrationComponent implements OnInit {
 	 * @param ecrcNo - business registartion ecrc no.
 	*/
 	searchPecRegByECRCNo(event, pecNo, fromPRC) {
-
 		if (event)
 			event.stopPropagation();
 
@@ -518,19 +517,27 @@ export class PecRegistrationComponent implements OnInit {
 			});
 		} else {
 			this.formService.getFormData(this.serviceFormId).subscribe(res => {
-				this.setValuesInForm(res, fromPRC);
-				// console.log("res", res);
-				this.CanEdit = res.canEditForm
-				//console.log(res.censusNo[0].census.length);
-				if(res.censusNo[0].census.length > 16){
-                    this.censusNo = true;
+
+				if (res.formStatus == "SUBMITTED") {
+					res.canEditForm = false;
+					this.CanEdit = res.canEditForm
 				}
-				else{
+				if (res.censusNo[0].census.length > 16) {
+					this.censusNo = true;
+				}
+				else {
 					this.censusNo = false;
 				}
-				
-				
+				if (res.formStatus == "SUBMITTED") {
+					this.pecRegForm.disable();
+				}
+				this.setValuesInForm(res, fromPRC);
+				// console.log("res", res);
+				//console.log(res.censusNo[0].census.length);
+
+
 			});
+
 		}
 
 	}
@@ -779,7 +786,7 @@ export class PecRegistrationComponent implements OnInit {
 		"prcNo": null,
 		"registrationDate": "2019-12-09",
 		"applicantFullNameGuj": null,
-		"applicantFullName": "Ram Bhai",
+		"applicantFullName": "Ramu Kaka",
 		"gender": {
 			"code": "MALE",
 			"name": null
@@ -788,19 +795,23 @@ export class PecRegistrationComponent implements OnInit {
 		"contactNo": "8962749074",
 		"email": "chetan.porwal@nascentinfo.com",
 		"ward": {
-			"code": "WARD_1",
-			"name": null
+			"wardzoneId": "5",
+			"wardzoneName": null
+		},
+		"block": {
+			"wardzoneId": "22",
+			"wardzoneName": null
 		},
 		"applicantDob": "1970-01-01",
 		"rcDate": null,
-		"commencementDate": "2019-04-01",
+		"commencementDate": "2021-04-01",
 		"vatNo": null,
 		"aadharNo": null,
 		"officeAddress": {
 			"addressType": "PF_PEC_OFFICE_ADDRESS",
 			"buildingName": "44",
-			"streetName": null,
-			"landmark": null,
+			"streetName": "Sayaji Rao",
+			"landmark": "VMC",
 			"area": "Akota",
 			"state": "GUJARAT",
 			"district": null,
@@ -819,8 +830,8 @@ export class PecRegistrationComponent implements OnInit {
 		"residentialAddress": {
 			"addressType": "PF_PEC_RESIDENTIAL_ADDRESS",
 			"buildingName": "44",
-			"streetName": null,
-			"landmark": null,
+			"streetName": "Sayaji Rao",
+			"landmark": "VMC",
 			"area": "Akota",
 			"state": "GUJARAT",
 			"district": null,
@@ -851,7 +862,7 @@ export class PecRegistrationComponent implements OnInit {
 		"gstNo": "29ABCDE1234F2Z5",
 		"censusNo": [
 			{
-				"census": "1111"
+				"census": "01-01-000-111-000-020"
 			}
 		],
 		"entry": {
