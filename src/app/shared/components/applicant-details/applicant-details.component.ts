@@ -33,7 +33,7 @@ export class ApplicantDetailsComponent implements OnInit, OnChanges {
 	ngOnInit() {
 
 		this.applicantDetailsForm = this.fb.group({
-			applicantName : [null,Validators.required],
+			applicantName : [null,[Validators.required,ValidationService.nameValidator]],
 			cellNo: [null, [Validators.maxLength(10), Validators.minLength(10)]],
 			email: [null, Validators.email]
 		});
