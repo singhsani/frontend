@@ -57,7 +57,9 @@
 				<div class="col">
 					<!-- Service Name : &nbsp;{{resourceType}} -->
 					<!-- Service Name : &nbsp;{{responseObj.additional_info.additional_info1}} -->
-					Service Name : &nbsp;{{dispData.txtadditionalInfo1}}
+					Service Name : &nbsp;{{dispData.txtadditionalInfo1 ? dispData.txtadditionalInfo1 :
+						dispData.resourceType ?
+						dispData.resourceType : serviceType ? serviceType : payableServiceType}}
 					<!-- Service Name : &nbsp;{{serviceType ? serviceType : payableServiceType}} -->
 				</div>
 			</div>
