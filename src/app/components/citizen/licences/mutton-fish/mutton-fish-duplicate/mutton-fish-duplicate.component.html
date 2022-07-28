@@ -2,8 +2,8 @@
 
 <mat-card [hidden]="serachLicenceObj.isDisplayDuplicateLicenceForm" class="mt-4 formClass">
 	<mat-form-field class="col-md-10">
-		<input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}"
-			[(ngModel)]="serachLicenceObj.searchLicenceNumber">
+		<input matInput upperCase appAlphaNumeric required placeholder="{{'search_by_application_no' | translate:translateKey}}"
+			[(ngModel)]="serachLicenceObj.searchLicenceNumber" maxlength="25">
 	</mat-form-field>
 	<button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary"
 		(click)="searchLicence()">{{'search' | translate:translateKey}}</button>
@@ -156,7 +156,8 @@
 						placeholder="{{'holder_pan_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput required maxlength="2" OnlyNumber placeholder="{{'no_of_copies' | translate:translateKey}}" formControlName="noOfCopies">
+					<input matInput required maxlength="2" OnlyNumber placeholder="{{'no_of_copies' | translate:translateKey}}" formControlName="noOfCopies"
+					(change)="changeNoOfCopies($event)">
 					<control-messages [control]="muttonFishDuplicateForm.get('noOfCopies')"></control-messages>
 				  </mat-form-field>
 
