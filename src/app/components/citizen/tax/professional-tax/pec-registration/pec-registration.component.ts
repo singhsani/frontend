@@ -518,20 +518,23 @@ export class PecRegistrationComponent implements OnInit {
 		} else {
 			this.formService.getFormData(this.serviceFormId).subscribe(res => {
 
+				this.setValuesInForm(res, fromPRC);
 				if (res.formStatus == "SUBMITTED") {
 					res.canEditForm = false;
 					this.CanEdit = res.canEditForm
 				}
-				if (res.censusNo[0].census.length > 16) {
-					this.censusNo = true;
-				}
-				else {
-					this.censusNo = false;
+				if (!(res.censusNo.length == 0)) {
+					if (res.censusNo[0].census.length > 16) {
+						this.censusNo = true;
+					}
+					else {
+						this.censusNo = false;
+					}
 				}
 				if (res.formStatus == "SUBMITTED") {
 					this.pecRegForm.disable();
 				}
-				this.setValuesInForm(res, fromPRC);
+
 				// console.log("res", res);
 				//console.log(res.censusNo[0].census.length);
 
