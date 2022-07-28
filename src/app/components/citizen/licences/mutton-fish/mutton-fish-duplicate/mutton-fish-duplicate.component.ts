@@ -164,7 +164,13 @@ export class MuttonFishDuplicateComponent implements OnInit {
 		});
 
 	}
-
+	changeNoOfCopies(event){
+		if(event.target.value<1){
+		  this.muttonFishDuplicateForm.get('noOfCopies').setValue(1);
+		  this.commonService.openAlert('Warning', 'No. Of Copies Zero Not allowed', 'warning');
+		  return ;
+		}
+	  }
 	/**
 	 * This method use for edit some fiels.
 	 */
