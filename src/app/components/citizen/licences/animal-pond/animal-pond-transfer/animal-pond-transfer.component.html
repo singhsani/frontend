@@ -2,7 +2,7 @@
 
 <mat-card [hidden]="serachLicenceObj.isDisplayTransferLicenceForm" class="mt-4 formClass">
 	<mat-form-field class="col-md-10">
-		<input matInput upperCase appAlphaNumeric required placeholder="{{'search_by_application_no' | translate:translateKey}}" maxlength="22"
+		<input matInput upperCase appAlphaNumeric required placeholder="{{'search_by_application_no' | translate:translateKey}}" maxlength="25"
 			[(ngModel)]="serachLicenceObj.searchLicenceNumber">
 	</mat-form-field>
 	<button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary"
