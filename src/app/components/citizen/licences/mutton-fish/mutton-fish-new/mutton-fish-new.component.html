@@ -101,7 +101,7 @@
 
 				<div class="row">
 					<h2>{{'permanat_address' | translate:translateKey}}</h2>
-					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredNotPincode]="true"
+					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="true"
 						[addressFormGroup]="muttonFishNewForm.get('permanantAddress')" >
 					</app-address>
 				</div>
@@ -109,11 +109,11 @@
 					<mat-checkbox class="col-md-12 mt-2"
 						[checked]="muttonFishNewForm.get('isSameAsPermanantAddress').get('code').value == 'YES'? true : false"
 						(change)="onSameAddressChange($event)">
-						{{'Temporary Address is same as Permanent Address ?' | translate: translateKey}}</mat-checkbox>
+						{{'Temporary Address is same as Permanent Address ?'}}</mat-checkbox>
 				</div>
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
-					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment [requiredNotPincode]="true"
+					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment [requiredFeilds]="true"
 						[addressFormGroup]="muttonFishNewForm.get('temporaryAddress')"></app-address>
 				</div>
 
@@ -193,7 +193,7 @@
 						</control-messages>
 					</div> -->
 
-					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment [requiredNotPincode]="true"
+					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment [requiredFeilds]="true"
 						[addressFormGroup]="muttonFishNewForm.get('businessAddress')"></app-address>
 				</div>
 

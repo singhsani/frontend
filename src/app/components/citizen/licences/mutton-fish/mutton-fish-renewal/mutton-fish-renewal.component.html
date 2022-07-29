@@ -120,7 +120,7 @@
 
 				<div class="row">
 					<h2>{{'permanat_address' | translate:translateKey}}</h2>
-					<app-address #permanantAddressEstablishment [requiredNotPincode]="true"
+					<app-address #permanantAddressEstablishment [requiredFeilds]="true"
 						[addressFormGroup]="muttonFishRenewalForm.get('permanantAddress')" (change)="valueChangeOnPermantAddress()"></app-address>
 				</div>
 
@@ -130,7 +130,7 @@
 
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
-					<app-address #temporaryAddressEstablishment [requiredNotPincode]="true"
+					<app-address #temporaryAddressEstablishment [requiredFeilds]="true"
 						[addressFormGroup]="muttonFishRenewalForm.get('temporaryAddress')"></app-address>
 				</div>
 
@@ -204,7 +204,7 @@
 						</control-messages>
 					</div>
 
-					<app-address #temporaryAddressEstablishment [requiredNotPincode]="true"
+					<app-address #temporaryAddressEstablishment [requiredFeilds]="true"
 						[addressFormGroup]="muttonFishRenewalForm.get('businessAddress')"></app-address>
 					
 				</div>
