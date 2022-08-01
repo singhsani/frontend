@@ -71,7 +71,7 @@ export class WaterPipelineWorkCompletionComponent implements OnInit {
 
   waterPipelineWorkCompletionSearchControls() {
     this.waterPipelineWorkCompletionSearchForm = this.fb.group({
-      workCompletionWorkOrderNo: [''],
+      workCompletionWorkOrderNo: ['',Validators.required],
       applicationNo: ['']
     });
   }
