@@ -63,8 +63,10 @@ export class PecRegistrationComponent implements OnInit {
 	selectedCensusNo: any = "CensusNo";
 	isCensusSelected: boolean = true;
 	placeHolderMessage = null;
-	CanEdit: boolean = true
-	censusNo: boolean = true
+	CanEdit: boolean = true;
+	censusNo: boolean = true;
+	isBlockNo :boolean =false;
+
 
 	constructor(
 		private fb: FormBuilder,
@@ -521,7 +523,9 @@ export class PecRegistrationComponent implements OnInit {
 				this.setValuesInForm(res, fromPRC);
 				if (res.formStatus == "SUBMITTED") {
 					res.canEditForm = false;
-					this.CanEdit = res.canEditForm
+					this.CanEdit = res.canEditForm;
+					this.isBlockNo = true;
+					this.pecRegForm.disable();
 				}
 				if (!(res.censusNo.length == 0)) {
 					if (res.censusNo[0].census.length > 16) {
@@ -534,11 +538,6 @@ export class PecRegistrationComponent implements OnInit {
 				if (res.formStatus == "SUBMITTED") {
 					this.pecRegForm.disable();
 				}
-
-				// console.log("res", res);
-				//console.log(res.censusNo[0].census.length);
-
-
 			});
 
 		}
