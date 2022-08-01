@@ -2,8 +2,8 @@
 
 <mat-card [hidden]="serachLicenceObj.isDisplayRenewLicenceForm" class="mt-4 formClass">
 	<mat-form-field class="col-md-10">
-		<input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}"
-			[(ngModel)]="serachLicenceObj.searchLicenceNumber">
+		<input matInput upperCase appAlphaNumeric required placeholder="{{'search_by_application_no' | translate:translateKey}}"
+			[(ngModel)]="serachLicenceObj.searchLicenceNumber" maxlength="25">
 	</mat-form-field>
 	<button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary"
 		(click)="searchLicence()">{{'search'
@@ -120,7 +120,7 @@
 
 				<div class="row">
 					<h2>{{'permanat_address' | translate:translateKey}}</h2>
-					<app-address #permanantAddressEstablishment [requiredNotPincode]="true"
+					<app-address #permanantAddressEstablishment [requiredFeilds]="true"
 						[addressFormGroup]="muttonFishRenewalForm.get('permanantAddress')" (change)="valueChangeOnPermantAddress()"></app-address>
 				</div>
 
@@ -130,7 +130,7 @@
 
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
-					<app-address #temporaryAddressEstablishment [requiredNotPincode]="true"
+					<app-address #temporaryAddressEstablishment [requiredFeilds]="true"
 						[addressFormGroup]="muttonFishRenewalForm.get('temporaryAddress')"></app-address>
 				</div>
 
@@ -204,7 +204,7 @@
 						</control-messages>
 					</div>
 
-					<app-address #temporaryAddressEstablishment [requiredNotPincode]="true"
+					<app-address #temporaryAddressEstablishment [requiredFeilds]="true"
 						[addressFormGroup]="muttonFishRenewalForm.get('businessAddress')"></app-address>
 					
 				</div>

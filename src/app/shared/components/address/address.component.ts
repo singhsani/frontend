@@ -18,8 +18,8 @@ export class AddressComponent implements OnInit, OnChanges {
 	@Input() requiredFeilds: boolean;
 	@Input() isDisplayGujFields: boolean = false;
 	@Input() formType: string = null;
-	@Input() requiredNotPincode : boolean;
-	@Input() requiredAhf : boolean;
+	@Input() requiredNotPincode: boolean;
+	@Input() requiredAhf: boolean;
 
 	translateKey: string = 'addressScreen';
 	countryListArray: any = [];
@@ -38,7 +38,7 @@ export class AddressComponent implements OnInit, OnChanges {
 	}
 
 	ngOnChanges() {
-		
+
 		/*If in your module need buildname & area require then pass module name from component in Input property */
 		if (this.formType == 'PFT') {
 			this.isBuildinAreaReq = true;
@@ -60,7 +60,7 @@ export class AddressComponent implements OnInit, OnChanges {
 			this.addressFormGroup.get('city').setValidators([Validators.required]);
 			this.addressFormGroup.get('country').setValidators([Validators.required]);
 			this.addressFormGroup.get('pincode').setValidators([Validators.required, Validators.minLength(6), Validators.maxLength(6)]);
-		} else if(!this.requiredFeilds){
+		} else if (!this.requiredFeilds) {
 			this.addressFormGroup.get('state').clearValidators();
 			this.addressFormGroup.get('city').clearValidators();
 			this.addressFormGroup.get('country').clearValidators();
@@ -75,7 +75,7 @@ export class AddressComponent implements OnInit, OnChanges {
 			this.addressFormGroup.get('city').setValidators([Validators.required]);
 			this.addressFormGroup.get('country').setValidators([Validators.required]);
 			this.addressFormGroup.get('pincode').clearValidators;
-		} else if(!this.requiredNotPincode) {
+		} else if (!this.requiredNotPincode) {
 			this.isBuildinAreaReq = true;
 			this.addressFormGroup.get('state').setValidators([Validators.required]);
 			this.addressFormGroup.get('area').setValidators([Validators.required]);
@@ -86,13 +86,13 @@ export class AddressComponent implements OnInit, OnChanges {
 
 		}
 
-		if(this.requiredAhf){
+		if (this.requiredAhf) {
 			this.addressFormGroup.get('buildingName').setValidators([Validators.required, ValidationService.buildingNameValidator]);
 			this.addressFormGroup.get('city').setValidators([Validators.required]);
 			this.addressFormGroup.get('country').setValidators([Validators.required]);
 			this.addressFormGroup.get('state').setValidators([Validators.required]);
 			this.addressFormGroup.get('pincode').setValidators([Validators.required, Validators.minLength(6), Validators.maxLength(6)]);
-		}else if(!this.requiredAhf){
+		} else if (!this.requiredAhf) {
 			this.addressFormGroup.get('buildingName').clearValidators();
 			this.addressFormGroup.get('state').clearValidators();
 			this.addressFormGroup.get('city').clearValidators();
@@ -118,7 +118,7 @@ export class AddressComponent implements OnInit, OnChanges {
 			uniqueId: null,
 			version: null,
 			addressType: null,
-			buildingName: [null, [ValidationService.buildingNameValidator,Validators.maxLength(60)]],
+			buildingName: [null, [ValidationService.buildingNameValidator, Validators.maxLength(60)]],
 			streetName: [null, Validators.maxLength(60)],
 			landmark: [null, Validators.maxLength(100)],
 			area: [null, Validators.maxLength(60)],
@@ -179,7 +179,7 @@ export class AddressComponent implements OnInit, OnChanges {
 
 		this.countryService.countriesData.subscribe(data => {
 			this.countryListArray = _.cloneDeep(data);
-			this.countryListArray = _.orderBy(this.countryListArray, ['name'],['asc']);
+			this.countryListArray = _.orderBy(this.countryListArray, ['name'], ['asc']);
 			setTimeout(() => {
 				if (this.editMode && this.addressFormGroup.get('country').value) {
 					this.getStateLists(this.addressFormGroup.get('country').value);
@@ -196,7 +196,7 @@ export class AddressComponent implements OnInit, OnChanges {
 	getStateLists(country) {
 
 		this.stateListArray = this.countryListArray.find(con => con.name === country).states;
-		this.stateListArray = _.orderBy(this.stateListArray, ['name'],['asc']);
+		this.stateListArray = _.orderBy(this.stateListArray, ['name'], ['asc']);
 		if (this.editMode && this.addressFormGroup.get('state').value) {
 			this.getCityLists(this.addressFormGroup.get('state').value);
 		}
@@ -208,8 +208,8 @@ export class AddressComponent implements OnInit, OnChanges {
 	 * @param name - state name
 	 */
 	getCityLists(state) {
-		this.cityListArray = this.stateListArray.find(obj => obj.name === state).cities;
-		this.cityListArray = _.orderBy(this.cityListArray, ['name'],['asc']);
+		this.cityListArray = this.stateListArray.find(obj => obj.name.toUpperCase === state.toUpperCase).cities;
+		this.cityListArray = _.orderBy(this.cityListArray, ['name'], ['asc']);
 	}
 
 	/**
