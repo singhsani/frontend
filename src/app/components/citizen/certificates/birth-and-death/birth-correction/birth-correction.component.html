@@ -70,10 +70,10 @@
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
-                            <input required matInput maxlength="150" appValidationFields appGujInputTarget
+                            <input  matInput maxlength="150" appValidationFields appGujInputTarget
                                 [form]="birthCorrectionForm"
                                 placeholder="{{'child_name' | translate:translateKey:'gu'}}"
-                                [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="childNameGuj" required>
+                                [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="childNameGuj" readonly>
                             <mat-error *ngIf="birthCorrectionForm.get('childNameGuj').invalid">Child Name Gujarati is
                                 Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('childNameGuj')"></control-messages> -->
@@ -82,7 +82,7 @@
                         <mat-form-field class="col-md-4">
                             <input matInput maxlength="150" appPreventSpace appGujInputTarget
                                 [form]="birthCorrectionForm" placeholder="{{'gender' | translate:translateKey:'gu'}}"
-                                formControlName="genderguj" required readonly>
+                                formControlName="genderguj" readonly>
                             <mat-error *ngIf="birthCorrectionForm.get('genderguj').invalid">Gender Gujarati is Required.
                             </mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('genderguj')"></control-messages> -->
@@ -92,7 +92,7 @@
                             <input matInput maxlength="150" appPreventSpace appGujInputTarget
                                 [form]="birthCorrectionForm"
                                 placeholder="{{'place_of_birth' | translate:translateKey:'gu'}}"
-                                formControlName="placeofbirthguj" required readonly>
+                                formControlName="placeofbirthguj" readonly>
                             <mat-error *ngIf="birthCorrectionForm.get('placeofbirthguj').invalid">Place of Birth
                                 Gujarati is Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('placeofbirthguj')"></control-messages> -->
@@ -116,7 +116,7 @@
                         <mat-form-field class="col-md-6">
                             <input matInput maxlength="300" appGujInputTarget [form]="birthCorrectionForm"
                                 placeholder="{{'first_name' | translate:translateKey:'gu'}}"
-                                formControlName="fatherFirstNameGuj" required readonly>
+                                formControlName="fatherFirstNameGuj" readonly>
                             <mat-error *ngIf="birthCorrectionForm.get('fatherFirstNameGuj').invalid">Father Name
                                 Gujarati is Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('fatherFirstNameGuj')"></control-messages> -->
@@ -141,7 +141,7 @@
                         <mat-form-field class="col-md-6">
                             <input matInput maxlength="300" appGujInputTarget [form]="birthCorrectionForm"
                                 placeholder="{{'mother_name'| translate:translateKey:'gu'}}"
-                                formControlName="motherFirstNameGuj" required readonly>
+                                formControlName="motherFirstNameGuj" readonly>
                             <mat-error *ngIf="birthCorrectionForm.get('motherFirstNameGuj').invalid">Mother Name
                                 Gujarati is Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('motherFirstNameGuj')"></control-messages> -->
@@ -164,7 +164,7 @@
                             <input matInput maxlength="150" appPreventSpace appGujInputTarget
                                 [form]="birthCorrectionForm"
                                 placeholder="{{'birth_date' | translate:translateKey:'gu'}}"
-                                formControlName="birthdateguj" required readonly>
+                                formControlName="birthdateguj" readonly>
                             <mat-error *ngIf="birthCorrectionForm.get('birthdateguj').invalid">Birth Date Gujarati is
                                 Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('birthdateguj')"></control-messages> -->
@@ -183,7 +183,7 @@
                             <input matInput maxlength="150" appPreventSpace appGujInputTarget
                                 [form]="birthCorrectionForm"
                                 placeholder="{{'birth_time' | translate:translateKey:'gu'}}"
-                                formControlName="birthtimeguj" required readonly>
+                                formControlName="birthtimeguj" readonly>
                             <mat-error *ngIf="birthCorrectionForm.get('birthtimeguj').invalid">Birth Time Gujarati is
                                 Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('birthtimeguj')"></control-messages> -->
@@ -202,7 +202,7 @@
                             <input matInput maxlength="150" appPreventSpace appGujInputTarget
                                 [form]="birthCorrectionForm"
                                 placeholder="{{'birth_address' | translate:translateKey:'gu'}}"
-                                formControlName="birthaddressguj" required readonly>
+                                formControlName="birthaddressguj" readonly>
                             <mat-error *ngIf="birthCorrectionForm.get('birthaddressguj').invalid">Birth Address Gujarati
                                 is Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('birthaddressguj')"></control-messages> -->
@@ -221,7 +221,7 @@
                             <input matInput maxlength="150" appPreventSpace appGujInputTarget
                                 [form]="birthCorrectionForm"
                                 placeholder="{{'permanent_add' | translate:translateKey:'gu'}}"
-                                formControlName="permanentaddguj" required readonly>
+                                formControlName="permanentaddguj" readonly>
                             <mat-error *ngIf="birthCorrectionForm.get('permanentaddguj').invalid">Permanent Address
                                 Gujarati is Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('permanentaddguj')"></control-messages> -->
@@ -264,10 +264,10 @@
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
-                            <input required matInput maxlength="150" appValidationFields appGujInputTarget
+                            <input  matInput maxlength="150" appValidationFields appGujInputTarget
                                 [form]="birthCorrectionForm"
                                 placeholder="{{'child_name' | translate:translateKey:'gu'}}"
-                                [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="childNameGuj" required>
+                                [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="childNameGuj" readonly>
                             <mat-error *ngIf="birthCorrectionForm.get('childNameGuj').invalid">Child Name Gujarati is
                                 Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('childNameGuj')"></control-messages> -->
@@ -276,7 +276,7 @@
                         <mat-form-field class="col-md-4">
                             <input matInput maxlength="150" appPreventSpace appGujInputTarget
                                 [form]="birthCorrectionForm" placeholder="{{'gender' | translate:translateKey:'gu'}}"
-                                formControlName="genderguj" required readonly>
+                                formControlName="genderguj" readonly>
                             <mat-error *ngIf="birthCorrectionForm.get('genderguj').invalid">Gender Gujarati is Required.
                             </mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('genderguj')"></control-messages> -->
@@ -286,7 +286,7 @@
                             <input matInput maxlength="150" appPreventSpace appGujInputTarget
                                 [form]="birthCorrectionForm"
                                 placeholder="{{'place_of_birth' | translate:translateKey:'gu'}}"
-                                formControlName="placeofbirthguj" required readonly>
+                                formControlName="placeofbirthguj" readonly>
                             <mat-error *ngIf="birthCorrectionForm.get('placeofbirthguj').invalid">Place of Birth
                                 Gujarati is Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('placeofbirthguj')"></control-messages> -->
@@ -327,7 +327,7 @@
                                 [form]="birthCorrectionForm"
                                 placeholder="{{'first_name' | translate:translateKey:'gu'}}"
                                 [validationFieldsType]="'onlyNameWithSpace'" formControlName="fatherFirstNameGuj"
-                                required>
+                                 readonly>
                             <mat-error *ngIf="birthCorrectionForm.get('fatherFirstNameGuj').invalid">Father Name
                                 Gujarati is Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('fatherFirstNameGuj')"></control-messages> -->
@@ -378,8 +378,7 @@
                             <input matInput maxlength="300" appValidationFields appGujInputTarget
                                 [form]="birthCorrectionForm"
                                 placeholder="{{'mother_name'| translate:translateKey:'gu'}}"
-                                [validationFieldsType]="'onlyNameWithSpace'" formControlName="motherFirstNameGuj"
-                                required>
+                                [validationFieldsType]="'onlyNameWithSpace'" formControlName="motherFirstNameGuj">
                             <mat-error *ngIf="birthCorrectionForm.get('motherFirstNameGuj').invalid">Mother Name
                                 Gujarati is Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('motherFirstNameGuj')"></control-messages> -->
@@ -413,7 +412,7 @@
                             <input matInput maxlength="150" appPreventSpace appGujInputTarget
                                 [form]="birthCorrectionForm"
                                 placeholder="{{'birth_date' | translate:translateKey:'gu'}}"
-                                formControlName="birthdateguj" required readonly>
+                                formControlName="birthdateguj" readonly>
                             <mat-error *ngIf="birthCorrectionForm.get('birthdateguj').invalid">Birth Date Gujarati is
                                 Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('birthdateguj')"></control-messages> -->
@@ -432,7 +431,7 @@
                             <input matInput maxlength="150" appPreventSpace appGujInputTarget
                                 [form]="birthCorrectionForm"
                                 placeholder="{{'birth_time' | translate:translateKey:'gu'}}"
-                                formControlName="birthtimeguj" required readonly>
+                                formControlName="birthtimeguj" readonly>
                             <mat-error *ngIf="birthCorrectionForm.get('birthtimeguj').invalid">Birth Time Gujarati is
                                 Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('birthtimeguj')"></control-messages> -->
@@ -451,7 +450,7 @@
                             <input matInput maxlength="150" appPreventSpace appGujInputTarget
                                 [form]="birthCorrectionForm"
                                 placeholder="{{'birth_address' | translate:translateKey:'gu'}}"
-                                formControlName="birthaddressguj" required readonly>
+                                formControlName="birthaddressguj" readonly>
                             <mat-error *ngIf="birthCorrectionForm.get('birthaddressguj').invalid">Birth Address Gujarati
                                 is Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('birthaddressguj')"></control-messages> -->
@@ -470,7 +469,7 @@
                             <input matInput maxlength="150" appPreventSpace appGujInputTarget
                                 [form]="birthCorrectionForm"
                                 placeholder="{{'permanent_add' | translate:translateKey:'gu'}}"
-                                formControlName="permanentaddguj" required readonly>
+                                formControlName="permanentaddguj" readonly>
                             <mat-error *ngIf="birthCorrectionForm.get('permanentaddguj').invalid">Permanent Address
                                 Gujarati is Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('permanentaddguj')"></control-messages> -->
