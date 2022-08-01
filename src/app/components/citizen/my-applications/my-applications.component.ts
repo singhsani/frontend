@@ -500,6 +500,11 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			|| row.serviceType == 'POND_CANCELLATION' || row.serviceType == 'POND_DUPLICATION') {
 			return false;
 		}
+
+		else if (row.serviceType == 'MEAT_FISH_LICENCE' ) {
+			return false;
+		}
+		
 		else if (row.fileStatus != 'DRAFT') {
 			return true;
 		}
