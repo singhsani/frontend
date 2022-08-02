@@ -76,7 +76,7 @@
                     </mat-form-field> -->
 
                     <mat-form-field class="col-md-6">
-                        <input matInput required appValidationFields maxlength="300" appGujInputTarget [form]="deathCorrectionForm"
+                        <input matInput appValidationFields maxlength="300" appGujInputTarget [form]="deathCorrectionForm"
                         [validationFieldsType]="'onlyNameWithSpace'" placeholder="{{'deceased_name' | translate:translateKey:'gu'}}"
                             formControlName="deceasednameguj">
                             <mat-error *ngIf="deathCorrectionForm.get('deceasednameguj').invalid">Deceased Name is Required.</mat-error>
@@ -92,7 +92,7 @@
 
                     <mat-form-field class="col-md-4">
                         <input matInput  appGujInputTarget  
-                        placeholder="{{'gender' | translate:translateKey:'gu'}}" formControlName="genderguj" required readonly>
+                        placeholder="{{'gender' | translate:translateKey:'gu'}}" formControlName="genderguj" readonly>
                         <mat-error *ngIf="deathCorrectionForm.get('genderguj').invalid">Gender Gujarati is Required.</mat-error>
                     </mat-form-field>
 
@@ -114,7 +114,7 @@
 
                         <mat-form-field class="col-md-6">
                             <input matInput  appGujInputTarget  
-                            placeholder="{{'father_name' | translate:translateKey:'gu'}}" formControlName="fathernameguj" required readonly>
+                            placeholder="{{'father_name' | translate:translateKey:'gu'}}" formControlName="fathernameguj" readonly>
                             <mat-error *ngIf="deathCorrectionForm.get('fathernameguj').invalid">Father Name Gujarati is Required.</mat-error>
                         </mat-form-field>
                     </div>
@@ -146,7 +146,7 @@
 
                     <mat-form-field class="col-md-6">
                         <input matInput trim type="text" appGujInputTarget [form]="deathCorrectionForm" formControlName="mothernameguj"
-                            placeholder="{{'mother_name' | translate: translateKey: 'gu'}}" required readonly>
+                            placeholder="{{'mother_name' | translate: translateKey: 'gu'}}" readonly>
                             <mat-error *ngIf="deathCorrectionForm.get('mothernameguj').invalid">Mother Name Gujarati is Required.</mat-error>
                     </mat-form-field>
 
@@ -163,7 +163,7 @@
 
                         <mat-form-field class="col-md-4">
                             <input matInput  appGujInputTarget  
-                            placeholder="{{'death_place_name' | translate:translateKey:'gu'}}" formControlName="placeofdeathguj" required readonly>
+                            placeholder="{{'death_place_name' | translate:translateKey:'gu'}}" formControlName="placeofdeathguj" readonly>
                             <mat-error *ngIf="deathCorrectionForm.get('placeofdeathguj').invalid">Place of Death Gujarati is Required.</mat-error>
                         </mat-form-field>
 
@@ -181,7 +181,7 @@
 
                         <mat-form-field class="col-md-12">
                             <textarea matInput  appGujInputTarget  
-                            placeholder="{{'address' | translate:translateKey:'gu'}}" formControlName="deathaddressguj" required readonly> </textarea>
+                            placeholder="{{'address' | translate:translateKey:'gu'}}" formControlName="deathaddressguj" readonly> </textarea>
                             <mat-error *ngIf="deathCorrectionForm.get('deathaddressguj').invalid">Death Address Gujarati is Required.</mat-error>
                         </mat-form-field>
 
@@ -193,7 +193,7 @@
 
                         <mat-form-field class="col-md-12">
                             <textarea matInput  appGujInputTarget  
-                            placeholder="{{'permanent_address' | translate:translateKey:'gu'}}" formControlName="permanentaddressguj" required readonly></textarea>
+                            placeholder="{{'permanent_address' | translate:translateKey:'gu'}}" formControlName="permanentaddressguj" readonly></textarea>
                             <mat-error *ngIf="deathCorrectionForm.get('permanentaddressguj').invalid">Permanent Address Gujarati is Required.</mat-error>
                         </mat-form-field>
    
