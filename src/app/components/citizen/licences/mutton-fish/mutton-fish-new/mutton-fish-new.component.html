@@ -128,11 +128,12 @@
 						<control-messages [control]="muttonFishNewForm.get('holderMobileNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="12" formControlName="holderFaxNo"
+					<input matInput OnlyNumber maxlength="12" minlength="12" formControlName="holderFaxNo"
 						placeholder="{{'holder_fax_no' | translate:translateKey}}">
+						<control-messages [control]="muttonFishNewForm.get('holderFaxNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="12" required formControlName="holderAadharNo"
+					<input matInput OnlyNumber maxlength="12" minlength="12"  required formControlName="holderAadharNo"
 						placeholder="{{'holder_aadhar_no' | translate:translateKey}}">
 					<control-messages [control]="muttonFishNewForm.get('holderAadharNo')"></control-messages>
 				</mat-form-field>
@@ -270,9 +271,9 @@
 
 								<td>
 									<!-- <div class="d-md-none">{{'name' | translate:translateKey}}</div> -->
-									<div *ngIf="!item.isEditMode">{{item.get('name').value}}</div>
+									<div class="abc" *ngIf="!item.isEditMode">{{item.get('name').value}}</div>
 									<mat-form-field *ngIf="item.isEditMode">
-										<input matInput maxlength="100" appValidationFields
+										<input matInput maxlength="100" appValidationFields 
 											[validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
 											placeholder="{{'name' | translate:translateKey}}" required>
 										<control-messages [control]="item.get('name')"></control-messages>
@@ -281,7 +282,7 @@
 
 								<td>
 									<!-- <div class="d-md-none">{{'address' | translate:translateKey}}</div> -->
-									<div *ngIf="!item.isEditMode">{{item.get('address').value}}</div>
+									<div class="abc" *ngIf="!item.isEditMode">{{item.get('address').value}}</div>
 									<mat-form-field *ngIf="item.isEditMode">
 										<input matInput maxlength="200"
 											placeholder="{{'address' | translate:translateKey}}"
