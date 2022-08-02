@@ -423,12 +423,12 @@ export class BirthCorrectionComponent implements OnInit {
 
 			//step - 1 (13)
 			childName: [null, Validators.required],
-			childNameGuj: [null, Validators.required],
+			childNameGuj: [null],
 			fatherFirstName:  [null, Validators.required],
 			// fatherMiddleName: null,
 			// fatherLastName: null,
 
-			fatherFirstNameGuj: [null, Validators.required],
+			fatherFirstNameGuj: [null],
 			// fatherMiddleNameGuj: null,
 			// fatherLastNameGuj: null,
 
@@ -436,24 +436,24 @@ export class BirthCorrectionComponent implements OnInit {
 			// motherMiddleName: null,
 			// motherLastName: null,
 
-			motherFirstNameGuj: [null, Validators.required],
+			motherFirstNameGuj: [null],
 			// motherMiddleNameGuj: null,
 			// motherLastNameGuj: null,
 
 			birthtime: [null, Validators.required],
-			birthtimeguj: [null, Validators.required],
+			birthtimeguj: [null],
 
 			gender: [null, Validators.required],
-			genderguj: [null, Validators.required],
+			genderguj: [null],
 
 			placeofbirth: [null, Validators.required],
-			placeofbirthguj: [null, Validators.required],
+			placeofbirthguj: [null],
 
 			birthaddress:[null, Validators.required],
-			birthaddressguj: [null, Validators.required],
+			birthaddressguj: [null],
 
 			permanentadd: [null, Validators.required],
-			permanentaddguj: [null, Validators.required],
+			permanentaddguj: [null],
 
 			refNumber: null,
 
@@ -461,7 +461,7 @@ export class BirthCorrectionComponent implements OnInit {
 				code: [null]
 			}),
 			birthDate: [null, Validators.required],
-			birthdateguj: [null, Validators.required],
+			birthdateguj: [null],
 			registrationDate: [null, Validators.required],
 
 			// fieldView: "ALL",

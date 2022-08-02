@@ -322,9 +322,9 @@ export class DeathCorrectionComponent implements OnInit {
 			deceasedname: [null, Validators.required],
 			// deceasedMiddleName: null,
 			// deceasedLastName: null,
-			deceasednameguj: [null, Validators.required],
+			deceasednameguj: [null],
 			gender: [null, Validators.required],
-			genderguj: [null, Validators.required],
+			genderguj: [null],
 			dateofdeath: [null, Validators.required],
 
 			// deceasedMiddleNameGuj: null,
@@ -332,9 +332,9 @@ export class DeathCorrectionComponent implements OnInit {
 
 			//step 2(family details - 2)
 			fathername: [null, Validators.required],
-			fathernameguj: [null, Validators.required],
+			fathernameguj: [null],
 			mothername: [null, Validators.required],
-			mothernameguj: [null, Validators.required],
+			mothernameguj: [null],
 			// fatherOrHusbandName: null,
 
 			refNumber: null,
@@ -342,12 +342,12 @@ export class DeathCorrectionComponent implements OnInit {
 
 			//step 3(other details)
 			placeofdeath: [null, Validators.required],
-			placeofdeathguj: [null, Validators.required],
+			placeofdeathguj: [null],
 			regdate: [null, Validators.required],
 			deathaddress: [null, Validators.required],
-			deathaddressguj: [null, Validators.required],
+			deathaddressguj: [null],
 			permanentaddress: [null, Validators.required],
-			permanentaddressguj: [null, Validators.required],
+			permanentaddressguj: [null],
 
 			typeOfCorrection: this.fb.group({
 				code: [null]
