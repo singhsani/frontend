@@ -137,18 +137,22 @@
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber maxlength="11" minlength="11" formControlName="holderTelephoneNo"
 						placeholder="{{'holder_telephone_no' | translate:translateKey}}">
+						<control-messages [control]="muttonFishRenewalForm.get('holderTelephoneNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber maxlength="10" minlength="10" required formControlName="holderMobileNo"
 						placeholder="{{'holder_mobile_no' | translate:translateKey}}">
+						<control-messages [control]="muttonFishRenewalForm.get('holderMobileNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="12" formControlName="holderFaxNo"
+					<input matInput OnlyNumber maxlength="12" minlength="12"  formControlName="holderFaxNo"
 						placeholder="{{'holder_fax_no' | translate:translateKey}}">
+						<control-messages [control]="muttonFishRenewalForm.get('holderFaxNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="12" required formControlName="holderAadharNo"
+					<input matInput OnlyNumber maxlength="12"  minlength="12"  required formControlName="holderAadharNo"
 						placeholder="{{'holder_aadhar_no' | translate:translateKey}}">
+						<control-messages [control]="muttonFishRenewalForm.get('holderAadharNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput appAlphaNumeric maxlength="10" required formControlName="holderPanNo"
