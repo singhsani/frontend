@@ -93,8 +93,9 @@ export class MuttonFishNewComponent implements OnInit {
 	getMuttonFishLicNewData() {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
+
 				this.muttonFishNewForm.patchValue(res);
-				this.isdisableMode = res.canEdit
+				this.isdisableMode = res.canEdit;
 				this.licenseConfiguration.isAttachmentButtonsVisible = true;
 				this.onChangeZone(this.muttonFishNewForm.get('zoneNo').value.code);
 				//this.onChangeWard(this.muttonFishNewForm.get('wardNo').value.code);
@@ -223,7 +224,7 @@ export class MuttonFishNewComponent implements OnInit {
 		} else {
 			return this.uploadFileArray;
 		}
-			this.removeAddressDetail();
+			//this.removeAddressDetail();
 	}
 
 	
