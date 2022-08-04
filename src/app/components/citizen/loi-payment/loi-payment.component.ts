@@ -33,6 +33,7 @@ export class LoiPaymentComponent implements OnInit {
 	config: CitizenConfig = new CitizenConfig();
 	loiDetails: any = [];
 	ShowTable = false;
+	showPayment = false;
 	filterData: any;
 	sum = 0;
 	loiRecords: any = [];
@@ -86,6 +87,7 @@ export class LoiPaymentComponent implements OnInit {
 	onItemChange(event) {
 		this.filterData = [];
 		this.ShowTable = true;
+		this.showPayment = true;
 		this.sum = 0;
 		let data = this.loiDetails.filter(element => element.loiNumber === event.target.defaultValue);
 		this.filterData = data.reduce((r, { charges }) => {

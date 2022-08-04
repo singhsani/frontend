@@ -93,8 +93,9 @@ export class MuttonFishNewComponent implements OnInit {
 	getMuttonFishLicNewData() {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
+
 				this.muttonFishNewForm.patchValue(res);
-				this.isdisableMode = res.canEdit
+				this.isdisableMode = res.canEdit;
 				this.licenseConfiguration.isAttachmentButtonsVisible = true;
 				this.onChangeZone(this.muttonFishNewForm.get('zoneNo').value.code);
 				//this.onChangeWard(this.muttonFishNewForm.get('wardNo').value.code);
@@ -223,7 +224,7 @@ export class MuttonFishNewComponent implements OnInit {
 		} else {
 			return this.uploadFileArray;
 		}
-			this.removeAddressDetail();
+			//this.removeAddressDetail();
 	}
 
 	
@@ -275,7 +276,7 @@ export class MuttonFishNewComponent implements OnInit {
 			holderTelephoneNo: [null, [Validators.maxLength(11), Validators.minLength(11)]],
 			holderMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
-			holderAadharNo: [null, [Validators.required, ValidationService.aadharValidation, Validators.maxLength(12)]],
+			holderAadharNo: [null, [Validators.required, Validators.maxLength(12)]],
 			holderPanNo: [null, [Validators.required, ValidationService.panValidator, Validators.maxLength(10)]],
 			/* Step 1 controls end */
 
