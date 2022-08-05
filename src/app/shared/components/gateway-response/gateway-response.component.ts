@@ -372,7 +372,10 @@ export class GatewayResponseComponent implements OnInit {
 
 			this.router.navigate([this.bookingConstant.MY_TICKETINGS_URL]);
 
-		}
+		}else if(this.dispData.payableServiceType == "APL-TRA" || this.paybleServiceType == "APL-TRA" || this.dispData.payableServiceType=="APL-REN" || this.paybleServiceType=="APL-REN" || this.dispData.payableServiceType=="APL-DUP" || this.paybleServiceType=="APL-DUP" || this.paybleServiceType=="APL-LIC" || this.dispData.payableServiceType=="APL-LIC") {
+
+        	this.redirectToMyApplication(this.dispData.myApplicationUrl,undefined,undefined,undefined);	
+		} 
 		else {
 			setTimeout(() => {
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
