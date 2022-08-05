@@ -39,7 +39,8 @@
                                 <td>{{ item.loiNumber }}</td>
                                 <td>{{ item.totalAmount }}</td>
                                 <td>
-                                    <button mat-raised-button color="primary" (click)="makePayment(item.loiNumber)">Payment</button>
+                                    <button [disabled]="!showPayment" mat-raised-button color="primary"
+                                        (click)="makePayment(item.loiNumber)">Payment</button>
                                 </td>
                             </tr>
                         </tbody>

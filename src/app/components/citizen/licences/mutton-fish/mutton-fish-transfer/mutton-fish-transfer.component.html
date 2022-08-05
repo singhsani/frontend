@@ -2,7 +2,8 @@
 
 <mat-card [hidden]="serachLicenceObj.isDisplayRenewLicenceForm" class="mt-4 formClass">
 	<mat-form-field class="col-md-10">
-		<input matInput upperCase appAlphaNumeric required placeholder="{{'search_by_application_no' | translate:translateKey}}"
+		<input matInput upperCase appAlphaNumeric required
+			placeholder="{{'search_by_application_no' | translate:translateKey}}"
 			[(ngModel)]="serachLicenceObj.searchLicenceNumber" maxlength="25">
 	</mat-form-field>
 	<button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary"
@@ -75,7 +76,7 @@
 						<control-messages [control]="muttonFishTransferForm.get('holderFirstName')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text"  maxlength="30" appValidationFields
+						<input matInput type="text" maxlength="30" appValidationFields
 							placeholder="{{'holder_middlename' | translate:translateKey}}"
 							formControlName="holderMiddleName" appGujInputSource targetElement="holderMiddleNameGuj"
 							[form]="muttonFishTransferForm">
@@ -104,8 +105,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="90"
 							placeholder="{{'holder_middlename' | translate:translateKey:'gu'}}" appValidationFields
-							 formControlName="holderMiddleNameGuj"
-							appGujInputTarget [form]="muttonFishTransferForm">
+							formControlName="holderMiddleNameGuj" appGujInputTarget [form]="muttonFishTransferForm">
 						<control-messages [control]="muttonFishTransferForm.get('holderMiddleNameGuj')">
 						</control-messages>
 					</mat-form-field>
@@ -123,11 +123,13 @@
 				<div class="row">
 					<h2>{{'permanat_address' | translate:translateKey}}</h2>
 					<app-address #permanantAddressEstablishment [requiredFeilds]="true"
-						[addressFormGroup]="muttonFishTransferForm.get('permanantAddress')" (change)=valueChangeOnPermantAddress()></app-address>
+						[addressFormGroup]="muttonFishTransferForm.get('permanantAddress')"
+						(change)=valueChangeOnPermantAddress()></app-address>
 				</div>
 
-				<div class="col-md-4" >
-					<mat-checkbox class="col-md-12 mt-2" (change)="onSameAddressChange($event)">{{'Temporary Address is same as Permanent Address?' | translate: translateKey}}</mat-checkbox>
+				<div class="col-md-4">
+					<mat-checkbox class="col-md-12 mt-2" (change)="onSameAddressChange($event)">{{'Temporary Address is
+						same as Permanent Address?' | translate: translateKey}}</mat-checkbox>
 				</div>
 
 				<div class="row">
@@ -139,20 +141,20 @@
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber maxlength="11" minlength="11" formControlName="holderTelephoneNo"
 						placeholder="{{'holder_telephone_no' | translate:translateKey}}">
-						<control-messages [control]="muttonFishTransferForm.get('holderTelephoneNo')"></control-messages>
+					<control-messages [control]="muttonFishTransferForm.get('holderTelephoneNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber maxlength="10" minlength="10" required formControlName="holderMobileNo"
 						placeholder="{{'holder_mobile_no' | translate:translateKey}}">
-						<control-messages [control]="muttonFishTransferForm.get('holderMobileNo')"></control-messages>
+					<control-messages [control]="muttonFishTransferForm.get('holderMobileNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="12" minlength="12"  formControlName="holderFaxNo"
+					<input matInput OnlyNumber maxlength="12" minlength="12" formControlName="holderFaxNo"
 						placeholder="{{'holder_fax_no' | translate:translateKey}}">
-				<control-messages [control]="muttonFishTransferForm.get('holderFaxNo')"></control-messages>
+					<control-messages [control]="muttonFishTransferForm.get('holderFaxNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="12" minlength="12"  required formControlName="holderAadharNo"
+					<input matInput OnlyNumber maxlength="12" minlength="12" required formControlName="holderAadharNo"
 						placeholder="{{'holder_aadhar_no' | translate:translateKey}}">
 					<control-messages [control]="muttonFishTransferForm.get('holderAadharNo')"></control-messages>
 				</mat-form-field>
@@ -236,7 +238,7 @@
 						<control-messages [control]="muttonFishTransferForm.get('relationshipId').get('code')">
 						</control-messages>
 					</div> -->
-				 </div> 
+				</div>
 
 				<div class="row">
 					<div class="col-md-10">
@@ -279,7 +281,7 @@
 									<!-- <div class="d-md-none">{{'name' | translate:translateKey}}</div> -->
 									<div *ngIf="!item.isEditMode">{{item.get('name').value}}</div>
 									<mat-form-field *ngIf="item.isEditMode">
-										<input matInput maxlength="100" appValidationFields
+										<input matInput maxlength="50" appValidationFields
 											[validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
 											placeholder="{{'name' | translate:translateKey}}*">
 										<control-messages [control]="item.get('name')"></control-messages>
@@ -290,7 +292,7 @@
 									<!-- <div class="d-md-none">{{'address' | translate:translateKey}}</div> -->
 									<div *ngIf="!item.isEditMode">{{item.get('address').value}}</div>
 									<mat-form-field *ngIf="item.isEditMode">
-										<input matInput maxlength="200"
+										<input matInput maxlength="100"
 											placeholder="{{'address' | translate:translateKey}}*"
 											formControlName="address">
 										<control-messages [control]="item.get('address')">
@@ -350,11 +352,11 @@
 				<div class="row">
 					<!-- muttonFishTransferForm.get('serviceDetail').get('serviceUploadDocuments').value 
 					| filterAttachmentMF:muttonFishTransferForm.get('statusOfBusinessId').value.code-->
-					<ng-container
-						*ngFor="let doc of uploadFileArray ">
+					<ng-container *ngFor="let doc of uploadFileArray ">
 						<div class="col-md-4"
 							*ngIf="doc.requiredOnCitizenPortal && doc.isActive && licenseConfiguration.isAttachmentButtonsVisible">
-							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
+							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn :
+								doc.documentLabelGuj }}
 								<span *ngIf="doc.mandatory" class="mandatory">*</span></label>
 							<file-upload [form]="muttonFishTransferForm" [uploadModel]="doc"></file-upload>
 						</div>
