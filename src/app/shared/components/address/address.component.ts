@@ -208,7 +208,7 @@ export class AddressComponent implements OnInit, OnChanges {
 	 * @param name - state name
 	 */
 	getCityLists(state) {
-		this.cityListArray = this.stateListArray.find(obj => obj.name.toUpperCase === state.toUpperCase).cities;
+		this.cityListArray = this.stateListArray.find(obj => obj.name.toUpperCase() === state.toUpperCase()).cities;
 		this.cityListArray = _.orderBy(this.cityListArray, ['name'], ['asc']);
 	}
 
