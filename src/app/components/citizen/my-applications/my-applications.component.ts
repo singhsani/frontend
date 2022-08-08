@@ -501,7 +501,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return false;
 		}
 
-		else if (row.serviceType == 'MEAT_FISH_LICENCE' ) {
+		else if (row.serviceType == 'MEAT_FISH_LICENCE'  || row.fileStatus == 'REJECTED' || row.serviceType =="MEAT_FISH_TRANSFER" || row.serviceType =="MEAT_FISH_RENEWAL") {
 			return false;
 		}
 		
