@@ -40,6 +40,7 @@ export class MuttonFishNewComponent implements OnInit {
 	isPartnershipDeedAllow: boolean = false;
 	isPoliceVerificationAllow: boolean = false;
 	isdisableMode :boolean =true;
+	istable : boolean = true;
 	// required attachment array
 
 	public uploadFileArray: Array<any> = [];
@@ -93,10 +94,15 @@ export class MuttonFishNewComponent implements OnInit {
 	getMuttonFishLicNewData() {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
-
+				debugger
 				this.muttonFishNewForm.patchValue(res);
 				this.isdisableMode = res.canEdit;
 				this.licenseConfiguration.isAttachmentButtonsVisible = true;
+				if(res.relationshipList.length == 0 && res.canEdit==false){
+					this.istable = false;
+				}else{
+					this.istable = true;
+				}
 				this.onChangeZone(this.muttonFishNewForm.get('zoneNo').value.code);
 				//this.onChangeWard(this.muttonFishNewForm.get('wardNo').value.code);
 				//this.onChangeStatusOfBusiness(this.muttonFishNewForm.get('statusOfBusinessId').value.code);

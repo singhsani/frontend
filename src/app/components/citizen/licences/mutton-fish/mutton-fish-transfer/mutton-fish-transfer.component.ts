@@ -36,6 +36,8 @@ export class MuttonFishTransferComponent implements OnInit {
 	PERSON_TYPE: Array<any> = [];
 	FIRM_ZONE: Array<any> = [];
 	WARD: Array<any> = [];
+	isdisableMode :boolean =true;
+	istable : boolean = true;
 	//BLOCK: Array<any> = [];
 	LOOKUP: any;
 	
@@ -192,6 +194,12 @@ export class MuttonFishTransferComponent implements OnInit {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.muttonFishTransferForm.patchValue(res);
+				this.isdisableMode = res.canEdit;
+				if(res.relationshipList.length == 0 && res.canEdit==false){
+					this.istable = false;
+				}else{
+					this.istable = true;
+				}
 				this.licenseConfiguration.isAttachmentButtonsVisible = true;
 				this.onChangeZone(this.muttonFishTransferForm.get('zoneNo').value.code);
 			//	this.onChangeWard(this.muttonFishTransferForm.get('wardNo').value.code);

@@ -248,8 +248,8 @@
 				</div>
 
 				<div *ngIf="muttonFishNewForm.get('relationshipList')['controls'].length">
-
-					<table class="table table-striped mb-0 responsiveTableRow">
+					<div *ngIf = "istable == true ">
+					<table class="table table-striped mb-0 responsiveTableRow" >
 						<thead>
 							<tr class="mo-d-none">
 								<th>SR. No</th>
@@ -328,6 +328,7 @@
 							</tr>
 						</tbody>
 					</table>
+					</div>
 				</div>
 				<!-- end table -->
 				<app-action-bar [form]="muttonFishNewForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
