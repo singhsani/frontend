@@ -483,10 +483,6 @@ export class MuttonFishRenewalComponent implements OnInit {
 	* @param row: table row index
 	*/
 	editRecord(row: any) {
-		if (this.muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR') {
-			this.toastrService.warning("You can not edit record.");
-			return false;
-		}
 		row.isEditMode = true;
 		row.deepCopyInEditMode = Object.assign({}, row.value)
 	}
@@ -496,10 +492,6 @@ export class MuttonFishRenewalComponent implements OnInit {
 	 * @param index : table index
 	 */
 	deleteRecord(index: any) {
-		if (this.muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR') {
-			this.toastrService.warning("You can not delete record.");
-			return false;
-		}
 		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
 			this.addItem().controls.splice(index, 1);
 			this.commonService.successAlert('Removed!', '', 'success');
