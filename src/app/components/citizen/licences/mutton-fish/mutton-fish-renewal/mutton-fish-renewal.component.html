@@ -158,7 +158,7 @@
 					<control-messages [control]="muttonFishRenewalForm.get('holderAadharNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput appAlphaNumeric maxlength="10" required formControlName="holderPanNo"
+					<input matInput appAlphaNumeric maxlength="10" upperCase required formControlName="holderPanNo"
 						placeholder="{{'holder_pan_no' | translate:translateKey}}">
 				</mat-form-field>
 
@@ -257,7 +257,7 @@
 				</div>
 
 				<div *ngIf="muttonFishRenewalForm.get('relationshipList')['controls'].length">
-
+					<div *ngIf = "istable == true ">
 					<table class="table table-striped mb-0 responsiveTableRow">
 						<thead>
 							<tr class="mo-d-none">
@@ -337,6 +337,7 @@
 							</tr>
 						</tbody>
 					</table>
+					</div>
 				</div>
 				<!-- end table -->
 				<app-action-bar [form]="muttonFishRenewalForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"

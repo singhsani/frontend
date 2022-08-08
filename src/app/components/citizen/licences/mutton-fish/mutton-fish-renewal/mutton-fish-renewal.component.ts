@@ -45,6 +45,8 @@ export class MuttonFishRenewalComponent implements OnInit {
 	// required attachment array
 	public uploadFileArray: Array<any> = [];
 	public mandatoryUploadFileArray: Array<any> = [];
+	isdisableMode :boolean =true;
+	istable : boolean = true;
 
 	// serach api variable
 	serachLicenceObj = {
@@ -210,6 +212,12 @@ export class MuttonFishRenewalComponent implements OnInit {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.muttonFishRenewalForm.patchValue(res);
+				this.isdisableMode = res.canEdit;
+				if(res.relationshipList.length == 0 && res.canEdit==false){
+					this.istable = false;
+				}else{
+					this.istable = true;
+				}
 				this.licenseConfiguration.isAttachmentButtonsVisible = true;
 				this.onChangeZone(this.muttonFishRenewalForm.get('zoneNo').value.code);
 				//	this.onChangeWard(this.muttonFishRenewalForm.get('wardNo').value.code);
