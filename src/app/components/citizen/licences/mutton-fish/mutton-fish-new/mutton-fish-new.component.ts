@@ -94,7 +94,6 @@ export class MuttonFishNewComponent implements OnInit {
 	getMuttonFishLicNewData() {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
-				debugger
 				this.muttonFishNewForm.patchValue(res);
 				this.isdisableMode = res.canEdit;
 				this.licenseConfiguration.isAttachmentButtonsVisible = true;
