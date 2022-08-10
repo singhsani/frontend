@@ -100,6 +100,7 @@
 
             <mat-form-field class="col-md-4">
               <input matInput type="text" appValidationFields validationFieldsType='alphanumericWithSpace'
+              required
                 class="capitalCase" maxlength="10" placeholder="{{'TAN No. (Attach certified copy)'}}"
                 formControlName="tanNo">
               <control-messages [control]="vendorRegistrationForm.get('tanNo')">
