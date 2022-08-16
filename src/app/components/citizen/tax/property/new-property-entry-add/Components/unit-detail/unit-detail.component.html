@@ -609,7 +609,7 @@
                                                 placeholder="Carpet Area (Sq.Meter)">
                                                 <mat-error *ngIf="formRoom.carpetAreaRoom.errors">
                                                     <div *ngIf="formRoom.carpetAreaRoom.errors.isCarpetAreaValid">
-                                                        *Carpet area 
+                                                        *Carpet area
                                                         must be smaller than the built-up area.</div>
                                                 </mat-error>
                                         </mat-form-field>
@@ -668,7 +668,7 @@
 </div>
 <div class="row text-right mt-3">
     <div class="col-md-12">
-        <button mat-raised-button class="ml-3" color="primary" type="button" (click)="onBackClick()">
+        <button mat-raised-button class="ml-3" color="primary" type="button" (click)="onBackClick();form.resetForm()">
             <mat-icon>skip_previous</mat-icon>{{'back' | translate:translateKey }}
         </button>
         <button mat-raised-button class="ml-3" color="primary" type="button" (click)="clearUnit()">
