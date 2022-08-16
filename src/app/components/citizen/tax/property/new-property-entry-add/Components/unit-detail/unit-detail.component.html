@@ -360,14 +360,8 @@
                                     <mat-form-field class="full-width-input">
                                         <input matInput number-only name="builtUpArea" formControlName="builtUpArea"
                                             [(ngModel)]="measurementModel.builtUpArea"
-                                            placeholder="{{'built_up_area' | translate:translateKey }} (Sq.Meter)" maxlength="10"
-                                            [required]="measurementModel.manualArea">
-                                        <mat-error *ngIf="formMeasurement.builtUpArea.errors">
-                                            <div *ngIf="formMeasurement.builtUpArea.errors.required">*Built-up Area is
-                                                required.</div>
-                                        </mat-error>
-
-                                    </mat-form-field>
+                                            placeholder="{{'built_up_area' | translate:translateKey }} (Sq.Meter)" maxlength="10">
+                                            </mat-form-field>
                                 </div>
                                 <div class="col-md-6">
                                     <mat-form-field class="full-width-input">
@@ -379,8 +373,7 @@
                                         <mat-error *ngIf="formMeasurement.carpetArea.errors">
                                             <div *ngIf="formMeasurement.carpetArea.errors.required">*Carpet Area is
                                                 required.</div>
-                                            <div *ngIf="formMeasurement.carpetArea.errors.isValidArea">*Carpet
-                                                Area must be less than Built-­up Area.</div>
+
                                         </mat-error>
                                     </mat-form-field>
                                 </div>
