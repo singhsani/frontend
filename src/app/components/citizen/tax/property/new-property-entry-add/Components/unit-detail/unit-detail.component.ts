@@ -52,7 +52,7 @@ export class UnitDetailComponent implements OnInit {
   carpetDisabled: boolean = true ;
   isDisabled: boolean = true;
   isReadOnly: boolean = true;
-  
+
   constructor(private formBuilder: FormBuilder,
     private newNewPropertyEntryAddDataSharingService: NewPropertyEntryAddDataSharingService,
     private commonService: CommonService,
@@ -499,7 +499,7 @@ export class UnitDetailComponent implements OnInit {
 
   initMeasurementForm() {
     this.measurementForm = this.formBuilder.group({
-      builtUpArea: new FormControl(null, Validators.required),
+      builtUpArea: new FormControl(null),
       carpetArea: new FormControl(null, Validators.required),
       exemptedArea: new FormControl(null, Validators.required),
       assessableArea: new FormControl({ value: null, disabled: true }),
@@ -507,7 +507,7 @@ export class UnitDetailComponent implements OnInit {
       generalTax: new FormControl({ value: null, disabled: true }),
       manualArea: new FormControl(),
     }, {
-        validator: [this.checkIsValidBuildUpCarpetArea('builtUpArea', 'carpetArea'), this.checkIsValidExempteArea('carpetArea', 'exemptedArea')]
+        validator: [ this.checkIsValidExempteArea('carpetArea', 'exemptedArea')]
       });
   }
 
@@ -535,21 +535,21 @@ export class UnitDetailComponent implements OnInit {
       });
   }
 
-  checkIsValidBuildUpCarpetArea(firstControlName: string, secondControlName: string) {
-    return (formGroup: FormGroup) => {
-      const control1 = formGroup.controls[firstControlName];
-      const control2 = formGroup.controls[secondControlName];
-      if (control2.errors && !control2.errors.isValidArea) {
-        return;
-      }
+  // checkIsValidBuildUpCarpetArea(firstControlName: string, secondControlName: string) {
+  //   return (formGroup: FormGroup) => {
+  //     const control1 = formGroup.controls[firstControlName];
+  //     const control2 = formGroup.controls[secondControlName];
+  //     if (control2.errors && !control2.errors.isValidArea) {
+  //       return;
+  //     }
 
-      if (parseFloat(control1.value) < parseFloat(control2.value)) {
-        control2.setErrors({ isValidArea: true });
-      } else {
-        control2.setErrors(null);
-      }
-    };
-  }
+  //     if (parseFloat(control1.value) < parseFloat(control2.value)) {
+  //       control2.setErrors({ isValidArea: true });
+  //     } else {
+  //       control2.setErrors(null);
+  //     }
+  //   };
+  // }
   checkIsValidExempteArea(firstControlName: string, secondControlName: string) {
     return (formGroup: FormGroup) => {
       const control1 = formGroup.controls[firstControlName];
@@ -642,7 +642,7 @@ export class UnitDetailComponent implements OnInit {
 
   updateValidation(event1, event2) {
     if(event1.value){
-      event2.setValidators([Validators.required]); 
+      event2.setValidators([Validators.required]);
     }else{
      event2.clearValidators();
     }
