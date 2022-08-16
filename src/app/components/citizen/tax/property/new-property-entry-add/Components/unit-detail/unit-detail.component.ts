@@ -190,6 +190,9 @@ export class UnitDetailComponent implements OnInit {
             this.unitDetailModel = model.length > 0 ? model[0] : new UnitDetailModel();
           }
           else {
+            this.unitDetailModel = new UnitDetailModel();
+            this.measurementModel = new MeasurementModel();
+            this.measurementModel.manualArea = true;
             this.isShowUnitable = false;
           }
         }
