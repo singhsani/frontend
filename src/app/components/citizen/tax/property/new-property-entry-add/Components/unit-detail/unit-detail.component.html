@@ -1,4 +1,4 @@
-<div class="row">
+  <div class="row">
     <div class="col-md-3">
         <b>{{'code' | translate:translateKey }}: </b>{{modelOccupier.occupierCode}}
     </div>
@@ -75,7 +75,7 @@
             <mat-expansion-panel [expanded]="step == 0" (opened)="setStep(0)" (closed)="revertStep()">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        <div class="panel-title">Unit Details {{isEditMode ? '- Unit No. : '+ unitDetailModel.unitNo : ''
+                        <div class="panel-title">Unit Details {{isEditMode && unitDetailModel && unitDetailModel.unitNo  && unitDetailModel.propertyUnitId? '- Unit No. : '+ unitDetailModel.unitNo : ''
                             }}
                         </div>
                     </mat-panel-title>
@@ -83,8 +83,8 @@
                 <form #form="ngForm" (ngSubmit)="saveUnitDetail(form)">
                     <div class="row ">
                         <div class="col-md-6">
-                            <mat-form-field class="full-width-input">
-                                <input maxlength="10" matInput [disabled]="isEditMode" name="unitNo"
+                            <mat-form-field class="full-width-input"> 
+                                <input maxlength="10" matInput [disabled]="isEditMode && unitDetailModel && unitDetailModel.unitNo && unitDetailModel.propertyUnitId" name="unitNo"
                                     [(ngModel)]="unitDetailModel.unitNo" #UnitNo="ngModel" placeholder="{{'unit_no' | translate:translateKey }}"
                                     (ngModelChange)="checkDuplicateUnitNo($event);" required>
                                 <mat-error *ngIf="UnitNo.invalid">*Unit No. is required.</mat-error>
@@ -331,10 +331,10 @@
                     </div>
                 </form>
             </mat-expansion-panel>
-            <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" *ngIf="isEditMode">
+            <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" *ngIf="isEditMode && unitDetailModel && unitDetailModel.unitNo && unitDetailModel.propertyUnitId">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        <div class="panel-title">Measurement Details {{isEditMode ? '- Unit No. :
+                        <div class="panel-title">Measurement Details {{isEditMode && unitDetailModel && unitDetailModel.unitNo && unitDetailModel.propertyUnitId ? '- Unit No. :
                             '+unitDetailModel.unitNo:'' }}</div>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
