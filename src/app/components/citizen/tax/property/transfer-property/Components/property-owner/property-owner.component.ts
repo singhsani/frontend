@@ -27,7 +27,9 @@ export class PropertyOwnerComponent implements OnInit {
   propertyDetailModel: any = {};
   subscription: Subscription;
   isNewOwnerExist: boolean = false;
-  @ViewChild(MatSort) sort: MatSort;
+  //@ViewChild(MatSort) sort: MatSort;
+  @ViewChild('sorter1') sorter1: MatSort;
+  @ViewChild('sorter2') sorter2: MatSort;
   constructor(private commonService: CommonService,
     private transferPropertyDataSharingService: TransferPropertyDataSharingService,
     private transferPropertyService: TransferPropertyService,
@@ -47,7 +49,8 @@ export class PropertyOwnerComponent implements OnInit {
         this.propertyDetailModel = data;
         this.searchOwnerByPropertyNo();
         this.searchOwnerByPropertyVersionId();
-      }
+
+  }
     })
   }
 
@@ -68,7 +71,7 @@ export class PropertyOwnerComponent implements OnInit {
       (data) => {
         if (data.status === 200) {
           this.dataSourceExistingOwner = new MatTableDataSource(data.body);
-          this.dataSourceExistingOwner.sort = this.sort;
+          this.dataSourceExistingOwner.sort = this.sorter1;
         }
       },
       (error) => {
@@ -90,7 +93,7 @@ export class PropertyOwnerComponent implements OnInit {
       (data) => {
         if (data.status === 200) {
           this.dataSourceNewOwner = new MatTableDataSource(data.body);
-          this.dataSourceNewOwner.sort = this.sort;
+          this.dataSourceNewOwner.sort = this.sorter2;
           if (this.dataSourceNewOwner.data.length > 0) {
             this.isNewOwnerExist = true;
           }
