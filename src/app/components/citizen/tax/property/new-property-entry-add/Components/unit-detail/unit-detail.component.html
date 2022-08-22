@@ -83,7 +83,7 @@
                 <form #form="ngForm" (ngSubmit)="saveUnitDetail(form)">
                     <div class="row ">
                         <div class="col-md-6">
-                            <mat-form-field class="full-width-input"> 
+                            <mat-form-field class="full-width-input">
                                 <input maxlength="10" matInput [disabled]="isEditMode && unitDetailModel && unitDetailModel.unitNo && unitDetailModel.propertyUnitId" name="unitNo"
                                     [(ngModel)]="unitDetailModel.unitNo" #UnitNo="ngModel" placeholder="{{'unit_no' | translate:translateKey }}"
                                     (ngModelChange)="checkDuplicateUnitNo($event);" required>
@@ -553,16 +553,9 @@
                                         <mat-form-field class="full-width-input">
                                             <input matInput formControlName="builtUpAreaRoom" number-only
                                                 name="builtUpAreaRoom" [(ngModel)]="roomModel.builtUpArea"
-                                                placeholder="{{'built_up_area' | translate:translateKey }} (Sq.Meter)" maxlength="10" required>
+                                                placeholder="{{'built_up_area' | translate:translateKey }} (Sq.Meter)" maxlength="10">
                                             <mat-error [hidden]="!formRoom.builtUpAreaRoom.errors">
-                                                <div
-                                                    [hidden]="formRoom.builtUpAreaRoom.errors && !formRoom.builtUpAreaRoom.errors.required">
-                                                    *Built-­Up Area
-                                                    required.</div>
-                                                <div
-                                                    [hidden]="formRoom.builtUpAreaRoom.errors && !formRoom.builtUpAreaRoom.errors.isBuiltUpValidArea">
-                                                    *Built-­Up Area
-                                                    must be greater than Carpet Area.</div>
+
                                             </mat-error>
                                         </mat-form-field>
 
@@ -601,9 +594,7 @@
                                                 name="carpetAreaRoom" [(ngModel)]="roomModel.carpetArea"
                                                 placeholder="Carpet Area (Sq.Meter)">
                                                 <mat-error *ngIf="formRoom.carpetAreaRoom.errors">
-                                                    <div *ngIf="formRoom.carpetAreaRoom.errors.isCarpetAreaValid">
-                                                        *Carpet area
-                                                        must be smaller than the built-up area.</div>
+
                                                 </mat-error>
                                         </mat-form-field>
                                     </div>
