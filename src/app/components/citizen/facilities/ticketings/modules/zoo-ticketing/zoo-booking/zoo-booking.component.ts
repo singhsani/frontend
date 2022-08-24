@@ -318,6 +318,7 @@ export class ZooBookingComponent implements OnInit {
           this.ticketBookingForm.get('refNumber').setValue(err.error.data.refNumber);
           // this.ticketingService.getTotalAmount(err.error.data.refNumber).subscribe(data => {
           // console.log(data);
+          this.router.navigate([this.ticketingConstants.MY_TICKETINGS_URL]);
           // this.ticketBookingForm.get('totalAmount').setValue(err.error.data.TOTAL);
           // this.ticketingUtils.redirectToPayment(err, this.commonService, this.ticketingService, this.ticketBookingForm, this.router);
           this.ticketingUtils.redirectToCCAvenuePayment(err, this.commonService, this.ticketingService, this.paymentGateway, this.ticketBookingForm, this.router);
