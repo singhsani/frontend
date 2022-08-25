@@ -276,7 +276,8 @@ export class BookAtithigruhComponent implements OnInit {
 		var now = moment();
 		var hourToCheck = (now.day() !== 0)?14:0;
 		var dateToCheck = now.hour(hourToCheck).minute(0);
-
+		console.log("now:"+now+",hourToCheck:"+hourToCheck+",dateToCheck:"+dateToCheck);
+		console.log("moment().isAfter(dateToCheck):"+moment().isAfter(dateToCheck));
 		return moment().isAfter(dateToCheck);
 
 
