@@ -43,14 +43,14 @@ export class DashboardComponent implements OnInit {
 					"active": true
 				},
 
-				{
-					"code": "TOWNHALLBOOK",
-					"fieldView": "ALL",
-					"name": "Townhall",
-					"gujName": "ટાઉનહોલ",
-					"appointmentRequired": false,
-					"active": true
-				},
+				// {
+				// 	"code": "TOWNHALLBOOK",
+				// 	"fieldView": "ALL",
+				// 	"name": "Townhall",
+				// 	"gujName": "ટાઉનહોલ",
+				// 	"appointmentRequired": false,
+				// 	"active": true
+				// },
 				{
 					"code": "THEATERBOOK",
 					"fieldView": "ALL",
@@ -67,22 +67,22 @@ export class DashboardComponent implements OnInit {
 				// 	"appointmentRequired": false,
 				// 	"active": true
 				// },
-				{
-					"code": "STADIUMBOOK",
-					"fieldView": "ALL",
-					"name": "Stadium",
-					"gujName": "સ્ટેડિયમ",
-					"appointmentRequired": false,
-					"active": true
-				},
-				{
-					"code": "ATITHIGRUHBOOK",
-					"fieldView": "ALL",
-					"name": "Atithigruh",
-					"gujName": "અતિથિગ્રહ",
-					"appointmentRequired": false,
-					"active": true
-				},
+				// {
+				// 	"code": "STADIUMBOOK",
+				// 	"fieldView": "ALL",
+				// 	"name": "Stadium",
+				// 	"gujName": "સ્ટેડિયમ",
+				// 	"appointmentRequired": false,
+				// 	"active": true
+				// },
+				// {
+				// 	"code": "ATITHIGRUHBOOK",
+				// 	"fieldView": "ALL",
+				// 	"name": "Atithigruh",
+				// 	"gujName": "અતિથિગ્રહ",
+				// 	"appointmentRequired": false,
+				// 	"active": true
+				// },
 				{
 					"code": "CHILDRENTHEATERBOOK",
 					"fieldView": "ALL",
@@ -91,14 +91,14 @@ export class DashboardComponent implements OnInit {
 					"appointmentRequired": false,
 					"active": true
 				},
-				{
-					"code": "BOOKPERMISSION",
-					"fieldView": "ALL",
-					"name": "Shooting Permission",
-					"gujName": "પરવાનગી",
-					"appointmentRequired": false,
-					"active": true
-				},
+				// {
+				// 	"code": "BOOKPERMISSION",
+				// 	"fieldView": "ALL",
+				// 	"name": "Shooting Permission",
+				// 	"gujName": "પરવાનગી",
+				// 	"appointmentRequired": false,
+				// 	"active": true
+				// },
 				// {
 				// 	"code": "SWIMMINGPOOL",
 				// 	"fieldView": "ALL",
