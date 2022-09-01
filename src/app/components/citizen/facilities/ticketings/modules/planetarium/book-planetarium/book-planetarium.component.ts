@@ -436,7 +436,7 @@ export class BookPlanetariumComponent implements OnInit {
 
       schoolName: null,
       schoolMobileNumber: [null],
-      schoolEmailId: [null],
+      schoolEmailId: [null, [ ValidationService.emailValidator ,Validators.maxLength(50)]],
 
       shiftType: null,
       specialShow: null,
@@ -517,7 +517,7 @@ export class BookPlanetariumComponent implements OnInit {
       this.ticketBookingForm.get('planetariumShowTiming.code').clearValidators();
       this.ticketBookingForm.get('idType.code').clearValidators();
       this.ticketBookingForm.get('idNumber').clearValidators();
-      this.ticketBookingForm.controls['applicantMobile'].setErrors(null); 
+      this.ticketBookingForm.controls['applicantMobile'].setErrors(null);
       this.ticketBookingForm.controls['totalVisitor'].setErrors(null);
 
       //visitor rate chart
@@ -766,10 +766,10 @@ export class BookPlanetariumComponent implements OnInit {
         console.log(indent + field);
         const innerForm =form.get(field) as FormGroup;
         if(innerForm && innerForm.controls ) {
-          this.printFormInvalidControl(innerForm, indent + " ");	
-        } 	
-        
-      }; // 'control' is a FormControl  
+          this.printFormInvalidControl(innerForm, indent + " ");
+        }
+
+      }; // 'control' is a FormControl
 
     }
   }
