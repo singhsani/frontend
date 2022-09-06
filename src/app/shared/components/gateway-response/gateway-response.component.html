@@ -8,7 +8,7 @@
 		</h1>
 		<h4 class="mt-4" style="font-weight: 600;">
 			Thank you!
-			 <!-- Your payment of Rs. {{responseObj.mer_amount}} has been received. -->
+			<!-- Your payment of Rs. {{responseObj.mer_amount}} has been received. -->
 		</h4>
 
 		<!-- <h6 class="mt-4">
@@ -49,7 +49,7 @@
 
 			<div class="row">
 				<div class="col mb-2" *ngIf="responseObj.getway == 'BILLDESK'">
-					Payment Type : &nbsp;{{responseObj.payment_method_type == 'netbanking' ? 'Online' : 'Offline'}}
+					Payment Type : &nbsp;{{'Online'}}
 				</div>
 				<div class="col mb-2" *ngIf="responseObj.getway == 'CCAVENUE'">
 					Payment Type : &nbsp;{{responseObj.payment_mode}}
@@ -58,8 +58,8 @@
 					<!-- Service Name : &nbsp;{{resourceType}} -->
 					<!-- Service Name : &nbsp;{{responseObj.additional_info.additional_info1}} -->
 					Service Name : &nbsp;{{dispData.txtadditionalInfo1 ? dispData.txtadditionalInfo1 :
-						dispData.resourceType ?
-						dispData.resourceType : serviceType ? serviceType : payableServiceType}}
+					dispData.resourceType ?
+					dispData.resourceType : serviceType ? serviceType : payableServiceType}}
 					<!-- Service Name : &nbsp;{{serviceType ? serviceType : payableServiceType}} -->
 				</div>
 			</div>
@@ -83,12 +83,12 @@
 
 <!-- Payment failed-->
 <div *ngIf="responseObj.getway == 'BILLDESK'">
-<div class="conatiner text-center"
-	*ngIf="(responseObj.order_status == 'Failure' || responseObj.order_status == 'Aborted')  || (responseObj.hasOwnProperty('authStatus') && responseObj.authStatus != '0300')">
-	<mat-icon class="failedIcon">error</mat-icon>
-	<h1 class="errorMessage">Your payment failed</h1>
-	<h4>Please try after some time</h4>
-	<!-- <div class="row">
+	<div class="conatiner text-center"
+		*ngIf="(responseObj.order_status == 'Failure' || responseObj.order_status == 'Aborted')  || (responseObj.hasOwnProperty('authStatus') && responseObj.authStatus != '0300')">
+		<mat-icon class="failedIcon">error</mat-icon>
+		<h1 class="errorMessage">Your payment failed</h1>
+		<h4>Please try after some time</h4>
+		<!-- <div class="row">
 		<div class="col mb-3">
 			Transaction Failed Detail: {{responseObj.transaction_error_desc}}
 		</div>
@@ -98,54 +98,54 @@
 		Payment Type : {{responseObj.payment_method_type == 'netbanking' ? 'Online' :'Offline'}}
 	</h6> -->
 
-	<div>
-		<h5 class="payDetails">Payment Details</h5>
-		<mat-card class="cardDetail">
-			<div class="row">
-				<div class="col mb-2">
-					Amount Paid : &#8377; &nbsp;{{responseObj.txnAmount}}
+		<div>
+			<h5 class="payDetails">Payment Details</h5>
+			<mat-card class="cardDetail">
+				<div class="row">
+					<div class="col mb-2">
+						Amount Paid : &#8377; &nbsp;{{responseObj.txnAmount}}
+					</div>
+					<div class="col">
+						Transaction ID: &nbsp; {{responseObj.transactionid}}
+						<!-- Transaction Number : &nbsp;{{responseObj.transactionid}} -->
+					</div>
 				</div>
-				<div class="col">
-					Transaction ID: &nbsp; {{responseObj.transactionid}}
-					<!-- Transaction Number : &nbsp;{{responseObj.transactionid}} -->
+				<div class="row">
+					<div class="col mb-2">
+						Balance Amount : &#8377; &nbsp;{{responseObj.txnAmount}}
+					</div>
+					<div class="col">
+						Transaction Date : &nbsp;{{responseObj.trans_date}}
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col mb-2">
-					Balance Amount : &#8377; &nbsp;{{responseObj.txnAmount}}
-				</div>
-				<div class="col">
-					Transaction Date : &nbsp;{{responseObj.trans_date}}
-				</div>
-			</div>
 
-			<div class="row">
-				<div class="col mb-2">
-					Payment Type : &nbsp; {{responseObj.payment_method_type == 'netbanking' ? 'Online' :'Offline'}}
+				<div class="row">
+					<div class="col mb-2">
+						Payment Type : &nbsp; {{responseObj.payment_method_type == 'netbanking' ? 'Online' :'Offline'}}
+					</div>
+					<div class="col">
+						Order ID: &nbsp; {{responseObj.order_id}}
+					</div>
 				</div>
-				<div class="col">
-					Order ID: &nbsp; {{responseObj.order_id}}
-				</div>
-			</div>
 
-			<div class="row">
-				<div class="col mb-3">
-					Transaction Failed Detail: {{responseObj.transaction_error_desc}}
-					<!-- Payment Failed Detail : {{responseObj?.billDeskAuthStatus?.reason}}<br> -->
-					<!-- Transaction Msg : {{responseObj.transaction_error_desc}} -->
+				<div class="row">
+					<div class="col mb-3">
+						Transaction Failed Detail: {{responseObj.transaction_error_desc}}
+						<!-- Payment Failed Detail : {{responseObj?.billDeskAuthStatus?.reason}}<br> -->
+						<!-- Transaction Msg : {{responseObj.transaction_error_desc}} -->
+					</div>
 				</div>
-			</div>
-		</mat-card>
+			</mat-card>
+		</div>
+		<div class="mt-4">
+			<p style="font-size: 14px;">You will be automatically redirect to home page after
+				<span style="color:#f00">{{dispTime}} second</span>.
+			</p>
+			<p>OR
+				<a style="font-size: 14px;" href="javascript:0;" (click)="redirectToHomeFail()">Click here</a>
+			</p>
+		</div>
 	</div>
-	<div class="mt-4">
-		<p style="font-size: 14px;">You will be automatically redirect to home page after
-			<span style="color:#f00">{{dispTime}} second</span>.
-		</p>
-		<p>OR
-			<a style="font-size: 14px;" href="javascript:0;" (click)="redirectToHomeFail()">Click here</a>
-		</p>
-	</div>
-</div>
 </div>
 
 <div *ngIf="responseObj.getway == 'BILLDESK'">
@@ -212,16 +212,15 @@
 			</p>
 		</div>
 	</div>
-	</div>
+</div>
 
 
 <!-- Refund billdesk -->
-	<div *ngIf="responseObj.getway == 'BILLDESK'">
-		<div class="conatiner text-center"
-		*ngIf="(responseObj.order_status == 'Refund')">
-			<mat-icon class="checkIcon successicon">check_circle_outline</mat-icon>
-			<h1 class="errorMessage">Your payment Refund Successfull</h1>
-			<!-- <div class="row">
+<div *ngIf="responseObj.getway == 'BILLDESK'">
+	<div class="conatiner text-center" *ngIf="(responseObj.order_status == 'Refund')">
+		<mat-icon class="checkIcon successicon">check_circle_outline</mat-icon>
+		<h1 class="errorMessage">Your payment Refund Successfull</h1>
+		<!-- <div class="row">
 				<div class="col mb-3">
 					Transaction Refund Detail: {{responseObj.transaction_error_desc}}
 				</div>
@@ -231,54 +230,54 @@
 				Payment Type : {{responseObj.payment_method_type == 'netbanking' ? 'Online' :'Offline'}}
 			</h6> -->
 
-			<div>
-				<h5 class="payDetails">Payment Details</h5>
-				<mat-card class="cardDetail">
-					<div class="row">
-						<div class="col mb-2">
-							Amount Paid : &#8377; &nbsp;{{responseObj.txnAmount}}
-						</div>
-						<div class="col">
-							Transaction ID: &nbsp; {{responseObj.transactionid}}
-							<!-- Transaction Number : &nbsp;{{responseObj.transactionid}} -->
-						</div>
+		<div>
+			<h5 class="payDetails">Payment Details</h5>
+			<mat-card class="cardDetail">
+				<div class="row">
+					<div class="col mb-2">
+						Amount Paid : &#8377; &nbsp;{{responseObj.txnAmount}}
 					</div>
-					<div class="row">
-						<div class="col mb-2">
-							Balance Amount : &#8377; &nbsp;{{responseObj.txnAmount}}
-						</div>
-						<div class="col">
-							Transaction Date : &nbsp;{{responseObj.trans_date}}
-						</div>
+					<div class="col">
+						Transaction ID: &nbsp; {{responseObj.transactionid}}
+						<!-- Transaction Number : &nbsp;{{responseObj.transactionid}} -->
 					</div>
+				</div>
+				<div class="row">
+					<div class="col mb-2">
+						Balance Amount : &#8377; &nbsp;{{responseObj.txnAmount}}
+					</div>
+					<div class="col">
+						Transaction Date : &nbsp;{{responseObj.trans_date}}
+					</div>
+				</div>
 
-					<div class="row">
-						<div class="col mb-2">
-							Payment Type : &nbsp; {{responseObj.payment_method_type == 'netbanking' ? 'Online' :'Offline'}}
-						</div>
-						<div class="col">
-							Order ID: &nbsp; {{responseObj.order_id}}
-						</div>
+				<div class="row">
+					<div class="col mb-2">
+						Payment Type : &nbsp; {{responseObj.payment_method_type == 'netbanking' ? 'Online' :'Offline'}}
 					</div>
+					<div class="col">
+						Order ID: &nbsp; {{responseObj.order_id}}
+					</div>
+				</div>
 
-					<div class="row">
-						<div class="col mb-3">
-							Transaction Detail: {{responseObj.transaction_error_desc}}
-							<!-- Transaction Msg : {{responseObj.transaction_error_desc}} -->
-						</div>
+				<div class="row">
+					<div class="col mb-3">
+						Transaction Detail: {{responseObj.transaction_error_desc}}
+						<!-- Transaction Msg : {{responseObj.transaction_error_desc}} -->
 					</div>
-				</mat-card>
-			</div>
-			<div class="mt-4">
-				<p style="font-size: 14px;">You will be automatically redirect to home page after
-					<span style="color:#f00">{{dispTime}} second</span>.
-				</p>
-				<p>OR
-					<a style="font-size: 14px;" href="javascript:0;" (click)="redirectToHomeFail()">Click here</a>
-				</p>
-			</div>
+				</div>
+			</mat-card>
 		</div>
+		<div class="mt-4">
+			<p style="font-size: 14px;">You will be automatically redirect to home page after
+				<span style="color:#f00">{{dispTime}} second</span>.
+			</p>
+			<p>OR
+				<a style="font-size: 14px;" href="javascript:0;" (click)="redirectToHomeFail()">Click here</a>
+			</p>
 		</div>
+	</div>
+</div>
 
 
 <!-- Payment failed-->
@@ -329,49 +328,49 @@
 	</div>
 	<ng-template #elseCondition>
 		<div *ngIf="responseObj.order_status != 'Success'">
-		<div class="conatiner text-center">
+			<div class="conatiner text-center">
 
-		<mat-icon class="failedIcon">error</mat-icon>
-		<h1 class="errorMessage">Your payment failed</h1>
-		<h4>Please try after some time</h4>
+				<mat-icon class="failedIcon">error</mat-icon>
+				<h1 class="errorMessage">Your payment failed</h1>
+				<h4>Please try after some time</h4>
 
-		<div>
-			<h5 class="payDetails">Payment Details</h5>
-			<mat-card class="cardDetail">
-				<div class="row">
-					<div class="col mb-2">
-						Amount Paid : &#8377; &nbsp;{{responseObj.mer_amount}}
-					</div>
-					<div class="col">
-						Order Reference Number : &nbsp;{{responseObj.order_id}}
-					</div>
+				<div>
+					<h5 class="payDetails">Payment Details</h5>
+					<mat-card class="cardDetail">
+						<div class="row">
+							<div class="col mb-2">
+								Amount Paid : &#8377; &nbsp;{{responseObj.mer_amount}}
+							</div>
+							<div class="col">
+								Order Reference Number : &nbsp;{{responseObj.order_id}}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col mb-2">
+								Transaction ID : &nbsp;{{responseObj.tracking_id}}
+							</div>
+							<div class="col">
+								Transaction Date : &nbsp;{{responseObj.trans_date}}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col mb-3">
+								Reason : {{responseObj.failure_message}}
+							</div>
+						</div>
+					</mat-card>
 				</div>
-				<div class="row">
-					<div class="col mb-2">
-						Transaction ID : &nbsp;{{responseObj.tracking_id}}
-					</div>
-					<div class="col">
-						Transaction Date : &nbsp;{{responseObj.trans_date}}
-					</div>
+				<div class="mt-4">
+					<p style="font-size: 14px;">You will be automatically redirect to home page after
+						<span style="color:#f00">{{dispTime}} second</span>.
+					</p>
+					<p>OR
+						<a style="font-size: 14px;" href="javascript:0;" (click)="redirectToHomeFail()">Click here</a>
+					</p>
 				</div>
-				<div class="row">
-					<div class="col mb-3">
-						Reason : {{responseObj.failure_message}}
-					</div>
-				</div>
-			</mat-card>
+
+			</div>
 		</div>
-		<div class="mt-4">
-			<p style="font-size: 14px;">You will be automatically redirect to home page after
-				<span style="color:#f00">{{dispTime}} second</span>.
-			</p>
-			<p>OR
-				<a style="font-size: 14px;" href="javascript:0;" (click)="redirectToHomeFail()">Click here</a>
-			</p>
-		</div>
-
-	</div>
-</div>
 	</ng-template>
-	</div>
+</div>
 <div id="sectionToPrint"></div>

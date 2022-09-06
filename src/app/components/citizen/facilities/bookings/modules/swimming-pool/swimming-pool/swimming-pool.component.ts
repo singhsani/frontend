@@ -107,7 +107,7 @@ export class SwimmingPoolComponent implements OnInit {
   ) {
     this.bookingUtils = new BookingUtils(formService, toastr);
     this.bookingService.resourceType = 'swimming';
-    this.memberNumber = new FormControl('', ValidationService.swimmingPoolMemberValidator);
+    this.memberNumber = new FormControl('', Validators.required);
   }
 
   /**
