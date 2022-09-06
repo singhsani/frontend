@@ -47,12 +47,12 @@ export class GatewayResponseComponent implements OnInit {
 		this.dispData = JSON.parse(this.sessionStore.get('paymentData'));
 		console.log('this.dispData', this.dispData);
 	}
-	Tickting:String[]=[
+	Tickting: String[] = [
 		'zoo',
 		'zooanimaladoption',
 		'planetarium'
 	];
-	Booking:String[]=[
+	Booking: String[] = [
 		'townhall',
 		'amphiTheater',
 		'stadium',
@@ -292,7 +292,7 @@ export class GatewayResponseComponent implements OnInit {
 						this.interVal();
 					}
 					/* EMAIL */
-          this.sendEventForMail(this.refNumber, this.serviceType);
+					this.sendEventForMail(this.refNumber, this.serviceType);
 				},
 					err => {
 						this.toastr.error('Internal server error');
@@ -358,11 +358,11 @@ export class GatewayResponseComponent implements OnInit {
 
 			this.router.navigate([this.bookingConstant.MY_BOOKINGS_URL]);
 
-		}else if(this.dispData.payableServiceType == "SHOP-ESTAB-LIC-NEW" || this.paybleServiceType == "SHOP-ESTAB-TRANSFER") {
+		} else if (this.dispData.payableServiceType == "SHOP-ESTAB-LIC-NEW" || this.paybleServiceType == "SHOP-ESTAB-TRANSFER") {
 
-        	this.redirectToMyApplication(this.dispData.myApplicationUrl,undefined,undefined,undefined);
+			this.redirectToMyApplication(this.dispData.myApplicationUrl, undefined, undefined, undefined);
 
-			
+
 		} else if ((this.dispData.resourceType == "townhall") || (this.dispData.resourceType == "amphiTheater") || (this.dispData.resourceType == "stadium") || (this.dispData.resourceType == "childrenTheater") || (this.dispData.resourceType == "atithigruh") || (this.dispData.resourceType == "shootingPermission")) {
 
 			this.router.navigate([this.bookingConstant.MY_BOOKINGS_URL]);
@@ -372,10 +372,10 @@ export class GatewayResponseComponent implements OnInit {
 
 			this.router.navigate([this.bookingConstant.MY_TICKETINGS_URL]);
 
-		}else if(this.dispData.payableServiceType == "APL-TRA" || this.paybleServiceType == "APL-TRA" || this.dispData.payableServiceType=="APL-REN" || this.paybleServiceType=="APL-REN" || this.dispData.payableServiceType=="APL-DUP" || this.paybleServiceType=="APL-DUP" || this.paybleServiceType=="APL-LIC" || this.dispData.payableServiceType=="APL-LIC") {
+		} else if (this.dispData.payableServiceType == "APL-TRA" || this.paybleServiceType == "APL-TRA" || this.dispData.payableServiceType == "APL-REN" || this.paybleServiceType == "APL-REN" || this.dispData.payableServiceType == "APL-DUP" || this.paybleServiceType == "APL-DUP" || this.paybleServiceType == "APL-LIC" || this.dispData.payableServiceType == "APL-LIC") {
 
-        	this.redirectToMyApplication(this.dispData.myApplicationUrl,undefined,undefined,undefined);	
-		} 
+			this.redirectToMyApplication(this.dispData.myApplicationUrl, undefined, undefined, undefined);
+		}
 		else {
 			setTimeout(() => {
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
@@ -443,7 +443,7 @@ export class GatewayResponseComponent implements OnInit {
 				}, err => {
 					this.toastr.error("Something went wrong");
 				})
-			} else{
+			} else {
 				return;
 			}
 
@@ -457,9 +457,11 @@ export class GatewayResponseComponent implements OnInit {
 			this.sendMail(refNumber, "PAYMENT");
 		} else if (serviceType == 'FORM_CHARGES') {
 			this.sendMail(refNumber, "FORMCHARGES");
-		}else if (serviceType == 'ATITHIGURH_DEPOSIT') {
-		  this.sendMail(refNumber, "BOOKED");
-		}else {
+		} else if (serviceType == 'ATITHIGURH_DEPOSIT') {
+			this.sendMail(refNumber, "BOOKED");
+		} else if (serviceType == 'AMPHI_FEES') {
+			this.sendMail(refNumber, "BOOKED");
+		} else {
 			this.sendMail(refNumber, "PAYMENT");
 		}
 	}
