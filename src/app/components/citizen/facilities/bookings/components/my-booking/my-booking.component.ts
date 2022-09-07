@@ -100,14 +100,14 @@ export class MyBookingComponent implements OnInit {
 
 	) {
 		let resourcesList = [
-			// { type: 'townhall', name: 'Townhall' },
-			// { type: 'stadium', name: 'Stadium' },
+			{ type: 'townhall', name: 'Townhall' },
+			{ type: 'stadium', name: 'Stadium' },
 			{ type: 'amphiTheater', name: 'Amphi Theater' },
 			// { type: 'guesthouse', name: 'Guest House' },
 			{ type: 'childrenTheater', name: 'Children Theater' },
-			// { type: 'shootingPermission', name: 'Shooting Permission' },
+			{ type: 'shootingPermission', name: 'Shooting Permission' },
 			{ type: 'swimming', name: 'Swimming Pool' },
-			// { type: 'atithigruh', name: 'AtithiGruh' },
+			{ type: 'atithigruh', name: 'AtithiGruh' },
 		]
 		this.resources = resourcesList;
 	}
