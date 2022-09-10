@@ -27,7 +27,7 @@
   .panel-title
   {
     font-size: 20px;
-    
+
   }
 
   /deep/ .mat-expansion-panel-content
@@ -50,3 +50,7 @@
   .mat-checkbox-layout .mat-checkbox-label {
     line-height: 36px;
 }
+
+td.mat-cell, td.mat-footer-cell, th.mat-header-cell{
+  min-width: 200px;
+ }
