@@ -42,6 +42,7 @@ export class UnitDetailComponent implements OnInit {
   effectiveToDateMinDate = new Date();
   isEditMode: boolean = false;
   isEditRoom: boolean = false;
+  showBuildUpArea: boolean =false;
   measurementModel: MeasurementModel;
   roomModel: RoomModel;
   isShowRoomDetail: boolean = false;
@@ -302,6 +303,9 @@ export class UnitDetailComponent implements OnInit {
             this.step = 1;
             this.getUnitListByOccupierId();
           }
+          if(form.submitted){
+            this.showBuildUpArea = true;
+          }
         },
         (error) => {
           this.commonService.callErrorResponse(error);
@@ -532,6 +536,7 @@ export class UnitDetailComponent implements OnInit {
           const tempMeasurementId = data.body.data;
           this.saveMeasurementTax(tempMeasurementId);
           }
+          this.showBuildUpArea=false;
       },
       (error) => {
         this.commonService.callErrorResponse(error);
