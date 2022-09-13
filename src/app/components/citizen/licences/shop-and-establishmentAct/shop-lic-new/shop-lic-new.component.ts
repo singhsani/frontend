@@ -461,8 +461,8 @@ export class ShopLicNewComponent implements OnInit {
 			noOfMenOldValue: null,
 			noOfWomenldValue:null,
 			id: data.id ? data.id : null,
-			noOfMen: [data.noOfMen ? data.noOfMen : null,[Validators.required,Validators.min(0)]],
-			noOfWomen: [data.noOfWomen ? data.noOfWomen : null,[Validators.required,Validators.min(0)]],
+			noOfMen: [data.noOfMen ? data.noOfMen : 0,[Validators.required,Validators.min(0)]],
+			noOfWomen: [data.noOfWomen ? data.noOfWomen : 0,[Validators.required,Validators.min(0)]],
 			// //workerType: [data.workerType ? data.workerType : null, [Validators.required]],
 			workersType: [data.workersType,[Validators.required]],
 			total: [data.total ? data.total : null,{validators:[Validators.required,Validators.min(0) ]}]
