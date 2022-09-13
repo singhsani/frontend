@@ -619,6 +619,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		if (row.fileStatus == 'PAYMENT' && row.serviceType == 'MARRIAGE_REGISTRATION') {
 			return false;
 		}
+		else if (row.fileStatus == 'PAYMENT' && row.serviceType == 'SHOP_ESTAB_APPLICATION') {
+			return false;
+		}
 		else if (row.fileStatus === 'PAYMENT' && row.serviceType === 'FS_FIRE_CERTIFICATE' ||
 			row.serviceType === 'FS_GAS_CONNECTION_NOC' ||
 			row.serviceType === 'FS_ELECTRIC_CONNECTION_NOC' ||
