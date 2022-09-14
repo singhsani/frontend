@@ -359,4 +359,11 @@ export class DashboardComponent implements OnInit {
 				break;
 		}
 	}
+
+	onClick(event){
+		if(event=="STADIUMBOOK"){
+            this.commonService.openAlert("Warring", 'Bookings will not be accepted until the stadium is under construction.(સ્ટેડિયમ નિર્માણાધીન છે, ત્યાં સુધી બુકિંગ સ્વીકારવામાં આવશે નહીં.)', "warning");
+			this.router.navigate(['citizen/dashboard'])
+		}
+	}
 }
