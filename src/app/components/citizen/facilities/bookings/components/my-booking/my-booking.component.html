@@ -313,6 +313,14 @@
               {{'refund_acknowledgment' | translate:translateKey}}
             </button>
 
+
+            <button
+              *ngIf="element.resourceType == 'ATITHIGRUH' && (element.status == 'CANCELLED' || element.status == 'CANCELLATION_APPROVED')"
+              mat-menu-item color="primary" (click)="remarksModal(rejectTemplate);remarks(element)">
+              <mat-icon class="m-1" title="Why Rejected?">help_outline</mat-icon>
+              {{'cancellation_remark' | translate:translateKey}}
+            </button>
+
             <!-- <button mat-menu-item color="primary" (click)="openJSONModal(template);jsonDisplay(element)">
               <mat-icon class="m-1" title="{{'application_json' | translate:translateKey}}">center_focus_weak</mat-icon>
               {{'application_json' | translate:translateKey}}
@@ -580,6 +588,34 @@
   </div>
   <div class="modal-body scrollModel">
     <h5><b> {{rejectedMessage}} </b></h5>
+  </div>
+</ng-template>
+
+
+<ng-template #rejectTemplate>
+  <div class="modal-header">
+      <div class="col-9">
+          <h5 class="modal-title pull-left">Remarks</h5>
+      </div>
+      <div class="col-1">
+          <button class="pull-left mat-icon-button">
+              <mat-icon title="{{'copy_clipboard' | translate:translateKey}}">content_copy</mat-icon>
+          </button>
+      </div>
+      <div class="col-1">
+          <button title="{{'close' | translate:translateKey}}" class=" mat-icon-button" aria-label="Close"
+              (click)="modalRef.hide()">
+              <mat-icon>close</mat-icon>
+          </button>
+      </div>
+  </div>
+  <div class="modal-body">
+      <div class="row">
+          <div class="col-12">
+              <div type="text" readonly class="text-left remarks" [innerHtml]="getInnerHTML()" #copytext>
+              </div>
+          </div>
+      </div>
   </div>
 </ng-template>
 
