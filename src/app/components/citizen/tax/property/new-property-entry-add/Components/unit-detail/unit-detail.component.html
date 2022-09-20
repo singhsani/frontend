@@ -538,19 +538,6 @@
                                             </mat-error>
                                         </mat-form-field>
 
-                                        <div class="ngSelect">
-                                            <ng-select required placeholder="{{'room_type' | translate:translateKey }} *" [items]="roomTypeList"
-                                                bindValue="itemId" bindLabel="itemName"
-                                                formControlName="roomTypeLookupId"
-                                                [(ngModel)]="roomModel.roomTypeLookupId"
-                                                [ngClass]="{'ng-invalid ng-touched':  form.submitted && formRoom.roomTypeLookupId.errors}">
-                                            </ng-select>
-                                            <div *ngIf="form.submitted && formRoom.roomTypeLookupId.errors">
-                                                <mat-error *ngIf="formRoom.roomTypeLookupId.errors.required">*Room Type
-                                                    is required.
-                                                </mat-error>
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <mat-form-field class="full-width-input">
