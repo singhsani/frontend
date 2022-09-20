@@ -87,6 +87,9 @@ export class MyBookingComponent implements OnInit {
 	isLoadingResults: boolean = true;
 	isAmphi: boolean = false;
 	selectedResourceType: string = null;
+	modalRef: BsModalRef;
+	rejectRemarks: string = '';
+
 
 	constructor(
 		private fb: FormBuilder,
@@ -874,5 +877,18 @@ export class MyBookingComponent implements OnInit {
 		} else {
 			return false;
 		}
+	}
+
+	remarks(element){
+		debugger
+		this.rejectRemarks = element.cancellationBooking.remarks;
+	}
+
+	remarksModal(template: TemplateRef<any>) {
+		this.modalRef = this.modalService.show(template);
+	}
+
+	getInnerHTML() {
+		return `<b>Cancellation Remarks :</b> ${this.rejectRemarks}`;
 	}
 }
