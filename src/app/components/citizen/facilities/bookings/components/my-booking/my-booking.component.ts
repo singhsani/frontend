@@ -880,7 +880,6 @@ export class MyBookingComponent implements OnInit {
 	}
 
 	remarks(element){
-		debugger
 		this.rejectRemarks = element.cancellationBooking.remarks;
 	}
 
