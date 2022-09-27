@@ -536,4 +536,12 @@ export class TownHallBookComponent implements OnInit {
 		})
 	}
 
+  canclebtn(){
+	const currentRoute   =  this.router.url;
+	 this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+	 this.router.navigate([currentRoute]);
+   }); 
+ }
+
+
 }
