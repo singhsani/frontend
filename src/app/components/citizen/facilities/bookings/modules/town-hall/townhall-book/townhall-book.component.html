@@ -93,7 +93,7 @@
         </mat-card>
     <div class="fotButtonBar">
         <div class="col-sm-12 col-md-12 text-right">
-            <button mat-raised-button (click)="guideLineFlag = false; showSearchForm= true;" color="primary">
+`           <button mat-raised-button (click)="guideLineFlag = false; showSearchForm= true;" color="primary">
                 <mat-icon>thumb_up_alt</mat-icon>
                 {{'proceed'| translate: translateKey}}
             </button>
@@ -420,6 +420,10 @@
 
         <div class="fotButtonBar">
             <div class="col-sm-12 col-md-12 text-right">
+                <button mat-raised-button color="primary" 
+                    (click)="canclebtn()">{{'cancel'}}
+                </button>
+
                 <button mat-raised-button type="button" color="primary" (click)="showPaymentReciept = false;showApplicationForm = true;getUserProfile();">
                     {{'proceed_for_application' | translate: translateKey}}
                     <mat-icon>navigate_next</mat-icon>
@@ -486,6 +490,9 @@
 
                     <div class="row mt-4 fotButtonBar">
                         <div class="col-sm-12 col-md-12 text-right">
+                            <button mat-raised-button color="primary" 
+                                (click)="canclebtn()">{{'cancel'}}
+                            </button>
                             <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">{{'next'
                                 | translate:translateKey}}
                                 <mat-icon>navigate_next</mat-icon>
@@ -564,6 +571,11 @@
                                 <mat-icon>navigate_before</mat-icon>
                                 {{'back' | translate:translateKey}}
                             </button>
+                            <div class="col-sm-9 col-md-9 text-right">
+                            <button mat-raised-button color="primary" 
+                                (click)="canclebtn()">{{'cancel'}}
+                            </button>
+                            </div>    
                             <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">
                                 {{'next'| translate:translateKey}}
                                 <mat-icon>navigate_next</mat-icon>
@@ -621,6 +633,11 @@
                                 <mat-icon>navigate_before</mat-icon>
                                 {{'back' | translate:translateKey}}
                             </button>
+                            <div class="col-sm-8 col-md-8 text-right">
+                                <button mat-raised-button color="primary" 
+                                    (click)="canclebtn()">{{'cancel'}}
+                                </button>
+                            </div>  
                             <button mat-raised-button color="primary" type="submit">
                                 <mat-icon>check_circle_outline</mat-icon>
                                 {{'submit_application'| translate: translateKey}}
