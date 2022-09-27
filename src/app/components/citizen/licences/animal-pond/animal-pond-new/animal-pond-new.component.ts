@@ -507,6 +507,16 @@ export class AnimalPondNewComponent implements OnInit {
 					}
 				}
 			}
+			else if (relationshipId == 'PARTNER') {
+				if ((<FormArray>this.animalPondNewForm.get('relationshipList')).length == 0) {
+					this.addItem('relationshipList').push(this.createArray());
+					let newlyadded = this.addItem('relationshipList').controls;
+					if (newlyadded.length) {
+						this.editRecord((newlyadded[newlyadded.length - 1]));
+						(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
+					}
+				}
+			}
 		} catch (error) {
 			console.log(error.message);
 		}

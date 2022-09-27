@@ -173,11 +173,12 @@
                 {{'deposit_payment' | translate:translateKey}}
               </button>
 
-              <button *ngIf="showRecieptReprint(element)" mat-menu-item color="primary"
-                (click)="printReceipt(element, element.payableServiceType)">
-                <mat-icon title="Print Receipt" color="primary">print</mat-icon>
-                {{'receipt_reprint' | translate:translateKey}}
-              </button>
+              <div *ngIf="element.resourceType== 'TOWNHALL'"> 
+                <button *ngIf="showRecieptReprint(element)" mat-menu-item color="primary" (click)="printReceipt(element, element.payableServiceType=this.bookingConstant.TOWNHALL_FEES)">
+                   <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+                   {{'receipt_reprint' | translate:translateKey}}
+               </button>
+                </div>
 
               <button *ngIf="element.resourceType == 'SWIMMING_POOL' && 
                 element.status === this.bookingConstant.BOOKED" mat-menu-item color="primary"
@@ -186,6 +187,13 @@
                 {{'receipt_reprint' | translate:translateKey}}
               </button>
 
+              <div *ngIf="element.resourceType!= 'TOWNHALL'"> 
+              <button *ngIf="showRecieptReprint(element)" mat-menu-item color="primary"
+                (click)="printReceipt(element, element.payableServiceType)">
+                <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+                {{'receipt_reprint' | translate:translateKey}}
+              </button>
+              </div>
               <!-- Recepit Re-print Call -->
               <!-- TODO We'll changes AS PER REQUIREMENT-->
               <div *ngIf="element.resourceType!= (bookingConstant.TOWNHALL_RESOURCE_TYPE | uppercase)">

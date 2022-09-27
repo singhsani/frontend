@@ -97,8 +97,8 @@ export class TownHallBookComponent implements OnInit {
 	 */
 	Dates: Array<any> = [];
 	//endMaxDate:any = new Date();
-	endMinDate :any = new Date;
-	maxEndDate:any;
+	endMinDate: any = new Date;
+	maxEndDate: any;
 
 	/**
 	 * Bank Lookups
@@ -124,7 +124,7 @@ export class TownHallBookComponent implements OnInit {
 	showSearchForm: boolean = false;
 	showPaymentReciept: boolean = false;
 	isLoadingResults: boolean = false;
-	show:boolean = false;
+	show: boolean = false;
 	shortlistData: BookingDetails[];
 
 	constructor(
@@ -161,9 +161,9 @@ export class TownHallBookComponent implements OnInit {
 		 * Subscribe start date changes
 		 */
 		this.searchTownHallForm.controls.startDate.valueChanges.subscribe(data => {
-			  this.searchTownHallForm.controls.endDate.reset();
-			  this.endMinDate = data;
-			  this.toStartDate = data;
+			this.searchTownHallForm.controls.endDate.reset();
+			this.endMinDate = data;
+			this.toStartDate = data;
 			return;
 		});
 
@@ -211,8 +211,8 @@ export class TownHallBookComponent implements OnInit {
 			orgTelephoneNo: [null, [Validators.required]],
 			organizationPresidentName: [null, [Validators.required]],
 			organizationAddress: this.fb.group(this.addressComp.addressControls()),
-			gstNo :[null,ValidationService.gstNoValidator],
-			programmeName : [null],
+			gstNo: [null, ValidationService.gstNoValidator],
+			programmeName: [null, [Validators.required]],
 			/**
 			 * Applicant Details
 			 */
@@ -267,8 +267,8 @@ export class TownHallBookComponent implements OnInit {
 	 * @param date get the selected date value
 	//  */
 	onDateChange(date) {
-        let futureMonth = moment(date).add(3, 'month');
-      //  this.endMaxDate = moment(futureMonth).format("YYYY-MM-DD");
+		let futureMonth = moment(date).add(3, 'month');
+		//  this.endMaxDate = moment(futureMonth).format("YYYY-MM-DD");
 	}
 
 	/**
@@ -302,8 +302,8 @@ export class TownHallBookComponent implements OnInit {
 		if (this.searchTownHallForm.valid) {
 			this.isLoadingResults = true;
 			/**
-		     * Filter Object to get list of available dates.
-		     */
+			 * Filter Object to get list of available dates.
+			 */
 			let filterData = {
 				resourceName: this.searchTownHallForm.get('code').value,
 				startDate: moment(this.searchTownHallForm.get('startDate').value).format("YYYY-MM-DD"),
@@ -377,9 +377,9 @@ export class TownHallBookComponent implements OnInit {
 						this.paymentObject = payResp.data;
 						// this.bookingDetailsDataSource.data = payResp.data.bookingDetails as BookingDetails[];
 						this.shortlistData = payResp.data.bookingDetails as BookingDetails[];
-            			this.bookingDetailsDataSource.data = this.shortlistData.sort((a, b) => {
-             		 	return (<any>new Date(a.bookingDateTime) - (<any>new Date(b.bookingDateTime)))
-            			});
+						this.bookingDetailsDataSource.data = this.shortlistData.sort((a, b) => {
+							return (<any>new Date(a.bookingDateTime) - (<any>new Date(b.bookingDateTime)))
+						});
 						this.CD.detectChanges();
 						this.showPaymentReciept = true;
 						this.CD.detectChanges();
@@ -398,16 +398,16 @@ export class TownHallBookComponent implements OnInit {
 		}
 	}
 
-	onChangePurposeOfBooking(event){
+	onChangePurposeOfBooking(event) {
 
-		if(event=='NATAK'){
-		  this.show=true;
-		  this.townHallApplicationForm.get('programmeName').setValidators([Validators.required]);
-		}else{
-		  this.show = false;
-		}
+		// if (event == 'NATAK') {
+		// 	this.show = true;
+		// 	this.townHallApplicationForm.get('programmeName').setValidators([Validators.required]);
+		// } else {
+		// 	this.show = false;
+		// }
 
-	  }
+	}
 
 
 
@@ -438,7 +438,7 @@ export class TownHallBookComponent implements OnInit {
 			}, (err) => {
 				this.isLoadingResults = false;
 				if (err.status == 402) {
-					this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway ,this.townHallApplicationForm, this.router);
+					this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway, this.townHallApplicationForm, this.router);
 					// this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService, this.townHallApplicationForm, this.router);
 					return;
 				} else if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {
@@ -465,7 +465,7 @@ export class TownHallBookComponent implements OnInit {
 	 * Method is used to handle error/validation on submit
 	 * @param count - count of invalid control.
 	 */
-	 handleErrorsOnSubmit() {
+	handleErrorsOnSubmit() {
 
 		const key = this.bookingUtils.getInvalidFormControlKey(this.townHallApplicationForm);
 		const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 0;
@@ -476,21 +476,21 @@ export class TownHallBookComponent implements OnInit {
 
 	}
 
-	setFormControlToTabIndexMap(){
+	setFormControlToTabIndexMap() {
 		// index 2
-		this.formControlNameToTabIndex.set("organizationName",0);
-		this.formControlNameToTabIndex.set("orgTelephoneNo",0);
-		this.formControlNameToTabIndex.set("organizationPresidentName",0);
-		this.formControlNameToTabIndex.set("programmeName",0);
-		this.formControlNameToTabIndex.set("organizationAddress",0);
+		this.formControlNameToTabIndex.set("organizationName", 0);
+		this.formControlNameToTabIndex.set("orgTelephoneNo", 0);
+		this.formControlNameToTabIndex.set("organizationPresidentName", 0);
+		this.formControlNameToTabIndex.set("programmeName", 0);
+		this.formControlNameToTabIndex.set("organizationAddress", 0);
 		// index 1
-		this.formControlNameToTabIndex.set("applicantName",1);
-		this.formControlNameToTabIndex.set("applicantMobile",1);
-		this.formControlNameToTabIndex.set("confirmMobile",1);
-		this.formControlNameToTabIndex.set("emailID",1);
-		this.formControlNameToTabIndex.set("confirmEmailID",1);
-		this.formControlNameToTabIndex.set("relationshipWithOrg",1);
-		this.formControlNameToTabIndex.set("applicantAddress",1);
+		this.formControlNameToTabIndex.set("applicantName", 1);
+		this.formControlNameToTabIndex.set("applicantMobile", 1);
+		this.formControlNameToTabIndex.set("confirmMobile", 1);
+		this.formControlNameToTabIndex.set("emailID", 1);
+		this.formControlNameToTabIndex.set("confirmEmailID", 1);
+		this.formControlNameToTabIndex.set("relationshipWithOrg", 1);
+		this.formControlNameToTabIndex.set("applicantAddress", 1);
 
 		// index 2
 		this.formControlNameToTabIndex.set('bankName', 2)
@@ -501,40 +501,40 @@ export class TownHallBookComponent implements OnInit {
 		this.formControlNameToTabIndex.set('programPurpose', 2)
 
 	}
-  /**
-   * Get user data
-   */
-  getUserProfile() {
-    this.bookingService.getUserProfile().subscribe(resp => {
-        this.townHallApplicationForm.get('applicantName').setValue(resp.data.firstName + ' ' + resp.data.lastName);
-        this.townHallApplicationForm.get('emailID').setValue(resp.data.email);
-        this.townHallApplicationForm.get('applicantMobile').setValue(resp.data.cellNo);
-		this.townHallApplicationForm.get('confirmMobile').setValue(resp.data.cellNo);
-		this.townHallApplicationForm.get('confirmEmailID').setValue(resp.data.email);
-	},
-      err => {
-        this.toster.error("Server Error");
-      });
-    this.townHallApplicationForm.get('applicantAddress').get('country').setValue('INDIA');
-    this.townHallApplicationForm.get('applicantAddress').get('state').setValue('GUJARAT');
-    this.townHallApplicationForm.get('applicantAddress').get('city').setValue('Vadodara');
-  }
+	/**
+	 * Get user data
+	 */
+	getUserProfile() {
+		this.bookingService.getUserProfile().subscribe(resp => {
+			this.townHallApplicationForm.get('applicantName').setValue(resp.data.firstName + ' ' + resp.data.lastName);
+			this.townHallApplicationForm.get('emailID').setValue(resp.data.email);
+			this.townHallApplicationForm.get('applicantMobile').setValue(resp.data.cellNo);
+			this.townHallApplicationForm.get('confirmMobile').setValue(resp.data.cellNo);
+			this.townHallApplicationForm.get('confirmEmailID').setValue(resp.data.email);
+		},
+			err => {
+				this.toster.error("Server Error");
+			});
+		this.townHallApplicationForm.get('applicantAddress').get('country').setValue('INDIA');
+		this.townHallApplicationForm.get('applicantAddress').get('state').setValue('GUJARAT');
+		this.townHallApplicationForm.get('applicantAddress').get('city').setValue('Vadodara');
+	}
 
-  getClass(shift) {
-    let shiftCount = shift.length;
-    let availableCount = shift.filter(s => s.slotStatus === "AVAILABLE").length;
-    let bookedCount = shift.filter(s => s.slotStatus === "BOOKED").length;
-    let reservedCount = shift.filter(s => s.slotStatus === "RESERVED").length;
-    let temporaryBlockCount = shift.filter(s => s.slotStatus === "TEMPORARY_BLOCKED").length;
+	getClass(shift) {
+		let shiftCount = shift.length;
+		let availableCount = shift.filter(s => s.slotStatus === "AVAILABLE").length;
+		let bookedCount = shift.filter(s => s.slotStatus === "BOOKED").length;
+		let reservedCount = shift.filter(s => s.slotStatus === "RESERVED").length;
+		let temporaryBlockCount = shift.filter(s => s.slotStatus === "TEMPORARY_BLOCKED").length;
 
-    return shiftCount === reservedCount || shiftCount === temporaryBlockCount || shiftCount === bookedCount  ? 'bookDate'  : '';
-  }
+		return shiftCount === reservedCount || shiftCount === temporaryBlockCount || shiftCount === bookedCount ? 'bookDate' : '';
+	}
 
-  onChangeTownHalls(data){
-    this.bookingService.getAvailableStots(data).subscribe(respData => {
-    this.maxEndDate = moment(respData.data.endDate, "DD-MM-YYYY").toDate();
-    })
-  }
+	onChangeTownHalls(data) {
+		this.bookingService.getAvailableStots(data).subscribe(respData => {
+			this.maxEndDate = moment(respData.data.endDate, "DD-MM-YYYY").toDate();
+		})
+	}
 
   canclebtn(){
 	const currentRoute   =  this.router.url;

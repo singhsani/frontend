@@ -44,7 +44,7 @@
                 <li> General show charge per seat 20 Rs.</li>
             </ul>
           </li>
-          <li>Seating Capacity: For Special Show citizen can book 156 seats and for General Show one user can book 4 seats.</li>
+          <li>Seating Capacity: For Special Show citizen can book 98 seats and for General Show one user can book 4 seats.</li>
         </ol>
       </mat-card-content>
     </mat-card>
@@ -267,7 +267,7 @@
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
-                        <input matInput type="text" formControlName="schoolEmailId"
+                        <input matInput type="text" formControlName="schoolEmailId" maxlength="50"
                             placeholder="{{'school_email_id' | translate: translateKey}}" required>
                         <control-messages [control]="ticketBookingForm.get('schoolEmailId')" ></control-messages>
                     </mat-form-field>
