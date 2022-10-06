@@ -95,7 +95,7 @@
 
                     <div class="col-md-4 ngSelect" formGroupName="block">
                         <ng-select placeholder="{{'block_no' | translate: pecTranslateKey}}"
-                            formControlName="wardzoneName" required>
+                            formControlName="wardzoneName">
                             <ng-option *ngFor="let block of blockNoArray" [value]="block.wardzoneId">
                                 {{block.wardzoneName}}</ng-option>
                         </ng-select>
