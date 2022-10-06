@@ -453,4 +453,7 @@ export class BookingService {
       return this.http.get(this.requestURL);
     }
 
+    getSlotAvillable(refNumber){
+      return this.http.post(`api/booking/${this.resourceType}/getSlotAvailable`,refNumber);
+    }
 }

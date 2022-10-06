@@ -9,6 +9,7 @@ import { BookingConstants, BookingUtils } from '../../../config/booking-config';
 import { ValidationService } from 'src/app/shared/services/validation.service';
 import { BookingService } from '../../../shared-booking/services/booking-service.service';
 import { FormsActionsService } from '../../../../../../../core/services/citizen/data-services/forms-actions.service';
+import Swal from 'sweetalert2';
 
 export interface BookingDetails {
 	administrationCharges: string
@@ -43,6 +44,9 @@ export class TownHallBookComponent implements OnInit {
 
 	bookingConstants = BookingConstants;
 	bookingUtils: BookingUtils;
+	checkForm: boolean = false;
+	refNumber : string;
+
 
 	public formControlNameToTabIndex = new Map();
 
@@ -372,6 +376,8 @@ export class TownHallBookComponent implements OnInit {
 				this.townHallApplicationForm.patchValue(resp.data);
 				this.addressComp.getCountryLists();
 				this.appAddressComp.getCountryLists();
+				this.refNumber = resp.data.refNumber;
+
 				if (resp.data.status == this.bookingConstants.DRAFT) {
 					this.bookingService.searchPayment(resp.data.refNumber).subscribe(payResp => {
 						this.paymentObject = payResp.data;
@@ -415,21 +421,23 @@ export class TownHallBookComponent implements OnInit {
 	 * Method is used to submit townhall application form.
 	 */
 	submitTownhallApplication() {
+		if(this.checkForm){
+			return;
+		  }
 
-
-		if (this.townHallApplicationForm.invalid) {
+		if (this.townHallApplicationForm.invalid && this.checkForm == false) {
 			this.handleErrorsOnSubmit();
 			this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
 			return;
 		}
-		else if (!this.bookingUtils.matcher(this.townHallApplicationForm, 'emailID', 'confirmEmailID') || !this.bookingUtils.matcher(this.townHallApplicationForm, 'applicantMobile', 'confirmMobile')) {
+		else if (this.checkForm == false &&  !this.bookingUtils.matcher(this.townHallApplicationForm, 'emailID', 'confirmEmailID') || !this.bookingUtils.matcher(this.townHallApplicationForm, 'applicantMobile', 'confirmMobile')) {
 			this.handleErrorsOnSubmit();
 			this.commonService.openAlert("Field Error", !this.bookingUtils.matcher(this.townHallApplicationForm, 'emailID', 'confirmEmailID') ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning')
 			return;
-		} else if (!this.townHallApplicationForm.get('agree').value) {
+		} else if (this.checkForm == false &&  !this.townHallApplicationForm.get('agree').value) {
 			this.commonService.openAlert("Field Error", this.bookingConstants.AGREE_MESSAGE, 'warning')
 			return;
-		} else if (!this.townHallApplicationForm.get('termsCondition').value) {
+		} else if (this.checkForm == false &&  !this.townHallApplicationForm.get('termsCondition').value) {
 			this.commonService.openAlert("Field Error", this.bookingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning')
 			return;
 		} else {
@@ -537,11 +545,43 @@ export class TownHallBookComponent implements OnInit {
 	}
 
   canclebtn(){
-	const currentRoute   =  this.router.url;
-	 this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-	 this.router.navigate([currentRoute]);
-   }); 
- }
+	this.checkForm = true;
+    this.townHallApplicationForm.controls['applicantName'].setErrors(null);
+    this.townHallApplicationForm.controls['applicantMobile'].setErrors(null);
+    this.townHallApplicationForm.controls['confirmMobile'].setErrors(null);
+    this.townHallApplicationForm.controls['emailID'].setErrors(null);
+    this.townHallApplicationForm.controls['confirmEmailID'].setErrors(null);
+    this.townHallApplicationForm.controls['relationshipWithOrg'].setErrors(null);
+    this.townHallApplicationForm.controls['organizationName'].setErrors(null);
+    this.townHallApplicationForm.controls['orgTelephoneNo'].setErrors(null);
+    this.townHallApplicationForm.controls['organizationPresidentName'].setErrors(null);
+    this.townHallApplicationForm.controls['programmeName'].setErrors(null);
+    this.townHallApplicationForm.controls['programShortDetails'].setErrors(null);
+    this.townHallApplicationForm.controls['programPurpose'].setErrors(null);
 
 
+    let cancelDirect = {
+      title: 'Are you sure Do you wan to cancel?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, cancel it!',
+      imageUrl: this.commonService.imageUrls("warning"),
+			imageClass: 'doneIcon',
+    }
+	Swal(cancelDirect as any).then((result111) => {
+		if(result111.value){
+		 this.bookingService.getSlotAvillable(this.refNumber).subscribe(res => console.log(res));
+		  const currentRoute   =  this.router.url;
+				this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+				this.router.navigate([currentRoute]);
+			  });
+		}else{
+			this.checkForm = false
+			this.townHallApplicationForm.touched
+  
+		}
+	  })
+	}
 }
