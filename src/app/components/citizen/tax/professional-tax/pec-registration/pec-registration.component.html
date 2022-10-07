@@ -402,7 +402,7 @@
 					<mat-form-field class="col-md-4"
 						*ngIf="pecRegForm.get('professionConstitution.code').value == 'OTHER'">
 						<input matInput autocomplete="off" maxlength="100" formControlName="otherProfession" type="text"
-							appValidationFields validationFieldsType="appAlphanumericNumber"
+							appValidationFields validationFieldsType="appAlphanumericNumberWithSpace"
 							placeholder="{{'other_profession' | translate: translateKey}}" required>
 						<control-messages [control]="pecRegForm.get('otherProfession')"></control-messages>
 					</mat-form-field>
