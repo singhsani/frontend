@@ -53,13 +53,13 @@ export class ApplicantDetailPropertywaterComponent implements OnInit {
 
     	this.model.citizenAddressDTO.state = null;
     	this.model.citizenAddressDTO.city = null;
-		
+
 		if (country) {
 			this.getStateLists(country);
 		}
 
   }
-  
+
   /**
 	 * This method is use for change the state
 	 * @param state - name of state
@@ -111,14 +111,14 @@ getStateLists(country) {
 	 */
 	getCityLists(state) {
         const ele = state.name || state;
-		this.cityListArray = this.stateListArray.find(obj => obj.name === ele).cities;
+		this.cityListArray = this.stateListArray.find(obj => obj.name.toLowerCase() === ele.toLowerCase()).cities;
 		this.cityListArray = _.orderBy(this.cityListArray, ['name'], ['asc']);
 	}
 
 	saveApplicantDetails(form: NgForm) {
 		if (form.form.valid) {
 			this.model.citizenServiceType = this.serviceType;
-			this.applicantDetails.emit(this.model);	
+			this.applicantDetails.emit(this.model);
 		}
 	}
 
@@ -128,11 +128,11 @@ getStateLists(country) {
 		}else{
 			this.stepChange.emit(1);
 		}
-		
+
 	}
 
 	getUserProfile(){
-		
+
 		if(!this.commonServcie2.fromAdmin()) {
 			this.commonService.getUserProfile().subscribe(res => {
 				const userData = res['data'];
@@ -141,7 +141,7 @@ getStateLists(country) {
 					this.model.lastName = userData.lastName;
 					this.model.middleName = userData.middleName;
 					this.model.mobileNo = userData.cellNo;
-					this.model.email = userData.email;	
+					this.model.email = userData.email;
 					this.model.citizenAddressDTO.buildingName = userData.buildingName;
 					this.model.citizenAddressDTO.streetName = userData.streetName;
 					this.model.citizenAddressDTO.landmark = userData.landmark;
@@ -167,8 +167,8 @@ getStateLists(country) {
 	}
 
 	getCityListsForDefaultState(state :any) {
-		this.cityListArray = this.stateListArray.find(obj => obj.name.toUpperCase() === state).cities;
-		this.stateListArray.find(obj => obj.name === state).cities
+		this.cityListArray = this.stateListArray.find(obj => obj.name.toUpperCase() === state.toUpperCase()).cities;
+		this.stateListArray.find(obj => obj.name.toLowerCase() === state.toLowerCase()).cities
 		this.cityListArray = _.orderBy(this.cityListArray, ['name'],['asc']);
 	}
 
