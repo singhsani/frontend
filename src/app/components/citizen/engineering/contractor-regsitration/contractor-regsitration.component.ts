@@ -10,6 +10,8 @@ import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { EngineeringService } from '../engineering.service';
 import * as _ from 'lodash';
 import { ManageRoutes } from 'src/app/config/routes-conf';
+import { ValidationService } from 'src/app/shared/services/validation.service';
+import { CitizenConfig } from '../../citizen-config';
 @Component({
   selector: 'app-contractor-regsitration',
   templateUrl: './contractor-regsitration.component.html',
@@ -19,6 +21,9 @@ export class ContractorRegsitrationComponent implements OnInit {
 
   @ViewChild('residenceAddress') resAddrComponent: any;
   @ViewChild('firmAddress') officeAddrComponent: any;
+  @ViewChild('address') addrComponent: any;
+  public formControlNameToTabIndex = new Map();
+  public affordableHousingConfiguration: CitizenConfig = new CitizenConfig();
 
   translateKey: string = 'pecRegistrationScreen';
 
@@ -38,6 +43,7 @@ export class ContractorRegsitrationComponent implements OnInit {
 
   formId: number;
   showButtons: boolean = false;
+  isSubmitBtnVisible: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -58,7 +64,7 @@ export class ContractorRegsitrationComponent implements OnInit {
 
   ngOnInit() {
     this.contractorRegistrationControl();
-    this.contractorRegistrationForm.addControl('ownerShipDetail', this.ownerShipDetail);
+    //this.contractorRegistrationForm.addControl('ownerShipDetail', this.ownerShipDetail);
     this.contractorRegistrationForm.addControl('firmEmployeeDetail', this.firmEmployeeDetail);
 
     this.activatedRoute.paramMap.subscribe(param => {
@@ -72,10 +78,30 @@ export class ContractorRegsitrationComponent implements OnInit {
     if (!this.formId) {
       this.createFormData();
     }
+    this.setFormControlToTabIndexMap();
+  }
+
+  setFormControlToTabIndexMap() {
+
+    this.formControlNameToTabIndex.set('firstName', 0)
+    this.formControlNameToTabIndex.set('middleName', 0)
+    this.formControlNameToTabIndex.set('lastName', 0)
+    this.formControlNameToTabIndex.set('mobileNumber', 0)
+    this.formControlNameToTabIndex.set('emailId', 0)
+    this.formControlNameToTabIndex.set('ownerFirstName', 0)
+    this.formControlNameToTabIndex.set('ownerMiddleName', 0)
+    this.formControlNameToTabIndex.set('ownerLastName', 0)
+    this.formControlNameToTabIndex.set('ownerMobileNumber', 0)
+    this.formControlNameToTabIndex.set('ownerEmailId', 0)
+    this.formControlNameToTabIndex.set('bankAccountNo', 0)
+    this.formControlNameToTabIndex.set('bankName', 0)
+    this.formControlNameToTabIndex.set('branchName', 0)
+    
   }
 
   createFormData() {
-    this.engineer.createFormData().subscribe(res => {
+
+    this.engineer.createFormDataa().subscribe(res => {
       this.contractorRegistrationForm.patchValue(res);
       setTimeout(() => {
         this.showButtons = true;
@@ -86,74 +112,91 @@ export class ContractorRegsitrationComponent implements OnInit {
 
     this.contractorRegistrationForm = this.fb.group({
 
-      apiType: null,
+      apiType: "contractor",
       serviceCode: null,
-      serviceFormId: this.formId,
+      serviceFormId: null,
       applicationNumber: null,
-      id: null,
-      applicantFirstName: null,
-      applicantMiddleName: null,
-      applicantLastName: null,
-      applicantMobileNumber: null,
-      applicantEmail: null,
-      serviceType: null,
-      formStatus: null,
-      hasFirmOrPartnership: null,
-      powerOfAttorneyName: null,
-
+     canEdit:[true],
+      fristName: [null, [Validators.required, Validators.maxLength(50)]],
+      middleName: [null,[Validators.required, Validators.maxLength(50)]],
+      lastName: [null,[Validators.required, Validators.maxLength(50)]],
+      mobileNumber: [null,[Validators.required]],
+      emailId: [null,[Validators.required, ValidationService.emailValidator]],
+      partnerShip: [null],
+      ownerFirstName: [null,[Validators.required, Validators.maxLength(50)]],
+      ownerMiddleName: [null,[Validators.required, Validators.maxLength(50)]],
+      ownerLastName: [null,[Validators.required, Validators.maxLength(50)]],
+      ownerMobileNumber: [null,[Validators.required]],
+      ownerEmailId: [null,[Validators.required, ValidationService.emailValidator]],
+      bankAccountNo: [null,[Validators.required]],
+      branchName: [null,[Validators.required, Validators.maxLength(50)]],
       bankName: this.fb.group({
         code: [null, [Validators.required]],
         name: null
       }),
+      whichDepartment: [null],
+      postRegistrationDetails: [null],
+      engineerDetails: [null],
+      incomeTaxDetails: [null],
+      anyAnotherOrganisationShareholder: [null],
+      registrationDateandRenewdate: [null],
+      solvencyAmountandBankDetails: [null],
+      oldRegistrationDateandNumber: [null],
+      notCompletedReasonDetails: [null],
+      amountRemainsInCorporationOrOrganization: [null],
+      partnersList: this.fb.group({
+        ownerType: [null],
+        OwnerName: [null],
+        ownerDetail: [null],
+      }),
+      contractorWorkDetails: null,
+      // serviceCode:'Contractor-Registration',
+      EmployeeDetails: this.fb.group({
+        employeeName: [null],
+        employeeQualification: [null],
+        employeeStatus: [null],
+        employeeExperiernceyears: [null],
+        employeestartWorkingProject: [null],
+        projectStartDate: [null],
+      }),
+      bussinessName: [null,[Validators.required, Validators.maxLength(50)]],
+      bussinessMobileNo: [null,[Validators.required]],
+      registrationDetails: [null],
+      threeYearDetaols: [null],
+      WorkShopplantRate: [null],
+      ownerAccountDepartment: [null],
+      turnoverDetails: [null],
+      anotherorganisation: [null],
+      address: this.fb.group(this.addrComponent.addressControls()),
+      OwnwemobileNumber : [null],
+      attachments: []
 
-      accountNumber: null,
-      branchName: null,
-      firmName: null,
-      firmMobileNumber: null,
-      registrationDate: null,
-      remarks: null,
-
-      ownershipDetailList: this.ownerShipDetail,
-      firmEmployeeDetails: this.firmEmployeeDetail,
-
-      residenceAddress: this.fb.group(this.officeAddrComponent.addressControls()),
-      firmAddress: this.fb.group(this.resAddrComponent.addressControls()),
-
-      registrationDetail: null,
-      threeYearWorkDetail: null,
-      turnOverDetail: null,
-      workShopAndPlantRate: null,
-      hasOwnerAccountDepartment: null,
-      contractorWorkDetail: null,
-      hasAnyRegistrationOnAnotherOrganisation: null,
-      anotherDeptOrOrgName: null,
-      pastRegistrationDetail: null,
-      engineerDetail: null,
-      incomeTaxDetail: null,
-      hasOwnerPartnerAndShareHolderApplyInAnyOrganization: null,
-      solvencyAmountAndBankDetail: null,
-      registrationDateOrReNewDate: null,
-      oldRegistrationDate: null,
-      oldRegistrationNumber: null,
-      anyUnCompleteWorkDetailWithReason: null,
-      hasAmountRemainingAnyCorporationOrOrganization: null,
-
-      attachments: [],
-      acceptAndCondition: [true],
-      createdByCitizen: [true],
     });
-    this.ownerShipDetail.push(this.createOwnerShipDetail());
-    this.firmEmployeeDetail.push(this.createFirmEmployeeDetail());
+
+
+  }
+
+  saveRecord(row: any) {
+    if (row.valid) {
+      row.isEditMode = false;
+      row.newRecordAdded = false;
+    }
   }
 
   getContractorData(id: number) {
     this.formService.getFormData(id).subscribe(res => {
       console.log("tresr", res)
       this.contractorRegistrationForm.patchValue(res);
-      this.showButtons = true;
-      this.contractorRegistrationForm.disable();
+      //this.showButtons = true;
+      //this.contractorRegistrationForm.disable();
+      this.locationChange(res.applyingFor);
+
+      if (res.formStatus == 'PAYMENT_RECEIVED' || res.formStatus == 'SUBMITTED') {
+        this.contractorRegistrationForm.disable();
+        this.contractorRegistrationForm.get('canEdit').setValue(false);
+      }
       this.setServiceDetailsOnInit(res);
-     
+
     });
   }
 
@@ -163,8 +206,15 @@ export class ContractorRegsitrationComponent implements OnInit {
     });
   }
 
+  locationChange(event) {
+    this.engineer.getFeeFromLocationn(event.value).subscribe(res => {
+      this.contractorRegistrationForm.get('registrationAmount').setValue(res.fee);
+    })
+    this.contractorRegistrationForm.get('locationOfFactoryWorks').get('code').setValue(event.value);
+  }
+
   getAllDocumentLists() {
-    this.engineer.getAllDocuments().subscribe(res => {
+    this.engineer.getAllDocumentss().subscribe(res => {
       this.attachmentList = _.cloneDeep(res);
 
       for (let file of this.attachmentList) {
@@ -181,22 +231,24 @@ export class ContractorRegsitrationComponent implements OnInit {
       console.log("file" + JSON.stringify(file));
       this.attachmentList.push(file);
     }
+    this.manadoty();
+  }
+
+  manadoty() {
+    this.uploadFilesArray = [];
+    _.forEach(this.attachmentList, (value) => {
+      if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+        this.uploadFilesArray.push({
+          'labelName': value.documentLabelEn,
+          'fieldIdentifier': value.fieldIdentifier,
+          'documentIdentifier': value.documentIdentifier
+        })
+      }
+    });
   }
 
   onTabChange(evt) {
     this.tabIndex = evt;
-  }
-
-
-  createOwnerShipDetail(): FormGroup {
-    return this.fb.group({
-      ownerType: null,
-      ownerName: null,
-    });
-  }
-
-  addRowOwnerShip() {
-    this.ownerShipDetail.push(this.createOwnerShipDetail());
   }
 
   onRemoveRowOwnerShip(rowIndex: number) {
@@ -251,12 +303,40 @@ export class ContractorRegsitrationComponent implements OnInit {
     this.modalJsonRef.hide();
   }
 
-
   onSubmit() {
+    if (this.contractorRegistrationForm.invalid) {
+      //this.commonService.prrintInvalidForm(this.affordableHousingForm);
+      let count = this.affordableHousingConfiguration.getAllErrors(this.contractorRegistrationForm);
 
-    
+      this.commonService.openAlert("Warning", this.affordableHousingConfiguration.ALL_FEILD_REQUIRED_MESSAGE, "warning", "", cb => {
+        switch (true) {
+          case (count <= 27):
+            this.tabIndex = 0;
+            break;
+          case (count <= 48):
+            this.tabIndex = 1;
+            break;
+          case (count <= 58):
+            this.tabIndex = 2;
+            break;
+          case (count <= 68):
+            this.tabIndex = 4;
+            break;
+          default:
+            this.tabIndex = 0;
+        }
+
+      });
+      return;
+    }
+    /* Normal submit*/
+    this.onSubmitUsingAPI();
+
+  }
+
+
+  onSubmitUsingAPI() {
     this.contractorRegistrationForm.get('serviceFormId').setValue(this.formId);
-
     this.mandatoryFileCheck(this.contractorRegistrationForm.get('serviceFormId').value, this.attachmentList).then(data => {
       if (data.status) {
         this.engineer.vendorSaveFormData(this.contractorRegistrationForm.getRawValue()).subscribe(res => {
@@ -302,4 +382,16 @@ export class ContractorRegsitrationComponent implements OnInit {
 
     this.contractorRegistrationForm.patchValue(obj);
   }
+
+  //upload file
+  uploadFilesArray: Array<any> = [];
+
+  handleErrorsOnSubmit(key) {
+
+    const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 0;
+
+    this.tabIndex = index;
+    return false;
+  }
+
 }
