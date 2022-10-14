@@ -272,7 +272,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 		// call save api before submit 
 		this.formService.saveFormData(this.form.getRawValue()).subscribe(
 			res => {
-				//this.form.patchValue(res);
+				this.form.patchValue(res);
 				this.isSaveBtnDisabled = false;
 				if (this.isstepper) {
 					this.tabIndex.emit(this.stepInfo.next);
