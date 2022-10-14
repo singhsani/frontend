@@ -1,91 +1,169 @@
-<div class="pb-3">
+<div class="container">
+
   <app-title-bar [title]="'Contractor Registration'">
-    <!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
-      Patch Value
-    </button> -->
+    <!-- <form class="searchBox">
+      <mat-form-field>
+        <input matInput autocomplete="off" trim="blur" maxlength="21" id="applicationNumberTextBox"
+          #applicationNumberTextBox [value]="applicationNumberTextBox.value.toUpperCase()" type="text"
+          placeholder="{{'Application Number'}}">
+        <button mat-button matSuffix mat-icon-button
+          (click)="checkDataFromApplicationNumber(applicationNumberTextBox.value)">
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+    </form> -->
   </app-title-bar>
+
+
   <mat-card class="formClass cardBorder">
 
     <form [formGroup]="contractorRegistrationForm">
       <mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
-       
+        <!-- Tab 1 Starts -->
         <mat-tab>
           <ng-template mat-tab-label>
-            <div>{{'Firm Detail'}}</div>
+            <div>{{'Contractor Detail' | translate: translateKey}}</div>
           </ng-template>
 
           <div class="row">
-            <div class="col-md-12">
-              <h2 style="margin-left: -16px;"><b>{{'Details of Firm'}}</b></h2>
-            </div>
+            <h2><b>Applicant Detail</b></h2>
             <mat-form-field class="col-md-4">
-              <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required
-                maxlength="100" placeholder="{{'applicant_first_name' | translate: translateKey}}"
-                formControlName="applicantFirstName" class="capitalCase">
-              <control-messages [control]="contractorRegistrationForm.get('applicantFirstName')">
+              <input matInput type="text" formControlName="fristName" appValidationFields validationFieldsType='alphanumericWithSpace' required
+               maxlength="50" placeholder="{{'first_name'  | translate: translateKey}}">
+               <control-messages [control]="contractorRegistrationForm.get('fristName')">
               </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required
-                maxlength="100" placeholder="{{'applicant_middle_name' | translate: translateKey}}"
-                formControlName="applicantMiddleName" class="capitalCase">
-              <control-messages [control]="contractorRegistrationForm.get('applicantMiddleName')">
+              <input matInput type="text" formControlName="middleName" appValidationFields validationFieldsType='alphanumericWithSpace' required
+               maxlength="50" placeholder="{{'middle_aame' | translate: translateKey}}">
+               <control-messages [control]="contractorRegistrationForm.get('middleName')">
               </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required
-                maxlength="100" placeholder="{{'applicant_last_name' | translate: translateKey}}"
-                formControlName="applicantLastName" class="capitalCase">
-              <control-messages [control]="contractorRegistrationForm.get('applicantLastName')">
+              <input matInput type="text" formControlName="lastName" appValidationFields validationFieldsType='alphanumericWithSpace' required
+               maxlength="50" placeholder="{{'last_name' | translate: translateKey}}">
+               <control-messages [control]="contractorRegistrationForm.get('lastName')">
               </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput type="text" OnlyNumber maxlength="10"
-                placeholder="{{'applicant_mobile_number' | translate: translateKey}}"
-                formControlName="applicantMobileNumber">
-              <control-messages [control]="contractorRegistrationForm.get('applicantMobileNumber')">
-              </control-messages>
+              <input matInput formControlName="mobileNumber" type="text" required OnlyNumber maxlength="10"
+                placeholder="{{'mobile_number' | translate: translateKey}}">
+                <control-messages [control]="contractorRegistrationForm.get('mobileNumber')">
+                </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput type="text" required placeholder="{{'applicant_email' | translate: translateKey}}"
-                maxlength="50" formControlName="applicantEmail">
-              <control-messages [control]="contractorRegistrationForm.get('applicantEmail')">
-              </control-messages>
+              <input matInput type="text" formControlName="emailId" maxlength="50"
+                placeholder="{{'email_id' | translate: translateKey}}" required>
+                <control-messages [control]="contractorRegistrationForm.get('emailId')">
+                </control-messages>
             </mat-form-field>
 
-            <div class="row">
-              <h2><b>{{'Address of the Residence'}}</b></h2>
-              <app-address #residenceAddress [requiredFeilds]="true"
-                [addressFormGroup]="contractorRegistrationForm.get('residenceAddress')">
-              </app-address>
-            </div>
+            <h2><b>{{'address_detail' | translate: translateKey}}</b></h2>
+            <app-address #address [requiredFeilds]="true"
+              [addressFormGroup]="contractorRegistrationForm.get('address')"></app-address>
 
-            <div class="col-md-12 ngSelect">
-              <ng-select formControlName="hasFirmOrPartnership">
-                <ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
-                </ng-option>
+            <div class="col-md-4 ngSelect">
+              <mat-label><b>{{'if_company_partnership' | translate: translateKey}} *</b></mat-label>
+              <ng-select formControlName="partnerShip">
+                <ng-option>Yes</ng-option>
+                <ng-option>No</ng-option>
               </ng-select>
-              <control-messages [control]="contractorRegistrationForm.get('hasFirmOrPartnership')">
-              </control-messages>
             </div>
 
+
+            <h2><b>{{'owner_detail' | translate: translateKey}}</b></h2>
             <mat-form-field class="col-md-4">
-              <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required
-                maxlength="100" placeholder="{{'power_of_attorney_name' | translate: translateKey}}"
-                formControlName="powerOfAttorneyName" class="capitalCase">
-              <control-messages [control]="contractorRegistrationForm.get('powerOfAttorneyName')">
-              </control-messages>
+              <input matInput type="text" formControlName="ownerFirstName" appValidationFields validationFieldsType='alphanumericWithSpace'
+               maxlength="50" placeholder="{{'first_name' | translate: translateKey}}" required>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput autocomplete="off" minlength="9" maxlength="18" OnlyNumber formControlName="accountNumber"
-                type="tel" placeholder="{{'bank_account_no' | translate: translateKey}}" required>
-              <control-messages [control]="contractorRegistrationForm.get('accountNumber')"></control-messages>
+              <input matInput type="text" formControlName="ownerMiddleName" appValidationFields validationFieldsType='alphanumericWithSpace'
+               maxlength="50" placeholder="{{'middle_ name' | translate: translateKey}}" required>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" formControlName="ownerLastName" appValidationFields validationFieldsType='alphanumericWithSpace'
+               maxlength="50" placeholder="{{'last_name' | translate: translateKey}}" required>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" formControlName="ownerMobileNumber" required OnlyNumber maxlength="10"
+                placeholder="{{'mobile_number' | translate: translateKey}}" required>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" formControlName="ownerEmailId"
+                placeholder="{{'email_id' | translate: translateKey}}" required>
+            </mat-form-field>
+
+            <app-address #address [requiredFeilds]="true"
+              [addressFormGroup]="contractorRegistrationForm.get('address')"></app-address>
+
+            <h2><b>{{'name_of_the_partners' | translate: translateKey}}</b></h2>
+            <div class="table-responsive">
+              <table class="table table-bordered table-responsive-md table-striped text-center">
+                <thead>
+                  <tr>
+                    <th class="text-center">S.no.</th>
+                    <th class="text-center">Owner Type</th>
+                    <th class="text-center">Owner Name</th>
+                    <th class="text-center">Owner Detail</th>
+                    <th class="text-center">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr formArrayName="partnersList">
+                    <!-- <td  let i = index;
+                      [formGroupName]="indx">
+                      {{i + 1}}
+                      </td> -->
+                    <td>1</td>
+                    <td>
+                      <mat-form-field>
+                        <input matInput type="text" maxlength="50" formControlName="ownerType" appValidationFields validationFieldsType='alphanumericWithSpace'>
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <mat-form-field>
+                        <input matInput type="text" maxlength="50" formControlName="OwnerName" appValidationFields validationFieldsType='alphanumericWithSpace'>
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <mat-form-field>
+                        <input matInput type="text" maxlength="100" formControlName="ownerDetail">
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <span>
+                        <button type="submit" mat-icon-button color="primary">
+                          <mat-icon title="save" (click)="saveRecord(item)">save</mat-icon>
+                        </button>
+                        <button mat-raised-button color="warn" style="margin-top: 22px;">
+                          <mat-icon title="Cancel">cancel</mat-icon>
+                        </button>
+                      </span>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+            <div class="col-md-12 text-right">
+              <button mat-raised-button color="primary" (click)="addNewOwner()">{{'add_new' | translate:
+                translateKey}}</button>
+            </div>
+
+            <h2><b>Bank Detail</b></h2>
+            <mat-form-field class="col-md-4">
+              <input matInput autocomplete="off" minlength="9" maxlength="18" type="tel" formControlName="bankAccountNo"  
+              OnlyNumber placeholder="{{'bank_account_no' | translate: translateKey }}" required>
             </mat-form-field>
 
             <div class="col-md-4 ngSelect" formGroupName="bankName">
@@ -95,67 +173,280 @@
               <control-messages [control]="contractorRegistrationForm.get('bankName').get('code')"></control-messages>
             </div>
 
-            <mat-form-field class="col-md-4">
-              <input matInput appValidationFields validationFieldsType="onlyNameWithSpace" autocomplete="off"
-                maxlength="100" formControlName="branchName" type="text"
-                placeholder="{{'branch_name' | translate: translateKey}}" required>
-              <control-messages [control]="contractorRegistrationForm.get('branchName')"></control-messages>
-            </mat-form-field>
-
-            <mat-form-field class="col-md-8">
-              <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required
-                maxlength="100" placeholder="{{'firm_name' | translate: translateKey}}" formControlName="firmName"
-                class="capitalCase">
-              <control-messages [control]="contractorRegistrationForm.get('firmName')">
-              </control-messages>
-            </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput type="text" OnlyNumber maxlength="10"
-                placeholder="{{'firm_mobile_number' | translate: translateKey}}" formControlName="firmMobileNumber">
-              <control-messages [control]="contractorRegistrationForm.get('firmMobileNumber')">
-              </control-messages>
+              <input matInput autocomplete="off" maxlength="50" type="text" formControlName="branchName"
+              appValidationFields validationFieldsType='alphanumericWithSpace' placeholder="{{'branch_name'  | translate: translateKey}}" required>
             </mat-form-field>
 
-            <div class="row">
-              <h2><b>{{'Address of the Firm'}}</b></h2>
-              <app-address #firmAddress [requiredFeilds]="true"
-                [addressFormGroup]="contractorRegistrationForm.get('firmAddress')">
-              </app-address>
+
+            <h2><b>Business Detail</b></h2>
+            <mat-form-field class="col-md-6">
+              <input matInput autocomplete="off" maxlength="50" type="text" formControlName="bussinessName"
+              appValidationFields validationFieldsType='alphanumericWithSpace' placeholder="{{'Name' | translate: translateKey}}" required>
+            </mat-form-field>
+            <mat-form-field class="col-md-6">
+              <input matInput autocomplete="off" maxlength="10" type="text" formControlName="bussinessMobileNo"
+              OnlyNumber placeholder="{{'Mobile Number' | translate: translateKey}}" required>
+            </mat-form-field>
+            <app-address #address [requiredFeilds]="true"
+              [addressFormGroup]="contractorRegistrationForm.get('address')"></app-address>
+
+          </div>
+
+
+          <div class="fotButtonBar clearfix mt-5">
+            <div class="col-sm-12 col-md-12">
+              <!-- <button class="liteBorder pull-left" type="button" mat-raised-button
+                              >{{'back'}}</button> -->
+              <button class="pull-right" type="button" mat-raised-button color="primary"
+                (click)="tabIndex = 1">{{'next'}}</button>
+            </div>
+          </div>
+
+        </mat-tab>
+        <!-- Tab 1 Finish -->
+
+        <!-- Tab 2 Starts -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div>{{'Business Detail 1'}}</div>
+          </ng-template>
+
+          <div class="row">
+            <!-- <h2><b>Registration Detail</b></h2> -->
+            <mat-form-field class="col-md-6">
+              <textarea matInput maxlength="255" formControlName="registrationDetails"
+                placeholder="{{'Registration Detail' | translate: translateKey}}"></textarea>
+            </mat-form-field>
+            <mat-form-field class="col-md-6">
+              <textarea matInput maxlength="255" formControlName="threeYearDetaols"
+                placeholder="{{'Three Year Work Details' | translate: translateKey}}"></textarea>
+            </mat-form-field>
+
+            <h2><b>Firm Employee Details</b></h2>
+            <div class="table-responsive">
+              <table class="table table-bordered table-responsive-md table-striped text-center">
+                <tbody>
+                  <tr>
+                    <th>Name</th>
+                    <th>Qualification</th>
+                    <th>Status</th>
+                    <th>Experience in Years</th>
+                    <th>when He Started WorkIng This Project</th>
+                    <th>Project Start Date</th>
+                    <th class="text-center">Action</th>
+                  </tr>
+                  <tr formArrayName="EmployeeDetails">
+                    <td>
+                      <mat-form-field>
+                        <input matInput type="text" maxlength="50" formControlName="employeeName" appValidationFields validationFieldsType='alphanumericWithSpace'>
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <mat-form-field>
+                        <input matInput type="text" maxlength="50" formControlName="employeeQualification">
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <mat-form-field>
+                        <input matInput type="text" maxlength="50" formControlName="employeeStatus">
+                      </mat-form-field>
+                    </td>
+                    <td style="max-width:80px;">
+                      <mat-form-field>
+                        <input matInput type="text" maxlength="4" formControlName="employeeExperiernceyears">
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <mat-form-field>
+                        <input matInput type="text" maxlength="20" formControlName="employeestartWorkingProject">
+                      </mat-form-field>
+                    </td>
+                    <td style="max-width:100px;">
+                      <mat-form-field>
+                        <input matInput type="text" maxlength="20" formControlName="projectStartDate">
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <span>
+                        <!-- <button mat-icon-button color="primary" 
+                          (click)="editRecord()">
+                          <mat-icon title="Edit">edit</mat-icon>
+                        </button> -->
+                        <button type="submit" mat-icon-button color="primary">
+                          <mat-icon title="save" (click)="saveRecord(item)">save</mat-icon>
+                        </button>
+                      </span>
+                      <!-- <span *ngIf="contractorRegistrationForm.get('canEdit').value"> -->
+                      <!-- <button mat-icon-button color="warn" *ngIf="!item.isEditMode"
+                          (click)="deleteRecord(indx,'relationshipList')">
+                          <mat-icon title="Delete">delete</mat-icon>
+                        </button> -->
+                      <button mat-icon-button color="warn" (click)="cancelRecord()">
+                        <mat-icon title="Delete">cancel</mat-icon>
+                      </button>
+                      <!-- </span> -->
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
-            <div class="fotButtonBar clearfix">
-              <div class="col-sm-12 col-md-12">
-                <button class="pull-right" mat-raised-button color="primary" (click)="tabIndex = 1">Next</button>
-              </div>
+            <mat-form-field class="col-md-12">
+              <textarea matInput maxlength="255" formControlName="turnoverDetails"
+                placeholder="{{'turnover_details' | translate: translateKey}}"></textarea>
+            </mat-form-field>
+
+          </div>
+
+
+          <div class="fotButtonBar clearfix mt-5">
+            <div class="col-sm-12 col-md-12">
+              <button class="liteBorder pull-left" type="button" mat-raised-button (click)="tabIndex = 0">{{'back' |
+                translate: translateKey}}</button>
+              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 2">{{'next'
+                | translate: translateKey}}</button>
+            </div>
+          </div>
+
+        </mat-tab>
+        <!-- Tab 2 Finish -->
+
+
+        <!-- Tab 3 Starts -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div>{{'Business Detail 2'}}</div>
+          </ng-template>
+
+          <div class="row">
+            <mat-form-field class="col-md-12">
+              <textarea matInput formControlName="WorkShopplantRate" maxlength="255"
+                placeholder="{{'workshop_&_Plant Rate'  | translate: translateKey }}"></textarea>
+            </mat-form-field>
+
+            <div class="col-md-4 ngSelect">
+              <mat-label><b>{{'owner_account_department?' | translate: translateKey }} *</b></mat-label>
+              <ng-select formControlName="ownerAccountDepartment">
+                <ng-option>Yes</ng-option>
+                <ng-option>No</ng-option>
+              </ng-select>
+            </div>
+            <mat-form-field class="col-md-12">
+              <textarea matInput maxlength="255" formControlName="contractorWorkDetails"
+                placeholder="{{'contractor_work_details' | translate: translateKey }}"></textarea>
+            </mat-form-field>
+
+            <div class="col-md-12"><b>{{'any_registration_on_another_organisation?' | translate: translateKey }} *</b>
+            </div>
+            <div class="col-md-4 ngSelect">
+              <ng-select formControlName="anotherorganisation">
+                <ng-option>Yes</ng-option>
+                <ng-option>No</ng-option>
+              </ng-select>
+            </div>
+
+            <mat-form-field class="col-md-8">
+              <input matInput autocomplete="off" maxlength="100" type="text" formControlName="whichDepartment"
+                placeholder="{{'which_department' | translate: translateKey}}" required>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <textarea matInput maxlength="255" formControlName="postRegistrationDetails"
+                placeholder="{{'post_registration_details' | translate: translateKey}}"></textarea>
+            </mat-form-field>
+            <mat-form-field class="col-md-4">
+              <textarea matInput maxlength="255" formControlName="engineerDetails"
+                placeholder="{{'engineer_details' | translate: translateKey}}"></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <textarea matInput maxlength="255" formControlName="incomeTaxDetails"
+                placeholder="{{'income_tax_details' | translate: translateKey}}"></textarea>
+            </mat-form-field>
+
+            <div class="col-md-12"><b>{{'owner_partner_and_shareholder_apply_in_any_organization' | translate:
+                translateKey}} *</b></div>
+            <div class="col-md-6 ngSelect">
+              <ng-select formControlName="anyAnotherOrganisationShareholder">
+                <ng-option>Yes</ng-option>
+                <ng-option>No</ng-option>
+              </ng-select>
+            </div>
+
+            <mat-form-field class="col-md-6">
+              <input matInput autocomplete="off" maxlength="100" type="text"
+                formControlName="registrationDateandRenewdate"
+                placeholder="{{'new_registration_date_for_renew_date' | translate: translateKey}}" required>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-6">
+              <textarea matInput maxlength="255" formControlName="solvencyAmountandBankDetails"
+                placeholder="{{'solvency_amount_and_bank_details' | translate: translateKey}}"></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-6">
+              <textarea matInput maxlength="255" formControlName="oldRegistrationDateandNumber"
+                placeholder="{{'old_registration_date_and_number' | translate: translateKey}}"></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-6">
+              <textarea matInput maxlength="255" formControlName="notCompletedReasonDetails"
+                placeholder="{{'any_work_not_completed_reason_detail' | translate: translateKey}}"></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-6">
+              <textarea matInput maxlength="255" formControlName="amountRemainsInCorporationOrOrganization"
+                placeholder="{{'If_amount_remains_in_corporation_or_organization' | translate: translateKey}}"></textarea>
+            </mat-form-field>
+
+          </div>
+
+          <div class="fotButtonBar clearfix mt-5">
+            <div class="col-sm-12 col-md-12">
+              <button class="liteBorder pull-left" type="button" mat-raised-button (click)="tabIndex = 1">{{'back' |
+                translate: translateKey}}</button>
+              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 3">{{'next'
+                | translate: translateKey}}</button>
             </div>
           </div>
         </mat-tab>
-      
+        <!-- Tab 3 Finish -->
+
+
+        <!-- Tab 4 Starts -->
         <mat-tab>
           <ng-template mat-tab-label>
-            <div>{{'Tab 2'}}</div>
+            <div>{{'Attachment' | translate: translateKey}}</div>
           </ng-template>
 
-          <div class="row"></div>
+          <div class="row">
+            <div class="col-md-4" *ngFor="let doc of attachmentList">
+              <div *ngIf="doc.requiredOnAdminPortal && doc.isActive">
+                <label>{{doc.documentLabelEn}}
+                  <span class="text-danger" *ngIf="doc.mandatory">*</span>
+                </label>
+                <file-upload [form]="contractorRegistrationForm" [uploadModel]="doc"></file-upload>
+              </div>
+            </div>
+          </div>
+
+         
+
+          <app-action-bar [uploadFiles]="uploadFilesArray" [form]="contractorRegistrationForm"
+            (tabIndex)="onTabChange($event)" [paymentGateway]="paymentGateway"
+            (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next:5, back:2} ">
+          </app-action-bar>
+
+          <!-- step Attachment Ends -->
+          <select-payment-gateway #paymentGateway></select-payment-gateway>
+
         </mat-tab>
-       
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <div>{{'Tab 3'}}</div>
-          </ng-template>
-          <div class="row"></div>
-        </mat-tab>
-       
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <div>{{'Tab 4'}}</div>
-          </ng-template>
-          <div class="row"></div>
-        </mat-tab>
-        
+        <!-- Tab 4 Finish -->
 
       </mat-tab-group>
     </form>
+
   </mat-card>
 </div>
