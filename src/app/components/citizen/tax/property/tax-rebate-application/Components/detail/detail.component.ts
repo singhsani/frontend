@@ -46,7 +46,7 @@ export class DetailComponent implements OnInit {
     this.taxRebateApplicationDataSharingService.observableDataModel.subscribe(data => {
       if (data) {
         this.model = Object.assign({}, data);
-        
+
       }
     });
     this.getRebatTypeList();
@@ -105,7 +105,7 @@ export class DetailComponent implements OnInit {
             this.alertService.error(errorMessage);
           }
           else {
-            this.alertService.error(error.error.message);
+            this.alertService.warning(error.error.message);
           }
         })
     }
@@ -121,10 +121,10 @@ export class DetailComponent implements OnInit {
         data.forEach(app => {
           this.taxrebateDocumentUploadDocs.push(app);
         });
-        
+
       },
       (error) => {
-        
+
       });
   }
 
@@ -277,7 +277,7 @@ export class DetailComponent implements OnInit {
     this.taxRebateApplicationService.getApplicationNo(taxRebateApplicationId).subscribe(
       (data) => {
         console.log('data 253 - >',data);
-       this.taxRebateApplicationDataSharingService.applicationNumber = data.body.data.applicationNo;  
+       this.taxRebateApplicationDataSharingService.applicationNumber = data.body.data.applicationNo;
        this.taxRebateApplicationDataSharingService.serviceCode  = data.body.data.serviceCode;
        this.taxRebateApplicationDataSharingService.serviceId   = data.body.data.serviceId;
        this.taxRebateApplicationDataSharingService.isPaymentReceipt   = data.body.data.paymentReceipt;
@@ -300,7 +300,7 @@ export class DetailComponent implements OnInit {
   stepChangedEvent(event){
     this.stepper.selectedIndex = event;
   }
-  
+
   saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
     applicantDetailsDTO.uniqueId = this.taxRebateApplicationDataSharingService.applicationNumber;
     this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
