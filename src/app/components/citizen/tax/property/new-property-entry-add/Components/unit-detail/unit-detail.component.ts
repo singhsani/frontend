@@ -235,7 +235,7 @@ export class UnitDetailComponent implements OnInit {
   isDuplicateUnitNo = false;
   checkDuplicateUnitNo(event) {
     this.isDuplicateUnitNo = false;
-    if (this.dataSource && this.dataSource.data && this.dataSource.data.length && this.dataSource.data.length > 0) {
+    if (this.dataSource && this.dataSource.data && this.dataSource.data.length && this.dataSource.data.length > 0 &&this.unitDetailModel.unitNo!=null) {
       const obj = this.dataSource.data.filter(f => f.unitNo.toLowerCase() === this.unitDetailModel.unitNo.toLowerCase()
         && f.occupierId === this.modelOccupier.propertyOccupierId
         && f.propertyBasicId === this.modelOccupier.propertyBasicVersionId
