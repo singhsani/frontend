@@ -25,7 +25,7 @@ export class ContractorRegsitrationComponent implements OnInit {
   public formControlNameToTabIndex = new Map();
   public affordableHousingConfiguration: CitizenConfig = new CitizenConfig();
 
-  translateKey: string = 'pecRegistrationScreen';
+  translateKey: string = 'constructorNewRegistration';
 
   ownerShipDetail: FormArray;
   firmEmployeeDetail: FormArray;
