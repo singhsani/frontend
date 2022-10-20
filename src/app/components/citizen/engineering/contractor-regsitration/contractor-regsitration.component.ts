@@ -21,11 +21,11 @@ export class ContractorRegsitrationComponent implements OnInit {
 
   @ViewChild('residenceAddress') resAddrComponent: any;
   @ViewChild('firmAddress') officeAddrComponent: any;
-  @ViewChild('address') addrComponent: any;
+  @ViewChild('bissinessAddress') bussinessAddressComponent: any;
   public formControlNameToTabIndex = new Map();
   public affordableHousingConfiguration: CitizenConfig = new CitizenConfig();
 
-  translateKey: string = 'pecRegistrationScreen';
+  translateKey: string = 'constructorNewRegistration';
 
   ownerShipDetail: FormArray;
   firmEmployeeDetail: FormArray;
@@ -130,10 +130,17 @@ export class ContractorRegsitrationComponent implements OnInit {
       ownerEmailId: [null,[Validators.required, ValidationService.emailValidator]],
       bankAccountNo: [null,[Validators.required]],
       branchName: [null,[Validators.required, Validators.maxLength(50)]],
-      bankName: this.fb.group({
+      registrationBank: this.fb.group({
         code: [null, [Validators.required]],
         name: null
       }),
+
+      locationOfContractorWorks: this.fb.group({
+        code: null,
+        name: null
+      }),
+      applyingFor: [null, [Validators.required]],
+
       whichDepartment: [null],
       postRegistrationDetails: [null],
       engineerDetails: [null],
@@ -167,9 +174,12 @@ export class ContractorRegsitrationComponent implements OnInit {
       ownerAccountDepartment: [null],
       turnoverDetails: [null],
       anotherorganisation: [null],
-      address: this.fb.group(this.addrComponent.addressControls()),
+      factoryAddress: this.fb.group(this.officeAddrComponent.addressControls()),
+      registeredAddress: this.fb.group(this.resAddrComponent.addressControls()),
+      bussinessAddress: this.fb.group(this.bussinessAddressComponent.addressControls()),
       OwnwemobileNumber : [null],
-      attachments: []
+      attachments: [],
+      createdByCitizen: [true],
 
     });
 
@@ -210,7 +220,7 @@ export class ContractorRegsitrationComponent implements OnInit {
     this.engineer.getFeeFromLocationn(event.value).subscribe(res => {
       this.contractorRegistrationForm.get('registrationAmount').setValue(res.fee);
     })
-    this.contractorRegistrationForm.get('locationOfFactoryWorks').get('code').setValue(event.value);
+    this.contractorRegistrationForm.get('locationOfContractorWorks').get('code').setValue(event.value);
   }
 
   getAllDocumentLists() {
