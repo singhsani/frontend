@@ -11,7 +11,7 @@ import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
 import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
 import { CommonService as CommonService2 } from 'src/app/vmcshared/Services/common-service';
 import { Router } from '@angular/router';
-
+import { Constants } from 'src/app/vmcshared/Constants';
 @Component({
   selector: 'app-detail',
   templateUrl: './detail.component.html',
@@ -49,22 +49,31 @@ export class DetailComponent implements OnInit {
 
       }
     });
-    this.getRebatTypeList();
+   // this.getRebatTypeList();
+   this.getLookups()
     this.getFinancialYear();
   }
 
-  getRebatTypeList() {
-    this.taxRebateApplicationService.getRebatType({ active: true,approvalRequired:true }).subscribe(
-      (data) => {
-        if (data.status === 200 && data.body.length) {
-          this.rebateTypeList = data.body;
-        }
-      },
-      (error) => {
-        this.alertService.error(error.error.message);
-      }
-    )
+  getLookups() {
+    let lookupcode = `lookup_codes=${Constants.LookupCodes.Rebate_Type}`;
+    this.taxRebateApplicationService.getLookupValuesAccordingToScreen(lookupcode).subscribe(data => {
+      this.rebateTypeList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.Rebate_Type))[0].items;
+
+    });
   }
+
+  // getRebatTypeList() {
+  //   this.taxRebateApplicationService.getRebatType({ active: true,approvalRequired:true }).subscribe(
+  //     (data) => {
+  //       if (data.status === 200 && data.body.length) {
+  //         this.rebateTypeList = data.body;
+  //       }
+  //     },
+  //     (error) => {
+  //       this.alertService.error(error.error.message);
+  //     }
+  //   )
+  // }
 
   getFinancialYear() {
     this.taxRebateApplicationService.getFinancialYear().subscribe(
