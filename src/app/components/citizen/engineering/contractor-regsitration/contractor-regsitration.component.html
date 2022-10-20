@@ -66,7 +66,7 @@
 
             <mat-form-field class="col-md-4">
               <input matInput type="text" formControlName="middleName" appValidationFields validationFieldsType='alphanumericWithSpace' required
-               maxlength="50" placeholder="{{'middle_aame' | translate: translateKey}}">
+               maxlength="50" placeholder="{{'middle_name' | translate: translateKey}}">
                <control-messages [control]="contractorRegistrationForm.get('middleName')">
               </control-messages>
             </mat-form-field>
@@ -80,7 +80,7 @@
 
             <mat-form-field class="col-md-4">
               <input matInput formControlName="mobileNumber" type="text" required OnlyNumber maxlength="10"
-                placeholder="{{'mobile_number' | translate: translateKey}}">
+                placeholder="{{'mobile_no' | translate: translateKey}}">
                 <control-messages [control]="contractorRegistrationForm.get('mobileNumber')">
                 </control-messages>
             </mat-form-field>
@@ -105,7 +105,7 @@
             </div>
 
 
-            <h2><b>{{'owner_detail' | translate: translateKey}}</b></h2>
+            <h2><b>{{'owner_details' | translate: translateKey}}</b></h2>
             <mat-form-field class="col-md-4">
               <input matInput type="text" formControlName="ownerFirstName" appValidationFields validationFieldsType='alphanumericWithSpace'
                maxlength="50" placeholder="{{'first_name' | translate: translateKey}}" required>
@@ -113,7 +113,7 @@
 
             <mat-form-field class="col-md-4">
               <input matInput type="text" formControlName="ownerMiddleName" appValidationFields validationFieldsType='alphanumericWithSpace'
-               maxlength="50" placeholder="{{'middle_ name' | translate: translateKey}}" required>
+               maxlength="50" placeholder="{{'middle_name' | translate: translateKey}}" required>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
@@ -123,7 +123,7 @@
 
             <mat-form-field class="col-md-4">
               <input matInput type="text" formControlName="ownerMobileNumber" required OnlyNumber maxlength="10"
-                placeholder="{{'mobile_number' | translate: translateKey}}" required>
+                placeholder="{{'mobile_no' | translate: translateKey}}" required>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
@@ -352,11 +352,11 @@
           <div class="row">
             <mat-form-field class="col-md-12">
               <textarea matInput formControlName="WorkShopplantRate" maxlength="255"
-                placeholder="{{'workshop_&_Plant Rate'  | translate: translateKey }}"></textarea>
+                placeholder="{{'work_shop_and_plant_rate'  | translate: translateKey }}"></textarea>
             </mat-form-field>
 
             <div class="col-md-4 ngSelect">
-              <mat-label><b>{{'owner_account_department?' | translate: translateKey }} *</b></mat-label>
+              <mat-label><b>{{'owner_account_department' | translate: translateKey }} *</b></mat-label>
               <ng-select formControlName="ownerAccountDepartment">
                 <ng-option>Yes</ng-option>
                 <ng-option>No</ng-option>
@@ -367,7 +367,7 @@
                 placeholder="{{'contractor_work_details' | translate: translateKey }}"></textarea>
             </mat-form-field>
 
-            <div class="col-md-12"><b>{{'any_registration_on_another_organisation?' | translate: translateKey }} *</b>
+            <div class="col-md-12"><b>{{'any_registration_on_another_organisation' | translate: translateKey }} *</b>
             </div>
             <div class="col-md-4 ngSelect">
               <ng-select formControlName="anotherorganisation">
@@ -422,7 +422,7 @@
 
             <mat-form-field class="col-md-6">
               <textarea matInput maxlength="255" formControlName="notCompletedReasonDetails"
-                placeholder="{{'any_work_not_completed_reason_detail' | translate: translateKey}}"></textarea>
+                placeholder="{{'any_work_not_completed_reason_details' | translate: translateKey}}"></textarea>
             </mat-form-field>
 
             <mat-form-field class="col-md-6">
