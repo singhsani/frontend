@@ -7,7 +7,7 @@ import { TaxRebateApplicationModule } from '../tax-rebate-application.module';
 
 @Injectable()
 export class TaxRebateApplicationService {
-
+  getLookupValuesUrl = Constants.baseApiUrl + 'lookup/gets';
   constructor(private http: HttpClient) { }
 
   getWardZoneLevel() {
@@ -46,7 +46,7 @@ export class TaxRebateApplicationService {
       .pipe(map((response: any) => response))
   }
 
-  
+
   approveDept(data: any) {
     return this.http.post(`${Constants.assessmentModuleApiUrl}taxrebate/application/submitNewgen`, data,
     { observe: 'response' })
@@ -64,15 +64,18 @@ export class TaxRebateApplicationService {
     { observe: 'response' })
       .pipe(map((response: any) => response))
   }
- 
+
   getRebatType(data: any) {
     return this.http.post(`${Constants.baseApiUrl}property/rebatemaster/search`, data,
       { observe: 'response' })
       .pipe(map((response: any) => response))
   }
+  getLookupValuesAccordingToScreen(lookupIdCode: any) {
+    return this.http.get(this.getLookupValuesUrl + "?" + lookupIdCode);
+}
 
   getFinancialYear() {
-    return this.http.get(`${Constants.baseApiUrl}financialyear/list`, 
+    return this.http.get(`${Constants.baseApiUrl}financialyear/list`,
       { observe: 'response' })
       .pipe(map((response: any) => response))
   }
