@@ -71,7 +71,6 @@ export class TaxRebateApplicationService {
       .pipe(map((response: any) => response))
   }
   getLookupValuesAccordingToScreen(lookupIdCode: any) {
-    // console.log('Common API', this.getLookupValuesUrl + "?" + lookupIdCode);
     return this.http.get(this.getLookupValuesUrl + "?" + lookupIdCode);
 }
 

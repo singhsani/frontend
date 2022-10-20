@@ -49,7 +49,7 @@ export class DetailComponent implements OnInit {
 
       }
     });
-   // this.getRebatTypeList();
+
    this.getLookups()
     this.getFinancialYear();
   }
@@ -61,19 +61,6 @@ export class DetailComponent implements OnInit {
 
     });
   }
-
-  // getRebatTypeList() {
-  //   this.taxRebateApplicationService.getRebatType({ active: true,approvalRequired:true }).subscribe(
-  //     (data) => {
-  //       if (data.status === 200 && data.body.length) {
-  //         this.rebateTypeList = data.body;
-  //       }
-  //     },
-  //     (error) => {
-  //       this.alertService.error(error.error.message);
-  //     }
-  //   )
-  // }
 
   getFinancialYear() {
     this.taxRebateApplicationService.getFinancialYear().subscribe(
