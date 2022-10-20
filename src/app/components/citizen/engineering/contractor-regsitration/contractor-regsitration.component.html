@@ -26,6 +26,35 @@
             <div>{{'Contractor Detail' | translate: translateKey}}</div>
           </ng-template>
 
+          <div class="col-md-6">
+            <div class="mb-4 mt-4">
+               <mat-label><strong>Registration Category *</strong></mat-label>
+            </div>
+            <mat-radio-group formControlName="applyingFor" required class="radioGroup">
+              <mat-radio-button value="AA" (change)="locationChange($event)" class="mr-3">
+                {{'AA'}}
+              </mat-radio-button>
+              <mat-radio-button value="A" (change)="locationChange($event)">
+                {{'A'}}
+              </mat-radio-button>
+              <mat-radio-button value="B" (change)="locationChange($event)">
+                {{'B'}}
+              </mat-radio-button>
+              <mat-radio-button value="C" (change)="locationChange($event)">
+                {{'C'}}
+              </mat-radio-button>
+              <mat-radio-button value="D" (change)="locationChange($event)">
+                {{'D'}}
+              </mat-radio-button>
+              <mat-radio-button value="E1" (change)="locationChange($event)">
+                {{'E1'}}
+              </mat-radio-button>
+              <mat-radio-button value="E2" (change)="locationChange($event)">
+                {{'E2'}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+
           <div class="row">
             <h2><b>Applicant Detail</b></h2>
             <mat-form-field class="col-md-4">
@@ -63,9 +92,9 @@
                 </control-messages>
             </mat-form-field>
 
-            <h2><b>{{'address_details' | translate: translateKey}}</b></h2>
-            <app-address #address [requiredFeilds]="true"
-              [addressFormGroup]="contractorRegistrationForm.get('address')"></app-address>
+            <h2><b>{{'address_detail' | translate: translateKey}}</b></h2>
+            <app-address #firmAddress [requiredFeilds]="true"
+              [addressFormGroup]="contractorRegistrationForm.get('factoryAddress')"></app-address>
 
             <div class="col-md-4 ngSelect">
               <mat-label><b>{{'if_company_partnership' | translate: translateKey}} *</b></mat-label>
@@ -102,8 +131,8 @@
                 placeholder="{{'email_id' | translate: translateKey}}" required>
             </mat-form-field>
 
-            <app-address #address [requiredFeilds]="true"
-              [addressFormGroup]="contractorRegistrationForm.get('address')"></app-address>
+            <app-address #residenceAddress [requiredFeilds]="true"
+              [addressFormGroup]="contractorRegistrationForm.get('registeredAddress')"></app-address>
 
             <h2><b>{{'name_of_the_partners' | translate: translateKey}}</b></h2>
             <div class="table-responsive">
@@ -166,11 +195,11 @@
               OnlyNumber placeholder="{{'bank_account_no' | translate: translateKey }}" required>
             </mat-form-field>
 
-            <div class="col-md-4 ngSelect" formGroupName="bankName">
+            <div class="col-md-4 ngSelect" formGroupName="registrationBank">
               <ng-select placeholder="{{'bank_name' | translate: translateKey}} *" formControlName="code">
                 <ng-option *ngFor="let bank of bankNameArray" [value]="bank.code">{{bank.name}}</ng-option>
               </ng-select>
-              <control-messages [control]="contractorRegistrationForm.get('bankName').get('code')"></control-messages>
+              <control-messages [control]="contractorRegistrationForm.get('registrationBank').get('code')"></control-messages>
             </div>
 
 
@@ -189,8 +218,8 @@
               <input matInput autocomplete="off" maxlength="10" type="text" formControlName="bussinessMobileNo"
               OnlyNumber placeholder="{{'Mobile Number' | translate: translateKey}}" required>
             </mat-form-field>
-            <app-address #address [requiredFeilds]="true"
-              [addressFormGroup]="contractorRegistrationForm.get('address')"></app-address>
+            <app-address #bissinessAddress [requiredFeilds]="true"
+              [addressFormGroup]="contractorRegistrationForm.get('bussinessAddress')"></app-address>
 
           </div>
 
