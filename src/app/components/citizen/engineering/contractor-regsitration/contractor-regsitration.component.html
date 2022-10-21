@@ -92,6 +92,20 @@
                 </control-messages>
             </mat-form-field>
 
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" appValidationFields class="capitalCase"
+                validationFieldsType='alphanumericWithSpace' required maxlength="10"
+                placeholder="Pan No" formControlName="panNo">
+              <control-messages [control]="contractorRegistrationForm.get('panNo')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput autocomplete="off" type="text" maxlength="15" formControlName="gstNo" class="capitalCase"
+                placeholder="Gst No">
+              <control-messages [control]="contractorRegistrationForm.get('gstNo')"></control-messages>
+            </mat-form-field>
+
             <h2><b>{{'address_detail' | translate: translateKey}}</b></h2>
             <app-address #firmAddress [requiredFeilds]="true"
               [addressFormGroup]="contractorRegistrationForm.get('factoryAddress')"></app-address>

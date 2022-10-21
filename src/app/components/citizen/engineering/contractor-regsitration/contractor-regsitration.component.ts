@@ -122,6 +122,8 @@ export class ContractorRegsitrationComponent implements OnInit {
       lastName: [null,[Validators.required, Validators.maxLength(50)]],
       mobileNumber: [null,[Validators.required]],
       emailId: [null,[Validators.required, ValidationService.emailValidator]],
+      gstNo: [null],
+      panNo: [null, [Validators.required, ValidationService.panValidator]],
       partnerShip: [null],
       ownerFirstName: [null,[Validators.required, Validators.maxLength(50)]],
       ownerMiddleName: [null,[Validators.required, Validators.maxLength(50)]],
