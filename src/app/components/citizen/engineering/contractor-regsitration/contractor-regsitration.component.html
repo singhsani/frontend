@@ -17,7 +17,7 @@
     <!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
       Patch Value
     </button> -->
-  </app-title-bar> 
+  </app-title-bar>
 
 
   <mat-card class="formClass cardBorder">
@@ -241,16 +241,16 @@
 
             <h2><b>Business Detail</b></h2>
             <mat-form-field class="col-md-6">
-              <input matInput autocomplete="off" maxlength="50" type="text" formControlName="bussinessName"
+              <input matInput autocomplete="off" maxlength="50" type="text" formControlName="businessName"
                 appValidationFields validationFieldsType='onlyNameWithSpace'
                 placeholder="{{'business_name' | translate: translateKey}}" required>
             </mat-form-field>
             <mat-form-field class="col-md-6">
-              <input matInput autocomplete="off" maxlength="10" type="text" formControlName="bussinessMobileNo"
-                OnlyNumber placeholder="{{'mobile_number' | translate: translateKey}}" required>
+              <input matInput autocomplete="off" maxlength="10" type="text" formControlName="businessMobileNo"
+                OnlyNumber placeholder="{{'business_mobile_number' | translate: translateKey}}" required>
             </mat-form-field>
             <app-address #bissinessAddress [requiredFeilds]="true"
-              [addressFormGroup]="contractorRegistrationForm.get('bussinessAddress')"></app-address>
+              [addressFormGroup]="contractorRegistrationForm.get('businessAddress')"></app-address>
 
           </div>
 
