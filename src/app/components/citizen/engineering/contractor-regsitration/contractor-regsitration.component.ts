@@ -12,6 +12,7 @@ import * as _ from 'lodash';
 import { ManageRoutes } from 'src/app/config/routes-conf';
 import { ValidationService } from 'src/app/shared/services/validation.service';
 import { CitizenConfig } from '../../citizen-config';
+import { SessionStorageService } from 'angular-web-storage';
 @Component({
   selector: 'app-contractor-regsitration',
   templateUrl: './contractor-regsitration.component.html',
@@ -25,7 +26,7 @@ export class ContractorRegsitrationComponent implements OnInit {
   public formControlNameToTabIndex = new Map();
   public affordableHousingConfiguration: CitizenConfig = new CitizenConfig();
 
-  translateKey: string = 'constructorNewRegistration';
+  translateKey: string = 'contractorRegistrationScreen';
 
   ownerShipDetail: FormArray;
   firmEmployeeDetail: FormArray;
@@ -50,7 +51,7 @@ export class ContractorRegsitrationComponent implements OnInit {
 
     private commonService: CommonService,
     private activatedRoute: ActivatedRoute,
-
+    private session: SessionStorageService,
     private router: Router,
     private formService: FormsActionsService,
     private modalService: BsModalService,
@@ -96,7 +97,7 @@ export class ContractorRegsitrationComponent implements OnInit {
     this.formControlNameToTabIndex.set('bankAccountNo', 0)
     this.formControlNameToTabIndex.set('bankName', 0)
     this.formControlNameToTabIndex.set('branchName', 0)
-    
+
   }
 
   createFormData() {
@@ -116,22 +117,22 @@ export class ContractorRegsitrationComponent implements OnInit {
       serviceCode: null,
       serviceFormId: null,
       applicationNumber: null,
-     canEdit:[true],
-      fristName: [null, [Validators.required, Validators.maxLength(50)]],
-      middleName: [null,[Validators.required, Validators.maxLength(50)]],
-      lastName: [null,[Validators.required, Validators.maxLength(50)]],
-      mobileNumber: [null,[Validators.required]],
-      emailId: [null,[Validators.required, ValidationService.emailValidator]],
+      canEdit: [true],
+      firstName: [null, [Validators.required, Validators.maxLength(50)]],
+      middleName: [null, [Validators.maxLength(50)]],
+      lastName: [null, [Validators.required, Validators.maxLength(50)]],
+      mobileNumber: [null, [Validators.required]],
+      emailId: [null, [ValidationService.emailValidator]],
       gstNo: [null],
       panNo: [null, [Validators.required, ValidationService.panValidator]],
       partnerShip: [null],
-      ownerFirstName: [null,[Validators.required, Validators.maxLength(50)]],
-      ownerMiddleName: [null,[Validators.required, Validators.maxLength(50)]],
-      ownerLastName: [null,[Validators.required, Validators.maxLength(50)]],
-      ownerMobileNumber: [null,[Validators.required]],
-      ownerEmailId: [null,[Validators.required, ValidationService.emailValidator]],
-      bankAccountNo: [null,[Validators.required]],
-      branchName: [null,[Validators.required, Validators.maxLength(50)]],
+      ownerFirstName: [null, [Validators.required, Validators.maxLength(50)]],
+      ownerMiddleName: [null, [Validators.maxLength(50)]],
+      ownerLastName: [null, [Validators.required, Validators.maxLength(50)]],
+      ownerMobileNumber: [null, [Validators.required]],
+      ownerEmailId: [null, [ValidationService.emailValidator]],
+      bankAccountNo: [null, [Validators.required]],
+      branchName: [null, [Validators.required, Validators.maxLength(50)]],
       registrationBank: this.fb.group({
         code: [null, [Validators.required]],
         name: null
@@ -168,8 +169,8 @@ export class ContractorRegsitrationComponent implements OnInit {
         employeestartWorkingProject: [null],
         projectStartDate: [null],
       }),
-      bussinessName: [null,[Validators.required, Validators.maxLength(50)]],
-      bussinessMobileNo: [null,[Validators.required]],
+      bussinessName: [null, [Validators.required, Validators.maxLength(50)]],
+      bussinessMobileNo: [null, [Validators.required]],
       registrationDetails: [null],
       threeYearDetaols: [null],
       WorkShopplantRate: [null],
@@ -179,7 +180,6 @@ export class ContractorRegsitrationComponent implements OnInit {
       factoryAddress: this.fb.group(this.officeAddrComponent.addressControls()),
       registeredAddress: this.fb.group(this.resAddrComponent.addressControls()),
       bussinessAddress: this.fb.group(this.bussinessAddressComponent.addressControls()),
-      OwnwemobileNumber : [null],
       attachments: [],
       createdByCitizen: [true],
 
@@ -210,6 +210,10 @@ export class ContractorRegsitrationComponent implements OnInit {
       this.setServiceDetailsOnInit(res);
 
     });
+  }
+
+  selectLanguage(language: string) {
+    this.session.set('currentLanguage', language);
   }
 
   getBankNames() {
@@ -388,12 +392,55 @@ export class ContractorRegsitrationComponent implements OnInit {
 
   patchValue() {
     const obj = {
-
-
+      "firstName": "Arvind Dangi",
+      "middleName": "Dangi",
+      "lastName": "Dangi",
+      "mobileNumber": "8962749074",
+      "emailId": "chetan.porwal@nascentinfo.com",
+      "ownerFirstName": "gkjghjk",
+      "ownerMiddleNmae": " jhfj",
+      "ownerLastName": "fffff",
+      "ownerMobileNumber": "88888888888",
+      "ownereEmailId": "jhgjh@gmail.com",
+      "bankAccountNo": "123456789098",
+      "bankName": "sbi",
+      "branchName": "shujalpur",
+      "whichDepartment": "gkjkjk",
+      "postRegistrationDetails": "gjkkjgljk",
+      "engineerDetails": "hjkgj",
+      "incomeTaxDetails": "jhfjh",
+      "anyAnotherOrganisationShareholder": "jhfjhf",
+      "registrationDateandRenewdate": "hjfkj",
+      "solvencyAmountandBankDetails": "jhfgjk",
+      "oldRegistrationDateandNumber": "hjfgjk",
+      "notCompletedReasonDetails": "jhgkkk",
+      "amountRemainsInCorporationOrOrganization": "jhgkkjhfgjh",
+      "partnersList": {
+        "ownerType": "jklhjklh",
+        "OwnerName": "lkhljkh",
+        "ownerDetail": "jkg",
+      },
+      "EmployeeDetails": {
+        "employeeName": "Arvind",
+        "employeeQualification": "MCA",
+        "employeeStatus": "gjkhjg",
+        "employeeExperiernceyears": "jhgkjhgk",
+        "employeestartWorkingProject": "jkgjkgjhg",
+        "projectStartDate": "gjkgk",
+      },
+      "contractorWorkDetails": "utgjhgkh",
+      "bussinessName": "contractor",
+      "OwnwemobileNumber": "6265661272",
+      "registrationDetails": "kjgjklgl",
+      "threeYearDetaols": "jkgjk",
+      "WorkShopplantRate": "gjkkjgjk",
+      "ownerAccountDepartment": "ghkgjkj",
+      "turnoverDetails": "gkjjk",
+      "anotherorganisation": "jhfgjhfk",
     }
-
     this.contractorRegistrationForm.patchValue(obj);
   }
+
 
   //upload file
   uploadFilesArray: Array<any> = [];
