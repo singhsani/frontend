@@ -118,7 +118,6 @@ export class AnimalPondDuplicateComponent implements OnInit {
 	createRecordPatchSerachData(searchData: any) {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		this.formService.createFormData().subscribe(res => {
-
 			this.formId = res.serviceFormId;
 			this.animalPondDuplicateForm.patchValue(searchData);
 
@@ -128,6 +127,8 @@ export class AnimalPondDuplicateComponent implements OnInit {
 				version: res.version,
 				refNumber: this.serachLicenceObj.searchLicenceNumber,
 				serviceFormId: res.serviceFormId,
+				wardNo: searchData.wardNo.code,
+
 				createdDate: res.createdDate,
 				updatedDate: res.createdDate,
 				serviceType: res.serviceType,
@@ -199,7 +200,6 @@ export class AnimalPondDuplicateComponent implements OnInit {
 		});
 	}
 
-
 	/**
 	* Method is used to set form controls
 	* 'Guj' control is consider as a Gujarati fields
@@ -229,7 +229,6 @@ export class AnimalPondDuplicateComponent implements OnInit {
 			holderAadharNo: [null, [Validators.required, Validators.maxLength(12), Validators.minLength(12)]],
 			holderPanNo: [null, [Validators.required, Validators.maxLength(10)]],
 			/* Step 1 controls end */
-
 			applicationDate: [],
 			licenseIssueDate: [null],
 			licenseDuplicatealDate: [null],
@@ -239,6 +238,9 @@ export class AnimalPondDuplicateComponent implements OnInit {
 			attachments: [],
 			businessType: this.fb.group({
 				code: [null, Validators.required]
+			}),
+			wardNo: this.fb.group({
+				code : null
 			})
 			/* Step 4 controls end */
 		});
