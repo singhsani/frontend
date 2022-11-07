@@ -184,8 +184,8 @@ export class ContractorRegsitrationComponent implements OnInit {
 
     });
 
-    this.firmEmployeeDetailList.push(this.createFirmEmployeeDetail());
-    this.partnerShipDetailList.push(this.createPartnerShipDetail());
+  //  this.firmEmployeeDetailList.push(this.createFirmEmployeeDetail());
+   // this.partnerShipDetailList.push(this.createPartnerShipDetail());
   }
 
   addRowPartnweShipDetail() {
@@ -237,7 +237,6 @@ export class ContractorRegsitrationComponent implements OnInit {
   getContractorData(id: number) {
     this.formService.getFormData(id).subscribe(res => {
       console.log("tresr", res)
-      debugger;
       this.contractorRegistrationForm.patchValue(res);
       //this.showButtons = true;
       //this.contractorRegistrationForm.disable();
@@ -384,7 +383,6 @@ export class ContractorRegsitrationComponent implements OnInit {
 
 
   onSubmitUsingAPI() {
-    debugger;
     this.contractorRegistrationForm.get('serviceFormId').setValue(this.formId);
     this.mandatoryFileCheck(this.contractorRegistrationForm.get('serviceFormId').value, this.attachmentList).then(data => {
       if (data.status) {
