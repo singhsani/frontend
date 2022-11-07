@@ -178,8 +178,8 @@
                     <td>
                       <mat-form-field>
                         <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
-                          maxlength="100" class="capitalCase" [formControl]="row.get('OwnerName')">
-                        <control-messages [control]="row.get('OwnerName')">
+                          maxlength="100" class="capitalCase" [formControl]="row.get('ownerName')">
+                        <control-messages [control]="row.get('ownerName')">
                         </control-messages>
                       </mat-form-field>
                     </td>
@@ -323,19 +323,41 @@
                     </td>
                     <td>
                       <mat-form-field>
+                        <input matInput autocomplete="off" appDate [formControl]="row.get('joiningDate')"
+                          [min]="maxDate" [matDatepicker]="joiningDate"
+                          (dateChange)="onDateChangePurchaseDate('joiningDate', $event.value,row)">
+                        <mat-datepicker-toggle matSuffix [for]="joiningDate"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi="true" #joiningDate></mat-datepicker>
+                        <div align="end" class="default-show-hint mat-hint mat-right"></div>
+
+                        <control-messages [control]="row.get('joiningDate')">
+                        </control-messages>
+                      </mat-form-field>
+                      <!-- <mat-form-field>
                         <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
                           maxlength="100" class="capitalCase" [formControl]="row.get('joiningDate')">
                         <control-messages [control]="row.get('joiningDate')">
                         </control-messages>
-                      </mat-form-field>
+                      </mat-form-field> -->
                     </td>
                     <td style="max-width:100px;">
                       <mat-form-field>
+                        <input matInput autocomplete="off" appDate [formControl]="row.get('projectStartDate')"
+                          [min]="maxDate" [matDatepicker]="projectStartDate"
+                          (dateChange)="onDateChangePurchaseDate('projectStartDate', $event.value,row)">
+                        <mat-datepicker-toggle matSuffix [for]="projectStartDate"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi="true" #projectStartDate></mat-datepicker>
+                        <div align="end" class="default-show-hint mat-hint mat-right"></div>
+
+                        <control-messages [control]="row.get('projectStartDate')">
+                        </control-messages>
+                      </mat-form-field>
+                      <!-- <mat-form-field>
                         <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
                           maxlength="100" class="capitalCase" [formControl]="row.get('projectStartDate')">
                         <control-messages [control]="row.get('projectStartDate')">
                         </control-messages>
-                      </mat-form-field>
+                      </mat-form-field> -->
                     </td>
                     <td>
                       <button mat-raised-button type="button" color="warn" style="margin-top: 22px;"
@@ -355,7 +377,7 @@
             </div>
 
             <mat-form-field class="col-md-12">
-              <textarea matInput maxlength="255" formControlName="turnoverDetails"
+              <textarea matInput maxlength="255" formControlName="turnOverDetails"
                 placeholder="{{'turnover_details' | translate: translateKey}}"></textarea>
             </mat-form-field>
 
@@ -383,7 +405,7 @@
 
           <div class="row">
             <mat-form-field class="col-md-12">
-              <textarea matInput formControlName="WorkShopplantRate" maxlength="255"
+              <textarea matInput formControlName="workShopPlantRate" maxlength="255"
                 placeholder="{{'work_shop_and_plant_rate'  | translate: translateKey }}"></textarea>
             </mat-form-field>
 
@@ -403,20 +425,20 @@
                 *</b>
             </div>
             <div class="col-md-4 ngSelect">
-              <ng-select formControlName="anotherorganisation">
+              <ng-select formControlName="anotherOrganisation">
                 <ng-option>Yes</ng-option>
                 <ng-option>No</ng-option>
               </ng-select>
             </div>
 
             <mat-form-field class="col-md-8">
-              <input matInput autocomplete="off" maxlength="100" type="text" formControlName="whichDepartment"
+              <input matInput autocomplete="off" maxlength="255" type="text" formControlName="whichDepartment"
                 placeholder="{{'which_department' | translate: translateKey}}" required>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <textarea matInput maxlength="255" formControlName="postRegistrationDetails"
-                placeholder="{{'post_registration_details' | translate: translateKey}}"></textarea>
+              <textarea matInput maxlength="255" formControlName="pastRegistrationDetails"
+                placeholder="{{'past_registration_details' | translate: translateKey}}"></textarea>
             </mat-form-field>
             <mat-form-field class="col-md-4">
               <textarea matInput maxlength="255" formControlName="engineerDetails"
@@ -438,19 +460,37 @@
             </div>
 
             <mat-form-field class="col-md-6">
-              <input matInput autocomplete="off" maxlength="100" type="text"
-                formControlName="registrationDateandRenewdate"
-                placeholder="{{'new_registration_date_for_renew_date' | translate: translateKey}}" required>
+              <input matInput autocomplete="off" appDate formControlName="registrationDateOrReNewDate" [min]="maxDate"
+                [matDatepicker]="registrationDateOrReNewDate"
+                (dateChange)="onDateChange('registrationDateOrReNewDate', $event.value)">
+              <mat-datepicker-toggle matSuffix [for]="registrationDateOrReNewDate"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #registrationDateOrReNewDate></mat-datepicker>
+              <div align="end" class="default-show-hint mat-hint mat-right"></div>
+
+              <control-messages [control]="contractorRegistrationForm.get('registrationDateOrReNewDate')">
+              </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-6">
-              <textarea matInput maxlength="255" formControlName="solvencyAmountandBankDetails"
+              <textarea matInput maxlength="255" formControlName="solvencyAmountAndBankDetail"
                 placeholder="{{'solvency_amount_and_bank_details' | translate: translateKey}}"></textarea>
             </mat-form-field>
 
             <mat-form-field class="col-md-6">
-              <textarea matInput maxlength="255" formControlName="oldRegistrationDateandNumber"
-                placeholder="{{'old_registration_date_and_number' | translate: translateKey}}"></textarea>
+              <input matInput autocomplete="off" appDate formControlName="oldRegistrationDate" [min]="maxDate"
+                [matDatepicker]="oldRegistrationDate"
+                (dateChange)="onDateChange('oldRegistrationDate', $event.value)">
+              <mat-datepicker-toggle matSuffix [for]="oldRegistrationDate"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #oldRegistrationDate></mat-datepicker>
+              <div align="end" class="default-show-hint mat-hint mat-right"></div>
+
+              <control-messages [control]="contractorRegistrationForm.get('oldRegistrationDate')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-6">
+              <textarea matInput maxlength="25" formControlName="oldRegistrationNumber"
+                placeholder="{{'old_registration_number' | translate: translateKey}}"></textarea>
             </mat-form-field>
 
             <mat-form-field class="col-md-6">

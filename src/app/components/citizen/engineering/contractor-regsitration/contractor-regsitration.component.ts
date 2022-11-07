@@ -133,16 +133,17 @@ export class ContractorRegsitrationComponent implements OnInit {
       emailId: [null, [ValidationService.emailValidator]],
       gstNo: [null],
       panNo: [null, [Validators.required, ValidationService.panValidator]],
-      partnerShip: [null],
       ownerFirstName: [null, [Validators.required, Validators.maxLength(50)]],
       ownerMiddleName: [null, [Validators.maxLength(50)]],
       ownerLastName: [null, [Validators.required, Validators.maxLength(50)]],
       ownerMobileNumber: [null, [Validators.required]],
       ownerEmailId: [null, [ValidationService.emailValidator]],
+      businessName: [null, [Validators.required, Validators.maxLength(50)]],
+      businessMobileNo: [null, [Validators.required]],
       bankAccountNo: [null, [Validators.required]],
       branchName: [null, [Validators.required, Validators.maxLength(50)]],
       registrationBank: this.fb.group({
-        code: [null, [Validators.required]],
+        code: [null],
         name: null
       }),
 
@@ -150,30 +151,31 @@ export class ContractorRegsitrationComponent implements OnInit {
         code: null,
         name: null
       }),
-      applyingFor: [null, [Validators.required]],
+      applyingFor: [null],
+      partnerShip: [null],
 
       whichDepartment: [null],
-      postRegistrationDetails: [null],
+      pastRegistrationDetails: [null],
       engineerDetails: [null],
       incomeTaxDetails: [null],
       anyAnotherOrganisationShareholder: [null],
-      registrationDateandRenewdate: [null],
-      solvencyAmountandBankDetails: [null],
-      oldRegistrationDateandNumber: [null],
+      registrationDateOrReNewDate: [null],
+      solvencyAmountAndBankDetail: [null],
+      oldRegistrationNumber: [null],
+      oldRegistrationDate: [null],
       notCompletedReasonDetails: [null],
       amountRemainsInCorporationOrOrganization: [null],
       partnerDetails: this.partnerShipDetailList,
       contractorWorkDetails: null,
       // serviceCode:'Contractor-Registration',
       firmEmployeeDetails: this.firmEmployeeDetailList,
-      businessName: [null, [Validators.required, Validators.maxLength(50)]],
-      businessMobileNo: [null, [Validators.required]],
+
       registrationDetails: [null],
       threeYearDetails: [null],
-      WorkShopplantRate: [null],
+      workShopPlantRate: [null],
       ownerAccountDepartment: [null],
-      turnoverDetails: [null],
-      anotherorganisation: [null],
+      turnOverDetails: [null],
+      anotherOrganisation: [null],
       factoryAddress: this.fb.group(this.officeAddrComponent.addressControls()),
       registeredAddress: this.fb.group(this.resAddrComponent.addressControls()),
       businessAddress: this.fb.group(this.bussinessAddressComponent.addressControls()),
@@ -197,7 +199,7 @@ export class ContractorRegsitrationComponent implements OnInit {
         code: null,
         name: null
       }),
-      OwnerName: [null],
+      ownerName: [null],
       ownerDetail: [null],
     });
   }
@@ -235,6 +237,7 @@ export class ContractorRegsitrationComponent implements OnInit {
   getContractorData(id: number) {
     this.formService.getFormData(id).subscribe(res => {
       console.log("tresr", res)
+      debugger;
       this.contractorRegistrationForm.patchValue(res);
       //this.showButtons = true;
       //this.contractorRegistrationForm.disable();
@@ -259,9 +262,18 @@ export class ContractorRegsitrationComponent implements OnInit {
     });
   }
 
+  onDateChange(fieldName, date) {
+    console.log("sdfgdg " + this.contractorRegistrationForm.get(fieldName).value + " " + fieldName + " " + date);
+    this.contractorRegistrationForm.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
+  }
+
+  onDateChangePurchaseDate(control, date, obj) {
+    obj.get(control).setValue(moment(date).format("YYYY-MM-DD"));
+  }
+
   locationChange(event) {
     this.engineer.getFeeFromLocationn(event.value).subscribe(res => {
-      this.contractorRegistrationForm.get('registrationAmount').setValue(res.fee);
+      //this.contractorRegistrationForm.get('registrationAmount').setValue(res.fee);
     })
     this.contractorRegistrationForm.get('locationOfContractorWorks').get('code').setValue(event.value);
   }
@@ -335,6 +347,11 @@ export class ContractorRegsitrationComponent implements OnInit {
   }
 
   onSubmit() {
+    this.contractorRegistrationForm.get('anyAnotherOrganisationShareholder').setValue(true);
+    this.contractorRegistrationForm.get('partnerShip').setValue(true);
+    this.contractorRegistrationForm.get('ownerAccountDepartment').setValue(true);
+    this.contractorRegistrationForm.get('anotherOrganisation').setValue(true);
+
     if (this.contractorRegistrationForm.invalid) {
       //this.commonService.prrintInvalidForm(this.affordableHousingForm);
       let count = this.affordableHousingConfiguration.getAllErrors(this.contractorRegistrationForm);
@@ -367,6 +384,7 @@ export class ContractorRegsitrationComponent implements OnInit {
 
 
   onSubmitUsingAPI() {
+    debugger;
     this.contractorRegistrationForm.get('serviceFormId').setValue(this.formId);
     this.mandatoryFileCheck(this.contractorRegistrationForm.get('serviceFormId').value, this.attachmentList).then(data => {
       if (data.status) {
@@ -423,20 +441,16 @@ export class ContractorRegsitrationComponent implements OnInit {
       "bankName": "sbi",
       "branchName": "shujalpur",
       "whichDepartment": "gkjkjk",
-      "postRegistrationDetails": "gjkkjgljk",
+      "pastRegistrationDetails": "gjkkjgljk",
       "engineerDetails": "hjkgj",
       "incomeTaxDetails": "jhfjh",
-      "anyAnotherOrganisationShareholder": "jhfjhf",
-      "registrationDateandRenewdate": "hjfkj",
-      "solvencyAmountandBankDetails": "jhfgjk",
-      "oldRegistrationDateandNumber": "hjfgjk",
+      // "anyAnotherOrganisationShareholder": "jhfjhf",
+      "registrationDateOrReNewDate": "26/12/2022",
+      "solvencyAmountAndBankDetail": "jhfgjk",
+      "oldRegistrationDate": "2022-12-01",
+      "oldRegistrationNumber": "hjfgjk",
       "notCompletedReasonDetails": "jhgkkk",
       "amountRemainsInCorporationOrOrganization": "jhgkkjhfgjh",
-      "partnerDetails": {
-        //"ownerType": "jklhjklh",
-        "OwnerName": "lkhljkh",
-        "ownerDetail": "jkg",
-      },
       "factoryAddress": {
         "addressType": "FIRM_ADDRESS",
         "buildingName": "41",
@@ -497,24 +511,16 @@ export class ContractorRegsitrationComponent implements OnInit {
         "cityGuj": null,
         "countryGuj": null
       },
-      "firmEmployeeDetails": {
-        "employeeName": "Arvind",
-        "employeeQualification": "MCA",
-        "employeeStatus": "gjkhjg",
-        "employeeExperienceYears": "25",
-        "joiningDate": "jkgjkgjhg",
-        "projectStartDate": "gjkgk",
-      },
       "contractorWorkDetails": "utgjhgkh",
       "businessName": "contractor",
       "businessMobileNo": "8962749074",
       "OwnwemobileNumber": "6265661272",
       "registrationDetails": "kjgjklgl",
       "threeYearDetails": "jkgjk",
-      "WorkShopPlantRate": "gjkkjgjk",
-      "ownerAccountDepartment": "ghkgjkj",
-      "turnoverDetails": "gkjjk",
-      "anotherorganisation": "jhfgjhfk",
+      "workShopPlantRate": "gjkkjgjk",
+      // "ownerAccountDepartment": "ghkgjkj",
+      "turnOverDetails": "gkjjk",
+      // "anotherOrganisation": "jhfgjhfk",
     }
     this.contractorRegistrationForm.patchValue(obj);
   }
