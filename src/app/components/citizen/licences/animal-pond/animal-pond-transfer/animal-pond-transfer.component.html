@@ -2,7 +2,8 @@
 
 <mat-card [hidden]="serachLicenceObj.isDisplayTransferLicenceForm" class="mt-4 formClass">
 	<mat-form-field class="col-md-10">
-		<input matInput upperCase appAlphaNumeric required placeholder="{{'search_by_application_no' | translate:translateKey}}" maxlength="25"
+		<input matInput upperCase appAlphaNumeric required
+			placeholder="{{'search_by_application_no' | translate:translateKey}}" maxlength="25"
 			[(ngModel)]="serachLicenceObj.searchLicenceNumber">
 	</mat-form-field>
 	<button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary"
@@ -351,13 +352,13 @@
 					<div class="col-md-10">
 						<h2>{{ 'insert_animal_detail' | translate:translateKey}}</h2>
 					</div>
-					<div class="col-md-2 pt-3" style="text-align: right;">
+					<!-- <div class="col-md-2 pt-3" style="text-align: right;">
 						<button type="button" (click)="addMoreAnimal()"
 							[disabled]="animalPondTransferForm.get('animalDetails')['controls'].length >= ANIMAL_TYPE.length"
 							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button
 							color="primary">{{'add'|
 							translate:translateKey}}</button>
-					</div>
+					</div> -->
 				</div>
 
 				<div *ngIf="animalPondTransferForm.get('animalDetails')['controls'].length">
@@ -414,10 +415,10 @@
 									</td>
 									<td style="width: 40px;" *ngIf="animalPondTransferForm.get('canEdit').value">
 
-										<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
+										<!-- <button mat-icon-button color="primary" *ngIf="!item.isEditMode"
 											(click)="editRecord(item)">
 											<mat-icon title="Edit">edit</mat-icon>
-										</button>
+										</button> -->
 										<button type="submit" [disabled]="item.invalid"
 											*ngIf="item.isEditMode && item.get('animalCount').value !=0"
 											(click)="saveRecord(item)" mat-icon-button color="primary">
@@ -425,10 +426,10 @@
 										</button>
 									</td>
 									<td style="width: 40px;" *ngIf="animalPondTransferForm.get('canEdit').value">
-										<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
+										<!-- <button mat-icon-button color="warn" *ngIf="!item.isEditMode"
 											(click)="deleteRecord(indx,'animalDetails')">
 											<mat-icon title="Delete">delete</mat-icon>
-										</button>
+										</button> -->
 										<button mat-icon-button color="warn" *ngIf="item.isEditMode"
 											(click)="cancelRecord(item,indx,'animalDetails')">
 											<mat-icon title="Delete">cancel</mat-icon>
