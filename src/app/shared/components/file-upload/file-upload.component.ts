@@ -59,7 +59,7 @@ export class FileUploadComponent implements OnInit {
 	 */
 
 	ngOnInit() {
-	
+
 		this.attachments = (this.form.get('attachments') && this.form.get('attachments').value) ? this.form.get('attachments').value : [];
 
 		this.disableOrEnableButton();
@@ -76,18 +76,32 @@ export class FileUploadComponent implements OnInit {
 	 */
 	selectFile(event) {
 		if (event) {
-			
+
 			this.selectedFiles = event.target.files;
 			let fileType = this.selectedFiles[0].type;
 			this.fileName = this.selectedFiles[0].name;
 			this.canUpload = true;
+			if(this.form.value.serviceCode = 'HEL-MR' && this.form.value.serviceDetail.serviceUploadDocuments[9].documentIdentifier == 'MARRIAGE_JOINT_PHOTO' ||
+          this.form.value.serviceDetail.serviceUploadDocuments[10].documentIdentifier == 'BRIDE_PHOTO' ||
+          this.form.value.serviceDetail.serviceUploadDocuments[11].documentIdentifier == 'BRIDE_GROOM_PHOTO'){
+
+          if !(fileType === 'image/jpeg' || fileType === 'image/jpg'){
+              this.canUpload = false;
+              this.fileName = '';
+              this.getFile = '';
+              this.priviewImage = '';
+              this.commonService.openAlert("Warning", "Uploaded file is not a valid format.", "warning");
+          }
+  		}
+
 			if (fileType === 'image/png' || fileType === 'image/jpg' || fileType === 'image/jpeg' || fileType === 'image/gif' || fileType === 'application/pdf') {
+
 				let reader = new FileReader();
 				reader.onload = (e: any) => {
 					this.priviewImage = e.target.result;
 				}
 				reader.readAsDataURL(event.target.files[0]);
-				
+
 				this.upload();
 			} else {
 				this.canUpload = false;
@@ -96,7 +110,7 @@ export class FileUploadComponent implements OnInit {
 				this.priviewImage = '';
 				this.commonService.openAlert("Warning", "Uploaded file is not a valid format. Only JPG, PNG, GIF and PDF", "warning");
 			}
-			
+
 		}
 
 	}
