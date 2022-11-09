@@ -76,43 +76,62 @@ export class FileUploadComponent implements OnInit {
 	 */
 	selectFile(event) {
 		if (event) {
-
 			this.selectedFiles = event.target.files;
 			let fileType = this.selectedFiles[0].type;
 			this.fileName = this.selectedFiles[0].name;
 			this.canUpload = true;
-			if(this.form.value.serviceCode = 'HEL-MR' && this.form.value.serviceDetail.serviceUploadDocuments[9].documentIdentifier == 'MARRIAGE_JOINT_PHOTO' ||
-          this.form.value.serviceDetail.serviceUploadDocuments[10].documentIdentifier == 'BRIDE_PHOTO' ||
-          this.form.value.serviceDetail.serviceUploadDocuments[11].documentIdentifier == 'BRIDE_GROOM_PHOTO'){
-
-          if !(fileType === 'image/jpeg' || fileType === 'image/jpg'){
-              this.canUpload = false;
-              this.fileName = '';
-              this.getFile = '';
-              this.priviewImage = '';
-              this.commonService.openAlert("Warning", "Uploaded file is not a valid format.", "warning");
-          }
-  		}
-
-			if (fileType === 'image/png' || fileType === 'image/jpg' || fileType === 'image/jpeg' || fileType === 'image/gif' || fileType === 'application/pdf') {
-
-				let reader = new FileReader();
-				reader.onload = (e: any) => {
-					this.priviewImage = e.target.result;
-				}
-				reader.readAsDataURL(event.target.files[0]);
-
-				this.upload();
-			} else {
-				this.canUpload = false;
-				this.fileName = '';
-				this.getFile = '';
-				this.priviewImage = '';
-				this.commonService.openAlert("Warning", "Uploaded file is not a valid format. Only JPG, PNG, GIF and PDF", "warning");
+			if(this.form.value.serviceCode == 'HEL-MR'){
+			  let booleanCheckForMarriage = this.checkForMarriage();
+			  if(booleanCheckForMarriage){
+			    if(fileType != 'image/jpeg'){
+			      this.uploadingFileForError();
+			    }else{
+			      this.uploadingFile(event);
+			    }
+			  }else{
+			  /*  others */
+			    this.uploadingFile(event);
+			  }
+			}else{ /* Other services */
+			  this.fileUploadValidFile(fileType,event);
 			}
-
 		}
+	}
 
+	checkForMarriage(){
+	  if(this.uploadModel.documentIdentifier == 'MARRIAGE_JOINT_PHOTO' ||
+	    this.uploadModel.documentIdentifier == 'BRIDE_PHOTO' ||
+	    this.uploadModel.documentIdentifier == 'BRIDE_GROOM_PHOTO'){
+	    return true;
+	  }
+	  return false;
+	}
+
+	fileUploadValidFile(fileType,event){
+	  if (fileType === 'image/png' || fileType === 'image/jpg' || fileType === 'image/jpeg' || fileType === 'image/gif' || fileType === 'application/pdf') {
+      this.uploadingFile(event);
+    } else {
+      this.uploadingFileForError();
+    }
+	}
+
+/* For success */
+	uploadingFile(event){
+    let reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.priviewImage = e.target.result;
+    }
+    reader.readAsDataURL(event.target.files[0]);
+    this.upload();
+	}
+
+	/*  For Error */
+	uploadingFileForError(){
+	  this.canUpload = false;
+    this.fileName = '';
+    this.getFile = '';
+    this.priviewImage = '';
+    this.commonService.openAlert("Warning", "Uploaded file is not a valid format. Only JPG, PNG, GIF and PDF", "warning");
 	}
 
 
