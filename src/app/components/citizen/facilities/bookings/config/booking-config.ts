@@ -27,6 +27,8 @@ export class BookingConstants extends BTConstants {
     static AMPHI_RESOURCE_TYPE = 'amphiTheater';
     static FORM_CHARGES = 'FORM_CHARGES';
     static SWIMMING_POOL_ADMISSION_FEES='SWIMMING_POOL_ADMISSION_FEES';
+    static BLOCKED = 'BLOCKED';
+    static PARTIALLY_BOOKED='PARTIALLY_BOOKED';
 }
 
 /**
