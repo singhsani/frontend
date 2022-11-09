@@ -1,17 +1,7 @@
 <div class="container">
 
   <app-title-bar [title]="'Contractor Registration'">
-    <!-- <form class="searchBox">
-      <mat-form-field>
-        <input matInput autocomplete="off" trim="blur" maxlength="21" id="applicationNumberTextBox"
-          #applicationNumberTextBox [value]="applicationNumberTextBox.value.toUpperCase()" type="text"
-          placeholder="{{'Application Number'}}">
-        <button mat-button matSuffix mat-icon-button
-          (click)="checkDataFromApplicationNumber(applicationNumberTextBox.value)">
-          <mat-icon>search</mat-icon>
-        </button>
-      </mat-form-field>
-    </form> -->
+
     <button class="pull-right" type="button" (click)="selectLanguage('en')">EN</button>
     <button class="pull-right" type="button" (click)="selectLanguage('gu')">ગુજ</button>
     <!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
@@ -119,15 +109,6 @@
             <app-address #firmAddress [requiredFeilds]="true"
               [addressFormGroup]="contractorRegistrationForm.get('factoryAddress')"></app-address>
 
-            <div class="col-md-4 ngSelect">
-              <mat-label><b>{{'if_company_partnership' | translate: translateKey}} *</b></mat-label>
-              <ng-select formControlName="partnerShip">
-                <ng-option>Yes</ng-option>
-                <ng-option>No</ng-option>
-              </ng-select>
-            </div>
-
-
             <h2><b>{{'owner_details' | translate: translateKey}}</b></h2>
             <mat-form-field class="col-md-4">
               <input matInput type="text" formControlName="ownerFirstName" appValidationFields
@@ -160,49 +141,60 @@
             <app-address #residenceAddress [requiredFeilds]="true"
               [addressFormGroup]="contractorRegistrationForm.get('registeredAddress')"></app-address>
 
+            <div class="col-md-4 ngSelect">
+              <mat-label><b>{{'if_company_partnership' | translate: translateKey}} *</b></mat-label>
+              <ng-select formControlName="partnerShip">
+                <ng-option>Yes</ng-option>
+                <ng-option>No</ng-option>
+              </ng-select>
+            </div>
+
             <h2><b>{{'name_of_the_partners' | translate: translateKey}}</b></h2>
             <div class="table-responsive">
               <table class="table table-bordered table-responsive-md table-striped text-center">
-                <thead>
+                <tbody>
                   <tr>
                     <th class="text-center">{{'s_no' | translate: translateKey}}</th>
                     <th class="text-center">{{'owner_type' | translate: translateKey}}</th>
                     <th class="text-center">{{'owner_name' | translate: translateKey}}</th>
                     <th class="text-center">{{'owner_detail' | translate: translateKey}}</th>
-                    <th class="text-center">{{'action' | translate: translateKey}}Action</th>
+                    <th class="text-center">{{'action' | translate: translateKey}}</th>
                   </tr>
-                </thead>
-                <tbody>
+                  <tr *ngFor="let row of contractorRegistrationForm.get('partnerDetails')?.controls;let index = index;">
+                    <td>
+                      {{index+1}}
+                    </td>
+                    <td>
+                      <div [formGroup]="row.get('ownerType')">
+                        <ng-select formControlName="code">
+                          <ng-option *ngFor="let impl of contractorOwnerType" [value]="impl.code">{{impl.name}}
+                          </ng-option>
+                        </ng-select>
+                        <control-messages [control]="row.get('ownerType').get('code')">
+                        </control-messages>
+                      </div>
 
-                  <tr formArrayName="partnersList">
-                    <!-- <td  let i = index;
-                      [formGroupName]="indx">
-                      {{i + 1}}
-                      </td> -->
-                    <td>1</td>
+                    </td>
                     <td>
                       <mat-form-field>
-                        <input matInput type="text" maxlength="50" formControlName="ownerType" appValidationFields
-                          validationFieldsType='onlyNameWithSpace'>
+                        <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+                          maxlength="100" class="capitalCase" [formControl]="row.get('ownerName')">
+                        <control-messages [control]="row.get('ownerName')">
+                        </control-messages>
                       </mat-form-field>
                     </td>
                     <td>
                       <mat-form-field>
-                        <input matInput type="text" maxlength="50" formControlName="OwnerName" appValidationFields
-                          validationFieldsType='onlyNameWithSpace'>
-                      </mat-form-field>
-                    </td>
-                    <td>
-                      <mat-form-field>
-                        <input matInput type="text" maxlength="100" formControlName="ownerDetail">
+                        <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+                          maxlength="100" class="capitalCase" [formControl]="row.get('ownerDetail')">
+                        <control-messages [control]="row.get('ownerDetail')">
+                        </control-messages>
                       </mat-form-field>
                     </td>
                     <td>
                       <span>
-                        <button type="submit" mat-icon-button color="primary">
-                          <mat-icon title="save" (click)="saveRecord(item)">save</mat-icon>
-                        </button>
-                        <button mat-raised-button color="warn" style="margin-top: 22px;">
+                        <button mat-raised-button type="button" color="warn" style="margin-top: 22px;"
+                          (click)="onRemoveRowOwnerShip(index)">
                           <mat-icon title="Cancel">cancel</mat-icon>
                         </button>
                       </span>
@@ -213,7 +205,7 @@
               </table>
             </div>
             <div class="col-md-12 text-right">
-              <button mat-raised-button color="primary" (click)="addNewOwner()">{{'add_new' | translate:
+              <button mat-raised-button color="primary" (click)="addRowPartnweShipDetail()">{{'add_new' | translate:
                 translateKey}}</button>
             </div>
 
@@ -257,10 +249,8 @@
 
           <div class="fotButtonBar clearfix mt-5">
             <div class="col-sm-12 col-md-12">
-              <!-- <button class="liteBorder pull-left" type="button" mat-raised-button
-                              >{{'back'}}</button> -->
               <button class="pull-right" type="button" mat-raised-button color="primary"
-                (click)="tabIndex = 1">{{'next'}}</button>
+                (click)="tabIndex = 1">{{'Next'}}</button>
             </div>
           </div>
 
@@ -280,7 +270,7 @@
                 placeholder="{{'registration_detail' | translate: translateKey}}"></textarea>
             </mat-form-field>
             <mat-form-field class="col-md-6">
-              <textarea matInput maxlength="255" formControlName="threeYearDetaols"
+              <textarea matInput maxlength="255" formControlName="threeYearDetails"
                 placeholder="{{'three_year_work_details' | translate: translateKey}}"></textarea>
             </mat-form-field>
 
@@ -289,73 +279,105 @@
               <table class="table table-bordered table-responsive-md table-striped text-center">
                 <tbody>
                   <tr>
-                    <th>Name</th>
-                    <th>Qualification</th>
-                    <th>Status</th>
-                    <th>Experience in Years</th>
-                    <th>when He Started WorkIng This Project</th>
-                    <th>Project Start Date</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Qualification</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Experience in Years</th>
+                    <th class="text-center">when He Started WorkIng This Project</th>
+                    <th class="text-center">Project Start Date</th>
                     <th class="text-center">Action</th>
                   </tr>
-                  <tr formArrayName="EmployeeDetails">
+                  <tr
+                    *ngFor="let row of contractorRegistrationForm.get('firmEmployeeDetails')?.controls;let index = index;">
                     <td>
                       <mat-form-field>
-                        <input matInput type="text" maxlength="50" formControlName="employeeName" appValidationFields
-                          validationFieldsType='onlyNameWithSpace'>
+                        <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+                          maxlength="100" class="capitalCase" [formControl]="row.get('employeeName')">
+                        <control-messages [control]="row.get('employeeName')">
+                        </control-messages>
                       </mat-form-field>
                     </td>
                     <td>
                       <mat-form-field>
-                        <input matInput type="text" maxlength="50" formControlName="employeeQualification">
+                        <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+                          maxlength="100" class="capitalCase" [formControl]="row.get('employeeQualification')">
+                        <control-messages [control]="row.get('employeeQualification')">
+                        </control-messages>
                       </mat-form-field>
                     </td>
                     <td>
                       <mat-form-field>
-                        <input matInput type="text" maxlength="50" formControlName="employeeStatus">
+                        <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+                          maxlength="100" class="capitalCase" [formControl]="row.get('employeeStatus')">
+                        <control-messages [control]="row.get('employeeStatus')">
+                        </control-messages>
                       </mat-form-field>
                     </td>
                     <td style="max-width:80px;">
                       <mat-form-field>
-                        <input matInput type="text" maxlength="4" formControlName="employeeExperiernceyears">
+                        <input matInput type="text" maxlength="4" OnlyNumber
+                          [formControl]="row.get('employeeExperienceYears')">
+                        <control-messages [control]="row.get('employeeExperienceYears')">
+                        </control-messages>
                       </mat-form-field>
                     </td>
                     <td>
                       <mat-form-field>
-                        <input matInput type="text" maxlength="20" formControlName="employeestartWorkingProject">
+                        <input matInput autocomplete="off" appDate [formControl]="row.get('joiningDate')"
+                          [min]="maxDate" [matDatepicker]="joiningDate"
+                          (dateChange)="onDateChangePurchaseDate('joiningDate', $event.value,row)">
+                        <mat-datepicker-toggle matSuffix [for]="joiningDate"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi="true" #joiningDate></mat-datepicker>
+                        <div align="end" class="default-show-hint mat-hint mat-right"></div>
+
+                        <control-messages [control]="row.get('joiningDate')">
+                        </control-messages>
                       </mat-form-field>
+                      <!-- <mat-form-field>
+                        <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+                          maxlength="100" class="capitalCase" [formControl]="row.get('joiningDate')">
+                        <control-messages [control]="row.get('joiningDate')">
+                        </control-messages>
+                      </mat-form-field> -->
                     </td>
                     <td style="max-width:100px;">
                       <mat-form-field>
-                        <input matInput type="text" maxlength="20" formControlName="projectStartDate">
+                        <input matInput autocomplete="off" appDate [formControl]="row.get('projectStartDate')"
+                          [min]="maxDate" [matDatepicker]="projectStartDate"
+                          (dateChange)="onDateChangePurchaseDate('projectStartDate', $event.value,row)">
+                        <mat-datepicker-toggle matSuffix [for]="projectStartDate"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi="true" #projectStartDate></mat-datepicker>
+                        <div align="end" class="default-show-hint mat-hint mat-right"></div>
+
+                        <control-messages [control]="row.get('projectStartDate')">
+                        </control-messages>
                       </mat-form-field>
+                      <!-- <mat-form-field>
+                        <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+                          maxlength="100" class="capitalCase" [formControl]="row.get('projectStartDate')">
+                        <control-messages [control]="row.get('projectStartDate')">
+                        </control-messages>
+                      </mat-form-field> -->
                     </td>
                     <td>
-                      <span>
-                        <!-- <button mat-icon-button color="primary" 
-                          (click)="editRecord()">
-                          <mat-icon title="Edit">edit</mat-icon>
-                        </button> -->
-                        <button type="submit" mat-icon-button color="primary">
-                          <mat-icon title="save" (click)="saveRecord(item)">save</mat-icon>
-                        </button>
-                      </span>
-                      <!-- <span *ngIf="contractorRegistrationForm.get('canEdit').value"> -->
-                      <!-- <button mat-icon-button color="warn" *ngIf="!item.isEditMode"
-                          (click)="deleteRecord(indx,'relationshipList')">
-                          <mat-icon title="Delete">delete</mat-icon>
-                        </button> -->
-                      <button mat-icon-button color="warn" (click)="cancelRecord()">
-                        <mat-icon title="Delete">cancel</mat-icon>
+                      <button mat-raised-button type="button" color="warn" style="margin-top: 22px;"
+                        (click)="onRemoveRowFirmDetail(index)">
+                        <mat-icon title="Cancel">cancel</mat-icon>
                       </button>
-                      <!-- </span> -->
+
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
+            <div class="col-md-12 text-right">
+              <button mat-raised-button color="primary" (click)="addRowFirmDetail()">{{'add_new' | translate:
+                translateKey}}</button>
+            </div>
+
             <mat-form-field class="col-md-12">
-              <textarea matInput maxlength="255" formControlName="turnoverDetails"
+              <textarea matInput maxlength="255" formControlName="turnOverDetails"
                 placeholder="{{'turnover_details' | translate: translateKey}}"></textarea>
             </mat-form-field>
 
@@ -364,9 +386,9 @@
 
           <div class="fotButtonBar clearfix mt-5">
             <div class="col-sm-12 col-md-12">
-              <button class="liteBorder pull-left" type="button" mat-raised-button (click)="tabIndex = 0">{{'back' |
+              <button class="liteBorder pull-left" type="button" mat-raised-button (click)="tabIndex = 0">{{'Back' |
                 translate: translateKey}}</button>
-              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 2">{{'next'
+              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 2">{{'Next'
                 | translate: translateKey}}</button>
             </div>
           </div>
@@ -383,7 +405,7 @@
 
           <div class="row">
             <mat-form-field class="col-md-12">
-              <textarea matInput formControlName="WorkShopplantRate" maxlength="255"
+              <textarea matInput formControlName="workShopPlantRate" maxlength="255"
                 placeholder="{{'work_shop_and_plant_rate'  | translate: translateKey }}"></textarea>
             </mat-form-field>
 
@@ -403,20 +425,20 @@
                 *</b>
             </div>
             <div class="col-md-4 ngSelect">
-              <ng-select formControlName="anotherorganisation">
+              <ng-select formControlName="anotherOrganisation">
                 <ng-option>Yes</ng-option>
                 <ng-option>No</ng-option>
               </ng-select>
             </div>
 
             <mat-form-field class="col-md-8">
-              <input matInput autocomplete="off" maxlength="100" type="text" formControlName="whichDepartment"
+              <input matInput autocomplete="off" maxlength="255" type="text" formControlName="whichDepartment"
                 placeholder="{{'which_department' | translate: translateKey}}" required>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <textarea matInput maxlength="255" formControlName="postRegistrationDetails"
-                placeholder="{{'post_registration_details' | translate: translateKey}}"></textarea>
+              <textarea matInput maxlength="255" formControlName="pastRegistrationDetails"
+                placeholder="{{'past_registration_details' | translate: translateKey}}"></textarea>
             </mat-form-field>
             <mat-form-field class="col-md-4">
               <textarea matInput maxlength="255" formControlName="engineerDetails"
@@ -438,19 +460,37 @@
             </div>
 
             <mat-form-field class="col-md-6">
-              <input matInput autocomplete="off" maxlength="100" type="text"
-                formControlName="registrationDateandRenewdate"
-                placeholder="{{'new_registration_date_for_renew_date' | translate: translateKey}}" required>
+              <input matInput autocomplete="off" appDate formControlName="registrationDateOrReNewDate" [min]="maxDate"
+                [matDatepicker]="registrationDateOrReNewDate"
+                (dateChange)="onDateChange('registrationDateOrReNewDate', $event.value)">
+              <mat-datepicker-toggle matSuffix [for]="registrationDateOrReNewDate"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #registrationDateOrReNewDate></mat-datepicker>
+              <div align="end" class="default-show-hint mat-hint mat-right"></div>
+
+              <control-messages [control]="contractorRegistrationForm.get('registrationDateOrReNewDate')">
+              </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-6">
-              <textarea matInput maxlength="255" formControlName="solvencyAmountandBankDetails"
+              <textarea matInput maxlength="255" formControlName="solvencyAmountAndBankDetail"
                 placeholder="{{'solvency_amount_and_bank_details' | translate: translateKey}}"></textarea>
             </mat-form-field>
 
             <mat-form-field class="col-md-6">
-              <textarea matInput maxlength="255" formControlName="oldRegistrationDateandNumber"
-                placeholder="{{'old_registration_date_and_number' | translate: translateKey}}"></textarea>
+              <input matInput autocomplete="off" appDate formControlName="oldRegistrationDate" [min]="maxDate"
+                [matDatepicker]="oldRegistrationDate"
+                (dateChange)="onDateChange('oldRegistrationDate', $event.value)">
+              <mat-datepicker-toggle matSuffix [for]="oldRegistrationDate"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #oldRegistrationDate></mat-datepicker>
+              <div align="end" class="default-show-hint mat-hint mat-right"></div>
+
+              <control-messages [control]="contractorRegistrationForm.get('oldRegistrationDate')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-6">
+              <textarea matInput maxlength="25" formControlName="oldRegistrationNumber"
+                placeholder="{{'old_registration_number' | translate: translateKey}}"></textarea>
             </mat-form-field>
 
             <mat-form-field class="col-md-6">
@@ -467,9 +507,9 @@
 
           <div class="fotButtonBar clearfix mt-5">
             <div class="col-sm-12 col-md-12">
-              <button class="liteBorder pull-left" type="button" mat-raised-button (click)="tabIndex = 1">{{'back' |
+              <button class="liteBorder pull-left" type="button" mat-raised-button (click)="tabIndex = 1">{{'Back' |
                 translate: translateKey}}</button>
-              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 3">{{'next'
+              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 3">{{'Next'
                 | translate: translateKey}}</button>
             </div>
           </div>

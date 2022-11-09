@@ -28,8 +28,8 @@ export class ContractorRegsitrationComponent implements OnInit {
 
   translateKey: string = 'contractorRegistrationScreen';
 
-  ownerShipDetail: FormArray;
-  firmEmployeeDetail: FormArray;
+  partnerShipDetailList: FormArray;
+  firmEmployeeDetailList: FormArray;
 
   implYesNorray: Array<any> = [{ name: 'YES', code: true }, { name: 'NO', code: false }];
   tabIndex: number = 0;
@@ -45,6 +45,7 @@ export class ContractorRegsitrationComponent implements OnInit {
   formId: number;
   showButtons: boolean = false;
   isSubmitBtnVisible: boolean = true;
+  contractorOwnerType: any = [];
 
   constructor(
     private fb: FormBuilder,
@@ -59,14 +60,15 @@ export class ContractorRegsitrationComponent implements OnInit {
   ) {
     this.engineer.apiType = "contractor";
     this.formService.apiType = "contractor";
-    this.ownerShipDetail = this.fb.array([]);
-    this.firmEmployeeDetail = this.fb.array([]);
+    this.partnerShipDetailList = this.fb.array([]);
+    this.firmEmployeeDetailList = this.fb.array([]);
   }
 
   ngOnInit() {
     this.contractorRegistrationControl();
     //this.contractorRegistrationForm.addControl('ownerShipDetail', this.ownerShipDetail);
-    this.contractorRegistrationForm.addControl('firmEmployeeDetail', this.firmEmployeeDetail);
+    this.contractorRegistrationForm.addControl('firmEmployeeDetail', this.firmEmployeeDetailList);
+    this.contractorRegistrationForm.addControl('partnerDetails', this.partnerShipDetailList);
 
     this.activatedRoute.paramMap.subscribe(param => {
       this.formId = Number(param.get('id'));
@@ -75,6 +77,7 @@ export class ContractorRegsitrationComponent implements OnInit {
 
     this.getBankNames();
     this.getAllDocumentLists();
+    this.getLookUp();
 
     if (!this.formId) {
       this.createFormData();
@@ -82,6 +85,11 @@ export class ContractorRegsitrationComponent implements OnInit {
     this.setFormControlToTabIndexMap();
   }
 
+  getLookUp() {
+    this.engineer.getLookup().subscribe(res => {
+      this.contractorOwnerType = res.VENDOR_TYPE_FIRM;
+    });
+  }
   setFormControlToTabIndexMap() {
 
     this.formControlNameToTabIndex.set('firstName', 0)
@@ -125,16 +133,17 @@ export class ContractorRegsitrationComponent implements OnInit {
       emailId: [null, [ValidationService.emailValidator]],
       gstNo: [null],
       panNo: [null, [Validators.required, ValidationService.panValidator]],
-      partnerShip: [null],
       ownerFirstName: [null, [Validators.required, Validators.maxLength(50)]],
       ownerMiddleName: [null, [Validators.maxLength(50)]],
       ownerLastName: [null, [Validators.required, Validators.maxLength(50)]],
       ownerMobileNumber: [null, [Validators.required]],
       ownerEmailId: [null, [ValidationService.emailValidator]],
+      businessName: [null, [Validators.required, Validators.maxLength(50)]],
+      businessMobileNo: [null, [Validators.required]],
       bankAccountNo: [null, [Validators.required]],
       branchName: [null, [Validators.required, Validators.maxLength(50)]],
       registrationBank: this.fb.group({
-        code: [null, [Validators.required]],
+        code: [null],
         name: null
       }),
 
@@ -142,41 +151,31 @@ export class ContractorRegsitrationComponent implements OnInit {
         code: null,
         name: null
       }),
-      applyingFor: [null, [Validators.required]],
+      applyingFor: [null],
+      partnerShip: [null],
 
       whichDepartment: [null],
-      postRegistrationDetails: [null],
+      pastRegistrationDetails: [null],
       engineerDetails: [null],
       incomeTaxDetails: [null],
       anyAnotherOrganisationShareholder: [null],
-      registrationDateandRenewdate: [null],
-      solvencyAmountandBankDetails: [null],
-      oldRegistrationDateandNumber: [null],
+      registrationDateOrReNewDate: [null],
+      solvencyAmountAndBankDetail: [null],
+      oldRegistrationNumber: [null],
+      oldRegistrationDate: [null],
       notCompletedReasonDetails: [null],
       amountRemainsInCorporationOrOrganization: [null],
-      partnersList: this.fb.group({
-        ownerType: [null],
-        OwnerName: [null],
-        ownerDetail: [null],
-      }),
+      partnerDetails: this.partnerShipDetailList,
       contractorWorkDetails: null,
       // serviceCode:'Contractor-Registration',
-      EmployeeDetails: this.fb.group({
-        employeeName: [null],
-        employeeQualification: [null],
-        employeeStatus: [null],
-        employeeExperiernceyears: [null],
-        employeestartWorkingProject: [null],
-        projectStartDate: [null],
-      }),
-      businessName: [null, [Validators.required, Validators.maxLength(50)]],
-      businessMobileNo: [null, [Validators.required]],
+      firmEmployeeDetails: this.firmEmployeeDetailList,
+
       registrationDetails: [null],
-      threeYearDetaols: [null],
-      WorkShopplantRate: [null],
+      threeYearDetails: [null],
+      workShopPlantRate: [null],
       ownerAccountDepartment: [null],
-      turnoverDetails: [null],
-      anotherorganisation: [null],
+      turnOverDetails: [null],
+      anotherOrganisation: [null],
       factoryAddress: this.fb.group(this.officeAddrComponent.addressControls()),
       registeredAddress: this.fb.group(this.resAddrComponent.addressControls()),
       businessAddress: this.fb.group(this.bussinessAddressComponent.addressControls()),
@@ -185,7 +184,47 @@ export class ContractorRegsitrationComponent implements OnInit {
 
     });
 
+  //  this.firmEmployeeDetailList.push(this.createFirmEmployeeDetail());
+   // this.partnerShipDetailList.push(this.createPartnerShipDetail());
+  }
 
+  addRowPartnweShipDetail() {
+    this.partnerShipDetailList.push(this.createPartnerShipDetail());
+  }
+
+
+  createPartnerShipDetail(): FormGroup {
+    return this.fb.group({
+      ownerType: this.fb.group({
+        code: null,
+        name: null
+      }),
+      ownerName: [null],
+      ownerDetail: [null],
+    });
+  }
+
+  onRemoveRowOwnerShip(rowIndex: number) {
+    this.partnerShipDetailList.removeAt(rowIndex);
+  }
+
+  addRowFirmDetail() {
+    this.firmEmployeeDetailList.push(this.createFirmEmployeeDetail());
+  }
+
+  onRemoveRowFirmDetail(rowIndex: number) {
+    this.firmEmployeeDetailList.removeAt(rowIndex);
+  }
+
+  createFirmEmployeeDetail(): FormGroup {
+    return this.fb.group({
+      employeeName: [null],
+      employeeQualification: [null],
+      employeeStatus: [null],
+      employeeExperienceYears: [null],
+      joiningDate: [null],
+      projectStartDate: [null],
+    });
   }
 
   saveRecord(row: any) {
@@ -222,9 +261,18 @@ export class ContractorRegsitrationComponent implements OnInit {
     });
   }
 
+  onDateChange(fieldName, date) {
+    console.log("sdfgdg " + this.contractorRegistrationForm.get(fieldName).value + " " + fieldName + " " + date);
+    this.contractorRegistrationForm.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
+  }
+
+  onDateChangePurchaseDate(control, date, obj) {
+    obj.get(control).setValue(moment(date).format("YYYY-MM-DD"));
+  }
+
   locationChange(event) {
     this.engineer.getFeeFromLocationn(event.value).subscribe(res => {
-      this.contractorRegistrationForm.get('registrationAmount').setValue(res.fee);
+      //this.contractorRegistrationForm.get('registrationAmount').setValue(res.fee);
     })
     this.contractorRegistrationForm.get('locationOfContractorWorks').get('code').setValue(event.value);
   }
@@ -267,28 +315,6 @@ export class ContractorRegsitrationComponent implements OnInit {
     this.tabIndex = evt;
   }
 
-  onRemoveRowOwnerShip(rowIndex: number) {
-    this.ownerShipDetail.removeAt(rowIndex);
-  }
-
-  createFirmEmployeeDetail(): FormGroup {
-    return this.fb.group({
-      employeeName: null,
-      employeeQualification: null,
-      employeeStatus: null,
-      experience: null,
-      joiningDate: null,
-      projectStartDate: null
-    });
-  }
-
-  addRowFirmDetail() {
-    this.firmEmployeeDetail.push(this.createFirmEmployeeDetail());
-  }
-
-  onRemoveRowFirmDetail(rowIndex: number) {
-    this.firmEmployeeDetail.removeAt(rowIndex);
-  }
 
   mandatoryFileCheck(serviceFormId, attachmentList) {
     return new Promise<any>((resolve, reject) => {
@@ -320,6 +346,11 @@ export class ContractorRegsitrationComponent implements OnInit {
   }
 
   onSubmit() {
+    this.contractorRegistrationForm.get('anyAnotherOrganisationShareholder').setValue(true);
+    this.contractorRegistrationForm.get('partnerShip').setValue(true);
+    this.contractorRegistrationForm.get('ownerAccountDepartment').setValue(true);
+    this.contractorRegistrationForm.get('anotherOrganisation').setValue(true);
+
     if (this.contractorRegistrationForm.invalid) {
       //this.commonService.prrintInvalidForm(this.affordableHousingForm);
       let count = this.affordableHousingConfiguration.getAllErrors(this.contractorRegistrationForm);
@@ -397,46 +428,97 @@ export class ContractorRegsitrationComponent implements OnInit {
       "lastName": "Dangi",
       "mobileNumber": "8962749074",
       "emailId": "chetan.porwal@nascentinfo.com",
+      "panNo": "DFVFD1212D",
+      "gstNo": "24ANCPP4357N2ZL",
       "ownerFirstName": "gkjghjk",
-      "ownerMiddleNmae": " jhfj",
+      "ownerMiddleName": " jhfj",
       "ownerLastName": "fffff",
-      "ownerMobileNumber": "88888888888",
+      "ownerMobileNumber": "8888888888",
       "ownereEmailId": "jhgjh@gmail.com",
       "bankAccountNo": "123456789098",
       "bankName": "sbi",
       "branchName": "shujalpur",
       "whichDepartment": "gkjkjk",
-      "postRegistrationDetails": "gjkkjgljk",
+      "pastRegistrationDetails": "gjkkjgljk",
       "engineerDetails": "hjkgj",
       "incomeTaxDetails": "jhfjh",
-      "anyAnotherOrganisationShareholder": "jhfjhf",
-      "registrationDateandRenewdate": "hjfkj",
-      "solvencyAmountandBankDetails": "jhfgjk",
-      "oldRegistrationDateandNumber": "hjfgjk",
+      // "anyAnotherOrganisationShareholder": "jhfjhf",
+      "registrationDateOrReNewDate": "26/12/2022",
+      "solvencyAmountAndBankDetail": "jhfgjk",
+      "oldRegistrationDate": "2022-12-01",
+      "oldRegistrationNumber": "hjfgjk",
       "notCompletedReasonDetails": "jhgkkk",
       "amountRemainsInCorporationOrOrganization": "jhgkkjhfgjh",
-      "partnersList": {
-        "ownerType": "jklhjklh",
-        "OwnerName": "lkhljkh",
-        "ownerDetail": "jkg",
+      "factoryAddress": {
+        "addressType": "FIRM_ADDRESS",
+        "buildingName": "41",
+        "streetName": "Sayaji Rao",
+        "landmark": "VMC",
+        "area": "Akota",
+        "state": "GUJARAT",
+        "district": null,
+        "city": "Vadodara",
+        "country": "INDIA",
+        "pincode": "435345",
+        "buildingNameGuj": "દ્ફ્ગ્દ્ફ્ગ્ફ્દ્ગ",
+        "streetNameGuj": null,
+        "landmarkGuj": null,
+        "areaGuj": "ફ્દ્ગ્દ્ફ્ગ્ફ્દ્ગ",
+        "stateGuj": null,
+        "districtGuj": null,
+        "cityGuj": null,
+        "countryGuj": null
       },
-      "EmployeeDetails": {
-        "employeeName": "Arvind",
-        "employeeQualification": "MCA",
-        "employeeStatus": "gjkhjg",
-        "employeeExperiernceyears": "jhgkjhgk",
-        "employeestartWorkingProject": "jkgjkgjhg",
-        "projectStartDate": "gjkgk",
+      "registeredAddress": {
+        "addressType": "RESIDENCE_ADDRESS",
+        "buildingName": "42",
+        "streetName": "Sayaji Rao",
+        "landmark": "VMC",
+        "area": "Akota",
+        "state": "GUJARAT",
+        "district": null,
+        "city": "Vadodara",
+        "country": "INDIA",
+        "pincode": "435345",
+        "buildingNameGuj": "દ્ફ્ગ્દ્ફ્ગ્ફ્દ્ગ",
+        "streetNameGuj": null,
+        "landmarkGuj": null,
+        "areaGuj": "ફ્દ્ગ્દ્ફ્ગ્ફ્દ્ગ",
+        "stateGuj": null,
+        "districtGuj": null,
+        "cityGuj": null,
+        "countryGuj": null
+      },
+      "businessAddress": {
+        "addressType": "RESIDENCE_ADDRESS",
+        "buildingName": "43",
+        "streetName": "Sayaji Rao",
+        "landmark": "VMC",
+        "area": "Akota",
+        "state": "GUJARAT",
+        "district": null,
+        "city": "Vadodara",
+        "country": "INDIA",
+        "pincode": "435345",
+        "buildingNameGuj": "દ્ફ્ગ્દ્ફ્ગ્ફ્દ્ગ",
+        "streetNameGuj": null,
+        "landmarkGuj": null,
+        "areaGuj": "ફ્દ્ગ્દ્ફ્ગ્ફ્દ્ગ",
+        "stateGuj": null,
+        "districtGuj": null,
+        "cityGuj": null,
+        "countryGuj": null
       },
       "contractorWorkDetails": "utgjhgkh",
       "businessName": "contractor",
+      "businessMobileNo": "8962749074",
       "OwnwemobileNumber": "6265661272",
       "registrationDetails": "kjgjklgl",
-      "threeYearDetaols": "jkgjk",
-      "WorkShopplantRate": "gjkkjgjk",
-      "ownerAccountDepartment": "ghkgjkj",
-      "turnoverDetails": "gkjjk",
-      "anotherorganisation": "jhfgjhfk",
+      "threeYearDetails": "jkgjk",
+      "workShopPlantRate": "gjkkjgjk",
+      // "ownerAccountDepartment": "ghkgjkj",
+      "turnOverDetails": "gkjjk",
+      // "anotherOrganisation": "jhfgjhfk",
     }
     this.contractorRegistrationForm.patchValue(obj);
   }

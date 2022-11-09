@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { AffodableService } from '../services/AffordableService';
+import { Router, ActivatedRoute, RouterLinkWithHref } from '@angular/router';
+import { ManageRoutes } from 'src/app/config/routes-conf';
 
 @Component({
   selector: 'app-my-afh-status',
@@ -10,10 +12,12 @@ import { AffodableService } from '../services/AffordableService';
 export class MyAfhStatusComponent implements OnInit {
 
   constructor(private toster: ToastrService,
+    private router: Router,
     private affodableService: AffodableService) { }
 
   applicationStatus: any;
-
+	actionBarKey: string = 'adminActionBar';
+  tabIndex: number = 0;
   isFormApproved: boolean = true;
   isShortListed: boolean = true;
   isFinalDraw: boolean = true;
@@ -58,6 +62,11 @@ export class MyAfhStatusComponent implements OnInit {
           this.toster.error(err.error.error_description);
         })
     }
+  }
+
+  onCitizen()
+  {
+		this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
   }
 
 

@@ -198,49 +198,49 @@ export class VendorRegistrationComponent implements OnInit {
         this.vendorRegistrationForm.get('canEdit').setValue(false);
       }
 
-      // res.vendorNameDetails.forEach(app => {
-      //   (<FormArray>this.vendorRegistrationForm.get('vendorNameDetails')).push(this.createFormGroupVendor('vendorNameDetails', app));
-      // });
+      res.vendorNameDetails.forEach(app => {
+        (<FormArray>this.vendorRegistrationForm.get('vendorNameDetails')).push(this.createFormGroupVendor('vendorNameDetails', app));
+      });
       this.isPreviewVendorNameDetail = true;
 
-      // res.vendorNameDetails.forEach(app => {
-      //   (<FormArray>this.vendorRegistrationForm.get('listOfItemMaterial')).push(this.createFormGroupVendor('listOfItemMaterial', app));
-      // });
+      res.listOfItemMaterial.forEach(app => {
+        (<FormArray>this.vendorRegistrationForm.get('listOfItemMaterial')).push(this.createFormGroupVendor('listOfItemMaterial', app));
+      });
       this.isListOfItemMaterial = true;
 
-      // res.vendorNameDetails.forEach(app => {
-      //   (<FormArray>this.vendorRegistrationForm.get('vendorNameHoldingDetails')).push(this.createFormGroupVendor('vendorNameHoldingDetails', app));
-      // });
+      res.vendorNameHoldingDetails.forEach(app => {
+        (<FormArray>this.vendorRegistrationForm.get('vendorNameHoldingDetails')).push(this.createFormGroupVendor('vendorNameHoldingDetails', app));
+      });
       this.isVendorNameHoldingDetails = true;
 
-      // res.vendorNameDetails.forEach(app => {
-      //   (<FormArray>this.vendorRegistrationForm.get('vendorNameAuthorizedDetails')).push(this.createFormGroupVendor('vendorNameAuthorizedDetails', app));
-      // });
+      res.vendorNameAuthorizedDetails.forEach(app => {
+        (<FormArray>this.vendorRegistrationForm.get('vendorNameAuthorizedDetails')).push(this.createFormGroupVendor('vendorNameAuthorizedDetails', app));
+      });
       this.isVendorNameAuthorizedDetails = true;
 
-      // res.vendorNameDetails.forEach(app => {
-      //   (<FormArray>this.vendorRegistrationForm.get('vendorNameLastYearDetails')).push(this.createFormGroupVendor('vendorNameLastYearDetails', app));
-      // });
+      res.vendorNameLastYearDetails.forEach(app => {
+        (<FormArray>this.vendorRegistrationForm.get('vendorNameLastYearDetails')).push(this.createFormGroupVendor('vendorNameLastYearDetails', app));
+      });
       this.isVendorNameLastYearDetails = true;
 
-      // res.vendorNameDetails.forEach(app => {
-      //   (<FormArray>this.vendorRegistrationForm.get('supplierOrderDetails')).push(this.createFormGroupVendor('supplierOrderDetails', app));
-      // });
+      res.supplierOrderDetails.forEach(app => {
+        (<FormArray>this.vendorRegistrationForm.get('supplierOrderDetails')).push(this.createFormGroupVendor('supplierOrderDetails', app));
+      });
       this.isSupplierOrderDetails = true;
 
-      // res.vendorNameDetails.forEach(app => {
-      //   (<FormArray>this.vendorRegistrationForm.get('qualificationDetails')).push(this.createFormGroupVendor('qualificationDetails', app));
-      // });
+      res.qualificationDetails.forEach(app => {
+        (<FormArray>this.vendorRegistrationForm.get('qualificationDetails')).push(this.createFormGroupVendor('qualificationDetails', app));
+      });
       this.isQualificationDetails = true;
 
-      // res.vendorNameDetails.forEach(app => {
-      //   (<FormArray>this.vendorRegistrationForm.get('installedMachineCapacities')).push(this.createFormGroupVendor('installedMachineCapacities', app));
-      // });
+      res.installedMachineCapacities.forEach(app => {
+        (<FormArray>this.vendorRegistrationForm.get('installedMachineCapacities')).push(this.createFormGroupVendor('installedMachineCapacities', app));
+      });
       this.isInstalledMachineCapacities = true;
 
-      // res.vendorNameDetails.forEach(app => {
-      //   (<FormArray>this.vendorRegistrationForm.get('registeredGovtDetail')).push(this.createFormGroupVendor('registeredGovtDetail', app));
-      // });
+      res.registeredGovtDetail.forEach(app => {
+        (<FormArray>this.vendorRegistrationForm.get('registeredGovtDetail')).push(this.createFormGroupVendor('registeredGovtDetail', app));
+      });
       this.isRegisteredGovtDetail = true;
 
 
@@ -515,16 +515,16 @@ export class VendorRegistrationComponent implements OnInit {
 
     });
 
-    this.academicQualifications.push(this.createEducationQualification());
-    this.academicQualificationAndExperience.push(this.createEducationQualification());
-    this.vendorNameArray.push(this.createVendorNameArray());
-    this.listOfItemMaterialSupplier.push(this.createItemMaterialSupplier());
-    this.vendorNameLastYear.push(this.createItemMaterialSupplierLastThreeYear());
-    this.vendorNameAuthorized.push(this.createItemAuthorized());
-    this.vendorNameholding.push(this.createItemHolding());
-    this.vendorDetailsOfOrderIndicationQuantity.push(this.createDetailsOfIndicatingQuantity());
-    this.vendorMachinesCapacities.push(this.createDetailsOfMahineInstalledCapacities());
-    this.vendorRegisteredGovtDetail.push(this.createRegisteredGovtDetail());
+    // this.academicQualifications.push(this.createEducationQualification());
+    // this.academicQualificationAndExperience.push(this.createEducationQualification());
+    // this.vendorNameArray.push(this.createVendorNameArray());
+    // this.listOfItemMaterialSupplier.push(this.createItemMaterialSupplier());
+    // this.vendorNameLastYear.push(this.createItemMaterialSupplierLastThreeYear());
+    // this.vendorNameAuthorized.push(this.createItemAuthorized());
+    // this.vendorNameholding.push(this.createItemHolding());
+    // this.vendorDetailsOfOrderIndicationQuantity.push(this.createDetailsOfIndicatingQuantity());
+    // this.vendorMachinesCapacities.push(this.createDetailsOfMahineInstalledCapacities());
+    // this.vendorRegisteredGovtDetail.push(this.createRegisteredGovtDetail());
   }
 
   onTabChange(evt) {
