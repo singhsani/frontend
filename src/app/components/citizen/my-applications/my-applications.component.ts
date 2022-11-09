@@ -456,7 +456,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}
 		else if ((row.fileStatus == 'SUBMITTED' || row.fileStatus == 'APPROVED' || row.fileStatus == 'PAYMENT_RECEIVED' || row.fileStatus == 'PAYMENT' || row.fileStatus == 'SCRUTINY')
 			&& preViewDisplayServiceTypeArr.indexOf(row.serviceType) > -1) {
-			return true
+			return false;
+		}
+		else if (row.serviceType == 'APL_LICENCE' && row.fileStatus == 'PAYMENT_RECEIVED') {
+			return false;
 		}
 	}
 	/**
