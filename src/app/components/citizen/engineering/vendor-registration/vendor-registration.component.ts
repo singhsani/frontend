@@ -193,7 +193,8 @@ export class VendorRegistrationComponent implements OnInit {
       this.locationChange(res.applyingFor);
 
       //this.showButtons = false;
-      if (res.formStatus == 'PAYMENT_RECEIVED' || res.formStatus == 'SUBMITTED') {
+      
+      if (res.formStatus == 'PAYMENT_RECEIVED' || res.formStatus == 'SUBMITTED' || res.formStatus == 'DRAFT') {
         this.vendorRegistrationForm.disable();
         this.vendorRegistrationForm.get('canEdit').setValue(false);
       }
