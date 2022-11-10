@@ -458,7 +458,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			&& preViewDisplayServiceTypeArr.indexOf(row.serviceType) > -1) {
 			return false;
 		}
-		else if (row.serviceType == 'APL_LICENCE' && row.fileStatus == 'PAYMENT_RECEIVED') {
+		else if (row.serviceType == 'APL_LICENCE' && row.fileStatus == 'PAYMENT_RECEIVED' || row.fileStatus == 'SCRUTIN') {
 			return false;
 		}
 	}
