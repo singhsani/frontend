@@ -9,7 +9,7 @@
 			<div class="row">
 
 				<mat-form-field class="col-4">
-					<input matInput type="text" formControlName="marriageRegNumber"
+					<input matInput type="text" formControlName="marriageRegNumber" required
 						placeholder="{{ 'marriage_reg_number' | translate:translateKey }}">
 					<control-messages [control]="marriageSearchForm.get('marriageRegNumber')"></control-messages>
 				</mat-form-field>
@@ -188,7 +188,7 @@
 						 (click)="getCertificate()">{{'certificate' | translate:translateKey}}</button>
 						</div>
 						</ng-container>
-	
+
 					<!-- <ng-container>
 						<div class= "col-md-12">
 						<button type="button" mat-raised-button color="primary" class="pull-right"
