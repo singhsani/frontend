@@ -593,6 +593,7 @@ export class VendorRegistrationComponent implements OnInit {
     this.vendorTypeFirm = this.vendorTypeFirm.filter(o => o.code === event.value);
 
     if (event.value == 'PROPRIETORSHIP') {
+      this.vendorNameArray.push(this.createVendorNameArray());
       this.vendorArrayNameButtons = true;
     } else {
       this.vendorArrayNameButtons = false;
