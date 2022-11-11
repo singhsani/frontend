@@ -433,7 +433,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		const preViewDisplayServiceTypeArr = ['FS_REVISED_FIRE_NOC', 'FS_RENEWAL_NOC', 'FS_TEMP_STRUCT_NOC', 'FS_TEMP_FIREWORKSHOP_NOC', 'FS_FINAL_FIRE_NOC', 'FS_PROVISIONAL_HOSPITAL_NOC', 'FS_PROVISIONAL_NOC',
 			'FS_FIRE_CERTIFICATE', 'FS_WATER_TANKER', 'FS_FINAL_HOSPITAL_NOC', 'FS_ELECTRIC_CONNECTION_NOC', 'FS_NAVARATRI_NOC', 'FS_GAS_CONNECTION_NOC', 'CREMATION_REGISTRATION']
 
-
 		if ((row.serviceType === 'SHOP_ESTAB_APPLICATION' && row.fileStatus === 'APPROVED') || (row.serviceType === 'SHOP_ESTAB_APPLICATION' && row.fileStatus === 'REJECTED')
 			|| (row.serviceType === 'SHOP_ESTAB_TRANSFER' && row.fileStatus === 'APPROVED') || (row.serviceType === 'SHOP_ESTAB_TRANSFER' && row.fileStatus === 'REJECTED')) {
 			return true;
@@ -451,15 +450,20 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.fileStatus == 'APPROVED') {
 			return false;
 		}
-		else if (!row.canEdit) {
-			return true;
-		}
 		else if ((row.fileStatus == 'SUBMITTED' || row.fileStatus == 'APPROVED' || row.fileStatus == 'PAYMENT_RECEIVED' || row.fileStatus == 'PAYMENT' || row.fileStatus == 'SCRUTINY')
 			&& preViewDisplayServiceTypeArr.indexOf(row.serviceType) > -1) {
 			return false;
 		}
 		else if (row.serviceType == 'APL_LICENCE' && row.fileStatus == 'PAYMENT_RECEIVED' || row.fileStatus == 'SCRUTIN') {
 			return false;
+		}
+
+		else if (row.serviceType == 'VENDOR_REG' && row.fileStatus == 'PAYMENT_RECEIVED') {
+			return false;
+		}
+
+		else if (!row.canEdit) {
+			return true;
 		}
 	}
 	/**
@@ -504,10 +508,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return false;
 		}
 
-		else if (row.serviceType == 'MEAT_FISH_LICENCE'  || row.fileStatus == 'REJECTED' || row.serviceType =="MEAT_FISH_TRANSFER" || row.serviceType =="MEAT_FISH_RENEWAL") {
+		else if (row.serviceType == 'MEAT_FISH_LICENCE' || row.fileStatus == 'REJECTED' || row.serviceType == "MEAT_FISH_TRANSFER" || row.serviceType == "MEAT_FISH_RENEWAL") {
 			return false;
 		}
-		
+
 		else if (row.fileStatus != 'DRAFT') {
 			return true;
 		}
@@ -861,7 +865,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}
 	}
 	// For Hide Admin side in Citizen Service process payment option
-	 
+
 	// isShopHideButton(row) {
 
 	// 	if ((this.commonService.fromAdmin() && row.serviceDetail.code == 'SHOP-ESTAB-LIC-NEW') || (this.commonService.fromAdmin() && row.serviceDetail.code == 'SHOP-ESTAB-TRANSFER')) {
