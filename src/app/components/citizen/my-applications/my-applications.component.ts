@@ -18,6 +18,7 @@ import { Location } from '@angular/common';
 import { downloadFile } from 'src/app/vmcshared/downloadFile';
 import { PaymentService } from 'src/app/vmcshared/component/payment/payment.service'
 import { PaymentNewService } from 'src/app/shared/services/paymentNew.service';
+import { e } from '@angular/core/src/render3';
 
 @Component({
 	selector: 'app-my-applications',
@@ -454,7 +455,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			&& preViewDisplayServiceTypeArr.indexOf(row.serviceType) > -1) {
 			return false;
 		}
-		else if (row.serviceType == 'APL_LICENCE' && row.fileStatus == 'PAYMENT_RECEIVED' || row.fileStatus == 'SCRUTIN') {
+		else if (row.serviceType == 'APL_LICENCE' && row.fileStatus == 'PAYMENT_RECEIVED' || row.fileStatus == 'SCRUTINY') {
 			return false;
 		}
 
@@ -507,7 +508,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			|| row.serviceType == 'POND_CANCELLATION' || row.serviceType == 'POND_DUPLICATION') {
 			return false;
 		}
-
+	    //    else if(row.fileStatus = 'SUBMITTED' && row.serviceType == 'DUPLICATE_MARRIAGE_REGISTRATION'){
+		// 	return false;
+		// }
+       
 		else if (row.serviceType == 'MEAT_FISH_LICENCE' || row.fileStatus == 'REJECTED' || row.serviceType == "MEAT_FISH_TRANSFER" || row.serviceType == "MEAT_FISH_RENEWAL") {
 			return false;
 		}
@@ -527,6 +531,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		if (row.fileStatus == 'SUBMITTED' && printReceiptServiceTypeArr.indexOf(row.serviceType) > 0) {
 			return false
 		}
+		// if(row.fileStatus == 'PAYMENT' && row.serviceType == 'MARRIAGE_REGISTRATION')
+		// {
+		// 	return false;
+		// }
 		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'FS_WATER_TANKER') {
 			return true;
 		}
@@ -570,9 +578,12 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return true;
 		}
 
-		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'MARRIAGE_REGISTRATION') {
-			return true;
-		}
+		// if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'MARRIAGE_REGISTRATION') {
+		// 	return true;
+		// }
+		// if(row.fileStatus = 'SUBMITTED' && row.serviceType == 'DUPLICATE_MARRIAGE_REGISTRATION'){
+		// 	return true;
+		// }
 		if (row.fileStatus === 'REJECTED') {
 			return false;
 		}
@@ -624,7 +635,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	}
 	isPrintReceiptPayment(row) {
 		if (row.fileStatus == 'PAYMENT' && row.serviceType == 'MARRIAGE_REGISTRATION') {
-			return false;
+			return true;
 		}
 		else if (row.fileStatus == 'PAYMENT' && row.serviceType == 'SHOP_ESTAB_APPLICATION') {
 			return false;
