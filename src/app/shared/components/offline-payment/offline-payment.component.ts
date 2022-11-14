@@ -64,7 +64,6 @@ export class OfflinePaymentComponent implements OnInit, OnChanges {
 	 */
 	ngOnInit() {
 		this.wordAmount = this.commonService.getToWords(this.payData.amount);
-		debugger;
 		if (this.payData.payableServiceType == "SHOP-ESTAB-LIC-NEW") {
 			this.offlinePaymentService.getShopLookups().subscribe(lookupsData => {
 				if (lookupsData) {
