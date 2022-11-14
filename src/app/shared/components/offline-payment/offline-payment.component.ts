@@ -64,6 +64,7 @@ export class OfflinePaymentComponent implements OnInit, OnChanges {
 	 */
 	ngOnInit() {
 		this.wordAmount = this.commonService.getToWords(this.payData.amount);
+		debugger;
 		if (this.payData.payableServiceType == "SHOP-ESTAB-LIC-NEW") {
 			this.offlinePaymentService.getShopLookups().subscribe(lookupsData => {
 				if (lookupsData) {
@@ -71,6 +72,14 @@ export class OfflinePaymentComponent implements OnInit, OnChanges {
 					this.bankList = lookupsData.BANK_NAME_LIST;
 				}
 			})
+		}
+		else if(this.payData.payableServiceType == "HEL-MR"){
+		    this.offlinePaymentService.getLookupsForMarriage().subscribe(lookupsData => {
+      				if (lookupsData) {
+      					this.payModes = lookupsData.PAY_MODE;
+      					this.bankList = lookupsData.BANK_NAME_LIST;
+      				}
+      			})
 		}
 		else {
 			this.offlinePaymentService.getLookups().subscribe(lookpsData => {
@@ -180,7 +189,7 @@ export class OfflinePaymentComponent implements OnInit, OnChanges {
 	}
 
 	GetCloudBasedTxnStatus(payData) {
-		
+
 		if (this.responseObject == null) {
 			this.commonService.openAlert("Warning", "Please complete Transaction", "warning");
 			return false;
@@ -220,7 +229,7 @@ export class OfflinePaymentComponent implements OnInit, OnChanges {
 	}
 
 	generateNumber() {
-		
+
 		if (this.paymentTYpe == null) {
 			this.commonService.openAlert("Warning", "Please Select Income Type", "warning");
 			return false;
@@ -231,7 +240,7 @@ export class OfflinePaymentComponent implements OnInit, OnChanges {
 		}
 
 		let obj = null;
-		
+
 		if (this.paymentTYpe == 'Deposit') {
 			obj = {
 				'TransactionNumber': this.payData.refNumber,
@@ -313,7 +322,7 @@ export class OfflinePaymentComponent implements OnInit, OnChanges {
 		if(this.paymentModeSelect == 'CASH'){
 			this.dialogRef.close(this.paymentsForm.value);
 		}
-		
+
 		if (this.paymentsForm.get('chequeDate').value) {
 			this.paymentsForm.get('chequeDate').setValue(moment(this.paymentsForm.get('chequeDate').value).format("YYYY-MM-DD"));
 			this.dialogRef.close(this.paymentsForm.value);
