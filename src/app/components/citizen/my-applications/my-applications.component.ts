@@ -508,9 +508,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			|| row.serviceType == 'POND_CANCELLATION' || row.serviceType == 'POND_DUPLICATION') {
 			return false;
 		}
-	    //    else if(row.fileStatus = 'SUBMITTED' && row.serviceType == 'DUPLICATE_MARRIAGE_REGISTRATION'){
-		// 	return false;
-		// }
+	       else if(row.fileStatus = 'SUBMITTED' && row.serviceType == 'DUPLICATE_MARRIAGE_REGISTRATION'){
+			return false;
+		}
        
 		else if (row.serviceType == 'MEAT_FISH_LICENCE' || row.fileStatus == 'REJECTED' || row.serviceType == "MEAT_FISH_TRANSFER" || row.serviceType == "MEAT_FISH_RENEWAL") {
 			return false;
@@ -531,10 +531,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		if (row.fileStatus == 'SUBMITTED' && printReceiptServiceTypeArr.indexOf(row.serviceType) > 0) {
 			return false
 		}
-		// if(row.fileStatus == 'PAYMENT' && row.serviceType == 'MARRIAGE_REGISTRATION')
-		// {
-		// 	return false;
-		// }
+		if(row.fileStatus == 'PAYMENT' && row.serviceType == 'MARRIAGE_REGISTRATION')
+		{
+			return false;
+		}
 		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'FS_WATER_TANKER') {
 			return true;
 		}
@@ -578,12 +578,12 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return true;
 		}
 
-		// if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'MARRIAGE_REGISTRATION') {
-		// 	return true;
-		// }
-		// if(row.fileStatus = 'SUBMITTED' && row.serviceType == 'DUPLICATE_MARRIAGE_REGISTRATION'){
-		// 	return true;
-		// }
+		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'MARRIAGE_REGISTRATION') {
+			return true;
+		}
+		if(row.fileStatus = 'SUBMITTED' && row.serviceType == 'DUPLICATE_MARRIAGE_REGISTRATION'){
+			return true;
+		}
 		if (row.fileStatus === 'REJECTED') {
 			return false;
 		}
