@@ -376,6 +376,10 @@ export class GatewayResponseComponent implements OnInit {
 
 			this.redirectToMyApplication(this.dispData.myApplicationUrl, undefined, undefined, undefined);
 		}
+		else if(this.dispData.payableServiceType == "HEL-MR")
+		{
+			this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
+		}
 		else {
 			setTimeout(() => {
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
