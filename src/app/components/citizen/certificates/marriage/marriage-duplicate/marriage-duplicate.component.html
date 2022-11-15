@@ -28,7 +28,7 @@
 					<input matInput appDate [min]="marriageSearchForm.get('marriageDate').value" [max]="disablefutureDate"
 						[matDatepicker]="marriageRegDatepicker" formControlName="marriageRegDate"
 						(dateChange)="dateFormate($event.value,'marriageRegDate')"
-						placeholder="{{ 'marriage_reg_date' | translate:translateKey }}">
+						placeholder="{{ 'marriage_reg_date' | translate:translateKey }}" required>
 					<mat-datepicker-toggle matSuffix [for]="marriageRegDatepicker"></mat-datepicker-toggle>
 					<mat-datepicker #marriageRegDatepicker touchUi="true" touchUi="true"></mat-datepicker>
 					<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
