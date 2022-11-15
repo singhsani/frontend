@@ -627,7 +627,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	}
 	isPrintReceiptPayment(row) {
 		if (row.fileStatus == 'PAYMENT' && row.serviceType == 'MARRIAGE_REGISTRATION') {
-			return false;
+			return true;
 		}
 		else if (row.fileStatus == 'PAYMENT' && row.serviceType == 'SHOP_ESTAB_APPLICATION') {
 			return false;
