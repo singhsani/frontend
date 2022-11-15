@@ -509,10 +509,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			|| row.serviceType == 'POND_CANCELLATION' || row.serviceType == 'POND_DUPLICATION') {
 			return false;
 		}
-	       else if(row.fileStatus = 'SUBMITTED' && row.serviceType == 'DUPLICATE_MARRIAGE_REGISTRATION'){
+		else if (row.fileStatus = 'SUBMITTED' && row.serviceType == 'DUPLICATE_MARRIAGE_REGISTRATION') {
 			return false;
 		}
-       
+
 		else if (row.serviceType == 'MEAT_FISH_LICENCE' || row.fileStatus == 'REJECTED' || row.serviceType == "MEAT_FISH_TRANSFER" || row.serviceType == "MEAT_FISH_RENEWAL") {
 			return false;
 		}
@@ -532,8 +532,11 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		if (row.fileStatus == 'SUBMITTED' && printReceiptServiceTypeArr.indexOf(row.serviceType) > 0) {
 			return false
 		}
-		if(row.fileStatus == 'PAYMENT' && row.serviceType == 'MARRIAGE_REGISTRATION')
-		{
+		if (row.fileStatus == 'PAYMENT' && row.serviceType == 'MARRIAGE_REGISTRATION'
+			|| row.serviceType == 'APL_LICENCE' || row.serviceType == 'APL_RENEWAL' || row.serviceType == 'POND_TRANSFER'
+			|| row.serviceType == 'POND_DUPLICATION' || row.serviceType == 'VENDOR_REG'
+			|| row.serviceType == 'MEAT_FISH_LICENCE' || row.serviceType == 'MEAT_FISH_TRANSFER'
+			|| row.serviceType == 'MEAT_FISH_RENEWAL' || row.serviceType == 'MEAT_FISH_DUPLICATE') {
 			return false;
 		}
 		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'FS_WATER_TANKER') {
@@ -582,7 +585,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'MARRIAGE_REGISTRATION') {
 			return true;
 		}
-		if(row.fileStatus = 'SUBMITTED' && row.serviceType == 'DUPLICATE_MARRIAGE_REGISTRATION'){
+		if (row.fileStatus = 'SUBMITTED' && row.serviceType == 'DUPLICATE_MARRIAGE_REGISTRATION') {
 			return true;
 		}
 		if (row.fileStatus === 'REJECTED') {
