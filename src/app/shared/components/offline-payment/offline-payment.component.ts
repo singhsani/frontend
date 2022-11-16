@@ -45,6 +45,8 @@ export class OfflinePaymentComponent implements OnInit, OnChanges {
 	paymentTYpe: any = null;
 
 	wordAmount: any;
+	minDate = moment().subtract(1, 'months').format('YYYY-MM-DD');
+  maxDates = moment().add(3, 'months').format('YYYY-MM-DD');
 
 	maxDate = new Date();
 	constructor(
