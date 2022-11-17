@@ -49,7 +49,7 @@
 					<control-messages [control]="paymentsForm.get('accountHolderName')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput autocomplete="off" appDate [min]="maxDate" [matDatepicker]="chequeDatePicker" placeholder="Cheque/DD Date"
+					<input matInput autocomplete="off" appDate [min]="minDate" [max]="maxDates"  [matDatepicker]="chequeDatePicker" placeholder="Cheque/DD Date"
 						formControlName="chequeDate" (click)="chequeDatePicker.open()">
 					<mat-datepicker-toggle matSuffix [for]="chequeDatePicker"></mat-datepicker-toggle>
 					<mat-datepicker touchUi="true" #chequeDatePicker></mat-datepicker>
@@ -72,23 +72,23 @@
 						<control-messages [control]="paymentsForm.get('branchName')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput maxlength="6" placeholder="Cheque/DD Number" OnlyNumber formControlName="chequeNumber">
+					<input matInput OnlyNumber maxlength="6" placeholder="Cheque/DD Number" formControlName="chequeNumber">
 					<control-messages [control]="paymentsForm.get('chequeNumber')"></control-messages>
 				</mat-form-field>
 				<!--<mat-form-field class="col-md-4">-->
 				<!--<input matInput placeholder="Account Number" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountNumber">-->
 				<!--</mat-form-field>-->
 				<mat-form-field class="col-md-4">
-					<input matInput minlength="9" maxlength="16" placeholder="Account Number" OnlyNumber formControlName="accountNumber">
+					<input matInput OnlyNumber maxlength="16" minlength="9" placeholder="Account Number" formControlName="accountNumber">
 					<control-messages [control]="paymentsForm.get('accountNumber')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput maxlength="40" placeholder="Account Holder Name" appValidationFields
+					<input matInput minlength="2" maxlength="50" placeholder="Account Holder Name" appValidationFields
 						[validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName">
 						<control-messages [control]="paymentsForm.get('accountHolderName')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput autocomplete="off" appDate [min]="maxDate" [matDatepicker]="chequeDatePicker" placeholder="Cheque/DD Date"
+					<input matInput autocomplete="off" appDate [min]="minDate" [max]="maxDates" readonly="readonly" [matDatepicker]="chequeDatePicker" placeholder="Cheque/DD Date"
 						formControlName="chequeDate" (click)="chequeDatePicker.open()">
 					<mat-datepicker-toggle matSuffix [for]="chequeDatePicker"></mat-datepicker-toggle>
 					<mat-datepicker touchUi="true" #chequeDatePicker></mat-datepicker>
