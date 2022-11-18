@@ -385,6 +385,7 @@ export class MarriageDuplicateComponent implements OnInit {
 			else {
 				this.toster.warning('No Record Found');
 				this.dataSource.data = [];
+				this.resultsLength =0;
 			}
 		}, err => {
 			this.toster.error(err);
