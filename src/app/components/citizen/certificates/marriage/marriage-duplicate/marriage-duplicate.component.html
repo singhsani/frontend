@@ -3,7 +3,7 @@
 
 <!-- Search From Starts from here -->
 <div *ngIf="showSearchForm">
-	<mat-card class="cardBorder">
+	<mat-card class="cardBorder mat-table">
 		<form [formGroup]="marriageSearchForm" (ngSubmit)="getApplicationDetails()" autocomplete="off">
 
 			<div class="row">
@@ -28,7 +28,7 @@
 					<input matInput appDate [min]="marriageSearchForm.get('marriageDate').value" [max]="disablefutureDate"
 						[matDatepicker]="marriageRegDatepicker" formControlName="marriageRegDate"
 						(dateChange)="dateFormate($event.value,'marriageRegDate')"
-						placeholder="{{ 'marriage_reg_date' | translate:translateKey }}" required>
+						placeholder="{{ 'marriage_reg_date' | translate:translateKey }}" >
 					<mat-datepicker-toggle matSuffix [for]="marriageRegDatepicker"></mat-datepicker-toggle>
 					<mat-datepicker #marriageRegDatepicker touchUi="true" touchUi="true"></mat-datepicker>
 					<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
@@ -69,14 +69,14 @@
 	<!-- Search Form Ends Here -->
 
 	<!-- Table start-->
-	<div class="pl-1 pr-1 mt-4">
-		<div class="example-container mat-elevation-z8" [hidden]="resultsLength == 0">
+	<div class="pl-1 pr-1 mt-4  scroll">
+		<div class="example-container mat-elevation-z8" [hidden]="resultsLength == 0 ">
 
 			<table mat-table #table [dataSource]="dataSource" matSort matSortActive="created" matSortDisableClear
 				matSortDirection="asc">
 
 				<ng-container matColumnDef="id">
-					<th mat-header-cell *matHeaderCellDef>S.no.</th>
+					<th mat-header-cell *matHeaderCellDef>Sr.No.</th>
 					<td mat-cell *matCellDef="let row; let i = index;">{{ paginator.pageIndex==0?i+1:((paginator.pageIndex+1)*10)+(i+1)
 					}}</td>
 				</ng-container>
@@ -184,7 +184,7 @@
 
 					<ng-container>
 						<div class= "col-md-12">
-						<button type="button" mat-raised-button color="primary" class="pull-right"
+						<button type="button" mat-raised-button color="primary" class="pull-right" disabled
 						 (click)="getCertificate()">{{'certificate' | translate:translateKey}}</button>
 						</div>
 						</ng-container>
