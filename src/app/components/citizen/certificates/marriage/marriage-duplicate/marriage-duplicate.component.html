@@ -69,8 +69,8 @@
 	<!-- Search Form Ends Here -->
 
 	<!-- Table start-->
-	<div class="pl-1 pr-1 mt-4">
-		<div class="example-container mat-elevation-z8" [hidden]="resultsLength == 0">
+	<div class="pl-1 pr-1 mt-4  scroll">
+		<div class="example-container mat-elevation-z8" [hidden]="resultsLength == 0 ">
 
 			<table mat-table #table [dataSource]="dataSource" matSort matSortActive="created" matSortDisableClear
 				matSortDirection="asc">
