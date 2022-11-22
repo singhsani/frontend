@@ -13,13 +13,13 @@ import { ToastrService } from 'ngx-toastr';
 import { LicenseConfiguration } from '../../license-configuration';
 
 @Component({
-  selector: 'app-animal-pond-cancellation',
-  templateUrl: './animal-pond-cancellation.component.html',
-  styleUrls: ['./animal-pond-cancellation.component.scss']
+	selector: 'app-animal-pond-cancellation',
+	templateUrl: './animal-pond-cancellation.component.html',
+	styleUrls: ['./animal-pond-cancellation.component.scss']
 })
 export class AnimalPondCancellationComponent implements OnInit {
 
- 	@ViewChild('permanantAddressEstablishment') permanantAddressEstablishment: any;
+	@ViewChild('permanantAddressEstablishment') permanantAddressEstablishment: any;
 
 	animalPondCancellationForm: FormGroup;
 	translateKey: string = 'animalPondCancellationScreen';
@@ -42,7 +42,7 @@ export class AnimalPondCancellationComponent implements OnInit {
 	// serach api variable
 	serachLicenceObj = {
 		isDisplayCancellationLicenceForm: <boolean>false,
-		searchLicenceNumber:""
+		searchLicenceNumber: ""
 	}
 
 	ANIMAL_POND_STATUS_OF_BUSINESS: Array<any> = [];
@@ -68,14 +68,14 @@ export class AnimalPondCancellationComponent implements OnInit {
 			})
 	}
 
-    /**
-     * @param fb - Declare FormBuilder property.
-     * @param validationError - Declare validation service property
-     * @param formService - Declare form service property 
-     * @param uploadFileService - Declare upload file service property.
-     * @param commonService - Declare sweet alert.
+	/**
+	 * @param fb - Declare FormBuilder property.
+	 * @param validationError - Declare validation service property
+	 * @param formService - Declare form service property 
+	 * @param uploadFileService - Declare upload file service property.
+	 * @param commonService - Declare sweet alert.
 	 * @param toastrService - Show massage with timer.
-     */
+	 */
 	constructor(
 		private fb: FormBuilder,
 		private validationService: ValidationService,
@@ -113,9 +113,9 @@ export class AnimalPondCancellationComponent implements OnInit {
 	}
 
 	/**
-     * This method is use to create new record for citizen.
-     * @param searchData: exciting licence number data
-     */
+	 * This method is use to create new record for citizen.
+	 * @param searchData: exciting licence number data
+	 */
 	createRecordPatchSerachData(searchData: any) {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		this.formService.createFormData().subscribe(res => {
@@ -148,6 +148,12 @@ export class AnimalPondCancellationComponent implements OnInit {
 
 				periodFrom: res.periodFrom,
 				periodTo: res.periodTo,
+
+				wardNo: searchData.wardNo.code,
+				zoneNo: searchData.zoneNo.code,
+				blockNo: searchData.blockNo.code,
+				totalAnimal: searchData.totalAnimal,
+
 				// newRegistration: res.newRegistration,
 				// renewal: res.renewal,
 				// adminCharges: res.adminCharges,
@@ -161,7 +167,7 @@ export class AnimalPondCancellationComponent implements OnInit {
 
 			this.animalPondCancellationForm.disable();
 			this.enableFielList();
-		
+
 			let currentUrl = this.location.path().replace('false', this.formId.toString());
 			this.location.go(currentUrl);
 		});
@@ -171,7 +177,7 @@ export class AnimalPondCancellationComponent implements OnInit {
 	/**
 	 * This method use for edit some fiels.
 	 */
-	enableFielList() { 
+	enableFielList() {
 		this.animalPondCancellationForm.get('cancellationReason').enable();
 	}
 
@@ -208,16 +214,16 @@ export class AnimalPondCancellationComponent implements OnInit {
 		this.animalPondCancellationForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'APL-CAN',
-			refNumber:[null],
+			refNumber: [null],
 			/* Step 1 controls start */
 			personType: this.fb.group({
 				code: [null]
 			}),
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30)]],
-			holderMiddleName: [null,[Validators.maxLength(30)]],
+			holderMiddleName: [null, [Validators.maxLength(30)]],
 			holderLastName: [null, [Validators.required, Validators.maxLength(30)]],
 			holderFirstNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
-			holderMiddleNameGuj: [null,[Validators.maxLength(30)]],
+			holderMiddleNameGuj: [null, [Validators.maxLength(30)]],
 			holderLastNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
 
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
@@ -226,32 +232,46 @@ export class AnimalPondCancellationComponent implements OnInit {
 			holderTelephoneNo: [null, [Validators.maxLength(11), Validators.minLength(11)]],
 			holderMobileNo: [null, [Validators.required, Validators.maxLength(11), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
-			holderAadharNo: [null, [Validators.required, Validators.maxLength(12),Validators.minLength(12)]],
+			holderAadharNo: [null, [Validators.required, Validators.maxLength(12), Validators.minLength(12)]],
 			holderPanNo: [null, [Validators.required, Validators.maxLength(10)]],
-			/* Step 1 controls end */ 
+			/* Step 1 controls end */
 
 			applicationDate: [],
 			licenseIssueDate: [null],
 			licenseCancellationalDate: [null],
 			loinumber: [null],
 
-			cancellationReason:[null,Validators.maxLength(200)],
+			cancellationReason: [null, Validators.maxLength(200)],
 			/* Step 4 controls start*/
 			attachments: [],
 			/* Step 4 controls end */
-			businessType:this.fb.group({
+			businessType: this.fb.group({
 				code: [null, Validators.required]
-			})
+			}),
+
+			wardNo: this.fb.group({
+				code: null,
+				name: null
+			}),
+			zoneNo: this.fb.group({
+				code: null,
+				name: null
+			}),
+			blockNo: this.fb.group({
+				code: null,
+				name: null
+			}),
+			totalAnimal: null
 		});
 	}
 
 	/**
-     * Method is used to set data value to upload method.
-     * @param indentifier - file identifier
-     * @param labelName - file label name.
-     * @param formPart - file form part
-     * @param variableName - file variable name.
-     */
+	 * Method is used to set data value to upload method.
+	 * @param indentifier - file identifier
+	 * @param labelName - file label name.
+	 * @param formPart - file form part
+	 * @param variableName - file variable name.
+	 */
 	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
 		this.uploadModel = {
 			fieldIdentifier: indentifier.toString(),
@@ -263,10 +283,10 @@ export class AnimalPondCancellationComponent implements OnInit {
 		return this.uploadModel;
 	}
 
-    /**
-     * This method required for final form submition.
-     * @param flag - flag of invalid control.
-     */
+	/**
+	 * This method required for final form submition.
+	 * @param flag - flag of invalid control.
+	 */
 	handleErrorsOnSubmit(flag) {
 
 		let step0 = 23;
