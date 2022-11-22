@@ -128,6 +128,9 @@ export class AnimalPondDuplicateComponent implements OnInit {
 				refNumber: this.serachLicenceObj.searchLicenceNumber,
 				serviceFormId: res.serviceFormId,
 				wardNo: searchData.wardNo.code,
+				zoneNo: searchData.zoneNo.code,
+				blockNo: searchData.blockNo.code,
+				totalAnimal: searchData.totalAnimal,
 
 				createdDate: res.createdDate,
 				updatedDate: res.createdDate,
@@ -240,8 +243,18 @@ export class AnimalPondDuplicateComponent implements OnInit {
 				code: [null, Validators.required]
 			}),
 			wardNo: this.fb.group({
-				code : null
-			})
+				code: null,
+				name: null
+			}),
+			zoneNo: this.fb.group({
+				code: null,
+				name: null
+			}),
+			blockNo: this.fb.group({
+				code: null,
+				name: null
+			}),
+			totalAnimal: null
 			/* Step 4 controls end */
 		});
 	}
