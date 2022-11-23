@@ -181,8 +181,8 @@
             </div>
            <div class="col-md-6">
               <mat-form-field class="full-width-input">
-                  <mat-label>City Survey Number</mat-label>
-                  <input mask-census-no trim="blur" maxlength="21" minlength="21" matInput (input)="onChangeAddress()" name="cityCensusNo" #CityCensusNo="ngModel" [(ngModel)]="addressModel.propertyAddressDTO.cityCensusNo">
+                  <mat-label>City Census Number</mat-label>
+                  <input  trim="blur" appAlphaNumeric maxlength="50" matInput (input)="onChangeAddress()" name="cityCensusNo" #CityCensusNo="ngModel" [(ngModel)]="addressModel.propertyAddressDTO.cityCensusNo">
                   <mat-error *ngIf="CityCensusNo.invalid">*Invalid CensusNo.</mat-error>
               </mat-form-field>
           </div>

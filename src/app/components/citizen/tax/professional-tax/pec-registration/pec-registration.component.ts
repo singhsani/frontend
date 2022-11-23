@@ -715,6 +715,9 @@ export class PecRegistrationComponent implements OnInit {
 	}
 
 	getAllBlockNos(event) {
+		if(event == undefined){
+			return false;
+		}
 		this.profeService.getAllBlockNos(event).subscribe(res => {
 			this.blockNoArray = res;
 		});

@@ -190,10 +190,13 @@ export class VendorRegistrationComponent implements OnInit {
     this.formService.getFormData(id).subscribe(res => {
       console.log("tresr", res)
       this.vendorRegistrationForm.patchValue(res);
+      if(res.formStatus != 'REJECTED'){
       this.locationChange(res.applyingFor);
+      }
 
       //this.showButtons = false;
-      if (res.formStatus == 'PAYMENT_RECEIVED' || res.formStatus == 'SUBMITTED') {
+      
+      if (res.formStatus == 'PAYMENT_RECEIVED' || res.formStatus == 'SUBMITTED' || res.formStatus == 'DRAFT') {
         this.vendorRegistrationForm.disable();
         this.vendorRegistrationForm.get('canEdit').setValue(false);
       }
@@ -592,6 +595,7 @@ export class VendorRegistrationComponent implements OnInit {
     this.vendorTypeFirm = this.vendorTypeFirm.filter(o => o.code === event.value);
 
     if (event.value == 'PROPRIETORSHIP') {
+      this.vendorNameArray.push(this.createVendorNameArray());
       this.vendorArrayNameButtons = true;
     } else {
       this.vendorArrayNameButtons = false;
@@ -827,9 +831,10 @@ export class VendorRegistrationComponent implements OnInit {
 
     // this.engineer.vendorSaveFormData(this.vendorRegistrationForm.getRawValue()).subscribe(res => {
     //   this.commonService.openAlert(" Successful", "", "success", `</b>`);
+    //this.reportForm.get('professionalTaxType').setValidators(null);
     // })
     this.vendorRegistrationForm.get('serviceFormId').setValue(this.formId);
-
+    this.vendorRegistrationForm.get('applyingFor').setValidators(null);
     this.mandatoryFileCheck(this.vendorRegistrationForm.get('serviceFormId').value, this.attachmentList).then(data => {
       if (data.status) {
         this.engineer.vendorSaveFormData(this.vendorRegistrationForm.getRawValue()).subscribe(res => {
