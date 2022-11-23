@@ -539,6 +539,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     message: string = `Welcome to Vadodara Municipal Corporation's Virtual Civic Center, which is simple and convenient way for citizens to access various services from anywhere at anytime.
     The services of Virtual Civic Center can be accessed without paying any additional charge.`;
     isViewMode: boolean;
+    gujName: any;
 
     /**
      * @param fb - Declare FormBuilder property.
@@ -1128,27 +1129,31 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 //for display static days
                 if (res.groomBirthDate != null && res.marriageDate != null) {
                     this.CalculateAge('groomBirthDate');
-                }
-
+                }   
                 //display static gujarati var
                 if (!_.isUndefined(res.groomReligion.code)) {
                     this.onChange(res.groomReligion.code, this.religionArray, 'religionGujgroom')
+                    this.religionGujgroom = res.groomReligion.gujName;
                 }
 
                 if (!_.isUndefined(res.brideReligion.code)) {
                     this.onChange(res.brideReligion.code, this.religionArray, 'religionGujbride')
+                    this.religionGujbride = res.brideReligion.gujName;
                 }
 
                 if (!_.isUndefined(res.marriageTimeGroomStatus.code)) {
                     this.onChange(res.marriageTimeGroomStatus.code, this.maritalStatusArray, 'maritalstatusGujgroom')
+                    this.maritalstatusGujgroom = res.marriageTimeGroomStatus.gujName
                 }
 
                 if (!_.isUndefined(res.marriageTimeBrideStatus.code)) {
                     this.onChange(res.marriageTimeBrideStatus.code, this.maritalStatusArray, 'maritalstatusGujbride')
+                    this.maritalstatusGujbride = res.marriageTimeBrideStatus.gujName;
                 }
 
                 if (!_.isUndefined(res.applicantRelation.code)) {
                     this.onChange(res.applicantRelation.code, this.applicantrelationArray, 'applicantrelationGuj')
+                    this.applicantrelationGuj = res.applicantRelation.gujName;
                 }
                 if (!_.isUndefined(res.uniqueIdProofLable.code)) {
                     this.onChange(res.uniqueIdProofLable.code, this.identityproofArray, 'identityproofGuj')
