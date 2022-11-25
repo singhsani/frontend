@@ -271,6 +271,13 @@ export class GatewayResponseComponent implements OnInit {
 									}, 10000);
 
 									this.interVal();
+								}else if(this.formService.apiType == 'MFLicense' || this.formService.apiType == 'MFLRenewal' || this.formService.apiType == 'MFLTransfer'){
+									setTimeout(() => {
+										const url = '/citizen/my-applications' + '?id=' + payRespData.serviceFormId + '&apiCode=' + payRespData.serviceDetail.code
+										this.router.navigateByUrl(url);
+									}, 10000);
+
+									this.interVal();
 								} else {
 									setTimeout(() => {
 										this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
@@ -374,6 +381,8 @@ export class GatewayResponseComponent implements OnInit {
 
 		} else if (this.dispData.payableServiceType == "APL-TRA" || this.paybleServiceType == "APL-TRA" || this.dispData.payableServiceType == "APL-REN" || this.paybleServiceType == "APL-REN" || this.dispData.payableServiceType == "APL-DUP" || this.paybleServiceType == "APL-DUP" || this.paybleServiceType == "APL-LIC" || this.dispData.payableServiceType == "APL-LIC") {
 
+			this.redirectToMyApplication(this.dispData.myApplicationUrl, undefined, undefined, undefined);
+		} else if(this.dispData.payableServiceType == "MF-DUP" || this.paybleServiceType == "MF-DUP" || this.dispData.payableServiceType == "MF-TRA" || this.paybleServiceType == "MF-TRA" || this.dispData.payableServiceType == "MF-REN" || this.paybleServiceType == "MF-REN" || this.dispData.payableServiceType == "MF-LIC" || this.paybleServiceType == "MF-LIC"){
 			this.redirectToMyApplication(this.dispData.myApplicationUrl, undefined, undefined, undefined);
 		}
 		else if(this.dispData.payableServiceType == "HEL-MR" || this.dispData.payableServiceType == 'HEL-DUPMR')
