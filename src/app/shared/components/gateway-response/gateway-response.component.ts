@@ -261,7 +261,6 @@ export class GatewayResponseComponent implements OnInit {
 						// this.sendMail(this.dispData.refNumber, this.bookingConstant.SUBMIT);
 					}
 					if (payRespData.fileStatus == "PAYMENT_RECEIVED") {
-						debugger
 						this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(payRespData.serviceDetail.code);
 						this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
 							if (res) {
