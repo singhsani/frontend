@@ -20,7 +20,7 @@
 
 		<div class="row">
 			<mat-form-field class="iconMat col-md-6">
-				<input matInput type="email" placeholder="Email"  formControlName="email"
+				<input matInput type="email" placeholder="Email"  formControlName="email" required
 				 #firstname="matInput">
 				<control-messages [control]="applicantDetailsForm.get('email')"></control-messages>
 			</mat-form-field>
