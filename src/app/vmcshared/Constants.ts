@@ -49,7 +49,7 @@ export class Constants {
     static propertyTaxModuleApiBaseUrl: string;
     static propertyBillTypeIdSelected: string = "NORMAL";
     static pageSize: number = 5;
-    static pageRecord: Array<number> = [5,25,100]; 
+    static pageRecord: Array<number> = [5,25,100];
 
     static LookupCodes = {
         Water_Within_Limit: "WATER_WITHIN_LIMIT",
@@ -105,6 +105,7 @@ export class Constants {
         Water_Transfer_Reason: "WATER_TRANSFER_REASON",
         Reason_For_Reassessment: "REASON_FOR_REASSESSMENT",
         Room_Type: "ROOM_TYPE",
+        Room_Type_New:"ROOM_TYPE_NEW",
         History_Transaction_Type: 'HISTORY_TRANSACTION_TYPE',
         Collection_Payment_Of: "COLLECTION_PAYMET_OF",
         Action_on_Vacancy_Amount: "ACTION_ON_VACANCY_AMOUNT",
