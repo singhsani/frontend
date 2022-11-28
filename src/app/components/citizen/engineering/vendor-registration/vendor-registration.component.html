@@ -1148,7 +1148,7 @@
             <div class="col-md-4">
 
               <div>
-                <mat-label> Quality Control independent of production control.</mat-label>
+                <mat-label> Is the person in-charge for Quality control independent of production control? with..</mat-label>
               </div>
 
               <mat-radio-group formControlName="adoptedForQualityControl" class="radioGroup">
@@ -1399,7 +1399,7 @@
                   <td class="text-center">
                     <mat-form-field>
                       <input matInput autocomplete="off" appDate [formControl]="row.get('orderDate')"
-                        [min]="threeYearDate" [max]="fiveYearDate" [matDatepicker]="orderPicker"
+                         [max]="maxDate" [matDatepicker]="orderPicker"
                         (dateChange)="onDateChangeOrder('orderDate', $event.value,row)">
                       <mat-datepicker-toggle matSuffix [for]="orderPicker"></mat-datepicker-toggle>
                       <mat-datepicker touchUi="true" #orderPicker></mat-datepicker>
