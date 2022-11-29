@@ -601,14 +601,14 @@
           </ng-template>
 
           <div class="row">
-            <mat-form-field class="col-md-4">
+            <mat-form-field class="col-md-6">
               <input matInput type="text" maxlength="11" OnlyNumber placeholder="{{'Loan Capital with Bank Limit.'}}"
                 formControlName="loanCapitalWithBankLimit">
               <control-messages [control]="vendorRegistrationForm.get('loanCapitalWithBankLimit')">
               </control-messages>
             </mat-form-field>
 
-            <div class="col-md-4">
+            <div class="col-md-6">
               <div>
                 <mat-label> Copy of Latest Income Tax Clearance certificate.</mat-label>
               </div>
@@ -631,7 +631,7 @@
               </control-messages>
             </div> -->
 
-            <mat-form-field class="col-md-4">
+            <mat-form-field class="col-md-6">
               <input matInput type="text" appValidationFields
                 validationFieldsType='appAlphanumericNumberWithDashAndComa' maxlength="1000"
                 placeholder="{{'Area of land occupied by the factory'}}" formControlName="areaOfLandFactory">
@@ -639,7 +639,31 @@
               </control-messages>
             </mat-form-field>
 
-            <mat-form-field class="col-md-8">
+            <mat-form-field class="col-md-6">
+              <input matInput type="text" maxlength="10" placeholder="{{'Built up area of the factory.'}}"
+                formControlName="builtAreaFactory">
+              <control-messages [control]="vendorRegistrationForm.get('builtAreaFactory')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-12">
+              <input matInput type="text" maxlength="1000" appValidationFields
+                validationFieldsType='appAlphanumericNumberWithDashAndComa'
+                placeholder="{{'Details of land documents occupied by the factory.'}}"
+                formControlName="detailsOfLandDocumentsFactory">
+              <control-messages [control]="vendorRegistrationForm.get('detailsOfLandDocumentsFactory')">
+              </control-messages>
+            </mat-form-field>
+  
+            <mat-form-field class="col-md-12">
+              <input matInput type="text" maxlength="1000" appValidationFields
+                validationFieldsType='appAlphanumericNumberWithDashAndComa'
+                placeholder="{{'Building permission detail.'}}" formControlName="buildingPermissionDetail">
+              <control-messages [control]="vendorRegistrationForm.get('buildingPermissionDetail')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-12">
               <input matInput type="text" maxlength="1000" appValidationFields
                 validationFieldsType='appAlphanumericNumberWithDashAndComa'
                 placeholder="{{'Product Manufactured with complete description'}}"
@@ -648,14 +672,6 @@
               </control-messages>
             </mat-form-field>
 
-
-
-            <mat-form-field class="col-md-4">
-              <input matInput type="text" maxlength="10" placeholder="{{'Built up area of the factory.'}}"
-                formControlName="builtAreaFactory">
-              <control-messages [control]="vendorRegistrationForm.get('builtAreaFactory')">
-              </control-messages>
-            </mat-form-field>
 
             <mat-form-field class="col-md-3">
               <input matInput type="text" maxlength="4" OnlyNumber
@@ -678,6 +694,62 @@
                 placeholder="{{'MSME,NSIC and SSI Certificate No.(Notarized copy)'}}"
                 formControlName="sscNSICCertificateNumber">
               <control-messages [control]="vendorRegistrationForm.get('sscNSICCertificateNumber')">
+              </control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-6">
+              <input matInput placeholder="{{'Factory license validity period startDate.'}}" autocomplete="off" appDate
+                formControlName="factoryLicenseStartDate"  [matDatepicker]="factoryLicenseStartDate"
+                (dateChange)="onDateChange('factoryLicenseStartDate', $event.value)">
+              <mat-datepicker-toggle matSuffix [for]="factoryLicenseStartDate"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #factoryLicenseStartDate></mat-datepicker>
+              <div align="end" class="default-show-hint mat-hint mat-right"></div>
+              <control-messages [control]="vendorRegistrationForm.get('factoryLicenseStartDate')">
+              </control-messages>
+            </mat-form-field>
+  
+            <mat-form-field class="col-md-6">
+              <input matInput autocomplete="off" placeholder="{{'Factory license validity period endDate.'}}" appDate
+                formControlName="factoryLicenseEndDate"
+                [matDatepicker]="factoryLicenseEndDate"
+                (dateChange)="onDateChange('factoryLicenseEndDate', $event.value)">
+              <mat-datepicker-toggle matSuffix [for]="factoryLicenseEndDate"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #factoryLicenseEndDate></mat-datepicker>
+              <div align="end" class="default-show-hint mat-hint mat-right"></div>
+              <control-messages [control]="vendorRegistrationForm.get('factoryLicenseEndDate')">
+              </control-messages>
+            </mat-form-field>
+  
+            <mat-form-field class="col-md-6">
+              <input matInput placeholder="{{'MSME,NSIC and SSI certificate validity period StartDate'}}"
+                autocomplete="off" appDate formControlName="certificateMSMENSISSIStartDate" 
+                [matDatepicker]="certificateMSMENSISSIStartDate"
+                (dateChange)="onDateChange('certificateMSMENSISSIStartDate', $event.value)">
+              <mat-datepicker-toggle matSuffix [for]="certificateMSMENSISSIStartDate"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #certificateMSMENSISSIStartDate></mat-datepicker>
+              <div align="end" class="default-show-hint mat-hint mat-right"></div>
+              <control-messages [control]="vendorRegistrationForm.get('certificateMSMENSISSIStartDate')">
+              </control-messages>
+            </mat-form-field>
+  
+            <mat-form-field class="col-md-6">
+              <input matInput autocomplete="off"
+                placeholder="{{'MSME,NSIC and SSI certificate validity period endDate.'}}" appDate
+                formControlName="certificateMSMENSISSIEndDate"
+                [matDatepicker]="certificateMSMENSISSIEndDate"
+                (dateChange)="onDateChange('certificateMSMENSISSIEndDate', $event.value)">
+              <mat-datepicker-toggle matSuffix [for]="certificateMSMENSISSIEndDate"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #certificateMSMENSISSIEndDate></mat-datepicker>
+              <div align="end" class="default-show-hint mat-hint mat-right"></div>
+              <control-messages [control]="vendorRegistrationForm.get('certificateMSMENSISSIEndDate')">
+              </control-messages>
+            </mat-form-field>
+  
+            <mat-form-field class="col-md-12">
+              <input matInput type="text" maxlength="1000" appValidationFields
+                validationFieldsType='appAlphanumericNumberWithDashAndComa'
+                placeholder="{{'IS / BIS / CE / International Licences Details'}}" formControlName="licencesISIBISCE">
+              <control-messages [control]="vendorRegistrationForm.get('licencesISIBISCE')">
               </control-messages>
             </mat-form-field>
 
@@ -804,7 +876,7 @@
                   <td>
                     <mat-form-field>
                       <input matInput autocomplete="off" appDate [formControl]="row.get('registrationDate')"
-                        [max]="maxDate" [matDatepicker]="registrationDate"
+                       [matDatepicker]="registrationDate"
                         (dateChange)="onDateChangePurchaseDate('registrationDate', $event.value,row)">
                       <mat-datepicker-toggle matSuffix [for]="registrationDate"></mat-datepicker-toggle>
                       <mat-datepicker touchUi="true" #registrationDate></mat-datepicker>
@@ -818,7 +890,7 @@
                   <td>
                     <mat-form-field>
 
-                      <input matInput autocomplete="off" appDate [formControl]="row.get('validityFrom')" [max]="maxDate"
+                      <input matInput autocomplete="off" appDate [formControl]="row.get('validityFrom')" 
                         [matDatepicker]="validityFrom"
                         (dateChange)="onDateChangePurchaseDate('validityFrom', $event.value,row)">
                       <mat-datepicker-toggle matSuffix [for]="validityFrom"></mat-datepicker-toggle>
@@ -832,7 +904,7 @@
                   <td>
                     <mat-form-field>
 
-                      <input matInput autocomplete="off" appDate [formControl]="row.get('validityTo')" [min]="maxDate"
+                      <input matInput autocomplete="off" appDate [formControl]="row.get('validityTo')" 
                         [matDatepicker]="validityTo"
                         (dateChange)="onDateChangePurchaseDate('validityTo', $event.value,row)">
                       <mat-datepicker-toggle matSuffix [for]="validityTo"></mat-datepicker-toggle>
@@ -1029,81 +1101,6 @@
             </mat-form-field>
 
           </div>
-
-          <mat-form-field class="col-md-12">
-            <input matInput type="text" maxlength="1000" appValidationFields
-              validationFieldsType='appAlphanumericNumberWithDashAndComa'
-              placeholder="{{'Details of land documents occupied by the factory.'}}"
-              formControlName="detailsOfLandDocumentsFactory">
-            <control-messages [control]="vendorRegistrationForm.get('detailsOfLandDocumentsFactory')">
-            </control-messages>
-          </mat-form-field>
-
-          <mat-form-field class="col-md-12">
-            <input matInput type="text" maxlength="1000" appValidationFields
-              validationFieldsType='appAlphanumericNumberWithDashAndComa'
-              placeholder="{{'Building permission detail.'}}" formControlName="buildingPermissionDetail">
-            <control-messages [control]="vendorRegistrationForm.get('buildingPermissionDetail')">
-            </control-messages>
-          </mat-form-field>
-
-          <mat-form-field class="col-md-6">
-            <input matInput placeholder="{{'Factory license validity period startDate.'}}" autocomplete="off" appDate
-              formControlName="factoryLicenseStartDate" [max]="maxDate" [matDatepicker]="factoryLicenseStartDate"
-              (dateChange)="onDateChange('factoryLicenseStartDate', $event.value)">
-            <mat-datepicker-toggle matSuffix [for]="factoryLicenseStartDate"></mat-datepicker-toggle>
-            <mat-datepicker touchUi="true" #factoryLicenseStartDate></mat-datepicker>
-            <div align="end" class="default-show-hint mat-hint mat-right"></div>
-            <control-messages [control]="vendorRegistrationForm.get('factoryLicenseStartDate')">
-            </control-messages>
-          </mat-form-field>
-
-          <mat-form-field class="col-md-6">
-            <input matInput autocomplete="off" placeholder="{{'Factory license validity period endDate.'}}" appDate
-              formControlName="factoryLicenseEndDate"
-              [min]="vendorRegistrationForm.get('factoryLicenseStartDate').value"
-              [matDatepicker]="factoryLicenseEndDate"
-              (dateChange)="onDateChange('factoryLicenseEndDate', $event.value)">
-            <mat-datepicker-toggle matSuffix [for]="factoryLicenseEndDate"></mat-datepicker-toggle>
-            <mat-datepicker touchUi="true" #factoryLicenseEndDate></mat-datepicker>
-            <div align="end" class="default-show-hint mat-hint mat-right"></div>
-            <control-messages [control]="vendorRegistrationForm.get('factoryLicenseEndDate')">
-            </control-messages>
-          </mat-form-field>
-
-          <mat-form-field class="col-md-6">
-            <input matInput placeholder="{{'MSME,NSIC and SSI certificate validity period StartDate'}}"
-              autocomplete="off" appDate formControlName="certificateMSMENSISSIStartDate" [max]="maxDate"
-              [matDatepicker]="certificateMSMENSISSIStartDate"
-              (dateChange)="onDateChange('certificateMSMENSISSIStartDate', $event.value)">
-            <mat-datepicker-toggle matSuffix [for]="certificateMSMENSISSIStartDate"></mat-datepicker-toggle>
-            <mat-datepicker touchUi="true" #certificateMSMENSISSIStartDate></mat-datepicker>
-            <div align="end" class="default-show-hint mat-hint mat-right"></div>
-            <control-messages [control]="vendorRegistrationForm.get('certificateMSMENSISSIStartDate')">
-            </control-messages>
-          </mat-form-field>
-
-          <mat-form-field class="col-md-6">
-            <input matInput autocomplete="off"
-              placeholder="{{'MSME,NSIC and SSI certificate validity period endDate.'}}" appDate
-              formControlName="certificateMSMENSISSIEndDate"
-              [min]="vendorRegistrationForm.get('certificateMSMENSISSIStartDate').value"
-              [matDatepicker]="certificateMSMENSISSIEndDate"
-              (dateChange)="onDateChange('certificateMSMENSISSIEndDate', $event.value)">
-            <mat-datepicker-toggle matSuffix [for]="certificateMSMENSISSIEndDate"></mat-datepicker-toggle>
-            <mat-datepicker touchUi="true" #certificateMSMENSISSIEndDate></mat-datepicker>
-            <div align="end" class="default-show-hint mat-hint mat-right"></div>
-            <control-messages [control]="vendorRegistrationForm.get('certificateMSMENSISSIEndDate')">
-            </control-messages>
-          </mat-form-field>
-
-          <mat-form-field class="col-md-12">
-            <input matInput type="text" maxlength="1000" appValidationFields
-              validationFieldsType='appAlphanumericNumberWithDashAndComa'
-              placeholder="{{'IS / BIS / CE / International Licences Details'}}" formControlName="licencesISIBISCE">
-            <control-messages [control]="vendorRegistrationForm.get('licencesISIBISCE')">
-            </control-messages>
-          </mat-form-field>
 
           <div class="fotButtonBar clearfix">
             <div class="col-sm-12 col-md-12">
@@ -1321,7 +1318,7 @@
                     <mat-form-field>
 
                       <input matInput autocomplete="off" appDate [formControl]="row.get('purchasingDate')"
-                        [max]="maxDate" [matDatepicker]="purchasingDate"
+                         [matDatepicker]="purchasingDate"
                         (dateChange)="onDateChangePurchaseDate('purchasingDate', $event.value,row)">
                       <mat-datepicker-toggle matSuffix [for]="purchasingDate"></mat-datepicker-toggle>
                       <mat-datepicker touchUi="true" #purchasingDate></mat-datepicker>
@@ -1399,7 +1396,7 @@
                   <td class="text-center">
                     <mat-form-field>
                       <input matInput autocomplete="off" appDate [formControl]="row.get('orderDate')"
-                         [max]="maxDate" [matDatepicker]="orderPicker"
+                          [matDatepicker]="orderPicker"
                         (dateChange)="onDateChangeOrder('orderDate', $event.value,row)">
                       <mat-datepicker-toggle matSuffix [for]="orderPicker"></mat-datepicker-toggle>
                       <mat-datepicker touchUi="true" #orderPicker></mat-datepicker>
