@@ -332,6 +332,7 @@ export class VendorRegistrationComponent implements OnInit {
       case 'registeredGovtDetail':
         formGroupData = this.fb.group({
           nameOfAuthority: [{ value: data.nameOfAuthority ? data.nameOfAuthority : null, disabled: true }],
+          regNumber: [{ value: data.regNumber ? data.regNumber : null, disabled: true }],
           registrationDate: [{ value: data.registrationDate ? data.registrationDate : null, disabled: true }],
           validityFrom: [{ value: data.validityFrom ? data.validityFrom : null, disabled: true }],
           validityTo: [{ value: data.validityTo ? data.validityTo : null, disabled: true }],
@@ -650,6 +651,7 @@ export class VendorRegistrationComponent implements OnInit {
   createRegisteredGovtDetail(): FormGroup {
     return this.fb.group({
       nameOfAuthority: null,
+      regNumber:null,
       registrationDate: null,
       validityFrom: null,
       validityTo: null

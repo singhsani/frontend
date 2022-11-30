@@ -850,11 +850,12 @@
           </div>
 
           <div>
-            <table class="table table-bordered  table-striped text-center">
+            <table class="table table-bordered  table-responsive">
               <tbody>
                 <tr>
                   <th class="text-center">S.no.</th>
                   <th class="text-center">Name Of Authority</th>
+                  <th class="text-center">Reg.Number</th>
                   <th class="text-center">Registration Date </th>
                   <th class="text-center">Validity From</th>
                   <th class="text-center">Validity To</th>
@@ -872,6 +873,16 @@
                       </control-messages>
                     </mat-form-field>
                   </td>
+
+                  <td>
+                    <mat-form-field>
+                      <input matInput type="text" appValidationFields OnlyNumber maxlength="15"
+                        [formControl]="row.get('regNumber')">
+                      <control-messages [control]="row.get('regNumber')">
+                      </control-messages>
+                    </mat-form-field>
+                  </td>
+
 
                   <td>
                     <mat-form-field>
