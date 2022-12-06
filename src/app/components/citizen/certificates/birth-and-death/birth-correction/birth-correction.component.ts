@@ -86,6 +86,7 @@ export class BirthCorrectionComponent implements OnInit {
 	// 	{ labelName: 'Kyc Document of Father', fieldIdentifier: '1.3' },
 	// ]
 	uploadFileArray: Array<any> = [];
+	BirthCorrectionCopyMode: Array<any> = [];
 
 
 	/**
@@ -183,7 +184,6 @@ export class BirthCorrectionComponent implements OnInit {
 	 */
 	getBirthCorrectionData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
-
 			this.birthCorrectionForm.patchValue(res);
 			// this.config.documentList(res, this.uploadFileArray);
 
@@ -245,7 +245,7 @@ export class BirthCorrectionComponent implements OnInit {
 
 
 	/**
-	 * This method use for displaying string data in json 
+	 * This method use for displaying string data in json
 	 */
 	// listOfData(prods) {
 	// 	let newgnData = JSON.parse(prods);
@@ -385,6 +385,7 @@ export class BirthCorrectionComponent implements OnInit {
 	getLookupData() {
 		this.formService.getDataFromLookups().subscribe(res => {
 			this.TypeOfCorrection = res.BIRTH_CORRECTION_TYPE;
+			this.BirthCorrectionCopyMode = res.BIRTH_CORRECTION_COPY_MODE;
 		});
 	}
 
@@ -470,6 +471,18 @@ export class BirthCorrectionComponent implements OnInit {
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 
 			attachments: [],
+			//birthCorrectionCopies: [null, Validators.required],
+			totalCopies: [null, Validators.required],
+			birthCorrectionCopyMode: this.fb.group({
+                  code: [null, [Validators.required]],
+                  gujName: null,
+                  id: null,
+                  name: null,
+                  orderSequence: null,
+                  type: null,
+                  uniqueId: null,
+                  version: null
+                })
 		});
 	}
 
@@ -543,4 +556,7 @@ export class BirthCorrectionComponent implements OnInit {
 			}
 		}
 	}
+	getlength(event){
+  		return false
+  	}
 }

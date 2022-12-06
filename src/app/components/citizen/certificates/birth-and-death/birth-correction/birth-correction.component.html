@@ -45,6 +45,24 @@
 
                 <div *ngIf="allowChildNameInsertion">
                     <div class="row">
+
+                      <mat-form-field formGroupName="birthCorrectionCopyMode" class="col-md-4">
+                        <mat-select placeholder="{{'BIRTH_CORRECTION_COPY_MODE' | translate:translateKey}} *"
+                                    formControlName="code">
+                          <mat-option *ngFor="let birthCorrectionCopyMode of BirthCorrectionCopyMode" [value]="birthCorrectionCopyMode.code">
+                            {{birthCorrectionCopyMode.name}}
+                          </mat-option>
+                        </mat-select>
+                        <control-messages [control]="birthCorrectionForm.get('birthCorrectionCopyMode').get('code')">
+                        </control-messages>
+                      </mat-form-field>
+
+                      <mat-form-field class="col-md-4">
+                        <input matInput [max]="100"  type="number" [min]="1 "  OnlyNumber (keypress)="getlength($event)"
+                               placeholder="{{'total_copies' | translate:translateKey}} *" formControlName="totalCopies">
+                        <control-messages [control]="birthCorrectionForm.get('totalCopies')"></control-messages>
+                      </mat-form-field>
+
                         <mat-form-field class="col-md-4">
                             <input required matInput [form]="birthCorrectionForm" maxlength="50" appGujInputSource
                                 targetElement="childNameGuj" appValidationFields
