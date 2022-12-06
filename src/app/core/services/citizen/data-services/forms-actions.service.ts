@@ -152,6 +152,10 @@ export class FormsActionsService {
 		this.requestURL = `api/form/${this.apiType}/printReceiptForPayment?id=${appId}`;
 		return this.http.get(this.requestURL,'printReceipt');
 	}
+	printAfterReschedule(appId){
+		this.requestURL = `api/form/${this.apiType}/printReceiptAfterReschedule?id=${appId}`;
+		return this.http.get(this.requestURL,'printReceipt');
+	}
 
 	/**
 	 * This method is use to generate print view
