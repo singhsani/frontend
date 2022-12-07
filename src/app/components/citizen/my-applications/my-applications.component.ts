@@ -649,6 +649,15 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		else
 			return false;
 	}
+
+	isPrintReceiptAfterReschedule(row)
+	{    
+	
+		if(row.fileStatus == 'SUBMITTED'  && row.serviceType == 'MARRIAGE_REGISTRATION')
+		{
+		return true;
+	}
+}
 	getInnerHTML() {
 		return `<b>Remarks :</b> ${this.rejectRemarks}`;
 	}
@@ -845,6 +854,29 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 			this.formService.printPaymentReceipt(id).subscribe(
+				receiptResponse => {
+					let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
+					sectionToPrintReceipt.innerHTML = receiptResponse;
+					setTimeout(() => {
+						window.print();
+					}, 300);
+				},
+				err => {
+					this.commonService.openAlert('Error!', err.error[0].message, 'error');
+				}
+			)
+		}
+
+	}
+
+	PrintReceiptAfterReschedule(apiCode: string, id: number) {
+
+		if (this.urlMap.has(apiCode)) {
+			this.printPropertyACKReceiptAdmin(apiCode, id);
+		} else {
+
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+			this.formService.printAfterReschedule(id).subscribe(
 				receiptResponse => {
 					let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
 					sectionToPrintReceipt.innerHTML = receiptResponse;
