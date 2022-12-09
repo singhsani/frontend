@@ -42,8 +42,8 @@
         <div class="row">
           <div class="col-md-4">
             <div class="ngSelect">
-              <ng-select required placeholder="Rebate Type *" [items]="rebateTypeList" bindValue="itemId"
-                bindLabel="itemName" name="rebateTypeId" [(ngModel)]="model.rebateTypeId"
+              <ng-select required placeholder="Rebate Type *" [items]="rebateTypeList" bindValue="taxRebateId"
+                bindLabel="taxRebateTypeName" name="taxRebateMstId" [(ngModel)]="model.taxRebateMstId"
                 #RebateTypeLookupId="ngModel"
                 [ngClass]="{'ng-invalid ng-touched':  formDetail.submitted && RebateTypeLookupId.invalid}">
               </ng-select>
