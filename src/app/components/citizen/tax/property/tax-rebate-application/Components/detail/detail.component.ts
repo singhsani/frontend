@@ -49,19 +49,22 @@ export class DetailComponent implements OnInit {
 
       }
     });
-
-   this.getLookups()
+    this.getRebatTypeList();
     this.getFinancialYear();
   }
 
-  getLookups() {
-    let lookupcode = `lookup_codes=${Constants.LookupCodes.Rebate_Type}`;
-    this.taxRebateApplicationService.getLookupValuesAccordingToScreen(lookupcode).subscribe(data => {
-      this.rebateTypeList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.Rebate_Type))[0].items;
-
-    });
+ getRebatTypeList() {
+    this.taxRebateApplicationService.getRebatType({ active: true,approvalRequired:true }).subscribe(
+      (data) => {
+        if (data.status === 200 && data.body.length) {
+          this.rebateTypeList = data.body;
+        }
+      },
+      (error) => {
+        this.alertService.error(error.error.message);
+      }
+    )
   }
-
   getFinancialYear() {
     this.taxRebateApplicationService.getFinancialYear().subscribe(
       (data) => {
