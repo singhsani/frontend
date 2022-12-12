@@ -31,13 +31,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <mat-form-field class="full-width-input">
-                <input trim="blur" matInput name="propertyNo" placeholder="{{'property_no' | translate:translateKey }} " [(ngModel)]="addressModel.propertyNo" disabled>
-                </mat-form-field>
-            </div>
             <div class="col-md-6">
               <mat-form-field class="full-width-input">
                   <mat-label>Old Property No / Census No</mat-label>
@@ -46,12 +39,19 @@
               </mat-form-field>
           </div>
         </div>
+        <!-- <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input" hidden>
+                <input trim="blur" matInput name="propertyNo" placeholder="{{'property_no' | translate:translateKey }} " [(ngModel)]="addressModel.propertyNo" disabled>
+                </mat-form-field>
+            </div>
+         </div> -->
         <div class="row">
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                 <input trim="blur" matInput placeholder="{{'reference_property_no' | translate:translateKey }} " name="referencePropertyNo"
                         minlength="12" #ReferencePropertyNo="ngModel" (blur)="onBlurReferenceProperty(ReferencePropertyNo.invalid)"
-                        [(ngModel)]="addressModel.referencePropertyNo" maxlength="255" mask-property-no>
+                        [(ngModel)]="addressModel.referencePropertyNo" maxlength="12" mask-property-no>
                     <mat-error *ngIf="ReferencePropertyNo.invalid">*Invalid Reference Property No.</mat-error>
                 </mat-form-field>
             </div>
