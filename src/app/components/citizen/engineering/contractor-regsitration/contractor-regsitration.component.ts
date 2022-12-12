@@ -92,10 +92,10 @@ export class ContractorRegsitrationComponent implements OnInit {
   }
   setFormControlToTabIndexMap() {
 
-    this.formControlNameToTabIndex.set('firstName', 0)
+    this.formControlNameToTabIndex.set('nameOfTheFirm', 0)
     this.formControlNameToTabIndex.set('middleName', 0)
     this.formControlNameToTabIndex.set('lastName', 0)
-    this.formControlNameToTabIndex.set('mobileNumber', 0)
+    this.formControlNameToTabIndex.set('officeContactNumber', 0)
     this.formControlNameToTabIndex.set('emailId', 0)
     this.formControlNameToTabIndex.set('ownerFirstName', 0)
     this.formControlNameToTabIndex.set('ownerMiddleName', 0)
@@ -126,10 +126,10 @@ export class ContractorRegsitrationComponent implements OnInit {
       serviceFormId: null,
       applicationNumber: null,
       canEdit: [true],
-      firstName: [null, [Validators.required, Validators.maxLength(50)]],
+      nameOfTheFirm: [null, [Validators.required, Validators.maxLength(50)]],
       middleName: [null, [Validators.maxLength(50)]],
       lastName: [null, [Validators.required, Validators.maxLength(50)]],
-      mobileNumber: [null, [Validators.required]],
+      officeContactNumber: [null, [Validators.required]],
       emailId: [null, [ValidationService.emailValidator]],
       gstNo: [null],
       panNo: [null, [Validators.required, ValidationService.panValidator]],
@@ -426,7 +426,7 @@ export class ContractorRegsitrationComponent implements OnInit {
       "firstName": "Arvind Dangi",
       "middleName": "Dangi",
       "lastName": "Dangi",
-      "mobileNumber": "8962749074",
+      "officeContactNumber": "8962749074",
       "emailId": "chetan.porwal@nascentinfo.com",
       "panNo": "DFVFD1212D",
       "gstNo": "24ANCPP4357N2ZL",
