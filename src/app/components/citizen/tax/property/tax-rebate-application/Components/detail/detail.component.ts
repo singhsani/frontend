@@ -57,7 +57,18 @@ export class DetailComponent implements OnInit {
     this.taxRebateApplicationService.getRebatType({ active: true,approvalRequired:true }).subscribe(
       (data) => {
         if (data.status === 200 && data.body.length) {
-          this.rebateTypeList = data.body;
+
+        const obj = {};
+        for (let i = 0, len = data.body.length; i < len; i++) {
+          obj[data.body[i]['taxRebateTypeName']] = data.body[i];
+        }
+
+        let uniqueArray = new Array();
+
+        for (const key in obj) { 
+          uniqueArray.push(obj[key]);
+        }
+        this.rebateTypeList = uniqueArray;
         }
       },
       (error) => {
