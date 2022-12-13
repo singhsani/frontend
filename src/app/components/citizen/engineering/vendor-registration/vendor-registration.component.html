@@ -1172,10 +1172,19 @@
               </control-messages>
             </mat-form-field>
 
+            <mat-form-field class="col-md-12">
+              <input matInput type="text" maxlength="1000" appValidationFields
+                validationFieldsType='appAlphanumericNumberWithDashAndComa'
+                placeholder="{{'Method adopted for Quality Control.'}}"
+                formControlName="methodEmployeeIdentify">
+              <control-messages [control]="vendorRegistrationForm.get('methodEmployeeIdentify')">
+              </control-messages>
+            </mat-form-field>
+
             <div class="col-md-6">
 
               <div>
-                <mat-label> Is the person in-charge for Quality control independent of production control? with..</mat-label>
+                <mat-label> Is the person in-charge for Quality control independent of production control?</mat-label>
               </div>
 
               <mat-radio-group formControlName="adoptedForQualityControl" class="radioGroup">
