@@ -457,4 +457,8 @@ export class MarriageDuplicateComponent implements OnInit {
 		this.showSearchForm = false;
 		this.isVisibeDuplicateForm = false;
 	}
+
+	getlength(event){
+		return false
+	}
 }
