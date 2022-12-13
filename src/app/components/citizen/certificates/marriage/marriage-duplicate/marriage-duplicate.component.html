@@ -159,9 +159,13 @@
 							</control-messages>
 						</mat-form-field>
 
-						<mat-form-field class="col-md-4">
+						<!-- <mat-form-field class="col-md-4">
 							<input matInput maxlength="2" type="number" [min]="0" OnlyNumber
 								placeholder="{{'total_copies' | translate:translateKey}}" formControlName="totalCopies">
+							<control-messages [control]="marriageDuplicateForm.get('totalCopies')"></control-messages>
+						</mat-form-field> -->
+						<mat-form-field class="col-md-4">
+							<input matInput  OnlyNumber maxlength="10" minlength="1" placeholder="{{'total_copies' | translate:translateKey}}" formControlName="totalCopies">
 							<control-messages [control]="marriageDuplicateForm.get('totalCopies')"></control-messages>
 						</mat-form-field>
 
