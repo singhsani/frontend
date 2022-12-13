@@ -412,6 +412,9 @@ export class VendorRegistrationComponent implements OnInit {
       headAlterMobileNumber: [null, [Validators.maxLength(10), Validators.minLength(10)]],
       headISDNumber: [null, [Validators.maxLength(12)]],
       headSTDNumber: [null, [Validators.maxLength(11)]],
+      headName: [null, [Validators.required, Validators.maxLength(150)]],
+      headDesignation: [null],
+      headEmail: [null, [Validators.required, ValidationService.emailValidator]],
 
       resContactNumber: [null, [Validators.required]],
       resFaxNumber: [null, [ValidationService.faxValidation]],
@@ -419,6 +422,8 @@ export class VendorRegistrationComponent implements OnInit {
 
       factoryAddress: this.fb.group(this.officeAddrComponent.addressControls()),
       registeredAddress: this.fb.group(this.resAddrComponent.addressControls()),
+      branchAddress: this.fb.group(this.resAddrComponent.addressControls()),
+      contactAddress: this.fb.group(this.resAddrComponent.addressControls()),
 
       namesOfTheOwner: null,
       //manufacturingOwnedDetails: null,
@@ -988,6 +993,9 @@ export class VendorRegistrationComponent implements OnInit {
       "headAlterMobileNumber": "7485967485",
       "headISDNumber": "7485967485",
       "headSTDNumber": "7485967485",
+      "headName": "Arvind Dangi",
+      "headDesignation": "gjkgjkhg",
+      'headEmail': "hkhJ@gmail.com",
       "licencesISIBISCE": "7485967485"
 
     }
