@@ -37,7 +37,7 @@
                 <mat-form-field class="col-md-4">
                     <input matInput trim type="text" formControlName="childName" appGujInputSource
                         targetElement="childNameGuj" placeholder="{{'child_name' | translate: translateKey}}" required
-                        readonly>
+                        >
                     <control-messages [control]="birthDuplicateForm.get('childName')"></control-messages>
                 </mat-form-field>
 
@@ -87,14 +87,14 @@
                 <mat-form-field class="col-md-6">
                     <input matInput trim type="text" formControlName="motherFirstName" appGujInputSource
                         targetElement="motherFirstNameGuj" placeholder="{{'mother_name' | translate: translateKey}}"
-                        required readonly>
+                        required >
                         <mat-error *ngIf="birthDuplicateForm.get('motherFirstName').invalid">Mother Name is Required.</mat-error>
                     <!-- <control-messages [control]="birthDuplicateForm.get('motherFirstName')"></control-messages> -->
                 </mat-form-field>
 
                 <mat-form-field class="col-md-6">
                     <input matInput appGujInputTarget placeholder="{{'mother_name' | translate:translateKey:'gu'}}"
-                        formControlName="motherFirstNameGuj"readonly>
+                        formControlName="motherFirstNameGuj">
                         <mat-error *ngIf="birthDuplicateForm.get('motherFirstNameGuj').invalid">Mother Name Gujarati is Required.</mat-error>
                     <!-- <control-messages [control]="birthDuplicateForm.get('motherFirstNameGuj')"></control-messages> -->
                 </mat-form-field>
@@ -108,14 +108,14 @@
                 <mat-form-field class="col-md-6">
                     <input matInput trim formControlName="fatherFirstName" appGujInputSource
                         targetElement="fatherFirstNameGuj" placeholder="{{'father_name' | translate: translateKey}}"
-                        required readonly>
+                        required >
                         <mat-error *ngIf="birthDuplicateForm.get('fatherFirstName').invalid">Father Name is Required.</mat-error>
                     <!-- <control-messages [control]="birthDuplicateForm.get('fatherFirstName')"></control-messages> -->
                 </mat-form-field>
 
                 <mat-form-field class="col-md-6">
                     <input matInput trim appGujInputTarget placeholder="{{'father_name' | translate:translateKey:'gu'}}"
-                        formControlName="fatherFirstNameGuj" readonly>
+                        formControlName="fatherFirstNameGuj" >
                         <mat-error *ngIf="birthDuplicateForm.get('fatherFirstNameGuj').invalid">Father Name Gujarati is Required.</mat-error>
                     <!-- <control-messages [control]="birthDuplicateForm.get('fatherFirstNameGuj')"></control-messages> -->
                 </mat-form-field>
@@ -163,14 +163,14 @@
                 <mat-form-field class="col-md-12">
                     <input matInput trim type="text" formControlName="birthaddress" appGujInputSource
                         targetElement="birthaddressguj" placeholder="{{'address' | translate: translateKey}}" required
-                        readonly>
+                        >
                         <mat-error *ngIf="birthDuplicateForm.get('birthaddress').invalid">Birth Address is Required.</mat-error>
                     <!-- <control-messages [control]="birthDuplicateForm.get('birthaddress')"></control-messages> -->
                 </mat-form-field>
 
                 <mat-form-field class="col-md-12">
                     <input matInput trim appGujInputTarget placeholder="{{'address' | translate:translateKey:'gu'}}"
-                        formControlName="birthaddressguj" readonly>
+                        formControlName="birthaddressguj" >
                         <mat-error *ngIf="birthDuplicateForm.get('birthaddressguj').invalid">Birth Address Gujarati is Required.</mat-error>
                     <!-- <control-messages [control]="birthDuplicateForm.get('birthaddressguj')"></control-messages> -->
                 </mat-form-field>
@@ -178,7 +178,7 @@
                 <mat-form-field class="col-md-12">
                     <input matInput trim type="text" formControlName="permanentadd" appGujInputSource
                         targetElement="permanentaddguj" placeholder="{{'permanent_add' | translate: translateKey}}"
-                        required readonly>
+                        required >
                         <mat-error *ngIf="birthDuplicateForm.get('permanentadd').invalid">Permanent Address is Required.</mat-error>
                     <!-- <control-messages [control]="birthDuplicateForm.get('permanentadd')"></control-messages> -->
                 </mat-form-field>
@@ -186,7 +186,7 @@
                 <mat-form-field class="col-md-12">
                     <input matInput trim appGujInputTarget
                         placeholder="{{'permanent_add' | translate:translateKey:'gu'}}"
-                        formControlName="permanentaddguj" readonly>
+                        formControlName="permanentaddguj" >
                         <mat-error *ngIf="birthDuplicateForm.get('permanentaddguj').invalid">Permanent Address Gujarati is Required.</mat-error>
                     <!-- <control-messages [control]="birthDuplicateForm.get('permanentaddguj')"></control-messages> -->
                 </mat-form-field>
