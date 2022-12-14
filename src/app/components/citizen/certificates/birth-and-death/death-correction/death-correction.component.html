@@ -200,7 +200,7 @@
                     </div>
 
                 <app-action-bar [uploadFiles]="uploadFileArray" [form]="deathCorrectionForm"
-                    [stepInfo]="{step: 'step0', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"
+                    [stepInfo]="{step: 'step1', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"
                     (tabIndex)="onTabChange($event)"></app-action-bar>
                 <!-- <app-action-bar [uploadFiles]="uploadFileArray" [form]="deathCorrectionForm" [step]="'step1'"
                     (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar> -->
@@ -264,8 +264,8 @@
                     </div> -->
 
 
-                <app-action-bar [paymentGateway]="paymentGateway" [form]="deathCorrectionForm" [isstepper]="false"
-                    [stepInfo]="{step: 'final', next: 2, back: 1}" [uploadFiles]="uploadFileArray" [isstepper]="false"
+                <app-action-bar [paymentGateway]="paymentGateway" [form]="deathCorrectionForm" 
+                    [stepInfo]="{step: 'final', next: 2, back: 0}" [uploadFiles]="uploadFileArray" 
                     (handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onTabChange($event)"></app-action-bar>
                 <!-- <app-action-bar [uploadFiles]="uploadFileArray" [form]="deathCorrectionForm" [step]="'final'"
                     (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar> -->
