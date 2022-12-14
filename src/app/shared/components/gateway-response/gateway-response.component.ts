@@ -350,7 +350,7 @@ export class GatewayResponseComponent implements OnInit {
 	}
 
 	redirectToHome() {
-		if (this.dispData.payableServiceType == "PROFESSIONAL_TAX") {
+		if (this.dispData.payableServiceType == "PROFESSIONAL_TAX" || this.dispData.payableServiceType == "HEL-DUPDR" ||this.dispData.payableServiceType =="HEL-BCR" || this.dispData.payableServiceType =="HEL-DCR" || this.dispData.payableServiceType =="HEL-DUPBR") {
 
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS')]);
 

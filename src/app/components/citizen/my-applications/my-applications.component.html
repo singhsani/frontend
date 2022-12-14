@@ -445,12 +445,24 @@
                                 {{'preview_application' | translate:translateKey}}
                             </button>
                             <!-- (row.fileStatus == 'SUBMITTED' && -->
-                            <button mat-menu-item *ngIf="(isPrintReceipt(row))" color="primary"
+                            <ng-container *ngIf="!(row.serviceType == 'DEATH_CORRECTION_REGISTRATION' && row.fileStatus == 'SUBMITTED')">
+                                <button mat-menu-item *ngIf="(isPrintReceipt(row))" color="primary"
+                                    (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                                    <mat-icon class="m-1" title="{{'print_receipt' | translate:translateKey}}">print
+                                    </mat-icon>
+                                    {{'print_receipt' | translate:translateKey}}
+                                </button>
+                            </ng-container>
+                           
+                            <ng-container *ngIf="row.serviceType == 'DEATH_CORRECTION_REGISTRATION' && row.fileStatus == 'SUBMITTED'">
+                                <button mat-menu-item *ngIf="(isPrintReceipt(row))" color="primary"
                                 (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
                                 <mat-icon class="m-1" title="{{'print_receipt' | translate:translateKey}}">print
                                 </mat-icon>
-                                {{'print_receipt' | translate:translateKey}}
+                                         {{'print_acknolowdgement_receipt' | translate:translateKey}}
                             </button>
+                            </ng-container>
+                            
 
                             <button mat-menu-item
                                 *ngIf="(row.fileStatus == 'CANCELLED' && row.serviceType == 'SHOP_ESTAB_APPLICATION') ||
