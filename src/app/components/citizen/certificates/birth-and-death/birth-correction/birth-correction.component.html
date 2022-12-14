@@ -43,7 +43,7 @@
 
                 <h2>{{'child_details' | translate:translateKey}}</h2>
 
-                <div *ngIf="allowChildNameInsertion">
+                  <div *ngIf="allowChildNameInsertion">
                     <div class="row">
 
                       <mat-form-field formGroupName="birthCorrectionCopyMode" class="col-md-4">
@@ -125,7 +125,7 @@
                             <input matInput maxlength="150" appValidationFields [form]="birthCorrectionForm"
                                 appGujInputSource targetElement="fatherFirstNameGuj"
                                 placeholder="{{'first_name' | translate:translateKey}}"
-                                formControlName="fatherFirstName" required readonly>
+                                formControlName="fatherFirstName" required>
                             <mat-error *ngIf="birthCorrectionForm.get('fatherFirstName').invalid">Father Name is
                                 Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('fatherFirstName')"></control-messages> -->
@@ -150,7 +150,7 @@
                             <input matInput maxlength="150" [form]="birthCorrectionForm" appGujInputSource
                                 targetElement="motherFirstNameGuj"
                                 placeholder="{{'mother_name' | translate:translateKey}}"
-                                formControlName="motherFirstName" required readonly>
+                                formControlName="motherFirstName" required>
                             <mat-error *ngIf="birthCorrectionForm.get('motherFirstName').invalid">Mother Name is
                                 Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('motherFirstName')"></control-messages> -->
@@ -210,7 +210,7 @@
                         <mat-form-field class="col-md-12">
                             <input matInput trim type="text" formControlName="birthaddress" appGujInputSource
                                 targetElement="birthaddressguj"
-                                placeholder="{{'birth_address' | translate: translateKey}}" required readonly>
+                                placeholder="{{'birth_address' | translate: translateKey}}" required >
                             <mat-error *ngIf="birthCorrectionForm.get('birthaddress').invalid">Birth Address is
                                 Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('birthaddress')"></control-messages> -->
@@ -220,7 +220,7 @@
                             <input matInput maxlength="150" appPreventSpace appGujInputTarget
                                 [form]="birthCorrectionForm"
                                 placeholder="{{'birth_address' | translate:translateKey:'gu'}}"
-                                formControlName="birthaddressguj" readonly>
+                                formControlName="birthaddressguj" >
                             <mat-error *ngIf="birthCorrectionForm.get('birthaddressguj').invalid">Birth Address Gujarati
                                 is Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('birthaddressguj')"></control-messages> -->
@@ -229,7 +229,7 @@
                         <mat-form-field class="col-md-12">
                             <input matInput trim type="text" formControlName="permanentadd" appGujInputSource
                                 targetElement="permanentaddguj"
-                                placeholder="{{'permanent_add' | translate: translateKey}}" required readonly>
+                                placeholder="{{'permanent_add' | translate: translateKey}}" required>
                             <mat-error *ngIf="birthCorrectionForm.get('permanentadd').invalid">Permanent Address is
                                 Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('permanentadd')"></control-messages> -->
@@ -239,7 +239,7 @@
                             <input matInput maxlength="150" appPreventSpace appGujInputTarget
                                 [form]="birthCorrectionForm"
                                 placeholder="{{'permanent_add' | translate:translateKey:'gu'}}"
-                                formControlName="permanentaddguj" readonly>
+                                formControlName="permanentaddguj">
                             <mat-error *ngIf="birthCorrectionForm.get('permanentaddguj').invalid">Permanent Address
                                 Gujarati is Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('permanentaddguj')"></control-messages> -->
@@ -477,7 +477,7 @@
                         <mat-form-field class="col-md-12">
                             <input matInput trim type="text" formControlName="permanentadd" appGujInputSource
                                 targetElement="permanentaddguj"
-                                placeholder="{{'permanent_add' | translate: translateKey}}" required readonly>
+                                placeholder="{{'permanent_add' | translate: translateKey}}" required >
                             <mat-error *ngIf="birthCorrectionForm.get('permanentadd').invalid">Permanent Address is
                                 Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('permanentadd')"></control-messages> -->
@@ -487,7 +487,7 @@
                             <input matInput maxlength="150" appPreventSpace appGujInputTarget
                                 [form]="birthCorrectionForm"
                                 placeholder="{{'permanent_add' | translate:translateKey:'gu'}}"
-                                formControlName="permanentaddguj" readonly>
+                                formControlName="permanentaddguj">
                             <mat-error *ngIf="birthCorrectionForm.get('permanentaddguj').invalid">Permanent Address
                                 Gujarati is Required.</mat-error>
                             <!-- <control-messages [control]="birthCorrectionForm.get('permanentaddguj')"></control-messages> -->

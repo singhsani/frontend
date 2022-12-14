@@ -92,18 +92,9 @@
             </mat-form-field>
             <mat-form-field class="col-md-4">
               <input matInput type="text" appValidationFields validationFieldsType='alphanumericWithSpace' required
-                class="capitalCase" maxlength="10" required placeholder="{{'PAN No. (Attach certified copy)'}}"
+                class="capitalCase" maxlength="10" required placeholder="{{'PAN/TAN NO. (Attach certified copy)'}}"
                 formControlName="panNo">
               <control-messages [control]="vendorRegistrationForm.get('panNo')">
-              </control-messages>
-            </mat-form-field>
-
-            <mat-form-field class="col-md-4">
-              <input matInput type="text" appValidationFields validationFieldsType='alphanumericWithSpace'
-              required
-                class="capitalCase" maxlength="10" placeholder="{{'TAN No. (Attach certified copy)'}}"
-                formControlName="tanNo">
-              <control-messages [control]="vendorRegistrationForm.get('tanNo')">
               </control-messages>
             </mat-form-field>
 
@@ -123,7 +114,7 @@
             <mat-form-field class="col-md-4">
               <mat-label>{{'GST Registration Date'}}</mat-label>
               <input appDate matInput (dateChange)="onDateChange('gstRegiDate', $event.value)" [max]="maxDate"
-                [matDatepicker]="gstRegiDate" formControlName="gstRegiDate">
+                [matDatepicker]="gstRegiDate" [formControlName]="gstRegiDate">
               <mat-datepicker-toggle matSuffix [for]="gstRegiDate"></mat-datepicker-toggle>
               <mat-datepicker #gstRegiDate touchUi="true"></mat-datepicker>
               <control-messages [control]="vendorRegistrationForm.get('gstRegiDate')">
@@ -166,7 +157,7 @@
           </mat-form-field>
 
           <div class="row">
-            <h2><b>{{'Address of the Registered Office'}}</b></h2>
+            <h2><b>{{'Address of the Registered Office / Head Office'}}</b></h2>
             <app-address #resAddr [requiredFeilds]="true"
               [addressFormGroup]="vendorRegistrationForm.get('registeredAddress')">
             </app-address>
@@ -195,6 +186,10 @@
 
           <div class="row">
             <h2><b>{{'Branch Office address'}}</b></h2>
+            <app-address #resAddr [requiredFeilds]="true"
+              [addressFormGroup]="vendorRegistrationForm.get('branchAddress')">
+            </app-address>
+          </div>
             <mat-form-field class="col-md-3">
               <input matInput type="text" required OnlyNumber maxlength="10" placeholder="{{'Mobile number'}}"
                 formControlName="branchMobileNumber">
@@ -220,10 +215,28 @@
               </control-messages>
             </mat-form-field>
 
-          </div>
+          
 
           <div class="row">
-            <h2><b>{{'Head Office Address'}}</b></h2>
+            <h2><b>{{'Contact Person Details'}}</b></h2>
+            <app-address #resAddr [requiredFeilds]="true"
+              [addressFormGroup]="vendorRegistrationForm.get('contactAddress')">
+            </app-address>
+          </div>
+          <mat-form-field class="col-md-4">
+            <input matInput type="text" appValidationFields validationFieldsType='alphanumericWithSpace' required
+              maxlength="150" placeholder="{{'Name'}}" 
+              formControlName="headName">
+            <control-messages [control]="vendorRegistrationForm.get('headName')">
+            </control-messages>
+          </mat-form-field>
+          <mat-form-field class="col-md-4">
+            <input matInput type="text" appValidationFields validationFieldsType='alphanumericWithSpace'
+              maxlength="150" placeholder="{{'Designation'}}" 
+              formControlName="headDesignation">
+            <control-messages [control]="vendorRegistrationForm.get('headDesignation')">
+            </control-messages>
+          </mat-form-field>
             <mat-form-field class="col-md-3">
               <input matInput type="text" required OnlyNumber maxlength="10" placeholder="{{'Mobile number'}}"
                 formControlName="headMobileNumber">
@@ -231,8 +244,14 @@
               </control-messages>
             </mat-form-field>
             <mat-form-field class="col-md-3">
+              <input matInput type="text" required placeholder="{{'Email Id'}}" maxlength="50"
+                formControlName="headEmail">
+              <control-messages [control]="vendorRegistrationForm.get('headEmail')">
+              </control-messages>
+            </mat-form-field>
+            <mat-form-field class="col-md-3">
               <input matInput type="text" OnlyNumber maxlength="10" minlength="10"
-                placeholder="{{'Alternate Mobile Number'}}" formControlName="headAlterMobileNumber">
+                placeholder="{{'Telephone Number'}}" formControlName="headAlterMobileNumber">
               <control-messages [control]="vendorRegistrationForm.get('headAlterMobileNumber')">
               </control-messages>
             </mat-form-field>
@@ -249,7 +268,7 @@
               </control-messages>
             </mat-form-field>
 
-          </div>
+          
 
 
           <div class="fotButtonBar clearfix">
@@ -1153,10 +1172,19 @@
               </control-messages>
             </mat-form-field>
 
+            <mat-form-field class="col-md-12">
+              <input matInput type="text" maxlength="1000" appValidationFields
+                validationFieldsType='appAlphanumericNumberWithDashAndComa'
+                placeholder="{{'Method adopted for Quality Control.'}}"
+                formControlName="methodEmployeeIdentify">
+              <control-messages [control]="vendorRegistrationForm.get('methodEmployeeIdentify')">
+              </control-messages>
+            </mat-form-field>
+
             <div class="col-md-6">
 
               <div>
-                <mat-label> Is the person in-charge for Quality control independent of production control? with..</mat-label>
+                <mat-label> Is the person in-charge for Quality control independent of production control?</mat-label>
               </div>
 
               <mat-radio-group formControlName="adoptedForQualityControl" class="radioGroup">
