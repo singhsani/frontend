@@ -24,12 +24,15 @@ export class PropertySearchComponent implements OnInit {
   wardZoneLevel4List = [];
   propertyNo: string;
 
-  displayedColumns: string[] = ['propertyNo', 'propertyAddress', 'ownerNames', 'serialNo', 'select'];
+  displayedColumns: string[] = ['propertyNo', 'address', 'ownerNames', 'serialNo', 'select'];
   dataSource = new MatTableDataSource([]);
   selectedItem: any = null;
   isSearchByPropertyNo: boolean = false;
   isShowTable: boolean = false;
-  @ViewChild(MatSort) sort:MatSort;
+  @ViewChild(MatSort)
+  set sort(value: MatSort) {
+    this.dataSource.sort = value;
+  }
   @ViewChild(MatPaginator) paginator: MatPaginator;
   pageRecord = Constants.pageRecord;
   resultsLength: number = 0;
