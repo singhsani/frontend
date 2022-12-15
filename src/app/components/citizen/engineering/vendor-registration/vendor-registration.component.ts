@@ -201,6 +201,10 @@ export class VendorRegistrationComponent implements OnInit {
         this.vendorRegistrationForm.get('canEdit').setValue(false);
       }
 
+      // to remove the intaial (frist index) of data 
+      (<FormArray>this.vendorRegistrationForm.get('vendorNameDetails')).removeAt(this.vendorRegistrationForm.controls.vendorNameDetails.value[0]);
+      (<FormArray>this.vendorRegistrationForm.get('listOfItemMaterial')).removeAt(this.vendorRegistrationForm.controls.listOfItemMaterial.value[0]);
+      
       res.vendorNameDetails.forEach(app => {
         (<FormArray>this.vendorRegistrationForm.get('vendorNameDetails')).push(this.createFormGroupVendor('vendorNameDetails', app));
       });
@@ -525,9 +529,9 @@ export class VendorRegistrationComponent implements OnInit {
     });
 
     // this.academicQualifications.push(this.createEducationQualification());
-    // this.academicQualificationAndExperience.push(this.createEducationQualification());
-    // this.vendorNameArray.push(this.createVendorNameArray());
-    // this.listOfItemMaterialSupplier.push(this.createItemMaterialSupplier());
+  //  this.academicQualificationAndExperience.push(this.createEducationQualification());
+    this.vendorNameArray.push(this.createVendorNameArray());
+    this.listOfItemMaterialSupplier.push(this.createItemMaterialSupplier());
     // this.vendorNameLastYear.push(this.createItemMaterialSupplierLastThreeYear());
     // this.vendorNameAuthorized.push(this.createItemAuthorized());
     // this.vendorNameholding.push(this.createItemHolding());
@@ -601,7 +605,7 @@ export class VendorRegistrationComponent implements OnInit {
     this.vendorTypeFirm = this.vendorTypeFirm.filter(o => o.code === event.value);
 
     if (event.value == 'PROPRIETORSHIP') {
-      this.vendorNameArray.push(this.createVendorNameArray());
+     // this.vendorNameArray.push(this.createVendorNameArray());
       this.vendorArrayNameButtons = true;
     } else {
       this.vendorArrayNameButtons = false;
@@ -615,10 +619,10 @@ export class VendorRegistrationComponent implements OnInit {
 
   createItemMaterialSupplier(): FormGroup {
     return this.fb.group({
-      itemsMaterial: null,
+      itemsMaterial: [null,[Validators.required]],
       rating: null,
       description: null,
-      isNumber: null,
+      isNumber: [null,[Validators.required]],
     });
   }
 
@@ -678,11 +682,11 @@ export class VendorRegistrationComponent implements OnInit {
   createVendorNameArray(): FormGroup {
     return this.fb.group({
       ownerType: this.fb.group({
-        code: null,
+        code: [null,[Validators.required]],
         name: null
       }),
-      ownerName: null,
-      ownerAddress: null
+      ownerName: [null,[Validators.required]],
+      ownerAddress: [null,[Validators.required]]
     });
   }
 
