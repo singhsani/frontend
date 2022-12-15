@@ -349,7 +349,7 @@
 
                   <td class="designationDrop">
 
-                    <div [formGroup]="row.get('ownerType')">
+                    <div [formGroup]="row.get('ownerType')" class="ngSelect">
                       <ng-select formControlName="code">
                         <ng-option *ngFor="let impl of vendorTypeFirm" [value]="impl.code">{{impl.name}}
                         </ng-option>
@@ -418,7 +418,7 @@
                   <tbody>
                     <tr>
                       <th class="text-center">Items / Materials</th>
-                      <th class="text-center">Rating</th>
+                      <th class="text-center">Brand/Grade/Rating</th>
                       <th class="text-center">Description</th>
                       <th class="text-center">IS Number</th>
                       <th class="text-center">Action</th>
