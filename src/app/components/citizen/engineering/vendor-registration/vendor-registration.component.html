@@ -69,7 +69,7 @@
               </control-messages>
             </mat-form-field>
 
-            <div class="col-md-4 ngSelect">
+            <!-- <div class="col-md-4 ngSelect">
               <mat-form-field class="year-picker ">
                 <input matInput [matDatepicker]="datepicker" [max]="maxDate" [min]="_min"
                   formControlName="yearOfEstablishment" (click)="_openDatepickerOnClick(datepicker)"
@@ -86,7 +86,18 @@
                   Year is Required.
                 </div>
               </mat-error>
-            </div>
+            </div> -->
+            <app-year-picker class="col-md-3" [max]="maxDate" mode="YEAR" label="Year"
+            formControlName="yearOfEstablishment" required>
+            <mat-error class="mat-error ng-star-inserted"
+              *ngIf="vendorRegistrationForm.get('yearOfEstablishment').invalid && (vendorRegistrationForm.get('yearOfEstablishment').dirty || vendorRegistrationForm.get('yearOfEstablishment').touched)">
+              <div *ngIf="vendorRegistrationForm.get('yearOfEstablishment').errors.required">
+                Year is Required.
+              </div>
+            </mat-error>
+          </app-year-picker>
+
+
 
             <mat-form-field class="col-md-4">
               <input matInput autocomplete="off" appDate formControlName="commencementDate" [max]="maxDate"
