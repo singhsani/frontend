@@ -69,36 +69,16 @@
               </control-messages>
             </mat-form-field>
 
-            <!-- <div class="col-md-4 ngSelect">
-              <mat-form-field class="year-picker ">
-                <input matInput [matDatepicker]="datepicker" [max]="maxDate" [min]="_min"
-                  formControlName="yearOfEstablishment" (click)="_openDatepickerOnClick(datepicker)"
-                  (focus)="_openDatepickerOnFocus(datepicker)" placeholder="Year" readonly>
-                <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
-
-                <mat-datepicker #datepicker [touchUi]="touchUi" startView="multi-year"
-                  (yearSelected)="_yearSelectedHandler($event,datepicker)" panelClass="year-picker">
-                </mat-datepicker>
-              </mat-form-field>
+            <mat-form-field class="col-md-4 ">
+              <input matInput  type="text" OnlyNumber required maxlength="4" formControlName="yearOfEstablishment" placeholder="Year"  (change)="getYearChange($event.target.value)">
               <mat-error class="mat-error ng-star-inserted"
                 *ngIf="vendorRegistrationForm.get('yearOfEstablishment').invalid && (vendorRegistrationForm.get('yearOfEstablishment').dirty || vendorRegistrationForm.get('yearOfEstablishment').touched)">
                 <div *ngIf="vendorRegistrationForm.get('yearOfEstablishment').errors.required">
                   Year is Required.
                 </div>
               </mat-error>
-            </div> -->
-            <app-year-picker class="col-md-3" [max]="maxDate" mode="YEAR" label="Year"
-            formControlName="yearOfEstablishment" required>
-            <mat-error class="mat-error ng-star-inserted"
-              *ngIf="vendorRegistrationForm.get('yearOfEstablishment').invalid && (vendorRegistrationForm.get('yearOfEstablishment').dirty || vendorRegistrationForm.get('yearOfEstablishment').touched)">
-              <div *ngIf="vendorRegistrationForm.get('yearOfEstablishment').errors.required">
-                Year is Required.
-              </div>
-            </mat-error>
-          </app-year-picker>
-
-
-
+            </mat-form-field>
+            
             <mat-form-field class="col-md-4">
               <input matInput autocomplete="off" appDate formControlName="commencementDate" [max]="maxDate"
                 [min]="minDateNew" [matDatepicker]="commencementDatePicker"
