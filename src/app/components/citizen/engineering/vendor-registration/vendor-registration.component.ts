@@ -1,6 +1,6 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { Component, forwardRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { DateAdapter, MatDatepicker, MatDialog, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { ValidationService } from 'src/app/shared/services/validation.service';
@@ -13,11 +13,22 @@ import { FormsActionsService } from 'src/app/core/services/citizen/data-services
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { ManageRoutes } from 'src/app/config/routes-conf';
 import { CitizenConfig } from '../../citizen-config';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { YearPickerComponent, YEAR_MODE_FORMATS } from 'src/app/shared/components/year-picker/year-picker.component';
 
 @Component({
   selector: 'app-vendor-registration',
   templateUrl: './vendor-registration.component.html',
-  styleUrls: ['./vendor-registration.component.scss']
+  styleUrls: ['./vendor-registration.component.scss'],
+  providers: [
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: YEAR_MODE_FORMATS },
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => YearPickerComponent),
+      multi: true,
+    },
+  ],
 })
 export class VendorRegistrationComponent implements OnInit {
 
@@ -1006,5 +1017,45 @@ export class VendorRegistrationComponent implements OnInit {
 
     this.vendorRegistrationForm.patchValue(obj);
   }
+
+
+   //Year _picker
+
+  @ViewChild(MatDatepicker) _picker: MatDatepicker<moment.Moment>;
+
+  // Function to call when the date changes.
+  onChange = (year: Date) => { };
+
+  // Function to call when the input is touched (when a star is clicked).
+  onTouched = () => { };
+
+
+  _yearSelectedHandler(chosenDate, datepicker: MatDatepicker<moment.Moment>) {
+    // console.log(chosenDate._d);
+    if (!chosenDate.year()) {
+      datepicker.close();
+      return;
+    }
+
+    this.vendorRegistrationForm.get('yearOfEstablishment').setValue(chosenDate._d, { emitEvent: false });
+    this.onChange(chosenDate.toDate());
+    this.onTouched();
+    datepicker.close();
+  }
+
+  _openDatepickerOnClick(datepicker: MatDatepicker<moment.Moment>) {
+    if (!datepicker.opened) {
+      datepicker.open();
+    }
+  }
+
+  _openDatepickerOnFocus(datepicker: MatDatepicker<moment.Moment>) {
+    setTimeout(() => {
+      if (!datepicker.opened) {
+        datepicker.open();
+      }
+    });
+  }
+
 
 }
