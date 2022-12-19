@@ -1007,44 +1007,8 @@ export class VendorRegistrationComponent implements OnInit {
     this.vendorRegistrationForm.patchValue(obj);
   }
 
-
-   //Year _picker
-
-  @ViewChild(MatDatepicker) _picker: MatDatepicker<moment.Moment>;
-
-  // Function to call when the date changes.
-  onChange = (year: Date) => { };
-
-  // Function to call when the input is touched (when a star is clicked).
-  onTouched = () => { };
-
-
-  _yearSelectedHandler(chosenDate, datepicker: MatDatepicker<moment.Moment>) {
-    // console.log(chosenDate._d);
-    if (!chosenDate.year()) {
-      datepicker.close();
-      return;
-    }
-
-    this.vendorRegistrationForm.get('yearOfEstablishment').setValue(chosenDate._d, { emitEvent: false });
-    this.onChange(chosenDate.toDate());
-    this.onTouched();
-    datepicker.close();
+  getYearChange(event){
+      this.vendorRegistrationForm.get('yearOfEstablishment').setValue(event)
   }
-
-  _openDatepickerOnClick(datepicker: MatDatepicker<moment.Moment>) {
-    if (!datepicker.opened) {
-      datepicker.open();
-    }
-  }
-
-  _openDatepickerOnFocus(datepicker: MatDatepicker<moment.Moment>) {
-    setTimeout(() => {
-      if (!datepicker.opened) {
-        datepicker.open();
-      }
-    });
-  }
-
-
+ 
 }
