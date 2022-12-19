@@ -228,54 +228,56 @@
 
           <div class="row">
             <h2><b>{{'Contact Person Details'}}</b></h2>
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" appValidationFields validationFieldsType='alphanumericWithSpace' required
+                maxlength="150" placeholder="{{'Name'}}" 
+                formControlName="headName">
+              <control-messages [control]="vendorRegistrationForm.get('headName')">
+              </control-messages>
+            </mat-form-field>
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" appValidationFields validationFieldsType='alphanumericWithSpace'
+                maxlength="150" placeholder="{{'Designation'}}" 
+                formControlName="headDesignation">
+              <control-messages [control]="vendorRegistrationForm.get('headDesignation')">
+              </control-messages>
+            </mat-form-field>
+              <mat-form-field class="col-md-4">
+                <input matInput type="text" required OnlyNumber maxlength="10" placeholder="{{'Mobile number'}}"
+                  formControlName="headMobileNumber">
+                <control-messages [control]="vendorRegistrationForm.get('headMobileNumber')">
+                </control-messages>
+              </mat-form-field>
+              <mat-form-field class="col-md-3">
+                <input matInput type="text" required placeholder="{{'Email Id'}}" maxlength="50"
+                  formControlName="headEmail">
+                <control-messages [control]="vendorRegistrationForm.get('headEmail')">
+                </control-messages>
+              </mat-form-field>
+              <mat-form-field class="col-md-3">
+                <input matInput type="text" OnlyNumber maxlength="10" minlength="10"
+                  placeholder="{{'Telephone Number'}}" formControlName="headAlterMobileNumber">
+                <control-messages [control]="vendorRegistrationForm.get('headAlterMobileNumber')">
+                </control-messages>
+              </mat-form-field>
+              <mat-form-field class="col-md-3">
+                <input matInput type="text" OnlyNumber maxlength="11" minlength="10" placeholder="{{'STD Number'}}"
+                  formControlName="headSTDNumber">
+                <control-messages [control]="vendorRegistrationForm.get('headSTDNumber')">
+                </control-messages>
+              </mat-form-field>
+              <mat-form-field class="col-md-3">
+                <input matInput type="text" OnlyNumber maxlength="12" minlength="10" placeholder="{{'ISD Number'}}"
+                  formControlName="headISDNumber">
+                <control-messages [control]="vendorRegistrationForm.get('headISDNumber')">
+                </control-messages>
+              </mat-form-field>
+
             <app-address #resAddr [requiredFeilds]="true"
               [addressFormGroup]="vendorRegistrationForm.get('contactAddress')">
             </app-address>
           </div>
-          <mat-form-field class="col-md-4">
-            <input matInput type="text" appValidationFields validationFieldsType='alphanumericWithSpace' required
-              maxlength="150" placeholder="{{'Name'}}" 
-              formControlName="headName">
-            <control-messages [control]="vendorRegistrationForm.get('headName')">
-            </control-messages>
-          </mat-form-field>
-          <mat-form-field class="col-md-4">
-            <input matInput type="text" appValidationFields validationFieldsType='alphanumericWithSpace'
-              maxlength="150" placeholder="{{'Designation'}}" 
-              formControlName="headDesignation">
-            <control-messages [control]="vendorRegistrationForm.get('headDesignation')">
-            </control-messages>
-          </mat-form-field>
-            <mat-form-field class="col-md-3">
-              <input matInput type="text" required OnlyNumber maxlength="10" placeholder="{{'Mobile number'}}"
-                formControlName="headMobileNumber">
-              <control-messages [control]="vendorRegistrationForm.get('headMobileNumber')">
-              </control-messages>
-            </mat-form-field>
-            <mat-form-field class="col-md-3">
-              <input matInput type="text" required placeholder="{{'Email Id'}}" maxlength="50"
-                formControlName="headEmail">
-              <control-messages [control]="vendorRegistrationForm.get('headEmail')">
-              </control-messages>
-            </mat-form-field>
-            <mat-form-field class="col-md-3">
-              <input matInput type="text" OnlyNumber maxlength="10" minlength="10"
-                placeholder="{{'Telephone Number'}}" formControlName="headAlterMobileNumber">
-              <control-messages [control]="vendorRegistrationForm.get('headAlterMobileNumber')">
-              </control-messages>
-            </mat-form-field>
-            <mat-form-field class="col-md-3">
-              <input matInput type="text" OnlyNumber maxlength="11" minlength="10" placeholder="{{'STD Number'}}"
-                formControlName="headSTDNumber">
-              <control-messages [control]="vendorRegistrationForm.get('headSTDNumber')">
-              </control-messages>
-            </mat-form-field>
-            <mat-form-field class="col-md-3">
-              <input matInput type="text" OnlyNumber maxlength="12" minlength="10" placeholder="{{'ISD Number'}}"
-                formControlName="headISDNumber">
-              <control-messages [control]="vendorRegistrationForm.get('headISDNumber')">
-              </control-messages>
-            </mat-form-field>
+        
 
           
 
