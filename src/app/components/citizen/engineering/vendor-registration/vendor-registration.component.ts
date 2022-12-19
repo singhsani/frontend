@@ -13,22 +13,11 @@ import { FormsActionsService } from 'src/app/core/services/citizen/data-services
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { ManageRoutes } from 'src/app/config/routes-conf';
 import { CitizenConfig } from '../../citizen-config';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { YearPickerComponent, YEAR_MODE_FORMATS } from 'src/app/shared/components/year-picker/year-picker.component';
 
 @Component({
   selector: 'app-vendor-registration',
   templateUrl: './vendor-registration.component.html',
   styleUrls: ['./vendor-registration.component.scss'],
-  providers: [
-    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: YEAR_MODE_FORMATS },
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => YearPickerComponent),
-      multi: true,
-    },
-  ],
 })
 export class VendorRegistrationComponent implements OnInit {
 
