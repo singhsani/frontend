@@ -184,6 +184,7 @@ export class Constants {
         Property_Collection: "PROPERTY_COLLECTION",
         Water_Collection: "WATER_COLLECTION",
         LOI_COLLECTION: "LOI_COLLECTION",
+        Vacant_Premises_Certificate : "VACANT_PREMISES_CERTIFICATE",
     };
 
     static Register_Type = {
