@@ -1,3 +1,4 @@
+import { Constants } from "src/app/vmcshared/Constants";
 
 export class SearchModel {
     level1Id: number;
@@ -12,6 +13,7 @@ export class SearchModel {
     mobileNo: string;
     pageNo: number;
 	pageSize: number;
+    fromModule = Constants.Payment_From_Option.Vacant_Premises_Certificate;
 }
 
 export class DataModel {
