@@ -110,8 +110,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return `case1`;
 		} else if (row.departmentName == 'Property Tax' || row.departmentName == 'WATER-SUPPLY') {
 			return `case2`;
+		} else if (row.departmentName == 'Vendor Registration' && row.fileStatusName == 'Deposit Received') {
+			return `case4`;
 		} else {
-			return `case3`;
+			return `case3`
 		}
 	}
 
@@ -958,4 +960,16 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 
 
 	}
+
+	// for deposit Receipt in vendor 
+	depositReceived(serviceId) {
+		this.formService.nonRefundableCollection(serviceId).subscribe(res => {
+			let sectionToPrint: any = document.getElementById('sectionToPrint');
+			sectionToPrint.innerHTML = res;
+			setTimeout(() => {
+				window.print();
+			});
+		})
+	}
+
 }
