@@ -181,6 +181,8 @@ export class VendorRegistrationComponent implements OnInit {
 
     this.formControlNameToTabIndex.set('locationOfFactoryWorks', 0)
     this.formControlNameToTabIndex.set('isIncomeTaxDetails', 1)
+    this.formControlNameToTabIndex.set('listOfItemMaterial', 1)
+    this.formControlNameToTabIndex.set('vendorNameDetails', 1)
     this.formControlNameToTabIndex.set('manufacturingOwnedDetails', 1)
     this.formControlNameToTabIndex.set('acceptAndCondition', 4)
 
