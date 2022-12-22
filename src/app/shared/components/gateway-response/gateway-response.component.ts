@@ -265,7 +265,7 @@ export class GatewayResponseComponent implements OnInit {
 						this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
 							if (res) {
 								if (this.formService.apiType == 'APLicense' || this.formService.apiType == 'APLRenewal' || this.formService.apiType == 'APLTransfer' ||
-								this.formService.apiType == 'MFLicense' || this.formService.apiType == 'MFLRenewal' || this.formService.apiType == 'MFLTransfer') {
+								this.formService.apiType == 'MFLicense' || this.formService.apiType == 'MFRenewal' || this.formService.apiType == 'MFTransfer') {
 									setTimeout(() => {
 										const url = '/citizen/my-applications' + '?id=' + payRespData.serviceFormId + '&apiCode=' + payRespData.serviceDetail.code
 										this.router.navigateByUrl(url);
