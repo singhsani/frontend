@@ -197,7 +197,7 @@ export class VendorRegistrationComponent implements OnInit {
     this.formControlNameToTabIndex.set('manufacturingOwnedDetails', 1)
     this.formControlNameToTabIndex.set('acceptAndCondition', 4)
     this.formControlNameToTabIndex.set('buildingName', 0),
-    this.formControlNameToTabIndex.set('streetName', 0)
+      this.formControlNameToTabIndex.set('streetName', 0)
     this.formControlNameToTabIndex.set('landmark', 0)
     this.formControlNameToTabIndex.set('area', 0)
     this.formControlNameToTabIndex.set('state', 0)
@@ -209,12 +209,12 @@ export class VendorRegistrationComponent implements OnInit {
     this.formService.getFormData(id).subscribe(res => {
       console.log("tresr", res)
       this.vendorRegistrationForm.patchValue(res);
-      if(res.formStatus != 'REJECTED'){
-      this.locationChange(res.applyingFor);
+      if (res.formStatus != 'REJECTED') {
+        this.locationChange(res.applyingFor);
       }
 
       //this.showButtons = false;
-      
+
       if (res.formStatus == 'PAYMENT_RECEIVED' || res.formStatus == 'SUBMITTED' || res.formStatus == 'DRAFT') {
         this.vendorRegistrationForm.disable();
         this.vendorRegistrationForm.get('canEdit').setValue(false);
@@ -223,7 +223,7 @@ export class VendorRegistrationComponent implements OnInit {
       // to remove the intaial (frist index) of data 
       (<FormArray>this.vendorRegistrationForm.get('vendorNameDetails')).removeAt(this.vendorRegistrationForm.controls.vendorNameDetails.value[0]);
       (<FormArray>this.vendorRegistrationForm.get('listOfItemMaterial')).removeAt(this.vendorRegistrationForm.controls.listOfItemMaterial.value[0]);
-      
+
       res.vendorNameDetails.forEach(app => {
         (<FormArray>this.vendorRegistrationForm.get('vendorNameDetails')).push(this.createFormGroupVendor('vendorNameDetails', app));
       });
@@ -556,7 +556,7 @@ export class VendorRegistrationComponent implements OnInit {
     });
 
     // this.academicQualifications.push(this.createEducationQualification());
-  //  this.academicQualificationAndExperience.push(this.createEducationQualification());
+    //  this.academicQualificationAndExperience.push(this.createEducationQualification());
     this.vendorNameArray.push(this.createVendorNameArray());
     this.listOfItemMaterialSupplier.push(this.createItemMaterialSupplier());
     // this.vendorNameLastYear.push(this.createItemMaterialSupplierLastThreeYear());
@@ -623,8 +623,8 @@ export class VendorRegistrationComponent implements OnInit {
       this.vendorRegistrationForm.get('registrationAmount').setValue(res.fee);
     })
     this.vendorRegistrationForm.get('locationOfFactoryWorks').get('code').setValue(event.value);
-    if(event.value == "IN_GUJARAT"){
-     this.resetAddressValue()
+    if (event.value == "IN_GUJARAT") {
+      this.resetAddressValue()
       this.vendorRegistrationForm.get('state').setValue('GUJARAT')
       this.vendorRegistrationForm.get('city').setValue('Vadodara')
       this.vendorRegistrationForm.get('country').setValue('INDIA')
@@ -636,7 +636,7 @@ export class VendorRegistrationComponent implements OnInit {
       this.country = 'India'
 
     }
-    else if(event.value == "OUTSIDE_GUJARAT"){
+    else if (event.value == "OUTSIDE_GUJARAT") {
       this.resetAddressValue()
       this.vendorRegistrationForm.get('country').setValue('INDIA')
       this.vendorRegistrationForm.get('state').enable()
@@ -646,7 +646,7 @@ export class VendorRegistrationComponent implements OnInit {
       this.city = ''
       this.country = 'India'
     }
-    else{
+    else {
       this.resetAddressValue()
       this.vendorRegistrationForm.get('state').enable()
       this.vendorRegistrationForm.get('city').enable()
@@ -664,7 +664,7 @@ export class VendorRegistrationComponent implements OnInit {
     this.vendorTypeFirm = this.vendorTypeFirm.filter(o => o.code === event.value);
 
     if (event.value == 'PROPRIETORSHIP') {
-     // this.vendorNameArray.push(this.createVendorNameArray());
+      // this.vendorNameArray.push(this.createVendorNameArray());
       this.vendorArrayNameButtons = true;
     } else {
       this.vendorArrayNameButtons = false;
@@ -678,10 +678,10 @@ export class VendorRegistrationComponent implements OnInit {
 
   createItemMaterialSupplier(): FormGroup {
     return this.fb.group({
-      itemsMaterial: [null,[Validators.required]],
+      itemsMaterial: [null, [Validators.required]],
       rating: null,
       description: null,
-      isNumber: [null,[Validators.required]],
+      isNumber: [null, [Validators.required]],
     });
   }
 
@@ -719,7 +719,7 @@ export class VendorRegistrationComponent implements OnInit {
   createRegisteredGovtDetail(): FormGroup {
     return this.fb.group({
       nameOfAuthority: null,
-      regNumber:null,
+      regNumber: null,
       registrationDate: null,
       validityFrom: null,
       validityTo: null
@@ -741,11 +741,11 @@ export class VendorRegistrationComponent implements OnInit {
   createVendorNameArray(): FormGroup {
     return this.fb.group({
       ownerType: this.fb.group({
-        code: [null,[Validators.required]],
+        code: [null, [Validators.required]],
         name: null
       }),
-      ownerName: [null,[Validators.required]],
-      ownerAddress: [null,[Validators.required]]
+      ownerName: [null, [Validators.required]],
+      ownerAddress: [null, [Validators.required]]
     });
   }
 
@@ -1066,89 +1066,89 @@ export class VendorRegistrationComponent implements OnInit {
     this.vendorRegistrationForm.patchValue(obj);
   }
 
-  getYearChange(event){
-      this.vendorRegistrationForm.get('yearOfEstablishment').setValue(event)
+  getYearChange(event) {
+    this.vendorRegistrationForm.get('yearOfEstablishment').setValue(event)
   }
- 
+
 
   /**
-	 * Method use to initialise form controls for address form group
+   * Method use to initialise form controls for address form group
   */
 
 
 
- 
 
- onChangebuildingName(event){
-  this.buildingName = event.target.value;
-  this.onChangeaddress()
- }
 
- onChangestreetName(event){
-  this.streetName = event.target.value;
-  this.onChangeaddress()
- }
+  onChangebuildingName(event) {
+    this.buildingName = event.target.value;
+    this.onChangeaddress()
+  }
 
- onChangelandmark(event){
-  debugger
-  this.landmark = event.target.value;
-  this.onChangeaddress()
- }
+  onChangestreetName(event) {
+    this.streetName = event.target.value;
+    this.onChangeaddress()
+  }
 
- onChangearea(event){
-  this.area = event.target.value;
-  this.onChangeaddress()
- }
+  onChangelandmark(event) {
+    debugger
+    this.landmark = event.target.value;
+    this.onChangeaddress()
+  }
 
- onChangepincode(event){
-  this.pinCode = event.target.value;
-  this.onChangeaddress()
- }
+  onChangearea(event) {
+    this.area = event.target.value;
+    this.onChangeaddress()
+  }
 
- onChangeCity(event){
-  this.city = event.target.value;
-  this.onChangeaddress()
- }
+  onChangepincode(event) {
+    this.pinCode = event.target.value;
+    this.onChangeaddress()
+  }
 
- onChangeCountry(event){
-  this.country = event.target.value;
-  this.onChangeaddress()
- }
+  onChangeCity(event) {
+    this.city = event.target.value;
+    this.onChangeaddress()
+  }
 
- onChangeState(event){
-  this.state = event.target.value;
-  this.onChangeaddress()
- }
+  onChangeCountry(event) {
+    this.country = event.target.value;
+    this.onChangeaddress()
+  }
 
- onChangeaddress(){
+  onChangeState(event) {
+    this.state = event.target.value;
+    this.onChangeaddress()
+  }
 
-  this.setAddressValue = this.buildingName + ' ' +  this.streetName + ' ' + this.landmark +' ' + ' ' + this.area + ' ' 
-  + this.state  + ' ' + this.city  + ' ' + this.country  + ' ' +this.pinCode
-  //console.log('setAddressValue', this.setAddressValue);
-  
-  this.vendorRegistrationForm.get('factoryAddressDetails').setValue(this.setAddressValue)
-  this.vendorRegistrationForm.get('factoryAddressDetails').disable()
-  // console.log(this.vendorRegistrationForm.get('factoryAddressDetails').value);
-  
- }
+  onChangeaddress() {
 
- resetAddressValue(){
-  this.vendorRegistrationForm.get('buildingName').setValue(null)
-  this.vendorRegistrationForm.get('streetName').setValue(null)
-  this.vendorRegistrationForm.get('landmark').setValue(null)
-  this.vendorRegistrationForm.get('area').setValue(null)
-  this.vendorRegistrationForm.get('pincode').setValue(null)
-  this.vendorRegistrationForm.get('state').setValue(null)
-  this.vendorRegistrationForm.get('city').setValue(null)
-  this.vendorRegistrationForm.get('country').setValue(null)
-  this.setAddressValue = ''
-  this.buildingName = ''
-  this.streetName = ''
-  this.city = ''
-  this.country = ''
-  this.pinCode = ''
-  this.state = ''
-  this.landmark = ''
-  this.area = ''
- }
+    this.setAddressValue = this.buildingName + ' ' + this.streetName + ' ' + this.landmark + ' ' + ' ' + this.area + ' '
+      + this.city + ' ' + this.state + ' ' + this.country + ' ' + this.pinCode
+    //console.log('setAddressValue', this.setAddressValue);
+
+    this.vendorRegistrationForm.get('factoryAddressDetails').setValue(this.setAddressValue)
+    this.vendorRegistrationForm.get('factoryAddressDetails').disable()
+    // console.log(this.vendorRegistrationForm.get('factoryAddressDetails').value);
+
+  }
+
+  resetAddressValue() {
+    this.vendorRegistrationForm.get('buildingName').setValue(null)
+    this.vendorRegistrationForm.get('streetName').setValue(null)
+    this.vendorRegistrationForm.get('landmark').setValue(null)
+    this.vendorRegistrationForm.get('area').setValue(null)
+    this.vendorRegistrationForm.get('pincode').setValue(null)
+    this.vendorRegistrationForm.get('state').setValue(null)
+    this.vendorRegistrationForm.get('city').setValue(null)
+    this.vendorRegistrationForm.get('country').setValue(null)
+    this.setAddressValue = ''
+    this.buildingName = ''
+    this.streetName = ''
+    this.city = ''
+    this.country = ''
+    this.pinCode = ''
+    this.state = ''
+    this.landmark = ''
+    this.area = ''
+  }
 }
