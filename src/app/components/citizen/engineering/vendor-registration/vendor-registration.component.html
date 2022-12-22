@@ -127,13 +127,78 @@
           </div>
 
 
-          <div class="row">
+          <div class="row" >
             <h2><b>{{'Address of the factory/works from where material will be supplied'}}</b></h2>
 
-            <app-address #officeAddr [requiredFeilds]="true"
+            <!-- <app-address #officeAddr [requiredFeilds]="true"
               [addressFormGroup]="vendorRegistrationForm.get('factoryAddress')">
-            </app-address>
-          </div>
+            </app-address> -->
+
+              <mat-form-field class="col-md-4">
+                <input matInput type="text" formControlName="buildingName" required
+                  placeholder="{{'building_name' | translate: translateKey }}" maxlength="60" 
+                 (change)="onChangebuildingName($event)">
+                <control-messages [control]="vendorRegistrationForm.get('buildingName')"></control-messages>
+              </mat-form-field>
+          
+              <mat-form-field class="col-md-4">
+                <input matInput type="text" formControlName="streetName" 
+                  placeholder="{{'street_name' | translate: translateKey }} " maxlength="60" 
+                  (change)="onChangestreetName($event)">
+                <control-messages [control]="vendorRegistrationForm.get('streetName')"></control-messages>
+              </mat-form-field>
+          
+              <mat-form-field class="col-md-4">
+                <input matInput type="text" formControlName="landmark" 
+                  placeholder="{{'landmark' | translate: translateKey }}" maxlength="100" 
+                  (change)=" onChangelandmark($event)">
+                <control-messages [control]="vendorRegistrationForm.get('landmark')"></control-messages>
+              </mat-form-field>
+
+              <mat-form-field class="col-md-4">
+                <input matInput type="text" formControlName="area" required
+                  placeholder="{{'area' | translate: translateKey }} {{isBuildinAreaReq?'*':''}}" maxlength="60"
+                   (change)="onChangearea($event)" >
+                <control-messages [control]="vendorRegistrationForm.get('area')"></control-messages>
+              </mat-form-field>
+          
+            
+              <mat-form-field class="col-md-4 ">
+                <input matInput type="text" formControlName="city" 
+                  placeholder="{{'city' | translate: translateKey }}" maxlength="100" 
+                  (change)=" onChangeCity($event)" required>
+                <control-messages [control]="vendorRegistrationForm.get('city')"></control-messages>
+              </mat-form-field>
+
+          
+              <mat-form-field class="col-md-4 ">
+                <input matInput type="text" formControlName="state" 
+                  placeholder="{{'state' | translate: translateKey }}" maxlength="100" 
+                  (change)=" onChangeState($event)" required>
+                <control-messages [control]="vendorRegistrationForm.get('state')"></control-messages>
+              </mat-form-field>
+          
+              <mat-form-field class="col-md-4">
+                <input matInput type="text" formControlName="country" 
+                placeholder="{{'country' | translate: translateKey }}" maxlength="100" 
+                (change)=" onChangeCountry($event)" required>
+                <control-messages [control]="vendorRegistrationForm.get('country')"></control-messages>
+              </mat-form-field>
+          
+              <mat-form-field class="col-md-4">
+                <input matInput type="tel" OnlyNumber formControlName="pincode" required
+                  placeholder="{{'pincode' | translate: translateKey }}" minlength="6" maxlength="6"
+                  (change)="onChangepincode($event)">
+                <control-messages [control]="vendorRegistrationForm.get('pincode')"></control-messages>
+              </mat-form-field>
+
+            </div>
+
+            <mat-form-field class="col-md-12">
+              <textarea disabled matInput formControlName="factoryAddressDetails" placeholder="{{'factory Address'}}" [(ngModel)]="setAddressValue"
+              rows="3"></textarea>
+            </mat-form-field>
+
 
           <mat-form-field class="col-md-4">
             <input matInput type="text" OnlyNumber required maxlength="11" minlength="10"
@@ -1642,7 +1707,7 @@
             </div>
           </div> -->
 
-          <app-action-bar [uploadFiles]="uploadFilesArray" [form]="vendorRegistrationForm"
+          <app-action-bar [uploadFiles]="uploadFilesArray" [form]="vendorRegistrationForm" 
             (tabIndex)="onTabChange($event)" [paymentGateway]="paymentGateway"
             (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next:6, back:3} ">
           </app-action-bar>
