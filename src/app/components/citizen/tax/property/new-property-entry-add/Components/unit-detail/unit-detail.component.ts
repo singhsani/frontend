@@ -97,10 +97,10 @@ export class UnitDetailComponent implements OnInit {
   }
 
   getLookups() {
-    const lookupcode = `lookup_codes=${Constants.LookupCodes.Floor_No}&lookup_codes=${Constants.LookupCodes.Room_Type}`;
+    const lookupcode = `lookup_codes=${Constants.LookupCodes.Floor_No}&lookup_codes=${Constants.LookupCodes.Room_Type_New}`;
     this.commonService.getLookupValuesAccordingToScreen(lookupcode).subscribe(data => {
       this.floorList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.Floor_No))[0].items;
-      this.roomTypeList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.Room_Type))[0].items;
+      this.roomTypeList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.Room_Type_New))[0].items;
       this.floorList.sort((a, b) => (a.itemName < b.itemName ? -1 : 1));
     });
   }
@@ -235,7 +235,7 @@ export class UnitDetailComponent implements OnInit {
   isDuplicateUnitNo = false;
   checkDuplicateUnitNo(event) {
     this.isDuplicateUnitNo = false;
-    if (this.dataSource && this.dataSource.data && this.dataSource.data.length && this.dataSource.data.length > 0) {
+    if (this.dataSource && this.dataSource.data && this.dataSource.data.length && this.dataSource.data.length > 0 &&this.unitDetailModel.unitNo!=null) {
       const obj = this.dataSource.data.filter(f => f.unitNo.toLowerCase() === this.unitDetailModel.unitNo.toLowerCase()
         && f.occupierId === this.modelOccupier.propertyOccupierId
         && f.propertyBasicId === this.modelOccupier.propertyBasicVersionId

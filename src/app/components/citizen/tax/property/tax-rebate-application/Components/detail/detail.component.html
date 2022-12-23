@@ -59,7 +59,7 @@
                 [(ngModel)]="model.totalOutstanding">
             </mat-form-field>
           </div>
-          <div class="col-md-4"> 
+          <div class="col-md-4">
               <mat-form-field class="full-width-input" hidden>
                       <input matInput trim="blur" placeholder="Application Number" maxlength="20" #ApplicationNo="ngModel" name="applicationNo" [(ngModel)]="model.applicationNo">
                       <mat-error *ngIf="ApplicationNo.invalid">*Application No. is required.</mat-error>
@@ -80,7 +80,7 @@
 
 <mat-step>
   <ng-template matStepLabel>Applicant Details</ng-template>
-  <app-applicant-detail-propertywater (stepChange)="stepChangedEvent($event)" 
+  <app-applicant-detail-propertywater (stepChange)="stepChangedEvent($event)"
   (applicantDetails)="saveApplicantDetails($event)"
     [serviceType]="'PRO-TAX-REBATE'" [showSkipButton]="true"></app-applicant-detail-propertywater>
 </mat-step>
@@ -96,18 +96,18 @@
       </div>
       </ng-container>
     </div>
-    
-      
+
+
       <div class="button-row text-right mt-3">
           <button mat-raised-button class="ml-3" color="primary" (click)="onSubmitApproved()" type="button">
               <mat-icon>save</mat-icon>Submit
           </button>
       </div>
-  
-  </mat-card> 
+
+  </mat-card>
 </mat-step>
-      
-    
+
+
   </mat-horizontal-stepper>
   <!-- <div class="row" *ngIf="isShaved && !isApprovedorDecline">
     <div class="col-md-12 text-right">

@@ -109,5 +109,7 @@
   <button mat-raised-button color="accent" [disabled]="isGenerateNoc">NOC Generated</button>
   <button mat-raised-button color="accent" [disabled]="isSaleDeedLetter">Sale Deed Letter</button>
   <button mat-raised-button color="accent" [disabled]="isFinalPossession">Final Possession</button>
-
 </mat-card>
+<button type="button" class="liteBorder pull-left" mat-raised-button
+  (click)="onCitizen()">{{'back' |
+  translate: actionBarKey}}</button>

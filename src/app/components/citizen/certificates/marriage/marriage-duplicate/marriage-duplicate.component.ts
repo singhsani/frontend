@@ -384,6 +384,8 @@ export class MarriageDuplicateComponent implements OnInit {
 			}
 			else {
 				this.toster.warning('No Record Found');
+				this.dataSource.data = [];
+				this.resultsLength =0;
 			}
 		}, err => {
 			this.toster.error(err);
@@ -415,20 +417,20 @@ export class MarriageDuplicateComponent implements OnInit {
 		// 	});
 	}
 
-	getCertificate(){
-        let certificate = 'certificate';
-        this.formService.getCertificatOrLiglePrintForDuplicateMrg(certificate,this.appId).subscribe(res => {
-            let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
-            sectionToPrintReceipt.innerHTML = res;
-            setTimeout(() => {
-                window.print();
-            }, 300);
-        },
-            err => {
-                this.commonService.openAlert('Error!', err.error[0].message, 'error');
-            }
-        )
-    }
+	// getCertificate(){
+    //     let certificate = 'certificate';
+    //     this.formService.getCertificatOrLiglePrintForDuplicateMrg(certificate,this.appId).subscribe(res => {
+    //         let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
+    //         sectionToPrintReceipt.innerHTML = res;
+    //         setTimeout(() => {
+    //             window.print();
+    //         }, 300);
+    //     },
+    //         err => {
+    //             this.commonService.openAlert('Error!', err.error[0].message, 'error');
+    //         }
+    //     )
+    // }
 
 	// liglePrint() {
     //     let service = 'legalprint';
@@ -454,5 +456,9 @@ export class MarriageDuplicateComponent implements OnInit {
 		this.createDuplicateMRRecord(data);
 		this.showSearchForm = false;
 		this.isVisibeDuplicateForm = false;
+	}
+
+	getlength(event){
+		return false
 	}
 }

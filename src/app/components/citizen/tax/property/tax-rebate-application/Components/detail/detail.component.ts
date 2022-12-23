@@ -11,7 +11,7 @@ import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
 import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
 import { CommonService as CommonService2 } from 'src/app/vmcshared/Services/common-service';
 import { Router } from '@angular/router';
-
+import { Constants } from 'src/app/vmcshared/Constants';
 @Component({
   selector: 'app-detail',
   templateUrl: './detail.component.html',
@@ -46,18 +46,29 @@ export class DetailComponent implements OnInit {
     this.taxRebateApplicationDataSharingService.observableDataModel.subscribe(data => {
       if (data) {
         this.model = Object.assign({}, data);
-        
+
       }
     });
     this.getRebatTypeList();
     this.getFinancialYear();
   }
 
-  getRebatTypeList() {
+ getRebatTypeList() {
     this.taxRebateApplicationService.getRebatType({ active: true,approvalRequired:true }).subscribe(
       (data) => {
         if (data.status === 200 && data.body.length) {
-          this.rebateTypeList = data.body;
+
+        const obj = {};
+        for (let i = 0, len = data.body.length; i < len; i++) {
+          obj[data.body[i]['taxRebateTypeName']] = data.body[i];
+        }
+
+        let uniqueArray = new Array();
+
+        for (const key in obj) { 
+          uniqueArray.push(obj[key]);
+        }
+        this.rebateTypeList = uniqueArray;
         }
       },
       (error) => {
@@ -65,7 +76,6 @@ export class DetailComponent implements OnInit {
       }
     )
   }
-
   getFinancialYear() {
     this.taxRebateApplicationService.getFinancialYear().subscribe(
       (data) => {
@@ -105,7 +115,7 @@ export class DetailComponent implements OnInit {
             this.alertService.error(errorMessage);
           }
           else {
-            this.alertService.error(error.error.message);
+            this.alertService.warning(error.error.message);
           }
         })
     }
@@ -121,10 +131,10 @@ export class DetailComponent implements OnInit {
         data.forEach(app => {
           this.taxrebateDocumentUploadDocs.push(app);
         });
-        
+
       },
       (error) => {
-        
+
       });
   }
 
@@ -277,7 +287,7 @@ export class DetailComponent implements OnInit {
     this.taxRebateApplicationService.getApplicationNo(taxRebateApplicationId).subscribe(
       (data) => {
         console.log('data 253 - >',data);
-       this.taxRebateApplicationDataSharingService.applicationNumber = data.body.data.applicationNo;  
+       this.taxRebateApplicationDataSharingService.applicationNumber = data.body.data.applicationNo;
        this.taxRebateApplicationDataSharingService.serviceCode  = data.body.data.serviceCode;
        this.taxRebateApplicationDataSharingService.serviceId   = data.body.data.serviceId;
        this.taxRebateApplicationDataSharingService.isPaymentReceipt   = data.body.data.paymentReceipt;
@@ -300,7 +310,7 @@ export class DetailComponent implements OnInit {
   stepChangedEvent(event){
     this.stepper.selectedIndex = event;
   }
-  
+
   saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
     applicantDetailsDTO.uniqueId = this.taxRebateApplicationDataSharingService.applicationNumber;
     this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(

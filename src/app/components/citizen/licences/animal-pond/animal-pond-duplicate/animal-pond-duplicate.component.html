@@ -2,7 +2,8 @@
 
 <mat-card [hidden]="serachLicenceObj.isDisplayDuplicateLicenceForm" class="mt-4 formClass">
   <mat-form-field class="col-md-10">
-    <input matInput upperCase appAlphaNumeric required placeholder="{{'search_by_application_no' | translate:translateKey}}" maxlength="25"
+    <input matInput upperCase appAlphaNumeric required
+      placeholder="{{'search_by_application_no' | translate:translateKey}}" maxlength="25"
       [(ngModel)]="serachLicenceObj.searchLicenceNumber">
   </mat-form-field>
   <button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary"
@@ -141,8 +142,9 @@
           <control-messages [control]="animalPondDuplicateForm.get('holderPanNo')"></control-messages>
         </mat-form-field>
         <mat-form-field class="col-md-4">
-          <input matInput required maxlength="2" OnlyNumber placeholder="{{'no_of_copies' | translate:translateKey}}"
-            formControlName="noOfCopies" (change)="changeNoOfCopies($event)">
+          <input matInput required maxlength="2" readonly OnlyNumber
+            placeholder="{{'no_of_copies' | translate:translateKey}}" formControlName="noOfCopies"
+            (change)="changeNoOfCopies($event)">
           <control-messages [control]="animalPondDuplicateForm.get('noOfCopies')"></control-messages>
         </mat-form-field>
 

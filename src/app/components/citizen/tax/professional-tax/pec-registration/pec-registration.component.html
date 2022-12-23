@@ -103,20 +103,19 @@
 					</div>
 
 					<div class="col-md-4 ngSelect" formGroupName="block" *ngIf="isBlockNo == false">
-						<ng-select placeholder="{{'block_no' | translate: translateKey}} *" formControlName="wardzoneId"
-							required>
+						<ng-select placeholder="{{'block_no' | translate: translateKey}} " formControlName="wardzoneId">
 							<ng-option *ngFor="let block of blockNoArray" [value]="block.wardzoneId">
 								{{block.wardzoneName}}</ng-option>
 						</ng-select>
-						<mat-error
+						<!-- <mat-error
 							*ngIf="pecRegForm.get('block').touched && pecRegForm.get('block').get('wardzoneId').value == null">
 							{{"Block is Required"}}
-						</mat-error>
+						</mat-error> -->
 						<!-- <control-messages [control]="pecRegForm.get('block').get('wardzoneId')"></control-messages> -->
 					</div>
 					<div class="col-md-4 ngSelect" formGroupName="block" *ngIf="isBlockNo == true">
-						<ng-select placeholder="{{'block_no' | translate: translateKey}} *" formControlName="wardzoneName"
-							required>
+						<ng-select placeholder="{{'block_no' | translate: translateKey}} " formControlName="wardzoneName"
+							>
 							<ng-option *ngFor="let block of blockNoArray" [value]="block.wardzoneId">
 								{{block.wardzoneName}}</ng-option>
 						</ng-select>
@@ -403,7 +402,7 @@
 					<mat-form-field class="col-md-4"
 						*ngIf="pecRegForm.get('professionConstitution.code').value == 'OTHER'">
 						<input matInput autocomplete="off" maxlength="100" formControlName="otherProfession" type="text"
-							appValidationFields validationFieldsType="appAlphanumericNumber"
+							appValidationFields validationFieldsType="appAlphanumericNumberWithSpace"
 							placeholder="{{'other_profession' | translate: translateKey}}" required>
 						<control-messages [control]="pecRegForm.get('otherProfession')"></control-messages>
 					</mat-form-field>
