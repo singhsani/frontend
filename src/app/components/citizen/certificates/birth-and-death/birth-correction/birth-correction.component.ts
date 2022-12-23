@@ -212,9 +212,7 @@ export class BirthCorrectionComponent implements OnInit {
 	 */
 	createBirthCorrectionData(data) {
 		this.formService.createFormData().subscribe(res => {
-			debugger
 			this.birthCorrectionForm.patchValue(res);
-			debugger
 			// this.config.documentList(res, this.uploadFileArray);
 
 			this.clearFormArrray(<FormArray>this.birthCorrectionForm.get('serviceDetail').get('serviceUploadDocuments'));
@@ -384,7 +382,6 @@ export class BirthCorrectionComponent implements OnInit {
 	 */
 	getLookupData() {
 		this.formService.getDataFromLookups().subscribe(res => {
-			debugger
 			this.TypeOfCorrection = res.BIRTH_CORRECTION_TYPE;
 			this.DuplicateCopyMode = res.BIRTH_CORRECTION_COPY_MODE;
 
