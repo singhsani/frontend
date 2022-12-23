@@ -104,7 +104,7 @@ export class BirthCorrectionComponent implements OnInit {
 	apiCode: string;
 
 	configDoc: CertificateConfig = new CertificateConfig();
-
+	DuplicateCopyMode: Array<any> = [];
 	/**
 	 * Constructor.
 	 * @param fb - form builder.
@@ -212,9 +212,9 @@ export class BirthCorrectionComponent implements OnInit {
 	 */
 	createBirthCorrectionData(data) {
 		this.formService.createFormData().subscribe(res => {
-
+			debugger
 			this.birthCorrectionForm.patchValue(res);
-
+			debugger
 			// this.config.documentList(res, this.uploadFileArray);
 
 			this.clearFormArrray(<FormArray>this.birthCorrectionForm.get('serviceDetail').get('serviceUploadDocuments'));
@@ -384,7 +384,10 @@ export class BirthCorrectionComponent implements OnInit {
 	 */
 	getLookupData() {
 		this.formService.getDataFromLookups().subscribe(res => {
+			debugger
 			this.TypeOfCorrection = res.BIRTH_CORRECTION_TYPE;
+			this.DuplicateCopyMode = res.BIRTH_CORRECTION_COPY_MODE;
+
 		});
 	}
 
@@ -420,7 +423,7 @@ export class BirthCorrectionComponent implements OnInit {
 	 */
 	birthCorrectionFormControls() {
 		this.birthCorrectionForm = this.fb.group({
-
+			
 			//step - 1 (13)
 			childName: [null, Validators.required],
 			childNameGuj: [null],
@@ -470,6 +473,19 @@ export class BirthCorrectionComponent implements OnInit {
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 
 			attachments: [],
+			
+			totalCopies: [null, Validators.required],
+			birthCorrectionCopyMode: this.fb.group({
+                code: [null, [Validators.required]],
+                gujName: null,
+                id: null,
+                name: null,
+                orderSequence: null,
+                type: null,
+                uniqueId: null,
+                version: null
+            })
+		
 		});
 	}
 
@@ -542,5 +558,9 @@ export class BirthCorrectionComponent implements OnInit {
 				formArray.removeAt(0)
 			}
 		}
+	}
+
+	getlength(event){
+		return false
 	}
 }
