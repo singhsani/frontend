@@ -94,7 +94,8 @@ export class VendorRegistrationComponent implements OnInit {
   state = '';
   city = '';
   country = '';
-
+  canAddressEdit = true;
+  
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
@@ -218,6 +219,7 @@ export class VendorRegistrationComponent implements OnInit {
       if (res.formStatus == 'PAYMENT_RECEIVED' || res.formStatus == 'SUBMITTED' || res.formStatus == 'DRAFT') {
         this.vendorRegistrationForm.disable();
         this.vendorRegistrationForm.get('canEdit').setValue(false);
+        this.canAddressEdit = false
       }
 
       // to remove the intaial (frist index) of data 
