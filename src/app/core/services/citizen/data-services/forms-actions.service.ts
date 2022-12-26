@@ -543,4 +543,10 @@ export class FormsActionsService {
 		this.requestURL = `api/form/duplicateMarriageReg/legalprint/${data}/${id}`;
 		return this.http.get(this.requestURL,'printReceipt');
 	}
+
+	// for Vendor Registration when Deposit Received 
+	nonRefundableCollection(serviceFormId) {
+		this.requestURL = `api/form/vendor/collectionAmount/${serviceFormId}`;
+		return this.http.get(this.requestURL, 'printReceipt');
+	  }
 }

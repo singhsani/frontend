@@ -105,7 +105,7 @@ export class BirthCorrectionComponent implements OnInit {
 		apiCode: string;
 	
 		configDoc: CertificateConfig = new CertificateConfig();
-	
+		DuplicateCopyMode: Array<any> = [];
 		/**
 		 * Constructor.
 		 * @param fb - form builder.
@@ -368,6 +368,8 @@ export class BirthCorrectionComponent implements OnInit {
 		getLookupData() {
 			this.formService.getDataFromLookups().subscribe(res => {
 				this.TypeOfCorrection = res.BIRTH_CORRECTION_TYPE;
+				this.DuplicateCopyMode = res.DUPLICATE_COPY_MODE;
+
 			});
 		}
 	
@@ -442,6 +444,17 @@ export class BirthCorrectionComponent implements OnInit {
 				apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 	
 				attachments: [],
+				totalCopies: [null, Validators.required],
+				duplicbirthCorrectionCopyModeateCopyMode: this.fb.group({
+                code: [null, [Validators.required]],
+                gujName: null,
+                id: null,
+                name: null,
+                orderSequence: null,
+                type: null,
+                uniqueId: null,
+                version: null
+            })
 			});
 		}
 	
@@ -494,5 +507,9 @@ export class BirthCorrectionComponent implements OnInit {
 				}
 			});
 		}
+
+		getlength(event){
+		return false
+	}
 	}
 	
