@@ -63,7 +63,7 @@
 	</div>
 
 	<div *ngIf="isSearch">
-		<app-marriage-available-slots [search]="isSearch" [resources]="appointmentForm.get('resources.code').value" [appointmentdate]="appointmentForm.get('appointmentdate').value"></app-marriage-available-slots>	
+		<app-marriage-available-slots [search]="isSearch" [resources]="appointmentForm.get('resources.code').value" [appointmentdate]="appointmentForm.get('appointmentdate').value"></app-marriage-available-slots>
 	</div>
 
 	<div class="modal-footer customthead">
@@ -397,7 +397,7 @@
 							<control-messages [control]="marriageFormGroup.get('groomCompanyPhoneNumber')">
 							</control-messages>
 						</mat-form-field>
-						
+
 						<mat-form-field class="col-md-4">
 							<input matInput OnlyNumber required placeholder="{{'mobile_no' | translate:translateKey}}"
 								formControlName="groomPhoneNumber" type="tel">
@@ -1434,7 +1434,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" [value]="parentAge('groomNriSecondWitnessBirthDate','groomNriSecondWitnessAge')" 
+						<input matInput placeholder="Age:" [value]="parentAge('groomNriSecondWitnessBirthDate','groomNriSecondWitnessAge')"
 							readonly />
 					</mat-form-field>
 				</div>
@@ -1697,11 +1697,11 @@
 							<control-messages [control]="marriageFormGroup.get('uniqueIdProof')"></control-messages>
 						</mat-form-field>
 
-						
+
 						<mat-form-field class="col-md-4">
 							<input matInput readonly placeholder="{{'uniqueId_proof' | translate:translateKey:'gu'}}" [value]="identityproofGuj">
 						</mat-form-field>
-						
+
 					</div> -->
 
 				</div>
