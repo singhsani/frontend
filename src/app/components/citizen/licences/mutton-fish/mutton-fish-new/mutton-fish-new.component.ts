@@ -188,7 +188,6 @@ export class MuttonFishNewComponent implements OnInit {
 		
 		if (event == 'PROPRIETORSHIPFIRM') {
 			for (let file of localUploadArray) {
-				debugger;
 				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') || (file['documentIdentifier'] == 'POLICE_VERIFICATION') || (file['documentIdentifier'] == 'RENT_AGREEMENT')) {
 						file['mandatory'] = false;
 				}else{
