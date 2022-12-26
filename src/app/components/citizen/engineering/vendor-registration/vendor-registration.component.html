@@ -133,62 +133,64 @@
             <!-- <app-address #officeAddr [requiredFeilds]="true"
               [addressFormGroup]="vendorRegistrationForm.get('factoryAddress')">
             </app-address> -->
+            <ng-container *ngIf="canAddressEdit == true">
+              <mat-form-field class="col-md-4">
+                <input matInput type="text" formControlName="buildingName" required
+                  placeholder="{{'building_name' | translate: translateKey }}" maxlength="60"
+                  (change)="onChangebuildingName($event)">
+                <control-messages [control]="vendorRegistrationForm.get('buildingName')"></control-messages>
+              </mat-form-field>
 
-            <mat-form-field class="col-md-4">
-              <input matInput type="text" formControlName="buildingName" required
-                placeholder="{{'building_name' | translate: translateKey }}" maxlength="60"
-                (change)="onChangebuildingName($event)">
-              <control-messages [control]="vendorRegistrationForm.get('buildingName')"></control-messages>
-            </mat-form-field>
+              <mat-form-field class="col-md-4">
+                <input matInput type="text" formControlName="streetName"
+                  placeholder="{{'street_name' | translate: translateKey }} " maxlength="60"
+                  (change)="onChangestreetName($event)">
+                <control-messages [control]="vendorRegistrationForm.get('streetName')"></control-messages>
+              </mat-form-field>
 
-            <mat-form-field class="col-md-4">
-              <input matInput type="text" formControlName="streetName"
-                placeholder="{{'street_name' | translate: translateKey }} " maxlength="60"
-                (change)="onChangestreetName($event)">
-              <control-messages [control]="vendorRegistrationForm.get('streetName')"></control-messages>
-            </mat-form-field>
+              <mat-form-field class="col-md-4">
+                <input matInput type="text" formControlName="landmark"
+                  placeholder="{{'landmark' | translate: translateKey }}" maxlength="100"
+                  (change)=" onChangelandmark($event)">
+                <control-messages [control]="vendorRegistrationForm.get('landmark')"></control-messages>
+              </mat-form-field>
 
-            <mat-form-field class="col-md-4">
-              <input matInput type="text" formControlName="landmark"
-                placeholder="{{'landmark' | translate: translateKey }}" maxlength="100"
-                (change)=" onChangelandmark($event)">
-              <control-messages [control]="vendorRegistrationForm.get('landmark')"></control-messages>
-            </mat-form-field>
-
-            <mat-form-field class="col-md-4">
-              <input matInput type="text" formControlName="area" required
-                placeholder="{{'area' | translate: translateKey }} {{isBuildinAreaReq?'*':''}}" maxlength="60"
-                (change)="onChangearea($event)">
-              <control-messages [control]="vendorRegistrationForm.get('area')"></control-messages>
-            </mat-form-field>
-
-
-            <mat-form-field class="col-md-4 ">
-              <input matInput type="text" formControlName="city" placeholder="{{'city' | translate: translateKey }}"
-                maxlength="100" (change)=" onChangeCity($event)" required>
-              <control-messages [control]="vendorRegistrationForm.get('city')"></control-messages>
-            </mat-form-field>
+              <mat-form-field class="col-md-4">
+                <input matInput type="text" formControlName="area" required
+                  placeholder="{{'area' | translate: translateKey }} {{isBuildinAreaReq?'*':''}}" maxlength="60"
+                  (change)="onChangearea($event)">
+                <control-messages [control]="vendorRegistrationForm.get('area')"></control-messages>
+              </mat-form-field>
 
 
-            <mat-form-field class="col-md-4 ">
-              <input matInput type="text" formControlName="state" placeholder="{{'state' | translate: translateKey }}"
-                maxlength="100" (change)=" onChangeState($event)" required>
-              <control-messages [control]="vendorRegistrationForm.get('state')"></control-messages>
-            </mat-form-field>
+              <mat-form-field class="col-md-4 ">
+                <input matInput type="text" formControlName="city" placeholder="{{'city' | translate: translateKey }}"
+                  maxlength="100" (change)=" onChangeCity($event)" required>
+                <control-messages [control]="vendorRegistrationForm.get('city')"></control-messages>
+              </mat-form-field>
 
-            <mat-form-field class="col-md-4">
-              <input matInput type="text" formControlName="country"
-                placeholder="{{'country' | translate: translateKey }}" maxlength="100"
-                (change)=" onChangeCountry($event)" required>
-              <control-messages [control]="vendorRegistrationForm.get('country')"></control-messages>
-            </mat-form-field>
 
-            <mat-form-field class="col-md-4">
-              <input matInput type="tel" OnlyNumber formControlName="pincode" required
-                placeholder="{{'pincode' | translate: translateKey }}" minlength="6" maxlength="6"
-                (change)="onChangepincode($event)">
-              <control-messages [control]="vendorRegistrationForm.get('pincode')"></control-messages>
-            </mat-form-field>
+              <mat-form-field class="col-md-4 ">
+                <input matInput type="text" formControlName="state" placeholder="{{'state' | translate: translateKey }}"
+                  maxlength="100" (change)=" onChangeState($event)" required>
+                <control-messages [control]="vendorRegistrationForm.get('state')"></control-messages>
+              </mat-form-field>
+
+              <mat-form-field class="col-md-4">
+                <input matInput type="text" formControlName="country"
+                  placeholder="{{'country' | translate: translateKey }}" maxlength="100"
+                  (change)=" onChangeCountry($event)" required>
+                <control-messages [control]="vendorRegistrationForm.get('country')"></control-messages>
+              </mat-form-field>
+
+              <mat-form-field class="col-md-4">
+                <input matInput type="tel" OnlyNumber formControlName="pincode" required
+                  placeholder="{{'pincode' | translate: translateKey }}" minlength="6" maxlength="6"
+                  (change)="onChangepincode($event)">
+                <control-messages [control]="vendorRegistrationForm.get('pincode')"></control-messages>
+              </mat-form-field>
+            </ng-container>
+
 
           </div>
 
@@ -923,8 +925,7 @@
               </mat-icon>
             </div> -->
             <div class="col-md-2 text-right">
-              <button mat-raised-button type="button" color="primary"
-                (click)="addRowVendorRegisteredGovtDetail()">{{'Add
+              <button mat-raised-button type="button" color="primary" (click)="addRowVendorRegisteredGovtDetail()">{{'Add
                 New'}}</button>
             </div>
           </div>
@@ -1025,8 +1026,7 @@
               <mat-icon (click)="getFile('LIST_MACHINERIES')" class="text-info">remove_red_eye</mat-icon>
             </div> -->
             <div class="col-md-2 text-right">
-              <button mat-raised-button type="button" color="primary"
-                (click)="addRowVendorMachineInstalledCapacity()">{{'Add
+              <button mat-raised-button type="button" color="primary" (click)="addRowVendorMachineInstalledCapacity()">{{'Add
                 New'}}</button>
             </div>
           </div>
@@ -1368,8 +1368,7 @@
             <h2 class="col-md-6">{{'Last three years purchasing item detail'}}</h2>
 
             <div class="col-md-6 text-right">
-              <button mat-raised-button type="button" color="primary" type="button"
-                (click)="addRowLastThreeYear()">{{'Add
+              <button mat-raised-button type="button" color="primary" type="button" (click)="addRowLastThreeYear()">{{'Add
                 New'}}</button>
             </div>
           </div>
