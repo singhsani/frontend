@@ -350,7 +350,7 @@ export class GatewayResponseComponent implements OnInit {
 	}
 
 	redirectToHome() {
-		if (this.dispData.payableServiceType == "PROFESSIONAL_TAX" || this.dispData.payableServiceType == "HEL-DUPDR" ||this.dispData.payableServiceType =="HEL-BCR" || this.dispData.payableServiceType =="HEL-DCR" || this.dispData.payableServiceType =="HEL-DUPBR") {
+		if (this.dispData.payableServiceType == "PROFESSIONAL_TAX" ) {
 
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS')]);
 
@@ -358,7 +358,8 @@ export class GatewayResponseComponent implements OnInit {
 
 			this.router.navigate([this.bookingConstant.MY_BOOKINGS_URL]);
 
-		} else if (this.dispData.payableServiceType == "SHOP-ESTAB-LIC-NEW" || this.paybleServiceType == "SHOP-ESTAB-TRANSFER") {
+		} else if (this.dispData.payableServiceType == "SHOP-ESTAB-LIC-NEW" || this.paybleServiceType == "SHOP-ESTAB-TRANSFER" || this.dispData.payableServiceType == "HEL-BCR"  || this.dispData.payableServiceType =="HEL-DCR" 
+			|| this.dispData.payableServiceType == "HEL-DUPDR" || this.dispData.payableServiceType =="HEL-DUPBR") {
 
 			this.redirectToMyApplication(this.dispData.myApplicationUrl, undefined, undefined, undefined);
 
