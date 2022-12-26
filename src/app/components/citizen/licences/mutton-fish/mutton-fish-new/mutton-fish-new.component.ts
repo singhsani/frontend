@@ -188,12 +188,19 @@ export class MuttonFishNewComponent implements OnInit {
 		
 		if (event == 'PROPRIETORSHIPFIRM') {
 			for (let file of localUploadArray) {
-				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') || (file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
+				debugger;
+				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') || (file['documentIdentifier'] == 'POLICE_VERIFICATION') || (file['documentIdentifier'] == 'RENT_AGREEMENT')) {
 						file['mandatory'] = false;
 				}else{
 					this.uploadFileArray.push(file);
 				}
-
+				if(file['documentIdentifier'] == 'PROOF_OF_OWNERSHIP'){
+					file['mandatory'] = false;
+				}
+				 if(file['documentIdentifier'] == 'PROPERTY_BILL_RECEIPT'){
+					// file['isActive'] = true;
+					file['mandatory'] = true;
+				}
 				if (file['mandatory'] == true) {
 					this.mandatoryUploadFileArray.push(file);
 				}

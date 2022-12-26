@@ -304,7 +304,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 
 		if (event == 'PROPRIETORSHIPFIRM') {
 			for (let file of localUploadArray) {
-				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') || (file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
+				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') || (file['documentIdentifier'] == 'POLICE_VERIFICATION') || (file['documentIdentifier'] == 'RENT_AGREEMENT')) {
 					file['mandatory'] = false;
 				}else{
 					this.uploadFileArray.push(file);
