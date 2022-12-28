@@ -114,6 +114,8 @@
               <input matInput type="text" formControlName="ownerFirstName" appValidationFields
                 validationFieldsType='onlyNameWithOutSpace' maxlength="50"
                 placeholder="{{'first_name' | translate: translateKey}}" required>
+                <control-messages [control]="contractorRegistrationForm.get('ownerFirstName')">
+                </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
@@ -126,27 +128,36 @@
               <input matInput type="text" formControlName="ownerLastName" appValidationFields
                 validationFieldsType='onlyNameWithOutSpace' maxlength="50"
                 placeholder="{{'last_name' | translate: translateKey}}" required>
+                <control-messages [control]="contractorRegistrationForm.get('ownerLastName')">
+                </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
               <input matInput type="text" formControlName="ownerMobileNumber" required OnlyNumber maxlength="10"
                 placeholder="{{'mobile_no' | translate: translateKey}}" required>
+                <control-messages [control]="contractorRegistrationForm.get('ownerMobileNumber')">
+                </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
               <input matInput type="text" formControlName="ownerEmailId" maxlength="50"
-                placeholder="{{'email_id' | translate: translateKey}}">
+                placeholder="{{'email_id' | translate: translateKey}}" required>
+                <control-messages [control]="contractorRegistrationForm.get('ownerEmailId')">
+                </control-messages>
             </mat-form-field>
 
             <app-address #residenceAddress [requiredFeilds]="true"
               [addressFormGroup]="contractorRegistrationForm.get('registeredAddress')"></app-address>
 
             <div class="col-md-4 ngSelect">
-              <mat-label><b>{{'if_company_partnership' | translate: translateKey}} *</b></mat-label>
-              <ng-select formControlName="partnerShip">
-                <ng-option>Yes</ng-option>
-                <ng-option>No</ng-option>
-              </ng-select>
+              <mat-label><b>{{'if_company_partnership' | translate: translateKey}}</b></mat-label>
+              <mat-radio-group formControlName="partnerShip" class="radioGroup">
+                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code" class="mr-3">
+                  {{impl.name}}
+                </mat-radio-button>
+              </mat-radio-group>
+              <control-messages [control]="contractorRegistrationForm.get('partnerShip')">
+              </control-messages>
             </div>
 
             <h2><b>{{'name_of_the_partners' | translate: translateKey}}</b></h2>
@@ -193,7 +204,7 @@
                     </td>
                     <td>
                       <span>
-                        <button mat-raised-button type="button" color="warn" style="margin-top: 22px;"
+                        <button [hidden]="isPreviewVendorNameDetail" mat-raised-button type="button" color="warn" style="margin-top: 22px;"
                           (click)="onRemoveRowOwnerShip(index)">
                           <mat-icon title="Cancel">cancel</mat-icon>
                         </button>
@@ -213,6 +224,8 @@
             <mat-form-field class="col-md-4">
               <input matInput autocomplete="off" minlength="9" maxlength="18" type="tel" formControlName="bankAccountNo"
                 OnlyNumber placeholder="{{'bank_account_no' | translate: translateKey }}" required>
+                <control-messages [control]="contractorRegistrationForm.get('bankAccountNo')">
+                </control-messages>
             </mat-form-field>
 
             <div class="col-md-4 ngSelect" formGroupName="registrationBank">
@@ -228,6 +241,8 @@
               <input matInput autocomplete="off" maxlength="50" type="text" formControlName="branchName"
                 appValidationFields validationFieldsType='alphanumericWithSpace'
                 placeholder="{{'branch_name'  | translate: translateKey}}" required>
+                <control-messages [control]="contractorRegistrationForm.get('branchName')">
+                </control-messages>
             </mat-form-field>
 
 
@@ -236,10 +251,14 @@
               <input matInput autocomplete="off" maxlength="50" type="text" formControlName="businessName"
                 appValidationFields validationFieldsType='onlyNameWithSpace'
                 placeholder="{{'business_name' | translate: translateKey}}" required>
+                <control-messages [control]="contractorRegistrationForm.get('businessName')">
+                </control-messages>
             </mat-form-field>
             <mat-form-field class="col-md-6">
               <input matInput autocomplete="off" maxlength="10" type="text" formControlName="businessMobileNo"
                 OnlyNumber placeholder="{{'business_mobile_number' | translate: translateKey}}" required>
+                <control-messages [control]="contractorRegistrationForm.get('businessMobileNo')">
+                </control-messages>
             </mat-form-field>
             <app-address #bissinessAddress [requiredFeilds]="true"
               [addressFormGroup]="contractorRegistrationForm.get('businessAddress')"></app-address>
@@ -360,7 +379,7 @@
                       </mat-form-field> -->
                     </td>
                     <td>
-                      <button mat-raised-button type="button" color="warn" style="margin-top: 22px;"
+                      <button [hidden]="isFirmNameDetail" mat-raised-button type="button" color="warn" style="margin-top: 22px;"
                         (click)="onRemoveRowFirmDetail(index)">
                         <mat-icon title="Cancel">cancel</mat-icon>
                       </button>
@@ -410,28 +429,32 @@
             </mat-form-field>
 
             <div class="col-md-4 ngSelect">
-              <mat-label><b>{{'owner_account_department' | translate: translateKey }} *</b></mat-label>
-              <ng-select formControlName="ownerAccountDepartment">
-                <ng-option>Yes</ng-option>
-                <ng-option>No</ng-option>
-              </ng-select>
+              <mat-label><b>{{'owner_account_department' | translate: translateKey }}</b></mat-label>
+              <mat-radio-group formControlName="ownerAccountDepartment" class="radioGroup">
+                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code" class="mr-3">
+                  {{impl.name}}
+                </mat-radio-button>
+              </mat-radio-group>
+              <control-messages [control]="contractorRegistrationForm.get('ownerAccountDepartment')">
+              </control-messages>
             </div>
             <mat-form-field class="col-md-12">
               <textarea matInput maxlength="255" formControlName="contractorWorkDetails"
                 placeholder="{{'contractor_work_details' | translate: translateKey }}"></textarea>
             </mat-form-field>
 
-            <div class="col-md-12"><b>{{'any_registration_on_another_organisation' | translate: translateKey }}
-                *</b>
-            </div>
-            <div class="col-md-4 ngSelect">
-              <ng-select formControlName="anotherOrganisation">
-                <ng-option>Yes</ng-option>
-                <ng-option>No</ng-option>
-              </ng-select>
+           
+            <div class="col-md-8 ngSelect">
+              <mat-label><b>{{'any_registration_on_another_organisation' | translate: translateKey }}</b></mat-label>
+              <mat-radio-group formControlName="anotherOrganisation" class="radioGroup">
+                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code" class="mr-3">
+                  {{impl.name}}
+                </mat-radio-button>
+              </mat-radio-group>
+            
             </div>
 
-            <mat-form-field class="col-md-8">
+            <mat-form-field class="col-md-12">
               <input matInput autocomplete="off" maxlength="255" type="text" formControlName="whichDepartment"
                 placeholder="{{'which_department' | translate: translateKey}}" required>
             </mat-form-field>
@@ -450,13 +473,14 @@
                 placeholder="{{'income_tax_details' | translate: translateKey}}"></textarea>
             </mat-form-field>
 
-            <div class="col-md-12"><b>{{'owner_partner_and_shareholder_apply_in_any_organization' | translate:
-                translateKey}} *</b></div>
-            <div class="col-md-6 ngSelect">
-              <ng-select formControlName="anyAnotherOrganisationShareholder">
-                <ng-option>Yes</ng-option>
-                <ng-option>No</ng-option>
-              </ng-select>
+            <div class="col-md-8 ngSelect">
+              <mat-label><b>{{'owner_partner_and_shareholder_apply_in_any_organization' | translate: translateKey }}</b></mat-label>
+              <mat-radio-group formControlName="anyAnotherOrganisationShareholder" class="radioGroup">
+                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code" class="mr-3">
+                  {{impl.name}}
+                </mat-radio-button>
+              </mat-radio-group>
+            
             </div>
 
             <mat-form-field class="col-md-6">
