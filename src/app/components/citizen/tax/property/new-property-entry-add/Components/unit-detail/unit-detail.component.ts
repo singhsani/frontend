@@ -531,7 +531,7 @@ export class UnitDetailComponent implements OnInit {
       (data) => {
         if (data.status === 200) {
           this.measurementModel.propertyMeasurementId = data.body.data;
-          this.getUnitListByOccupierId();
+          // this.getUnitListByOccupierId();
           // this.viewMeasurement();
           const tempMeasurementId = data.body.data;
           this.saveMeasurementTax(tempMeasurementId);
@@ -664,7 +664,7 @@ export class UnitDetailComponent implements OnInit {
     this.newNewPropertyEntryAddService.saveMeasurementTax(Id).subscribe(
       (data) => {
         if (data) {
-          // this.getUnitListByOccupierId();
+          this.getUnitListByOccupierId();
           this.viewMeasurement();
         }
       },
