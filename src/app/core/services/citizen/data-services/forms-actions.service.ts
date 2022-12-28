@@ -152,6 +152,10 @@ export class FormsActionsService {
 		this.requestURL = `api/form/${this.apiType}/printReceiptForPayment?id=${appId}`;
 		return this.http.get(this.requestURL,'printReceipt');
 	}
+	printAfterReschedule(appId){
+		this.requestURL = `api/form/${this.apiType}/printReceiptAfterReschedule?id=${appId}`;
+		return this.http.get(this.requestURL,'printReceipt');
+	}
 
 	/**
 	 * This method is use to generate print view
@@ -539,4 +543,10 @@ export class FormsActionsService {
 		this.requestURL = `api/form/duplicateMarriageReg/legalprint/${data}/${id}`;
 		return this.http.get(this.requestURL,'printReceipt');
 	}
+
+	// for Vendor Registration when Deposit Received 
+	nonRefundableCollection(serviceFormId) {
+		this.requestURL = `api/form/vendor/collectionAmount/${serviceFormId}`;
+		return this.http.get(this.requestURL, 'printReceipt');
+	  }
 }

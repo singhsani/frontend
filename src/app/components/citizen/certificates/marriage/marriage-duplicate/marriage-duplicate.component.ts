@@ -99,7 +99,7 @@ export class MarriageDuplicateComponent implements OnInit {
 	 * show hide duplicate form.
 	 */
 	isVisibeDuplicateForm: boolean = true;
-	DUPLICATE_COPY_MODE: Array<any> = [];
+	DUPLICATE_COPY_MODE_DUPLICATE_MARRIAGE:Array<any> = [];
 	YES_NO: Array<any> = [];
 	MARITAL_STATUS: Array<any> = [];
 	RELIGION: Array<any> = [];
@@ -312,7 +312,7 @@ export class MarriageDuplicateComponent implements OnInit {
 	 */
 	getLookupData() {
 		this.formService.getDataFromLookups().subscribe(res => {
-			this.DUPLICATE_COPY_MODE = res.DUPLICATE_COPY_MODE;
+			this.DUPLICATE_COPY_MODE_DUPLICATE_MARRIAGE = res.DUPLICATE_COPY_MODE_DUPLICATE_MARRIAGE;
 			this.YES_NO = res.YES_NO;
 			this.RELIGION = res.RELIGION;
 			this.MARITAL_STATUS = res.MARITAL_STATUS;
@@ -456,5 +456,9 @@ export class MarriageDuplicateComponent implements OnInit {
 		this.createDuplicateMRRecord(data);
 		this.showSearchForm = false;
 		this.isVisibeDuplicateForm = false;
+	}
+
+	getlength(event){
+		return false
 	}
 }

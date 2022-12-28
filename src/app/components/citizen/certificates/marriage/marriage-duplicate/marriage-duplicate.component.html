@@ -150,7 +150,7 @@
 						<mat-form-field formGroupName="duplicateCopyMode" class="col-md-4">
 							<mat-select placeholder="{{'duplicate_copy_mode' | translate:translateKey}}"
 								formControlName="code">
-								<mat-option *ngFor="let duplicatemode of DUPLICATE_COPY_MODE"
+								<mat-option *ngFor="let duplicatemode of DUPLICATE_COPY_MODE_DUPLICATE_MARRIAGE"
 									[value]="duplicatemode.code">
 									{{duplicatemode.name}}
 								</mat-option>
@@ -159,9 +159,14 @@
 							</control-messages>
 						</mat-form-field>
 
-						<mat-form-field class="col-md-4">
+						<!-- <mat-form-field class="col-md-4">
 							<input matInput maxlength="2" type="number" [min]="0" OnlyNumber
 								placeholder="{{'total_copies' | translate:translateKey}}" formControlName="totalCopies">
+							<control-messages [control]="marriageDuplicateForm.get('totalCopies')"></control-messages>
+						</mat-form-field> -->
+						<mat-form-field class="col-md-6">
+							<input matInput [max]="100"  type="number" [min]="1 "  OnlyNumber (keypress)="getlength($event)"
+								placeholder="{{'total_copies' | translate:translateKey}} *" formControlName="totalCopies">
 							<control-messages [control]="marriageDuplicateForm.get('totalCopies')"></control-messages>
 						</mat-form-field>
 

@@ -46,7 +46,8 @@ export class ContractorRegsitrationComponent implements OnInit {
   showButtons: boolean = false;
   isSubmitBtnVisible: boolean = true;
   contractorOwnerType: any = [];
-
+  isPreviewVendorNameDetail = false;
+  isFirmNameDetail = false;
   constructor(
     private fb: FormBuilder,
 
@@ -92,10 +93,10 @@ export class ContractorRegsitrationComponent implements OnInit {
   }
   setFormControlToTabIndexMap() {
 
-    this.formControlNameToTabIndex.set('firstName', 0)
+    this.formControlNameToTabIndex.set('nameOfTheFirm', 0)
     this.formControlNameToTabIndex.set('middleName', 0)
     this.formControlNameToTabIndex.set('lastName', 0)
-    this.formControlNameToTabIndex.set('mobileNumber', 0)
+    this.formControlNameToTabIndex.set('officeContactNumber', 0)
     this.formControlNameToTabIndex.set('emailId', 0)
     this.formControlNameToTabIndex.set('ownerFirstName', 0)
     this.formControlNameToTabIndex.set('ownerMiddleName', 0)
@@ -126,10 +127,10 @@ export class ContractorRegsitrationComponent implements OnInit {
       serviceFormId: null,
       applicationNumber: null,
       canEdit: [true],
-      firstName: [null, [Validators.required, Validators.maxLength(50)]],
+      nameOfTheFirm: [null, [Validators.required, Validators.maxLength(50)]],
       middleName: [null, [Validators.maxLength(50)]],
       lastName: [null, [Validators.required, Validators.maxLength(50)]],
-      mobileNumber: [null, [Validators.required]],
+      officeContactNumber: [null, [Validators.required]],
       emailId: [null, [ValidationService.emailValidator]],
       gstNo: [null],
       panNo: [null, [Validators.required, ValidationService.panValidator]],
@@ -246,9 +247,50 @@ export class ContractorRegsitrationComponent implements OnInit {
         this.contractorRegistrationForm.disable();
         this.contractorRegistrationForm.get('canEdit').setValue(false);
       }
+      res.firmEmployeeDetails.forEach(app => {
+        (<FormArray>this.contractorRegistrationForm.get('firmEmployeeDetails')).push(this.createFormGroupVendor('firmEmployeeDetails', app));
+      });
+      this.isFirmNameDetail = true;
+      res.partnerDetails.forEach(app => {
+        (<FormArray>this.contractorRegistrationForm.get('partnerDetails')).push(this.createFormGroupVendor('partnerDetails', app));
+      });
+      this.isPreviewVendorNameDetail = true;
+
       this.setServiceDetailsOnInit(res);
 
     });
+  }
+
+  createFormGroupVendor(key: string, data: any): FormGroup {
+
+    let formGroupData: FormGroup;
+    switch (key) {
+      case 'partnerDetails':
+        formGroupData = this.fb.group({
+          ownerType: this.fb.group({
+            code: [{ value: data.ownerType.code ? data.ownerType.code : null, disabled: true }],
+            name: [{ value: data.ownerType.name ? data.ownerType.name : null, disabled: true }]
+          }),
+          ownerName: [{ value: data.ownerName ? data.ownerName : null, disabled: true }],
+          ownerDetail: [{ value: data.ownerDetail ? data.ownerDetail : null, disabled: true }],
+        })
+        break;
+
+      case 'firmEmployeeDetails':
+        formGroupData = this.fb.group({
+          employeeName: [{ value: data.employeeName ? data.employeeName : null, disabled: true }],
+          employeeQualification: [{ value: data.employeeQualification ? data.employeeQualification : null, disabled: true }],
+          employeeStatus: [{ value: data.employeeStatus ? data.employeeStatus : null, disabled: true }],
+          employeeExperienceYears: [{ value: data.employeeExperienceYears ? data.employeeExperienceYears : null, disabled: true }],
+          joiningDate: [{ value: data.joiningDate ? data.joiningDate : null, disabled: true }],
+          projectStartDate: [{ value: data.projectStartDate ? data.projectStartDate : null, disabled: true }],
+        })
+        break;
+
+      default:
+        break;
+    }
+    return formGroupData;
   }
 
   selectLanguage(language: string) {
@@ -426,7 +468,7 @@ export class ContractorRegsitrationComponent implements OnInit {
       "firstName": "Arvind Dangi",
       "middleName": "Dangi",
       "lastName": "Dangi",
-      "mobileNumber": "8962749074",
+      "officeContactNumber": "8962749074",
       "emailId": "chetan.porwal@nascentinfo.com",
       "panNo": "DFVFD1212D",
       "gstNo": "24ANCPP4357N2ZL",
