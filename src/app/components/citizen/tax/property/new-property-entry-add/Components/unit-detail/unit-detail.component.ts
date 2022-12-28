@@ -664,7 +664,7 @@ export class UnitDetailComponent implements OnInit {
     this.newNewPropertyEntryAddService.saveMeasurementTax(Id).subscribe(
       (data) => {
         if (data) {
-          // this.getUnitListByOccupierId();
+          this.getUnitListByOccupierId();
           this.viewMeasurement();
         }
       },
