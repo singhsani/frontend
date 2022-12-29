@@ -46,14 +46,14 @@ export class MuttonFishDuplicateComponent implements OnInit {
 	// serach api variable
 	serachLicenceObj = {
 		isDisplayDuplicateLicenceForm: <boolean>false,
-		searchLicenceNumber:""
+		searchLicenceNumber: ""
 	}
 
 	/**
 	 * This method for serach licence using licence number.
 	 */
 	searchLicence() {
-    let obj = { refNumber: this.serachLicenceObj.searchLicenceNumber };
+		let obj = { refNumber: this.serachLicenceObj.searchLicenceNumber };
 		this.MuttonFishService.searchLicence(obj).subscribe(
 			(res: any) => {
 				if (res.success) {
@@ -70,14 +70,14 @@ export class MuttonFishDuplicateComponent implements OnInit {
 			})
 	}
 
-    /**
-     * @param fb - Declare FormBuilder property.
-     * @param validationError - Declare validation service property
-     * @param formService - Declare form service property 
-     * @param uploadFileService - Declare upload file service property.
-     * @param commonService - Declare sweet alert.
+	/**
+	 * @param fb - Declare FormBuilder property.
+	 * @param validationError - Declare validation service property
+	 * @param formService - Declare form service property 
+	 * @param uploadFileService - Declare upload file service property.
+	 * @param commonService - Declare sweet alert.
 	 * @param toastrService - Show massage with timer.
-     */
+	 */
 	constructor(
 		private fb: FormBuilder,
 		private validationService: ValidationService,
@@ -113,9 +113,9 @@ export class MuttonFishDuplicateComponent implements OnInit {
 	}
 
 	/**
-     * This method is use to create new record for citizen.
-     * @param searchData: exciting licence number data
-     */
+	 * This method is use to create new record for citizen.
+	 * @param searchData: exciting licence number data
+	 */
 	createRecordPatchSerachData(searchData: any) {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		this.formService.createFormData().subscribe(res => {
@@ -132,6 +132,8 @@ export class MuttonFishDuplicateComponent implements OnInit {
 				createdDate: res.createdDate,
 				updatedDate: res.createdDate,
 				serviceType: res.serviceType,
+				wardNo: res.wardNo,
+				zoneNo: res.zoneNo,
 				// deptFileStatus: res.deptFileStatus,
 				serviceName: res.serviceName,
 				fileNumber: res.fileNumber,
@@ -164,13 +166,13 @@ export class MuttonFishDuplicateComponent implements OnInit {
 		});
 
 	}
-	changeNoOfCopies(event){
-		if(event.target.value<1){
-		  this.muttonFishDuplicateForm.get('noOfCopies').setValue(1);
-		  this.commonService.openAlert('Warning', 'No. Of Copies Zero Not allowed', 'warning');
-		  return ;
+	changeNoOfCopies(event) {
+		if (event.target.value < 1) {
+			this.muttonFishDuplicateForm.get('noOfCopies').setValue(1);
+			this.commonService.openAlert('Warning', 'No. Of Copies Zero Not allowed', 'warning');
+			return;
 		}
-	  }
+	}
 	/**
 	 * This method use for edit some fiels.
 	 */
@@ -238,10 +240,10 @@ export class MuttonFishDuplicateComponent implements OnInit {
 				code: [null, [Validators.required]]
 			}),
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30)]],
-			holderMiddleName: [null, [ Validators.maxLength(30)]],
+			holderMiddleName: [null, [Validators.maxLength(30)]],
 			holderLastName: [null, [Validators.required, Validators.maxLength(30)]],
 			holderFirstNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
-			holderMiddleNameGuj: [null, [ Validators.maxLength(90)]],
+			holderMiddleNameGuj: [null, [Validators.maxLength(90)]],
 			holderLastNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
 
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
@@ -274,17 +276,24 @@ export class MuttonFishDuplicateComponent implements OnInit {
 			licenseDuplicatealDate: [null],
 			loinumber: [null],
 			noOfCopies: [1, [Validators.required]],
-
+			wardNo: this.fb.group({
+				code: null,
+				name: null
+			}),
+			zoneNo: this.fb.group({
+				code: null,
+				name: null
+			}),
 			/* Step 4 controls start*/
 			attachments: []
 			/* Step 4 controls end */
 		});
 	}
 
-    /**
-     * This method required for final form submition.
-     * @param flag - flag of invalid control.
-     */
+	/**
+	 * This method required for final form submition.
+	 * @param flag - flag of invalid control.
+	 */
 	handleErrorsOnSubmit(flag) {
 		let step0 = 16;
 		if (flag != null) {
@@ -300,12 +309,12 @@ export class MuttonFishDuplicateComponent implements OnInit {
 	}
 
 
-  /**
-   * This method is change date format.
-   * @param date : selected date
-   * @param controlType : form control name
-   */
-  dateFormat(date, controlType: string) {
-    this.muttonFishDuplicateForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
-  }
+	/**
+	 * This method is change date format.
+	 * @param date : selected date
+	 * @param controlType : form control name
+	 */
+	dateFormat(date, controlType: string) {
+		this.muttonFishDuplicateForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+	}
 }
