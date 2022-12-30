@@ -49,6 +49,9 @@ export class SwimmingPoolComponent implements OnInit {
   isFileUploaded3: boolean = false;
   isFileUploaded4: boolean = false;
   applicantageyear: number = null;
+  isFileUploaded5: boolean = false;
+  isFileUploaded6: boolean = false;
+  isSwimmingTestReportShow: boolean = false;
 
   countryListArray: any = [];
   stateListArray: any = [];
@@ -181,6 +184,10 @@ export class SwimmingPoolComponent implements OnInit {
     }
     else {
       this.toastr.error("Server Error");
+    }
+
+    if (event == 'SWIMMER') {
+      this.isSwimmingTestReportShow = true;
     }
   }
   defaultAsperPool() {
