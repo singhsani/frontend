@@ -404,7 +404,39 @@
 								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'certified_doctors_certificate'}">
 								</booking-file-upload>
 							</div>
+							<div class="col-md-4">
+								<label labelPosition="after">{{'photo_id_proof' |
+									translate:translateKey}} *
+								</label>
+								<booking-file-upload (uploaded)="isFileUploaded4 = $event"
+									[deleteButtonIsDisabled]="navigatedRefNumber ? true : false"
+									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'5', labelName:'Photo Id Proof', formPart:'1.4', refNumber:
+							swimmimgPoolBookingForm.get('refNumber').value, variableName: 'photo_id_proof'}" [attachments]="attachments">
+								</booking-file-upload>
+							</div>
 
+							<div *ngIf="isSwimmingTestReportShow" class="col-md-4">
+								<label labelPosition="after">{{'swimming_test_report' |
+									translate:translateKey}} *
+								</label>
+								<booking-file-upload (uploaded)="isFileUploaded5 = $event"
+									[deleteButtonIsDisabled]="navigatedRefNumber ? true : false"
+									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'6', labelName:'Swimming Test Report', formPart:'1.5', refNumber:
+							swimmimgPoolBookingForm.get('refNumber').value, variableName: 'swimming_test_report'}"
+									[attachments]="attachments">
+								</booking-file-upload>
+							</div>
+
+							<div class="col-md-4">
+								<label labelPosition="after">{{'other_documents' |
+									translate:translateKey}}
+								</label>
+								<booking-file-upload (uploaded)="isFileUploaded6 = $event"
+									[deleteButtonIsDisabled]="navigatedRefNumber ? true : false"
+									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'5', labelName:'Other Documents', formPart:'1.6', refNumber:
+							swimmimgPoolBookingForm.get('refNumber').value, variableName: 'other_documents'}" [attachments]="attachments">
+								</booking-file-upload>
+							</div>
 						</ng-container>
 
 					</div>
