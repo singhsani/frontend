@@ -52,6 +52,7 @@ export class SwimmingPoolComponent implements OnInit {
   isFileUploaded5: boolean = false;
   isFileUploaded6: boolean = false;
   isSwimmingTestReportShow: boolean = false;
+  isApplicateAgeGreaterThanEighteen: boolean = false;
 
   countryListArray: any = [];
   stateListArray: any = [];
@@ -408,6 +409,9 @@ export class SwimmingPoolComponent implements OnInit {
     // this.applicantagedays = bday.diff(bday.add(this.applicantageyear, 'years'), 'days', false);
 
     this.swimmimgPoolBookingForm.get("applicantAge").setValue(this.applicantageyear);
+    if (this.applicantageyear >= 18) {
+      this.isApplicateAgeGreaterThanEighteen = true;
+    }
   }
 
   /**
