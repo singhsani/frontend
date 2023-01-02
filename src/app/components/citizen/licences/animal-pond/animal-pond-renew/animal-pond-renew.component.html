@@ -14,7 +14,7 @@
 		<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
 			<!-- step 1 Starts -->
-			<mat-tab>
+			<mat-tab disabled>
 				<ng-template mat-tab-label>
 					<div>{{'license_holder_detail' | translate:translateKey}}</div>
 				</ng-template>
@@ -164,7 +164,7 @@
 			<!-- step 1 Ends -->
 
 			<!-- step 2 Starts -->
-			<mat-tab>
+			<mat-tab disabled>
 				<ng-template mat-tab-label>
 					<div>{{'business_detail' | translate:translateKey}}</div>
 				</ng-template>
@@ -338,7 +338,7 @@
 			<!-- step 2 Ends -->
 
 			<!-- step 3 start -->
-			<mat-tab>
+			<mat-tab disabled>
 				<ng-template mat-tab-label>
 					<div>{{'insert_animal_detail' | translate:translateKey}}</div>
 				</ng-template>
@@ -454,7 +454,7 @@
 			<!-- step 3 end -->
 
 			<!-- step 4 Attachment Starts -->
-			<mat-tab>
+			<mat-tab disabled>
 				<ng-template mat-tab-label>
 					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
