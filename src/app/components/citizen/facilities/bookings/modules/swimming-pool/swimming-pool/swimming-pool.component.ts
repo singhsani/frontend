@@ -51,6 +51,7 @@ export class SwimmingPoolComponent implements OnInit {
   applicantageyear: number = null;
   isFileUploaded5: boolean = false;
   isFileUploaded6: boolean = false;
+  isFileUploaded7: boolean = false;
   isSwimmingTestReportShow: boolean = false;
   isApplicateAgeGreaterThanEighteen: boolean = false;
 
@@ -190,7 +191,7 @@ export class SwimmingPoolComponent implements OnInit {
     if (event == 'SWIMMER') {
       this.isSwimmingTestReportShow = true;
     }
-    else{
+    else {
       this.isSwimmingTestReportShow = false;
     }
   }
@@ -415,7 +416,7 @@ export class SwimmingPoolComponent implements OnInit {
     if (this.applicantageyear <= 18) {
       this.isApplicateAgeGreaterThanEighteen = true;
     }
-    else{
+    else {
       this.isApplicateAgeGreaterThanEighteen = false;
     }
   }
@@ -477,17 +478,17 @@ export class SwimmingPoolComponent implements OnInit {
       this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
       return;
     }
-    else if(this.isApplicateAgeGreaterThanEighteen == true && !this.isFileUploaded3 ){
+    else if (this.isApplicateAgeGreaterThanEighteen == true && !this.isFileUploaded3) {
       this.handleErrorsonSubmit(errCount);
       this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
       return;
     }
-    else if (!this.isRenewalForm && (!this.isFileUploaded1 || !this.isFileUploaded2 || !this.isFileUploaded4)) {
+    else if (!this.isRenewalForm && (!this.isFileUploaded1 || !this.isFileUploaded2 || !this.isFileUploaded4 || !this.isFileUploaded5)) {
       this.handleErrorsonSubmit(errCount);
       this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
       return;
     }
-    else if(this.isSwimmingTestReportShow == true && !this.isFileUploaded5  ){
+    else if (this.isSwimmingTestReportShow == true && !this.isFileUploaded6) {
       this.handleErrorsonSubmit(errCount);
       this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
       return;
