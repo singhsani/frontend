@@ -260,29 +260,31 @@
 						<div class="width100p" formArrayName="censusNo">
 							<div class="row" *ngFor="let item of pecRegForm.get('censusNo')['controls']; let i = index;"
 								[formGroupName]="i">
-								<div class="col-md-6">
-									<mat-form-field>
-										<div *ngIf="censusNo == true">
-											<mat-select style="margin-top: 15px !important;"
-												placeholder="{{'census_no' | translate: translateKey}}" value="CensusNo"
-												disabled>
-												<mat-option value="CensusNo">Census No</mat-option>
-											</mat-select>
-										</div>
-										<div *ngIf="censusNo == false">
-											<mat-select style="margin-top: 15px !important;"
-												placeholder="{{'census_no' | translate: translateKey}}"
-												value="PropertyNo" disabled>
-												<mat-option value="PropertyNo">Property No</mat-option>
-											</mat-select>
-										</div>
+								<div class="row" *ngIf="this.pecRegForm.get('censusNo')['controls'][i].value.census != null">
+									<div class="col-md-6">
+										<mat-form-field>
+											<div *ngIf="this.pecRegForm.get('censusNo')['controls'][i].value.census.length > 18">
+												<mat-select style="margin-top: 15px !important;"
+													placeholder="{{'census_no' | translate: translateKey}}" value="CensusNo"
+													disabled>
+													<mat-option value="CensusNo">Census No</mat-option>
+												</mat-select>
+											</div>
+											<div *ngIf="this.pecRegForm.get('censusNo')['controls'][i].value.census.length === 18">
+												<mat-select style="margin-top: 15px !important;"
+													placeholder="{{'census_no' | translate: translateKey}}"
+													value="PropertyNo" disabled>
+													<mat-option value="PropertyNo">Property No</mat-option>
+												</mat-select>
+											</div>
+										</mat-form-field>
+									</div>
+									<mat-form-field class="col-md-6">
+										<input style="margin-top: 15px !important;" matInput autocomplete="off"
+											appMaskCensusNumber maxlength="21" formControlName="census" type="text"
+											required >
 									</mat-form-field>
 								</div>
-								<mat-form-field class="col-md-6">
-									<input style="margin-top: 15px !important;" matInput autocomplete="off"
-										appMaskCensusNumber maxlength="21" formControlName="census" type="text"
-										required >
-								</mat-form-field>
 							</div>
 
 							<div class="col-md-12 pt-3" *ngIf="isDeleteBtnShow">
