@@ -254,6 +254,12 @@ export class PecRegistrationComponent implements OnInit {
 					file['mandatory'] = true;
 				}
 			}
+		}else{
+			for (let file of this.attachmentList) {
+				if (file['documentIdentifier'] == 'MOU') {
+					file['mandatory'] = false;
+				}
+			}
 		}
 	}
 
