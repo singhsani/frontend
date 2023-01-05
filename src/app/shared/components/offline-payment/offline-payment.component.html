@@ -31,6 +31,7 @@
 					<ng-select placeholder="Bank Name *" formControlName="bankName">
 						<ng-option *ngFor="let bankObj of bankList" [value]="bankObj.code">{{bankObj.name}}</ng-option>
 					</ng-select>
+					<control-messages [control]="paymentsForm.get('bankName')"></control-messages>
 				</div>
 				<mat-form-field class="col-md-4">
 					<input matInput maxlength="20" placeholder="Branch Name" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="branchName">
@@ -65,6 +66,7 @@
 					<ng-select placeholder="Bank Name *" formControlName="bankName">
 						<ng-option *ngFor="let bankObj of bankList" [value]="bankObj.code">{{bankObj.name}}</ng-option>
 					</ng-select>
+					<control-messages [control]="paymentsForm.get('bankName')"></control-messages>
 				</div>
 				<mat-form-field class="col-md-4">
 					<input matInput maxlength="20" placeholder="Branch Name" appValidationFields
