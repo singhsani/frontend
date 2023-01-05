@@ -24,7 +24,7 @@
           <div class="col-md-6">
             <div class="mb-4 mt-4">
               <!-- <mat-label><strong>Registration Category *</strong></mat-label> -->
-              <mat-label><strong>{{'registration_category' | translate: translateKey}}</strong></mat-label>
+              <mat-label><strong>{{'Registration Category' | translate: translateKey}}</strong></mat-label>
             </div>
             <mat-radio-group formControlName="applyingFor" required class="radioGroup">
               <mat-radio-button value="AA" (change)="locationChange($event)" class="mr-3">
@@ -52,7 +52,7 @@
           </div>
 
           <div class="row">
-            <h2><b>{{'applicant_detail' | translate: translateKey}}</b></h2>
+            <h2><b>{{'applicant_Details' | translate: translateKey}}</b></h2>
             <mat-form-field class="col-md-4">
               <input matInput type="text" formControlName="nameOfTheFirm" appValidationFields
                 validationFieldsType='onlyNameWithOutSpace' required maxlength="50"
@@ -86,7 +86,7 @@
 
             <mat-form-field class="col-md-4">
               <input matInput type="text" formControlName="emailId" maxlength="50"
-                placeholder="{{'email_id' | translate: translateKey}}">
+                placeholder="{{'email_id' | translate: translateKey}}" required>
               <control-messages [control]="contractorRegistrationForm.get('emailId')">
               </control-messages>
             </mat-form-field>
@@ -100,7 +100,7 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput autocomplete="off" type="text" maxlength="15" formControlName="gstNo" class="capitalCase"
+              <input matInput autocomplete="off" type="text" maxlength="15" formControlName="gstNo" class="capitalCase" 
                 placeholder="{{'gst_no' | translate: translateKey}}">
               <control-messages [control]="contractorRegistrationForm.get('gstNo')"></control-messages>
             </mat-form-field>
@@ -222,7 +222,7 @@
 
             <h2><b>Bank Detail</b></h2>
             <mat-form-field class="col-md-4">
-              <input matInput autocomplete="off" minlength="9" maxlength="18" type="tel" formControlName="bankAccountNo"
+              <input matInput autocomplete="off" minlength="9" maxlength="17" type="tel" formControlName="bankAccountNo"
                 OnlyNumber placeholder="{{'bank_account_no' | translate: translateKey }}" required>
                 <control-messages [control]="contractorRegistrationForm.get('bankAccountNo')">
                 </control-messages>
@@ -461,7 +461,7 @@
 
             <mat-form-field class="col-md-4">
               <textarea matInput maxlength="255" formControlName="pastRegistrationDetails"
-                placeholder="{{'past_registration_details' | translate: translateKey}}"></textarea>
+                placeholder="{{'post_registration_details' | translate: translateKey}}"></textarea>
             </mat-form-field>
             <mat-form-field class="col-md-4">
               <textarea matInput maxlength="255" formControlName="engineerDetails"
@@ -486,7 +486,8 @@
             <mat-form-field class="col-md-6">
               <input matInput autocomplete="off" appDate formControlName="registrationDateOrReNewDate" [min]="maxDate"
                 [matDatepicker]="registrationDateOrReNewDate"
-                (dateChange)="onDateChange('registrationDateOrReNewDate', $event.value)">
+                (dateChange)="onDateChange('registrationDateOrReNewDate', $event.value)"
+                placeholder="{{'new_registration_date_and_renew_date' | translate: translateKey}}">
               <mat-datepicker-toggle matSuffix [for]="registrationDateOrReNewDate"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #registrationDateOrReNewDate></mat-datepicker>
               <div align="end" class="default-show-hint mat-hint mat-right"></div>
@@ -503,7 +504,8 @@
             <mat-form-field class="col-md-6">
               <input matInput autocomplete="off" appDate formControlName="oldRegistrationDate" [min]="maxDate"
                 [matDatepicker]="oldRegistrationDate"
-                (dateChange)="onDateChange('oldRegistrationDate', $event.value)">
+                (dateChange)="onDateChange('oldRegistrationDate', $event.value)"
+                placeholder="{{'old_registration_date' | translate: translateKey}}">
               <mat-datepicker-toggle matSuffix [for]="oldRegistrationDate"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #oldRegistrationDate></mat-datepicker>
               <div align="end" class="default-show-hint mat-hint mat-right"></div>
@@ -514,7 +516,7 @@
 
             <mat-form-field class="col-md-6">
               <textarea matInput maxlength="25" formControlName="oldRegistrationNumber"
-                placeholder="{{'old_registration_number' | translate: translateKey}}"></textarea>
+                placeholder="{{'old_registration_date_and_number' | translate: translateKey}}"></textarea>
             </mat-form-field>
 
             <mat-form-field class="col-md-6">
