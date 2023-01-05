@@ -63,7 +63,7 @@
                   </mat-form-field>
 
                   <mat-form-field class="col-md-6">
-                    <input matInput [max]="100"  type="number" [min]="1 "  OnlyNumber (onkeypress)="getlength($event)"
+                    <input matInput [max]="100"  type="number" [min]="1 "  OnlyNumber (keypress)="getlength($event)"
                            placeholder="{{'total_copies' | translate:translateKey}} *" formControlName="totalCopies">
                     <control-messages [control]="deathCorrectionForm.get('totalCopies')"></control-messages>
                   </mat-form-field>
