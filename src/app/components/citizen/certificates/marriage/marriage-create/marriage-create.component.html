@@ -32,7 +32,7 @@
 			<form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
 
 				<div class="row">
-					<div class="col-md-4 ngSelect" formGroupName='resources'>
+					<div class="col-md-7 ngSelect" formGroupName='resources'>
 						<ng-select formControlName="code" required (change)="resetFormValue()"
 							placeholder="{{'select_venue' | translate: translateKey}} *">
 							<ng-option *ngFor="let resources of resources" [value]="resources.code">{{resources.name}}
@@ -41,7 +41,7 @@
 						<control-messages [control]="appointmentForm.get('resources').get('code')"></control-messages>
 					</div>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-3">
 						<input matInput [min]="minDate" [matDatepickerFilter]="disableSunday" required
 							(dateChange)="dateFormateOne($event.value,'appointmentdate')"
 							[matDatepicker]="appointmentPicker" formControlName="appointmentdate"
@@ -52,8 +52,8 @@
 						<control-messages [control]="appointmentForm.get('appointmentdate')"></control-messages>
 					</mat-form-field>
 
-					<div class="col-md-4">
-						<button mat-stroked-button color="primary" class="w-50 mt-2" type="submit">
+					<div class="col-md-2">
+						<button mat-stroked-button color="primary" class="w-52 mt-2" type="submit">
 							{{'search' | translate: translateKey}}
 							<mat-icon>search</mat-icon>
 						</button>
