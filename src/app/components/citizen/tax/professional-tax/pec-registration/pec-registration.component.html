@@ -260,20 +260,17 @@
 						<div class="width100p" formArrayName="censusNo">
 							<div class="row" *ngFor="let item of pecRegForm.get('censusNo')['controls']; let i = index;"
 								[formGroupName]="i">
-								<div class="row"
-									*ngIf="this.pecRegForm.get('censusNo')['controls'][i].value.census != null">
+								<div class="row" *ngIf="this.pecRegForm.get('censusNo')['controls'][i].value != null && this.pecRegForm.get('censusNo')['controls'][i].value.census != null  && this.pecRegForm.get('censusNo')['controls'][i].value.census.length > 0">
 									<div class="col-md-6">
 										<mat-form-field>
-											<div
-												*ngIf="this.pecRegForm.get('censusNo')['controls'][i].value.census.length > 18">
+											<div *ngIf="this.pecRegForm.get('censusNo')['controls'][i].value.census.length > 18">
 												<mat-select style="margin-top: 15px !important;"
 													placeholder="{{'census_no' | translate: translateKey}}"
 													value="CensusNo" disabled>
 													<mat-option value="CensusNo">Census No</mat-option>
 												</mat-select>
 											</div>
-											<div
-												*ngIf="this.pecRegForm.get('censusNo')['controls'][i].value.census.length === 18">
+											<div *ngIf="this.pecRegForm.get('censusNo')['controls'][i].value.census.length <= 18">
 												<mat-select style="margin-top: 15px !important;"
 													placeholder="{{'census_no' | translate: translateKey}}"
 													value="PropertyNo" disabled>
