@@ -257,6 +257,14 @@
                 {{'cancel_booking' | translate:translateKey}}
               </button>
 
+              <div *ngIf="element.resourceType == 'TOWNHALL'">
+              <button *ngIf="showCancelBtnTownhall(element)" mat-menu-item data-toggle="modal" color="primary"
+              (click)="openModal(templateRequestModel, element.scheduleList, element.refNumber,element);">
+              <mat-icon title="View Booking Details" color="primary">cancel</mat-icon>
+              {{'cancel_booking' | translate:translateKey}}
+            </button>
+          </div>
+
               <!-- Make Cancelation Call for Advance booking-->
               <button *ngIf="showCancelAdvanceBooking(element)" mat-menu-item color="primary"
                 (click)="cancelAdvanceBooking(element)">
