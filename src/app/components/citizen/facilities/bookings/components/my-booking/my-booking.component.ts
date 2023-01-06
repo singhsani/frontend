@@ -644,6 +644,16 @@ export class MyBookingComponent implements OnInit {
 		// ----------------------------------------------------------
 		return true;
 	}
+	showCancelBtnTownhall(element){
+		if ((element.status === this.bookingConstant.PAYMENT_REQUIRED || 
+			element.status === this.bookingConstant.EXPIRED ||  
+			element.status === this.bookingConstant.PARTIALLY_BOOKED ||
+			element.status === this.bookingConstant.CANCELLATION_APPROVED ||
+			element.status === this.bookingConstant.CANCELLATION_REQUEST) || !element.isCancelRequired){
+			return false;
+		}
+		return true;
+	}
 
 	showCancelAdvanceBooking(element) {
 		if (element.resourceType === 'ATITHIGRUH'
