@@ -65,7 +65,7 @@ export class PecRegistrationComponent implements OnInit {
 	placeHolderMessage = null;
 	CanEdit: boolean = true;
 	censusNo: boolean = true;
-	isBlockNo :boolean =false;
+	isBlockNo: boolean = false;
 
 
 	constructor(
@@ -245,6 +245,22 @@ export class PecRegistrationComponent implements OnInit {
 				this.attachmentList = _.cloneDeep(res);
 			}
 		});
+	}
+
+	onConstitutionChange(event) {
+		if (event == 'COMPANY') {
+			for (let file of this.attachmentList) {
+				if (file['documentIdentifier'] == 'MOU') {
+					file['mandatory'] = true;
+				}
+			}
+		}else{
+			for (let file of this.attachmentList) {
+				if (file['documentIdentifier'] == 'MOU') {
+					file['mandatory'] = false;
+				}
+			}
+		}
 	}
 
 	/**
@@ -715,7 +731,7 @@ export class PecRegistrationComponent implements OnInit {
 	}
 
 	getAllBlockNos(event) {
-		if(event == undefined){
+		if (event == undefined) {
 			return false;
 		}
 		this.profeService.getAllBlockNos(event).subscribe(res => {

@@ -30,6 +30,7 @@ export class DeathCorrectionComponent implements OnInit {
 	 * death correction form group.
 	 */
 	deathCorrectionForm: FormGroup;
+	DeathCorrectionCopyMode: Array<any> = [];
 
 	/**
 	 * file upload model
@@ -62,7 +63,7 @@ export class DeathCorrectionComponent implements OnInit {
 	translateKey: string = 'deathCorrectionScreen';
 
 	/**
-	 * application id/Service form Id 
+	 * application id/Service form Id
 	 */
 	appId: number;
 
@@ -268,6 +269,7 @@ export class DeathCorrectionComponent implements OnInit {
 	getLookupData() {
 		this.formService.getDataFromLookups().subscribe(res => {
 			this.TypeOfCorrection = res.DEATH_CORRECTION_TYPE;
+			this.DeathCorrectionCopyMode = res.DEATH_CORRECTION_COPY_MODE;
 		});
 	}
 
@@ -372,14 +374,19 @@ export class DeathCorrectionComponent implements OnInit {
 			canEdit: true,
 			canDelete: true,
 			canSubmit: null,
-			// serviceDetail: this.fb.group({
-			// 	code: null,
-			// 	name: null,
-			// 	gujcbName: null,
-			// 	feesOnScrutiny: null
-			// }),
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			attachments: []
+			attachments: [],
+			totalCopies: [null, Validators.required],
+      deathCorrectionCopyMode: this.fb.group({
+            code: [null, [Validators.required]],
+            gujName: null,
+            id: null,
+            name: null,
+            orderSequence: null,
+            type: null,
+            uniqueId: null,
+            version: null
+          })
 		});
 
 	}
@@ -465,4 +472,8 @@ export class DeathCorrectionComponent implements OnInit {
 			}
 		}
 	}
+
+	getlength(event){
+  		return false
+  	}
 }

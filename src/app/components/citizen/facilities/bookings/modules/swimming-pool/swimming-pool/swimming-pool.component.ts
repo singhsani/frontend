@@ -49,6 +49,11 @@ export class SwimmingPoolComponent implements OnInit {
   isFileUploaded3: boolean = false;
   isFileUploaded4: boolean = false;
   applicantageyear: number = null;
+  isFileUploaded5: boolean = false;
+  isFileUploaded6: boolean = false;
+  isFileUploaded7: boolean = false;
+  isSwimmingTestReportShow: boolean = false;
+  isApplicateAgeGreaterThanEighteen: boolean = false;
 
   countryListArray: any = [];
   stateListArray: any = [];
@@ -181,6 +186,13 @@ export class SwimmingPoolComponent implements OnInit {
     }
     else {
       this.toastr.error("Server Error");
+    }
+
+    if (event == 'SWIMMER') {
+      this.isSwimmingTestReportShow = true;
+    }
+    else {
+      this.isSwimmingTestReportShow = false;
     }
   }
   defaultAsperPool() {
@@ -401,6 +413,12 @@ export class SwimmingPoolComponent implements OnInit {
     // this.applicantagedays = bday.diff(bday.add(this.applicantageyear, 'years'), 'days', false);
 
     this.swimmimgPoolBookingForm.get("applicantAge").setValue(this.applicantageyear);
+    if (this.applicantageyear <= 18) {
+      this.isApplicateAgeGreaterThanEighteen = true;
+    }
+    else {
+      this.isApplicateAgeGreaterThanEighteen = false;
+    }
   }
 
   /**
@@ -460,7 +478,17 @@ export class SwimmingPoolComponent implements OnInit {
       this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
       return;
     }
-    else if (!this.isRenewalForm && (!this.isFileUploaded1 || !this.isFileUploaded2 || !this.isFileUploaded3 || !this.isFileUploaded4)) {
+    else if (this.isApplicateAgeGreaterThanEighteen == true && !this.isFileUploaded3) {
+      this.handleErrorsonSubmit(errCount);
+      this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
+      return;
+    }
+    else if (!this.isRenewalForm && (!this.isFileUploaded1 || !this.isFileUploaded2 || !this.isFileUploaded4 || !this.isFileUploaded5)) {
+      this.handleErrorsonSubmit(errCount);
+      this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
+      return;
+    }
+    else if (this.isSwimmingTestReportShow == true && !this.isFileUploaded6) {
       this.handleErrorsonSubmit(errCount);
       this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
       return;

@@ -12,6 +12,8 @@ import { AppointmentServices } from '../../appointment.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { AppointmentConfig } from '../../appointment-config';
 import { Location } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
+
 
 
 
@@ -74,6 +76,7 @@ export class SlotBookingComponent implements OnInit {
 	*/
 	constructor(
 		// private formService: FormsActionsService,
+		private toster: ToastrService,
 		private appointmentService: AppointmentServices,
 		private formService: FormsActionsService,
 		private route: ActivatedRoute,
@@ -316,6 +319,9 @@ export class SlotBookingComponent implements OnInit {
 			<td>` + res.resourceName + `</td>
 			</tr>
 		</table>
+		<div class="alert alert-primary">
+		 Note :-Please Re-Print your receipt with update Schedule date and time.
+		</div>
 		</div>`;
 
 		this.commonService.openAlert("Schedule Appointment", "Appointment Scheduled Successfully", "info", appdetailhtml);
