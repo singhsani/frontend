@@ -37,14 +37,25 @@
     </div>
     <form #formVacancyCertificateNo="ngForm" (ngSubmit)="onSearchByVacancyCertificateNo(formVacancyCertificateNo)">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <mat-form-field class="full-width-input">
-                    <input matInput trim="blur" required maxlength="18" placeholder="Vacancy Certificate Number" name="vacancyCertificateNo"
-                        [(ngModel)]="vacancyCertificateNo" #VacancyCertificateNo="ngModel" (change)="onChangeVacancyCertificateNo()" number-only>
+                    <input matInput trim="blur" required maxlength="18" placeholder="Application Number" name="vacancyApplicationNo"
+                        [(ngModel)]="vacancyApplicationNo" #VacancyApplicationNo="ngModel" number-only>
+                    <mat-error *ngIf="VacancyApplicationNo.invalid">*Application No. is required.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <button mat-raised-button color="primary" type="button" (click)="getCertificateNoByApplicationNo()" [disabled]="isAppNoSearchDisable"> Go
+                </button>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field class="full-width-input">
+                    <input matInput trim="blur" maxlength="18" placeholder="Vacancy Certificate Number" name="vacancyCertificateNo"
+                        [(ngModel)]="vacancyCertificateNo" #VacancyCertificateNo="ngModel" number-only disabled>
                     <mat-error *ngIf="VacancyCertificateNo.invalid">*Vacancy Certificate No. is required.</mat-error>
                 </mat-form-field>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-2">
                 <button [disabled]="!isdisabledSearchButton" mat-raised-button color="primary" type="submit"> Go
                 </button>
             </div>
