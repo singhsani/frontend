@@ -21,6 +21,12 @@ export class RefundApplicationService {
       .pipe(map((response: any) => response))
   }
 
+  getVacancyPremiseCertificateNo(applicationNo: string) {
+    return this.http.get(`${Constants.assessmentModuleApiUrl}vacancypremisecertificate/getCertificateNo?applicationNo=${applicationNo}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
   save(data: any) {
     return this.http.post(`${Constants.assessmentModuleApiUrl}refundagainstvacancy/save`, data,
       { observe: 'response' })

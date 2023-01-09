@@ -30,11 +30,14 @@ export class RefundApplicationFormComponent implements OnInit {
     occupierModel: OccupierModel;
     isdisabledSearchButton: boolean = false;
     isdisabledSaveButton: boolean = false;
+    isDisableCertificateGoBtn = true;
     // totalOutstanding: number;
     vacancyPremiseCertficateModel:VacancyPremiseCertficateModel;
     applicationNo: string;
     serviceFormId : String;
     submitBtn: boolean = true;
+    isAppNoSearchDisable = true;
+    vacancyApplicationNo: string;
 
 
     constructor(private refundApplicationService: RefundApplicationService,
@@ -64,7 +67,7 @@ export class RefundApplicationFormComponent implements OnInit {
                 (data) => {
                     if (data.status === 200) {
                         this.occupierModel = data.body[0];
-                        this.isdisabledSearchButton = true;
+                        this.isAppNoSearchDisable = false;
                     }
                 },
                 (error) => {
@@ -206,6 +209,8 @@ export class RefundApplicationFormComponent implements OnInit {
         this.occupierModel = new OccupierModel();
         this.occupierModel.propertyAddress = new PropertyAddress();
         this.applicationNo = null;
+        this.isAppNoSearchDisable = true;
+        this.vacancyApplicationNo = null;
     }
 
 
@@ -244,4 +249,24 @@ export class RefundApplicationFormComponent implements OnInit {
                this.commonService.callErrorResponse(error);
              });
        }
+
+       getCertificateNoByApplicationNo(){
+         if(this.vacancyApplicationNo){
+           this.refundApplicationService.getVacancyPremiseCertificateNo(this.vacancyApplicationNo).subscribe(
+             (data) => {
+                 if (data.status === 200) {
+                     this.vacancyCertificateNo = data.body;
+                     this.isdisabledSearchButton = true;
+                 }
+             },
+             (error) => {
+               this.vacancyApplicationNo = null;
+               this.isdisabledSearchButton = false;
+               this.vacancyCertificateNo = null;
+               this.vacancyPremiseCertficateModel = new VacancyPremiseCertficateModel();
+               this.isdisabledSaveButton = false;
+               this.commonService.callErrorResponse(error);
+             });
+          }
+      }
 }
