@@ -48,6 +48,7 @@ export class ContractorRegsitrationComponent implements OnInit {
   contractorOwnerType: any = [];
   isPreviewVendorNameDetail = false;
   isFirmNameDetail = false;
+  checkbox: boolean = true;
   constructor(
     private fb: FormBuilder,
 
@@ -75,6 +76,16 @@ export class ContractorRegsitrationComponent implements OnInit {
       this.formId = Number(param.get('id'));
       this.getContractorData(this.formId);
     })
+
+    /**
+    * Update Permanent Address If 'officeResidentialAddressSame' is checked.
+    */
+     this.contractorRegistrationForm.controls.factoryAddress.valueChanges.subscribe(data => {
+      if (this.contractorRegistrationForm.get('officeResidentialAddressSame').value) {
+        this.onSameAddressChange({ checked: true });
+        return;
+      }
+    });
 
     this.getBankNames();
     this.getAllDocumentLists();
@@ -118,6 +129,23 @@ export class ContractorRegsitrationComponent implements OnInit {
       }, 0)
     });
   }
+
+  onSameAddressChange(event) {
+    let id = this.contractorRegistrationForm.get('registeredAddress.id').value;
+    if (event.checked) {
+      this.contractorRegistrationForm.get('registeredAddress').patchValue(this.contractorRegistrationForm.get('factoryAddress').value);
+      if (this.contractorRegistrationForm.get('factoryAddress').get('country').value) {
+        this.resAddrComponent.getStateLists(this.contractorRegistrationForm.get('factoryAddress').get('country').value);
+      }
+    } else {
+      this.contractorRegistrationForm.get('registeredAddress').reset();
+
+    }
+    this.contractorRegistrationForm.get('registeredAddress.addressType').setValue('FIRM_ADDRESS');
+    this.contractorRegistrationForm.get('registeredAddress.id').setValue(id);
+  }
+
+
   contractorRegistrationControl() {
 
     this.contractorRegistrationForm = this.fb.group({
@@ -182,6 +210,7 @@ export class ContractorRegsitrationComponent implements OnInit {
       businessAddress: this.fb.group(this.bussinessAddressComponent.addressControls()),
       attachments: [],
       createdByCitizen: [true],
+      officeResidentialAddressSame: [null],
 
     });
 
@@ -236,6 +265,7 @@ export class ContractorRegsitrationComponent implements OnInit {
   }
 
   getContractorData(id: number) {
+    this.checkbox = false
     this.formService.getFormData(id).subscribe(res => {
       console.log("tresr", res)
       this.contractorRegistrationForm.patchValue(res);
