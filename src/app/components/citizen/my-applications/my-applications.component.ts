@@ -908,9 +908,11 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 
 	}
 	applicantName(row) {
-		if (row.fileStatusName == "Draft") {
+		if (row.departmentName == "Contractor Registration") {
+			return row.applicantName;
+		} else if(row.fileStatusName == "Draft"){
 			return "N/A";
-		} else {
+		}else{
 			return row.applicantName;
 		}
 	}
