@@ -606,7 +606,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			'FS_FIRE_CERTIFICATE', 'FS_FINAL_HOSPITAL_NOC', 'FS_ELECTRIC_CONNECTION_NOC', 'FS_NAVARATRI_NOC', 'FS_GAS_CONNECTION_NOC']
 
 		if (row.fileStatus == 'SCRUTINY' && hideDownloadBtnServiceTypeArr.indexOf(row.serviceType) > 0) {
-			return true;
+			return false;
 		}
 
 		else if (row.fileStatus == 'SCRUTINY') {
