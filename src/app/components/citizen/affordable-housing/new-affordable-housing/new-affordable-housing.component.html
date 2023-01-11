@@ -127,8 +127,12 @@
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
 							maxlength="100" placeholder="{{'First Name' | translate:translateKey}}"
 							formControlName="firstAppHusWifeFirstName" required>
-						<control-messages [control]="affordableHousingForm.get('firstAppHusWifeFirstName')">
-						</control-messages>
+							<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="affordableHousingForm.get('firstAppHusWifeFirstName').invalid && (affordableHousingForm.get('firstAppHusWifeFirstName').dirty || affordableHousingForm.get('firstAppHusWifeFirstName').touched)">
+							<div *ngIf="affordableHousingForm.get('firstAppHusWifeFirstName').errors.required">
+							  First name is Required.
+							</div>	
+							</mat-error>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
@@ -141,8 +145,12 @@
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
 							maxlength="100" placeholder="{{'Last Name' | translate:translateKey}}"
 							formControlName="firstAppHusWifeLastName" required>
-						<control-messages [control]="affordableHousingForm.get('firstAppHusWifeLastName')">
-						</control-messages>
+							<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="affordableHousingForm.get('firstAppHusWifeLastName').invalid && (affordableHousingForm.get('firstAppHusWifeLastName').dirty || affordableHousingForm.get('firstAppHusWifeLastName').touched)">
+							<div *ngIf="affordableHousingForm.get('firstAppHusWifeLastName').errors.required">
+							  Last name is Required.
+							</div>	
+							</mat-error>
 					</mat-form-field>
 
 
@@ -155,8 +163,12 @@
 						<mat-datepicker touchUi="true" #firstdobpicker></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">
 							{{affordableHousingConfiguration.DATE_HINT_MSG}}</div>
-						<control-messages [control]="affordableHousingForm.get('firstAppDateOfBirth')">
-						</control-messages>
+							<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="affordableHousingForm.get('firstAppDateOfBirth').invalid && (affordableHousingForm.get('firstAppDateOfBirth').dirty || affordableHousingForm.get('firstAppDateOfBirth').touched)">
+							<div *ngIf="affordableHousingForm.get('firstAppDateOfBirth').errors.required">
+							  Date of birth is Required.
+							</div>	
+							</mat-error>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -178,13 +190,17 @@
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber placeholder="{{'Mobile No 1' | translate:translateKey}}" type="tel"
 							maxlength="10" minlength="10" formControlName="firstAppMobileNumOne" required>
-						<control-messages [control]="affordableHousingForm.get('firstAppMobileNumOne')">
-						</control-messages>
+							<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="affordableHousingForm.get('firstAppMobileNumOne').invalid && (affordableHousingForm.get('firstAppMobileNumOne').dirty || affordableHousingForm.get('firstAppMobileNumOne').touched)">
+							<div *ngIf="affordableHousingForm.get('firstAppMobileNumOne').errors.required">
+							  Mobile number is Required.
+							</div>	
+							</mat-error>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber placeholder="{{'Mobile No 2' | translate:translateKey}}" type="tel"
-							formControlName="firstAppMobileNumTwo" minlength="10" maxlength="11">
+							formControlName="firstAppMobileNumTwo" minlength="10" maxlength="10">
 						<control-messages [control]="affordableHousingForm.get('firstAppMobileNumTwo')">
 						</control-messages>
 					</mat-form-field>
@@ -236,8 +252,12 @@
 							validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'Applicant Occupation' | translate:translateKey}}"
 							formControlName="firstAppOccupation">
-						<control-messages [control]="affordableHousingForm.get('firstAppOccupation')">
-						</control-messages>
+							<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="affordableHousingForm.get('firstAppOccupation').invalid && (affordableHousingForm.get('firstAppOccupation').dirty || affordableHousingForm.get('firstAppOccupation').touched)">
+							<div *ngIf="affordableHousingForm.get('firstAppOccupation').errors.required">
+							  Occupation is Required.
+							</div>	
+							</mat-error>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -245,8 +265,12 @@
 							validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'organisation_Name' | translate:translateKey}}"
 							formControlName="firstAppOrganizationName">
-						<control-messages [control]="affordableHousingForm.get('firstAppOrganizationName')">
-						</control-messages>
+							<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="affordableHousingForm.get('firstAppOrganizationName').invalid && (affordableHousingForm.get('firstAppOrganizationName').dirty || affordableHousingForm.get('firstAppOrganizationName').touched)">
+							<div *ngIf="affordableHousingForm.get('firstAppOrganizationName').errors.required">
+							  Organization name is Required.
+							</div>	
+							</mat-error>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -254,8 +278,12 @@
 							validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'designation_Held' | translate:translateKey}}"
 							formControlName="firstAppOccupationDesignation">
-						<control-messages [control]="affordableHousingForm.get('firstAppOccupationDesignation')">
-						</control-messages>
+							<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="affordableHousingForm.get('firstAppOccupationDesignation').invalid && (affordableHousingForm.get('firstAppOccupationDesignation').dirty || affordableHousingForm.get('firstAppOccupationDesignation').touched)">
+							<div *ngIf="affordableHousingForm.get('firstAppOccupationDesignation').errors.required">
+							  Designation is Required.
+							</div>	
+							</mat-error>
 					</mat-form-field>
 				</div>
 
@@ -279,22 +307,28 @@
 						<input matInput type="text" appAlphaNumeric required OnlyNumber minlength="12" maxlength="12"
 							placeholder="{{'aadharID' | translate:translateKey}}"
 							formControlName="firstAppAadharCardNumber">
-						<control-messages [control]="affordableHousingForm.get('firstAppAadharCardNumber')">
-						</control-messages>
+							<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="affordableHousingForm.get('firstAppAadharCardNumber').invalid && (affordableHousingForm.get('firstAppAadharCardNumber').dirty || affordableHousingForm.get('firstAppAadharCardNumber').touched)">
+							<div *ngIf="affordableHousingForm.get('firstAppAadharCardNumber').errors.required">
+							  Aadhar Card Number is Required.
+							</div>
+						  </mat-error>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" #inputPAN [value]="inputPAN.value.toUpperCase()" appAlphaNumeric
 							required maxlength="10" placeholder="{{'panNo' | translate:translateKey}}"
 							formControlName="firstAppPanCardNumber">
-						<control-messages [control]="affordableHousingForm.get('firstAppPanCardNumber')">
-						</control-messages>
+							<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="affordableHousingForm.get('firstAppPanCardNumber').invalid && (affordableHousingForm.get('firstAppPanCardNumber').dirty || affordableHousingForm.get('firstAppPanCardNumber').touched)">
+							<div *ngIf="affordableHousingForm.get('firstAppPanCardNumber').errors.required">
+							  PAN Card Number is Required.
+							</div>
+						  </mat-error>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appAlphaNumeric maxlength="20"
 							placeholder="{{'rationCardNo' | translate:translateKey}}"
 							formControlName="firstAppRationCardNumber">
-						<control-messages [control]="affordableHousingForm.get('firstAppRationCardNumber')">
-						</control-messages>
 					</mat-form-field>
 				</div>
 				<div class="row">
@@ -336,8 +370,12 @@
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
 							required maxlength="100" placeholder="{{'First Name' | translate:translateKey}}"
 							formControlName="secondApplicantFirstName">
-						<control-messages [control]="affordableHousingForm.get('secondApplicantFirstName')">
-						</control-messages>
+							<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="affordableHousingForm.get('secondApplicantFirstName').invalid && (affordableHousingForm.get('secondApplicantFirstName').dirty || affordableHousingForm.get('secondApplicantFirstName').touched)">
+							<div *ngIf="affordableHousingForm.get('secondApplicantFirstName').errors.required">
+							  Second Applicant First Name is Required.
+							</div>
+						  </mat-error>
 					</mat-form-field>
 					<mat-form-field class="col-md-3">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
@@ -350,8 +388,12 @@
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
 							required maxlength="100" placeholder="{{'Last Name' | translate:translateKey}}"
 							formControlName="secondApplicantLastName">
-						<control-messages [control]="affordableHousingForm.get('secondApplicantLastName')">
-						</control-messages>
+							<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="affordableHousingForm.get('secondApplicantLastName').invalid && (affordableHousingForm.get('secondApplicantLastName').dirty || affordableHousingForm.get('secondApplicantLastName').touched)">
+							<div *ngIf="affordableHousingForm.get('secondApplicantLastName').errors.required">
+							  Second Applicant Last Name is Required.
+							</div>
+						  </mat-error>
 					</mat-form-field>
 					<div class="col-md-12">
 						<h2 style="margin-left: -16px;"><b>{{'Husband/Wife/Father Name' | translate:
@@ -361,8 +403,12 @@
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
 							maxlength="100" placeholder="{{'First Name' | translate:translateKey}}"
 							formControlName="secondAppHusWifeFirstName" required>
-						<control-messages [control]="affordableHousingForm.get('secondAppHusWifeFirstName')">
-						</control-messages>
+							<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="affordableHousingForm.get('secondAppHusWifeFirstName').invalid && (affordableHousingForm.get('secondAppHusWifeFirstName').dirty || affordableHousingForm.get('secondAppHusWifeFirstName').touched)">
+							<div *ngIf="affordableHousingForm.get('secondAppHusWifeFirstName').errors.required">
+							  Second Applicant First Name is Required.
+							</div>
+						  </mat-error>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
@@ -375,8 +421,12 @@
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
 							maxlength="100" placeholder="{{'Last Name' | translate:translateKey}}"
 							formControlName="secondAppHusWifeLastName" required>
-						<control-messages [control]="affordableHousingForm.get('secondAppHusWifeLastName')">
-						</control-messages>
+							<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="affordableHousingForm.get('secondAppHusWifeLastName').invalid && (affordableHousingForm.get('secondAppHusWifeLastName').dirty || affordableHousingForm.get('secondAppHusWifeLastName').touched)">
+							<div *ngIf="affordableHousingForm.get('secondAppHusWifeLastName').errors.required">
+							  Second Applicant Last Name is Required.
+							</div>
+						  </mat-error>
 					</mat-form-field>
 
 
@@ -389,8 +439,12 @@
 						<mat-datepicker touchUi="true" #seconddobpicker></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">
 							{{affordableHousingConfiguration.DATE_HINT_MSG}}</div>
-						<control-messages [control]="affordableHousingForm.get('secondAppDateOfBirth')">
-						</control-messages>
+							<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="affordableHousingForm.get('secondAppDateOfBirth').invalid && (affordableHousingForm.get('secondAppDateOfBirth').dirty || affordableHousingForm.get('secondAppDateOfBirth').touched)">
+							<div *ngIf="affordableHousingForm.get('secondAppDateOfBirth').errors.required">
+							  Second Applicant Date of birth is Required.
+							</div>
+						  </mat-error>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -412,8 +466,12 @@
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber placeholder="{{'Mobile No 1' | translate:translateKey}}" type="tel"
 							maxlength="10" minlength="10" formControlName="secondAppMobileNumOne" required>
-						<control-messages [control]="affordableHousingForm.get('secondAppMobileNumOne')">
-						</control-messages>
+							<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="affordableHousingForm.get('secondAppMobileNumOne').invalid && (affordableHousingForm.get('secondAppMobileNumOne').dirty || affordableHousingForm.get('secondAppMobileNumOne').touched)">
+							<div *ngIf="affordableHousingForm.get('secondAppMobileNumOne').errors.required">
+							  Second Applicant Mobile Number is Required.
+							</div>
+						  </mat-error>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -450,8 +508,12 @@
 							validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'Applicant Occupation' | translate:translateKey}}"
 							formControlName="secondAppOccupation">
-						<control-messages [control]="affordableHousingForm.get('secondAppOccupation')">
-						</control-messages>
+							<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="affordableHousingForm.get('secondAppOccupation').invalid && (affordableHousingForm.get('secondAppOccupation').dirty || affordableHousingForm.get('secondAppOccupation').touched)">
+							<div *ngIf="affordableHousingForm.get('secondAppOccupation').errors.required">
+							  Second Applicant Occupation is Required.
+							</div>
+						  </mat-error>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -459,8 +521,12 @@
 							validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'organisation_Name' | translate:translateKey}}"
 							formControlName="secondAppOrganizationName">
-						<control-messages [control]="affordableHousingForm.get('secondAppOrganizationName')">
-						</control-messages>
+							<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="affordableHousingForm.get('secondAppOrganizationName').invalid && (affordableHousingForm.get('secondAppOrganizationName').dirty || affordableHousingForm.get('secondAppOrganizationName').touched)">
+							<div *ngIf="affordableHousingForm.get('secondAppOrganizationName').errors.required">
+							  Second Applicant Organization Name is Required.
+							</div>
+						  </mat-error>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -468,8 +534,12 @@
 							validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'designation_Held' | translate:translateKey}}"
 							formControlName="secondAppOccupationDesignation">
-						<control-messages [control]="affordableHousingForm.get('secondAppOccupationDesignation')">
-						</control-messages>
+							<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="affordableHousingForm.get('secondAppOccupationDesignation').invalid && (affordableHousingForm.get('secondAppOccupationDesignation').dirty || affordableHousingForm.get('secondAppOccupationDesignation').touched)">
+							<div *ngIf="affordableHousingForm.get('secondAppOccupationDesignation').errors.required">
+							  Second Applicant Designation is Required.
+							</div>
+						  </mat-error>
 					</mat-form-field>
 				</div>
 
@@ -493,15 +563,23 @@
 						<input matInput type="text" appAlphaNumeric required OnlyNumber minlength="12" maxlength="12"
 							placeholder="{{'aadharID' | translate:translateKey}}"
 							formControlName="secondAppAadharCardNumber">
-						<control-messages [control]="affordableHousingForm.get('secondAppAadharCardNumber')">
-						</control-messages>
+							<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="affordableHousingForm.get('secondAppAadharCardNumber').invalid && (affordableHousingForm.get('secondAppAadharCardNumber').dirty || affordableHousingForm.get('secondAppAadharCardNumber').touched)">
+							<div *ngIf="affordableHousingForm.get('secondAppAadharCardNumber').errors.required">
+							  Second Applicant Aadhar Number is Required.
+							</div>
+						  </mat-error>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" #inputPAN2 [value]="inputPAN2.value.toUpperCase()" appAlphaNumeric
 							required maxlength="10" placeholder="{{'panNo' | translate:translateKey}}"
 							formControlName="secondAppPanCardNumber">
-						<control-messages [control]="affordableHousingForm.get('secondAppPanCardNumber')">
-						</control-messages>
+							<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="affordableHousingForm.get('secondAppPanCardNumber').invalid && (affordableHousingForm.get('secondAppPanCardNumber').dirty || affordableHousingForm.get('secondAppPanCardNumber').touched)">
+							<div *ngIf="affordableHousingForm.get('secondAppPanCardNumber').errors.required">
+							  Second Applicant PAN Number is Required.
+							</div>
+						  </mat-error>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appAlphaNumeric maxlength="20"
@@ -1148,21 +1226,35 @@
 						<ng-select placeholder="{{'Bank Name *' | translate: translateKey}}" formControlName="code">
 							<ng-option *ngFor="let ddbank of bankNameArray" [value]="ddbank.code">{{ ddbank.name
 								}}
-							</ng-option>
-							<control-messages [control]="affordableHousingForm.get('ddBank').get('code')">
-							</control-messages>
-						</ng-select>
+					</ng-option>
+				  </ng-select>
+				  <mat-error class="mat-error ng-star-inserted errors-massage"
+					*ngIf="affordableHousingForm.get('ddBank').get('code').invalid && (affordableHousingForm.get('ddBank').get('code').dirty || affordableHousingForm.get('ddBank').get('code').touched)">
+					<div *ngIf="affordableHousingForm.get('ddBank').get('code').errors.required">
+					Bank Name is Required.
 					</div>
+				  </mat-error>
+				</div>
 					<mat-form-field class="col-md-4">
 						<input matInput placeholder="{{'Branch Name *' | translate: translateKey}}"
 							formControlName="ddBankBranch" type="text" appValidationFields
 							validationFieldsType='onlyNameWithSpace' maxlength="50">
-						<control-messages [control]="affordableHousingForm.get('ddBankBranch')"></control-messages>
+							<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="affordableHousingForm.get('ddBankBranch').invalid && (affordableHousingForm.get('ddBankBranch').dirty || affordableHousingForm.get('ddBankBranch').touched)">
+							<div *ngIf="affordableHousingForm.get('ddBankBranch').errors.required">
+							DD Branch Name is Required.
+							</div>
+						  </mat-error>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber maxlength="6" formControlName="ddNumber"
 							placeholder="{{'DD Number' | translate: translateKey}}">
-						<control-messages [control]="affordableHousingForm.get('ddNumber')"></control-messages>
+							<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="affordableHousingForm.get('ddNumber').invalid && (affordableHousingForm.get('ddNumber').dirty || affordableHousingForm.get('ddNumber').touched)">
+							<div *ngIf="affordableHousingForm.get('ddNumber').errors.required">
+							DD Number is Required.
+							</div>
+						  </mat-error>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber maxlength="6" formControlName="ddAmount"
@@ -1176,11 +1268,15 @@
 							formControlName="ddIssuingDate">
 						<mat-datepicker-toggle matSuffix [for]="chequeDate"></mat-datepicker-toggle>
 						<mat-datepicker #chequeDate touchUi="true"></mat-datepicker>
-						<control-messages [control]="affordableHousingForm.get('ddIssuingDate')"></control-messages>
 						<div align="end" class="default-show-hint mat-hint mat-right">
 							Hint: DD/MM/YYYY
 						</div>
-
+						<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="affordableHousingForm.get('ddIssuingDate').invalid && (affordableHousingForm.get('ddIssuingDate').dirty || affordableHousingForm.get('ddIssuingDate').touched)">
+							<div *ngIf="affordableHousingForm.get('ddIssuingDate').errors.required">
+							Cheque/DD Issue Date is Required.
+							</div>
+						  </mat-error>
 					</mat-form-field>
 				</div>
 				<div class="fotButtonBar clearfix">
