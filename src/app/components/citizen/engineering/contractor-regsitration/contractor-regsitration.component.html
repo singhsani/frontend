@@ -100,7 +100,7 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput autocomplete="off" type="text" maxlength="15" formControlName="gstNo" class="capitalCase" 
+              <input matInput autocomplete="off" type="text" maxlength="15" formControlName="gstNo"  
                 placeholder="{{'gst_no' | translate: translateKey}}">
               <control-messages [control]="contractorRegistrationForm.get('gstNo')"></control-messages>
             </mat-form-field>
@@ -132,19 +132,26 @@
                 </control-messages>
             </mat-form-field>
 
-            <mat-form-field class="col-md-4">
+            <mat-form-field class="col-md-6">
               <input matInput type="text" formControlName="ownerMobileNumber" required OnlyNumber maxlength="10"
                 placeholder="{{'mobile_no' | translate: translateKey}}" required>
                 <control-messages [control]="contractorRegistrationForm.get('ownerMobileNumber')">
                 </control-messages>
             </mat-form-field>
 
-            <mat-form-field class="col-md-4">
+            <mat-form-field class="col-md-6">
               <input matInput type="text" formControlName="ownerEmailId" maxlength="50"
                 placeholder="{{'email_id' | translate: translateKey}}" required>
                 <control-messages [control]="contractorRegistrationForm.get('ownerEmailId')">
                 </control-messages>
             </mat-form-field>
+
+            <div *ngIf="checkbox">
+              <mat-checkbox class="col-md-12 mt-2" formControlName="officeResidentialAddressSame" 
+                (change)="onSameAddressChange($event)">{{'Owner Details is Same as Address Details' | translate: translateKey}}
+              </mat-checkbox>
+            </div>
+
 
             <app-address #residenceAddress [requiredFeilds]="true"
               [addressFormGroup]="contractorRegistrationForm.get('registeredAddress')"></app-address>
@@ -222,7 +229,7 @@
 
             <h2><b>Bank Detail</b></h2>
             <mat-form-field class="col-md-4">
-              <input matInput autocomplete="off" minlength="9" maxlength="17" type="tel" formControlName="bankAccountNo"
+              <input matInput autocomplete="off" minlength="9" maxlength="18" type="tel" formControlName="bankAccountNo"
                 OnlyNumber placeholder="{{'bank_account_no' | translate: translateKey }}" required>
                 <control-messages [control]="contractorRegistrationForm.get('bankAccountNo')">
                 </control-messages>
@@ -301,8 +308,8 @@
                     <th class="text-center">Name</th>
                     <th class="text-center">Qualification</th>
                     <th class="text-center">Status</th>
-                    <th class="text-center">Experience in Years</th>
-                    <th class="text-center">when He Started WorkIng This Project</th>
+                    <th class="text-center">How Much Years Of Experience</th>
+                    <th class="text-center">When He Started WorkIng This Project</th>
                     <th class="text-center">Project Start Date</th>
                     <th class="text-center">Action</th>
                   </tr>
