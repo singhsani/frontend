@@ -439,12 +439,14 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			|| (row.serviceType === 'SHOP_ESTAB_TRANSFER' && row.fileStatus === 'APPROVED') || (row.serviceType === 'SHOP_ESTAB_TRANSFER' && row.fileStatus === 'REJECTED')) {
 			return true;
 		}
-   else  if (row.fileStatus === 'SUBMITTED' || row.fileStatus == 'APPROVED' || row.fileStatus == 'PAYMENT_RECEIVED' && row.serviceType === 'FS_FIRE_CERTIFICATE' ||
+   else  if ((row.fileStatus === 'SUBMITTED' || row.fileStatus == 'APPROVED' || row.fileStatus == 'PAYMENT_RECEIVED') && (row.serviceType === 'FS_FIRE_CERTIFICATE' ||
     row.serviceType === 'FS_GAS_CONNECTION_NOC' ||
     row.serviceType === 'FS_ELECTRIC_CONNECTION_NOC' ||
-    row.serviceType === 'FS_WATER_TANKER') {
+    row.serviceType === 'FS_WATER_TANKER')){
     return true;
   }
+
+
 		else if ((row.serviceType === 'DUPLICATE_BIRTH_REGISTRATION' && row.fileStatus === 'APPROVED' || row.fileStatus === 'REJECTED') || (row.serviceType === 'DUPLICATE_DEATH_REGISTRATION' && row.fileStatus === 'APPROVED' || row.fileStatus === 'REJECTED')
 			|| (row.serviceType === 'BIRTH_CORRECTION_REGISTRATION' && row.fileStatus === 'APPROVED' || row.fileStatus === 'REJECTED') || (row.serviceType === 'DEATH_CORRECTION_REGISTRATION' && row.fileStatus === 'APPROVED' || row.fileStatus === 'REJECTED')) {
 			return true;
@@ -963,7 +965,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 
 	}
 
-	// for deposit Receipt in vendor 
+	// for deposit Receipt in vendor
 	depositReceived(serviceId) {
 		this.formService.nonRefundableCollection(serviceId).subscribe(res => {
 			let sectionToPrint: any = document.getElementById('sectionToPrint');
