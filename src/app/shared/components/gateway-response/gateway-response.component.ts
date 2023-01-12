@@ -383,6 +383,11 @@ export class GatewayResponseComponent implements OnInit {
 		{
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
 		}
+
+		else if(this.dispData.payableServiceType == "FS-ELE" || this.dispData.payableServiceType == "FS_FIRE_CERTIFICATE"|| this.dispData.payableServiceType == "FS-GAS" || this.dispData.payableServiceType == "FS-WATER")
+		{
+			this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
+		}
 		else {
 			setTimeout(() => {
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
