@@ -649,7 +649,9 @@ export class MyBookingComponent implements OnInit {
 			element.status === this.bookingConstant.EXPIRED ||  
 			element.status === this.bookingConstant.PARTIALLY_BOOKED ||
 			element.status === this.bookingConstant.CANCELLATION_APPROVED ||
-			element.status === this.bookingConstant.CANCELLATION_REQUEST) || !element.isCancelRequired){
+			element.status === this.bookingConstant.CANCELLATION_REQUEST ||
+			element.status === this.bookingConstant.REFUND_APPROVED ||
+			element.status === this.bookingConstant.REFUND_REQUEST) || !element.isCancelRequired){
 			return false;
 		}
 		return true;
