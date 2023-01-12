@@ -9,7 +9,7 @@
 					<ng-template mat-tab-label>
 						<div>{{'applicant_detail' | translate:translateKey}}</div>
 					</ng-template>
-	
+
 					<div class="row">
 						<mat-form-field class="col-md-6">
 							<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" required maxlength="100"
@@ -17,20 +17,20 @@
 							 targetElement="applicantNameGuj" [form]="waterTankerAppForm">
 							<control-messages [control]="waterTankerAppForm.get('applicantName')"></control-messages>
 						</mat-form-field>
-	
+
 						<mat-form-field class="col-md-6">
 							<input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget [form]="waterTankerAppForm"
 							 placeholder="{{ 'applicant_name' | translate:translateKey:'gu' }}">
 							<control-messages [control]="waterTankerAppForm.get('applicantNameGuj')"></control-messages>
 						</mat-form-field>
-	
+
 						<mat-form-field class="col-md-4">
 							<!-- <span matPrefix>+91 &nbsp;</span> -->
 							<input matInput OnlyNumber placeholder="{{'mobile_no' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.mobileNumber_maxLength"
 							 [minlength]="fireFacilityConfig.mobileNumber_minLength" formControlName="mobileNo" required>
 							<control-messages [control]="waterTankerAppForm.get('mobileNo')"></control-messages>
 						</mat-form-field>
-	
+
 						<mat-form-field class="col-md-8">
 							<input matInput appPreventSpace placeholder="{{'email_id' | translate:translateKey}}" type="email"
 							 formControlName="email" required>
@@ -47,8 +47,8 @@
 							<control-messages [control]="waterTankerAppForm.get('applicationDate')">
 							</control-messages>
 						</mat-form-field>
-						
-		
+
+
 					</div>
 					<app-action-bar [form]="waterTankerAppForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
 					 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
@@ -166,7 +166,7 @@
 					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="waterTankerAppForm.get('permanantAddress').value"
 					 [addressFormGroup]="waterTankerAppForm.get('permanantAddress')"></app-address> -->
 					<mat-form-field class="col-md-6">
-						<textarea matInput rows="3" cols="50" formControlName="tankDeliveryAddress" placeholder="{{ 'tank_delivery_address' | translate:translateKey }}"
+						<textarea matInput rows="3" cols="50" maxlength="250" formControlName="tankDeliveryAddress" placeholder="{{ 'tank_delivery_address' | translate:translateKey }}"
 						 required> </textarea>
 						<control-messages [control]="waterTankerAppForm.get('tankDeliveryAddress')"></control-messages>
 					</mat-form-field>
