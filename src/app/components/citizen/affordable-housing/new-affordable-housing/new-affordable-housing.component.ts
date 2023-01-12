@@ -49,6 +49,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	addnewBtnown: boolean = true;
 	addnewBtnPlot: boolean = true;
 	addnewBtnfamily = true;
+	nextTab : boolean=false;
 
 	showButtons: boolean = false;
 	bankNameArray = [];
@@ -76,6 +77,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	rationCard: Array<any> = ["APL", "BPL", "Not Applicable"];
 
 	LOOKUP: any;
+
 
 	houseTypes = [];
 
@@ -724,6 +726,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	editRecord(row: any) {
 		row.isEditMode = true;
 		row.deepCopyInEditMode = Object.assign({}, row.value);
+		this.nextTab=true;
 	}
 
 
@@ -737,6 +740,7 @@ export class NewAffordableHousingComponent implements OnInit {
 		if (row.valid) {
 			row.isEditMode = false;
 			row.newRecordAdded = false;
+			this.nextTab=false;
 		}
 	}
 
@@ -760,6 +764,7 @@ export class NewAffordableHousingComponent implements OnInit {
 		} catch (error) {
 
 		}
+		this.nextTab=false;
 	}
 
 	/**
@@ -882,6 +887,7 @@ export class NewAffordableHousingComponent implements OnInit {
 					this.editRecord((newlyadded[newlyadded.length - 1]));
 					(<any>newlyadded[newlyadded.length - 1]).newRecordAdded = true;
 				}
+				this.nextTab=true;
 				break;
 			case 'placeOfChoice':
 				if (this.getFormsArray('placeOfChoice').length < 5) {
@@ -889,6 +895,7 @@ export class NewAffordableHousingComponent implements OnInit {
 				} else {
 					this.commonService.openAlert("Warning", "You can add maximum 5 place of choice", "warning");
 				}
+				this.nextTab=true;
 				break;
 			case 'ownHouseDetail':
 
@@ -904,6 +911,7 @@ export class NewAffordableHousingComponent implements OnInit {
 					this.editRecord((newlyadded11[newlyadded11.length - 1]));
 					(<any>newlyadded11[newlyadded11.length - 1]).newRecordAdded = true;
 				}
+				this.nextTab=true;
 				break;
 			case 'ownLandPlotDetail':
 
@@ -920,6 +928,7 @@ export class NewAffordableHousingComponent implements OnInit {
 					this.editRecord((newlyadded22[newlyadded22.length - 1]));
 					(<any>newlyadded22[newlyadded22.length - 1]).newRecordAdded = true;
 				}
+				this.nextTab=true;
 				break;
 
 			default:
@@ -1188,4 +1197,55 @@ export class NewAffordableHousingComponent implements OnInit {
 
 		this.affordableHousingForm.patchValue(obj);
 	}
+
+
+	 getValidatorErrorMessage(controlName: string, validatorName: string, validatorValue?: any) {
+        let config = {
+            // error list
+            required: `${_.startCase(controlName)} is Required`,
+            namelengtherror: 'Name must be at least 2 characters long',
+            nameCharerror: 'Not include numeric character and special symbols',
+            invalidCreditCard: 'Is invalid credit card number',
+            invalidEmail: 'Invalid email address',
+            invalidPassword: 'Invalid password. Password must be at least 6 characters long, and contain a number',
+            invalidemarrigedate: 'Required and Should not be future date!',
+            invalideDate: 'Date Invalid',
+            invalidAadharno: 'Aadhar Number length should be 12',
+            invalidNumberEntry: 'Enter only Number',
+            max: `Maximum value should be ${validatorValue.max}`,
+            min: `Minimum value should be ${validatorValue.min}`,
+            minlength: `Minimum length ${validatorValue.requiredLength} characters`,
+            maxlength: `Cannot exceed ${validatorValue.requiredLength} characters`,
+            matDatepickerMin: `Date Should not below the ${moment(validatorValue.min).format("DD/MM/YYYY")}`,
+            matDatepickerMax: `Date Should not exceed ${moment(validatorValue.max).format("DD/MM/YYYY")}`,
+            invalidName: `${_.startCase(controlName)} Is Not Valid`,
+            invalidPinCode: `Pin Code Not Valid`,
+            invalidAadhar: `Invalid Aadhar Number`,
+            invalidNumber: `Invalid Mobile Number`,
+            invalidNumberVehcile: `Maximum Length is 10 digit`,
+            invalidFaxNumber: `Invalid Fax Number`,
+            invalidpregnanceTime: 'Pregnancy duration between 25 to 40',
+            invalidbirthRegNumber: 'Invalid Birth Registration Date',
+            invalidBuildingName: 'Building name is not valid',
+            invalidemployeeage: 'Age must be >13 year',
+            invalidIfscCode: 'IFSC Code is not valid',
+            invalidPan: 'Enter valid PAN number e.g. ABCDE1234T',
+            invalidTan: 'Enter valid TAN number e.g. HIJKL1234Z',
+            invalidPanLastFour: 'Enter valid PAN number e.g. 234T',
+            invalidGstin: 'The GSTIN is invalid, Please enter a valid GSTIN e.g. 29ABCDE1234F2Z5',
+            invalidpetaKendraNumber: 'Should contains only alpha-numeric and numeric value',
+            invalidAmount: 'Amount should be in digit and Only two digit allowed after decimal',
+            motherMarriageTimeAge: 'Mothers age at marriage time should not be less then 12 Years',
+            invalidGstNo: 'Please enter a valid GSTIN e.g. 29ABCDE1234F2Z5',
+            invalidAccountNo: 'Invalid Account No',
+            invalidAcHolderName: 'Invalid Name',
+            invalidDrivingLicense: 'Enter valid License number e.g. GJ0620210012122',
+            invalidElectionCard: 'Enter valid Election Card Number e.g. ABC1234567',
+            invalidPassport: 'Enter valid Passport number e,g, A1234567 or AB1234567',
+            invalidPropertyNo: 'Please enter valid property no. with occupier code',
+            invalidMemberNo: 'Please enter valid member no.'
+        }
+
+        return config[validatorName];
+    }
 }
