@@ -1158,7 +1158,7 @@
 
 
 				<div class="fotButtonBar clearfix">
-					<div class="col-sm-12 col-md-12">
+					<div class="col-sm-12 col-md-12" *ngIf="nextTab != true">
 						<button type="button" class="liteBorder pull-left" mat-raised-button
 							(click)="tabIndex = 3">{{'back' |
 							translate: actionBarKey}}</button>
