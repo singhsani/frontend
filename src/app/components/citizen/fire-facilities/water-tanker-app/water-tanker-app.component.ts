@@ -88,10 +88,9 @@ export class WaterTankerAppComponent implements OnInit {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.waterTankerAppForm.patchValue(res);
-
-				this.fireFacilityConfig.isAttachmentButtonsVisible = true;
-
-				let applicantNameGujFields = this.waterTankerAppForm.get('applicantNameGuj');
+        this.onChangeTime(res.requireIn.code);
+       	this.fireFacilityConfig.isAttachmentButtonsVisible = true;
+        let applicantNameGujFields = this.waterTankerAppForm.get('applicantNameGuj');
 				let applicantNameValue = this.waterTankerAppForm.get('applicantName').value;
 				if (!applicantNameGujFields.value) {
 					applicantNameGujFields.setValue(this.TranslateService.getEngToGujTranslation(applicantNameValue))
