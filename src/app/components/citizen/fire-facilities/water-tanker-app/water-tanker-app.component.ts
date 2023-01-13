@@ -45,7 +45,7 @@ export class WaterTankerAppComponent implements OnInit {
 	/**
 	 * @param fb - Declare FormBuilder property.
 	 * @param validationError - Declare validation service property
-	 * @param formService - Declare form service property 
+	 * @param formService - Declare form service property
 	 * @param validationService - Declare validations property.
 	 */
 	constructor(
@@ -90,13 +90,13 @@ export class WaterTankerAppComponent implements OnInit {
 				this.waterTankerAppForm.patchValue(res);
 
 				this.fireFacilityConfig.isAttachmentButtonsVisible = true;
-				
+
 				let applicantNameGujFields = this.waterTankerAppForm.get('applicantNameGuj');
 				let applicantNameValue = this.waterTankerAppForm.get('applicantName').value;
 				if (!applicantNameGujFields.value) {
 					applicantNameGujFields.setValue(this.TranslateService.getEngToGujTranslation(applicantNameValue))
 				}
-			
+
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.waterTankerAppForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
 				});
@@ -107,7 +107,7 @@ export class WaterTankerAppComponent implements OnInit {
 			}
 		});
 	}
-	
+
 	/**
 	* Method is used to get lookup data
 	*/
@@ -143,11 +143,10 @@ export class WaterTankerAppComponent implements OnInit {
 	}
 	/**
 	 * Method is handel depended documents (depended on form field value ).
-	 * @param event 
-	 * @param dependedKey 
+	 * @param event
+	 * @param dependedKey
 	 */
 	dependentAttachment(dependedKey: string) {
-		// debugger  
 		var control = (<FormArray>this.waterTankerAppForm.get('serviceDetail').get('serviceUploadDocuments')).controls
 		var fields = control.find((data) => data.get('documentIdentifier').value === dependedKey);
 
@@ -162,12 +161,12 @@ export class WaterTankerAppComponent implements OnInit {
 			}
 		} else {
 
-			this.uploadFilesArray = []; 
-			// fields.get('mandatory').setValue(false); 
-			// var indewx = this.uploadFilesArray.findIndex((data) => data.documentIdentifier === dependedKey) 
-			// if (indewx != -1) { 
-			// 	this.uploadFilesArray.splice(indewx, 1); 
-			// } 
+			this.uploadFilesArray = [];
+			// fields.get('mandatory').setValue(false);
+			// var indewx = this.uploadFilesArray.findIndex((data) => data.documentIdentifier === dependedKey)
+			// if (indewx != -1) {
+			// 	this.uploadFilesArray.splice(indewx, 1);
+			// }
 
 		}
 
@@ -226,7 +225,7 @@ export class WaterTankerAppComponent implements OnInit {
 			}),
 			totalTankRequired: [null, [Validators.required, Validators.maxLength(1)]],
 			totalAmount: [null, [Validators.maxLength(5)]],
-			tankDeliveryAddress: [null, [Validators.required, Validators.maxLength(500)]],
+			tankDeliveryAddress: [null, [Validators.required, Validators.maxLength(250)]],
 
 			// loinumber: [null]
 
@@ -284,7 +283,7 @@ export class WaterTankerAppComponent implements OnInit {
 					}else{
 						this.waterTankerAppForm.patchValue(res);
 					}
-					
+
 				},
 				err => {
 					console.log(err.message)
