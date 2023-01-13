@@ -541,7 +541,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		if (row.fileStatus == 'SUBMITTED' && printReceiptServiceTypeArr.indexOf(row.serviceType) > 0) {
 			return false
 		}
-		if (row.fileStatus == 'PAYMENT_RECEIVED' && row.serviceType == 'FS_WATER_TANKER') {
+		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'FS_WATER_TANKER') {
 			return true;
 		}
 		if ((row.fileStatus == 'SUBMITTED' || row.fileStatus == 'APPROVED' || row.fileStatus == 'REJECTED') && row.serviceType == 'FS_PROVISIONAL_HOSPITAL_NOC') {
