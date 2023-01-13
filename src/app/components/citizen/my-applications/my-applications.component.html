@@ -573,6 +573,40 @@
                     </ng-container>
                     <!-- /case4 -->
 
+                    <!-------/case5 Contractor Rgistration  -->
+
+                    <ng-container *ngSwitchCase="'case5'">
+                        <div class="mobile-label1">:</div>
+                        <button class="actionBtn" mat-button [matMenuTriggerFor]="menuTax">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+
+                        <mat-menu #menuTax="matMenu">
+                            <button mat-menu-item color="primary"
+                             (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                                <mat-icon class="m-1" title="{{'print_receipt' | translate:translateKey}}">print
+                                </mat-icon>
+                                {{'print_receipt' | translate:translateKey}}
+                            </button>
+
+                            <button mat-menu-item *ngIf="isPrintViewDisplay(row)" color="primary"
+                            (click)="printView(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                            <mat-icon class="m-1" title="{{'print_view' | translate:translateKey}}">pageview
+                            </mat-icon>
+                            {{'print_view' | translate:translateKey}}
+                        </button>
+
+                        <button mat-menu-item color="primary"
+                            (click)="contractorDepositReceived(row.serviceFormId)">
+                            <mat-icon class="m-1" title="{{'print_view' | translate:translateKey}}">print
+                            </mat-icon>
+                            {{'print_deposit_Received' | translate:translateKey}}
+                        </button>
+
+                        </mat-menu>
+
+                    </ng-container>
+
                 </div>
             </mat-cell>
         </ng-container>

@@ -112,7 +112,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return `case2`;
 		} else if (row.departmentName == 'Vendor Registration' && row.fileStatusName == 'Deposit Received') {
 			return `case4`;
-		} else {
+		} else if(row.departmentName == 'Contractor Registration' && row.fileStatusName == 'Deposit Received'){
+			return `case5`
+		}else{
 			return `case3`
 		}
 	}
@@ -469,6 +471,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}
 
 		else if (row.serviceType == 'VENDOR_REG' && row.fileStatus == 'PAYMENT_RECEIVED') {
+			return false;
+
+		}else if(row.serviceType == 'CONTRACTOR_REGISTRATION' && row.fileStatus == 'PAYMENT_RECEIVED'){
 			return false;
 		}
 		else if (!row.canEdit) {
@@ -968,6 +973,18 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	// for deposit Receipt in vendor
 	depositReceived(serviceId) {
 		this.formService.nonRefundableCollection(serviceId).subscribe(res => {
+			let sectionToPrint: any = document.getElementById('sectionToPrint');
+			sectionToPrint.innerHTML = res;
+			setTimeout(() => {
+				window.print();
+			});
+		})
+	}
+
+	//for deposit Receipt in Contractor
+
+	contractorDepositReceived(serviceId) {
+		this.formService.nonRefundableCollections(serviceId).subscribe(res => {
 			let sectionToPrint: any = document.getElementById('sectionToPrint');
 			sectionToPrint.innerHTML = res;
 			setTimeout(() => {
