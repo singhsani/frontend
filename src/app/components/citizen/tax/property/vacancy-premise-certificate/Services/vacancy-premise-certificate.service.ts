@@ -80,7 +80,6 @@ export class VacancyPremiseCertificateService {
       { observe: 'response' })
       .pipe(map((response: any) => response))
   }
- 
   getAttachmentList(serviceFormId) {
     return this.http.get<Array<Object>>(`${Constants.serverApiIp}/property/vacancypremisecertificate/attachments?serviceFormId=${serviceFormId}`);
   }
@@ -89,6 +88,11 @@ export class VacancyPremiseCertificateService {
     return this.http.get(`${Constants.serverApiIp}/api/form/vacantPremisesCertificate/getApplicationDetails?serviceId=${serviceId}`,
     { observe: 'response' })
     .pipe(map((response: any) => response))
-}
+  }
 
+  getvacancypremiseapplication(occupierId: string) {
+    return this.http.get(`${Constants.serverApiIp}/property/vacancypremisecertificate/getApplicationNo?propertyOccupierId=${occupierId}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  } 
 }

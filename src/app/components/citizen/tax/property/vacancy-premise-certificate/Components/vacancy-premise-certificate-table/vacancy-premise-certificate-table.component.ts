@@ -145,7 +145,7 @@ export class VacancyPremiseCertificateTableComponent implements OnInit {
           if(data.body) {
             this.dataMoodel.outstandingAmount = data.body.outstandingAmount;
             this.dataMoodel.taxRateWiseOutstandingDetails = data.body.taxRateWiseOutstandingDetails;
-            this.dataMoodel.totalOutstanding = data.body.outstandingAmount
+            this.dataMoodel.totalOutstanding = data.body.outstandingAmount;
           }
         }
       },
@@ -155,16 +155,34 @@ export class VacancyPremiseCertificateTableComponent implements OnInit {
   }
 
   onEnterClick() {
-    if(this.dataMoodel.outstandingAmount != 0) {
-      this.commonService.dueToOutstandingMessage(this.selectedItem.propertyNo);
-    } else {
-      this.dataMoodel = Object.assign(this.dataMoodel,this.selectedItem);
-      this.dataMoodel.occupierId = this.selectedItem.propertyOccupierId;
-      this.vacancyPremiseCertificateDataSharingService.updatedDataModel(this.dataMoodel);
-      this.vacancyPremiseCertificateDataSharingService.updatedIsShowForm(true);
-    }
+      this.getVacancyPremisesApplication(this.selectedItem.propertyOccupierId + "");
   }
 
+  getVacancyPremisesApplication (propertyOccupierId: string){
+    if(!propertyOccupierId){
+      return;
+    }
+    this.vacancyPremiseCertificateService.getvacancypremiseapplication(propertyOccupierId).subscribe(
+      (data) => {
+        if (data.status === 200) {
+          if(data.body != null && data.body != '') {
+            this.alertService.warning("You have already apply for vacancy premise.Your application number is :" + data.body)
+            }else{
+              if(this.dataMoodel.outstandingAmount != 0) {
+                this.commonService.dueToOutstandingMessage(this.selectedItem.propertyNo);
+              } else {
+                this.dataMoodel = Object.assign(this.dataMoodel,this.selectedItem);
+                this.dataMoodel.occupierId = this.selectedItem.propertyOccupierId;
+                this.vacancyPremiseCertificateDataSharingService.updatedDataModel(this.dataMoodel);
+                this.vacancyPremiseCertificateDataSharingService.updatedIsShowForm(true);
+              }
+            }
+        }
+      },
+      (error) => {
+        this.commonService.callErrorResponse(error);
+      });
+  }
   onOutstandingDetailCLick() {
     this.isShowOutstandingDetail = !this.isShowOutstandingDetail;
     this.detailOutstandingButtonText = "Show Detail";
