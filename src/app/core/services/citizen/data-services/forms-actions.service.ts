@@ -549,4 +549,12 @@ export class FormsActionsService {
 		this.requestURL = `api/form/vendor/collectionAmount/${serviceFormId}`;
 		return this.http.get(this.requestURL, 'printReceipt');
 	  }
+
+	//for Contrctor Registration when Deposit Received
+
+	nonRefundableCollections(serviceFormId) {
+		this.requestURL = `api/form/contractor/collectionAmount/${serviceFormId}`;
+		return this.http.get(this.requestURL, 'printReceipt');
+	  }
+
 }
