@@ -251,7 +251,7 @@
                 {{'police_performance_license' | translate:translateKey}}
               </button>
 
-              <button *ngIf="showCancelBtn(element)" mat-menu-item data-toggle="modal" color="primary"
+              <button *ngIf="element.resourceType != 'TOWNHALL' && showCancelBtn(element)" mat-menu-item data-toggle="modal" color="primary"
                 (click)="openModal(templateRequestModel, element.scheduleList, element.refNumber,element);">
                 <mat-icon title="View Booking Details" color="primary">cancel</mat-icon>
                 {{'cancel_booking' | translate:translateKey}}
