@@ -1465,6 +1465,10 @@ export class ShopLicNewComponent implements OnInit {
 			{
 				documentIdentifier: 'OTHER_DOC',
 				mandatory: false
+			},
+			{
+				documentIdentifier: 'EMPLOYER_PHOTO',
+				mandatory: true
 			}
 		
 		];
