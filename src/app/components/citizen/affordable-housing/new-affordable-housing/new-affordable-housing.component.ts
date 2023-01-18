@@ -77,7 +77,10 @@ export class NewAffordableHousingComponent implements OnInit {
 	rationCard: Array<any> = ["APL", "BPL", "Not Applicable"];
 
 	LOOKUP: any;
-
+    messageForMobileNum: string;
+	messageForAaadherNum: string;
+	messageForPanCard: string;
+	validationErrorMsg = false
 
 	houseTypes = [];
 
@@ -879,6 +882,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	 * @param key - identify for form array
 	 */
 	addRecordFormArray(key: string): void {
+		debugger
 		switch (key) {
 			case 'familyMembers':
 				this.getFormsArray('familyMembers').push(this.createFormGroup("familyMembers", {}));
@@ -1198,54 +1202,42 @@ export class NewAffordableHousingComponent implements OnInit {
 		this.affordableHousingForm.patchValue(obj);
 	}
 
+	
+	vaildMobileNumber(event) {
+		if(event.target.value.length == ''){
+			this.validationErrorMsg = false
+		}
+		else if (event.target.value.length != 10) {
+			this.validationErrorMsg = true
+			this.messageForMobileNum = "Maximum Length is 10 digit !"
+		}
+		else {
+			this.validationErrorMsg = false
+		}
+	}
 
-	 getValidatorErrorMessage(controlName: string, validatorName: string, validatorValue?: any) {
-        let config = {
-            // error list
-            required: `${_.startCase(controlName)} is Required`,
-            namelengtherror: 'Name must be at least 2 characters long',
-            nameCharerror: 'Not include numeric character and special symbols',
-            invalidCreditCard: 'Is invalid credit card number',
-            invalidEmail: 'Invalid email address',
-            invalidPassword: 'Invalid password. Password must be at least 6 characters long, and contain a number',
-            invalidemarrigedate: 'Required and Should not be future date!',
-            invalideDate: 'Date Invalid',
-            invalidAadharno: 'Aadhar Number length should be 12',
-            invalidNumberEntry: 'Enter only Number',
-            max: `Maximum value should be ${validatorValue.max}`,
-            min: `Minimum value should be ${validatorValue.min}`,
-            minlength: `Minimum length ${validatorValue.requiredLength} characters`,
-            maxlength: `Cannot exceed ${validatorValue.requiredLength} characters`,
-            matDatepickerMin: `Date Should not below the ${moment(validatorValue.min).format("DD/MM/YYYY")}`,
-            matDatepickerMax: `Date Should not exceed ${moment(validatorValue.max).format("DD/MM/YYYY")}`,
-            invalidName: `${_.startCase(controlName)} Is Not Valid`,
-            invalidPinCode: `Pin Code Not Valid`,
-            invalidAadhar: `Invalid Aadhar Number`,
-            invalidNumber: `Invalid Mobile Number`,
-            invalidNumberVehcile: `Maximum Length is 10 digit`,
-            invalidFaxNumber: `Invalid Fax Number`,
-            invalidpregnanceTime: 'Pregnancy duration between 25 to 40',
-            invalidbirthRegNumber: 'Invalid Birth Registration Date',
-            invalidBuildingName: 'Building name is not valid',
-            invalidemployeeage: 'Age must be >13 year',
-            invalidIfscCode: 'IFSC Code is not valid',
-            invalidPan: 'Enter valid PAN number e.g. ABCDE1234T',
-            invalidTan: 'Enter valid TAN number e.g. HIJKL1234Z',
-            invalidPanLastFour: 'Enter valid PAN number e.g. 234T',
-            invalidGstin: 'The GSTIN is invalid, Please enter a valid GSTIN e.g. 29ABCDE1234F2Z5',
-            invalidpetaKendraNumber: 'Should contains only alpha-numeric and numeric value',
-            invalidAmount: 'Amount should be in digit and Only two digit allowed after decimal',
-            motherMarriageTimeAge: 'Mothers age at marriage time should not be less then 12 Years',
-            invalidGstNo: 'Please enter a valid GSTIN e.g. 29ABCDE1234F2Z5',
-            invalidAccountNo: 'Invalid Account No',
-            invalidAcHolderName: 'Invalid Name',
-            invalidDrivingLicense: 'Enter valid License number e.g. GJ0620210012122',
-            invalidElectionCard: 'Enter valid Election Card Number e.g. ABC1234567',
-            invalidPassport: 'Enter valid Passport number e,g, A1234567 or AB1234567',
-            invalidPropertyNo: 'Please enter valid property no. with occupier code',
-            invalidMemberNo: 'Please enter valid member no.'
+	vaildAadharCardNumber(event){
+	   if(event.target.value.length == ''){
+		this.validationErrorMsg = false
+	}
+	else if (event.target.value.length != 12) {
+		this.validationErrorMsg = true
+		this.messageForAaadherNum = "Aadhar Number length should be 12 !"
+	}
+	else {
+		this.validationErrorMsg = false
+	}
+	}
+
+	validPanCardNumber(event){
+        if (event.target.value) {
+            const matches = event.target.value.match(/^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}/);
+			this.messageForPanCard = "Enter valid PAN number e.g. ABCDE1234T"
+            this.validationErrorMsg = true
+        } else {
+			this.validationErrorMsg = false
+           
         }
-
-        return config[validatorName];
-    }
+    
+	}
 }

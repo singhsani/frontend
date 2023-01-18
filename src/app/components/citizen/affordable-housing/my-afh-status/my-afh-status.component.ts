@@ -59,14 +59,14 @@ export class MyAfhStatusComponent implements OnInit {
             this.isFinalPossession = false;
           }
         }, (err: any) => {
-          this.toster.error(err.error.error_description);
+          this.toster.error(err.error[0].message);
         })
     }
   }
 
   onCitizen()
   {
-		this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
+    this.router.navigate(['/citizen/dashboard']);
   }
 
 
