@@ -2,8 +2,8 @@
 
   <app-title-bar [title]="'Contractor Registration'">
 
-    <button class="pull-right" type="button" (click)="selectLanguage('en')">EN</button>
-    <button class="pull-right" type="button" (click)="selectLanguage('gu')">ગુજ</button>
+    <!-- <button class="pull-right" type="button" (click)="selectLanguage('en')">EN</button>
+    <button class="pull-right" type="button" (click)="selectLanguage('gu')">ગુજ</button> -->
     <!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
       Patch Value
     </button> -->
@@ -21,10 +21,22 @@
             <div>{{'Contractor Detail' | translate: translateKey}}</div>
           </ng-template>
 
-          <div class="col-md-6">
+          <div class="row">
+
+            <div class="col-md-6">
+              <div class="mb-4 mt-4">
+                <mat-label><strong>{{'Registration Group' | translate : translateKey}}</strong></mat-label>
+              </div>
+              <mat-radio-group class="radioGroup" formControlName="registrationGroup" required>
+                <mat-radio-button value="A">A</mat-radio-button>
+                <mat-radio-button value="B">B</mat-radio-button>
+              </mat-radio-group>
+             </div>
+
+           <div class="col-md-6">
             <div class="mb-4 mt-4">
               <!-- <mat-label><strong>Registration Category *</strong></mat-label> -->
-              <mat-label><strong>{{'Registration Category' | translate: translateKey}}</strong></mat-label>
+              <mat-label><strong>{{'Registration class' | translate: translateKey}}</strong></mat-label>
             </div>
             <mat-radio-group formControlName="applyingFor" required class="radioGroup">
               <mat-radio-button value="AA" (change)="locationChange($event)" class="mr-3">
@@ -50,6 +62,7 @@
               </mat-radio-button>
             </mat-radio-group>
           </div>
+        </div>
 
           <div class="row">
             <h2><b>{{'applicant_Details' | translate: translateKey}}</b></h2>
@@ -77,35 +90,20 @@
               </control-messages>
             </mat-form-field>
 
-            <mat-form-field class="col-md-4">
+            <mat-form-field class="col-md-6">
               <input matInput formControlName="officeContactNumber" type="text" required OnlyNumber maxlength="10"
                 placeholder="{{'mobile_no' | translate: translateKey}}">
               <control-messages [control]="contractorRegistrationForm.get('officeContactNumber')">
               </control-messages>
             </mat-form-field>
 
-            <mat-form-field class="col-md-4">
+            <mat-form-field class="col-md-6">
               <input matInput type="text" formControlName="emailId" maxlength="50"
                 placeholder="{{'email_id' | translate: translateKey}}" required>
               <control-messages [control]="contractorRegistrationForm.get('emailId')">
               </control-messages>
             </mat-form-field>
 
-            <mat-form-field class="col-md-4">
-              <input matInput type="text" appValidationFields class="capitalCase"
-                validationFieldsType='alphanumericWithSpace' required maxlength="10"
-                placeholder="{{'pan_no' | translate: translateKey}}" formControlName="panNo">
-              <control-messages [control]="contractorRegistrationForm.get('panNo')">
-              </control-messages>
-            </mat-form-field>
-
-            <mat-form-field class="col-md-4">
-              <input matInput autocomplete="off" type="text" maxlength="15" formControlName="gstNo"  
-                placeholder="{{'gst_no' | translate: translateKey}}">
-              <control-messages [control]="contractorRegistrationForm.get('gstNo')"></control-messages>
-            </mat-form-field>
-
-            <h2><b>{{'address_detail' | translate: translateKey}}</b></h2>
             <app-address #firmAddress [requiredFeilds]="true"
               [addressFormGroup]="contractorRegistrationForm.get('factoryAddress')"></app-address>
 
@@ -158,12 +156,15 @@
 
             <div class="col-md-4 ngSelect">
               <mat-label><b>{{'if_company_partnership' | translate: translateKey}}</b></mat-label>
-              <mat-radio-group formControlName="partnerShip" class="radioGroup">
-                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code" class="mr-3">
-                  {{impl.name}}
+              <mat-radio-group formControlName="partnerShipp" class="radioGroup" >
+                <mat-radio-button value="PROPRIETORSHIP" (change)="typeOfFirmChange($event)" class="mr-3">
+                  {{'yes'}}
+                </mat-radio-button>
+                <mat-radio-button value="PARTNERS" (change)="typeOfFirmChange($event)">
+                  {{'No'}}
                 </mat-radio-button>
               </mat-radio-group>
-              <control-messages [control]="contractorRegistrationForm.get('partnerShip')">
+              <control-messages [control]="contractorRegistrationForm.get('partnerShipp')">
               </control-messages>
             </div>
 
@@ -223,34 +224,10 @@
               </table>
             </div>
             <div class="col-md-12 text-right">
-              <button mat-raised-button color="primary" (click)="addRowPartnweShipDetail()">{{'add_new' | translate:
+              <button mat-raised-button color="primary" [disabled]="vendorArrayNameButtons" (click)="addRowPartnweShipDetail()">{{'add_new' | translate:
                 translateKey}}</button>
             </div>
 
-            <h2><b>Bank Detail</b></h2>
-            <mat-form-field class="col-md-4">
-              <input matInput autocomplete="off" minlength="9" maxlength="18" type="tel" formControlName="bankAccountNo"
-                OnlyNumber placeholder="{{'bank_account_no' | translate: translateKey }}" required>
-                <control-messages [control]="contractorRegistrationForm.get('bankAccountNo')">
-                </control-messages>
-            </mat-form-field>
-
-            <div class="col-md-4 ngSelect" formGroupName="registrationBank">
-              <ng-select placeholder="{{'bank_name' | translate: translateKey}} *" formControlName="code">
-                <ng-option *ngFor="let bank of bankNameArray" [value]="bank.code">{{bank.name}}</ng-option>
-              </ng-select>
-              <control-messages [control]="contractorRegistrationForm.get('registrationBank').get('code')">
-              </control-messages>
-            </div>
-
-
-            <mat-form-field class="col-md-4">
-              <input matInput autocomplete="off" maxlength="50" type="text" formControlName="branchName"
-                appValidationFields validationFieldsType='alphanumericWithSpace'
-                placeholder="{{'branch_name'  | translate: translateKey}}" required>
-                <control-messages [control]="contractorRegistrationForm.get('branchName')">
-                </control-messages>
-            </mat-form-field>
 
 
             <h2><b>Business Detail</b></h2>
@@ -267,8 +244,46 @@
                 <control-messages [control]="contractorRegistrationForm.get('businessMobileNo')">
                 </control-messages>
             </mat-form-field>
+            <mat-form-field class="col-md-6">
+              <input matInput type="text" appValidationFields class="capitalCase"
+                validationFieldsType='alphanumericWithSpace' required maxlength="10"
+                placeholder="{{'pan_no' | translate: translateKey}}" formControlName="panNo">
+              <control-messages [control]="contractorRegistrationForm.get('panNo')">
+              </control-messages>
+            </mat-form-field>
+            <mat-form-field class="col-md-6">
+              <input matInput autocomplete="off" type="text" maxlength="15" formControlName="gstNo" 
+                placeholder="{{'gst_no' | translate: translateKey}}" required>
+              <control-messages [control]="contractorRegistrationForm.get('gstNo')"></control-messages>
+            </mat-form-field>
+
             <app-address #bissinessAddress [requiredFeilds]="true"
               [addressFormGroup]="contractorRegistrationForm.get('businessAddress')"></app-address>
+
+              <h2><b>Bank Detail</b></h2>
+              <mat-form-field class="col-md-4">
+                <input matInput autocomplete="off" minlength="9" maxlength="18" type="tel" formControlName="bankAccountNo"
+                  OnlyNumber placeholder="{{'bank_account_no' | translate: translateKey }}" required>
+                  <control-messages [control]="contractorRegistrationForm.get('bankAccountNo')">
+                  </control-messages>
+              </mat-form-field>
+
+              <div class="col-md-4 ngSelect" formGroupName="registrationBank">
+                <ng-select placeholder="{{'bank_name' | translate: translateKey}} *" formControlName="code">
+                  <ng-option *ngFor="let bank of bankNameArray" [value]="bank.code">{{bank.name}}</ng-option>
+                </ng-select>
+                <control-messages [control]="contractorRegistrationForm.get('registrationBank').get('code')">
+                </control-messages>
+              </div>
+  
+  
+              <mat-form-field class="col-md-4">
+                <input matInput autocomplete="off" maxlength="50" type="text" formControlName="branchName"
+                  appValidationFields validationFieldsType='alphanumericWithSpace'
+                  placeholder="{{'branch_name'  | translate: translateKey}}" required>
+                  <control-messages [control]="contractorRegistrationForm.get('branchName')">
+                  </control-messages>
+              </mat-form-field>
 
           </div>
 
@@ -354,10 +369,7 @@
                           (dateChange)="onDateChangePurchaseDate('joiningDate', $event.value,row)">
                         <mat-datepicker-toggle matSuffix [for]="joiningDate"></mat-datepicker-toggle>
                         <mat-datepicker touchUi="true" #joiningDate></mat-datepicker>
-                        <div align="end" class="default-show-hint mat-hint mat-right"></div>
-
-                        <control-messages [control]="row.get('joiningDate')">
-                        </control-messages>
+                        <div align="end" ></div>
                       </mat-form-field>
                       <!-- <mat-form-field>
                         <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
@@ -374,9 +386,6 @@
                         <mat-datepicker-toggle matSuffix [for]="projectStartDate"></mat-datepicker-toggle>
                         <mat-datepicker touchUi="true" #projectStartDate></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right"></div>
-
-                        <control-messages [control]="row.get('projectStartDate')">
-                        </control-messages>
                       </mat-form-field>
                       <!-- <mat-form-field>
                         <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
@@ -464,6 +473,8 @@
             <mat-form-field class="col-md-12">
               <input matInput autocomplete="off" maxlength="255" type="text" formControlName="whichDepartment"
                 placeholder="{{'which_department' | translate: translateKey}}" required>
+                <control-messages [control]="contractorRegistrationForm.get('whichDepartment')">
+                </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
@@ -504,8 +515,8 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-6">
-              <textarea matInput maxlength="255" formControlName="solvencyAmountAndBankDetail"
-                placeholder="{{'solvency_amount_and_bank_details' | translate: translateKey}}"></textarea>
+                <input matInput type="text" maxlength="255" formControlName="solvencyAmountAndBankDetail" OnlyNumber
+                placeholder="{{'solvency_amount_and_bank_details' | translate: translateKey}}">
             </mat-form-field>
 
             <mat-form-field class="col-md-6">

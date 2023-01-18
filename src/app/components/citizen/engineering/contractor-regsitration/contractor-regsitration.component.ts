@@ -13,6 +13,7 @@ import { ManageRoutes } from 'src/app/config/routes-conf';
 import { ValidationService } from 'src/app/shared/services/validation.service';
 import { CitizenConfig } from '../../citizen-config';
 import { SessionStorageService } from 'angular-web-storage';
+import { ValidatorService } from 'src/app/vmcshared/data-table/validator.service';
 @Component({
   selector: 'app-contractor-regsitration',
   templateUrl: './contractor-regsitration.component.html',
@@ -160,7 +161,7 @@ export class ContractorRegsitrationComponent implements OnInit {
       lastName: [null, [Validators.required, Validators.maxLength(50)]],
       officeContactNumber: [null, [Validators.required]],
       emailId: [null, [ValidationService.emailValidator]],
-      gstNo: [null],
+      gstNo: [null,[Validators.required, ValidationService.gstNoValidator]],
       panNo: [null, [Validators.required, ValidationService.panValidator]],
       ownerFirstName: [null, [Validators.required, Validators.maxLength(50)]],
       ownerMiddleName: [null, [Validators.maxLength(50)]],
@@ -181,7 +182,7 @@ export class ContractorRegsitrationComponent implements OnInit {
         name: null
       }),
       applyingFor: [null],
-      partnerShip: [null],
+      partnerShipp: [null],
 
       whichDepartment: [null],
       pastRegistrationDetails: [null],
@@ -211,6 +212,7 @@ export class ContractorRegsitrationComponent implements OnInit {
       attachments: [],
       createdByCitizen: [true],
       officeResidentialAddressSame: [null],
+      registrationGroup :[null],
 
     });
 
@@ -265,8 +267,11 @@ export class ContractorRegsitrationComponent implements OnInit {
   }
 
   getContractorData(id: number) {
-    this.checkbox = false
+    this.checkbox = true
     this.formService.getFormData(id).subscribe(res => {
+      if(res.formStatus == 'SUBMITTED'){
+        this.checkbox = false;
+      }
       console.log("tresr", res)
       this.contractorRegistrationForm.patchValue(res);
       //this.showButtons = true;
@@ -338,13 +343,13 @@ export class ContractorRegsitrationComponent implements OnInit {
     this.contractorRegistrationForm.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
   }
 
-  onDateChangePurchaseDate(control, date, obj) {
-    obj.get(control).setValue(moment(date).format("YYYY-MM-DD"));
-  }
+  // onDateChangePurchaseDate(control, date, obj) {
+  //   obj.get(control).setValue(moment(date).format("YYYY-MM-DD"));
+  // }
 
   locationChange(event) {
     this.engineer.getFeeFromLocationn(event.value).subscribe(res => {
-      //this.contractorRegistrationForm.get('registrationAmount').setValue(res.fee);
+      this.contractorRegistrationForm.get('solvencyAmountAndBankDetail').setValue(res.fee);
     })
     this.contractorRegistrationForm.get('locationOfContractorWorks').get('code').setValue(event.value);
   }
@@ -419,7 +424,7 @@ export class ContractorRegsitrationComponent implements OnInit {
 
   onSubmit() {
     this.contractorRegistrationForm.get('anyAnotherOrganisationShareholder').setValue(true);
-    this.contractorRegistrationForm.get('partnerShip').setValue(true);
+    this.contractorRegistrationForm.get('partnerShipp').setValue(true);
     this.contractorRegistrationForm.get('ownerAccountDepartment').setValue(true);
     this.contractorRegistrationForm.get('anotherOrganisation').setValue(true);
 
@@ -484,6 +489,18 @@ export class ContractorRegsitrationComponent implements OnInit {
     } else {
       this.conditionallyResetFields();
     }
+  }
+
+  vendorArrayNameButtons: boolean = true;
+  typeOfFirmChange(event) {
+
+    if (event.value == 'PROPRIETORSHIP') {
+      // this.vendorNameArray.push(this.createVendorNameArray());
+      this.vendorArrayNameButtons = false;
+    } else {
+      this.vendorArrayNameButtons = true;
+    }
+
   }
 
 
