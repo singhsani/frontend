@@ -70,4 +70,8 @@ export class EngineeringService {
     return this.http.get(`api/contractor/location/feeAmount/` + code);
   }
 
+  getLookups() {
+    return this.http.get('api/contractor/lookups');
+  }
+
 }

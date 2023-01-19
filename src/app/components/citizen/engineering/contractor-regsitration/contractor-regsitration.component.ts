@@ -50,6 +50,9 @@ export class ContractorRegsitrationComponent implements OnInit {
   isPreviewVendorNameDetail = false;
   isFirmNameDetail = false;
   checkbox: boolean = true;
+  anotherOrganisations :boolean =  false;
+  anotherOrganisationss :boolean =  false;
+  qualifictionType : any = [];
   constructor(
     private fb: FormBuilder,
 
@@ -91,6 +94,7 @@ export class ContractorRegsitrationComponent implements OnInit {
     this.getBankNames();
     this.getAllDocumentLists();
     this.getLookUp();
+    this.getLookUps();
 
     if (!this.formId) {
       this.createFormData();
@@ -103,6 +107,13 @@ export class ContractorRegsitrationComponent implements OnInit {
       this.contractorOwnerType = res.VENDOR_TYPE_FIRM;
     });
   }
+
+  getLookUps() {
+    this.engineer.getLookups().subscribe(res => {
+      this.qualifictionType = res.CONTRACTOR_REG_FIRM;
+    });
+  }
+
   setFormControlToTabIndexMap() {
 
     this.formControlNameToTabIndex.set('nameOfTheFirm', 0)
@@ -213,6 +224,8 @@ export class ContractorRegsitrationComponent implements OnInit {
       createdByCitizen: [true],
       officeResidentialAddressSame: [null],
       registrationGroup :[null],
+      departmentOrInstitution : [null],
+      corporationAnyDepartment : [null],
 
     });
 
@@ -250,8 +263,11 @@ export class ContractorRegsitrationComponent implements OnInit {
 
   createFirmEmployeeDetail(): FormGroup {
     return this.fb.group({
+      employeeQualificationType: this.fb.group({
+        code: null,
+        name: null
+      }),
       employeeName: [null],
-      employeeQualification: [null],
       employeeStatus: [null],
       employeeExperienceYears: [null],
       joiningDate: [null],
@@ -271,6 +287,8 @@ export class ContractorRegsitrationComponent implements OnInit {
     this.formService.getFormData(id).subscribe(res => {
       if(res.formStatus == 'SUBMITTED'){
         this.checkbox = false;
+        this.anotherOrganisations = true;
+        this.anotherOrganisationss = true;
       }
       console.log("tresr", res)
       this.contractorRegistrationForm.patchValue(res);
@@ -314,7 +332,11 @@ export class ContractorRegsitrationComponent implements OnInit {
       case 'firmEmployeeDetails':
         formGroupData = this.fb.group({
           employeeName: [{ value: data.employeeName ? data.employeeName : null, disabled: true }],
-          employeeQualification: [{ value: data.employeeQualification ? data.employeeQualification : null, disabled: true }],
+          //employeeQualification: [{ value: data.employeeQualification ? data.employeeQualification : null, disabled: true }],
+          employeeQualificationType: this.fb.group({
+            code: [{ value: data.employeeQualificationType.code ? data.employeeQualificationType.code : null, disabled: true }],
+            name: [{ value: data.employeeQualificationType.name ? data.employeeQualificationType.name : null, disabled: true }]
+          }),
           employeeStatus: [{ value: data.employeeStatus ? data.employeeStatus : null, disabled: true }],
           employeeExperienceYears: [{ value: data.employeeExperienceYears ? data.employeeExperienceYears : null, disabled: true }],
           joiningDate: [{ value: data.joiningDate ? data.joiningDate : null, disabled: true }],
@@ -503,6 +525,24 @@ export class ContractorRegsitrationComponent implements OnInit {
 
   }
 
+  groupChange(event){
+   if(event.value == true){
+     this.anotherOrganisations = true;
+   }else{
+     this.anotherOrganisations = false;
+   }
+    
+  }
+
+  corporationAnyDeparment(event){
+    if(event.value == true){
+      this.anotherOrganisationss = true;
+    }else{
+      this.anotherOrganisationss = false;
+    }
+     
+   }
+
 
   conditionallyResetFields() {
 
@@ -538,6 +578,8 @@ export class ContractorRegsitrationComponent implements OnInit {
       "oldRegistrationNumber": "hjfgjk",
       "notCompletedReasonDetails": "jhgkkk",
       "amountRemainsInCorporationOrOrganization": "jhgkkjhfgjh",
+      "departmentOrInstitution" : "ghfjjghfjghfjghf",
+      "corporationAnyDepartment" : "fjfjghfjfjfgh",
       "factoryAddress": {
         "addressType": "FIRM_ADDRESS",
         "buildingName": "41",

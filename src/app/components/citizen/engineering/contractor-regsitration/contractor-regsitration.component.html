@@ -307,15 +307,11 @@
           <div class="row">
             <!-- <h2><b>Registration Detail</b></h2> -->
             <mat-form-field class="col-md-6">
-              <textarea matInput maxlength="255" formControlName="registrationDetails"
-                placeholder="{{'registration_detail' | translate: translateKey}}"></textarea>
-            </mat-form-field>
-            <mat-form-field class="col-md-6">
               <textarea matInput maxlength="255" formControlName="threeYearDetails"
                 placeholder="{{'three_year_work_details' | translate: translateKey}}"></textarea>
             </mat-form-field>
 
-            <h2><b>Firm Employee Details</b></h2>
+            <h2><b>{{'firm_empployee_details' | translate: translateKey}}</b></h2>
             <div class="table-responsive">
               <table class="table table-bordered table-responsive-md table-striped text-center">
                 <tbody>
@@ -323,9 +319,9 @@
                     <th class="text-center">Name</th>
                     <th class="text-center">Qualification</th>
                     <th class="text-center">Status</th>
-                    <th class="text-center">How Much Years Of Experience</th>
-                    <th class="text-center">When He Started WorkIng This Project</th>
-                    <th class="text-center">Project Start Date</th>
+                    <th class="text-center">How Many Years Of Experience</th>
+                    <th class="text-center">Date of Appointment</th>
+                    <th class="text-center">Date of Joining</th>
                     <th class="text-center">Action</th>
                   </tr>
                   <tr
@@ -338,13 +334,24 @@
                         </control-messages>
                       </mat-form-field>
                     </td>
-                    <td>
+                    <!-- <td>
                       <mat-form-field>
                         <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
                           maxlength="100" class="capitalCase" [formControl]="row.get('employeeQualification')">
                         <control-messages [control]="row.get('employeeQualification')">
                         </control-messages>
                       </mat-form-field>
+                    </td> -->
+                    <td>
+                      <div [formGroup]="row.get('employeeQualificationType')">
+                        <ng-select formControlName="code">
+                          <ng-option *ngFor="let impl of qualifictionType" [value]="impl.code">{{impl.name}}
+                          </ng-option>
+                        </ng-select>
+                        <control-messages [control]="row.get('employeeQualificationType').get('code')">
+                        </control-messages>
+                      </div>
+
                     </td>
                     <td>
                       <mat-form-field>
@@ -365,8 +372,7 @@
                     <td>
                       <mat-form-field>
                         <input matInput autocomplete="off" appDate [formControl]="row.get('joiningDate')"
-                          [min]="maxDate" [matDatepicker]="joiningDate"
-                          (dateChange)="onDateChangePurchaseDate('joiningDate', $event.value,row)">
+                          [min]="maxDate" [matDatepicker]="joiningDate">
                         <mat-datepicker-toggle matSuffix [for]="joiningDate"></mat-datepicker-toggle>
                         <mat-datepicker touchUi="true" #joiningDate></mat-datepicker>
                         <div align="end" ></div>
@@ -381,8 +387,7 @@
                     <td style="max-width:100px;">
                       <mat-form-field>
                         <input matInput autocomplete="off" appDate [formControl]="row.get('projectStartDate')"
-                          [min]="maxDate" [matDatepicker]="projectStartDate"
-                          (dateChange)="onDateChangePurchaseDate('projectStartDate', $event.value,row)">
+                          [min]="maxDate" [matDatepicker]="projectStartDate">
                         <mat-datepicker-toggle matSuffix [for]="projectStartDate"></mat-datepicker-toggle>
                         <mat-datepicker touchUi="true" #projectStartDate></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right"></div>
@@ -416,6 +421,11 @@
                 placeholder="{{'turnover_details' | translate: translateKey}}"></textarea>
             </mat-form-field>
 
+            <mat-form-field class="col-md-12">
+              <textarea matInput formControlName="workShopPlantRate" maxlength="255"
+                placeholder="{{'work_shop_and_plant_rate'  | translate: translateKey }}"></textarea>
+            </mat-form-field>
+
           </div>
 
 
@@ -439,12 +449,7 @@
           </ng-template>
 
           <div class="row">
-            <mat-form-field class="col-md-12">
-              <textarea matInput formControlName="workShopPlantRate" maxlength="255"
-                placeholder="{{'work_shop_and_plant_rate'  | translate: translateKey }}"></textarea>
-            </mat-form-field>
-
-            <div class="col-md-4 ngSelect">
+            <div class="col-md-8 ngSelect">
               <mat-label><b>{{'owner_account_department' | translate: translateKey }}</b></mat-label>
               <mat-radio-group formControlName="ownerAccountDepartment" class="radioGroup">
                 <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code" class="mr-3">
@@ -454,39 +459,35 @@
               <control-messages [control]="contractorRegistrationForm.get('ownerAccountDepartment')">
               </control-messages>
             </div>
-            <mat-form-field class="col-md-12">
-              <textarea matInput maxlength="255" formControlName="contractorWorkDetails"
-                placeholder="{{'contractor_work_details' | translate: translateKey }}"></textarea>
-            </mat-form-field>
-
            
             <div class="col-md-8 ngSelect">
               <mat-label><b>{{'any_registration_on_another_organisation' | translate: translateKey }}</b></mat-label>
               <mat-radio-group formControlName="anotherOrganisation" class="radioGroup">
-                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code" class="mr-3">
+                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code" class="mr-3" (change)="groupChange($event)">
                   {{impl.name}}
                 </mat-radio-button>
               </mat-radio-group>
             
             </div>
 
-            <mat-form-field class="col-md-12">
-              <input matInput autocomplete="off" maxlength="255" type="text" formControlName="whichDepartment"
-                placeholder="{{'which_department' | translate: translateKey}}" required>
-                <control-messages [control]="contractorRegistrationForm.get('whichDepartment')">
-                </control-messages>
-            </mat-form-field>
+            <div class="col-md-12" *ngIf="anotherOrganisations">
+              <mat-form-field class="col-md-12">
+                <textarea matInput maxlength="255" formControlName="departmentOrInstitution"></textarea>
+              </mat-form-field>
+              </div>
 
-            <mat-form-field class="col-md-4">
+          
+            <mat-form-field class="col-md-12">
               <textarea matInput maxlength="255" formControlName="pastRegistrationDetails"
                 placeholder="{{'post_registration_details' | translate: translateKey}}"></textarea>
             </mat-form-field>
-            <mat-form-field class="col-md-4">
+          
+            <mat-form-field class="col-md-12">
               <textarea matInput maxlength="255" formControlName="engineerDetails"
                 placeholder="{{'engineer_details' | translate: translateKey}}"></textarea>
             </mat-form-field>
 
-            <mat-form-field class="col-md-4">
+            <mat-form-field class="col-md-12">
               <textarea matInput maxlength="255" formControlName="incomeTaxDetails"
                 placeholder="{{'income_tax_details' | translate: translateKey}}"></textarea>
             </mat-form-field>
@@ -494,28 +495,21 @@
             <div class="col-md-8 ngSelect">
               <mat-label><b>{{'owner_partner_and_shareholder_apply_in_any_organization' | translate: translateKey }}</b></mat-label>
               <mat-radio-group formControlName="anyAnotherOrganisationShareholder" class="radioGroup">
-                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code" class="mr-3">
+                <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code" class="mr-3" (change)="corporationAnyDeparment($event)">
                   {{impl.name}}
                 </mat-radio-button>
               </mat-radio-group>
             
             </div>
 
-            <mat-form-field class="col-md-6">
-              <input matInput autocomplete="off" appDate formControlName="registrationDateOrReNewDate" [min]="maxDate"
-                [matDatepicker]="registrationDateOrReNewDate"
-                (dateChange)="onDateChange('registrationDateOrReNewDate', $event.value)"
-                placeholder="{{'new_registration_date_and_renew_date' | translate: translateKey}}">
-              <mat-datepicker-toggle matSuffix [for]="registrationDateOrReNewDate"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #registrationDateOrReNewDate></mat-datepicker>
-              <div align="end" class="default-show-hint mat-hint mat-right"></div>
+            <div class="col-md-12" *ngIf="anotherOrganisationss">
+              <mat-form-field class="col-md-12">
+                <textarea matInput maxlength="255" formControlName="corporationAnyDepartment"></textarea>
+              </mat-form-field>
+              </div>
 
-              <control-messages [control]="contractorRegistrationForm.get('registrationDateOrReNewDate')">
-              </control-messages>
-            </mat-form-field>
-
-            <mat-form-field class="col-md-6">
-                <input matInput type="text" maxlength="255" formControlName="solvencyAmountAndBankDetail" OnlyNumber
+            <mat-form-field class="col-md-8">
+                <input matInput type="text" maxlength="255" formControlName="solvencyAmountAndBankDetail" OnlyNumber readonly
                 placeholder="{{'solvency_amount_and_bank_details' | translate: translateKey}}">
             </mat-form-field>
 
@@ -537,12 +531,12 @@
                 placeholder="{{'old_registration_date_and_number' | translate: translateKey}}"></textarea>
             </mat-form-field>
 
-            <mat-form-field class="col-md-6">
+            <mat-form-field class="col-md-12">
               <textarea matInput maxlength="255" formControlName="notCompletedReasonDetails"
                 placeholder="{{'any_work_not_completed_reason_details' | translate: translateKey}}"></textarea>
             </mat-form-field>
 
-            <mat-form-field class="col-md-6">
+            <mat-form-field class="col-md-12">
               <textarea matInput maxlength="255" formControlName="amountRemainsInCorporationOrOrganization"
                 placeholder="{{'If_amount_remains_in_corporation_or_organization' | translate: translateKey}}"></textarea>
             </mat-form-field>
