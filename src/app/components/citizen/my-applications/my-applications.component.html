@@ -320,7 +320,7 @@
 
                         <mat-menu #menuTax="matMenu">
                             <button mat-menu-item
-                                *ngIf="row.fileStatus === 'PAYMENT_RECEIVED' || (row.fileStatus === 'APPROVED' && row.serviceType !='PROPERTY_ASSESSMENT' ) ||
+                                *ngIf="row.fileStatus === 'PAYMENT_RECEIVED' || (row.fileStatus === 'APPROVED' && row.serviceType !='PROPERTY_ASSESSMENT' && row.serviceType !='TRANSFER_OF_PROPERTY' ) ||
                                 ((row.serviceType === 'NO_DUE_CERTIFICATE' || row.serviceType === 'EXTRACT_OF_PROPERTY' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.serviceType === 'DUPLICATE_BILL') && row.fileStatus === 'SUBMITTED')
                                 || (row.serviceType === 'WTR_NEW_WATER_CONNECTION' && row.fileStatus === 'SUBMITTED' && row.newgenStatus === 'SUBMIT_AFTER_SCRUTINY') "
                                 color="primary"
