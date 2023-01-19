@@ -388,6 +388,9 @@ export class GatewayResponseComponent implements OnInit {
 		{
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
 		}
+		else if(this.dispData.payableServiceType == "AFFORD_HOUSE_FEES"){
+			this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
+		}
 		else {
 			setTimeout(() => {
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
