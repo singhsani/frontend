@@ -440,7 +440,7 @@ export class ShopLicTransferComponent implements OnInit {
 			nameOfEmployer: [null, [Validators.required, Validators.maxLength(100)]],
 
 			employerDesignation: [null, [Validators.required, Validators.maxLength(100)]],
-			employerMobileNumber: [null, [ValidationService.mobileNumberValidation]],
+			employerMobileNumber: [null, [Validators.required,ValidationService.mobileNumberValidation]],
 			alternateMobileNumber:[null, [ValidationService.mobileNumberValidation]],
 			landlineNumber:null,
 			employerEmailId: null,
@@ -1498,6 +1498,10 @@ export class ShopLicTransferComponent implements OnInit {
 			{
 				documentIdentifier: 'EMPLOYER_PHOTO',
 				mandatory: true
+			},
+			{
+				documentIdentifier: 'PEC_OR_PRC_RECEIPT',
+				mandatory: false
 			}
 		];
 

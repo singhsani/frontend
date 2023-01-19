@@ -143,7 +143,9 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text"
-							maxlength="16"
+							style="margin-top: 15px !important;"
+							maxlength="21"
+							appMaskCensusNumber
 							required
 							placeholder="Census Number"
 							formControlName="censusNumber"/>
@@ -227,7 +229,7 @@
 					<mat-form-field class="col-md-6">
 						<input matInput OnlyNumber type="text"  maxlength="10" minlength="10"
 							placeholder="Employer Mobile Number"
-							formControlName="employerMobileNumber" >
+							formControlName="employerMobileNumber" required>
 						<control-messages [control]="shopLicTransferForm.get('employerMobileNumber')">
 						</control-messages>
 					</mat-form-field>
