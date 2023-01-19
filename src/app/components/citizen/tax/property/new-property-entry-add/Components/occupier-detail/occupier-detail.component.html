@@ -1,4 +1,18 @@
 <mat-card>
+    <div class="row">
+        <div class="col-md-10"></div>
+        <div class="col-md-2">
+            <button color="primary" class="ml-3" mat-raised-button (click)="togglePanel()">
+                <mat-icon>add</mat-icon> Add
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <mat-divider></mat-divider>
+        </div>
+    </div>
+    <mat-expansion-panel [expanded]="panelOpenState">
     <form #form="ngForm" (ngSubmit)="saveOccupier(form)">
         <div class="row">
             <div class="col-md-2">
@@ -84,13 +98,21 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-            <div class="col-md-1">
-                <button mat-mini-fab type="submit" color="primary" title="Add">
-                    <mat-icon>add</mat-icon>
+        </div>
+        <div class="row text-right mt-3">
+            <div class="col-md-7"></div>
+            <div class="col-md-12">
+                <button mat-raised-button class="ml-3" type="submit" color="primary" title="Save">
+                    <mat-icon>save</mat-icon> Save
+                </button>
+                <button mat-raised-button class="ml-3" type="button" (click)="clearPropertyOwner(formOwner)"
+                    color="warn" title="Cancel">
+                    <mat-icon>clear_all</mat-icon> Cancel
                 </button>
             </div>
         </div>
     </form>
+    </mat-expansion-panel>
     <div class="row mt-4" *ngIf="!isOccupierExist">
         <div class="col-md-12">
             <div class="alert alert-danger">*Please enter atleast one Occupier Detail.</div>

@@ -33,6 +33,7 @@ export class OccupierDetailComponent implements OnInit {
   modelProperty: any = {};
   isUnitDetailEntered: boolean = true;
   unitDetailErrorMessage: string;
+  panelOpenState: boolean;
   constructor(private newNewPropertyEntryAddDataSharingService: NewPropertyEntryAddDataSharingService,
     private commonService: CommonService,
     private newNewPropertyEntryAddService: NewPropertyEntryAddService,
@@ -314,6 +315,14 @@ saveOccupierAfterEmail( formDetail: NgForm){
 
   //  saveOccupier finish
 
+}
+togglePanel() {
+  this.panelOpenState = !this.panelOpenState
+}
+
+clearPropertyOwner(form: NgForm){
+  console.log("Successfully Cleared.");
+  form.resetForm();
 }
 
 }
