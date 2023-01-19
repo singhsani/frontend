@@ -188,14 +188,17 @@
 
 
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber placeholder="{{'Mobile No 1' | translate:translateKey}}" type="tel"
-							maxlength="10" minlength="10" formControlName="firstAppMobileNumOne" required>
-							<mat-error class="mat-error ng-star-inserted errors-massage"
-							*ngIf="affordableHousingForm.get('firstAppMobileNumOne').invalid && (affordableHousingForm.get('firstAppMobileNumOne').dirty || affordableHousingForm.get('firstAppMobileNumOne').touched)">
-							<div *ngIf="affordableHousingForm.get('firstAppMobileNumOne').errors.required">
-							  Mobile number is Required.
-							</div>	
-							</mat-error>
+					  <input matInput OnlyNumber placeholder="{{'Mobile No 1' | translate:translateKey}}" type="tel" maxlength="10"
+					    minlength="10" formControlName="firstAppMobileNumOne" required (keyup)="vaildMobileNumber($event)">
+					  <mat-error class="mat-error ng-star-inserted errors-massage"
+					    *ngIf="affordableHousingForm.get('firstAppMobileNumOne').invalid && (affordableHousingForm.get('firstAppMobileNumOne').dirty || affordableHousingForm.get('firstAppMobileNumOne').touched)">
+					    <div *ngIf="affordableHousingForm.get('firstAppMobileNumOne').errors.required">
+					      Mobile number is Required.
+					    </div>
+					    <div *ngIf="validationErrorMsg" >
+							{{messageForMobileNum}}
+					    </div>
+					  </mat-error>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -304,25 +307,26 @@
 						</control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" appAlphaNumeric required OnlyNumber minlength="12" maxlength="12"
-							placeholder="{{'aadharID' | translate:translateKey}}"
-							formControlName="firstAppAadharCardNumber">
-							<mat-error class="mat-error ng-star-inserted errors-massage"
-							*ngIf="affordableHousingForm.get('firstAppAadharCardNumber').invalid && (affordableHousingForm.get('firstAppAadharCardNumber').dirty || affordableHousingForm.get('firstAppAadharCardNumber').touched)">
-							<div *ngIf="affordableHousingForm.get('firstAppAadharCardNumber').errors.required">
-							  Aadhar Card Number is Required.
-							</div>
-						  </mat-error>
+					  <input matInput type="text" appAlphaNumeric required OnlyNumber minlength="12" maxlength="12"
+					    placeholder="{{'aadharID' | translate:translateKey}}" formControlName="firstAppAadharCardNumber"
+					    (keyup)="vaildAadharCardNumber($event)">
+					  <mat-error class="mat-error ng-star-inserted errors-massage"
+					    *ngIf="affordableHousingForm.get('firstAppAadharCardNumber').invalid && (affordableHousingForm.get('firstAppAadharCardNumber').dirty || affordableHousingForm.get('firstAppAadharCardNumber').touched)">
+					    <div *ngIf="affordableHousingForm.get('firstAppAadharCardNumber').errors.required">
+					      Aadhar Card Number is Required. </div>
+					    <div *ngIf="validationErrorMsg">{{messageForAaadherNum}} </div>
+					  </mat-error>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" #inputPAN [value]="inputPAN.value.toUpperCase()" appAlphaNumeric
 							required maxlength="10" placeholder="{{'panNo' | translate:translateKey}}"
-							formControlName="firstAppPanCardNumber">
+							formControlName="firstAppPanCardNumber" (keyup)="validPanCardNumber($event)">
 							<mat-error class="mat-error ng-star-inserted errors-massage"
 							*ngIf="affordableHousingForm.get('firstAppPanCardNumber').invalid && (affordableHousingForm.get('firstAppPanCardNumber').dirty || affordableHousingForm.get('firstAppPanCardNumber').touched)">
 							<div *ngIf="affordableHousingForm.get('firstAppPanCardNumber').errors.required">
 							  PAN Card Number is Required.
 							</div>
+							<div *ngIf="validationErrorMsg">{{messageForPanCard}}</div>
 						  </mat-error>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
@@ -465,11 +469,14 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber placeholder="{{'Mobile No 1' | translate:translateKey}}" type="tel"
-							maxlength="10" minlength="10" formControlName="secondAppMobileNumOne" required>
+							maxlength="10" minlength="10" formControlName="secondAppMobileNumOne" required (keyup)="vaildMobileNumber($event)">
 							<mat-error class="mat-error ng-star-inserted errors-massage"
 							*ngIf="affordableHousingForm.get('secondAppMobileNumOne').invalid && (affordableHousingForm.get('secondAppMobileNumOne').dirty || affordableHousingForm.get('secondAppMobileNumOne').touched)">
 							<div *ngIf="affordableHousingForm.get('secondAppMobileNumOne').errors.required">
 							  Second Applicant Mobile Number is Required.
+							</div>
+							<div *ngIf="validationErrorMsg" >
+								{{messageForMobileNum}}
 							</div>
 						  </mat-error>
 					</mat-form-field>
@@ -562,22 +569,26 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appAlphaNumeric required OnlyNumber minlength="12" maxlength="12"
 							placeholder="{{'aadharID' | translate:translateKey}}"
-							formControlName="secondAppAadharCardNumber">
+							formControlName="secondAppAadharCardNumber" (keyup)="vaildAadharCardNumber($event)">
 							<mat-error class="mat-error ng-star-inserted errors-massage"
 							*ngIf="affordableHousingForm.get('secondAppAadharCardNumber').invalid && (affordableHousingForm.get('secondAppAadharCardNumber').dirty || affordableHousingForm.get('secondAppAadharCardNumber').touched)">
 							<div *ngIf="affordableHousingForm.get('secondAppAadharCardNumber').errors.required">
 							  Second Applicant Aadhar Number is Required.
 							</div>
+							<div *ngIf="validationErrorMsg">{{messageForAaadherNum}} </div>
 						  </mat-error>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" #inputPAN2 [value]="inputPAN2.value.toUpperCase()" appAlphaNumeric
 							required maxlength="10" placeholder="{{'panNo' | translate:translateKey}}"
-							formControlName="secondAppPanCardNumber">
+							formControlName="secondAppPanCardNumber" (keyup)="validPanCardNumber($event)">
 							<mat-error class="mat-error ng-star-inserted errors-massage"
 							*ngIf="affordableHousingForm.get('secondAppPanCardNumber').invalid && (affordableHousingForm.get('secondAppPanCardNumber').dirty || affordableHousingForm.get('secondAppPanCardNumber').touched)">
 							<div *ngIf="affordableHousingForm.get('secondAppPanCardNumber').errors.required">
 							  Second Applicant PAN Number is Required.
+							</div>
+							<div *ngIf="validationErrorMsg">
+								{{messageForPanCard}}
 							</div>
 						  </mat-error>
 					</mat-form-field>
@@ -721,8 +732,8 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" maxlength="16" minlength="16" appAlphaNumeric
-							formControlName="bankAccountNumber" type="text"
+						<input matInput autocomplete="off" maxlength="16" minlength="16" 
+							formControlName="bankAccountNumber" type="text" OnlyNumber
 							placeholder="{{'bank_account_no' | translate: translateKey}}" required>
 						<control-messages [control]="affordableHousingForm.get('bankAccountNumber')">
 						</control-messages>
@@ -771,7 +782,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput minlength="6" maxlength="7" #amountvalue
-							(change)="getWordAmount(amountvalue.value)" OnlyNumber
+							(change)="getWordAmount(amountvalue.value)" OnlyNumber oninput="if(!this.value.match('^[1-9][0-9]*$'))this.value='';"
 							placeholder="{{'annualIncome' | translate:translateKey}}" type="tel"
 							formControlName="aggregateAnnualIncomeAmount" required>
 						<control-messages [control]="affordableHousingForm.get('aggregateAnnualIncomeAmount')">
@@ -1158,12 +1169,12 @@
 
 
 				<div class="fotButtonBar clearfix">
-					<div class="col-sm-12 col-md-12" *ngIf="nextTab != true">
+					<div class="col-sm-12 col-md-12" >
 						<button type="button" class="liteBorder pull-left" mat-raised-button
 							(click)="tabIndex = 3">{{'back' |
 							translate: actionBarKey}}</button>
 						<button type="button" mat-raised-button class="pull-right" color="primary"
-							(click)="tabIndex = 5">{{'next'
+							(click)="tabIndex = 5"  [disabled]="nextTab != false">{{'next'
 							| translate:
 							actionBarKey}}</button>
 					</div>
@@ -1177,7 +1188,8 @@
 				</ng-template>
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="100"
+						<input matInput type="text" required maxlength="100" appValidationFields
+						[validationFieldsType]="'onlyNameWithSpace'"
 							placeholder="{{'nominee_name' | translate:translateKey}}" formControlName="nomineeName">
 						<control-messages [control]="affordableHousingForm.get('nomineeName')"></control-messages>
 					</mat-form-field>
@@ -1248,7 +1260,7 @@
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber maxlength="6" formControlName="ddNumber"
-							placeholder="{{'DD Number' | translate: translateKey}}">
+							placeholder="{{'DD Number' | translate: translateKey}} *">
 							<mat-error class="mat-error ng-star-inserted errors-massage"
 							*ngIf="affordableHousingForm.get('ddNumber').invalid && (affordableHousingForm.get('ddNumber').dirty || affordableHousingForm.get('ddNumber').touched)">
 							<div *ngIf="affordableHousingForm.get('ddNumber').errors.required">
