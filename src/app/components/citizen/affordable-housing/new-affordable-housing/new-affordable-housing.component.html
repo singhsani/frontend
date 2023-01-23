@@ -658,7 +658,7 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" formControlName="howLongLivingInVadodara" type="text"
-							maxlength="50"
+							maxlength="3" minlength="1"
 							placeholder="{{'How long have you been living in Vadodara?' | translate: translateKey}}"
 							required>
 						<control-messages [control]="affordableHousingForm.get('howLongLivingInVadodara')">
@@ -667,9 +667,10 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" formControlName="sqMetersPresentBuilding" type="text"
-							maxlength="50"
+							maxlength="14"
 							placeholder="{{'How many square meters is the present building?' | translate: translateKey}}"
 							required>
+							<div align="end" class="default-show-hint mat-hint mat-right">Hint:-50000 SQ. MTR.</div>
 						<control-messages [control]="affordableHousingForm.get('sqMetersPresentBuilding')">
 						</control-messages>
 					</mat-form-field>
