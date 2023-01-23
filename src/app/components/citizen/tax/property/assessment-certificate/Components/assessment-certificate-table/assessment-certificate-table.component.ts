@@ -222,11 +222,7 @@ export class AssessmentCertificateTableComponent implements OnInit {
           this.formService.submitFormData(res.data.serviceFormId).subscribe(res => {
             console.log('in res is:');
             console.log(res);
-            if(this.paymentService.isGuestUser()){
-              this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENDASHBOARD"));
-            }else{
-              this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
-            }
+            this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
           }, err => {
             let retUrl: string = '/citizen/my-applications';
             let retAfterPayment: string = environment.returnUrl;
