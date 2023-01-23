@@ -250,11 +250,7 @@ export class DuplicateBillTableComponent implements OnInit {
           (res=> {
             console.log(data);
             this.formService.submitFormData(res.serviceFormId).subscribe(res => {
-              if(this.paymentService.isGuestUser()){
-                this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENDASHBOARD"));
-              }else{
-                this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
-              }
+              this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
             }, err => {
               let retUrl: string = '/citizen/my-applications';
               let retAfterPayment: string = environment.returnUrl;
