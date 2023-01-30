@@ -23,7 +23,7 @@
       </div>
 
       <!-- This is input for other services search-->
-      <mat-form-field class="col-md-4" *ngIf="!isProfessionalTax">
+      <mat-form-field class="col-md-4" *ngIf="!isProfessionalTax && !isVehicleTaxForm">
         <input matInput placeholder="{{placeholder}}" formControlName="refNumber" required>
         <mat-error *ngIf="placeHolderMessage !== null">{{placeHolderMessage}}</mat-error>
         <!-- <control-messages [control]="paymentsForm.get('refNumber')"></control-messages> -->
@@ -33,6 +33,13 @@
       <mat-form-field class="col-md-4" *ngIf="isProfessionalTax">
         <input matInput appAlphaNumeric maxlength="12" placeholder="{{placeholder}}" formControlName="refNumber"
           required>
+        <mat-error *ngIf="placeHolderMessage !== null">{{placeHolderMessage}}</mat-error>
+        <!-- <control-messages [control]="paymentsForm.get('refNumber')"></control-messages> -->
+      </mat-form-field>
+
+      <!-- This is input for Vehicle tax search-->
+      <mat-form-field class="col-md-4" *ngIf="isVehicleTaxForm">
+        <input matInput placeholder="{{placeholder}}" formControlName="refNumber" required>
         <mat-error *ngIf="placeHolderMessage !== null">{{placeHolderMessage}}</mat-error>
         <!-- <control-messages [control]="paymentsForm.get('refNumber')"></control-messages> -->
       </mat-form-field>
@@ -186,6 +193,71 @@
       </div>
 
     </div>
+
+    <div>
+      <div class="row" style="margin-left: -30px;" *ngIf="isVehicleRecordExists && responseData">
+        <div class="col-md-12 mb-sm-0 mb-4">
+          <label class="col-md-2 font16 font-weight-bold">Name :</label>
+          <span class="font16 col">{{responseData?.firstName +' '+ responseData?.middleName +' '+
+            responseData?.lastName}}</span>
+        </div>
+        <div class="col-md-12 mb-sm-0 mb-4">
+          <label class="col-md-2 font16 font-weight-bold">Engine Number :</label>
+          <span class="font16 col">{{responseData?.engineNo}}</span>
+        </div>
+        <div class="col-md-12 mb-sm-0 mb-4">
+          <label class="col-md-2 font16 font-weight-bold">Chasis Name :</label>
+          <span class="font16 col">{{responseData?.chasisNo}}</span>
+        </div>
+        <div class="col-md-12 mb-sm-0 mb-4">
+          <label class="col-md-2 font16 font-weight-bold">Contact No :</label>
+          <span class="font16 col">{{responseData?.mobileNo}}</span>
+        </div>
+        <div class="col-md-12 mb-sm-0 mb-4">
+          <label class="col-md-2 font16 font-weight-bold">Vehicle Type :</label>
+          <span class="font16 col">{{responseData?.vehicleType.name}}</span>
+        </div>
+      </div>
+
+      <div class="row mt-4" *ngIf="isVehicleRecordExists">
+        <ng-container *ngIf="isVehicleSearch">
+          <div class="table-responsive">
+            <table class="table" style="border: 1px solid #dee2e6;">
+              <thead>
+                <tr>
+                  <th>BASIC VALUE</th>
+                  <th>APPLICABLE RATE (%)</th>
+                  <th>APPLICABLE TAX</th>
+                  <th>TOEKN FEE</th>
+                  <th>TOTAL PAYABLE</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{responseData.vehicleBasicValue}}</td>
+                  <td>{{responseData.vehicleTax}}</td>
+                  <td>{{responseData.amountFields.vehicleBasicValue}}</td>
+                  <td>{{responseData.amountFields.vehicleTokenFee}}</td>
+                  <td>{{totalPayable }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-container>
+
+
+        <div class="col-md-3 mt-4 mb-2 font16 font-weight-bold">Amount Payable : Rs. <span
+            style="color: #ff0000;">{{paymentsForm.get('amount').value}}</span> Only</div>
+        <div class="col mt-3 mb-3">
+          <button mat-raised-button class="paymentButton" color="primary" type="submit"
+            (click)="makePaymentVehicle(paymentsForm.value)">
+            Proceed for Payment
+          </button>
+        </div>
+      </div>
+
+    </div>
+
     <div *ngIf="isPropertyRecordExists">
       <div *ngIf="isPropertyTax">
 
