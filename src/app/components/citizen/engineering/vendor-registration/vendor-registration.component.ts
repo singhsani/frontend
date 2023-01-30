@@ -95,7 +95,7 @@ export class VendorRegistrationComponent implements OnInit {
   city = '';
   country = '';
   canAddressEdit = true;
-  
+
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
@@ -1092,7 +1092,6 @@ export class VendorRegistrationComponent implements OnInit {
   }
 
   onChangelandmark(event) {
-    debugger
     this.landmark = event.target.value;
     this.onChangeaddress()
   }

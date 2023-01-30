@@ -125,6 +125,12 @@ export class FormsActionsService {
 		return this.http.post(this.requestURL, {});
 	}
 
+	processPaymentVehicle(appId) {
+		this.requestURL = `api/form/vehicle/process-payment/${appId}`;
+
+		return this.http.post(this.requestURL, {});
+	}
+
 	/**
 	 * This method is use to submit citizen form data to department
 	 * @param appId - citizen app id
@@ -148,13 +154,13 @@ export class FormsActionsService {
 		return this.http.get(this.requestURL, 'printReceipt');
 	}
 
-	printPaymentReceipt(appId){
+	printPaymentReceipt(appId) {
 		this.requestURL = `api/form/${this.apiType}/printReceiptForPayment?id=${appId}`;
-		return this.http.get(this.requestURL,'printReceipt');
+		return this.http.get(this.requestURL, 'printReceipt');
 	}
-	printAfterReschedule(appId){
+	printAfterReschedule(appId) {
 		this.requestURL = `api/form/${this.apiType}/printReceiptAfterReschedule?id=${appId}`;
-		return this.http.get(this.requestURL,'printReceipt');
+		return this.http.get(this.requestURL, 'printReceipt');
 	}
 
 	/**
@@ -376,10 +382,17 @@ export class FormsActionsService {
 		return this.http.get(`api/professional/receipt/citizen/search/${num}`);
 	}
 
-	saveTaxPaymentDetails(data) {
-				return this.http.post(`api/professional/taxPayment`, data);
+	getAmountDetailsVehicle(num) {
+		return this.http.get(`api/form/vehicle/receipt/citizen/search/${num}`);
 	}
 
+	saveTaxPaymentDetails(data) {
+		return this.http.post(`api/professional/taxPayment`, data);
+	}
+
+	saveVehicleTaxPaymentDetails(data) {
+		return this.http.post(`api/vehicle/taxPayment`, data);
+	}
 
 
 	savePropertyTaxPaymentDetails(data: any) {
@@ -452,10 +465,10 @@ export class FormsActionsService {
 	}
 
 	getBase64StringURL(refNumber: string) {
-        this.requestURL = `api/form/${this.apiType}/getLoiDocument/${refNumber}`;
-        return this.http.get(this.requestURL);
-    }
-	
+		this.requestURL = `api/form/${this.apiType}/getLoiDocument/${refNumber}`;
+		return this.http.get(this.requestURL);
+	}
+
 	saveOfflinePayment(serviceId, paymentData) {
 		this.requestURL = `api/form/${this.apiType}/offlinePayment/${serviceId}`;
 		return this.http.post(this.requestURL, paymentData);
@@ -465,12 +478,12 @@ export class FormsActionsService {
 		this.requestURL = `api/user/${this.apiType}`;
 		return this.http.post(this.requestURL, reqData);
 	}
-	saveCustomCallApi(apiName: any, noofCopies: any, asonDate: any, occupierId: any,serviceApplicationId : any) {
+	saveCustomCallApi(apiName: any, noofCopies: any, asonDate: any, occupierId: any, serviceApplicationId: any) {
 		this.requestURL = `api/form/${this.apiType}/${apiName}?noofCopies=${noofCopies}&asonDate=${asonDate}&occupierId=${occupierId}&propertyServiceApplicationId=${serviceApplicationId}`;
 		return this.http.post(this.requestURL, {});
 	}
 
-	saveNoDueCertificate(apiName: any, noofCopies: any, asonDate: any, occupierId: any, propertyBasicId: any, serviceFormId : any) {
+	saveNoDueCertificate(apiName: any, noofCopies: any, asonDate: any, occupierId: any, propertyBasicId: any, serviceFormId: any) {
 		this.requestURL = `api/form/${this.apiType}/${apiName}?noofCopies=${noofCopies}&asonDate=${asonDate}&occupierId=${occupierId}&propertyBasicId=${propertyBasicId}&propertyServiceApplicationId=${serviceFormId}`;
 		return this.http.post(this.requestURL, {});
 	}
@@ -518,10 +531,10 @@ export class FormsActionsService {
 
 	}
 
-	saveApplicantDetails(data:any){
+	saveApplicantDetails(data: any) {
 		this.requestURL = `api/form/propertyAssessment/saveApplicantDetails`;
 		return this.http.post(this.requestURL, data);
-	  }
+	}
 
 	saveDuplicateBill(apiName: any, data: any) {
 		this.requestURL = `api/form/${this.apiType}/${apiName}`;
@@ -529,32 +542,32 @@ export class FormsActionsService {
 
 	}
 
-	printPaymentAckReceipt(appId,url){
+	printPaymentAckReceipt(appId, url) {
 		this.requestURL = `${url}?id=${appId}`;
-		return this.http.get(this.requestURL,'printReceipt');
+		return this.http.get(this.requestURL, 'printReceipt');
 	}
 
-	getCertificatOrLiglePrint(data: any,id: any){
+	getCertificatOrLiglePrint(data: any, id: any) {
 		this.requestURL = `api/form/marriageReg/legalprint/${data}/${id}`;
-		return this.http.get(this.requestURL,'printReceipt');
+		return this.http.get(this.requestURL, 'printReceipt');
 	}
 
-	getCertificatOrLiglePrintForDuplicateMrg(data: any,id: any){
+	getCertificatOrLiglePrintForDuplicateMrg(data: any, id: any) {
 		this.requestURL = `api/form/duplicateMarriageReg/legalprint/${data}/${id}`;
-		return this.http.get(this.requestURL,'printReceipt');
+		return this.http.get(this.requestURL, 'printReceipt');
 	}
 
 	// for Vendor Registration when Deposit Received 
 	nonRefundableCollection(serviceFormId) {
 		this.requestURL = `api/form/vendor/collectionAmount/${serviceFormId}`;
 		return this.http.get(this.requestURL, 'printReceipt');
-	  }
+	}
 
 	//for Contrctor Registration when Deposit Received
 
 	nonRefundableCollections(serviceFormId) {
 		this.requestURL = `api/form/contractor/collectionAmount/${serviceFormId}`;
 		return this.http.get(this.requestURL, 'printReceipt');
-	  }
+	}
 
 }
