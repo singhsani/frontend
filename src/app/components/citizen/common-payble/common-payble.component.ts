@@ -357,8 +357,8 @@ export class CommonPaybleComponent implements OnInit {
       this.placeholder = 'PEC Number';
       this.placeHolderMessage = 'PEC Number is Required';
     } else if (paySerCode === 'VEHICLE') {
-      this.placeholder = 'Application Id';
-      this.placeHolderMessage = 'Application Id is Required';
+      this.placeholder = 'Application No.';
+      this.placeHolderMessage = 'Application No. is Required';
     } else if (paySerCode === 'PAY-PRO-TAX') {
       this.placeholder = 'Property Number';
       this.placeHolderMessage = 'Property Number is Required';
