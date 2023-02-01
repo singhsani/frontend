@@ -32,7 +32,6 @@ export class FormsActionsService {
 	 * This method is use to create new citizen app
 	 */
 	createFormData() {
-       
 		this.requestURL = `api/form/${this.apiType}/create`;
 		if (this.commonService.fromAdmin()) {
 			this.requestURL = `api/form/${this.apiType}/admin-create?fromAdmin=${this.commonService.fromAdmin()}`;
@@ -383,7 +382,7 @@ export class FormsActionsService {
 	}
 
 	getAmountDetailsVehicle(num) {
-		return this.http.get(`api/form/vehicle/receipt/citizen/search/${num}`);
+		return this.http.get(`api/form/vehicle/receipt/search/${num}`);
 	}
 
 	saveTaxPaymentDetails(data) {
