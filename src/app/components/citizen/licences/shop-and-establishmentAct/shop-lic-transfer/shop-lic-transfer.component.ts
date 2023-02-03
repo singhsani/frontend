@@ -47,6 +47,8 @@ export class ShopLicTransferComponent implements OnInit {
 
 	isDisabledBtn: boolean = true;
 	hidesave:boolean = false;
+	isSubCategory: boolean = false;
+
 	// workerTypes :Array<any> = [];
 
 	//regiTyep: string[] = ['CERTIFICATION', 'INTIMATION'];
@@ -191,9 +193,12 @@ export class ShopLicTransferComponent implements OnInit {
 		console.log("Regis ", this.registrationType);
 
 		if (this.registrationType == "INTIMATION") {
-
+			
 			this.shopAndEstablishmentTransferService.getLatestApplicationsByIntimationNumber(this.certificateNumber).subscribe(res => {
 				console.log('Res', res)
+				if(res.otherDescription != null){
+					this.isSubCategory = true;
+				}
 				this.setFormDataFromLatestApplication(res)
 				if (this.shopLicTransferForm.get('organizationType').value != null) {
 					this.isGuideLineActive = flag;
@@ -213,6 +218,10 @@ export class ShopLicTransferComponent implements OnInit {
 		} else if (this.registrationType == "CERTIFICATION") {
 			this.shopAndEstablishmentTransferService.getLatestApplicationByCertificationNumber(this.certificateNumber).subscribe(res =>{
 				console.log('Res',res)
+				debugger
+				if(res.otherDescription != null){
+					this.isSubCategory = true;
+				}
 				this.setFormDataFromLatestApplication(res)
 				if(this.shopLicTransferForm.get('organizationType').value != null){
 					this.isGuideLineActive = flag;
@@ -273,7 +282,8 @@ export class ShopLicTransferComponent implements OnInit {
 			waterDrainageZoneId : res.waterDrainageZoneId,
 			waterDrainageZoneName : res.waterDrainageZoneName,
 			oldRegistrationNumber : res.oldRegistrationNumber,
-			oldRegistrationDate : res.oldRegistrationDate
+			oldRegistrationDate : res.oldRegistrationDate,
+			otherDescription : res.otherDescription
 			// workerCounts : res.workerCounts
 
 		 });
@@ -412,7 +422,7 @@ export class ShopLicTransferComponent implements OnInit {
 			registrationType: null,
 			renewal: null,
 			adminCharges: null,
-      netAmount: null,
+      		netAmount: null,
     //   certificateNumber: [null],
 			/* Step 1 controls start */
 			//previousRegistrationNo :  [null, [Validators.maxLength(150)]],//count=4
@@ -461,7 +471,7 @@ export class ShopLicTransferComponent implements OnInit {
 				name: null,
 			}),
 			commencementOfBusinessDate: [null, Validators.required],
-
+			otherDescription : null,
 			/* Step 2 controls end */
 
 
@@ -1669,5 +1679,16 @@ export class ShopLicTransferComponent implements OnInit {
 	getCommonWorkerType(){
 		let workerGrid = <FormArray>this.shopLicTransferForm.get('workerCounts');
 		this.shopAndEstablishmentService.getSelectedWorkerType(this.workerTypeList,workerGrid)
+	}
+
+	onChangeSubCategory(event){
+		debugger
+		console.log("subCategory",this.businessSubCategoryList);
+		console.log(event)
+		if(event == "B26" || event == "B13" || event == "A01"){
+			 this.isSubCategory = true;
+		}else{
+			this.isSubCategory = false;
+		}
 	}
 }

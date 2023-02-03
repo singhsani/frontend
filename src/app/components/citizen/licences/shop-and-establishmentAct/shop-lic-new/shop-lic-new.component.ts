@@ -50,7 +50,7 @@ export class ShopLicNewComponent implements OnInit {
 	isPatners: boolean = false;
 
 	isIntimation: boolean = false;
-
+	isSubCategory: boolean = false;
 	isDisabledBtn: boolean = true;
 	isDisabledOrgType: boolean = false;
 
@@ -372,6 +372,7 @@ export class ShopLicNewComponent implements OnInit {
 				name: null,
 			}),
 			commencementOfBusinessDate: [null, Validators.required],
+			otherDescription:null,
 
 			/* Step 2 controls end */
 
@@ -1745,4 +1746,14 @@ export class ShopLicNewComponent implements OnInit {
 		this.shopAndEstablishmentService.getSelectedWorkerType(this.workerTypeList,workerGrid)
 	}
 
+	onChangeSubCategory(event){
+		debugger
+		console.log("subCategory",this.businessSubCategoryList);
+		console.log(event)
+		if(event == "B26" || event == "B13" || event == "A01"){
+			 this.isSubCategory = true;
+		}else{
+			this.isSubCategory = false;
+		}
+	}
 }
