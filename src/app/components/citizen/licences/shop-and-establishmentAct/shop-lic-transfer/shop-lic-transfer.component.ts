@@ -17,6 +17,7 @@ import { Constants } from 'src/app/vmcshared/Constants';
 import { ProfessionalTaxService } from 'src/app/core/services/citizen/data-services/professional-tax.service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { ShopAndEstablishmentTransferService } from '../common/services/shop-and-establishment-transfer.service';
+import { BookingConstants } from '../../../facilities/bookings/config/booking-config';
 @Component({
   selector: 'app-shop-lic-transfer',
   templateUrl: './shop-lic-transfer.component.html',
@@ -135,8 +136,7 @@ export class ShopLicTransferComponent implements OnInit {
 		private taxRebateApplicationService: TaxRebateApplicationService,
 		private professionalTaxService : ProfessionalTaxService,
 		private alertService: AlertService,
-		private shopAndEstablishmentTransferService : ShopAndEstablishmentTransferService
-
+		private shopAndEstablishmentTransferService : ShopAndEstablishmentTransferService,
 	) { }
 
 	/**
@@ -1679,7 +1679,8 @@ export class ShopLicTransferComponent implements OnInit {
 	}
 
 	onChangeSubCategory(event){
-		if(event == "B26" || event == "B13" || event == "A01"){
+		if(event == BookingConstants.ANY_METAL_AND_STEEL_SHOPS || event == BookingConstants.ANY_GARAGE_REPAIRING_Shopes
+			 || event == BookingConstants.ANY_OFFICES){
 			 this.isSubCategory = true;
 		}else{
 			this.isSubCategory = false;

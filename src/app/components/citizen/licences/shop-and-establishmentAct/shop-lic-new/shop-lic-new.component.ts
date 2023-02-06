@@ -16,6 +16,7 @@ import { Constants } from 'src/app/vmcshared/Constants';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { ProfessionalTaxService } from 'src/app/core/services/citizen/data-services/professional-tax.service';
 import { ItemsList } from '@ng-select/ng-select/ng-select/items-list';
+import { BookingConstants } from '../../../facilities/bookings/config/booking-config';
 
 
 @Component({
@@ -1747,10 +1748,8 @@ export class ShopLicNewComponent implements OnInit {
 	}
 
 	onChangeSubCategory(event){
-		debugger
-		console.log("subCategory",this.businessSubCategoryList);
-		console.log(event)
-		if(event == "B26" || event == "B13" || event == "A01"){
+		if(event == BookingConstants.ANY_METAL_AND_STEEL_SHOPS || event == BookingConstants.ANY_GARAGE_REPAIRING_Shopes
+			|| event == BookingConstants.ANY_OFFICES){
 			 this.isSubCategory = true;
 		}else{
 			this.isSubCategory = false;
