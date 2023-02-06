@@ -217,8 +217,6 @@ export class ShopLicTransferComponent implements OnInit {
 			return;
 		} else if (this.registrationType == "CERTIFICATION") {
 			this.shopAndEstablishmentTransferService.getLatestApplicationByCertificationNumber(this.certificateNumber).subscribe(res =>{
-				console.log('Res',res)
-				debugger
 				if(res.otherDescription != null){
 					this.isSubCategory = true;
 				}
@@ -228,7 +226,6 @@ export class ShopLicTransferComponent implements OnInit {
 				}
 				return;
 			},err => {
-				console.log("Error",err);
 				if(err && err.error[0]){
 					this.alertService.error(err.error[0].code)
 				}else{
@@ -1682,9 +1679,6 @@ export class ShopLicTransferComponent implements OnInit {
 	}
 
 	onChangeSubCategory(event){
-		debugger
-		console.log("subCategory",this.businessSubCategoryList);
-		console.log(event)
 		if(event == "B26" || event == "B13" || event == "A01"){
 			 this.isSubCategory = true;
 		}else{
