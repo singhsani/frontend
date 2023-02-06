@@ -44,6 +44,9 @@ export class ShopLicTransferComponent implements OnInit {
 	isPatners: boolean = false;
 
 	isIntimation: boolean = false;
+	totalNoOfWoman: number = 0;
+	womanDocument :Array<any> = [];
+	edit:boolean = true;
 
 	isDisabledBtn: boolean = true;
 	hidesave:boolean = false;
@@ -748,6 +751,7 @@ export class ShopLicTransferComponent implements OnInit {
 	 * @param persontype : person array type
 	 */
 	addMorePersonwork(persontype: string) {
+		this.edit = false;
 		let isEditAnotherRow = this.isTableInEditMode(persontype);
 		if (!isEditAnotherRow) {
 
@@ -848,8 +852,8 @@ export class ShopLicTransferComponent implements OnInit {
 	/**
 	 * Method is used to count person
 	 * @param formType : form vontrol name
-	 * @param fieldsType : set value in this from control
-	 * @param filterType : filter type
+	  * @param fieldsType : set value in this from control
+	  * @param filterType : filter type
 	 */
 	calulateNumberOfPerson(formType: string, fieldsType: string, filterType: string) {
 		let countNumber = [];
@@ -897,6 +901,14 @@ export class ShopLicTransferComponent implements OnInit {
 	* @param row: table row id
 	*/
 	editRecord(row: any) {
+		if(this.edit){
+			console.log(this.totalNoOfWoman)
+			const Rnumber = parseInt(row.controls.noOfWomen.value)
+			this.totalNoOfWoman = this.totalNoOfWoman - Rnumber
+			this.deleteWomenDocument();
+			this.addWomenDocument();
+		}
+		this.edit = true;
 		row.isEditMode = true;
 		row.deepCopyInEditMode = Object.assign({}, row.value);
 	}
@@ -904,7 +916,10 @@ export class ShopLicTransferComponent implements OnInit {
 	/**
 	* Method is used when user click for remove person
 	*/
-	deleteRecord(persontype: string, index: any) {
+	deleteRecord(persontype: string, index: any, item:any) {
+		const	Rnumber = parseInt(item.controls.noOfWomen.value)
+		this.totalNoOfWoman = this.totalNoOfWoman - Rnumber 
+		this.deleteWomenDocument();
 		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
 			this.getArrayByType(persontype).removeAt(index);
 			this.toastrService.success("Succesfully deleted", "Deleted");
@@ -1467,6 +1482,18 @@ export class ShopLicTransferComponent implements OnInit {
 
 	}
 	
+	deleteWomenDocument(){
+		
+		if(this.totalNoOfWoman == 0)
+	   {
+		   this.displayDocs.forEach((file,index)=> {
+				   if(file.documentIdentifier == 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J'){
+					   this.displayDocs.splice(index, 1);
+				   }
+		   })
+	   }
+   }
+	
 	
 
 	commonUploadDocument(){
@@ -1502,7 +1529,15 @@ export class ShopLicTransferComponent implements OnInit {
 			{
 				documentIdentifier: 'PEC_OR_PRC_RECEIPT',
 				mandatory: false
-			}
+			},
+			{
+				documentIdentifier: 'NOTICE_OF_WEEKLY_HOLIDAY_FORM_K',
+				mandatory: false
+			},
+			{
+				documentIdentifier: 'FORM_Q',
+				mandatory: false
+			},
 		];
 
 		return comonDocument;
@@ -1547,6 +1582,59 @@ export class ShopLicTransferComponent implements OnInit {
 		return docs;
 
 	}
+
+	addWomenDocument(){
+		
+		const localUploadArray = [...this.serverUploadFilesArray];
+		let count = 0;
+		for (let file of this.displayDocs) {
+			if(file.documentIdentifier == 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J'){
+					count++;
+			}
+		}
+		if(count == 0){
+			
+			if(this.totalNoOfWoman > 0){
+				{
+			
+					this.womanDocument = [
+						{
+							documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
+							mandatory: true
+						},
+
+					];				
+
+				}
+				this.returnFile(localUploadArray);
+				// for (let file of localUploadArray) {
+					
+				// 		if (this.checkFileNeedToAddInDocumentList(file, this.womanDocument)) {
+				// 			file['mandatory'] = this.isFileMandatory(file, this.womanDocument);
+				// 			this.displayDocs.push(file);
+							
+				// 			if (file['mandatory']) {
+				// 				this.uploadFilesArray.push({
+				// 					'labelName': file.documentLabelEn,
+				// 					'fieldIdentifier': file.fieldIdentifier,
+				// 					'documentIdentifier': file.documentIdentifier,
+				// 					'mandatory' : file.mandatory
+				// 				})
+				// 			}
+				
+				// 		} else {
+				// 			file['mandatory'] = false;
+				// 		}
+
+				// 	}
+				
+				}
+			
+			}
+			
+	}
+
+
 
 	validatePecNumber(formControl : any){
 		let numberValue = formControl.value.substring(0,3)
@@ -1640,6 +1728,8 @@ export class ShopLicTransferComponent implements OnInit {
 
 }
 	savePersonOccupyingRecord(row: any) {
+		const	Rnumber = parseInt(row.controls.noOfWomen.value)
+		this.totalNoOfWoman =  this.totalNoOfWoman + Rnumber;
 		let grandTotal = 0;
 		if (this.registrationType === this.regiTyep[0].code) {
 			let control = this.shopLicTransferForm.get('workerCounts')['controls'];
@@ -1662,6 +1752,7 @@ export class ShopLicTransferComponent implements OnInit {
 			this.saveRecord(row);
 
 		}
+		this.addWomenDocument();
 		
 	}
 	
@@ -1669,5 +1760,28 @@ export class ShopLicTransferComponent implements OnInit {
 	getCommonWorkerType(){
 		let workerGrid = <FormArray>this.shopLicTransferForm.get('workerCounts');
 		this.shopAndEstablishmentService.getSelectedWorkerType(this.workerTypeList,workerGrid)
+	}
+
+	returnFile(localUploadArray:any){
+		for (let file of localUploadArray) {
+					
+			if (this.checkFileNeedToAddInDocumentList(file, this.womanDocument)) {
+				file['mandatory'] = this.isFileMandatory(file, this.womanDocument);
+				this.displayDocs.push(file);
+				
+				if (file['mandatory']) {
+					this.uploadFilesArray.push({
+						'labelName': file.documentLabelEn,
+						'fieldIdentifier': file.fieldIdentifier,
+						'documentIdentifier': file.documentIdentifier,
+						'mandatory' : file.mandatory
+					})
+				}
+	
+			} else {
+				file['mandatory'] = false;
+			}
+			return file;
+		}
 	}
 }
