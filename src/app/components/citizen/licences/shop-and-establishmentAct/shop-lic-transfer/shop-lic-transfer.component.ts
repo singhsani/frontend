@@ -1591,7 +1591,6 @@ export class ShopLicTransferComponent implements OnInit {
 	}
 
 	addWomenDocument(){
-		
 		const localUploadArray = [...this.serverUploadFilesArray];
 		let count = 0;
 		for (let file of this.displayDocs) {
@@ -1600,10 +1599,8 @@ export class ShopLicTransferComponent implements OnInit {
 			}
 		}
 		if(count == 0){
-			
 			if(this.totalNoOfWoman > 0){
 				{
-			
 					this.womanDocument = [
 						{
 							documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
@@ -1614,26 +1611,6 @@ export class ShopLicTransferComponent implements OnInit {
 
 				}
 				this.returnFile(this.womanDocument);
-				// for (let file of localUploadArray) {
-					
-				// 		if (this.checkFileNeedToAddInDocumentList(file, this.womanDocument)) {
-				// 			file['mandatory'] = this.isFileMandatory(file, this.womanDocument);
-				// 			this.displayDocs.push(file);
-							
-				// 			if (file['mandatory']) {
-				// 				this.uploadFilesArray.push({
-				// 					'labelName': file.documentLabelEn,
-				// 					'fieldIdentifier': file.fieldIdentifier,
-				// 					'documentIdentifier': file.documentIdentifier,
-				// 					'mandatory' : file.mandatory
-				// 				})
-				// 			}
-				
-				// 		} else {
-				// 			file['mandatory'] = false;
-				// 		}
-
-				// 	}
 				
 				}
 			
