@@ -17,6 +17,7 @@ import { Constants } from 'src/app/vmcshared/Constants';
 import { ProfessionalTaxService } from 'src/app/core/services/citizen/data-services/professional-tax.service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { ShopAndEstablishmentTransferService } from '../common/services/shop-and-establishment-transfer.service';
+import { BookingConstants } from '../../../facilities/bookings/config/booking-config';
 @Component({
   selector: 'app-shop-lic-transfer',
   templateUrl: './shop-lic-transfer.component.html',
@@ -47,6 +48,8 @@ export class ShopLicTransferComponent implements OnInit {
 
 	isDisabledBtn: boolean = true;
 	hidesave:boolean = false;
+	isSubCategory: boolean = false;
+
 	// workerTypes :Array<any> = [];
 
 	//regiTyep: string[] = ['CERTIFICATION', 'INTIMATION'];
@@ -133,8 +136,7 @@ export class ShopLicTransferComponent implements OnInit {
 		private taxRebateApplicationService: TaxRebateApplicationService,
 		private professionalTaxService : ProfessionalTaxService,
 		private alertService: AlertService,
-		private shopAndEstablishmentTransferService : ShopAndEstablishmentTransferService
-
+		private shopAndEstablishmentTransferService : ShopAndEstablishmentTransferService,
 	) { }
 
 	/**
@@ -191,9 +193,12 @@ export class ShopLicTransferComponent implements OnInit {
 		console.log("Regis ", this.registrationType);
 
 		if (this.registrationType == "INTIMATION") {
-
+			
 			this.shopAndEstablishmentTransferService.getLatestApplicationsByIntimationNumber(this.certificateNumber).subscribe(res => {
 				console.log('Res', res)
+				if(res.otherDescription != null){
+					this.isSubCategory = true;
+				}
 				this.setFormDataFromLatestApplication(res)
 				if (this.shopLicTransferForm.get('organizationType').value != null) {
 					this.isGuideLineActive = flag;
@@ -212,14 +217,15 @@ export class ShopLicTransferComponent implements OnInit {
 			return;
 		} else if (this.registrationType == "CERTIFICATION") {
 			this.shopAndEstablishmentTransferService.getLatestApplicationByCertificationNumber(this.certificateNumber).subscribe(res =>{
-				console.log('Res',res)
+				if(res.otherDescription != null){
+					this.isSubCategory = true;
+				}
 				this.setFormDataFromLatestApplication(res)
 				if(this.shopLicTransferForm.get('organizationType').value != null){
 					this.isGuideLineActive = flag;
 				}
 				return;
 			},err => {
-				console.log("Error",err);
 				if(err && err.error[0]){
 					this.alertService.error(err.error[0].code)
 				}else{
@@ -273,7 +279,8 @@ export class ShopLicTransferComponent implements OnInit {
 			waterDrainageZoneId : res.waterDrainageZoneId,
 			waterDrainageZoneName : res.waterDrainageZoneName,
 			oldRegistrationNumber : res.oldRegistrationNumber,
-			oldRegistrationDate : res.oldRegistrationDate
+			oldRegistrationDate : res.oldRegistrationDate,
+			otherDescription : res.otherDescription
 			// workerCounts : res.workerCounts
 
 		 });
@@ -412,7 +419,7 @@ export class ShopLicTransferComponent implements OnInit {
 			registrationType: null,
 			renewal: null,
 			adminCharges: null,
-      netAmount: null,
+      		netAmount: null,
     //   certificateNumber: [null],
 			/* Step 1 controls start */
 			//previousRegistrationNo :  [null, [Validators.maxLength(150)]],//count=4
@@ -461,7 +468,7 @@ export class ShopLicTransferComponent implements OnInit {
 				name: null,
 			}),
 			commencementOfBusinessDate: [null, Validators.required],
-
+			otherDescription : null,
 			/* Step 2 controls end */
 
 
@@ -1669,5 +1676,14 @@ export class ShopLicTransferComponent implements OnInit {
 	getCommonWorkerType(){
 		let workerGrid = <FormArray>this.shopLicTransferForm.get('workerCounts');
 		this.shopAndEstablishmentService.getSelectedWorkerType(this.workerTypeList,workerGrid)
+	}
+
+	onChangeSubCategory(event){
+		if(event == BookingConstants.ANY_METAL_AND_STEEL_SHOPS || event == BookingConstants.ANY_GARAGE_REPAIRING_Shopes
+			 || event == BookingConstants.ANY_OFFICES){
+			 this.isSubCategory = true;
+		}else{
+			this.isSubCategory = false;
+		}
 	}
 }

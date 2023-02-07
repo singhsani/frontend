@@ -16,6 +16,7 @@ import { Constants } from 'src/app/vmcshared/Constants';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { ProfessionalTaxService } from 'src/app/core/services/citizen/data-services/professional-tax.service';
 import { ItemsList } from '@ng-select/ng-select/ng-select/items-list';
+import { BookingConstants } from '../../../facilities/bookings/config/booking-config';
 
 
 @Component({
@@ -50,7 +51,7 @@ export class ShopLicNewComponent implements OnInit {
 	isPatners: boolean = false;
 
 	isIntimation: boolean = false;
-
+	isSubCategory: boolean = false;
 	isDisabledBtn: boolean = true;
 	isDisabledOrgType: boolean = false;
 
@@ -372,6 +373,7 @@ export class ShopLicNewComponent implements OnInit {
 				name: null,
 			}),
 			commencementOfBusinessDate: [null, Validators.required],
+			otherDescription:null,
 
 			/* Step 2 controls end */
 
@@ -1745,4 +1747,12 @@ export class ShopLicNewComponent implements OnInit {
 		this.shopAndEstablishmentService.getSelectedWorkerType(this.workerTypeList,workerGrid)
 	}
 
+	onChangeSubCategory(event){
+		if(event == BookingConstants.ANY_METAL_AND_STEEL_SHOPS || event == BookingConstants.ANY_GARAGE_REPAIRING_Shopes
+			|| event == BookingConstants.ANY_OFFICES){
+			 this.isSubCategory = true;
+		}else{
+			this.isSubCategory = false;
+		}
+	}
 }

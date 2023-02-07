@@ -273,7 +273,7 @@
 
 					<div class="col-md-6 ngSelect selectCategoryDropdown" formGroupName="businessSubCategory">
 						<ng-select placeholder="{{'sub_category_of_business' | translate:translateKey}} *"
-							formControlName="code">
+							formControlName="code" (change)="onChangeSubCategory($event)">
 							<ng-option *ngFor="let sub_category of businessSubCategoryList" [value]="sub_category.code">
 								{{sub_category.name}}</ng-option>
 						</ng-select>
@@ -306,7 +306,12 @@
 						</control-messages>
 					</mat-form-field>
 
-					
+					<mat-form-field class="col-md-6" *ngIf="isSubCategory">
+						<input matInput type="text" 
+							placeholder="Other Description"
+							formControlName="otherDescription" >
+						<control-messages [control]="shopLicTransferForm.get('otherDescription')"></control-messages>
+					</mat-form-field>	
 				</div>
 				
 
