@@ -601,7 +601,7 @@
 										</span>
 										<span *ngIf="shopLicTransferForm.get('canEdit').value">
 											<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
-												(click)="deleteRecord('OCCUPANCY',indx)">
+												(click)="deleteRecord('OCCUPANCY',indx,item)">
 												<mat-icon title="Delete">delete</mat-icon>
 											</button>
 											<button mat-icon-button color="warn" *ngIf="item.isEditMode"

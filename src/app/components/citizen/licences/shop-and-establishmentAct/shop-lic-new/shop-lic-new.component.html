@@ -594,7 +594,7 @@
 										</span>
 										<span *ngIf="shopLicNewForm.get('canEdit').value">
 											<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
-												(click)="deleteRecord('OCCUPANCY',indx)">
+												(click)="deleteRecord('OCCUPANCY',indx,item)">
 												<mat-icon title="Delete">delete</mat-icon>
 											</button>
 											<button mat-icon-button color="warn" *ngIf="item.isEditMode"
@@ -632,7 +632,7 @@
 						<div class="col-md-4 ngSelect" formGroupName="organizationType">
 							<ng-select formControlName="code"
 								placeholder="{{ 'shop_lic_org_type' | translate:translateKey }} *"
-								(change)="onChangeTypeOfOrganization($event)">
+						    	(change)="onChangeTypeOfOrganization($event);">
 								<ng-option *ngFor="let org_type of SHOP_LIC_TYPE_OF_ORGANIZATION"
 									[value]="org_type.code">{{org_type.name}}</ng-option>
 							</ng-select>
