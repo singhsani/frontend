@@ -34,9 +34,9 @@ export class ShopLicNewComponent implements OnInit {
 	formId: number;
 	apiCode: string;
 	TotalNoOfPerson: number = 0;
-
+	totalNoOfWoman: number = 0;
 	hidesave:boolean = false;
-	
+	edit:boolean = true;
 	wardZoneLevel = [];
 	wardZoneLevel1List = [];
 	wardZoneLevel2List = [];
@@ -44,7 +44,7 @@ export class ShopLicNewComponent implements OnInit {
 	wardZoneLevel4List = [];
 
 	workerTypes :Array<any> = [];
-
+	womanDocument :Array<any> = [];
 	isGuideLineActive: boolean = false;
 
 	isPatners: boolean = false;
@@ -176,7 +176,7 @@ export class ShopLicNewComponent implements OnInit {
 				this.toastrService.warning("please enter woman or men number more than 0")
 				this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfMen').reset();
 				this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfWomen').reset();
-			}
+			}	
 		} 
 		let total = men + woman;
 		if(total == 0){
@@ -668,6 +668,7 @@ export class ShopLicNewComponent implements OnInit {
 	 * @param persontype : person array type
 	 */
 	addMorePersonwork(persontype: string) {
+		this.edit = false;
 		let isEditAnotherRow = this.isTableInEditMode(persontype);
 		if (!isEditAnotherRow) {
 
@@ -773,10 +774,7 @@ export class ShopLicNewComponent implements OnInit {
 
 	/**
 	 * Method is used to count person
-	 * @param formType : form vontrol name
-	 * @param fieldsType : set value in this from control
-	 * @param filterType : filter type
-	 */
+	 * @param formType : form vontrol nDelete
 	calulateNumberOfPerson(formType: string, fieldsType: string, filterType: string) {
 		let countNumber = [];
 		let data = (<FormArray>this.shopLicNewForm.get(formType)).controls;
@@ -823,6 +821,14 @@ export class ShopLicNewComponent implements OnInit {
 	* @param row: table row id
 	*/
 	editRecord(row: any) {
+		if(this.edit){
+			console.log(this.totalNoOfWoman)
+			const Rnumber = parseInt(row.controls.noOfWomen.value)
+			this.totalNoOfWoman = this.totalNoOfWoman - Rnumber
+			this.deleteWomenDocument();
+			this.addWomenDocument();
+		}	
+		this.edit = true;
 		row.isEditMode = true;
 		row.deepCopyInEditMode = Object.assign({}, row.value);
 	}
@@ -830,7 +836,10 @@ export class ShopLicNewComponent implements OnInit {
 	/**
 	* Method is used when user click for remove person
 	*/
-	deleteRecord(persontype: string, index: any) {
+	deleteRecord(persontype: string, index: any,item: any) {
+		const	Rnumber = parseInt(item.controls.noOfWomen.value)
+		this.totalNoOfWoman = this.totalNoOfWoman - Rnumber 
+		this.deleteWomenDocument();
 		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
 			this.getArrayByType(persontype).removeAt(index);
 			this.toastrService.success("Succesfully deleted", "Deleted");
@@ -852,6 +861,9 @@ export class ShopLicNewComponent implements OnInit {
 
 
 	savePersonOccupyingRecord(row: any) {
+	
+	  	const	Rnumber = parseInt(row.controls.noOfWomen.value)
+		this.totalNoOfWoman =  this.totalNoOfWoman + Rnumber;
 		let grandTotal = 0;
 		if (this.registrationType === this.regiTyep[0].code) {
 			let control = this.shopLicNewForm.get('workerCounts')['controls'];
@@ -864,8 +876,7 @@ export class ShopLicNewComponent implements OnInit {
 			
 				this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");
 			}
-			// console.log("grandTotal" +grandTotal);
-			// if(row.valid) {
+			
 			else {
 				row.isEditMode = false;
 				row.newRecordAdded = false;
@@ -874,6 +885,9 @@ export class ShopLicNewComponent implements OnInit {
 		else {
 			this.saveRecord(row);
 		}
+		
+		this.addWomenDocument();
+
 	}
 		/**
 		*  Method is used cancel editable dataview.
@@ -957,10 +971,9 @@ export class ShopLicNewComponent implements OnInit {
 	* @event is value of Type of Organization dropdown
 	*/
 	onChangeTypeOfOrganization(event) {
-
+	
 		this.shopLicNewForm.get('organizationType').get('code').setValue(event);
 	 	this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value,event);
-
 		try {
 			// this.updateServiceUploadDocument(event);
 			this.isPatners = false;
@@ -1293,8 +1306,7 @@ export class ShopLicNewComponent implements OnInit {
 		const documentCodeList = this.filterDocumentList(ownershipType,organizationCode);
 		const localUploadArray = [...this.serverUploadFilesArray];
 		this.displayDocs = [];
-		this.uploadFilesArray = [];
-
+		this.uploadFilesArray = [];	
 		for (let file of localUploadArray) {
 			if (this.checkFileNeedToAddInDocumentList(file, documentCodeList)) {
 				file['mandatory'] = this.isFileMandatory(file, documentCodeList);
@@ -1410,7 +1422,7 @@ export class ShopLicNewComponent implements OnInit {
 					}
 				];
 				return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument());
-			} else {
+			}else {
 				return [];
 			}
 		}
@@ -1437,6 +1449,68 @@ export class ShopLicNewComponent implements OnInit {
 
 	}
 
+	addWomenDocument(){
+		
+		const localUploadArray = [...this.serverUploadFilesArray];
+		let count = 0;
+		for (let file of this.displayDocs) {
+			if(file.documentIdentifier == 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J'){
+					count++;
+			}
+		}
+		if(count == 0){
+			
+			if(this.totalNoOfWoman > 0){
+				{
+			
+					this.womanDocument = [
+						{
+							documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
+							mandatory: true
+						},
+
+					];				
+
+				}
+				this.returnFile(localUploadArray);
+				// for (let file of localUploadArray) {
+					
+				// 		if (this.checkFileNeedToAddInDocumentList(file, this.womanDocument)) {
+				// 			file['mandatory'] = this.isFileMandatory(file, this.womanDocument);
+				// 			this.displayDocs.push(file);
+							
+				// 			if (file['mandatory']) {
+				// 				this.uploadFilesArray.push({
+				// 					'labelName': file.documentLabelEn,
+				// 					'fieldIdentifier': file.fieldIdentifier,
+				// 					'documentIdentifier': file.documentIdentifier,
+				// 					'mandatory' : file.mandatory
+				// 				})
+				// 			}
+				
+				// 		} else {
+				// 			file['mandatory'] = false;
+				// 		}
+
+				// 	}
+				
+				}
+			
+			}
+			
+	}
+
+	deleteWomenDocument(){
+		
+		 if(this.totalNoOfWoman == 0)
+		{
+			this.displayDocs.forEach((file,index)=> {
+					if(file.documentIdentifier == 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J'){
+						this.displayDocs.splice(index, 1);
+					}
+			})
+		}
+	}
 
 	commonUploadDocument(){
 		
@@ -1472,6 +1546,14 @@ export class ShopLicNewComponent implements OnInit {
 			},
 			{
 				documentIdentifier: 'PEC_OR_PRC_RECEIPT',
+				mandatory: false
+			},
+			{
+				documentIdentifier: 'NOTICE_OF_WEEKLY_HOLIDAY_FORM_K',
+				mandatory: false
+			},
+			{
+				documentIdentifier: 'FORM_Q',
 				mandatory: false
 			}
 		
@@ -1744,5 +1826,29 @@ export class ShopLicNewComponent implements OnInit {
 		let workerGrid = <FormArray>this.shopLicNewForm.get('workerCounts');
 		this.shopAndEstablishmentService.getSelectedWorkerType(this.workerTypeList,workerGrid)
 	}
+
+	returnFile(localUploadArray:any){
+		for (let file of localUploadArray) {
+					
+			if (this.checkFileNeedToAddInDocumentList(file, this.womanDocument)) {
+				file['mandatory'] = this.isFileMandatory(file, this.womanDocument);
+				this.displayDocs.push(file);
+				
+				if (file['mandatory']) {
+					this.uploadFilesArray.push({
+						'labelName': file.documentLabelEn,
+						'fieldIdentifier': file.fieldIdentifier,
+						'documentIdentifier': file.documentIdentifier,
+						'mandatory' : file.mandatory
+					})
+				}
+	
+			} else {
+				file['mandatory'] = false;
+			}
+			return file;
+		}
+	}
+
 
 }
