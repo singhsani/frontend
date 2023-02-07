@@ -26,6 +26,26 @@
                         {{ service.name }}
                     </button>
                 </div>
+                <div *ngIf="module.code == 'SHOP-ESTAB-NEW'" class="row">
+                    <div class="colBtn">
+                        <p> {{'For Women workers Form J' }}:
+                            <button mat-button (click)="downloadGuidLineDocumemnt('Form-J')"
+                                color="primary">Download</button>
+                        </p>
+                    </div>
+                    <div class="colBtn">
+                        <p> {{'Notice for Weekly Holiday Form K' }}:
+                            <button mat-button (click)="downloadGuidLineDocumemnt('Form-K')"
+                                color="primary">Download</button>
+                        </p>
+                    </div>
+                    <!-- <div class="colBtn">
+                        <p> {{'Form Q' }}:
+                            <button mat-button (click)="downloadGuidLineDocumemnt('Form-K')"
+                                color="primary">Download</button>
+                        </p>
+                    </div> -->
+                </div>
             </div>
         </mat-tab>
 
