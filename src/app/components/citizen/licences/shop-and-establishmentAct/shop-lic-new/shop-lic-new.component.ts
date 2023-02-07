@@ -1471,31 +1471,8 @@ export class ShopLicNewComponent implements OnInit {
 					]	
 				}
 				this.returnFile(this.womanDocument);
-				// for (let file of localUploadArray) {
-					
-				// 		if (this.checkFileNeedToAddInDocumentList(file, this.womanDocument)) {
-				// 			file['mandatory'] = this.isFileMandatory(file, this.womanDocument);
-				// 			this.displayDocs.push(file);
-							
-				// 			if (file['mandatory']) {
-				// 				this.uploadFilesArray.push({
-				// 					'labelName': file.documentLabelEn,
-				// 					'fieldIdentifier': file.fieldIdentifier,
-				// 					'documentIdentifier': file.documentIdentifier,
-				// 					'mandatory' : file.mandatory
-				// 				})
-				// 			}
-				
-				// 		} else {
-				// 			file['mandatory'] = false;
-				// 		}
-
-				// 	}
-				
 				}
-			
 			}
-			
 	}
 
 	deleteWomenDocument(){
