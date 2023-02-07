@@ -38,4 +38,9 @@ export class ShopAndEstablishmentService {
 	searchLicenceFromNewgen(licenceNumber) {
     	return this.http.post(`api/form/shopLicense/searchFromNewgen`,licenceNumber);
 	}
+
+	downloadGuidLineDocumemnt(filename: any, type: any) {
+		return this.http.getUploadedFile(`api/form/shopLicense/download/${filename}`, type);
+	  }
+	
 }
