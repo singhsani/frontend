@@ -49,7 +49,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	addnewBtnown: boolean = true;
 	addnewBtnPlot: boolean = true;
 	addnewBtnfamily = true;
-	nextTab: boolean = false;
+	nextTab : boolean=false;
 
 	showButtons: boolean = false;
 	bankNameArray = [];
@@ -77,7 +77,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	rationCard: Array<any> = ["APL", "BPL", "Not Applicable"];
 
 	LOOKUP: any;
-	messageForMobileNum: string;
+    messageForMobileNum: string;
 	messageForAaadherNum: string;
 	messageForPanCard: string;
 	validationErrorMsg = false
@@ -581,7 +581,7 @@ export class NewAffordableHousingComponent implements OnInit {
 			// /* Second Beneficiary controls End *//
 
 			// /* Bank Details controls Start *//
-			bankAccountNumber: [null, [Validators.required, Validators.maxLength(16), Validators.minLength(16)]],
+			bankAccountNumber: [null, [Validators.required, Validators.maxLength(16),Validators.minLength(16)]],
 			bank: this.fb.group({
 				code: [null, [Validators.required]],
 				name: null,
@@ -729,7 +729,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	editRecord(row: any) {
 		row.isEditMode = true;
 		row.deepCopyInEditMode = Object.assign({}, row.value);
-		this.nextTab = true;
+		this.nextTab=true;
 	}
 
 
@@ -743,7 +743,7 @@ export class NewAffordableHousingComponent implements OnInit {
 		if (row.valid) {
 			row.isEditMode = false;
 			row.newRecordAdded = false;
-			this.nextTab = false;
+			this.nextTab=false;
 		}
 	}
 
@@ -767,7 +767,7 @@ export class NewAffordableHousingComponent implements OnInit {
 		} catch (error) {
 
 		}
-		this.nextTab = false;
+		this.nextTab=false;
 	}
 
 	/**
@@ -882,6 +882,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	 * @param key - identify for form array
 	 */
 	addRecordFormArray(key: string): void {
+		debugger
 		switch (key) {
 			case 'familyMembers':
 				this.getFormsArray('familyMembers').push(this.createFormGroup("familyMembers", {}));
@@ -890,7 +891,7 @@ export class NewAffordableHousingComponent implements OnInit {
 					this.editRecord((newlyadded[newlyadded.length - 1]));
 					(<any>newlyadded[newlyadded.length - 1]).newRecordAdded = true;
 				}
-				this.nextTab = true;
+				this.nextTab=true;
 				break;
 			case 'placeOfChoice':
 				if (this.getFormsArray('placeOfChoice').length < 5) {
@@ -898,40 +899,40 @@ export class NewAffordableHousingComponent implements OnInit {
 				} else {
 					this.commonService.openAlert("Warning", "You can add maximum 5 place of choice", "warning");
 				}
-				this.nextTab = true;
+				this.nextTab=true;
 				break;
 			case 'ownHouseDetail':
 
 				let newlyadded11 = this.getFormsArray('ownHouseDetail').controls;
-				if (newlyadded11.length == 10) {
+				if(newlyadded11.length == 10){
 					this.toster.warning('you have added the maximum of 10 House Detail');
 					return;
 				}
 
 				this.getFormsArray('ownHouseDetail').push(this.createFormGroup("ownHouseDetail", {}));
-
+				
 				if (newlyadded11.length) {
 					this.editRecord((newlyadded11[newlyadded11.length - 1]));
 					(<any>newlyadded11[newlyadded11.length - 1]).newRecordAdded = true;
 				}
-				this.nextTab = true;
+				this.nextTab=true;
 				break;
 			case 'ownLandPlotDetail':
 
 				var newlyadded22 = this.getFormsArray('ownLandPlotDetail').controls;
-				if (newlyadded22.length == 10) {
+				if(newlyadded22.length == 10){
 					this.toster.warning('you have added the maximum of 10 Land Plot Detail');
 					return;
 				}
 
 				this.createFormGroup("placeOfChoice", {})
 				this.getFormsArray('ownLandPlotDetail').push(this.createFormGroup("ownLandPlotDetail", {}));
-
+				
 				if (newlyadded22.length) {
 					this.editRecord((newlyadded22[newlyadded22.length - 1]));
 					(<any>newlyadded22[newlyadded22.length - 1]).newRecordAdded = true;
 				}
-				this.nextTab = true;
+				this.nextTab=true;
 				break;
 
 			default:
@@ -1201,9 +1202,9 @@ export class NewAffordableHousingComponent implements OnInit {
 		this.affordableHousingForm.patchValue(obj);
 	}
 
-
+	
 	vaildMobileNumber(event) {
-		if (event.target.value.length == '') {
+		if(event.target.value.length == ''){
 			this.validationErrorMsg = false
 		}
 		else if (event.target.value.length != 10) {
@@ -1215,28 +1216,28 @@ export class NewAffordableHousingComponent implements OnInit {
 		}
 	}
 
-	vaildAadharCardNumber(event) {
-		if (event.target.value.length == '') {
-			this.validationErrorMsg = false
-		}
-		else if (event.target.value.length != 12) {
-			this.validationErrorMsg = true
-			this.messageForAaadherNum = "Aadhar Number length should be 12 !"
-		}
-		else {
-			this.validationErrorMsg = false
-		}
+	vaildAadharCardNumber(event){
+	   if(event.target.value.length == ''){
+		this.validationErrorMsg = false
+	}
+	else if (event.target.value.length != 12) {
+		this.validationErrorMsg = true
+		this.messageForAaadherNum = "Aadhar Number length should be 12 !"
+	}
+	else {
+		this.validationErrorMsg = false
+	}
 	}
 
-	validPanCardNumber(event) {
-		if (event.target.value) {
-			const matches = event.target.value.match(/^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}/);
+	validPanCardNumber(event){
+        if (event.target.value) {
+            const matches = event.target.value.match(/^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}/);
 			this.messageForPanCard = "Enter valid PAN number e.g. ABCDE1234T"
-			this.validationErrorMsg = true
-		} else {
+            this.validationErrorMsg = true
+        } else {
 			this.validationErrorMsg = false
-
-		}
-
+           
+        }
+    
 	}
 }

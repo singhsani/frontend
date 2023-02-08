@@ -171,7 +171,6 @@ export class NewRegistrationComponent implements OnInit {
       dealerEmail: ['', [ValidationService.emailValidator]],
       dealerMobileNo: [null, ValidationService.mobileNumberValidationVehicle],
       vehicleTax: [{ value: 0, disabled: true }],
-      registrationDate: [{ value: null }]
     });
 
     this.vehicleRegistrationForm.patchValue({

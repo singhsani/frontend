@@ -534,7 +534,7 @@ export class UnitDetailComponent implements OnInit {
           // this.getUnitListByOccupierId();
           // this.viewMeasurement();
           const tempMeasurementId = data.body.data;
-          this.saveMeasurementTax(tempMeasurementId, 0);
+          this.saveMeasurementTax(tempMeasurementId);
           }
           this.showBuildUpArea=false;
       },
@@ -637,10 +637,8 @@ export class UnitDetailComponent implements OnInit {
       (data) => {
         if (data.status === 200) {
           this.roomModel = new RoomModel();
-          // this.viewMeasurement();
-          // this.getUnitListByOccupierId();
-          const tempMeasurementId = data.body.data;
-          this.saveMeasurementTax(0, tempMeasurementId);
+          this.viewMeasurement();
+          this.getUnitListByOccupierId();
           form.resetForm();
           this.clearRoom();
         }
@@ -659,8 +657,11 @@ export class UnitDetailComponent implements OnInit {
     event2.updateValueAndValidity();
   }
 
-  saveMeasurementTax(mesurementId:Number,roomId:Number){
-    this.newNewPropertyEntryAddService.saveMeasurementTax(mesurementId, roomId).subscribe(
+  saveMeasurementTax(Id:Number){
+    if(!Id){
+      return;
+    }
+    this.newNewPropertyEntryAddService.saveMeasurementTax(Id).subscribe(
       (data) => {
         if (data) {
           this.getUnitListByOccupierId();
