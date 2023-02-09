@@ -59,7 +59,7 @@ export class PropertyOwnerComponent implements OnInit {
   }
 
   getLookups() {
-    let lookupcode = `lookup_codes=${Constants.LookupCodes.Title}`;
+    let lookupcode = `lookup_codes=${Constants.LookupCodes.TRANSFER_TITLE}`;
     this.commonService.getLookupValuesAccordingToScreen(lookupcode).subscribe(data => {
       this.titleList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.TRANSFER_TITLE))[0].items;
 
