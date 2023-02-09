@@ -98,6 +98,7 @@ export class Constants {
         Transfer_Type: "TRANSFER_TYPE",
         Floor_No: "UNIT_DETAILS_FLOOR_NO",
         Title: "title",
+        TRANSFER_TITLE: "TRANSFER_TITLE",
         Disconnection_Type: "DISCONN_TYPE",
         Reason_for_Disconnection: "DISCONN_REASON",
         Document_Type: "DOCUMENT",
