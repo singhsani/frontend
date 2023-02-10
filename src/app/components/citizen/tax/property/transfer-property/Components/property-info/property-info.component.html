@@ -74,7 +74,7 @@
                         (input)="checkIsValidTransferArea($event,TransferArea)">
                     <mat-error *ngIf="TransferArea.invalid && isValidTransferArea">*Transfer Area is required.
                     </mat-error>
-                    <mat-error *ngIf="!isValidTransferArea">*Transfer Area should not be greater than Carpet Area.
+                    <mat-error *ngIf="!isValidTransferArea">*Transfer area should be less than or equal to carpet area.
                     </mat-error>
 
                 </mat-form-field>

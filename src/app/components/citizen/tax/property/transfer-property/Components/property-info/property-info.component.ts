@@ -113,7 +113,7 @@ export class PropertyInfoComponent implements OnInit {
       });
   }
   onNext(formDetail: NgForm) {
-    if (formDetail.form.valid) {
+    if (formDetail.form.valid  &&  this.isValidTransferArea == true) {
       this.applicationModel.actualTransferDate = this.commonService.getPayloadDate(this.applicationModel.actualTransferDate);
       this.transferPropertyService.saveDetail(this.applicationModel).subscribe(
         (data) => {
