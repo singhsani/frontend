@@ -254,16 +254,6 @@ export class GatewayResponseComponent implements OnInit {
 					this.serviceType = payResp.data.responseData.payableServiceType;
 					//	This methods are used to send SMS and Email ater booking payment for Amphi Theater as
 					//  discussed with B A team.It can be applied for all module letter.
-					if (payRespData.serviceType == "FS_ELECTRIC_CONNECTION_NOC" || payRespData.serviceType == "FS_FIRE_CERTIFICATE" || payRespData.serviceType == "FS_GAS_CONNECTION_NOC") { //for Fire Services
-						{
-						   setTimeout(() => {
-							   const url = '/citizen/my-applications' + '?id=' + payRespData.serviceFormId + '&apiCode=' + payRespData.serviceDetail.code
-							   this.router.navigateByUrl(url);
-						   }, 10000);
-   
-						   this.interVal();
-					   }
-				   }
 					if (payRespData.fileStatus == "PAYMENT_RECEIVED") {
 						this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(payRespData.serviceDetail.code);
 						this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
@@ -287,6 +277,16 @@ export class GatewayResponseComponent implements OnInit {
 						});
 
 					}
+					if (payRespData.serviceType == "FS_ELECTRIC_CONNECTION_NOC" || payRespData.serviceType == "FS_FIRE_CERTIFICATE" || payRespData.serviceType == "FS_GAS_CONNECTION_NOC") { //for Fire Services
+						{
+						   setTimeout(() => {
+							   const url = '/citizen/my-applications' + '?id=' + payRespData.serviceFormId + '&apiCode=' + payRespData.serviceDetail.code
+							   this.router.navigateByUrl(url);
+						   }, 10000);
+   
+						   this.interVal();
+					   }
+				   }
 					else {
 						setTimeout(() => {
 							this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
@@ -428,6 +428,10 @@ export class GatewayResponseComponent implements OnInit {
 		this.interval = setInterval(() => {
 			this.dispTime = this.dispTime - 1
 		}, 1000)
+		if(this.dispTime < 0)
+		{
+			this.dispTime = 0;
+		}
 
 	}
 	/**
