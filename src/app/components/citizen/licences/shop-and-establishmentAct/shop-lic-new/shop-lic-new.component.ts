@@ -16,6 +16,7 @@ import { Constants } from 'src/app/vmcshared/Constants';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { ProfessionalTaxService } from 'src/app/core/services/citizen/data-services/professional-tax.service';
 import { ItemsList } from '@ng-select/ng-select/ng-select/items-list';
+import { BookingConstants } from '../../../facilities/bookings/config/booking-config';
 
 
 @Component({
@@ -50,7 +51,7 @@ export class ShopLicNewComponent implements OnInit {
 	isPatners: boolean = false;
 
 	isIntimation: boolean = false;
-
+	isSubCategory: boolean = false;
 	isDisabledBtn: boolean = true;
 	isDisabledOrgType: boolean = false;
 
@@ -372,6 +373,7 @@ export class ShopLicNewComponent implements OnInit {
 				name: null,
 			}),
 			commencementOfBusinessDate: [null, Validators.required],
+			otherDescription:null,
 
 			/* Step 2 controls end */
 
@@ -1302,7 +1304,6 @@ export class ShopLicNewComponent implements OnInit {
 		for (let i = array.length - 1; i >= 0; i--) {
 			array.removeAt(i)
 		}
-
 		const documentCodeList = this.filterDocumentList(ownershipType,organizationCode);
 		const localUploadArray = [...this.serverUploadFilesArray];
 		this.displayDocs = [];
@@ -1450,7 +1451,6 @@ export class ShopLicNewComponent implements OnInit {
 	}
 
 	addWomenDocument(){
-		
 		const localUploadArray = [...this.serverUploadFilesArray];
 		let count = 0;
 		for (let file of this.displayDocs) {
@@ -1468,36 +1468,11 @@ export class ShopLicNewComponent implements OnInit {
 							documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
 							mandatory: true
 						},
-
-					];				
-
+					]	
 				}
-				this.returnFile(localUploadArray);
-				// for (let file of localUploadArray) {
-					
-				// 		if (this.checkFileNeedToAddInDocumentList(file, this.womanDocument)) {
-				// 			file['mandatory'] = this.isFileMandatory(file, this.womanDocument);
-				// 			this.displayDocs.push(file);
-							
-				// 			if (file['mandatory']) {
-				// 				this.uploadFilesArray.push({
-				// 					'labelName': file.documentLabelEn,
-				// 					'fieldIdentifier': file.fieldIdentifier,
-				// 					'documentIdentifier': file.documentIdentifier,
-				// 					'mandatory' : file.mandatory
-				// 				})
-				// 			}
-				
-				// 		} else {
-				// 			file['mandatory'] = false;
-				// 		}
-
-				// 	}
-				
+				this.returnFile(this.womanDocument);
 				}
-			
 			}
-			
 	}
 
 	deleteWomenDocument(){
@@ -1827,28 +1802,37 @@ export class ShopLicNewComponent implements OnInit {
 		this.shopAndEstablishmentService.getSelectedWorkerType(this.workerTypeList,workerGrid)
 	}
 
-	returnFile(localUploadArray:any){
-		for (let file of localUploadArray) {
-					
-			if (this.checkFileNeedToAddInDocumentList(file, this.womanDocument)) {
-				file['mandatory'] = this.isFileMandatory(file, this.womanDocument);
-				this.displayDocs.push(file);
-				
-				if (file['mandatory']) {
-					this.uploadFilesArray.push({
-						'labelName': file.documentLabelEn,
-						'fieldIdentifier': file.fieldIdentifier,
-						'documentIdentifier': file.documentIdentifier,
-						'mandatory' : file.mandatory
-					})
-				}
-	
-			} else {
-				file['mandatory'] = false;
-			}
-			return file;
+	onChangeSubCategory(event){
+		if(event == BookingConstants.ANY_METAL_AND_STEEL_SHOPS || event == BookingConstants.ANY_GARAGE_REPAIRING_Shopes
+			|| event == BookingConstants.ANY_OFFICES){
+			 this.isSubCategory = true;
+		}else{
+			this.isSubCategory = false;
 		}
 	}
-
-
+	
+	returnFile(womanDocument:any){
+		const localUploadArray = [...this.serverUploadFilesArray];
+		const fileDocument = womanDocument[0];
+		for (let file of localUploadArray) {
+			if(file.documentIdentifier == fileDocument.documentIdentifier)	{	
+				if (this.checkFileNeedToAddInDocumentList(file, this.womanDocument)) {
+					file['mandatory'] = this.isFileMandatory(file, this.womanDocument);
+					this.displayDocs.push(file);
+					
+					if (file['mandatory']) {
+						this.uploadFilesArray.push({
+							'labelName': file.documentLabelEn,
+							'fieldIdentifier': file.fieldIdentifier,
+							'documentIdentifier': file.documentIdentifier,
+							'mandatory' : file.mandatory
+						})
+					}
+		
+				} else {
+					file['mandatory'] = false;
+				}
+			}
+		}
+	}
 }

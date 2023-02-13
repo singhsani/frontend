@@ -241,23 +241,6 @@ export class GatewayResponseComponent implements OnInit {
 			this.waterPostPayment(payData, data);
 
 
-		} else if (data.payableServiceType == "VEHICLE_TAX") {
-			payData.amount = Number(data.amount);
-			this.formService.saveVehicleTaxPaymentDetails(payData).subscribe(res => {
-				debugger;
-				if (res && res.body) {
-
-					setTimeout(() => {
-						this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS') + '?refNumber=' + res.body);
-						//this.redirectToMyApplication(ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS'),res.data.responseData.refNumber );
-					}, 10000);
-
-					this.interVal();
-
-
-				}
-				//this.redirectToHome();
-			});
 		} else {
 			if (this.isSearchanble == "true") {
 				setTimeout(() => {
@@ -273,28 +256,27 @@ export class GatewayResponseComponent implements OnInit {
 					//  discussed with B A team.It can be applied for all module letter.
 					if (payRespData.serviceType == "FS_ELECTRIC_CONNECTION_NOC" || payRespData.serviceType == "FS_FIRE_CERTIFICATE" || payRespData.serviceType == "FS_GAS_CONNECTION_NOC") { //for Fire Services
 						{
-							setTimeout(() => {
-								const url = '/citizen/my-applications' + '?id=' + payRespData.serviceFormId + '&apiCode=' + payRespData.serviceDetail.code
-								this.router.navigateByUrl(url);
-							}, 10000);
-
-							this.interVal();
-						}
-					}
+						   setTimeout(() => {
+							   const url = '/citizen/my-applications' + '?id=' + payRespData.serviceFormId + '&apiCode=' + payRespData.serviceDetail.code
+							   this.router.navigateByUrl(url);
+						   }, 10000);
+   
+						   this.interVal();
+					   }
+				   }
 					if (payRespData.fileStatus == "PAYMENT_RECEIVED") {
 						this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(payRespData.serviceDetail.code);
 						this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
 							if (res) {
 								if (this.formService.apiType == 'APLicense' || this.formService.apiType == 'APLRenewal' || this.formService.apiType == 'APLTransfer' ||
-									this.formService.apiType == 'MFLicense' || this.formService.apiType == 'MFRenewal' || this.formService.apiType == 'MFTransfer') {
+								this.formService.apiType == 'MFLicense' || this.formService.apiType == 'MFRenewal' || this.formService.apiType == 'MFTransfer') {
 									setTimeout(() => {
 										const url = '/citizen/my-applications' + '?id=' + payRespData.serviceFormId + '&apiCode=' + payRespData.serviceDetail.code
 										this.router.navigateByUrl(url);
 									}, 10000);
 
 									this.interVal();
-								} else {
-									setTimeout(() => {
+								}else {									setTimeout(() => {
 										this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
 									}, 10000);
 
@@ -371,7 +353,7 @@ export class GatewayResponseComponent implements OnInit {
 	}
 
 	redirectToHome() {
-		if (this.dispData.payableServiceType == "PROFESSIONAL_TAX") {
+		if (this.dispData.payableServiceType == "PROFESSIONAL_TAX" ) {
 
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS')]);
 
@@ -379,8 +361,8 @@ export class GatewayResponseComponent implements OnInit {
 
 			this.router.navigate([this.bookingConstant.MY_BOOKINGS_URL]);
 
-		} else if (this.dispData.payableServiceType == "SHOP-ESTAB-LIC-NEW" || this.paybleServiceType == "SHOP-ESTAB-TRANSFER" || this.dispData.payableServiceType == "HEL-BCR" || this.dispData.payableServiceType == "HEL-DCR"
-			|| this.dispData.payableServiceType == "HEL-DUPDR" || this.dispData.payableServiceType == "HEL-DUPBR") {
+		} else if (this.dispData.payableServiceType == "SHOP-ESTAB-LIC-NEW" || this.paybleServiceType == "SHOP-ESTAB-TRANSFER" || this.dispData.payableServiceType == "HEL-BCR"  || this.dispData.payableServiceType =="HEL-DCR" 
+			|| this.dispData.payableServiceType == "HEL-DUPDR" || this.dispData.payableServiceType =="HEL-DUPBR") {
 
 			this.redirectToMyApplication(this.dispData.myApplicationUrl, undefined, undefined, undefined);
 
@@ -397,17 +379,19 @@ export class GatewayResponseComponent implements OnInit {
 		} else if (this.dispData.payableServiceType == "APL-TRA" || this.paybleServiceType == "APL-TRA" || this.dispData.payableServiceType == "APL-REN" || this.paybleServiceType == "APL-REN" || this.dispData.payableServiceType == "APL-DUP" || this.paybleServiceType == "APL-DUP" || this.paybleServiceType == "APL-LIC" || this.dispData.payableServiceType == "APL-LIC") {
 
 			this.redirectToMyApplication(this.dispData.myApplicationUrl, undefined, undefined, undefined);
-		} else if (this.dispData.payableServiceType == "MF-DUP" || this.paybleServiceType == "MF-DUP" || this.dispData.payableServiceType == "MF-TRA" || this.paybleServiceType == "MF-TRA" || this.dispData.payableServiceType == "MF-REN" || this.paybleServiceType == "MF-REN" || this.dispData.payableServiceType == "MF-LIC" || this.paybleServiceType == "MF-LIC") {
+		} else if(this.dispData.payableServiceType == "MF-DUP" || this.paybleServiceType == "MF-DUP" || this.dispData.payableServiceType == "MF-TRA" || this.paybleServiceType == "MF-TRA" || this.dispData.payableServiceType == "MF-REN" || this.paybleServiceType == "MF-REN" || this.dispData.payableServiceType == "MF-LIC" || this.paybleServiceType == "MF-LIC"){
 			this.redirectToMyApplication(this.dispData.myApplicationUrl, undefined, undefined, undefined);
 		}
-		else if (this.dispData.payableServiceType == "HEL-MR" || this.dispData.payableServiceType == 'HEL-DUPMR') {
+		else if(this.dispData.payableServiceType == "HEL-MR" || this.dispData.payableServiceType == 'HEL-DUPMR')
+		{
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
 		}
 
-		else if (this.dispData.payableServiceType == "FS-ELE" || this.dispData.payableServiceType == "FS_FIRE_CERTIFICATE" || this.dispData.payableServiceType == "FS-GAS" || this.dispData.payableServiceType == "FS-WATER") {
+		else if(this.dispData.payableServiceType == "FS-ELE" || this.dispData.payableServiceType == "FS_FIRE_CERTIFICATE"|| this.dispData.payableServiceType == "FS-GAS" || this.dispData.payableServiceType == "FS-WATER")
+		{
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
 		}
-		else if (this.dispData.payableServiceType == "AFFORD_HOUSE_FEES") {
+		else if(this.dispData.payableServiceType == "AFFORD_HOUSE_FEES"){
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
 		}
 		else {

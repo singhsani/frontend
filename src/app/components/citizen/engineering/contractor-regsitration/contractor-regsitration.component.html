@@ -342,7 +342,7 @@
                         </control-messages>
                       </mat-form-field>
                     </td> -->
-                    <td style="max-width:500px;">
+                    <td>
                       <div [formGroup]="row.get('employeeQualificationType')">
                         <ng-select formControlName="code">
                           <ng-option *ngFor="let impl of qualifictionType" [value]="impl.code">{{impl.name}}
@@ -361,23 +361,21 @@
                         </control-messages>
                       </mat-form-field>
                     </td>
-                    <td style="max-width:1000px;">
+                    <td style="max-width:80px;">
                       <mat-form-field>
-                        <input matInput type="text"  maxlength="4" OnlyNumber
+                        <input matInput type="text" maxlength="4" OnlyNumber
                           [formControl]="row.get('employeeExperienceYears')">
                         <control-messages [control]="row.get('employeeExperienceYears')">
                         </control-messages>
                       </mat-form-field>
                     </td>
-                    <td style="max-width:500px;">
+                    <td>
                       <mat-form-field>
-                        <input matInput autocomplete="off" appDate [formControl]="row.get('projectStartDate')"
-                          [min]="maxDate" [matDatepicker]="projectStartDate">
-                        <mat-datepicker-toggle matSuffix [for]="projectStartDate"></mat-datepicker-toggle>
+                        <input matInput autocomplete="off" appDate [formControl]="row.get('joiningDate')"
+                          [min]="maxDate" [matDatepicker]="joiningDate">
+                        <mat-datepicker-toggle matSuffix [for]="joiningDate"></mat-datepicker-toggle>
                         <mat-datepicker touchUi="true" #joiningDate></mat-datepicker>
                         <div align="end" ></div>
-                        <control-messages [control]="row.get('projectStartDate')">
-                        </control-messages>
                       </mat-form-field>
                       <!-- <mat-form-field>
                         <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
@@ -386,15 +384,13 @@
                         </control-messages>
                       </mat-form-field> -->
                     </td>
-                    <td style="max-width:500px;">
+                    <td style="max-width:100px;">
                       <mat-form-field>
-                        <input matInput autocomplete="off" appDate [formControl]="row.get('joiningDate')"
-                          [min]="maxDate" [matDatepicker]="joiningDate">
-                        <mat-datepicker-toggle matSuffix [for]="joiningDate"></mat-datepicker-toggle>
+                        <input matInput autocomplete="off" appDate [formControl]="row.get('projectStartDate')"
+                          [min]="maxDate" [matDatepicker]="projectStartDate">
+                        <mat-datepicker-toggle matSuffix [for]="projectStartDate"></mat-datepicker-toggle>
                         <mat-datepicker touchUi="true" #projectStartDate></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right"></div>
-                        <control-messages [control]="row.get('joiningDate')">
-                        </control-messages>
                       </mat-form-field>
                       <!-- <mat-form-field>
                         <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
@@ -476,7 +472,7 @@
 
             <div class="col-md-12" *ngIf="anotherOrganisations">
               <mat-form-field class="col-md-12">
-                <textarea matInput maxlength="255" formControlName="departmentOrInstitution" placeholder="please Enter"></textarea>
+                <textarea matInput maxlength="255" formControlName="departmentOrInstitution"></textarea>
               </mat-form-field>
               </div>
 
@@ -486,24 +482,17 @@
                 placeholder="{{'post_registration_details' | translate: translateKey}}"></textarea>
             </mat-form-field>
           
-            <div class="col-md-12">
-              <mat-label><h6>If the engineer is unemployed, then the year in which he obtained his degree. Name of the district,
-                 registration number and date of the employment office, 
-                where he registered as an unemployed engineer.</h6></mat-label>
-            </div>
             <mat-form-field class="col-md-12">
-              <textarea matInput maxlength="255" formControlName="engineerDetails"></textarea>
+              <textarea matInput maxlength="255" formControlName="engineerDetails"
+                placeholder="{{'engineer_details' | translate: translateKey}}"></textarea>
             </mat-form-field>
 
-            <div class="col-md-12">
-              <mat-label><h6>Period up to which the income tax payment certificate has been obtained from the Income Tax Officer and the period of validity for which
-                 the certificate has been obtained (Attach a Copy).</h6></mat-label>
-            </div>
             <mat-form-field class="col-md-12">
-              <textarea matInput maxlength="255" formControlName="incomeTaxDetails"></textarea>
+              <textarea matInput maxlength="255" formControlName="incomeTaxDetails"
+                placeholder="{{'income_tax_details' | translate: translateKey}}"></textarea>
             </mat-form-field>
 
-            <div class="col-md-12 ngSelect">
+            <div class="col-md-8 ngSelect">
               <mat-label><b>{{'owner_partner_and_shareholder_apply_in_any_organization' | translate: translateKey }}</b></mat-label>
               <mat-radio-group formControlName="anyAnotherOrganisationShareholder" class="radioGroup">
                 <mat-radio-button *ngFor="let impl of implYesNorray" [value]="impl.code" class="mr-3" (change)="corporationAnyDeparment($event)">
@@ -515,7 +504,7 @@
 
             <div class="col-md-12" *ngIf="anotherOrganisationss">
               <mat-form-field class="col-md-12">
-                <textarea matInput maxlength="255" formControlName="corporationAnyDepartment" placeholder="please Enter"></textarea>
+                <textarea matInput maxlength="255" formControlName="corporationAnyDepartment"></textarea>
               </mat-form-field>
               </div>
 

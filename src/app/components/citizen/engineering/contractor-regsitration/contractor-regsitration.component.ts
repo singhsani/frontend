@@ -184,7 +184,7 @@ export class ContractorRegsitrationComponent implements OnInit {
       bankAccountNo: [null, [Validators.required]],
       branchName: [null, [Validators.required, Validators.maxLength(50)]],
       registrationBank: this.fb.group({
-        code: [null,[Validators.required]],
+        code: [null],
         name: null
       }),
 
@@ -229,7 +229,7 @@ export class ContractorRegsitrationComponent implements OnInit {
 
     });
 
-    this.firmEmployeeDetailList.push(this.createFirmEmployeeDetail());
+  //  this.firmEmployeeDetailList.push(this.createFirmEmployeeDetail());
    // this.partnerShipDetailList.push(this.createPartnerShipDetail());
   }
 
@@ -264,14 +264,14 @@ export class ContractorRegsitrationComponent implements OnInit {
   createFirmEmployeeDetail(): FormGroup {
     return this.fb.group({
       employeeQualificationType: this.fb.group({
-        code: [null],
+        code: null,
         name: null
       }),
       employeeName: [null],
       employeeStatus: [null],
       employeeExperienceYears: [null],
-      joiningDate: [null,[Validators.required]],
-      projectStartDate: [null,[Validators.required]],
+      joiningDate: [null],
+      projectStartDate: [null],
     });
   }
 
@@ -300,9 +300,6 @@ export class ContractorRegsitrationComponent implements OnInit {
         this.contractorRegistrationForm.disable();
         this.contractorRegistrationForm.get('canEdit').setValue(false);
       }
-
-      (<FormArray>this.contractorRegistrationForm.get('firmEmployeeDetails')).removeAt(this.contractorRegistrationForm.controls.firmEmployeeDetails.value[0]);
-
       res.firmEmployeeDetails.forEach(app => {
         (<FormArray>this.contractorRegistrationForm.get('firmEmployeeDetails')).push(this.createFormGroupVendor('firmEmployeeDetails', app));
       });

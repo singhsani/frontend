@@ -56,7 +56,10 @@ export class BTConstants {
     static REFUND_REQUEST = 'REFUND_REQUEST';
     static REFUND_APPROVED = 'REFUND_APPROVED';
     static COMPLETED = 'COMPLETED';
-    static CHILDREN_THEATER = 'CHILDREN_THEATER'
+    static CHILDREN_THEATER = 'CHILDREN_THEATER';
+    static ANY_METAL_AND_STEEL_SHOPS = "B26";
+    static ANY_GARAGE_REPAIRING_Shopes = "B13";
+    static ANY_OFFICES = "A01";
 }
 
 export class BTConfig extends CitizenConfig {

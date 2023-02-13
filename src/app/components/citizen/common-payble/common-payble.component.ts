@@ -39,9 +39,6 @@ export class CommonPaybleComponent implements OnInit {
   isWaterRecordExists: boolean = false;
   isECRCSearch: boolean = false;
 
-  isVehicleRecordExists: boolean = false;
-  isVehicleSearch: boolean = false;
-
   isPropertyTax: boolean = false;
   isWaterTax: boolean = false
   userServicesList = [];
@@ -59,9 +56,7 @@ export class CommonPaybleComponent implements OnInit {
   receiptEntry: any;
   feePaymentData: any;
   duesDetailsArr: any = [];
-  totalPayable: any = 0.0;
   isProfessionalTax: boolean = false;
-  isVehicleTaxForm: boolean = false;
   inputData: any
   selected: any;
 
@@ -232,6 +227,10 @@ export class CommonPaybleComponent implements OnInit {
 
     });
 
+
+
+
+
     // this.formService.ccAvenueMakePayment(obj).subscribe(res => {
     //   if (res) {
     //     this.session.set('paymentData', JSON.stringify(obj));
@@ -244,63 +243,6 @@ export class CommonPaybleComponent implements OnInit {
     //   this.getTransactionDetail(res.data);
     // });
 
-
-  }
-
-  makePaymentVehicle(payData) {
-    if (this.paymentsForm.get('amount').value < 0 || !this.paymentsForm.get('amount').value) {
-      this.commonService.openAlert("Warning", "Insufficient amount", "warning");
-      return;
-    }
-    this.formService.apiType = 'vehicle'
-
-    let serviceType = this.paymentsForm.get('payableServices').get('code').value;
-
-    let filterObj = _.filter(this.PayableServices, { 'code': serviceType })[0];
-
-    let updateAmount = '';
-    let updatePayableServiceType = ''
-    updateAmount = payData.amount;
-    updatePayableServiceType = payData.module.code
-
-    let retUrl: string = environment.returnUrl;
-
-    let obj = {
-      payableServiceType: updatePayableServiceType,
-      refNumber: payData.refNumber,
-      amount: updateAmount,
-      paymentMode: "NETBANKING",
-      returnUrl: retUrl,
-      searchable: false,
-      txtadditionalInfo1: payData.payableServices.code
-    }
-
-    let words = this.commonService.getToWords(updateAmount)
-    let html =
-      `
-            <div class="text-center">
-              <h2>Total Fee Pay</h2>
-              <div class="payAmount">
-                <i class="fa fa-inr" aria-hidden="true">` + updateAmount + `</i>
-              </div>
-              <p>Rupees in words</p>`
-      + words + `
-            </div>`
-
-
-    this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
-      // this.formService.createTokenforServicePayment(payData).subscribe(resp => {
-      // 	window.open(resp.data, "_self");
-      // }, err => {
-      // 	this.toastr.error(err.error.message);
-      // })
-      this.session.set('paymentData', JSON.stringify(obj));
-
-      this.paymentGateway.setPaymentDetails(obj, this.paymentsForm, this.router, this.applicationrouter, retUrl)
-      this.paymentGateway.setPaymentDetailsFromActionBar(obj);
-      this.paymentGateway.openModel();
-
-    });
   }
 
 
@@ -356,9 +298,6 @@ export class CommonPaybleComponent implements OnInit {
       // this.isProfessionalTax = true;
       this.placeholder = 'PEC Number';
       this.placeHolderMessage = 'PEC Number is Required';
-    } else if (paySerCode === 'VEHICLE') {
-      this.placeholder = 'Application No.';
-      this.placeHolderMessage = 'Application No. is Required';
     } else if (paySerCode === 'PAY-PRO-TAX') {
       this.placeholder = 'Property Number';
       this.placeHolderMessage = 'Property Number is Required';
@@ -381,13 +320,8 @@ export class CommonPaybleComponent implements OnInit {
   updateIsProfessionalTax(paySerCode) {
     if (paySerCode === 'PAY_PROF_TAX' || paySerCode === 'PEC_REG' || paySerCode === 'PRC_REG') {
       this.isProfessionalTax = true;
-      this.isVehicleTaxForm = false;
-    } else if (paySerCode === 'VEHICLE') {
-      this.isProfessionalTax = false;
-      this.isVehicleTaxForm = true;
     } else {
       this.isProfessionalTax = false;
-      this.isVehicleTaxForm = false;
       this.paymentsForm.get('refNumber').setValidators(null);
     }
   }
@@ -402,10 +336,6 @@ export class CommonPaybleComponent implements OnInit {
       this.getAmountData();
     } else if (serviceType === 'PAY-WTR-TAX') {
       this.getAmountDataWater();
-    } else if (serviceType === 'VEHICLE') {
-      this.isPropertyTax = false;
-      this.isWaterTax = false;
-      this.getAmountDataVehicle();
     }
     else {
       this.isPropertyTax = false;
@@ -552,53 +482,6 @@ export class CommonPaybleComponent implements OnInit {
 
   }
 
-  getAmountDataVehicle() {
-
-    if (this.paymentsForm.invalid) {
-      this.markFormGroupTouched(this.paymentsForm);
-      this.commonService.openAlert("Warning", "Enter all the required information", "warning");
-      return;
-    }
-
-    let serviceType = this.paymentsForm.get('payableServices').get('code').value;
-    let refNumber = this.paymentsForm.get('refNumber').value;
-
-    this.formService.apiType = 'vehicle';
-
-    let resData = {
-      refNumber: refNumber,
-      serviceType: serviceType
-    }
-
-    this.isRecordExists = false;
-    this.isPropertyRecordExists = false;
-    this.isECRCSearch = false;
-
-    this.paymentsForm.get('amount').setValue(null);
-
-    this.formService.getAmountDetailsVehicle(refNumber).subscribe(
-      res => {
-        if (res && res.data && Object.keys(res.data).length) {
-          this.isVehicleRecordExists = true;
-          this.isVehicleSearch = true;
-          this.responseData = res.data;
-          this.paymentsForm.get('id').setValue(this.responseData.serviceFormId);
-          this.duesDetailsArr = _.cloneDeep(res.data.amountFields);
-          this.totalPayable = this.responseData.amountFields.vehicleBasicValue +
-            this.responseData.amountFields.vehicleTokenFee
-
-          this.paymentsForm.get('amount').setValue(this.totalPayable);
-          this.paymentsForm.get('refNumber').setValue(this.responseData.uniqueId);
-          this.paymentsForm.get('payableServices').get('code').setValue('VEHICLE_TAX');
-          this.paymentsForm.get('module').get('code').setValue('VEHICLE_TAX');
-          //this.paymentsForm.get('payMode').get('code').setValue();
-          // this.paymentsForm.get('amount').disable();
-        } else {
-          this.toaster.warning('No record found !');
-        }
-      });
-  }
-
   toggleRow(obj) {
     obj.hidden = !obj.hidden;
   }
@@ -678,11 +561,6 @@ export class CommonPaybleComponent implements OnInit {
           this.setPayableServices('PROFESSIONAL')
           this.paymentsForm.get('payableServices').get('code').setValue('PAY_PROF_TAX');
           this.showHideSearchable('PAY_PROF_TAX');
-        } else if (this.selected == 'PROPERTY-TAX') {
-          this.paymentsForm.get('module').get('code').setValue(this.selected);
-          this.setPayableServices('VEHICLE');
-          this.paymentsForm.get('payableServices').get('code').setValue('VEHICLE');
-          this.showHideSearchable('VEHICLE');
         }
         else if (this.selected == 'PROPERTY-TAX') {
           this.paymentsForm.get('module').get('code').setValue(this.selected);
