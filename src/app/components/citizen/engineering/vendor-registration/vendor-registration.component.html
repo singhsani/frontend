@@ -69,14 +69,13 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-4 ">
-              <input matInput type="text" OnlyNumber required maxlength="4" formControlName="yearOfEstablishment"
+              <input matInput type="text" OnlyNumber required minlength="4" maxlength="4" formControlName="yearOfEstablishment"
                 placeholder="Year" (change)="getYearChange($event.target.value)">
               <mat-error class="mat-error ng-star-inserted"
                 *ngIf="vendorRegistrationForm.get('yearOfEstablishment').invalid && (vendorRegistrationForm.get('yearOfEstablishment').dirty || vendorRegistrationForm.get('yearOfEstablishment').touched)">
-                <div *ngIf="vendorRegistrationForm.get('yearOfEstablishment').errors.required">
-                  Year is Required.
-                </div>
               </mat-error>
+              <control-messages [control]="vendorRegistrationForm.get('yearOfEstablishment')">
+              </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
