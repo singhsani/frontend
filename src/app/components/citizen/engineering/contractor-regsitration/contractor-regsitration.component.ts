@@ -530,8 +530,9 @@ export class ContractorRegsitrationComponent implements OnInit {
      this.anotherOrganisations = true;
    }else{
      this.anotherOrganisations = false;
+     this.contractorRegistrationForm.get('departmentOrInstitution').setValue(null);
    }
-    
+
   }
 
   corporationAnyDeparment(event){
@@ -539,8 +540,9 @@ export class ContractorRegsitrationComponent implements OnInit {
       this.anotherOrganisationss = true;
     }else{
       this.anotherOrganisationss = false;
+      this.contractorRegistrationForm.get('corporationAnyDepartment').setValue(null);
     }
-     
+
    }
 
 
