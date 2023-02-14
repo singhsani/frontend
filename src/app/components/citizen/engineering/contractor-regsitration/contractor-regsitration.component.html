@@ -145,7 +145,7 @@
             </mat-form-field>
 
             <div *ngIf="checkbox">
-              <mat-checkbox class="col-md-12 mt-2" formControlName="officeResidentialAddressSame" 
+              <mat-checkbox class="col-md-12 mt-2" formControlName="officeResidentialAddressSame"
                 (change)="onSameAddressChange($event)">{{'Owner Details is Same as Address Details' | translate: translateKey}}
               </mat-checkbox>
             </div>
@@ -252,7 +252,7 @@
               </control-messages>
             </mat-form-field>
             <mat-form-field class="col-md-6">
-              <input matInput autocomplete="off" type="text" maxlength="15" formControlName="gstNo" 
+              <input matInput autocomplete="off" type="text" maxlength="15" formControlName="gstNo"
                 placeholder="{{'gst_no' | translate: translateKey}}" required>
               <control-messages [control]="contractorRegistrationForm.get('gstNo')"></control-messages>
             </mat-form-field>
@@ -275,8 +275,8 @@
                 <control-messages [control]="contractorRegistrationForm.get('registrationBank').get('code')">
                 </control-messages>
               </div>
-  
-  
+
+
               <mat-form-field class="col-md-4">
                 <input matInput autocomplete="off" maxlength="50" type="text" formControlName="branchName"
                   appValidationFields validationFieldsType='alphanumericWithSpace'
@@ -459,7 +459,7 @@
               <control-messages [control]="contractorRegistrationForm.get('ownerAccountDepartment')">
               </control-messages>
             </div>
-           
+
             <div class="col-md-8 ngSelect">
               <mat-label><b>{{'any_registration_on_another_organisation' | translate: translateKey }}</b></mat-label>
               <mat-radio-group formControlName="anotherOrganisation" class="radioGroup">
@@ -467,21 +467,21 @@
                   {{impl.name}}
                 </mat-radio-button>
               </mat-radio-group>
-            
+
             </div>
 
             <div class="col-md-12" *ngIf="anotherOrganisations">
               <mat-form-field class="col-md-12">
-                <textarea matInput maxlength="255" formControlName="departmentOrInstitution"></textarea>
+                <textarea matInput maxlength="255" formControlName="departmentOrInstitution" placeholder="Enter the details"></textarea>
               </mat-form-field>
               </div>
 
-          
+
             <mat-form-field class="col-md-12">
               <textarea matInput maxlength="255" formControlName="pastRegistrationDetails"
                 placeholder="{{'post_registration_details' | translate: translateKey}}"></textarea>
             </mat-form-field>
-          
+
             <mat-form-field class="col-md-12">
               <textarea matInput maxlength="255" formControlName="engineerDetails"
                 placeholder="{{'engineer_details' | translate: translateKey}}"></textarea>
@@ -499,12 +499,12 @@
                   {{impl.name}}
                 </mat-radio-button>
               </mat-radio-group>
-            
+
             </div>
 
             <div class="col-md-12" *ngIf="anotherOrganisationss">
               <mat-form-field class="col-md-12">
-                <textarea matInput maxlength="255" formControlName="corporationAnyDepartment"></textarea>
+                <textarea matInput maxlength="255" formControlName="corporationAnyDepartment" placeholder="Enter the details"></textarea>
               </mat-form-field>
               </div>
 
