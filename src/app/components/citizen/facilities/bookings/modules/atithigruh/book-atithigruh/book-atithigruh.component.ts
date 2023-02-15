@@ -73,6 +73,8 @@ export class BookAtithigruhComponent implements OnInit {
 	displayedColumns: Array<string> = ['id', 'shiftType', 'bookingDate', 'startTime', 'endTime', 'rent', 'electricCharges', 'administrationCharges', 'showTax', 'subTotal', 'gstAmount', 'total'];
 	profileObj : any;
 	public formControlNameToTabIndex = new Map();
+	checkProceed : boolean = false;
+	btnProceed: boolean = true; 
 
 	constructor(
 		private fb: FormBuilder,
@@ -599,6 +601,14 @@ export class BookAtithigruhComponent implements OnInit {
 		} else {
 		  this.toastr.error("Invalid request");
 		}
+	  }
+
+	clickProcess(event){
+		if(event.checked == true){
+            this.btnProceed = false;
+	    }else{
+	        this.btnProceed = true;
+	    }
 	  }
 	
 }
