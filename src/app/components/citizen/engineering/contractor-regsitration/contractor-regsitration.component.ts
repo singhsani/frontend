@@ -229,7 +229,7 @@ export class ContractorRegsitrationComponent implements OnInit {
 
     });
 
-  //  this.firmEmployeeDetailList.push(this.createFirmEmployeeDetail());
+    this.firmEmployeeDetailList.push(this.createFirmEmployeeDetail());
    // this.partnerShipDetailList.push(this.createPartnerShipDetail());
   }
 

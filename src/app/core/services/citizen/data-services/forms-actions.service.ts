@@ -557,4 +557,14 @@ export class FormsActionsService {
 		return this.http.get(this.requestURL, 'printReceipt');
 	  }
 
+	/**
+	 * This method is use to deposit payment  citizen side in Contractor Registration 
+	 * @param appId - citizen app id
+	 */
+	 contractorDepositePayment(appId) {
+		this.requestURL = `api/form/${this.apiType}/depositPaymentCitizenSide/${appId}`;
+
+		return this.http.post(this.requestURL, {});
+	}  
+
 }
