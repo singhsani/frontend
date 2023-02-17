@@ -606,6 +606,35 @@
 
                     </ng-container>
 
+                    <!-------/Contractor Deposite Payment-->
+                    <ng-container *ngSwitchCase="'case6'">
+                        <div class="mobile-label1">:</div>
+                        <button class="actionBtn" mat-button [matMenuTriggerFor]="menuTax">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+
+                        <mat-menu #menuTax="matMenu">
+
+                            <button mat-menu-item color="primary"
+                             (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                                <mat-icon class="m-1" title="{{'print_receipt' | translate:translateKey}}">print
+                                </mat-icon>
+                                {{'print_receipt' | translate:translateKey}}
+                            </button>
+
+                            <button mat-menu-item  color="primary"
+                            (click)="depositPayment(row.serviceDetail.code, row.serviceFormId,row.fileStatus)">
+                            <!-- <mat-icon class="m-1" title="{{'attach_money' | translate:translateKey}}">&#8377;</mat-icon> -->
+                            <i class="fa fa-inr m-1" title="{{'attach_money' | translate:translateKey}}"
+                                aria-hidden="true"></i>
+                            {{'payment' | translate:translateKey}}
+                        </button>
+
+
+                        </mat-menu>
+
+                    </ng-container>
+
                 </div>
             </mat-cell>
         </ng-container>
