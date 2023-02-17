@@ -603,7 +603,7 @@
 				<div class="row">
 					<h2><b>{{'occupationAddress' | translate: translateKey}}</b></h2>
 					<app-address #secondAppOccupationAddress
-						[requiredAhf]="this.affordableHousingForm.get('marriageStatus').get('code').value == 'MARRIED'"
+						[requiredFeilds]="this.affordableHousingForm.get('marriageStatus').get('code').value == 'MARRIED'"
 						[addressFormGroup]="affordableHousingForm.get('secondAppOccupationAddress')"></app-address>
 				</div>
 
@@ -676,7 +676,7 @@
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect">
-						<ng-select placeholder="{{'is your house kaccha or pucca ?' | translate: translateKey}}"
+						<ng-select placeholder="{{'is your house kaccha or pucca ?' | translate: translateKey}} *"
 							formControlName="hasCurrentHouseKacchaOrPucca">
 							<ng-option *ngFor="let impl of houseOldOrNew" [value]="impl">{{impl}}
 							</ng-option>
@@ -687,7 +687,7 @@
 
 					<div class="col-md-4 ngSelect">
 						<ng-select (change)="rentChange();"
-							placeholder="{{'Is house Rented or Own Property ?' | translate: translateKey}}"
+							placeholder="{{'Is house Rented or Own Property ?' | translate: translateKey}} *"
 							formControlName="hasCurrentHouseRentedOrPurchased">
 							<ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
 							</ng-option>
@@ -697,7 +697,7 @@
 					</div>
 
 					<div class="col-md-4 ngSelect">
-						<ng-select placeholder="{{'is your ration card APL or BPL ?' | translate: translateKey}}"
+						<ng-select placeholder="{{'is your ration card APL or BPL ?' | translate: translateKey}} *"
 							formControlName="rationCardType">
 							<ng-option *ngFor="let impl of rationCard" [value]="impl">{{impl}}
 							</ng-option>
