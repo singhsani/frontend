@@ -187,6 +187,7 @@ export class NoDueCertificateTableComponent implements OnInit {
           this.serviceCharge.occupierId = this.selectedItem.propertyOccupierId;
           this.serviceCharge.propertyBasicId = this.selectedItem.propertyBasicId;
           this.isShowPayMode = true;
+          this.getOutstandingDetails(this.selectedItem.propertyBasicId);
           this.serviceFeesDetails = data.body.data.serviceChargeDetail;
           this.setOrUpdateFeesDetails(this.serviceFeesDetails,this.NumberOfCopies);
 
@@ -208,8 +209,9 @@ export class NoDueCertificateTableComponent implements OnInit {
           this.alertService.info(error.error.message);
         }
       });
-
-    this.noDueCertificateService.getOutsatndingDetail(this.selectedItem.propertyBasicId).subscribe(
+  }
+    private getOutstandingDetails(propertyBasicId:number) {
+    this.noDueCertificateService.getOutsatndingDetail(propertyBasicId).subscribe(
       (data) => {
         if (data.status === 200) {
           
@@ -235,7 +237,7 @@ export class NoDueCertificateTableComponent implements OnInit {
           this.alertService.error(error.error.message);
         }
       });
-  }
+    }
 
   onBlurNoofCopies(event) {
     this.serviceCharge.totalAmount = this.serviceCharge.totalAmountOriginal * event.target.value;
