@@ -97,6 +97,11 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 				setTimeout(() => {
 					this.location.go(this.router.url.split('?')[0]);
 				}, 3000);
+			}else if(d.apiCode == 'VENDOR_REG' && d.id && d.fileStatus == 'APPROVED'){
+				this.depositReceived(d.id);
+				setTimeout(() => {
+					this.location.go(this.router.url.split('?')[0]);
+				}, 3000);
 			}else if(d.apiCode && d.id){
 				this.printReceipt(d.apiCode, '', d.id);
 				setTimeout(() => {
@@ -119,7 +124,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return `case4`;
 		} else if(row.departmentName == 'Contractor Registration' && row.fileStatusName == 'Deposit Received'){
 			return `case5`
-		}else if(row.departmentName == 'Contractor Registration' && row.fileStatusName == 'Approved'){	
+		}else if((row.departmentName == 'Contractor Registration' && row.fileStatusName == 'Approved') || (row.departmentName == "Vendor Registration" && row.fileStatusName == 'Approved')){	
 			return `case6`
 		}else{
 			return `case3`
