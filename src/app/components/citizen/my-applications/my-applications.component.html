@@ -320,7 +320,7 @@
 
                         <mat-menu #menuTax="matMenu">
                             <button mat-menu-item
-                                *ngIf="row.fileStatus === 'PAYMENT_RECEIVED' || (row.fileStatus === 'APPROVED' && row.serviceType !='PROPERTY_ASSESSMENT' && row.serviceType !='TRANSFER_OF_PROPERTY' )
+                                *ngIf="row.fileStatus === 'PAYMENT_RECEIVED' || (row.fileStatus === 'APPROVED' && row.serviceType !='PROPERTY_ASSESSMENT' && row.serviceType !='TRANSFER_OF_PROPERTY' ) 
                                 || (row.serviceType === 'WTR_NEW_WATER_CONNECTION' && row.fileStatus === 'SUBMITTED' && row.newgenStatus === 'SUBMIT_AFTER_SCRUTINY') "
                                 color="primary"
                                 (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
@@ -531,6 +531,15 @@
                                 {{'payment' | translate:translateKey}}
                             </button>
 
+                            <button mat-menu-item
+                            *ngIf="(row.fileStatus === 'SUBMITTED' && (row.serviceType === 'SHOP_ESTAB_APPLICATION' || row.serviceType === 'SHOP_ESTAB_TRANSFER'))"
+                            color="primary"
+                            (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                            <mat-icon class="m-1" title="{{'print_acknolowdgement_receipt' | translate:translateKey}}">print
+                            </mat-icon>
+                            {{'print_acknolowdgement_receipt' | translate:translateKey}}
+                        </button>
+                        
                         </mat-menu>
 
                     </ng-container>
