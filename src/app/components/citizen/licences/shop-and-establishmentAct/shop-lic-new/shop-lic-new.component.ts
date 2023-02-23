@@ -1695,9 +1695,9 @@ export class ShopLicNewComponent implements OnInit {
 	 
 	const data = {
  
-		"contactNo": "9558295586",
-		"mobileNo": "9558295586",
-		"email": "barad@gmail.com",
+		"contactNo": "9898433579",
+		"mobileNo": "9898433579",
+		"email": "jil.patel@nascentinfo.com",
 		"aadhaarNo": null,
 		"agree": false,
 		"paymentStatus": null,

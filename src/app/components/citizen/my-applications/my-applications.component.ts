@@ -574,7 +574,8 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}
 
 		const printReceiptServiceTypeForShopArr = ['SHOP_ESTAB_APPLICATION', 'SHOP_ESTAB_TRANSFER']
-		if ((row.fileStatus == 'SUBMITTED' || row.fileStatus == 'APPROVED' || row.fileStatus == 'CANCELLED') && printReceiptServiceTypeForShopArr.indexOf(row.serviceType) >= 0) {
+		if (( row.fileStatus == 'APPROVED' || row.fileStatus == 'CANCELLED'  ) 
+		&& printReceiptServiceTypeForShopArr.indexOf(row.serviceType) >= 0) {
 			return true;
 		}
 		if (row.fileStatus == 'REJECTED' && row.serviceType == 'SHOP_ESTAB_TRANSFER') {
@@ -654,9 +655,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	isPrintReceiptPayment(row) {
 		if (row.fileStatus == 'PAYMENT' && row.serviceType == 'MARRIAGE_REGISTRATION') {
 			return true;
-		}
-		else if (row.fileStatus == 'PAYMENT' && row.serviceType == 'SHOP_ESTAB_APPLICATION') {
-			return false;
 		}
 		else if (row.fileStatus === 'PAYMENT' && row.serviceType === 'FS_FIRE_CERTIFICATE' ||
 			row.serviceType === 'FS_GAS_CONNECTION_NOC' ||

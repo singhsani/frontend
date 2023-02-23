@@ -153,7 +153,6 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 	 * This method is use for submit form using API
 	 */
 	onSubmit() {
-
 		this.isSubmitBtnDisabled = true;
 		this.markFormGroupTouched(this.form);
 
