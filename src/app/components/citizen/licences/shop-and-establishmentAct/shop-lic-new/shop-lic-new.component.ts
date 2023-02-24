@@ -695,7 +695,7 @@ export class ShopLicNewComponent implements OnInit {
 			this.CD.detectChanges();
 			let newlyadded = this.getArrayByType(persontype).controls;
 			if (newlyadded.length) {
-				this.editRecord((newlyadded[newlyadded.length - 1]));
+				this.editRecordd((newlyadded[newlyadded.length - 1]));
 				(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
 			}
 		}
@@ -823,6 +823,17 @@ export class ShopLicNewComponent implements OnInit {
 	* @param row: table row id
 	*/
 	editRecord(row: any) {
+		if(this.edit){
+			console.log(this.totalNoOfWoman)
+			this.deleteWomenDocument();
+			this.addWomenDocument();
+		}	
+		this.edit = true;
+		row.isEditMode = true;
+		row.deepCopyInEditMode = Object.assign({}, row.value);
+	}
+	
+	editRecordd(row: any) {
 		if(this.edit){
 			console.log(this.totalNoOfWoman)
 			const Rnumber = parseInt(row.controls.noOfWomen.value)

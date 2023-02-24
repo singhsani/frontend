@@ -216,9 +216,12 @@ export class VendorRegistrationComponent implements OnInit {
 
       //this.showButtons = false;
 
-      if (res.formStatus == 'PAYMENT_RECEIVED' || res.formStatus == 'SUBMITTED' || res.formStatus == 'DRAFT') {
+      if (res.formStatus == 'PAYMENT_RECEIVED' || res.formStatus == 'SUBMITTED') {
         this.vendorRegistrationForm.disable();
         this.vendorRegistrationForm.get('canEdit').setValue(false);
+      }
+    
+      if (res.formStatus == 'PAYMENT_RECEIVED' || res.formStatus == 'SUBMITTED' || res.formStatus == 'DRAFT') {
         this.canAddressEdit = false
       }
 
