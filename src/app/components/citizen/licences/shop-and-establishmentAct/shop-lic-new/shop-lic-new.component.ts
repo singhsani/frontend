@@ -850,8 +850,6 @@ export class ShopLicNewComponent implements OnInit {
 	* Method is used when user click for remove person
 	*/
 	deleteRecord(persontype: string, index: any,item: any) {
-		const	Rnumber = parseInt(item.controls.noOfWomen.value)
-		this.totalNoOfWoman = this.totalNoOfWoman - Rnumber 
 		this.deleteWomenDocument();
 		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
 			this.getArrayByType(persontype).removeAt(index);
@@ -1845,5 +1843,15 @@ export class ShopLicNewComponent implements OnInit {
 				}
 			}
 		}
+	}
+
+	deletePersonRecord(persontype: string, index: any,item:any){
+		const	Rnumber = parseInt(item.controls.noOfWomen.value)
+		this.totalNoOfWoman = this.totalNoOfWoman - Rnumber 
+		this.deleteWomenDocument();
+		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
+			this.getArrayByType(persontype).removeAt(index);
+			this.toastrService.success("Succesfully deleted", "Deleted");
+		});
 	}
 }
