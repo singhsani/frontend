@@ -935,6 +935,14 @@ export class ShopLicTransferComponent implements OnInit {
 	* Method is used when user click for remove person
 	*/
 	deleteRecord(persontype: string, index: any, item:any) {
+		this.deleteWomenDocument();
+		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
+			this.getArrayByType(persontype).removeAt(index);
+			this.toastrService.success("Succesfully deleted", "Deleted");
+		});
+	}
+
+	deleteShopRecord(persontype: string, index: any, item:any){
 		const	Rnumber = parseInt(item.controls.noOfWomen.value)
 		this.totalNoOfWoman = this.totalNoOfWoman - Rnumber 
 		this.deleteWomenDocument();

@@ -594,7 +594,7 @@
 										</span>
 										<span *ngIf="shopLicNewForm.get('canEdit').value">
 											<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
-												(click)="deleteRecord('OCCUPANCY',indx,item)">
+												(click)="deletePersonRecord('OCCUPANCY',indx,item)">
 												<mat-icon title="Delete">delete</mat-icon>
 											</button>
 											<button mat-icon-button color="warn" *ngIf="item.isEditMode"
