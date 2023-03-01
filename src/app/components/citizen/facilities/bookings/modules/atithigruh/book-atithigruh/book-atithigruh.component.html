@@ -199,7 +199,7 @@
 
                     <ng-container *ngIf="!bookingForRegular">
                         <mat-form-field class="col-md-4">
-                            <mat-label>{{'booking_date'| translate: translateKey}}</mat-label>
+                            <mat-label>{{'program_date'| translate: translateKey}}</mat-label>
                             <input  appDate matInput [min]="toStartBookDate" [max]="toEndBookDate"
                                 [matDatepicker]="townHallBookingtoPicker" formControlName="bookingFrom"
                                 (dateChange)="onDateChange('bookingFrom', $event.value)">

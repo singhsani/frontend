@@ -695,7 +695,7 @@ export class ShopLicNewComponent implements OnInit {
 			this.CD.detectChanges();
 			let newlyadded = this.getArrayByType(persontype).controls;
 			if (newlyadded.length) {
-				this.editRecord((newlyadded[newlyadded.length - 1]));
+				this.editRecordd((newlyadded[newlyadded.length - 1]));
 				(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
 			}
 		}
@@ -825,6 +825,17 @@ export class ShopLicNewComponent implements OnInit {
 	editRecord(row: any) {
 		if(this.edit){
 			console.log(this.totalNoOfWoman)
+			this.deleteWomenDocument();
+			this.addWomenDocument();
+		}	
+		this.edit = true;
+		row.isEditMode = true;
+		row.deepCopyInEditMode = Object.assign({}, row.value);
+	}
+	
+	editRecordd(row: any) {
+		if(this.edit){
+			console.log(this.totalNoOfWoman)
 			const Rnumber = parseInt(row.controls.noOfWomen.value)
 			this.totalNoOfWoman = this.totalNoOfWoman - Rnumber
 			this.deleteWomenDocument();
@@ -839,8 +850,6 @@ export class ShopLicNewComponent implements OnInit {
 	* Method is used when user click for remove person
 	*/
 	deleteRecord(persontype: string, index: any,item: any) {
-		const	Rnumber = parseInt(item.controls.noOfWomen.value)
-		this.totalNoOfWoman = this.totalNoOfWoman - Rnumber 
 		this.deleteWomenDocument();
 		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
 			this.getArrayByType(persontype).removeAt(index);
@@ -1695,9 +1704,9 @@ export class ShopLicNewComponent implements OnInit {
 	 
 	const data = {
  
-		"contactNo": "9558295586",
-		"mobileNo": "9558295586",
-		"email": "barad@gmail.com",
+		"contactNo": "9898433579",
+		"mobileNo": "9898433579",
+		"email": "jil.patel@nascentinfo.com",
 		"aadhaarNo": null,
 		"agree": false,
 		"paymentStatus": null,
@@ -1834,5 +1843,15 @@ export class ShopLicNewComponent implements OnInit {
 				}
 			}
 		}
+	}
+
+	deletePersonRecord(persontype: string, index: any,item:any){
+		const	Rnumber = parseInt(item.controls.noOfWomen.value)
+		this.totalNoOfWoman = this.totalNoOfWoman - Rnumber 
+		this.deleteWomenDocument();
+		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
+			this.getArrayByType(persontype).removeAt(index);
+			this.toastrService.success("Succesfully deleted", "Deleted");
+		});
 	}
 }
