@@ -75,7 +75,11 @@ export class BookAtithigruhComponent implements OnInit {
 	public formControlNameToTabIndex = new Map();
 	checkProceed : boolean = false;
 	btnProceed: boolean = true; 
-
+	atithigruhName :string;
+	purpose :string;
+	startDate : string;
+	endDate : string;
+	
 	constructor(
 		private fb: FormBuilder,
 		private toaster: ToastrService,
@@ -333,7 +337,11 @@ export class BookAtithigruhComponent implements OnInit {
 			} else {
 				this.getReferenceForAdvanceBooking();
 			}
-
+			  // display Search Details on Atithigruh Booking Details Tab
+               this.atithigruhName = this.atithigruhName,
+			   this.purpose = this.purpose,
+			   this.startDate = this.BookingTypeForm.get('bookingFrom').value,
+			   this.endDate = this.bookingForRegular ? this.BookingTypeForm.get('bookingTo').value : this.BookingTypeForm.get('bookingFrom').value
 		} else {
 			this.toaster.warning(this.bookingUtils.ALL_FEILD_REQUIRED_MESSAGE);
 			this.bookingUtils.getAllErrors(this.BookingTypeForm);
@@ -611,4 +619,20 @@ export class BookAtithigruhComponent implements OnInit {
 	    }
 	  }
 	
+	onAtithiGruhNameChange(event) {
+		this.ATITHIGRUH.forEach(element => {
+			if (element.code == event) {
+				this.atithigruhName = element.name
+			}
+		});
+	}
+
+	onPurposeChange(event) {
+		this.PURPOSE.forEach(ele => {
+			if (ele.code == event) {
+				this.purpose = ele.name
+			}
+		})
+	}
+
 }
