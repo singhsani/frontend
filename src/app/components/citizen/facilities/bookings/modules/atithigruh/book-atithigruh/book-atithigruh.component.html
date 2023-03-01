@@ -151,7 +151,7 @@
                     </div>
 
                     <div class="col-md-4 ngSelect" formGroupName="atithiGruhName">
-                        <ng-select placeholder="{{'atithiguh'| translate: translateKey}}" formControlName="code">
+                        <ng-select placeholder="{{'atithiguh'| translate: translateKey}}" formControlName="code"  (change)="onAtithiGruhNameChange($event)">
                             <ng-option *ngFor="let at of ATITHIGRUH" [value]="at.code">
                                 {{ at.name }}
                             </ng-option>
@@ -160,7 +160,7 @@
                     </div>
 
                     <div formGroupName="bookingPurposeMaster" class="col-md-4 ngSelect">
-                        <ng-select placeholder="{{'purpose'| translate: translateKey}}" formControlName="code">
+                        <ng-select placeholder="{{'purpose'| translate: translateKey}}" formControlName="code" (change)="onPurposeChange($event)">
                             <ng-option *ngFor="let purpose of PURPOSE" [value]="purpose.code">
                                 {{ purpose.name }}
                             </ng-option>
@@ -381,6 +381,20 @@
                     </tr>
                 </tbody>
             </table>
+             <!-- display Search Details List -->
+            <div class="row">
+              <div class="col-md-8 ">
+                <div class="d-flex justify-content-between">
+                  <h5 class="detailslist"> Atithigruh Name :- <span class="detailsNamelist">{{atithigruhName}}  </span> </h5> 
+                  <h5  class="detailslist"> Purpose :- <span class="detailsNamelist">{{purpose}} </span>  </h5> 
+                </div>
+                <div class="mt-2">
+                   <h5 class="detailslist"> Date Of Programme :-  <span class="detailsNamelist"> {{startDate}} - {{endDate}} </span></h5>   
+                </div>
+                </div>
+              <div class="col-md-4">
+              </div>
+            </div>
         </div>
         <div class="fotButtonBar">
             <div class="col-sm-12 col-md-12 text-right">
