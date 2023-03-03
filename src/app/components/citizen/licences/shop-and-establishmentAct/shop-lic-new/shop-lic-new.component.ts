@@ -250,7 +250,9 @@ export class ShopLicNewComponent implements OnInit {
 				// //this.isGuideLineActive = false;
 
 				if (this.shopLicNewForm.get('ownershipType').value,this.shopLicNewForm.get('organizationType').get('code').value) {
-					this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value,this.shopLicNewForm.get('organizationType').get('code').value);
+					// this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value,this.shopLicNewForm.get('organizationType').get('code').value);
+					this.moreThanZeroWomenDocument(res,this.shopLicNewForm.get('ownershipType').value,this.shopLicNewForm.get('organizationType').get('code').value)
+
 				}
 				if(this.shopLicNewForm.get('waterDrainageZoneId')){
 					this.shopLicNewForm.get('zone').setValue(res.waterDrainageZoneName);
@@ -982,9 +984,9 @@ export class ShopLicNewComponent implements OnInit {
 	* @event is value of Type of Organization dropdown
 	*/
 	onChangeTypeOfOrganization(event) {
-	
 		this.shopLicNewForm.get('organizationType').get('code').setValue(event);
 	 	this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value,event);
+		 this.addWomenDocument();
 		try {
 			// this.updateServiceUploadDocument(event);
 			this.isPatners = false;
@@ -1383,6 +1385,7 @@ export class ShopLicNewComponent implements OnInit {
 	ownershipChange(ownershipType) {
 		this.shopLicNewForm.get('ownershipType').setValue(ownershipType);
 		this.updateServiceUploadDocument(ownershipType,this.shopLicNewForm.get('organizationType').get('code').value)
+		this.addWomenDocument();
 	}
 
 	/**
@@ -1853,5 +1856,39 @@ export class ShopLicNewComponent implements OnInit {
 			this.getArrayByType(persontype).removeAt(index);
 			this.toastrService.success("Succesfully deleted", "Deleted");
 		});
+	}
+
+	moreThanZeroWomenDocument(res,ownershipType,organizationType){
+		this.totalNoOfWoman = 0;
+		if(res.workerCounts != null){
+			res.workerCounts.forEach( count => {
+				this.totalNoOfWoman = this.totalNoOfWoman + count.noOfWomen;
+			})
+		}
+		this.updateServiceUploadDocument(ownershipType,organizationType);
+
+		let count = 0;
+		for (let file of this.displayDocs) {
+			if(file.documentIdentifier == 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J'){
+					count++;
+			}
+		}
+		if(count == 0){
+			if(this.totalNoOfWoman > 0){
+				{
+					this.womanDocument = [
+						{
+							documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
+							mandatory: true
+						},
+
+					];				
+
+				}
+				
+			}
+			this.returnFile(this.womanDocument);
+		}	
+				
 	}
 }
