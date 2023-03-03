@@ -18,6 +18,7 @@ import { ProfessionalTaxService } from 'src/app/core/services/citizen/data-servi
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { ShopAndEstablishmentTransferService } from '../common/services/shop-and-establishment-transfer.service';
 import { BookingConstants } from '../../../facilities/bookings/config/booking-config';
+import { identity } from 'rxjs';
 @Component({
   selector: 'app-shop-lic-transfer',
   templateUrl: './shop-lic-transfer.component.html',
@@ -104,6 +105,7 @@ export class ShopLicTransferComponent implements OnInit {
 	]
 
 	displayDocs = [];
+	getDocs:Array<any> = [];
 
 	certificateNumber = '';
 
@@ -342,7 +344,6 @@ export class ShopLicTransferComponent implements OnInit {
 				this.onChangeNoOfHumanWorking(res.registrationType);
 
 				this.getSubCategoryDropdownData(this.shopLicTransferForm.get('establishmentCategory').value.code);
-
 				this.serverUploadFilesArray = res.serviceDetail.serviceUploadDocuments;
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.shopLicTransferForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
@@ -353,7 +354,8 @@ export class ShopLicTransferComponent implements OnInit {
 				// 	this.updateServiceUploadDocument(this.shopLicTransferForm.get('ownershipType').value)
 				// }
 				if (this.shopLicTransferForm.get('ownershipType').value,this.shopLicTransferForm.get('organizationType').get('code').value) {
-					this.updateServiceUploadDocument(this.shopLicTransferForm.get('ownershipType').value,this.shopLicTransferForm.get('organizationType').get('code').value);
+					this.moreThanZeroWomenDocument(res,this.shopLicTransferForm.get('ownershipType').value,this.shopLicTransferForm.get('organizationType').get('code').value)
+					// this.updateServiceUploadDocument(this.shopLicTransferForm.get('ownershipType').value,this.shopLicTransferForm.get('organizationType').get('code').value);
 				}
 				// if(res.serviceDetail)
 				// //this.isGuideLineActive = false;
@@ -1044,7 +1046,7 @@ export class ShopLicTransferComponent implements OnInit {
 
 		this.shopLicTransferForm.get('organizationType').get('code').setValue(event);
 	 	this.updateServiceUploadDocument(this.shopLicTransferForm.get('ownershipType').value,event);
-
+		this.addWomenDocument();
 		try {
 			// this.updateServiceUploadDocument(event);
 			this.isPatners = false;
@@ -1444,6 +1446,7 @@ export class ShopLicTransferComponent implements OnInit {
 	ownershipChange(ownershipType) {
 		this.shopLicTransferForm.get('ownershipType').setValue(ownershipType);
 		this.updateServiceUploadDocument(ownershipType,this.shopLicTransferForm.get('organizationType').get('code').value);
+		this.addWomenDocument();
 	}
 
 	/**
@@ -1509,7 +1512,6 @@ export class ShopLicTransferComponent implements OnInit {
 	}
 	
 	deleteWomenDocument(){
-		
 		if(this.totalNoOfWoman == 0)
 	   {
 		   this.displayDocs.forEach((file,index)=> {
@@ -1797,5 +1799,39 @@ export class ShopLicTransferComponent implements OnInit {
 				}
 			}
 		}
+	}
+
+	moreThanZeroWomenDocument(res,ownershipType,organizationType){
+		this.totalNoOfWoman = 0;
+		if(res.workerCounts != null){
+			res.workerCounts.forEach( count => {
+				this.totalNoOfWoman = this.totalNoOfWoman + count.noOfWomen;
+			})
+		}
+		this.updateServiceUploadDocument(ownershipType,organizationType);
+
+		let count = 0;
+		for (let file of this.displayDocs) {
+			if(file.documentIdentifier == 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J'){
+					count++;
+			}
+		}
+		if(count == 0){
+			if(this.totalNoOfWoman > 0){
+				{
+					this.womanDocument = [
+						{
+							documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
+							mandatory: true
+						},
+
+					];				
+
+				}
+				
+			}
+			this.returnFile(this.womanDocument);
+		}	
+				
 	}
 }
