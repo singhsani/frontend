@@ -201,6 +201,7 @@ export class NewDrainageConnectionComponent implements OnInit {
               }
               if (this.dataSource.length === 0) {
                 this.dataSource.push(temojbNonPrimary)
+                this.dataSourceTable = new MatTableDataSource(this.dataSource)
                 this.isShowPropertyGrid = true;
               } else if (this.dataSource.length > 0 && this.dataSource.filter(x => x.propertyNo === temojbNonPrimary.propertyNo).length === 0) {
                 this.dataSource.push(temojbNonPrimary)
