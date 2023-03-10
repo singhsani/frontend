@@ -241,19 +241,14 @@ export class ShopLicNewComponent implements OnInit {
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 				});
-				this.requiredDocumentList();
-
+				
 				// if (this.shopLicNewForm.get('ownershipType').value) {
 				// 	this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value)
 				// }
 				// if(res.serviceDetail)
 				// //this.isGuideLineActive = false;
 
-				if (this.shopLicNewForm.get('ownershipType').value,this.shopLicNewForm.get('organizationType').get('code').value) {
-					// this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value,this.shopLicNewForm.get('organizationType').get('code').value);
-					this.moreThanZeroWomenDocument(res,this.shopLicNewForm.get('ownershipType').value,this.shopLicNewForm.get('organizationType').get('code').value)
-
-				}
+				
 				if(this.shopLicNewForm.get('waterDrainageZoneId')){
 					this.shopLicNewForm.get('zone').setValue(res.waterDrainageZoneName);
 				}
@@ -270,6 +265,14 @@ export class ShopLicNewComponent implements OnInit {
 					this.shopLicNewForm.get('workerType').setValue(res.workerType);
 				}
 
+				if(this.shopLicNewForm.get('otherAddresses')){
+					this.shopLicNewForm.get('otherAddresses').setValue(res.otherAddresses);
+				}
+
+				if(res.otherDescription != null){
+					this.isSubCategory = true;
+					this.shopLicNewForm.get('otherDescription').setValue(res.otherDescription);
+				}
 
 				if(res.waterDrainageZoneId) {
 					this.getWardZone(res.waterDrainageZoneId,2);
@@ -282,6 +285,13 @@ export class ShopLicNewComponent implements OnInit {
 				if (res.waterDrainageBlockId) {
 					this.getWardZone(res.waterDrainageWardId, 3);
 				}
+
+				if (this.shopLicNewForm.get('ownershipType').value,this.shopLicNewForm.get('organizationType').get('code').value) {
+					// this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value,this.shopLicNewForm.get('organizationType').get('code').value);
+					this.moreThanZeroWomenDocument(res,this.shopLicNewForm.get('ownershipType').value,this.shopLicNewForm.get('organizationType').get('code').value)
+
+				}
+				this.requiredDocumentList();
 
 				
 			} catch (error) {
@@ -346,7 +356,7 @@ export class ShopLicNewComponent implements OnInit {
 			oldRegistrationNumber: null,
 			oldRegistrationDate: null,
 			number: null,
-			otherAddresses: [null],
+			otherAddresses: null,
 			/* Step 1 controls end */
 
 			/* Step 2 controls start */
