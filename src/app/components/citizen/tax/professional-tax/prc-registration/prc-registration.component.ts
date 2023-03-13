@@ -689,7 +689,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 			return;
 		}
 
-		if (this.totalEmployees <= 0) {
+		if (this.totalEmployees < 0) {
 			this.commonService.openAlert("Warning", "Enter employee details", "warning");
 			return;
 		}
