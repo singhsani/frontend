@@ -352,6 +352,7 @@
 									<th width="110">{{'mobileNo' | translate:translateKey}}</th>
 									<th width="150">{{'emailId' | translate:translateKey}}</th>
 									<th width="60" *ngIf="shopLicTransferForm.get('canEdit').value"></th>
+									<th width="60" *ngIf="!(shopLicTransferForm.get('canEdit').value)"></th>
 								</tr>
 							</thead>
 							<tbody formArrayName="shopPersonList">
@@ -512,6 +513,7 @@
 									<th>{{'workerType' | translate:translateKey}}</th>
 									<th>{{'total' | translate:translateKey}}</th>
 									<th *ngIf="shopLicTransferForm.get('canEdit').value"></th>
+									<th *ngIf="!(shopLicTransferForm.get('canEdit').value)"></th>
 								</tr>
 							</thead>
 							<tbody formArrayName="workerCounts">
@@ -674,6 +676,7 @@
 									<th >{{'Mobile Number' | translate:translateKey}}</th>
 									<th >{{'Email-Id' | translate:translateKey}}</th>
 									<th *ngIf="shopLicTransferForm.get('canEdit').value"></th>
+									<th *ngIf="!(shopLicTransferForm.get('canEdit').value)"></th>
 								</tr>
 							</thead>
 							<tbody formArrayName="shopPartnerList">
