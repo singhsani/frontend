@@ -440,6 +440,11 @@ export class BookAtithigruhComponent implements OnInit {
 		} else {
 			this.toaster.warning(this.bookingConstants.SELECT_SLOT_MESSAGE);
 		}
+		// display Search Details on Atithigruh Booking Details Tab
+			this.atithigruhName = this.atithigruhName,
+			this.purpose = this.purpose
+			this.startDate = this.selectedShift[0].start
+			this.endDate = this.selectedShift[1].end
 	}
 
 	/**
