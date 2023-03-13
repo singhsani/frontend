@@ -340,6 +340,7 @@
 									<th width="110">{{'mobileNo' | translate:translateKey}}</th>
 									<th width="150">{{'emailId' | translate:translateKey}}</th>
 									<th width="60" *ngIf="shopLicNewForm.get('canEdit').value"></th>
+									<th width="60" *ngIf="!(shopLicNewForm.get('canEdit').value)"></th>
 								</tr>
 							</thead>
 							<tbody formArrayName="shopPersonList">
@@ -503,6 +504,7 @@
 									<th>{{'workerType' | translate:translateKey}}</th>
 									<th>{{'total' | translate:translateKey}}</th>
 									<th *ngIf="shopLicNewForm.get('canEdit').value"></th>
+									<th *ngIf="!(shopLicNewForm.get('canEdit').value)"></th>
 								</tr>
 							</thead>
 							<tbody formArrayName="workerCounts">
@@ -667,6 +669,7 @@
 									<th width="110">{{'Mobile Number' | translate:translateKey}}</th>
 									<th width="150">{{'Email-Id' | translate:translateKey}}</th>
 									<th width="60" *ngIf="shopLicNewForm.get('canEdit').value"></th>
+									<th width="60" *ngIf="!(shopLicNewForm.get('canEdit').value)"></th>
 								</tr>
 							</thead>
 							<tbody formArrayName="shopPartnerList">
