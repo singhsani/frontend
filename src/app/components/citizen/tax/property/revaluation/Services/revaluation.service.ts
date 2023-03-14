@@ -181,8 +181,8 @@ export class RevaluationService {
     return this.http.get<Array<Object>>(`${Constants.assessmentModuleApiUrl}revaluation/attachments?serviceFormId=${serviceFormId}`);
   }
 
-  saveMeasurementTax(measurementVersionId: Number) {
-    return this.http.post(`${Constants.assessmentModuleApiUrl}measurement/calculateTax?measurementVersionId=${measurementVersionId}`,
+  saveMeasurementTax(measurementVersionId: Number, roomId:Number) {
+    return this.http.post(`${Constants.assessmentModuleApiUrl}measurement/calculateTax?measurementVersionId=${measurementVersionId}&roomVersionId=${roomId}`,
       { observe: 'response' })
       .pipe(map((response: any) => response))
   }
