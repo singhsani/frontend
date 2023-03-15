@@ -412,11 +412,49 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 	  ngAfterViewInit(){
 		setTimeout(() => {
 			var element : any = document.getElementsByClassName('mat-tab-label-active');
-			const length = element.length
-			for (let index = 0; index < length; index++) {
-				element[0].classList.remove("mat-tab-label-active");
+			if(element.length>0){
+				const length = element.length
+				for (let index = 0; index < length; index++) {
+					element[0].classList.remove("mat-tab-label-active");
+				}
 			}
 		}, 500);
+		setTimeout(() => {
+			var element : any = document.getElementsByClassName('mat-tab-label-active');
+			if(element.length>0){
+				const length = element.length
+				for (let index = 0; index < length; index++) {
+					element[0].classList.remove("mat-tab-label-active");
+				}
+			}
+		}, 1000);
+		setTimeout(() => {
+			var element : any = document.getElementsByClassName('mat-tab-label-active');
+			if(element.length>0){
+				const length = element.length
+				for (let index = 0; index < length; index++) {
+					element[0].classList.remove("mat-tab-label-active");
+				}
+			}
+		}, 1250);
+		setTimeout(() => {
+			var element : any = document.getElementsByClassName('mat-tab-label-active');
+			if(element.length>0){
+				const length = element.length
+				for (let index = 0; index < length; index++) {
+					element[0].classList.remove("mat-tab-label-active");
+				}
+			}
+		}, 1500);
+		setTimeout(() => {
+			var element : any = document.getElementsByClassName('mat-tab-label-active');
+			if(element.length>0){
+				const length = element.length
+				for (let index = 0; index < length; index++) {
+					element[0].classList.remove("mat-tab-label-active");
+				}
+			}
+		}, 2000);
 	  }
 
 	  openModule(event){
