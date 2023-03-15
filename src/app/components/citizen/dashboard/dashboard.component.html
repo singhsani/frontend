@@ -15,12 +15,12 @@
         <mat-tab *ngFor="let module of userServicesList">
             <ng-template mat-tab-label>
                 <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
-                <span class="moduleIcon {{ module.code }}"></span>
-                <div class="moduleName" title="{{module.name}}">{{ module.name }}</div>
+                <span class="moduleIcon {{ module.code }}" (click)="openModule($event)"></span>
+                <div class="moduleName" title="{{module.name}}" (click)="openModule($event)" >{{ module.name }}</div>
                 <!-- <div>{{ module.gujName }}</div> -->
-                <span class="count">Services</span>
+                <span class="count" (click)="openModule($event)">Services</span>
             </ng-template>
-            <div class="servicesList row">
+            <div class="servicesList row" *ngIf="showModuleServices">
                 <div class="colBtn col-md-3" *ngFor="let service of module.services;" matTooltip="{{ service.name }}">
                     <button mat-stroked-button color="primary" (click)="createRecord(service.code)">
                         {{ service.name }}
@@ -75,12 +75,12 @@
         <mat-tab *ngFor="let module of bookingsAndTicketings">
             <ng-template mat-tab-label>
                 <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
-                <span class="moduleIcon {{ module.code }}"></span>
-                <div class="moduleName" title="{{module.name}}">{{ module.name }}</div>
+                <span class="moduleIcon {{ module.code }}" (click)="openBookingServices($event)"></span>
+                <div class="moduleName" title="{{module.name}}" (click)="openBookingServices($event)">{{ module.name }}</div>
                 <!-- <div>{{ module.gujName }}</div> -->
-                <span class="count">Services</span>
+                <span class="count" (click)="openBookingServices($event)">Services</span>
             </ng-template>
-            <div class="servicesList row">
+            <div class="servicesList row" *ngIf="showBookingServices">
                 <div class="colBtn col-md-3" *ngFor="let service of module.services;" matTooltip="{{ service.name }}">
                     <button mat-stroked-button *ngIf="service.active" color="primary"   (click)="onClick(service.code)" routerLink="/{{manageRoutes.getFullRoute(service.code)}}">
                         {{ service.name }}
