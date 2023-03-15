@@ -362,7 +362,7 @@
 
 				<div class="row">
 					<div class="col-md-3 ngSelect" formGroupName="secondPersonTypeTitle">
-						<ng-select placeholder="{{'Title' | translate: translateKey}} *" formControlName="code">
+						<ng-select placeholder="{{'Title' | translate: translateKey}} {{secondPersonrequiredFeilds?'*':''}}" formControlName="code" >
 							<ng-option *ngFor="let person of personTypeArray" [value]="person.code">
 								{{person.name}}
 							</ng-option>
@@ -372,7 +372,7 @@
 					</div>
 					<mat-form-field class="col-md-3">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
-							required maxlength="100" placeholder="{{'First Name' | translate:translateKey}}"
+							[required]="secondPersonrequiredFeilds" maxlength="100" placeholder="{{'First Name' | translate:translateKey}}"
 							formControlName="secondApplicantFirstName">
 							<mat-error class="mat-error ng-star-inserted errors-massage"
 							*ngIf="affordableHousingForm.get('secondApplicantFirstName').invalid && (affordableHousingForm.get('secondApplicantFirstName').dirty || affordableHousingForm.get('secondApplicantFirstName').touched)">
@@ -390,7 +390,7 @@
 					</mat-form-field>
 					<mat-form-field class="col-md-3">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
-							required maxlength="100" placeholder="{{'Last Name' | translate:translateKey}}"
+							[required]="secondPersonrequiredFeilds" maxlength="100" placeholder="{{'Last Name' | translate:translateKey}}"
 							formControlName="secondApplicantLastName">
 							<mat-error class="mat-error ng-star-inserted errors-massage"
 							*ngIf="affordableHousingForm.get('secondApplicantLastName').invalid && (affordableHousingForm.get('secondApplicantLastName').dirty || affordableHousingForm.get('secondApplicantLastName').touched)">
@@ -406,7 +406,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
 							maxlength="100" placeholder="{{'First Name' | translate:translateKey}}"
-							formControlName="secondAppHusWifeFirstName" required>
+							formControlName="secondAppHusWifeFirstName" [required]="secondPersonrequiredFeilds">
 							<mat-error class="mat-error ng-star-inserted errors-massage"
 							*ngIf="affordableHousingForm.get('secondAppHusWifeFirstName').invalid && (affordableHousingForm.get('secondAppHusWifeFirstName').dirty || affordableHousingForm.get('secondAppHusWifeFirstName').touched)">
 							<div *ngIf="affordableHousingForm.get('secondAppHusWifeFirstName').errors.required">
@@ -424,7 +424,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
 							maxlength="100" placeholder="{{'Last Name' | translate:translateKey}}"
-							formControlName="secondAppHusWifeLastName" required>
+							formControlName="secondAppHusWifeLastName" [required]="secondPersonrequiredFeilds">
 							<mat-error class="mat-error ng-star-inserted errors-massage"
 							*ngIf="affordableHousingForm.get('secondAppHusWifeLastName').invalid && (affordableHousingForm.get('secondAppHusWifeLastName').dirty || affordableHousingForm.get('secondAppHusWifeLastName').touched)">
 							<div *ngIf="affordableHousingForm.get('secondAppHusWifeLastName').errors.required">
@@ -438,7 +438,8 @@
 						<input matInput autocomplete="off" appDate formControlName="secondAppDateOfBirth"
 							[max]="dobMaxDate" [matDatepicker]="seconddobpicker" [matDatepicker]="seconddobpicker"
 							(dateChange)="onDateChangeSecondAge('secondAppDateOfBirth', $event.value)"
-							placeholder="{{'applicant_dob' | translate: translateKey}}" required>
+							placeholder="{{'applicant_dob' | translate: translateKey}}" 
+							[required]="secondPersonrequiredFeilds">
 						<mat-datepicker-toggle matSuffix [for]="seconddobpicker"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #seconddobpicker></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">
@@ -469,7 +470,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber placeholder="{{'Mobile No 1' | translate:translateKey}}" type="tel"
-							maxlength="10" minlength="10" formControlName="secondAppMobileNumOne" required (keyup)="vaildMobileNumber($event)">
+							maxlength="10" minlength="10" formControlName="secondAppMobileNumOne" [required]="secondPersonrequiredFeilds" (keyup)="vaildMobileNumber($event)">
 							<mat-error class="mat-error ng-star-inserted errors-massage"
 							*ngIf="affordableHousingForm.get('secondAppMobileNumOne').invalid && (affordableHousingForm.get('secondAppMobileNumOne').dirty || affordableHousingForm.get('secondAppMobileNumOne').touched)">
 							<div *ngIf="affordableHousingForm.get('secondAppMobileNumOne').errors.required">
@@ -511,7 +512,7 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="100" appValidationFields
+						<input matInput type="text" [required]="secondPersonrequiredFeilds" maxlength="100" appValidationFields
 							validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'Applicant Occupation' | translate:translateKey}}"
 							formControlName="secondAppOccupation">
@@ -524,7 +525,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="100" appValidationFields
+						<input matInput type="text" [required]="secondPersonrequiredFeilds" maxlength="100" appValidationFields
 							validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'organisation_Name' | translate:translateKey}}"
 							formControlName="secondAppOrganizationName">
@@ -537,7 +538,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="100" appValidationFields
+						<input matInput type="text" [required]="secondPersonrequiredFeilds" maxlength="100" appValidationFields
 							validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'designation_Held' | translate:translateKey}}"
 							formControlName="secondAppOccupationDesignation">
@@ -567,7 +568,7 @@
 						</control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" appAlphaNumeric required OnlyNumber minlength="12" maxlength="12"
+						<input matInput type="text" appAlphaNumeric [required]="secondPersonrequiredFeilds" OnlyNumber minlength="12" maxlength="12"
 							placeholder="{{'aadharID' | translate:translateKey}}"
 							formControlName="secondAppAadharCardNumber" (keyup)="vaildAadharCardNumber($event)">
 							<mat-error class="mat-error ng-star-inserted errors-massage"
@@ -580,7 +581,7 @@
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" #inputPAN2 [value]="inputPAN2.value.toUpperCase()" appAlphaNumeric
-							required maxlength="10" placeholder="{{'panNo' | translate:translateKey}}"
+							[required]="secondPersonrequiredFeilds" maxlength="10" placeholder="{{'panNo' | translate:translateKey}}"
 							formControlName="secondAppPanCardNumber" (keyup)="validPanCardNumber($event)">
 							<mat-error class="mat-error ng-star-inserted errors-massage"
 							*ngIf="affordableHousingForm.get('secondAppPanCardNumber').invalid && (affordableHousingForm.get('secondAppPanCardNumber').dirty || affordableHousingForm.get('secondAppPanCardNumber').touched)">
