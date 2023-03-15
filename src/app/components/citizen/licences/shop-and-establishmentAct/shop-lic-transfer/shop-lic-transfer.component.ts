@@ -1062,6 +1062,12 @@ export class ShopLicTransferComponent implements OnInit {
 		this.addWomenDocument();
 		try {
 			// this.updateServiceUploadDocument(event);
+				// when organization Type change Partner List clear  
+			if (this.shopLicTransferForm.get('shopPartnerList').value.length > 0) {
+				for (let i = 0; i < this.shopLicTransferForm.get('shopPartnerList').value.length; i++) {
+					this.getArrayByType('PATNERS').removeAt(i);
+				}
+			}
 			this.isPatners = false;
 
 			this.shopLicTransferForm.get('attachments').setValue([]);
