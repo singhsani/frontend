@@ -584,11 +584,11 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		if (row.fileStatus == "PAYMENT_RECEIVED" && row.serviceType == "FS_GAS_CONNECTION_NOC") {
 			return true;
 		}
-		// const printReceiptServiceTypeForShopArr = ['SHOP_ESTAB_APPLICATION', 'SHOP_ESTAB_TRANSFER']
-		// if (( row.fileStatus == 'APPROVED' || row.fileStatus == 'CANCELLED'  ) 
-		// && printReceiptServiceTypeForShopArr.indexOf(row.serviceType) >= 0) {
-		// 	return false;
-		// }
+		const printReceiptServiceTypeForShopArr = ['SHOP_ESTAB_APPLICATION', 'SHOP_ESTAB_TRANSFER']
+		if (( row.fileStatus == 'CANCELLED'  ) 
+		&& printReceiptServiceTypeForShopArr.indexOf(row.serviceType) >= 0) {
+			return true;
+		}
 		if (row.fileStatus == 'REJECTED' && row.serviceType == 'SHOP_ESTAB_TRANSFER') {
 			return false;
 		}
@@ -690,34 +690,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		else
 			return false;
 	}
-	isPrintAckShop(row)
-	{
-		 if (row.fileStatus == 'APPROVED' && row.serviceType == 'SHOP_ESTAB_APPLICATION') {
-			if(!row.fileNumber.indexOf("SHOP-IT") || !row.fileNumber.indexOf("SHOP-IR"))
-			{
-				return true;
-			}
-				
-			}
-				if (row.fileStatus == 'APPROVED' && row.serviceType == 'SHOP_ESTAB_TRANSFER') {
-					if(!row.fileNumber.indexOf("SHOP-IT") || !row.fileNumber.indexOf("SHOP-IR"))
-					{
-						return true;
-					}
-						
-					}
-	}
-
-	isPrintReceiptShop(row)
-	{
-		if (row.fileStatus == 'APPROVED' && (!row.fileNumber.indexOf("SHOP-RT") ||!row.fileNumber.indexOf("SHOP-RC")) && row.serviceType == 'SHOP_ESTAB_APPLICATION') {
-		
-					return true;
-				
-				}
-		
-	}
-
 	isPrintReceiptAfterReschedule(row)
 	{
 
