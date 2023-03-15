@@ -1,7 +1,6 @@
 import { PaginationService } from './../../../core/services/citizen/data-services/pagination.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { FormsActionsService } from '../../../core/services/citizen/data-services/forms-actions.service';
 
 import { ManageRoutes } from '../../../config/routes-conf';
@@ -15,13 +14,15 @@ import { ShopAndEstablishmentService } from '../licences/shop-and-establishment/
 	templateUrl: './dashboard.component.html',
 	styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
 
 	userServicesList: any;
 	manageRoutes: any = ManageRoutes;
 	services: any = [];
 	isRecentApp: boolean = false;
 	recentApp: any;
+	showModuleServices = false;
+	showBookingServices = false;
 	// bookingsAndTicketings = [];
 	bookingsAndTicketings: any = [
 		{
@@ -406,5 +407,23 @@ export class DashboardComponent implements OnInit {
 			this.toastr.error("Server Error");
 		  })
 	
+	  }
+
+	  ngAfterViewInit(){
+		setTimeout(() => {
+			var element : any = document.getElementsByClassName('mat-tab-label-active');
+			const length = element.length
+			for (let index = 0; index < length; index++) {
+				element[0].classList.remove("mat-tab-label-active");
+			}
+		}, 100);
+	  }
+
+	  openModule(event){
+	      this.showModuleServices = true;
+	  }
+
+	  openBookingServices(event){
+		  this.showBookingServices = true
 	  }
 }
