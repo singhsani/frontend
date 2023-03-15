@@ -416,7 +416,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 			for (let index = 0; index < length; index++) {
 				element[0].classList.remove("mat-tab-label-active");
 			}
-		}, 100);
+		}, 500);
 	  }
 
 	  openModule(event){
