@@ -81,7 +81,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	messageForAaadherNum: string;
 	messageForPanCard: string;
 	validationErrorMsg = false
-
+	secondPersonrequiredFeilds = false
 	houseTypes = [];
 
 	// Map for the formcontrol to tabIndex id;
@@ -311,6 +311,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	}
 
 	mandotoryFileds(flag) {
+		this.secondPersonrequiredFeilds = flag
 		if (flag) {
 			this.affordableHousingForm.get('secondPersonTypeTitle').get('code').setValidators([Validators.required]);
 			this.affordableHousingForm.get('secondApplicantFirstName').setValidators([Validators.required]);
