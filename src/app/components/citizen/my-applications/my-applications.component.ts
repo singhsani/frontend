@@ -667,12 +667,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		if (row.fileStatus == 'PAYMENT' && row.serviceType == 'MARRIAGE_REGISTRATION') {
 			return true;
 		}
-		// if (row.fileStatus == 'APPROVED' && (!row.fileNumber.indexOf("SHOP-IR")||!row.fileNumber.indexOf("SHOP-IT")) && row.serviceType == 'SHOP_ESTAB_TRANSFER') {
-		// 	return true;
-		// }
-		// if (row.fileStatus == 'APPROVED' && (!row.fileNumber.indexOf("SHOP-IR")||!row.fileNumber.indexOf("SHOP-IT")) && row.serviceType == 'SHOP_ESTAB_APPLICATION') {
-		// 	return true;
-		// }
 		else if (row.fileStatus === 'PAYMENT' && row.serviceType === 'FS_FIRE_CERTIFICATE' ||
 			row.serviceType === 'FS_GAS_CONNECTION_NOC' ||
 			row.serviceType === 'FS_ELECTRIC_CONNECTION_NOC' ||
