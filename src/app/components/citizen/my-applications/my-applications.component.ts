@@ -526,7 +526,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return false;
 		}
 		else if (row.serviceType === 'SHOP_ESTAB_APPLICATION' && !(this.commonService.fromAdmin())) {
-			return false;
+			return true;
 		}
 
 		else if (row.serviceType == 'APL_LICENCE' || row.serviceType == 'APL_RENEWAL' || row.serviceType == 'POND_TRANSFER'
@@ -587,7 +587,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		const printReceiptServiceTypeForShopArr = ['SHOP_ESTAB_APPLICATION', 'SHOP_ESTAB_TRANSFER']
 		if (( row.fileStatus == 'CANCELLED'  ) 
 		&& printReceiptServiceTypeForShopArr.indexOf(row.serviceType) >= 0) {
-			return true;
+			return false;
 		}
 		if (row.fileStatus == 'REJECTED' && row.serviceType == 'SHOP_ESTAB_TRANSFER') {
 			return false;
