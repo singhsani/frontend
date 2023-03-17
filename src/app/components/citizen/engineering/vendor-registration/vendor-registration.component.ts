@@ -1095,7 +1095,6 @@ export class VendorRegistrationComponent implements OnInit {
   }
 
   onChangelandmark(event) {
-    debugger
     this.landmark = event.target.value;
     this.onChangeaddress()
   }

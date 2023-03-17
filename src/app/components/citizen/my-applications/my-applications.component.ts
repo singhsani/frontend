@@ -505,6 +505,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return true;
 		}
 
+		if(row.serviceType == "VENDOR_REG" && row.fileStatus == "PAYMENT_RECEIVED"){
+			return true;
+		}
+
 		if (row.fileStatus === 'REJECTED' && row.serviceType === 'FS_FIRE_CERTIFICATE' ||
 			row.serviceType === 'FS_GAS_CONNECTION_NOC' ||
 			row.serviceType === 'FS_ELECTRIC_CONNECTION_NOC' ||
