@@ -369,10 +369,21 @@ export class ShopLicTransferComponent implements OnInit {
 					this.shopLicTransferForm.get('workerType').setValue(res.workerType);
 				}
 
-				if(this.shopLicTransferForm.get('otherAddresses')){
-					this.shopLicTransferForm.get('otherAddresses').setValue(res.otherAddresses);
+
+				this.serverUploadFilesArray = res.serviceDetail.serviceUploadDocuments;
+				res.serviceDetail.serviceUploadDocuments.forEach(app => {
+					(<FormArray>this.shopLicTransferForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
+				});
+				
+
+				if (this.shopLicTransferForm.get('ownershipType').value,this.shopLicTransferForm.get('organizationType').get('code').value) {
+					this.moreThanZeroWomenDocument(res,this.shopLicTransferForm.get('ownershipType').value,this.shopLicTransferForm.get('organizationType').get('code').value)
+					// this.updateServiceUploadDocument(this.shopLicTransferForm.get('ownershipType').value,this.shopLicTransferForm.get('organizationType').get('code').value);
 				}
 
+			
+				this.requiredDocumentList();  
+				
 				if(res.waterDrainageZoneId) {
 					this.getWardZone(res.waterDrainageZoneId,2);
 				}
@@ -389,17 +400,12 @@ export class ShopLicTransferComponent implements OnInit {
 					this.isSubCategory = true;
 					this.shopLicTransferForm.get('otherDescription').setValue(res.otherDescription);
 				}
-				
-				if (this.shopLicTransferForm.get('ownershipType').value,this.shopLicTransferForm.get('organizationType').get('code').value) {
-					this.moreThanZeroWomenDocument(res,this.shopLicTransferForm.get('ownershipType').value,this.shopLicTransferForm.get('organizationType').get('code').value)
-					// this.updateServiceUploadDocument(this.shopLicTransferForm.get('ownershipType').value,this.shopLicTransferForm.get('organizationType').get('code').value);
-				}
 
-				this.serverUploadFilesArray = res.serviceDetail.serviceUploadDocuments;
-				res.serviceDetail.serviceUploadDocuments.forEach(app => {
-					(<FormArray>this.shopLicTransferForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
-				});
-				this.requiredDocumentList();
+				if(this.shopLicTransferForm.get('otherAddresses')){
+					this.shopLicTransferForm.get('otherAddresses').setValue(res.otherAddresses);
+				}
+				
+			
 	}
 
 	/**
