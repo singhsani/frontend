@@ -7,7 +7,6 @@ import { TransferPropertyModule } from '../transfer-property.module';
 
 @Injectable()
 export class TransferPropertyService {
-
   constructor(private http: HttpClient) { }
 
   getWardZoneLevel() {
@@ -140,4 +139,11 @@ export class TransferPropertyService {
   getAttachmentList(serviceFormId) {
     return this.http.get<Array<Object>>(`${Constants.serverApiIp}/property/transfer/attachments?serviceFormId=${serviceFormId}`);
   }
+
+  getTransferSubTypeLookup(data:any) {
+    return this.http.get(`${Constants.baseApiUrl}lookup/gets?lookup_codes=${data}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+ 
 }
