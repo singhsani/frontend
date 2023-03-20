@@ -124,7 +124,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return `case4`;
 		} else if(row.departmentName == 'Contractor Registration' && row.fileStatusName == 'Deposit Received'){
 			return `case5`
-		}else if((row.departmentName == 'Contractor Registration' && row.fileStatusName == 'Approved') || (row.departmentName == "Vendor Registration" && row.fileStatusName == 'Approved')){	
+		}else if((row.departmentName == 'Contractor Registration' && row.fileStatusName == 'Approved') || (row.departmentName == "Vendor Registration" && row.fileStatusName == 'Approved')){
 			return `case6`
 		}else{
 			return `case3`
@@ -529,7 +529,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			(row.serviceType === 'DEATH_CORRECTION_REGISTRATION' && row.fileStatus === 'REJECTED')) {
 			return false;
 		}
-		else if (row.serviceType === 'SHOP_ESTAB_APPLICATION' && !(this.commonService.fromAdmin())) {
+		else if (row.serviceType === 'SHOP_ESTAB_APPLICATION' && row.fileStatus == 'CANCELLED' &&!(this.commonService.fromAdmin())) {
 			return true;
 		}
 
@@ -589,7 +589,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return true;
 		}
 		const printReceiptServiceTypeForShopArr = ['SHOP_ESTAB_APPLICATION', 'SHOP_ESTAB_TRANSFER']
-		if (( row.fileStatus == 'CANCELLED'  ) 
+		if (( row.fileStatus == 'CANCELLED'  )
 		&& printReceiptServiceTypeForShopArr.indexOf(row.serviceType) >= 0) {
 			return false;
 		}
@@ -1049,7 +1049,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		})
 	}
 
-	//for Deposit Payment in Contractor Registration 
+	//for Deposit Payment in Contractor Registration
 	depositPayment(apiCode: string, id: number, fileStatus:string) {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 		this.formService.contractorDepositePayment(id).subscribe(
@@ -1089,7 +1089,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 							this.paymentGateway.setPaymentDetailsFromActionBar(payData);
 							this.paymentGateway.openModel();
 						}, rj => {
-						
+
 						});
 						return;
 					}
