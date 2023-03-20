@@ -101,30 +101,30 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 					"appointmentRequired": false,
 					"active": true
 				},
-				// {
-				// 	"code": "SWIMMINGPOOL",
-				// 	"fieldView": "ALL",
-				// 	"name": "Swimming Pool",
-				// 	"gujName": "સ્નાનાગાર",
-				// 	"appointmentRequired": false,
-				// 	"active": true
-				// },
-				// {
-				// 	"code": "SWIMMINGPOOLRENEWAL",
-				// 	"fieldView": "ALL",
-				// 	"name": "Swimming Pool Renewal",
-				// 	"gujName": "સ્નાનાગાર",
-				// 	"appointmentRequired": false,
-				// 	"active": true
-				// },
 				{
-					"code": "SWIMMINGPOOLDASHBOARD",
+					"code": "SWIMMINGPOOL",
 					"fieldView": "ALL",
-					"name": "Swimming-Pool-Dashboard",
+					"name": "Swimming Pool",
 					"gujName": "સ્નાનાગાર",
 					"appointmentRequired": false,
 					"active": true
 				},
+				{
+					"code": "SWIMMINGPOOLRENEWAL",
+					"fieldView": "ALL",
+					"name": "Swimming Pool Renewal",
+					"gujName": "સ્નાનાગાર",
+					"appointmentRequired": false,
+					"active": true
+				},
+				// {
+				// 	"code": "SWIMMINGPOOLDASHBOARD",
+				// 	"fieldView": "ALL",
+				// 	"name": "Swimming-Pool-Dashboard",
+				// 	"gujName": "સ્નાનાગાર",
+				// 	"appointmentRequired": false,
+				// 	"active": true
+				// },
         {
 					"code": "MYTICKETINGS",
 					"fieldView": "ALL",
