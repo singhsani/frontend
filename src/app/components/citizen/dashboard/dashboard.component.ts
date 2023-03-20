@@ -399,7 +399,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
    * This method for download file
    */
 	 downloadGuidLineDocumemnt(fileName: any) {
-		 debugger;
+
 		 this.shopAndEstablishmentService.downloadGuidLineDocumemnt(fileName, 'application/pdf').subscribe(resp => {
 
 		  var newBlob = new Blob([resp], { type: "application/pdf" });
