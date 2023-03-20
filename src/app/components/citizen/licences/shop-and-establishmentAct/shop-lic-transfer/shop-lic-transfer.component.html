@@ -368,7 +368,7 @@
 											<input matInput appValidationFields
 												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
 												required>
-											<control-messages [control]="item.get('name')"></control-messages>
+									<control-messages class="matErrorTwoLine" [control]="item.get('name')"></control-messages>
 										</mat-form-field>
 									</td>
 
@@ -377,7 +377,7 @@
 										<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput formControlName="address" required>
-											<control-messages [control]="item.get('address')"></control-messages>
+											<control-messages class="matErrorTwoLine" [control]="item.get('address')"></control-messages>
 										</mat-form-field>
 									</td>
 
@@ -407,7 +407,7 @@
 											<input matInput appValidationFields
 												[validationFieldsType]="'onlyNameWithSpace'" formControlName="designation"
 												required>
-											<control-messages [control]="item.get('designation')"></control-messages>
+											<control-messages class="matErrorTwoLine" [control]="item.get('designation')"></control-messages>
 										</mat-form-field>
 									</td>
 
