@@ -11,7 +11,29 @@
 </h2>
 
 <div class="moduleList">
+
     <mat-tab-group [selectedIndex]="1">
+      <mat-tab *ngFor="let module of bookingsAndTicketings">
+        <ng-template mat-tab-label>
+            <div class="mat-tab-label-Container" (click)="openBookingServices($event)">
+            <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
+            <span class="moduleIcon {{ module.code }}" ></span>
+            <div class="moduleName" title="{{module.name}}">{{ module.name }}</div>
+            <!-- <div>{{ module.gujName }}</div> -->
+            <span class="count">Services</span>
+        </div>
+        </ng-template>
+        <div class="servicesList row" *ngIf="showBookingServices">
+            <div class="colBtn col-md-3" *ngFor="let service of module.services;" matTooltip="{{ service.name }}">
+                <button mat-stroked-button *ngIf="service.active" color="primary"   (click)="onClick(service.code)" routerLink="/{{manageRoutes.getFullRoute(service.code)}}">
+                    {{ service.name }}
+                </button>
+                <button mat-stroked-button *ngIf="!service.active" color="primary">
+                    {{ service.name }}
+                </button>
+            </div>
+        </div>
+    </mat-tab>
         <mat-tab *ngFor="let module of userServicesList">
             <ng-template mat-tab-label>
                 <div class="mat-tab-label-Container" (click)="openModule($event)">
@@ -68,35 +90,35 @@
     </mat-tab-group>
 </div>
 
-<h2>
+<!-- <h2>
     <mat-icon>dashboard</mat-icon>VMC Facility Booking
 </h2>
 
 <div class="moduleList">
-    <mat-tab-group>
-        <mat-tab *ngFor="let module of bookingsAndTicketings">
-            <ng-template mat-tab-label>
-                <div class="mat-tab-label-Container" (click)="openBookingServices($event)">
-                <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
-                <span class="moduleIcon {{ module.code }}" ></span>
-                <div class="moduleName" title="{{module.name}}">{{ module.name }}</div>
-                <!-- <div>{{ module.gujName }}</div> -->
-                <span class="count">Services</span>
-            </div>
-            </ng-template>
-            <div class="servicesList row" *ngIf="showBookingServices">
-                <div class="colBtn col-md-3" *ngFor="let service of module.services;" matTooltip="{{ service.name }}">
-                    <button mat-stroked-button *ngIf="service.active" color="primary"   (click)="onClick(service.code)" routerLink="/{{manageRoutes.getFullRoute(service.code)}}">
-                        {{ service.name }}
-                    </button>
-                    <button mat-stroked-button *ngIf="!service.active" color="primary">
-                        {{ service.name }}
-                    </button>
-                </div>
-            </div>
-        </mat-tab>
-    </mat-tab-group>
-</div>
+  <mat-tab-group>
+      <mat-tab *ngFor="let module of bookingsAndTicketings">
+          <ng-template mat-tab-label>
+              <div class="mat-tab-label-Container" (click)="openBookingServices($event)">
+
+              <span class="moduleIcon {{ module.code }}" ></span>
+              <div class="moduleName" title="{{module.name}}">{{ module.name }}</div>
+
+              <span class="count">Services</span>
+          </div>
+          </ng-template>
+          <div class="servicesList row" *ngIf="showBookingServices">
+              <div class="colBtn col-md-3" *ngFor="let service of module.services;" matTooltip="{{ service.name }}">
+                  <button mat-stroked-button *ngIf="service.active" color="primary"   (click)="onClick(service.code)" routerLink="/{{manageRoutes.getFullRoute(service.code)}}">
+                      {{ service.name }}
+                  </button>
+                  <button mat-stroked-button *ngIf="!service.active" color="primary">
+                      {{ service.name }}
+                  </button>
+              </div>
+          </div>
+      </mat-tab>
+  </mat-tab-group>
+</div> -->
 
 
 
