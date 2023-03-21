@@ -484,7 +484,7 @@
 						<h2 class="pl-0">{{'occupying_position_of_management_table_label' | translate: translateKey }}</h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
-						<button type="button" *ngIf="shopLicNewForm.get('canEdit').value"  
+						<button type="button" *ngIf="shopLicNewForm.get('canEdit').value" [disabled]="isDisabledMorePerson" 
 							matTooltip="Add More Person Occuping" mat-raised-button color="primary"
 							(click)="addMorePersonwork('OCCUPANCY')">{{'add' | translate: translateKey}}</button>
 							<!-- [disabled]="!(shopLicNewForm.get('workerCounts')['controls'].length < 2)" -->
@@ -559,7 +559,7 @@
 											<div col-md-6 class="ngSelect" *ngIf="item.isEditMode" >
 												<ng-select *ngIf="item.isEditMode" formControlName="workersType" required  (ngModelChange)="getCommonWorkerType()">
 													<ng-container *ngFor="let gender of workerTypeList">
-														<ng-option *ngIf="!gender.selected"  [value]="gender.code" >
+                                                      <ng-option *ngIf="!gender.selected" [value]="gender.code" >
 															{{gender.name}}</ng-option>
 													</ng-container>
 												</ng-select>
