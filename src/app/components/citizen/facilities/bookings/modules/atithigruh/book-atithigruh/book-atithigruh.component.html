@@ -389,7 +389,8 @@
                   <h5  class="detailslist"> Purpose :- <span class="detailsNamelist">{{purpose}} </span>  </h5> 
                 </div>
                 <div class="mt-2">
-                   <h5 class="detailslist"> Date Of Programme :-  <span class="detailsNamelist"> {{startDate | date:'dd-MM-yyy'}} - {{endDate | date:'dd-MM-yyy'}} </span></h5>   
+                   <h5 class="detailslist"> Date Of Programme :-  <span class="detailsNamelist"> {{startDate | date:'dd-MM-yyy'}}  
+                    <ng-container *ngIf="bookingForRegular"> - {{endDate | date:'dd-MM-yyy'}}</ng-container> </span></h5>   
                 </div>
                 </div>
               <div class="col-md-4">
