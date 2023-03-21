@@ -56,7 +56,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 				{
 					"code": "THEATERBOOK",
 					"fieldView": "ALL",
-					"name": "Amphi Theater",
+					"name": "Amphi Theatre",
 					"gujName": "એમ્ફી થિયેટર",
 					"appointmentRequired": false,
 					"active": true
@@ -88,7 +88,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 				{
 					"code": "CHILDRENTHEATERBOOK",
 					"fieldView": "ALL",
-					"name": "Children Theater",
+					"name": "Children Theatre",
 					"gujName": "બાળકો થિયેટર",
 					"appointmentRequired": false,
 					"active": true
