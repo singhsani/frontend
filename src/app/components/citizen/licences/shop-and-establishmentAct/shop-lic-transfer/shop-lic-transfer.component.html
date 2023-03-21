@@ -209,7 +209,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" required maxlength="500"
+						<input matInput type="text" required maxlength="250" 
 							placeholder="{{'residential_address_of_employer' | translate:translateKey}}"
 							formControlName="residentialAddressOfEmployer" 
 							>
@@ -236,7 +236,7 @@
 
 					<mat-form-field class="col-md-6">
 						<input matInput type="text" 
-							placeholder="Employer Email ID"
+							placeholder="Employer Email ID" maxlength="50"
 							formControlName="employerEmailId"  appValidationFields >
 						<control-messages [control]="shopLicTransferForm.get('employerEmailId')"></control-messages>
 					</mat-form-field>
@@ -368,7 +368,7 @@
 											<input matInput appValidationFields
 												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
 												required>
-											<control-messages [control]="item.get('name')"></control-messages>
+									<control-messages class="matErrorTwoLine" [control]="item.get('name')"></control-messages>
 										</mat-form-field>
 									</td>
 
@@ -377,7 +377,7 @@
 										<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput formControlName="address" required>
-											<control-messages [control]="item.get('address')"></control-messages>
+											<control-messages class="matErrorTwoLine" [control]="item.get('address')"></control-messages>
 										</mat-form-field>
 									</td>
 
@@ -407,7 +407,7 @@
 											<input matInput appValidationFields
 												[validationFieldsType]="'onlyNameWithSpace'" formControlName="designation"
 												required>
-											<control-messages [control]="item.get('designation')"></control-messages>
+											<control-messages class="matErrorTwoLine" [control]="item.get('designation')"></control-messages>
 										</mat-form-field>
 									</td>
 

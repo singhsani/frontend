@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 			"code": "BOOKINGMODULE",
 			"fieldView": "ALL",
 			"fieldList": null,
-			"name": "Booking Facilities",
+			"name": "Booking/Ticketing Facilities",
 			"gujName": "Booking Facilities",
 			"services": [
 
@@ -101,51 +101,31 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 					"appointmentRequired": false,
 					"active": true
 				},
-				// {
-				// 	"code": "SWIMMINGPOOL",
-				// 	"fieldView": "ALL",
-				// 	"name": "Swimming Pool",
-				// 	"gujName": "સ્નાનાગાર",
-				// 	"appointmentRequired": false,
-				// 	"active": true
-				// },
-				// {
-				// 	"code": "SWIMMINGPOOLRENEWAL",
-				// 	"fieldView": "ALL",
-				// 	"name": "Swimming Pool Renewal",
-				// 	"gujName": "સ્નાનાગાર",
-				// 	"appointmentRequired": false,
-				// 	"active": true
-				// },
 				{
-					"code": "SWIMMINGPOOLDASHBOARD",
+					"code": "SWIMMINGPOOL",
 					"fieldView": "ALL",
-					"name": "Swimming-Pool-Dashboard",
+					"name": "Swimming Pool",
+					"gujName": "સ્નાનાગાર",
+					"appointmentRequired": false,
+					"active": true
+				},
+				{
+					"code": "SWIMMINGPOOLRENEWAL",
+					"fieldView": "ALL",
+					"name": "Swimming Pool Renewal",
 					"gujName": "સ્નાનાગાર",
 					"appointmentRequired": false,
 					"active": true
 				},
 				// {
-				// 	"code": "BAND",
+				// 	"code": "SWIMMINGPOOLDASHBOARD",
 				// 	"fieldView": "ALL",
-				// 	"name": "Band",
-				// 	"gujName": "બેન્ડ",
+				// 	"name": "Swimming-Pool-Dashboard",
+				// 	"gujName": "સ્નાનાગાર",
 				// 	"appointmentRequired": false,
 				// 	"active": true
 				// },
-			]
-		},
-		{
-			"id": 2,
-			"uniqueId": null,
-			"version": null,
-			"code": "TICKETINGSMODULE",
-			"fieldView": "ALL",
-			"fieldList": null,
-			"name": "Ticketing Facilities",
-			"gujName": "Ticketing Facilities",
-			"services": [
-				{
+        {
 					"code": "MYTICKETINGS",
 					"fieldView": "ALL",
 					"name": "My Ticketings",
@@ -169,8 +149,52 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 					"appointmentRequired": false,
 					"active": true
 				}
+				// {
+				// 	"code": "BAND",
+				// 	"fieldView": "ALL",
+				// 	"name": "Band",
+				// 	"gujName": "બેન્ડ",
+				// 	"appointmentRequired": false,
+				// 	"active": true
+				// },
 			]
-		},
+		}
+		// {
+		// 	"id": 2,
+		// 	"uniqueId": null,
+		// 	"version": null,
+		// 	"code": "TICKETINGSMODULE",
+		// 	"fieldView": "ALL",
+		// 	"fieldList": null,
+		// 	"name": "Ticketing Facilities",
+		// 	"gujName": "Ticketing Facilities",
+		// 	"services": [
+		// 		{
+		// 			"code": "MYTICKETINGS",
+		// 			"fieldView": "ALL",
+		// 			"name": "My Ticketings",
+		// 			"gujName": "મારી ટિકિટિંગ્સ",
+		// 			"appointmentRequired": false,
+		// 			"active": true
+		// 		},
+		// 		{
+		// 			"code": "ZOO-DASHBOARD",
+		// 			"fieldView": "ALL",
+		// 			"name": "Zoo",
+		// 			"gujName": "પ્રાણી સંગ્રહાલય",
+		// 			"appointmentRequired": false,
+		// 			"active": true
+		// 		},
+		// 		{
+		// 			"code": "PLANETARIUMBOOK",
+		// 			"fieldView": "ALL",
+		// 			"name": "Planetarium",
+		// 			"gujName": "પ્લાનેટેરિયમ",
+		// 			"appointmentRequired": false,
+		// 			"active": true
+		// 		}
+		// 	]
+		// },
 		// {
 		// 	"id": 3,
 		// 	"uniqueId": null,
@@ -310,7 +334,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 			case 'WTR-RNW-PLUMB-LIC':
 			case 'PRO-TAX-TRAS-HISTORY':
 			case 'PROPERTY_UPDATE_EMAIL_AND_MOBILE':
-			case 'AFFORD-HOUSE-STATUS':		
+			case 'AFFORD-HOUSE-STATUS':
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode)]);
 				break;
 			default:
@@ -375,38 +399,38 @@ export class DashboardComponent implements OnInit, AfterViewInit {
    * This method for download file
    */
 	 downloadGuidLineDocumemnt(fileName: any) {
-		 debugger;
+
 		 this.shopAndEstablishmentService.downloadGuidLineDocumemnt(fileName, 'application/pdf').subscribe(resp => {
-	
+
 		  var newBlob = new Blob([resp], { type: "application/pdf" });
-	
+
 		  // IE doesn't allow using a blob object directly as link href
 		  // instead it is necessary to use msSaveOrOpenBlob
 		  if (window.navigator && window.navigator.msSaveOrOpenBlob) {
 			window.navigator.msSaveOrOpenBlob(newBlob);
 			return;
 		  }
-		  // For other browsers: 
+		  // For other browsers:
 		  // Create a link pointing to the ObjectURL containing the blob.
 		  const data = window.URL.createObjectURL(newBlob);
-	
+
 		  var link = document.createElement('a');
 		  link.href = data;
 		  link.download = fileName;
 		  // this is necessary as link.click() does not work on the latest firefox
 		  link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
-	
+
 		  setTimeout(function () {
 			// For Firefox it is necessary to delay revoking the ObjectURL
 			window.URL.revokeObjectURL(data);
 			link.remove();
 		  }, 100);
 		},
-	
+
 		  err => {
 			this.toastr.error("Server Error");
 		  })
-	
+
 	  }
 
 	  ngAfterViewInit(){
@@ -459,6 +483,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 	  openModule(event){
 	      this.showModuleServices = true;
+
 	  }
 
 	  openBookingServices(event){
