@@ -496,7 +496,7 @@
 						<h2 class="pl-0">{{'occupying_position_of_management_table_label' | translate: translateKey }}</h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
-						<button type="button" *ngIf="shopLicTransferForm.get('canEdit').value"
+						<button type="button" *ngIf="shopLicTransferForm.get('canEdit').value"[disabled]="isDisabledMorePerson"
 							matTooltip="Add More Person Occuping" mat-raised-button color="primary"
 							(click)="addMorePersonwork('OCCUPANCY')">{{'add' | translate: translateKey}}</button>
 					</div>
@@ -560,7 +560,7 @@
 
 								<td>
 										<div class="d-md-none">{{'workerType' | translate:translateKey}}</div>
-										<div class="ngSelect" required style="min-width:100px" >
+										<div  class="ngSelect" required style="min-width:100px" >
 										 <!-- <p *ngIf="!item.isEditMode">{{item.get('workersType').value}}</p>  -->
 										  <p class="width80" *ngIf="!item.isEditMode">
 											{{getSelectedDataFromLookUps(workerTypeList,item.get('workersType').value)?.name}} 
