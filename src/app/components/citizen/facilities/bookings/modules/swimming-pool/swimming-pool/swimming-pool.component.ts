@@ -97,6 +97,7 @@ export class SwimmingPoolComponent implements OnInit {
   }
   memberNumber: FormControl;
   isRenewalForm = false;
+  isVisibleElectricityBill = false;
 
   constructor(
     private fb: FormBuilder,
@@ -151,7 +152,12 @@ export class SwimmingPoolComponent implements OnInit {
       this.MEMBERSHIP_TYPE = resp.MEMBERSHIP_TYPE;
       this.BATCH_DURATION = resp.BATCH_DURATION;
       this.BLOOD_GROUP = resp.BLOOD_GROUP;
-      this.APPLICANT_PROOF = resp.APPLICANT_PROOF;
+     // this.APPLICANT_PROOF = resp.APPLICANT_PROOF;
+      resp.APPLICANT_PROOF.forEach(element => {
+        if(element.code == "DRIVING_LICENSE" || element.code == "AADHAAR_CARD" ||  element.code == "PASSPORT" || element.code == "ELECTION_CARD" || element.code == "ELECTRICITY_BILL"){
+          this.APPLICANT_PROOF.push(element) 
+        }
+      });
       // this.BANK = resp.BANK;
     },
       err => {
@@ -567,6 +573,7 @@ export class SwimmingPoolComponent implements OnInit {
       this.isLicenseVisibleIdNumber = false;
       this.isElectionCardIdNumber = false;
       this.isPassportIdNumber = false;
+      this.isVisibleElectricityBill = false;
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValue('');
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.aadharValidation]);
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
@@ -577,6 +584,8 @@ export class SwimmingPoolComponent implements OnInit {
       this.isLicenseVisibleIdNumber = false;
       this.isPassportIdNumber = false;
       this.isElectionCardIdNumber = false;
+      this.isVisibleElectricityBill = false;
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValue('');
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.panValidator]);
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
     }
@@ -586,6 +595,8 @@ export class SwimmingPoolComponent implements OnInit {
       this.isElectionCardIdNumber = false;
       this.isPassportIdNumber = false;
       this.isLicenseVisibleIdNumber = true;
+      this.isVisibleElectricityBill = false;
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValue('');
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.drivingLicenseValidator])
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
     }
@@ -595,6 +606,8 @@ export class SwimmingPoolComponent implements OnInit {
       this.isLicenseVisibleIdNumber = false;
       this.isPassportIdNumber = false;
       this.isElectionCardIdNumber = true;
+      this.isVisibleElectricityBill = false;
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValue('');
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.electionCardValidator])
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
     }
@@ -604,7 +617,20 @@ export class SwimmingPoolComponent implements OnInit {
       this.isLicenseVisibleIdNumber = false;
       this.isElectionCardIdNumber = false;
       this.isPassportIdNumber = true;
+      this.isVisibleElectricityBill = false;
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValue('');
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.passportValidator])
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
+    }
+   else if (idCode === 'ELECTRICITY_BILL') {
+      this.isVisibleIdNumber = false;
+      this.isPanCardVisibleIdNumber = false;
+      this.isLicenseVisibleIdNumber = false;
+      this.isElectionCardIdNumber = false;
+      this.isPassportIdNumber = false;
+      this.isVisibleElectricityBill = true;
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValue('');
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.electricityBillValidation]);
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
     }
     else {

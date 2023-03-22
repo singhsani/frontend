@@ -59,6 +59,7 @@ export class ValidationService {
             invalidCensusNumber: `Census Number length should be 21`,
             invalidPrcNumber : `Enter valid PRC number e.g. PRC123456789`,
             invalidPecNumber : `Enter valid PEC number e.g. PEC123456789`,
+            inValidelectricityBill  :`Enter valid Election Card Number e.g. 12345678901`
         }
 
         return config[validatorName];
@@ -410,6 +411,17 @@ export class ValidationService {
         if (control.value) {
             const matches = control.value.match(/^\P{1}\E{1}\C{1}[0-9]{9}$/);
             return matches ? null : { 'invalidPecNumber': true };
+        } else {
+            return null;
+        }
+    }
+
+
+    static electricityBillValidation(control: AbstractControl) {
+        // electricity Bill length should be 11 digits
+        if (control.value) {
+            const matches = control.value.match(/^[0-9]{11,11}$/);
+            return matches ? null : { 'inValidelectricityBill': true };
         } else {
             return null;
         }
