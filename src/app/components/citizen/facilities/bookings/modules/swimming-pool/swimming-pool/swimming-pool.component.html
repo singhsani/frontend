@@ -283,8 +283,16 @@
 							</control-messages>
 						</mat-form-field>
 
+						<mat-form-field class="col-md-4" *ngIf="isVisibleElectricityBill">
+							<input matInput maxlength="11" upperCase class="electricityBill"
+								formControlName="applicantIDProofNumber"
+								placeholder="{{'id_proof_no' | translate: translateKey}}" required OnlyNumber>
+							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProofNumber')">
+							</control-messages>
+						</mat-form-field>
+						
 						<mat-form-field class="col-md-4" *ngIf="!isVisibleIdNumber && !isPanCardVisibleIdNumber && 
-								!isLicenseVisibleIdNumber && !isElectionCardIdNumber && !isPassportIdNumber">
+								!isLicenseVisibleIdNumber && !isElectionCardIdNumber && !isPassportIdNumber && !isVisibleElectricityBill">
 							<input matInput upperCase maxlength="10" class="others"
 								formControlName="applicantIDProofNumber"
 								placeholder="{{'id_proof_no' | translate: translateKey}}" required appAlphaNumeric>
