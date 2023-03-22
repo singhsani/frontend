@@ -1,5 +1,5 @@
 <!-- *ngIf="searchObj.isDisplayRenewLicenceForm" -->
-<div *ngIf="searchObj.isDisplayRenewLicenceForm">
+<!-- <div *ngIf="searchObj.isDisplayRenewLicenceForm">
 	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
 	<mat-card class="mt-4 formClass">
@@ -18,61 +18,66 @@
 		</div>
 
 	</mat-card>
-</div>
-
+</div> -->
 
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 <mat-card class="formClass cardBorder" [hidden]="showDowlLoadFileTab" *ngIf="!searchObj.isDisplayRenewLicenceForm">
-
-	<mat-card-header class="p-4">
+	<div class="pageTitle">{{'online_swimming_pool_bookings'| translate: translateKey}}</div>
+	<!-- <mat-card-header class="p-4">
 		<mat-card-title>
 			<div>{{'note_title' | translate:translateKey}}</div>
 		</mat-card-title>
 		<mat-card-subtitle>{{'note_desc' | translate: translateKey}}:
 		</mat-card-subtitle>
-	</mat-card-header>
+	</mat-card-header> -->
 
 	<mat-card-content>
-
-		<div class="row p-4">
-			<div class="col-md-3">
-				<p> {{'doctor_certificate' | translate: translateKey}}:
-					<button mat-button (click)="downloadGuidLineDocumemnt('Fitness_Certi_Final_')"
-						color="primary">Download</button>
-				</p>
-			</div>
-			<div class="col-md-3">
-				<p> {{'gazette_certificate' | translate: translateKey}}:
-					<button mat-button (click)="downloadGuidLineDocumemnt('gazette_certificate')"
-						color="primary">Download</button>
-				</p>
-			</div>
-			<div class="col-md-3">
-				<p> {{'parent_certificate' | translate: translateKey}}:
-					<button mat-button (click)="downloadGuidLineDocumemnt('parent_certificate')"
-						color="primary">Download</button>
-				</p>
-			</div>
-			<div class="col-md-3">
-				<p> {{'swimming_test_report' | translate: translateKey}}:
-					<button mat-button (click)="downloadGuidLineDocumemnt('Test_Receipt__Final_')"
-						color="primary">Download</button>
-				</p>
-			</div>
+		<div class="head_container">
+		<img _ngcontent-c1="" alt="Vadodara Municipal Corporation" src="assets/images/vmc-logo.png" class="center">
+		<p> <b>Read all the rules swimming pool-wise before click on proceed, once you click on proceed we consider your acceptance of the rules and regulations.</b></p>
+            <p> <b>"Proceed" પર ક્લિક કરતા પહેલા સ્નાનાગાર મુજબના તમામ નિયમો વાંચો, એકવાર તમે "Proceed" પર ક્લિક કરો પછી અમે નિયમો અને નિયમોની તમારી સ્વીકૃતિને ધ્યાનમાં લઈશું.</b></p>
+			<br>
+			<p><h4 style="text-align:center">Need To Download For Application</h4>
+			<div class="row p-4">
+				<div class="col-md-3">
+					<p><b> {{'doctor_certificate' | translate: translateKey}}:
+						<button mat-button (click)="downloadGuidLineDocumemnt('Fitness_Certi_Final_')"
+							color="primary">Download</button></b>
+					</p>
+				</div>
+				<div class="col-md-3">
+					<p><b> {{'gazette_certificate' | translate: translateKey}}:
+						<button mat-button (click)="downloadGuidLineDocumemnt('gazette_certificate')"
+							color="primary">Download</button></b>
+					</p>
+				</div>
+				<div class="col-md-3">
+					<p> <b>{{'parent_certificate' | translate: translateKey}}:
+						<button mat-button (click)="downloadGuidLineDocumemnt('parent_certificate')"
+							color="primary">Download</button></b>
+					</p>
+				</div>
+				<div class="col-md-3">
+					<p><b> {{'swimming_test_report' | translate: translateKey}}:
+						<button mat-button (click)="downloadGuidLineDocumemnt('Test_Receipt__Final_')"
+							color="primary">Download</button></b>
+					</p>
+				</div>
 		</div>
-
-
+	</div>
+	<!-- <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar> -->
+	<app-swimming-pool-dashboard></app-swimming-pool-dashboard>
 	</mat-card-content>
 	<div class="fotButtonBar">
 		<div class="col-sm-12 col-md-12 text-right">
 			<button mat-raised-button (click)="showDowlLoadFileTab = true; showSwimmingPoolForm= false; saveFormData()"
 				color="primary">
-				<!-- <mat-icon>thumb_up_alt</mat-icon> -->
-				{{'proceed'| translate: translateKey}}
+				 <mat-icon>thumb_up_alt</mat-icon> 
+				 {{'proceed'| translate: translateKey}}
 			</button>
 		</div>
 	</div>
-</mat-card>
+</mat-card> 
 
 
 <span [hidden]="showSwimmingPoolForm">
