@@ -754,8 +754,7 @@ export class ShopLicTransferComponent implements OnInit {
 		if (!isEditAnotherRow) {
 
 			if (persontype === "PATNERS" && this.getArrayByType(persontype).controls.length >= 2) {
-				this.isDisabledMorePerson = true;
-			    this.commonService.openAlert("Warning", "Only 5 Worker Type Available !!", "warning");	
+				this.toastrService.warning("Occuping Person not allowed more than 2");	
 				return false;
 			}
 
