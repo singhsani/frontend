@@ -351,9 +351,9 @@ export class ShopLicNewComponent implements OnInit {
 			waterDrainageBlockId: [null],
 			ownershipType: [null, [Validators.required]],
 
-			pecNumber:[null],
-			prcNumber:[null],
-			censusNumber:[null,Validators.required],
+			pecNumber:[null, ValidationService.pecValidation],
+			prcNumber:[null, ValidationService.prcValidation],
+			censusNumber:[null,ValidationService.censusNumberValidator],
 			oldRegistrationNumber: null,
 			oldRegistrationDate: null,
 			number: null,
