@@ -326,6 +326,11 @@ export class ShopLicTransferComponent implements OnInit {
 			} catch (error) {
 				console.log(error.message)
 			}
+			if(res && res.registrationType){ 
+				this.isGuideLineActive = false; //preview
+			}else{
+				this.isGuideLineActive = true; 
+			}	
 		});
 	}
 
