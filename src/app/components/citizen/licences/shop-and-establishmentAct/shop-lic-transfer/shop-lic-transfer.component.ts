@@ -475,7 +475,7 @@ export class ShopLicTransferComponent implements OnInit {
 			employerMobileNumber: [null, [Validators.required,ValidationService.mobileNumberValidation]],
 			alternateMobileNumber:[null, [ValidationService.mobileNumberValidation]],
 			landlineNumber:null,
-			employerEmailId: null,
+			employerEmailId: [null, ValidationService.emailValidator],
 			residentialAddressOfEmployer: [null, [Validators.required, Validators.maxLength(500)]],
 
 			//nameOfManager: [null, [Validators.required, Validators.maxLength(60)]],
