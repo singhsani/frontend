@@ -89,10 +89,10 @@ export class BookChildrenTheaterComponent implements OnInit {
         this.bookingUtils = new BookingUtils(formService, toster);
         this.bookingService.resourceType = this.bookingConstants.CT_RESOURCE_TYPE;
 
-        this.head_lines = `Online Children theater Booking facility
-                            is the convenient and easy way to book the Children Theater
+        this.head_lines = `Online Children theatre Booking facility
+                            is the convenient and easy way to book the Children Theatre
                             of Vadodara Municiple Corporation. You can view the
-                            availability details of the Children Theater and select booking
+                            availability details of the Children Theatre and select booking
                             date. The booking is confirmed on approval from department
                             and the successful payment of the rent amount for selected date.`;
     }

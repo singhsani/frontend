@@ -51,6 +51,7 @@ export class ShopLicNewComponent implements OnInit {
 	isPatners: boolean = false;
 
 	isIntimation: boolean = false;
+	isDisabledMorePerson : boolean = false;
 	isSubCategory: boolean = false;
 	isDisabledBtn: boolean = true;
 	isDisabledOrgType: boolean = false;
@@ -686,10 +687,11 @@ export class ShopLicNewComponent implements OnInit {
 		let isEditAnotherRow = this.isTableInEditMode(persontype);
 		if (!isEditAnotherRow) {
 
-			// if (persontype === "OCCUPANCY" && this.getArrayByType(persontype).controls.length >= 2) {
-			// 	this.toastrService.warning("Occuping Person not allowed more than 2");
-			// 	return false;
-			// }
+			if (persontype === "OCCUPANCY" && this.getArrayByType(persontype).controls.length >= 5) {
+				this.isDisabledMorePerson = true;
+			    this.commonService.openAlert("Warning", "Only 5 Worker Type Available", "warning");	
+				return false;
+			}
 
 
 			if (persontype === "OCCUPANCY") {
@@ -1871,8 +1873,10 @@ export class ShopLicNewComponent implements OnInit {
 		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
 			this.getArrayByType(persontype).removeAt(index);
 			this.toastrService.success("Succesfully deleted", "Deleted");
+         this.getCommonWorkerType()
 		});
-	}
+		this.isDisabledMorePerson = false;
+	}     
 
 	moreThanZeroWomenDocument(res,ownershipType,organizationType){
 		this.totalNoOfWoman = 0;

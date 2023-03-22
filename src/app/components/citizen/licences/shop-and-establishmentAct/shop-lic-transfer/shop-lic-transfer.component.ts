@@ -46,6 +46,7 @@ export class ShopLicTransferComponent implements OnInit {
 	isPatners: boolean = false;
 
 	isIntimation: boolean = false;
+	isDisabledMorePerson : boolean = false;
 	totalNoOfWoman: number = 0;
 	womanDocument :Array<any> = [];
 	edit:boolean = true;
@@ -753,7 +754,7 @@ export class ShopLicTransferComponent implements OnInit {
 		if (!isEditAnotherRow) {
 
 			if (persontype === "PATNERS" && this.getArrayByType(persontype).controls.length >= 2) {
-				this.toastrService.warning("Occuping Person not allowed more than 2");
+				this.toastrService.warning("Occuping Person not allowed more than 2");	
 				return false;
 			}
 
@@ -783,6 +784,11 @@ export class ShopLicTransferComponent implements OnInit {
 		let isEditAnotherRow = this.isTableInEditMode(persontype);
 		if (!isEditAnotherRow) {
 
+			if (persontype === "OCCUPANCY" && this.getArrayByType(persontype).controls.length >= 5) {
+				this.isDisabledMorePerson = true;
+			    this.commonService.openAlert("Warning", "Only 5 Worker Type Available !!", "warning");	
+				return false;
+			}
 			if (persontype === "OCCUPANCY") {
 				this.getArrayByType(persontype).push(this.createArrayWorkOut({
 					personType: persontype
@@ -970,7 +976,9 @@ export class ShopLicTransferComponent implements OnInit {
 		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
 			this.getArrayByType(persontype).removeAt(index);
 			this.toastrService.success("Succesfully deleted", "Deleted");
+			this.getCommonWorkerType()
 		});
+		this.isDisabledMorePerson = false;
 	}
 
 	/**
