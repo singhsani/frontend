@@ -1,5 +1,5 @@
 <!-- *ngIf="searchObj.isDisplayRenewLicenceForm" -->
-<!-- <div *ngIf="searchObj.isDisplayRenewLicenceForm">
+<div *ngIf="searchObj.isDisplayRenewLicenceForm">
 	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
 	<mat-card class="mt-4 formClass">
@@ -18,7 +18,7 @@
 		</div>
 
 	</mat-card>
-</div> -->
+</div>
 
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 <mat-card class="formClass cardBorder" [hidden]="showDowlLoadFileTab" *ngIf="!searchObj.isDisplayRenewLicenceForm">
