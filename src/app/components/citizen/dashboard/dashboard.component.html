@@ -25,7 +25,7 @@
         </ng-template>
         <div class="servicesList row" *ngIf="showBookingServices">
             <div class="colBtn col-md-3" *ngFor="let service of module.services;" matTooltip="{{ service.name }}">
-                <button mat-stroked-button *ngIf="service.active" color="primary"   (click)="onClick(service.code)" routerLink="/{{manageRoutes.getFullRoute(service.code)}}">
+                <button mat-stroked-button *ngIf="service.active" color="primary"   routerLink="/{{manageRoutes.getFullRoute(service.code)}}">
                     {{ service.name }}
                 </button>
                 <button mat-stroked-button *ngIf="!service.active" color="primary">
