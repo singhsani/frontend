@@ -55,7 +55,11 @@ export class ValidationService {
             invalidElectionCard: 'Enter valid Election Card Number e.g. ABC1234567',
             invalidPassport: 'Enter valid Passport number e,g, A1234567 or AB1234567',
             invalidPropertyNo: 'Please enter valid property no. with occupier code',
-            invalidMemberNo: 'Please enter valid member no.'
+            invalidMemberNo: 'Please enter valid member no.',
+            invalidCensusNumber: `Census Number length should be 21`,
+            invalidPrcNumber : `Enter valid PRC number e.g. PRC123456789`,
+            invalidPecNumber : `Enter valid PEC number e.g. PEC123456789`,
+            inValidelectricityBill  :`Enter valid Election Card Number e.g. 12345678901`
         }
 
         return config[validatorName];
@@ -384,6 +388,43 @@ export class ValidationService {
         }
     }
 
+    static censusNumberValidator(control: FormControl) {
+         // censusNumber regex
+        if (control.value) {
+            const matches = control.value.match(/^\d{2}-\d{2}-\d{3}-\d{3}-\d{3}-\d{3}$/);
+            return matches ? null : { 'invalidCensusNumber': true }
+        }
+    }
 
+    static prcValidation(control: AbstractControl) {
+        // PFC regex
+        if (control.value) {
+            const matches = control.value.match(/^\P{1}\R{1}\C{1}[0-9]{9}$/);
+            return matches ? null : { 'invalidPrcNumber': true };
+        } else {
+            return null;
+        }
+    }
+
+    static pecValidation(control: AbstractControl) {
+        // PEC regex
+        if (control.value) {
+            const matches = control.value.match(/^\P{1}\E{1}\C{1}[0-9]{9}$/);
+            return matches ? null : { 'invalidPecNumber': true };
+        } else {
+            return null;
+        }
+    }
+
+
+    static electricityBillValidation(control: AbstractControl) {
+        // electricity Bill length should be 11 digits
+        if (control.value) {
+            const matches = control.value.match(/^[0-9]{11,11}$/);
+            return matches ? null : { 'inValidelectricityBill': true };
+        } else {
+            return null;
+        }
+    }
 }
 

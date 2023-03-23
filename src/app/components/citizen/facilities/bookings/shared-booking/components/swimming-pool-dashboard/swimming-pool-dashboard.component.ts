@@ -13,6 +13,7 @@ export class SwimmingPoolDashboardComponent implements OnInit {
 
   manageRoutes: any = ManageRoutes;
   guideLineFlag: boolean = true;
+  translateKey: string = 'swimmingPoolScreen';
   // Modules List
   modules: Array<any> = [
     {

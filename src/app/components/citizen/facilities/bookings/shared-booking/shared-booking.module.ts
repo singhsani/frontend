@@ -24,6 +24,7 @@ const MODULES = [
   declarations: [BookingFileUploadComponent, SwimmingPoolDashboardComponent],
   exports: [
     BookingFileUploadComponent,
+    SwimmingPoolDashboardComponent,
   ...MODULES],
   providers: [BookingService]
 })
