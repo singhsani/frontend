@@ -8,6 +8,7 @@ import { ValidationService } from './../../../../shared/services/validation.serv
 import { AppService } from '../../../../core/services/citizen/app-services/app.service';
 import { ManageRoutes } from '../../../../config/routes-conf';
 import { CommonService } from 'src/app/shared/services/common.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
 	selector: 'app-forgot-password',
@@ -53,26 +54,32 @@ export class ForgotPasswordComponent implements OnInit {
 	*/
 	onForgotPassword(formVals: FormGroup) {
 
-		
-		if (this.forgotPassForm.valid) {
-			this.loading = true;
-			this.issingupbtn = true;
-		this.appService.forgotPassword(formVals).subscribe(
-			res => {
-				this.loading = false;
-				/**
-				 * Redirect to reset password
-				 */
-				this.commonService.successAlert("Success", "For OTP and reset link update you can check your registered mail ID and Mobile number. Thank you.", "success");
-				this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHRESETPASS')], { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp,email : this.forgotPassForm.get('email').value } });
-			}, err => {
-				this.loading = false;
-				this.issingupbtn = false;
-				this.toaster.error(err.error[0].code);
-			})
-		} else {
-			this.isValidFlag = true;
-		};
-	}
+        
+        if (this.forgotPassForm.valid) {
+            this.loading = true;
+            this.issingupbtn = true;
 
+        let obj ={
+            email: this.forgotPassForm.get('email').value,
+           userType : this.forgotPassForm.get('userType').value,
+           url  : environment.envAPIServer + 'citizen/auth/reset-password?'
+        }
+        this.appService.forgotPassword(obj).subscribe(
+            res => {
+                this.loading = false;
+                /**
+                 * Redirect to reset password
+                 */
+                this.commonService.successAlert("Success", "For OTP and reset link update you can check your registered mail ID and Mobile number. Thank you.", "success");
+                let url = this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHRESETPASS')], { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp,email : this.forgotPassForm.get('email').value } });
+
+            }, err => {
+                this.loading = false;
+                this.issingupbtn = false;
+                this.toaster.error(err.error[0].code);
+            })
+        } else {
+            this.isValidFlag = true;
+        }; 
+    }
 }

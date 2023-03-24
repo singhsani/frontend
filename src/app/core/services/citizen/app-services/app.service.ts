@@ -114,4 +114,14 @@ export class AppService {
 		};
 		return headers;
 	}
+
+
+	/**
+	 * This method is used to perform send link on email operation.
+	 * @param setEmailLink - parameters to reset password.
+	 */
+	setEmailLink(emailResetLink) {
+
+		return this.http.post('public/user/ExpireLink', emailResetLink, this.getCommonHeaders());
+	}
 }
