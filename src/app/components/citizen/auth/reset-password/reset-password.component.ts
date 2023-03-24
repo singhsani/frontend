@@ -20,6 +20,7 @@ export class ResetPasswordComponent implements OnInit {
 	userType = 'CITIZEN';
 
 	loading: boolean = false;
+	isvisibleFrom : boolean = true;
 
 	/**
 	 * Constructor to declare defualt propeties of class.
@@ -67,7 +68,7 @@ export class ResetPasswordComponent implements OnInit {
 				//this.resetPassForm.get('code').setValue("");
 				//this.resetPassForm.get('code').enable();
 			}
-
+           this.sendLinkOnEmail(params['uniqueId'], params['code'], this.emailobj )
 		});
 
 	}
@@ -134,5 +135,24 @@ export class ResetPasswordComponent implements OnInit {
 				}
 			);
 		}
+	}
+
+	sendLinkOnEmail(uniqueId, code, email){
+		let data = {
+			uniqueId: uniqueId,
+			code:code,
+			email:email
+		}
+		this.appService.setEmailLink(data).subscribe(res =>{
+			if(res == false){
+				this.isvisibleFrom = res;
+				this.commonService.openAlert("error",'Your link is expired please try again for forgot password.', "error", "", cb => {
+					this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
+				})
+			}
+			else{
+				this.isvisibleFrom = res;
+			}
+		});
 	}
 }
