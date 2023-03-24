@@ -6,7 +6,7 @@
 			<mat-form-field class="iconMat col-md-6">
 				<mat-icon matPrefix>face</mat-icon>
 				<input matInput type="text" maxlength="50" placeholder="Applicant Name"  formControlName="applicantName"
-				 required #firstname="matInput">
+				appValidationFields [validationFieldsType]="'onlyNameWithSpace'" required #firstname="matInput">
 				<control-messages [control]="applicantDetailsForm.get('applicantName')"></control-messages>
 			</mat-form-field>
 
