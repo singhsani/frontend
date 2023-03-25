@@ -133,10 +133,26 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 					"appointmentRequired": false,
 					"active": true
 				},
+				// {
+				// 	"code": "ZOO-DASHBOARD",
+				// 	"fieldView": "ALL",
+				// 	"name": "Zoo",
+				// 	"gujName": "પ્રાણી સંગ્રહાલય",
+				// 	"appointmentRequired": false,
+				// 	"active": true
+				// },
 				{
-					"code": "ZOO-DASHBOARD",
+					"code": "ZOOBOOK",
 					"fieldView": "ALL",
-					"name": "Zoo",
+					"name": "Zoo Ticket",
+					"gujName": "પ્રાણી સંગ્રહાલય",
+					"appointmentRequired": false,
+					"active": true
+				},
+				{
+					"code": "ANIMAL-ADOPTION",
+					"fieldView": "ALL",
+					"name": "Animal Adoption",
 					"gujName": "પ્રાણી સંગ્રહાલય",
 					"appointmentRequired": false,
 					"active": true
@@ -148,7 +164,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 					"gujName": "પ્લાનેટેરિયમ",
 					"appointmentRequired": false,
 					"active": true
-				}
+				},
 				// {
 				// 	"code": "BAND",
 				// 	"fieldView": "ALL",
