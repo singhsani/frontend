@@ -60,7 +60,9 @@ export class TownHallBookComponent implements OnInit {
 	 */
 	searchTownHallForm: FormGroup;
 	townHallApplicationForm: FormGroup;
-
+	bookingDetails : FormGroup;
+	organizationDetails : FormGroup;
+	applicationDetails : FormGroup
 	/**
 	 * Town hall form Lookups
 	 */
@@ -206,46 +208,43 @@ export class TownHallBookComponent implements OnInit {
 	 */
 	createTownHallBookingApplicationForm() {
 		console.log("hello");
+			/*Organization Details*/
+			this.organizationDetails = this.fb.group({
+				organizationName: [null, [Validators.required]],
+				orgTelephoneNo: [null, [Validators.required]],
+				organizationPresidentName: [null, [Validators.required]],
+				organizationAddress: this.fb.group(this.addressComp.addressControls()),
+				gstNo: [null, ValidationService.gstNoValidator],
+				programmeName: [null, [Validators.required]],
+			}),
+			/*Applicant Details */
+			this.applicationDetails = this.fb.group({
+				applicantName: [null, [Validators.required]],
+				applicantMobile: [null, [Validators.required]],
+				confirmMobile: [null, [Validators.required]],
+				emailID: [null, [Validators.required, ValidationService.emailValidator, Validators.maxLength(50)]],
+				confirmEmailID: [null, [Validators.required, ValidationService.emailValidator, Validators.maxLength(50)]],
+				relationshipWithOrg: [null, [Validators.required]],
+				applicantAddress: this.fb.group(this.appAddressComp.addressControls()),
+			}),
+			/* Booking Details */
+			this.bookingDetails = this.fb.group({
+				/*** Bank Accoount Details*/
+				bankName: this.fb.group({
+				code: [null, [Validators.required]]
+				}),
+				accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
+				accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
+				ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
+				/*** Booking Details*/
+				programShortDetails: [null, [Validators.required]],
+				programPurpose: [null, [Validators.required]],
+				termsCondition: null,
+				agree: null,
+			}),
+
 		this.townHallApplicationForm = this.fb.group({
-			/**
-			 * Organization Details
-			 */
-			//
-			organizationName: [null, [Validators.required]],
-			orgTelephoneNo: [null, [Validators.required]],
-			organizationPresidentName: [null, [Validators.required]],
-			organizationAddress: this.fb.group(this.addressComp.addressControls()),
-			gstNo: [null, ValidationService.gstNoValidator],
-			programmeName: [null, [Validators.required]],
-			/**
-			 * Applicant Details
-			 */
-			applicantName: [null, [Validators.required]],
-			applicantMobile: [null, [Validators.required]],
-			confirmMobile: [null, [Validators.required]],
-			emailID: [null, [Validators.required, ValidationService.emailValidator, Validators.maxLength(50)]],
-			confirmEmailID: [null, [Validators.required, ValidationService.emailValidator, Validators.maxLength(50)]],
-			relationshipWithOrg: [null, [Validators.required]],
-			applicantAddress: this.fb.group(this.appAddressComp.addressControls()),
-			/**
-			 * Bank Accoount Details
-			 */
-			// bankName: this.fb.group({
-			// 	code: [null, [Validators.required]]
-			// }),
-			// accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
-			// accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
-			// ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
-			/**
-			 * Booking Details
-			 */
-			programShortDetails: [null, [Validators.required]],
-			programPurpose: [null, [Validators.required]],
-			termsCondition: null,
-			agree: null,
-			/**
-			 * form details
-			 */
+			/** * form details*/
 			id: null,
 			idfcCode: null,
 			refNumber: null,
@@ -264,6 +263,9 @@ export class TownHallBookComponent implements OnInit {
 				name: null
 			})
 		});
+		this.commonService.createCloneAbstractControl(this.applicationDetails,this.townHallApplicationForm);
+		this.commonService.createCloneAbstractControl(this.organizationDetails,this.townHallApplicationForm);
+		this.commonService.createCloneAbstractControl(this.bookingDetails,this.townHallApplicationForm);		
 	}
 
 	/**
@@ -426,12 +428,12 @@ export class TownHallBookComponent implements OnInit {
 		  }
 
 		if (this.townHallApplicationForm.invalid && this.checkForm == false) {
-			this.handleErrorsOnSubmit();
+		//	this.handleErrorsOnSubmit();
 			this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
 			return;
 		}
 		else if (this.checkForm == false &&  !this.bookingUtils.matcher(this.townHallApplicationForm, 'emailID', 'confirmEmailID') || !this.bookingUtils.matcher(this.townHallApplicationForm, 'applicantMobile', 'confirmMobile')) {
-			this.handleErrorsOnSubmit();
+		//	this.handleErrorsOnSubmit();
 			this.commonService.openAlert("Field Error", !this.bookingUtils.matcher(this.townHallApplicationForm, 'emailID', 'confirmEmailID') ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning')
 			return;
 		} else if (this.checkForm == false &&  !this.townHallApplicationForm.get('agree').value) {
@@ -473,9 +475,9 @@ export class TownHallBookComponent implements OnInit {
 	 * Method is used to handle error/validation on submit
 	 * @param count - count of invalid control.
 	 */
-	handleErrorsOnSubmit() {
+	handleErrorsOnSubmit(controlName) {
 
-		const key = this.bookingUtils.getInvalidFormControlKey(this.townHallApplicationForm);
+		const key = this.bookingUtils.getInvalidFormControlKey(controlName);
 		const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 0;
 
 		this.tabIndex = index;
@@ -514,18 +516,18 @@ export class TownHallBookComponent implements OnInit {
 	 */
 	getUserProfile() {
 		this.bookingService.getUserProfile().subscribe(resp => {
-			this.townHallApplicationForm.get('applicantName').setValue(resp.data.firstName + ' ' + resp.data.lastName);
-			this.townHallApplicationForm.get('emailID').setValue(resp.data.email);
-			this.townHallApplicationForm.get('applicantMobile').setValue(resp.data.cellNo);
-			this.townHallApplicationForm.get('confirmMobile').setValue(resp.data.cellNo);
-			this.townHallApplicationForm.get('confirmEmailID').setValue(resp.data.email);
+			this.applicationDetails.get('applicantName').setValue(resp.data.firstName + ' ' + resp.data.lastName);
+			this.applicationDetails.get('emailID').setValue(resp.data.email);
+			this.applicationDetails.get('applicantMobile').setValue(resp.data.cellNo);
+			this.applicationDetails.get('confirmMobile').setValue(resp.data.cellNo);
+			this.applicationDetails.get('confirmEmailID').setValue(resp.data.email);
 		},
 			err => {
 				this.toster.error("Server Error");
 			});
-		this.townHallApplicationForm.get('applicantAddress').get('country').setValue('INDIA');
-		this.townHallApplicationForm.get('applicantAddress').get('state').setValue('GUJARAT');
-		this.townHallApplicationForm.get('applicantAddress').get('city').setValue('Vadodara');
+		this.applicationDetails.get('applicantAddress').get('country').setValue('INDIA');
+		this.applicationDetails.get('applicantAddress').get('state').setValue('GUJARAT');
+		this.applicationDetails.get('applicantAddress').get('city').setValue('Vadodara');
 	}
 
 	getClass(shift) {
@@ -618,4 +620,19 @@ export class TownHallBookComponent implements OnInit {
 		  })
 	
 	  }
+	  checkValidation(controlName,isSubmitted){
+		if(controlName.invalid){
+			this.handleErrorsOnSubmit(controlName)
+		}else{
+			const organizationalAry = Object.keys(controlName.value);
+			organizationalAry.forEach(element => {
+				this.townHallApplicationForm.get(element).setValue(controlName.get(element).value);
+			});
+			this.commonService.setValueToFromControl(controlName,this.townHallApplicationForm);
+			this.tabIndex= this.tabIndex +1;
+			if(isSubmitted){
+				this.submitTownhallApplication(); 
+			}
+		}
+}
 }
