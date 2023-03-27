@@ -339,7 +339,7 @@ export class SwimmingPoolComponent implements OnInit {
       payableServiceType: null,
       resourceCode: null,
       swimmingPoolName: this.fb.group({
-        code: ['LALBAUG_SWIMMING_POOL', [Validators.required]],
+        code: [null, [Validators.required]],
         name: null,
         gujName: null
       }),
