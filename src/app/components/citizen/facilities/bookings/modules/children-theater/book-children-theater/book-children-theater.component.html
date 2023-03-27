@@ -6,9 +6,9 @@
     <mat-card class="cardBox">
         <div class="pageTitle">{{'online_children_theater_booking'| translate: translateKey}}</div>
         <mat-card-content class="p-4">
-            <p class="pb-2">{{head_lines| translate: translateKey}}</p>
-            <h2>{{'rules_and_regulations'| translate: translateKey}}</h2>
-            <ol class="olList">
+            <h4 class="pb-2">{{head_lines| translate: translateKey}}</h4><br>
+            <h2><b>{{'rules_and_regulations'| translate: translateKey}}</b></h2>
+            <h4><ol class="olList">
                 <li>
                     All parties/organizers have to observe the VMC Rules
                 </li>
@@ -21,9 +21,9 @@
               <li>
                 Theatre will be available between 9:00 AM to 8:00 PM
               </li>
-            </ol>
+            </ol></h4>
 
-              <h2>{{'fees_structure'| translate: translateKey}}</h2>
+              <h2><b>{{'fees_structure'| translate: translateKey}}</b></h2>
 
               <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
