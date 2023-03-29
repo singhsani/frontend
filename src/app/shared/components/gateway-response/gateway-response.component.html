@@ -1,6 +1,11 @@
 <!-- Payment Success-->
 <div class="container text-center" *ngIf="responseObj.order_status == 'Success' || responseObj.authStatus == '0300' ">
 	<div>
+		<h3>
+			<span class="warningmsg"><strong>Don't refresh the page or go back</strong></span>
+		</h3>
+	</div>
+	<div>
 		<h1>
 			<mat-icon class="checkIcon successicon">check_circle_outline</mat-icon>
 			&nbsp;
