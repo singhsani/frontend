@@ -44,6 +44,7 @@ export class SwimmingPoolComponent implements OnInit {
   disableDate = new Date(moment().subtract(1, 'm').format('YYYY-MM-DD'));
   disableBirthDate = new Date(moment().subtract(1, 'y').format('YYYY-MM-DD'));
   minBirthDate = new Date(1900, 0, 1);
+  maxBirthdate = new Date(moment().subtract(1, 'y').format('YYYY-MM-DD'));
   isFileUploaded1: boolean = false;
   isFileUploaded2: boolean = false;
   isFileUploaded3: boolean = false;
@@ -216,6 +217,10 @@ export class SwimmingPoolComponent implements OnInit {
   filterAsperBatchName(event: any) {
     let poolName = this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value;
     if (event == 'REGULAR') {
+      this.swimmimgPoolBookingForm.get('applicantBirthDate').reset();
+      this.swimmimgPoolBookingForm.get('applicantAge').reset();
+      this.minBirthDate = new Date(1900, 0, 1);
+      this.maxBirthdate = new Date(moment().subtract(12, 'y').format('YYYY-MM-DD'));
       this.bookingService.filterBatchCode(this.swimmimgPoolBookingForm.get('category').get('code').value, poolName).subscribe(rep => {
         this.BATCH_NAME = rep;
       },
@@ -223,9 +228,32 @@ export class SwimmingPoolComponent implements OnInit {
           this.toastr.error("Server Error");
         })
     }
-    else if (event) {
+    else if (event == "LADIES") {
+      this.swimmimgPoolBookingForm.get('applicantBirthDate').reset();
+      this.swimmimgPoolBookingForm.get('applicantAge').reset();
+      this.minBirthDate = new Date(1900, 0, 1);
+      this.maxBirthdate = new Date(moment().subtract(1, 'y').format('YYYY-MM-DD'));
       this.bookingService.filterBatchCode(event, poolName).subscribe(rep => {
         this.BATCH_NAME = rep;
+      },
+        err => {
+          this.toastr.error("Server Error");
+        })
+      }
+    else {
+      this.swimmimgPoolBookingForm.get('applicantBirthDate').reset();
+        this.swimmimgPoolBookingForm.get('applicantAge').reset();
+        this.minBirthDate = new Date(moment().subtract(12, 'y').format('YYYY-MM-DD'));
+        this.maxBirthdate = new Date(moment().subtract(5, 'y').format('YYYY-MM-DD'));
+      this.bookingService.filterBatchCode(event, poolName).subscribe(rep => {
+        // this.BATCH_NAME = rep;
+        this.BATCH_NAME = []
+        rep.forEach(element => {
+          if(element.code == "BABY_TIME-7-745-AM" || element.code == "BABY_TIME-9-945-AM" ||  element.code == "BABY_TIME-4-445-PM" || element.code == "BABY_TIME-6-645-AM" ){
+           debugger
+            this.BATCH_NAME.push(element) 
+          }
+        });
       },
         err => {
           this.toastr.error("Server Error");

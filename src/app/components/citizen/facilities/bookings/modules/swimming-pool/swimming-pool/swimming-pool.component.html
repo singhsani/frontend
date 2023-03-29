@@ -7,13 +7,14 @@
 			<mat-form-field class="col-md-10">
 				<input matInput required placeholder="{{'search_by_membership_no' | translate:translateKey}}"
 					maxlength="11" [formControl]="memberNumber">
+				<control-messages [control]="memberNumber">
+				</control-messages>
 			</mat-form-field>
-			<control-messages [control]="memberNumber">
-			</control-messages>
+			
 		</div>
 		<div>
 			<button class="col-md-2" [disabled]="!memberNumber.valid" mat-raised-button color="primary"
-				(click)="getSwimmingPoolData()">{{'search'
+				(click)="getSwimmingPoolData()">{{'Search'
 				| translate:translateKey}}</button>
 		</div>
 
@@ -217,7 +218,7 @@
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput [max]="disableBirthDate" autocomplete="off" appDate
+							<input matInput [max]="maxBirthdate" autocomplete="off" appDate [min]="minBirthDate"
 								[matDatepicker]="datepicker" [min]="minBirthDate" formControlName="applicantBirthDate"
 								placeholder="{{ 'date_of_birth' | translate:translateKey }} (DD/MM/YYYY)" required
 								(dateChange)="dateFormat($event.value,'applicantBirthDate');calculateAge($event.value)">
