@@ -48,7 +48,7 @@ export class ValidationService {
             invalidpetaKendraNumber: 'Should contains only alpha-numeric and numeric value',
             invalidAmount: 'Amount should be in digit and Only two digit allowed after decimal',
             motherMarriageTimeAge: 'Mothers age at marriage time should not be less then 12 Years',
-            invalidGstNo: 'Please enter a valid GSTIN e.g. 29ABCDE1234F2Z5',
+            invalidGstNo: 'Please enter a valid GST Number e.g. 29ABCDE1234F2Z5',
             invalidAccountNo: 'Invalid Account No',
             invalidAcHolderName: 'Invalid Name',
             invalidDrivingLicense: 'Enter valid License number e.g. GJ0620210012122',
