@@ -1549,6 +1549,7 @@ export class ShopLicTransferComponent implements OnInit {
 	}
 	
 	deleteWomenDocument(){
+		debugger
 		if(this.totalNoOfWomanForDocu == 0)
 	   {
 		   this.displayDocs.forEach((file,index)=> {
@@ -1556,6 +1557,12 @@ export class ShopLicTransferComponent implements OnInit {
 					   this.displayDocs.splice(index, 1);
 				   }
 		   })
+
+		//    this.uploadFilesArray.forEach((file,index) => {
+		// 	if(file.documentIdentifier == 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J'){
+		// 		this.uploadFilesArray.splice(index, 1);
+		// 	}
+		//    })
 	   }
    }
 	
