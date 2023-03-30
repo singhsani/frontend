@@ -1514,6 +1514,12 @@ export class ShopLicNewComponent implements OnInit {
 						this.displayDocs.splice(index, 1);
 					}
 			})
+
+			this.uploadFilesArray.forEach((file,index) => {
+				if(file.documentIdentifier == 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J'){
+					this.uploadFilesArray.splice(index, 1);
+				}
+			   })
 		}
 	}
 
