@@ -6,9 +6,12 @@
 		<div>
 			<mat-form-field class="col-md-10">
 				<input matInput required placeholder="{{'search_by_membership_no' | translate:translateKey}}"
-					maxlength="11" [formControl]="memberNumber">
-				<control-messages [control]="memberNumber">
-				</control-messages>
+					maxlength="16" [formControl]="memberNumber" (keyup)="getNumber($event)">
+				<!-- <control-messages [control]="memberNumber">
+				</control-messages> -->
+				<mat-error *ngIf="memberNumber.invalid && !showMsg">Membership Number  is required.
+				</mat-error>
+				<mat-error *ngIf="showMsg && memberNumber.invalid">Please enter valid  Membership number</mat-error>
 			</mat-form-field>
 			
 		</div>

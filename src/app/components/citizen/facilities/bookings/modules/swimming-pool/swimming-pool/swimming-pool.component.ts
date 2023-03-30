@@ -99,6 +99,7 @@ export class SwimmingPoolComponent implements OnInit {
   memberNumber: FormControl;
   isRenewalForm = false;
   isVisibleElectricityBill = false;
+  showMsg = false;
 
   constructor(
     private fb: FormBuilder,
@@ -114,7 +115,7 @@ export class SwimmingPoolComponent implements OnInit {
   ) {
     this.bookingUtils = new BookingUtils(formService, toastr);
     this.bookingService.resourceType = 'swimming';
-    this.memberNumber = new FormControl('', Validators.required);
+    this.memberNumber = new FormControl('', ValidationService.swimmingPoolMemberValidator);
   }
 
   /**
@@ -735,5 +736,17 @@ export class SwimmingPoolComponent implements OnInit {
       }, (error: any) => {
         this.commonService.openAlert("Error", error.error[0].message, "warning")
       })
+  }
+
+  getNumber(event){
+    if(event.target.value.length >= 1 && event.target.value.length <= 16 ){
+      this.showMsg = true;
+    }
+    else if(event.target.value.length == 0){
+      this.showMsg = false
+    }
+    else{
+      this.showMsg = false
+    }   
   }
 }
