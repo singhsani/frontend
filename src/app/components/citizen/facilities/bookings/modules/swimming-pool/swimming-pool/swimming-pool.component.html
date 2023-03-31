@@ -37,7 +37,10 @@
 
 	<mat-card-content class="footer_container">
 		<div class="head_container">
-		<img _ngcontent-c1="" alt="Vadodara Municipal Corporation" src="assets/images/vmc-logo.png" class="center">
+		<img _ngcontent-c1="" alt="Vadodara Municipal Corporation" src="assets/images/vmc-logo.png" class="center"><br>
+		<h1><b>Contact Details.</b></h1>
+		<h1><b>Karelibaug Swim.Pool:2483500 , &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	Sardarbaug Swim.Pool: 2335383.</b></h1><br>
+		<h1><b>Lalbaug Swim.Pool: 2651575 ,  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    RajivGandhi Swim.Pool: 2516760.</b></h1><br>
 		<h4> <b>Read all the rules swimming pool-wise before click on proceed, once you click on proceed we consider your acceptance of the rules and regulations.</b></h4>
             <h4> <b>"Proceed" પર ક્લિક કરતા પહેલા સ્વિમિંગ પૂલ મુજબના તમામ નિયમો વાંચો, એકવાર તમે "Proceed" પર ક્લિક કરો પછી અમે નિયમો અને નિયમોની તમારી સ્વીકૃતિને ધ્યાનમાં લઈશું.</b></h4>
 			<br>
@@ -131,7 +134,7 @@
 							</control-messages>
 						</div>
 
-						<div class="col-md-4 ngSelect" formGroupName="batchDuration">
+						<div class="col-md-2 ngSelect" formGroupName="batchDuration">
 							<ng-select placeholder="{{'batch_duration' | translate:translateKey}} *"
 								formControlName="code" required>
 								<ng-option *ngFor="let time of BATCH_DURATION" [value]="time.code"
@@ -142,7 +145,7 @@
 							</control-messages>
 						</div>
 
-						<div class="col-md-4 ngSelect" formGroupName="batchFor">
+						<div class="col-md-6 ngSelect" formGroupName="batchFor">
 							<ng-select placeholder="{{'batch_for' | translate:translateKey}} *" formControlName="code"
 								required
 								(change)="filterAsperBatchName($event);swimmimgPoolBookingForm.get('batchName').reset()">
