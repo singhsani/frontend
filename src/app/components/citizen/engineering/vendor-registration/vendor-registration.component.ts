@@ -421,7 +421,7 @@ export class VendorRegistrationComponent implements OnInit {
       typeOfFirm: [null, Validators.required],
       nameOfTheFirm: [null, [Validators.required, Validators.maxLength(150)]],
       commencementDate: [null, [Validators.required]],
-      yearOfEstablishment: [null, [Validators.required]],
+      yearOfEstablishment: [null],
       panNo: [null, [Validators.required, ValidationService.panValidator]],
       tanNo: [null, [ValidationService.tanValidator]],
       gstNo: [null, [ValidationService.gstNoValidator]],
