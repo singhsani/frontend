@@ -228,7 +228,15 @@ export class SwimmingPoolComponent implements OnInit {
     },
       err => {
         this.commonService.openAlert("Warning", err.error[0].message, "warning" , "", cb => {
-        this.swimmimgPoolBookingForm.reset()
+        this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').reset();
+        this.swimmimgPoolBookingForm.get('membershipType').get('code').reset();
+        this.swimmimgPoolBookingForm.get('category').get('code').reset();
+        this.swimmimgPoolBookingForm.get('batchDuration').get('code').reset();
+        this.swimmimgPoolBookingForm.get('birthDate').reset();
+        this.swimmimgPoolBookingForm.get('batchFor').get('code').reset();
+        this.swimmimgPoolBookingForm.get('batchName').get('code').reset();
+        this.swimmimgPoolBookingForm.get('applicantBirthDate').reset();
+        this.swimmimgPoolBookingForm.get('applicantAge').reset()
         }) ;
       })
   }
