@@ -95,6 +95,7 @@ export class VendorRegistrationComponent implements OnInit {
   city = '';
   country = '';
   canAddressEdit = true;
+  checkbox: boolean = true;
   
   constructor(
     private fb: FormBuilder,
@@ -1155,4 +1156,28 @@ export class VendorRegistrationComponent implements OnInit {
     this.landmark = ''
     this.area = ''
   }
+
+  onSameAddressChange(event){
+    if(event.checked){  
+      this.vendorRegistrationForm.get('registeredAddress').get('buildingName').setValue(this.vendorRegistrationForm.get('buildingName').value)
+      this.vendorRegistrationForm.get('registeredAddress').get('streetName').setValue(this.vendorRegistrationForm.get('streetName').value)
+      this.vendorRegistrationForm.get('registeredAddress').get('city').setValue(this.vendorRegistrationForm.get('city').value)
+      this.vendorRegistrationForm.get('registeredAddress').get('country').setValue(this.vendorRegistrationForm.get('country').value)
+      this.vendorRegistrationForm.get('registeredAddress').get('pincode').setValue(this.vendorRegistrationForm.get('pincode').value)
+      this.vendorRegistrationForm.get('registeredAddress').get('state').setValue(this.vendorRegistrationForm.get('state').value)
+      this.vendorRegistrationForm.get('registeredAddress').get('landmark').setValue(this.vendorRegistrationForm.get('landmark').value)
+      this.vendorRegistrationForm.get('registeredAddress').get('area').setValue(this.vendorRegistrationForm.get('area').value)
+    }
+    else{
+      this.vendorRegistrationForm.get('registeredAddress').get('buildingName').setValue(null)
+      this.vendorRegistrationForm.get('registeredAddress').get('streetName').setValue(null)
+      this.vendorRegistrationForm.get('registeredAddress').get('city').setValue(null)
+      this.vendorRegistrationForm.get('registeredAddress').get('country').setValue(null)
+      this.vendorRegistrationForm.get('registeredAddress').get('pincode').setValue(null)
+      this.vendorRegistrationForm.get('registeredAddress').get('state').setValue(null)
+      this.vendorRegistrationForm.get('registeredAddress').get('landmark').setValue(null)
+      this.vendorRegistrationForm.get('registeredAddress').get('area').setValue(null)
+    }
+  }
+  
 }
