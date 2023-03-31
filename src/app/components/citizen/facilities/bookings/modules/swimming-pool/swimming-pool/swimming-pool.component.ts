@@ -222,19 +222,6 @@ export class SwimmingPoolComponent implements OnInit {
        category: this.swimmimgPoolBookingForm.get('category').get('code').value,
        birthDate : this.swimmimgPoolBookingForm.get('birthDate').value
     }
-
-    if (event == 'REGULAR') {
-      this.minBirthDate = new Date(1900, 0, 1);
-      this.maxBirthdate = new Date(moment().subtract(12, 'y').format('YYYY-MM-DD'));
-    }
-    else if (event == "LADIES") {
-      this.minBirthDate = new Date(1900, 0, 1);
-      this.maxBirthdate = new Date(moment().subtract(1, 'y').format('YYYY-MM-DD'));
-      }
-    else {
-        this.minBirthDate = new Date(moment().subtract(12, 'y').format('YYYY-MM-DD'));
-        this.maxBirthdate = new Date(moment().subtract(5, 'y').format('YYYY-MM-DD'));
-    }
     this.BATCH_NAME = []
     this.bookingService.filterBatchCode(obj).subscribe(rep => {
       this.BATCH_NAME = rep;
