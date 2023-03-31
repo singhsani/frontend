@@ -134,7 +134,7 @@
 							</control-messages>
 						</div>
 
-						<div class="col-md-2 ngSelect" formGroupName="batchDuration">
+						<div class="col-md-4 ngSelect" formGroupName="batchDuration">
 							<ng-select placeholder="{{'batch_duration' | translate:translateKey}} *"
 								formControlName="code" required>
 								<ng-option *ngFor="let time of BATCH_DURATION" [value]="time.code"
