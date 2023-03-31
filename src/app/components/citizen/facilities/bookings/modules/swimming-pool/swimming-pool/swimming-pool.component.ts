@@ -44,7 +44,7 @@ export class SwimmingPoolComponent implements OnInit {
   disableDate = new Date(moment().subtract(1, 'm').format('YYYY-MM-DD'));
   disableBirthDate = new Date(moment().subtract(1, 'y').format('YYYY-MM-DD'));
   minBirthDate = new Date(1900, 0, 1);
-  maxBirthdate = new Date(moment().subtract(1, 'y').format('YYYY-MM-DD'));
+  maxBirthdate = new Date();
   isFileUploaded1: boolean = false;
   isFileUploaded2: boolean = false;
   isFileUploaded3: boolean = false;
@@ -216,55 +216,36 @@ export class SwimmingPoolComponent implements OnInit {
    * Filter details as per pool name selection
    */
   filterAsperBatchName(event: any) {
-    let poolName = this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value;
+    let obj = {
+       batchCode : event,
+       poolName : this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value,
+       category: this.swimmimgPoolBookingForm.get('category').get('code').value,
+       birthDate : this.swimmimgPoolBookingForm.get('birthDate').value
+    }
+
     if (event == 'REGULAR') {
-      this.swimmimgPoolBookingForm.get('applicantBirthDate').reset();
-      this.swimmimgPoolBookingForm.get('applicantAge').reset();
       this.minBirthDate = new Date(1900, 0, 1);
       this.maxBirthdate = new Date(moment().subtract(12, 'y').format('YYYY-MM-DD'));
-      this.bookingService.filterBatchCode(this.swimmimgPoolBookingForm.get('category').get('code').value, poolName).subscribe(rep => {
-        this.BATCH_NAME = rep;
-      },
-        err => {
-          this.toastr.error("Server Error");
-        })
     }
     else if (event == "LADIES") {
-      this.swimmimgPoolBookingForm.get('applicantBirthDate').reset();
-      this.swimmimgPoolBookingForm.get('applicantAge').reset();
       this.minBirthDate = new Date(1900, 0, 1);
       this.maxBirthdate = new Date(moment().subtract(1, 'y').format('YYYY-MM-DD'));
-      this.bookingService.filterBatchCode(event, poolName).subscribe(rep => {
-        this.BATCH_NAME = rep;
-      },
-        err => {
-          this.toastr.error("Server Error");
-        })
       }
     else {
-      this.swimmimgPoolBookingForm.get('applicantBirthDate').reset();
-        this.swimmimgPoolBookingForm.get('applicantAge').reset();
         this.minBirthDate = new Date(moment().subtract(12, 'y').format('YYYY-MM-DD'));
         this.maxBirthdate = new Date(moment().subtract(5, 'y').format('YYYY-MM-DD'));
-      this.bookingService.filterBatchCode(event, poolName).subscribe(rep => {
-        // this.BATCH_NAME = rep;
-        this.BATCH_NAME = []
-        rep.forEach(element => {
-          if(element.code == "BABY_TIME-7-745-AM" || element.code == "BABY_TIME-9-945-AM" ||  element.code == "BABY_TIME-4-445-PM" || element.code == "BABY_TIME-6-645-AM" ){
-           debugger
-            this.BATCH_NAME.push(element) 
-          }
-        });
-      },
-        err => {
-          this.toastr.error("Server Error");
-        })
     }
-    // else {
-    //   this.toastr.error("Server Error");
-    // }
-
+    this.BATCH_NAME = []
+    this.bookingService.filterBatchCode(obj).subscribe(rep => {
+      this.BATCH_NAME = rep;
+    },
+      err => {
+        this.commonService.openAlert("Warning", err.error[0].message, "warning" , "", cb => {
+        this.swimmimgPoolBookingForm.reset()
+        }) ;
+      })
   }
+  
 
   /**
    * Method for hide duration field
@@ -402,7 +383,7 @@ export class SwimmingPoolComponent implements OnInit {
       applicantPhoto: null,
       applicantMobileNumber: [null, Validators.required],
       applicantEmergencyNumber: null,
-      applicantBirthDate: [null, Validators.required],
+      applicantBirthDate: [{ value:null, disabled: true }],
       applicantJoiningMonth: [null, Validators.required],
       applicantAge: null,
       applicantIDProof: this.fb.group({
@@ -435,7 +416,8 @@ export class SwimmingPoolComponent implements OnInit {
       family: false,
       staffMember: false,
       isRenewalForm: false,
-      memberNumber: null
+      memberNumber: null,
+      birthDate :[null, Validators.required],
     });
   }
 
@@ -446,7 +428,7 @@ export class SwimmingPoolComponent implements OnInit {
 
     this.applicantageyear = moment().diff(event, 'years', false);
     // this.applicantagedays = bday.diff(bday.add(this.applicantageyear, 'years'), 'days', false);
-
+    this.swimmimgPoolBookingForm.get('applicantBirthDate').setValue(this.swimmimgPoolBookingForm.get('birthDate').value)
     this.swimmimgPoolBookingForm.get("applicantAge").setValue(this.applicantageyear);
     if (this.applicantageyear <= 18) {
       this.isApplicateAgeGreaterThanEighteen = true;
@@ -495,6 +477,7 @@ export class SwimmingPoolComponent implements OnInit {
         res => {
           this.swimmimgPoolBookingForm.get('refNumber').setValue(res.refNumber);
           this.swimmimgPoolBookingForm.patchValue(res);
+          this.tabIndex= this.tabIndex +1
         },
         err => {
           this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');

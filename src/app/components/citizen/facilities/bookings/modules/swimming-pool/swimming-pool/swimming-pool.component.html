@@ -77,7 +77,7 @@
 	</mat-card-content>
 		<div class="fotButtonBar proceedButtton">
 			<div class="col-sm-12 col-md-12 text-right">
-				<button mat-raised-button (click)="showDowlLoadFileTab = true; showSwimmingPoolForm= false; saveFormData()"
+				<button mat-raised-button (click)="showDowlLoadFileTab = true; showSwimmingPoolForm= false;"
 					color="primary">
 					<mat-icon>thumb_up_alt</mat-icon> 
 					{{'proceed'| translate: translateKey}}
@@ -145,7 +145,19 @@
 							</control-messages>
 						</div>
 
-						<div class="col-md-6 ngSelect" formGroupName="batchFor">
+						<mat-form-field class="col-md-4">
+							<input matInput [max]="maxBirthdate" autocomplete="off" appDate [max]="maxBirthdate" 
+								[matDatepicker]="birthDatedatepicker" formControlName="birthDate"
+								placeholder="{{ 'date_of_birth' | translate:translateKey }} (DD/MM/YYYY)" required
+								(dateChange)="dateFormat($event.value,'birthDate');calculateAge($event.value); swimmimgPoolBookingForm.get('batchFor').get('code').reset()" >
+							<mat-datepicker-toggle matSuffix [for]="birthDatedatepicker"></mat-datepicker-toggle>
+							<mat-datepicker #birthDatedatepicker touchUi="true"></mat-datepicker>
+							<div align="end" class="default-show-hint mat-hint mat-right">
+								{{config.DATE_HINT_MSG}}</div>
+						</mat-form-field>
+
+
+						<div class="col-md-4 ngSelect" formGroupName="batchFor">
 							<ng-select placeholder="{{'batch_for' | translate:translateKey}} *" formControlName="code"
 								required
 								(change)="filterAsperBatchName($event);swimmimgPoolBookingForm.get('batchName').reset()">
@@ -175,7 +187,7 @@
 								{{'back' | translate:translateKey}}
 							</button>
 							<button mat-raised-button type="button" color="primary"
-								(click)="tabIndex= tabIndex +1;saveFormData()">
+								(click)="saveFormData()">
 								{{'save_and_next'| translate:translateKey}}
 								<mat-icon>navigate_next</mat-icon>
 							</button>

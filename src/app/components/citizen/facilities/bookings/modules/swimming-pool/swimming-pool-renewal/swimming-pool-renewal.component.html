@@ -61,6 +61,19 @@
             </control-messages>
           </div>
 
+          <mat-form-field class="col-md-4">
+            <input matInput [max]="maxBirthdate" autocomplete="off" appDate [min]="minBirthDate"
+              [matDatepicker]="birthDatedatepicker" [min]="minBirthDate" formControlName="birthDate"
+              placeholder="{{ 'date_of_birth' | translate:translateKey }} (DD/MM/YYYY)" required
+              (dateChange)="dateFormat($event.value,'birthDate');calculateAge($event.value)">
+            <mat-datepicker-toggle matSuffix [for]="birthDatedatepicker"></mat-datepicker-toggle>
+            <mat-datepicker #birthDatedatepicker touchUi="true"></mat-datepicker>
+            <div align="end" class="default-show-hint mat-hint mat-right">
+              {{config.DATE_HINT_MSG}}</div>
+            <control-messages [control]="swimmimgPoolBookingForm.get('birthDate')">
+            </control-messages>
+          </mat-form-field>
+          
           <div class="col-md-4 ngSelect" formGroupName="batchFor">
             <ng-select placeholder="{{'batch_for' | translate:translateKey}} *" formControlName="code" required
               (change)="filterAsperBatchName($event);swimmimgPoolRenewalForm.get('batchName').reset()">
