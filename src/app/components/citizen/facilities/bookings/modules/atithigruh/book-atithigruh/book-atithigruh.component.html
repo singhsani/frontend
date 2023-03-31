@@ -111,7 +111,76 @@
             <h4>Booking Office : Near Sayajibagh Guest House No. 2, Sayajibagh, Vadodara.</h4>
             <h4>Booking time : Monday to Friday from 9:30 am to 1:00 pm.</h4>
             <h4>Saturday : 9:30 am to 11:00 am (Booking office will be closed on public holidays.)</h4>
-          </ol></h4>
+          </ol></h4><br>
+          <p class="pb-2 headLines">{{head_lines| translate: translateKey}}</p>      
+                  <div class="rate-chart">
+                    <h4><b>Atithigruh Booking Rate Chart</b></h4>
+                  </div>
+                    
+                <mat-card class="cardBox">
+                  <div class="pageTitle">
+                    <h4 align="center"><b>Atithigruh One Day Booking Charges</b></h4>
+                  </div>
+                </mat-card>
+                <table mat-table [dataSource]="feeDetails" class="mat-elevation-z8">
+
+                    <ng-container matColumnDef="sno">
+                        <th mat-header-cell *matHeaderCellDef> Sr.No. </th>
+                         <td mat-cell *matCellDef="let element"> {{element.sno}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="atithigruh">
+                        <th mat-header-cell *matHeaderCellDef> Atithigruh </th>
+                        <td mat-cell *matCellDef="let element"> {{element.atithigruh}} </td>
+                   </ng-container>
+
+                    <ng-container matColumnDef="rent">
+                        <th mat-header-cell *matHeaderCellDef class="text-right">Rent</th>
+                        <td mat-cell *matCellDef="let element" class="text-right"> {{element.rent}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="administrative_charge">
+                        <th mat-header-cell *matHeaderCellDef class="text-right" style="width: 200px;"> Administrative Charge</th>
+                        <td mat-cell *matCellDef="let element" class="text-right"> {{element.administrative_charge}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="gst">
+                        <th mat-header-cell *matHeaderCellDef class="text-right" style="width: 150px;"> GST</th>
+                        <td mat-cell *matCellDef="let element" class="text-right"> {{element.gst}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="total_rent">
+                      <th mat-header-cell *matHeaderCellDef class="text-right" style="width: 150px;"> Total Rent</th>
+                      <td mat-cell *matCellDef="let element" class="text-right"> {{element.total_rent}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="deposit">
+                        <th mat-header-cell *matHeaderCellDef class="text-right" style="width: 150px;"> Deposit</th>
+                        <td mat-cell *matCellDef="let element" class="text-right"> {{element.deposit}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="total">
+                      <th mat-header-cell *matHeaderCellDef class="text-right" style="width: 150px;"> Total</th>
+                      <td mat-cell *matCellDef="let element" class="text-right"> {{element.total}} </td>
+                  </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsFeeDetails"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnsFeeDetails;"></tr>
+                </table>
+      <div>
+        <mat-card-content class="p-4">
+            <h5>
+              <ol class="olList">
+
+                <li>
+                  <b><h5>For Death Reason Charges : If the Purpose of booking is Death Realted then rent will be 50% and deposit
+                    will be  Rs. 5000 to all Atithigruh.</h5></b>
+                </li>
+                <li>
+                    <b><h5>For Samuh Lagna : If the Purpose of booking is Samuh Lagna  then rent will be 50% to  all Atithigruh.</h5></b>
+                </li>
+              </ol>
+            </h5>
+        </mat-card-content>
+        </div>
           <div>
             <mat-checkbox (change)="clickProcess($event)" [checked]="checkProceed"> <b>Agree And Continue</b>
             </mat-checkbox>

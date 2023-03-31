@@ -71,6 +71,7 @@ export class BookAtithigruhComponent implements OnInit {
 	bookedPageSize: number = 5;
 	confirmRef: BsModalRef;
 	displayedColumns: Array<string> = ['id', 'shiftType', 'bookingDate', 'startTime', 'endTime', 'rent', 'electricCharges', 'administrationCharges', 'showTax', 'subTotal', 'gstAmount', 'total'];
+	displayedColumnsFeeDetails: string[] = ['sno', 'atithigruh', 'rent', 'administrative_charge', 'gst','total_rent', 'deposit','total'];
 	profileObj : any;
 	public formControlNameToTabIndex = new Map();
 	checkProceed : boolean = false;
@@ -79,6 +80,27 @@ export class BookAtithigruhComponent implements OnInit {
 	purpose :string;
 	startDate : string;
 	endDate : string;
+
+	feeDetails: any [] = [
+		{sno: 1, atithigruh: 'Sayajibaug 1', rent: '5000', administrative_charge: '500', gst:'990' ,total_rent: '6490', deposit: '7500',total: '13990'},
+		{sno: 2, atithigruh: 'Sayajibaug 2', rent: '5000', administrative_charge: '500', gst:'990' ,total_rent: '6490', deposit: '7500',total: '13990'},
+		{sno: 3, atithigruh: 'Sayajibaug 3', rent: '5000', administrative_charge: '500', gst:'990' ,total_rent: '6490', deposit: '7500',total: '13990'},
+		{sno: 4, atithigruh: 'Sayaji Lawn', rent: '7500', administrative_charge: '500', gst:'1440' ,total_rent: '9440', deposit: '10000',total: '19440'},
+		{sno: 5, atithigruh: 'Akota', rent: '12000', administrative_charge: '500', gst:'2250' ,total_rent: '14750', deposit: '20000',total: '34750'},
+		{sno: 6, atithigruh: 'Sardarbaug', rent: '12000', administrative_charge: '500', gst:'2250' ,total_rent: '14750', deposit: '20000',total: '34750'},
+		{sno: 7, atithigruh: 'Nijampura', rent: '12000', administrative_charge: '500', gst:'2250' ,total_rent: '14750', deposit: '20000',total: '34750'},
+		{sno: 8, atithigruh: 'Subhanpura', rent: '12000', administrative_charge: '500', gst:'2250' ,total_rent: '14750', deposit: '20000',total: '34750'},
+		{sno: 9, atithigruh: 'Dr.Babasaheb Ambedkar', rent: '12000', administrative_charge: '500', gst:'2250' ,total_rent: '14750', deposit: '20000',total: '34750'},
+		{sno: 10, atithigruh: 'Lalbaug', rent: '12000', administrative_charge: '500', gst:'2250' ,total_rent: '14750', deposit: '20000',total: '34750'},
+		{sno: 11, atithigruh: 'Premanand', rent: '8000', administrative_charge: '500', gst:'1530' ,total_rent: '10030', deposit: '10000',total: '20030'},
+		{sno: 12, atithigruh: 'Indrapuri', rent: '10000', administrative_charge: '500', gst:'1890' ,total_rent: '12390', deposit: '20000',total: '32390'},
+		{sno: 13, atithigruh: 'Sharad Nagar', rent: '8000', administrative_charge: '500', gst:'1530' ,total_rent: '10030', deposit: '7500',total: '17530'},
+		{sno: 14, atithigruh: 'Vijaynagarko Hall', rent: '3500', administrative_charge: '500', gst:'720 ' ,total_rent: '4720', deposit: '5000',total: '9720'},
+		{sno: 15, atithigruh: 'Tarasali Hall', rent: '3000', administrative_charge: '500', gst:'630' ,total_rent: '4130', deposit: '5000',total: '9130'},
+		{sno: 16, atithigruh: 'Chatrapati Shivaji', rent: '8000', administrative_charge: '500', gst:'1530' ,total_rent: '10030', deposit: '7500',total: '17530'},
+		{sno: 17, atithigruh: 'Diwali Pura', rent: '17000', administrative_charge: '500', gst:'3150' ,total_rent: '20650', deposit: '20000',total: '40650'},
+		{sno: 18, atithigruh: 'Manjalpur', rent: '20000', administrative_charge: '500', gst:'3690' ,total_rent: '24190', deposit: '30000',total: '54190'},
+	  ];
 	
 	constructor(
 		private fb: FormBuilder,
