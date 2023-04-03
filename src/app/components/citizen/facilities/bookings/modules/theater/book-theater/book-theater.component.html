@@ -398,7 +398,7 @@
                         <mat-form-field>
                           <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile"
                                  placeholder="{{'Confirm Mobile Number' | translate: translateKey}}" required>
-                          <control-messages [control]="theaterBookingForm.get('organizationNumber')"></control-messages>
+                          <control-messages [control]="theaterBookingForm.get('confirmMobile')"></control-messages>
                         </mat-form-field>
                         <mat-error
                           *ngIf="!bookingUtils.matcher(theaterBookingForm, 'organizationNumber', 'confirmMobile') && theaterBookingForm.get('organizationNumber').touched && theaterBookingForm.get('confirmMobile').touched">
