@@ -260,6 +260,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		);
 	}
 
+	infoVehiclePending(amount, wardNumber) {
+		this.commonService.infoAlert('Payment Remarks', 'Please make the payment of amount Rs. ' + amount +' at Ward office no. ' + wardNumber, "success");
+	}
+
 	cancelReasonReceipt(row) {
 		this.formService.cancelReceiptForShop(row.fileNumber).subscribe(
 			receiptResponse => {
