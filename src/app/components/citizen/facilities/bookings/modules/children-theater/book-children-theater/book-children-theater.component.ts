@@ -91,7 +91,7 @@ export class BookChildrenTheaterComponent implements OnInit {
 
         this.head_lines = `Online Children theatre Booking facility
                             is the convenient and easy way to book the Children Theatre
-                            of Vadodara Municiple Corporation. You can view the
+                            of Vadodara Municipal Corporation. You can view the
                             availability details of the Children Theatre and select booking
                             date. The booking is confirmed on approval from department
                             and the successful payment of the rent amount for selected date.`;
