@@ -293,6 +293,11 @@
                                 Why Rejected
                             </button>
 
+                            <button mat-menu-item *ngIf="row.serviceType == 'VEHICLE' && row.fileStatus == 'PAYMENT'"
+                                color="primary" (click)="infoVehiclePending(row.amount, row.wardNumber)">
+                                <mat-icon class="m-1" title="Info">help_outline</mat-icon>Payment Remarks
+                            </button>
+
                             <button mat-menu-item
                                 *ngIf="(row.serviceType == 'PEC_REG' || row.serviceType == 'PRC_REG') && isQueryRaiseDisplay(row)"
                                 color="primary"

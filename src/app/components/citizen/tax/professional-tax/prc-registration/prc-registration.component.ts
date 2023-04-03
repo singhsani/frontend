@@ -484,6 +484,9 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 				this.commonService.openAlert("PRC Is Already Exists", "", "warning", `Your PRC number is<br> <b>${res.data.prcNo}</b>`);
 				return;
 			}
+			if (res.data.messageForValidation != null) {
+				this.toastr.warning(res.data.messageForValidation);
+			}
 
 			this.prcRegForm.patchValue(res.data);
 

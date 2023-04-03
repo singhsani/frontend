@@ -393,4 +393,17 @@ export class CommonService {
 			});
 	}
 
+	infoAlert(title: string, message: string, type: string) {
+
+		let options = {
+			title: title,
+			text: message,
+			type: type,
+			imageUrl: null,
+			imageClass: 'doneIcon',
+		}
+
+		swal(options as any);
+	}
+
 }
