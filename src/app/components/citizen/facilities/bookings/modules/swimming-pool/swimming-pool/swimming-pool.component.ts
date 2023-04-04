@@ -717,7 +717,7 @@ export class SwimmingPoolComponent implements OnInit {
   }
 
   getNumber(event){
-    if(event.target.value.length >= 1 && event.target.value.length <= 16 ){
+    if(event.target.value.length >= 1 && event.target.value.length <= 11 ){
       this.showMsg = true;
     }
     else if(event.target.value.length == 0){
