@@ -18,13 +18,13 @@
             <div class="mat-tab-label-Container" (click)="openBookingServices($event)">
             <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
             <span class="moduleIcon {{ module.code }}" ></span>
-            <div class="moduleName" title="{{module.name}}">{{ module.name }}</div>
+            <div class="moduleName">{{ module.name }}</div>
             <!-- <div>{{ module.gujName }}</div> -->
             <span class="count">Services</span>
         </div>
         </ng-template>
         <div class="servicesList row" *ngIf="showBookingServices">
-            <div class="colBtn col-md-3" *ngFor="let service of module.services;" matTooltip="{{ service.name }}">
+            <div class="colBtn col-md-3" *ngFor="let service of module.services;">
                 <button mat-stroked-button *ngIf="service.active" color="primary"   routerLink="/{{manageRoutes.getFullRoute(service.code)}}">
                     {{ service.name }}
                 </button>
@@ -39,13 +39,13 @@
                 <div class="mat-tab-label-Container" (click)="openModule($event)">
                     <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
                     <span class="moduleIcon {{ module.code }}"></span>
-                    <div class="moduleName" title="{{module.name}}">{{ module.name }}</div>
+                    <div class="moduleName">{{ module.name }}</div>
                     <!-- <div>{{ module.gujName }}</div> -->
                     <span class="count">Services</span>
                 </div>
             </ng-template>
             <div class="servicesList row" *ngIf="showModuleServices">
-                <div class="colBtn col-md-3" *ngFor="let service of module.services;" matTooltip="{{ service.name }}">
+                <div class="colBtn col-md-3" *ngFor="let service of module.services;">
                     <button mat-stroked-button color="primary" (click)="createRecord(service.code)">
                         {{ service.name }}
                     </button>

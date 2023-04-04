@@ -533,6 +533,56 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     p {font-size: 12px; color: #453960; padding-bottom: 0; margin-bottom: 0;}
 }
 
+.moduleList:hover {
+    .mat-tab-label:hover {
+        background-color: #673ab7;
+        border: 1px solid #673ab7;
+        box-shadow: 2px 2px 9px #673ab7, 2px 2px 8px #673ab7;
+        .moduleName {color: white;}
+        .count {color: white;}
+    }
+
+    .mat-tab-label:hover .BOOKINGMODULE {background:url('assets/icons/booking-facilities-h.svg') !important;}
+
+    .mat-tab-label:hover .TICKETINGSMODULE {background:url('assets/icons/ticketing-facilities-h.svg') !important;}
+
+    .mat-tab-label:hover .SHOP-ESTAB {background:url('assets/icons/shop-and-establishment-license-h.svg') !important;}
+
+    .mat-tab-label:hover .SHOP-ESTAB-NEW {background:url('assets/icons/shop-and-establishment-license-h.svg') !important;}
+
+    .mat-tab-label:hover .WATER-TAX {background:url('assets/icons/water-tax-h.svg') !important;}
+
+    .mat-tab-label:hover .AFFORD-HOUSE {background:url('assets/icons/affordable-housing-h.svg') !important;}
+
+    .mat-tab-label:hover .FIRE {background:url('assets/icons/fire-services-h.svg') !important;}
+
+    .mat-tab-label:hover .FOOD-LIC {background:url('assets/icons/food-licensing-registration-h.png') !important;
+        background-repeat: no-repeat !important;  background-position: center center !important;}
+
+    .mat-tab-label:hover .ANIMAL-POND {background:url('assets/icons/animal-pond-license-h.svg') !important;}
+
+    .mat-tab-label:hover .PROFESSIONAL{background:url('assets/icons/professional-tax-h.svg') !important;}
+
+    .mat-tab-label:hover .MARRIAGE {background:url('assets/icons/marriage-registration-h.svg') !important;}
+
+    .mat-tab-label:hover .VEHICLE {background:url('assets/icons/vehicle-tax-h.png') !important;
+        background-repeat: no-repeat !important;  background-position: center center !important;}
+
+    .mat-tab-label:hover .PROPERTY-TAX {background:url('assets/icons/property-tax-h.svg') !important;}
+
+    .mat-tab-label:hover .MUTTON-FISH {background:url('assets/icons/meat-and-fish-license-h.svg') !important;}
+
+    .mat-tab-label:hover .BIRTH-DEATH {background:url('assets/icons/birth-and-death-h.png') !important;
+        background-repeat: no-repeat !important; background-position: center center !important;}
+
+    .mat-tab-label:hover .affordableHousing {background:url('assets/icons/affordable-housing-h.svg') !important;}
+
+    .mat-tab-label:hover .VENDOR_REG{background:url('assets/icons/professional-tax-h.svg') !important;}
+
+    .mat-tab-label:hover .CONTRACTOR_REGISTRATION{background:url('assets/icons/professional-tax-h.svg') !important;}
+
+}
+
 .moduleList {
     .mat-tab-header, .mat-tab-nav-bar {padding-bottom: 15px; border:0 !important;}
     .mat-tab-labels {display: contents};
@@ -579,6 +629,12 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     .mat-primary {color: #423c51; font-size: 15px; font-weight: 400; border-radius: 3px; border:1px solid #b2b2b2; display: block; width: 100%; text-overflow: ellipsis; text-decoration: none; white-space: normal; line-height: 1.4; padding:6px 8px; height: 100%;
         overflow: hidden;
         &:hover {background: $colorBlue; border-color: $colorBlue; color: #fff;}
+    }
+}
+
+.servicesList:hover {
+    .colBtn:hover .mat-stroked-button:hover{
+        box-shadow: 2px 2px 6px #673ab7, 2px 2px 10px #673ab7;
     }
 }
 
