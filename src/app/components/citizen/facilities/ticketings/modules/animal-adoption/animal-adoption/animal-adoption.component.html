@@ -1,15 +1,15 @@
 <mat-card class="cardBox">
   <div class="pageTitle">{{'animal_adoption' | translate: translateKey}}</div>
-  <div class="row" *ngIf="showAnimalAdoptionPricingTable">
+  <div class="row" *ngIf="showAnimalAdoptionPricingTable" style="height: 448px;">
 
-    <mat-card-content style="margin-top: 45px;" class="p-4 col-md-6">
+    <mat-card-content style="margin-top: 0px;" class="p-4 col-md-6">
       <h1><b>{{'Rules for adopting wildlife animal /birds (Friends of Zoo)'| translate: translateKey}}</b></h1>
       <div class="example-table-container mat-elevation-z8 borderOne">
 
         <table mat-table [dataSource]="dataSourceForPricing" class="myTicketPricingTabel">
 
           <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef>Sr. No.</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef style="text-align:justify">Sr. No.</mat-header-cell>
             <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
               <div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
               <div class="mobile-label1">:</div>
@@ -18,11 +18,11 @@
           </ng-container>
 
           <ng-container matColumnDef="animalBirdName">
-            <mat-header-cell *matHeaderCellDef>{{'animal_or_bird_name' | translate:translateKey}}</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef style="text-align:justify;padding: 15px;">{{'animal_or_bird_name' | translate:translateKey}}</mat-header-cell>
             <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
               <div class="mobile-label">{{'animal_or_bird_name' | translate:translateKey}}</div>
               <div class="mobile-label1">:</div>
-              <div class="row-inside"> {{row?.animalBirdName}} </div>
+              <div class="row-inside"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{row?.animalBirdName}} </div>
             </mat-cell>
           </ng-container>
 
@@ -46,11 +46,11 @@
           </ng-container> -->
 
           <ng-container matColumnDef="totalExpenses">
-            <mat-header-cell *matHeaderCellDef>{{'total_expenses' | translate:translateKey}}</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef style="text-align:justify">{{'total_expenses' | translate:translateKey}}</mat-header-cell>
             <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
               <div class="mobile-label">{{'total_expenses' | translate:translateKey}}</div>
               <div class="mobile-label1">:</div>
-              <div class="row-inside"> {{row?.totalExpenses}} </div>
+              <div class="row-inside"> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{{row?.totalExpenses}} </div>
             </mat-cell>
           </ng-container>
 
@@ -62,103 +62,103 @@
     </mat-card-content>
 
     <mat-card-content class="p-4 col-md-6">
-      <h4>{{'TERMS AND CONDITIONS FOR ADOPTION OF ZOO ANIMALS/BIRDS IN SRI SAYAJIBAUG ZOO, VMC UNDER THE ‘FRIENDS OF
-        ZOO’ PROGRAM'| translate: translateKey}}</h4>
+      <h5><b>{{'Terms and Conditions for Adoption of Zoo Animals/ Birds in Sri Sayajibaug Zoo, VMC under the ‘Friends of Zoo’ program.'| translate: translateKey}}</b></h5>
         
-      <h4><ol class="olList rules-scrollable">
+      <h5><ol class="olList rules-scrollable">
 
         <li>
-          <h4>Hon’ble Municipal Commissioner, Vadodara Municipal Corporation (VMC) reserves all the rights regarding the
-            Adoption of Zoo Animals/Birds under the ‘Friends of Zoo’ program.</h4>
+          <h5>Hon’ble Municipal Commissioner, Vadodara Municipal Corporation (VMC) reserves all the rights regarding the
+            Adoption of Zoo Animals/Birds under the ‘Friends of Zoo’ program.</h5>
         </li>
 
-        <h4>Hon’ble Municipal Commissioner, VMC reserves the right to:</h4>
+        <h5>Hon’ble Municipal Commissioner, VMC reserves the right to:</h5>
 
-        <h4>i. decide which Zoo Animals/Birds may be offered for Adoption.</h4>
-        <h4>ii. amend the Terms and Conditions for Adoption as and when required.</h4>
-        <h4>iii. revise the maintenance expenses of the Zoo Animals/Birds offered for Adoption.</h4>
+        <h5>i. decide which Zoo Animals/Birds may be offered for Adoption.</h5>
+        <h5>ii. amend the Terms and Conditions for Adoption as and when required.</h5>
+        <h5>iii. revise the maintenance expenses of the Zoo Animals/Birds offered for Adoption.</h5>
 
 
         <li>
-          <h4>The Zoo Animals/Birds offered for Adoption shall always remain under the sole ownership of Sri Sayajibaug
+          <h5>The Zoo Animals/Birds offered for Adoption shall always remain under the sole ownership of Sri Sayajibaug
             Zoo, VMC. The generous Donor shall be considered only as a ‘FRIEND’ of the Zoo for the Animal/Bird which
-            he/she has adopted. The Donor shall here onwards be referred to as ‘FRIEND’.</h4>
+            he/she has adopted. The Donor shall here onwards be referred to as ‘FRIEND’.</h5>
         </li>
 
         <li>
-          <h4>The Zoo Animals/Birds offered for Adoption shall be maintained within the Zoo Facility only and the
+          <h5>The Zoo Animals/Birds offered for Adoption shall be maintained within the Zoo Facility only and the
             minimum standards of upkeep of Zoo Animals as per the Central Zoo Authority (CZA), New Delhi, guidelines
-            will be followed.</h4>
+            will be followed.</h5>
         </li>
 
         <li>
-          <h4>The FRIEND shall neither be permitted to have any physical contact with the Zoo Animal/Bird that he/she
+          <h5>The FRIEND shall neither be permitted to have any physical contact with the Zoo Animal/Bird that he/she
             has adopted, nor the FRIEND will be allowed to bring any outside food for the Animal/Bird which he/she has
-            adopted. </h4>
+            adopted. </h5>
         </li>
 
         <li>
-          <h4>The Zoo Authority shall display the FRIEND’s Name on a signage at the respective Enclosure of the
-            Animal/Bird that the FRIEND has chosen for Adoption.</h4>
+          <h5>The Zoo Authority shall display the FRIEND’s Name on a signage at the respective Enclosure of the
+            Animal/Bird that the FRIEND has chosen for Adoption.</h5>
 
-          <h4>Please Note: The FRIEND shall give the details of the Name only which he/she desires to be displayed on
-            the signage. The dimensions and format of the signage is already fixed by the Zoo Authority.</h4>
+          <h5>Please Note: The FRIEND shall give the details of the Name only which he/she desires to be displayed on
+            the signage. The dimensions and format of the signage is already fixed by the Zoo Authority.</h5>
 
         </li>
 
         <li>
-          <h4>The Zoo Authority shall facilitate the FRIEND by permitting 25 Free Entries to the Zoo throughout his/her
-            period of Adoption.</h4>
-          <h4>Please Note: The Free Entry during the Adoption Period will be given only on a prior intimation by the
+          <h5>The Zoo Authority shall facilitate the FRIEND by permitting 25 Free Entries to the Zoo throughout his/her
+            period of Adoption.</h5>
+          <h5>Please Note: The Free Entry during the Adoption Period will be given only on a prior intimation by the
             FRIEND to the Zoo Office. For availing the Free Entry, the FRIEND is hereby requested to liaison with the
-            Zoo Education Officer; Contact No.: +91 9033340778.</h4>
+            Zoo Education Officer; Contact No.: +91 9033340778.</h5>
         </li>
 
         <li>
-          <h4>The FRIEND shall be honoured by awarding a ‘Certificate of Appreciation’ duly signed by the higher
-            Authorities of VMC.</h4>
+          <h5>The FRIEND shall be honoured by awarding a ‘Certificate of Appreciation’ duly signed by the higher
+            Authorities of VMC.</h5>
         </li>
 
         <li>
-          <h4>The FRIEND may be invited as a Guest for some of the Awareness/Educational programs organized by the
-            Zoo.</h4>
+          <h5>The FRIEND may be invited as a Guest for some of the Awareness/Educational programs organized by the
+            Zoo.</h5>
         </li>
 
         <li>
-          <h4>The FRIENDS are requested to take a kind note that the amount paid towards the Adoption Scheme is
+          <h5>The FRIENDS are requested to take a kind note that the amount paid towards the Adoption Scheme is
             Non-Refundable. Therefore, in the event of death of the Animal/Bird under adoption during the adoption
-            period, the amount will not be paid back.</h4>
+            period, the amount will not be paid back.</h5>
         </li>
 
         <li>
-          <h4>In addition to the Point No. 9, during the period of adoption the Animal/Bird under adoption may be
-            exchanged with another Zoo and in this case also the amount will not be paid back.</h4>
+          <h5>In addition to the Point No. 9, during the period of adoption the Animal/Bird under adoption may be
+            exchanged with another Zoo and in this case also the amount will not be paid back.</h5>
             <br>
 
 
           <h3>❖ GENEROUS CONSIDERATIONS:</h3>
             <br>
-          <h4>I. In addition to the Animal Adoption Scheme of Zoo; the Zoo shall be highly obliged to receive
+          <h5>I. In addition to the Animal Adoption Scheme of Zoo; the Zoo shall be highly obliged to receive
             contributions from Individuals/Corporates in the form of Commodity, which are a special seasonal
             requirements for Animals/Birds for their better upkeep viz. Coolers during Summer, Heaters during Winter,
-            Water Troughs, Feed Baskets, etc.</h4>
+            Water Troughs, Feed Baskets, etc.</h5>
 
-          <h4>II. Donations are also accepted on the occasions of major Festivals; on the occasions of Birthdays and/or
+          <h5>II. Donations are also accepted on the occasions of major Festivals; on the occasions of Birthdays and/or
             Death Anniversary; to commemorate days like World Environment Day, World Animal Day, International Day for
-            Biodiversity; Wildlife Week, etc.</h4>
+            Biodiversity; Wildlife Week, etc.</h5>
 
-          <h4>III. Donations are also welcomed to strengthen the Public Amenities at the Zoo likewise Wheelchairs, RO
-            Water Systems at Drinking Water Points, Benches at the Resting Points, Dust Bins, etc.</h4>
+          <h5>III. Donations are also welcomed to strengthen the Public Amenities at the Zoo likewise Wheelchairs, RO
+            Water Systems at Drinking Water Points, Benches at the Resting Points, Dust Bins, etc.</h5>
 
-          <h4>* Corporate Organizations can include the above Considerations in their CSR activity towards Environment
-            and Nature Conservation.</h4>
+          <h5>* Corporate Organizations can include the above Considerations in their CSR activity towards Environment
+            and Nature Conservation.</h5>
         </li>
-      </ol></h4>
+      </ol></h5>
     </mat-card-content>
 
   </div>
   <div class="fotButtonBar" *ngIf="showAnimalAdoptionPricingTable">
-    <div class="col-sm-12 col-md-12 text-right">
+    <div class="col-sm-12 col-md-12 text-right" style="height: 34px;
+    margin-top: -16px;">
       <button mat-raised-button (click)="showAnimalAdoptionPricingTable = false; showAnimalAdoptionForm= true;"
         color="primary">
         <!-- <mat-icon>thumb_up_alt</mat-icon> -->
