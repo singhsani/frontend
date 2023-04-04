@@ -144,26 +144,50 @@
 				</ng-template>
 				<div class="row">
 					<div class="col-md-4 ngSelect" formGroupName="zoneNo">
+						<ng-select  required placeholder="{{'business_under_zone' | translate:translateKey}} " formControlName="code"
+						(change)="onChangedZone($event)" >
+						  <ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.parentWardzoneId">
+							{{zone.wardzoneName}}</ng-option>
+						</ng-select>
+						<control-messages [control]="animalPondNewForm.get('zoneNo').get('code')"></control-messages>
+					  </div>
+			
+					  <div class="col-md-4 ngSelect" formGroupName="wardNo" >
+						<ng-select required placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="code"
+						 (change)="onChangedWard($event)">
+						  <ng-option *ngFor="let ward of wardZoneLevel2List" [value]="ward.wardzoneId">
+							{{ward.wardzoneName}}</ng-option>
+						</ng-select>
+						<control-messages [control]="animalPondNewForm.get('wardNo').get('code')"></control-messages>
+					  </div>
+					  <div class="col-md-4 ngSelect" formGroupName="blockNo" >
+						<ng-select required placeholder="{{'block_no' | translate:translateKey}} *" formControlName="code" >
+						  <ng-option *ngFor="let block of wardZoneLevel3List" [value]="block.wardzoneId">
+							{{block.wardzoneName}}</ng-option>
+						</ng-select>
+						<control-messages [control]="animalPondNewForm.get('blockNo').get('code')"></control-messages>
+					  </div>
+					<!-- <div class="col-md-4 ngSelect" formGroupName="zoneNo">
 						<ng-select placeholder="{{'business_under_zone' | translate:translateKey}} *"
 							formControlName="code"
 							(change)="onChangeZone($event);animalPondNewForm.get('wardNo').reset();animalPondNewForm.get('blockNo').reset()">
 							<ng-option *ngFor="let zone of FIRM_ZONE" [value]="zone.code">{{zone.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="animalPondNewForm.get('zoneNo').get('code')"></control-messages>
-					</div>
-					<div class="col-md-4 ngSelect" formGroupName="wardNo">
+					</div> -->
+					<!-- <div class="col-md-4 ngSelect" formGroupName="wardNo">
 						<ng-select placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="code"
 							(change)="onChangeWard($event);animalPondNewForm.get('blockNo').reset()">
 							<ng-option *ngFor="let ward of WARD" [value]="ward.code">{{ward.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="animalPondNewForm.get('wardNo').get('code')"></control-messages>
-					</div>
-					<div class="col-md-4 ngSelect" formGroupName="blockNo">
+					</div> -->
+					<!-- <div class="col-md-4 ngSelect" formGroupName="blockNo">
 						<ng-select placeholder="{{'block_no' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let block of BLOCK" [value]="block.code">{{block.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="animalPondNewForm.get('blockNo').get('code')"></control-messages>
-					</div>
+					</div> -->
 				</div>
 				<div class="row">
 					<h2>{{'business_address' | translate:translateKey}}</h2>
