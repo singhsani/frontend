@@ -460,4 +460,12 @@ export class BookTheaterComponent implements OnInit {
       this.toster.error("Invalid request");
     }
   }
+
+  agreeClick(event) {
+      this.theaterBookingForm.controls['agree'].setValue(event.checked);
+  }
+
+  termsConditionClick(event) {
+    this.theaterBookingForm.controls['termsCondition'].setValue(event.checked);
+  }
 }
