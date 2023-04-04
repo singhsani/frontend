@@ -6,7 +6,7 @@
 		<div>
 			<mat-form-field class="col-md-10">
 				<input matInput required placeholder="{{'search_by_membership_no' | translate:translateKey}}"
-					maxlength="16" [formControl]="memberNumber" (keyup)="getNumber($event)">
+					maxlength="11" [formControl]="memberNumber" (keyup)="getNumber($event)">
 				<!-- <control-messages [control]="memberNumber">
 				</control-messages> -->
 				<mat-error *ngIf="memberNumber.invalid && !showMsg">Membership Number  is required.
@@ -257,7 +257,8 @@
 
 						<div class="col-md-4 ngSelect" formGroupName="applicantIDProof">
 							<ng-select placeholder="{{'id_proof' | translate:translateKey}} *" formControlName="code"
-								(change)="CheckType($event)" required>
+								(change)="CheckType($event)" required
+								[items]="items" [ngOptionsSorter]="sortOptions" >
 								<ng-option *ngFor="let proof of APPLICANT_PROOF" [value]="proof.code">
 									{{proof.name}}
 								</ng-option>
