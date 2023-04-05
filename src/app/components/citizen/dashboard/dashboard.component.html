@@ -123,8 +123,8 @@
 
 
 
-<h2 *ngIf="!commonService.isGuestUser()">
-    <mat-icon>description</mat-icon>Recent Application
+<h2 class="applicationInformation" *ngIf="!commonService.isGuestUser()">
+    <mat-icon>description</mat-icon>Application Information
 </h2>
 
 <!-- <ul  class="recentList" *ngIf="isRecentApp && !commonService.isGuestUser()">
@@ -138,18 +138,18 @@
 
 <ul  class="recentList" *ngIf="isRecentApp && !commonService.isGuestUser()">
     <li>
-        <div>Citizen Services :</div>
-        <div class="recenText">Please refer your applied application for Citizen Services at <b>'My Applications'</b> section</div>
+        <div>Citizen Services:</div>
+        <div class="recenText">Please refer your applied applications for Citizen Services at <b><a style="color: black;" class="link" href="/citizen/my-applications">'My Applications'</a></b> section</div>
     </li>
 
     <li>
-        <div>Booking facilities:</div>
-        <div class="recenText">Please refer your applied application for Booking  facilities at <b>'My Bookings'</b> section</div>
+        <div>Booking Facilities:</div>
+        <div class="recenText">Please refer your applied applications for Booking Facilities at <b><a style="color: black;" class="link" href="/citizen/bookings/my-bookings">'My Bookings'</a></b> section</div>
     </li>
 
     <li>
-        <div>Ticketing facilities:</div>
-        <div class="recenText">Please refer your applied application for Ticketing facilities at <b>'My Ticketing'</b> section</div>
+        <div>Ticketing Facilities:</div>
+        <div class="recenText">Please refer your applied applications for Ticketing Facilities at <b><a style="color: black;" class="link" href="/citizen/ticketings/my-ticketings">'My Ticketing'</a></b> section</div>
     </li>
 
 </ul>

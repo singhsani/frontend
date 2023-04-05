@@ -488,15 +488,32 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 					element[0].classList.remove("mat-tab-label-active");
 				}
 			}
-		}, 2000);
+		}, 1000);
 	  }
 
-	  openModule(event){
-	      this.showModuleServices = true;
+	openModule(event){
+	    this.showModuleServices = true;
+		var element : any = document.getElementsByClassName('moduleList');
+		if(element.length>0){
+			window.scrollTo({ top: element[0].scrollHeight });
+		}		  
 
-	  }
+		setTimeout( () => {
+			var elementSer : any = document.getElementsByClassName('servicesList');
+			elementSer[0].classList.add("highlight");
+		}, 1000);
+	}
 
-	  openBookingServices(event){
-		  this.showBookingServices = true
-	  }
+	openBookingServices(event){
+		this.showBookingServices = true;
+		var element : any = document.getElementsByClassName('moduleList');
+		if(element.length>0){
+			window.scrollTo({ top: element[0].scrollHeight });
+		}
+
+		setTimeout( () => {
+			var elementSer : any = document.getElementsByClassName('servicesList');
+			elementSer[0].classList.add("highlight");
+		}, 1000);
+	}
 }
