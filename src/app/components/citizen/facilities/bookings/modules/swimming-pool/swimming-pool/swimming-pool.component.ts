@@ -79,6 +79,7 @@ export class SwimmingPoolComponent implements OnInit {
   BATCH_DURATION: Array<any> = [];
   BLOOD_GROUP: Array<any> = [];
   APPLICANT_PROOF: Array<any> = [];
+  idlist : Array<any> = [];
   // BANK: Array<any> = [];
   session: any;
   durationisReadOnly: boolean = false;
@@ -157,7 +158,16 @@ export class SwimmingPoolComponent implements OnInit {
      // this.APPLICANT_PROOF = resp.APPLICANT_PROOF;
       resp.APPLICANT_PROOF.forEach(element => {
         if(element.code == "DRIVING_LICENSE" || element.code == "AADHAAR_CARD" ||  element.code == "PASSPORT" || element.code == "ELECTION_CARD" || element.code == "ELECTRICITY_BILL"){
-          this.APPLICANT_PROOF.push(element) 
+           this.idlist.push(element) 
+           this.APPLICANT_PROOF = this.idlist.sort((a, b) => {
+            if(a.code > b.code) {
+              return 1;
+            } else if(a.code < b.code) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
         }
       });
       // this.BANK = resp.BANK;
