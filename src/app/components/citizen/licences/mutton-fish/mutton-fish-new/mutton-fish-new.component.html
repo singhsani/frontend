@@ -155,7 +155,7 @@
 					<div>{{'business_detail' | translate:translateKey}}</div>
 				</ng-template>
 				<div class="row">
-					 <!-- <div class="col-md-4 ngSelect" formGroupName="zoneNo">
+					<div class="col-md-4 ngSelect" formGroupName="zoneNo">
 						<ng-select placeholder="{{'business_under_zone' | translate:translateKey}} *"
 							formControlName="code"
 							(change)="onChangeZone($event);muttonFishNewForm.get('wardNo').reset();">
@@ -168,22 +168,8 @@
 							<ng-option *ngFor="let ward of WARD" [value]="ward.code">{{ward.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="muttonFishNewForm.get('wardNo').get('code')"></control-messages>
-					</div> -->
-					<div class="col-md-4 ngSelect" formGroupName="zoneNo">
-						<ng-select  placeholder="{{'business_under_zone' | translate:translateKey}} *" formControlName="code" required (change)="onChangedZone($event);
-						muttonFishNewForm.get('wardNo').reset();">
-						  <ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.parentWardzoneId">
-							{{zone.wardzoneName}}</ng-option>
-						</ng-select>
-						<control-messages [control]="muttonFishNewForm.get('zoneNo').get('code')"></control-messages>
-					  </div>
-					  <div class="col-md-4 ngSelect" formGroupName="wardNo" >
-						<ng-select required placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="code">
-						  <ng-option *ngFor="let ward of wardZoneLevel2List" [value]="ward.wardzoneId">
-							{{ward.wardzoneName}}</ng-option>
-						</ng-select>
-						<control-messages [control]="muttonFishNewForm.get('wardNo').get('code')"></control-messages>
-					  </div>
+					</div>
+
 				</div>
 				<div class="row">
 					<h2>{{'business_shop_address' | translate:translateKey}}</h2>
@@ -245,7 +231,7 @@
 
 				<!-- table -->
 				<div class="row">
-					<div class="col-md-10">
+					<div class="col-md-10" style="padding:0;padding-top:30px;">
 						<h2 *ngIf="muttonFishNewForm.get('statusOfBusinessId').value.code == 'PROPRIETORSHIPFIRM'">
 							{{ 'if_shop_is_in_properitership' | translate:translateKey}}</h2>
 
@@ -266,7 +252,7 @@
 					<table class="table table-striped mb-0 responsiveTableRow" >
 						<thead>
 							<tr class="mo-d-none">
-								<th>SR. No</th>
+								<th style="padding-left: 17px;">Sr. No</th>
 								<th>{{'name' | translate:translateKey}}</th>
 								<th>{{'address' | translate:translateKey}}</th>
 								<th>{{'mobile_no' | translate:translateKey}}</th>
@@ -278,7 +264,7 @@
 							<tr *ngFor="let item of muttonFishNewForm.get('relationshipList')['controls']; let indx = index;"
 								[formGroupName]="indx">
 
-								<td>
+								<td style="padding-left: 29px;">
 									<div class="d-md-none">#</div>
 									{{indx+1}}
 								</td>
@@ -317,7 +303,7 @@
 										</control-messages>
 									</mat-form-field>
 								</td>
-								<td>
+								<td style="text-align: right">
 									<span *ngIf="muttonFishNewForm.get('canEdit').value">
 										<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
 											(click)="editRecord(item)">
