@@ -161,11 +161,11 @@
                 <control-messages [control]="vendorRegistrationForm.get('area')"></control-messages>
               </mat-form-field>
 
-
-              <mat-form-field class="col-md-4 ">
-                <input matInput type="text" formControlName="city" placeholder="{{'city' | translate: translateKey }}"
-                  maxlength="100" (change)=" onChangeCity($event)" required>
-                <control-messages [control]="vendorRegistrationForm.get('city')"></control-messages>
+              <mat-form-field class="col-md-4">
+                <input matInput type="text" formControlName="country"
+                 placeholder="{{'country' | translate: translateKey }}" maxlength="100"
+                  (change)=" onChangeCountry($event)" required>
+                <control-messages [control]="vendorRegistrationForm.get('country')"></control-messages>
               </mat-form-field>
 
 
@@ -175,11 +175,10 @@
                 <control-messages [control]="vendorRegistrationForm.get('state')"></control-messages>
               </mat-form-field>
 
-              <mat-form-field class="col-md-4">
-                <input matInput type="text" formControlName="country"
-                  placeholder="{{'country' | translate: translateKey }}" maxlength="100"
-                  (change)=" onChangeCountry($event)" required>
-                <control-messages [control]="vendorRegistrationForm.get('country')"></control-messages>
+              <mat-form-field class="col-md-4 ">
+                <input matInput type="text" formControlName="city" placeholder="{{'city' | translate: translateKey }}"
+                 maxlength="100" (change)=" onChangeCity($event)" required>
+                <control-messages [control]="vendorRegistrationForm.get('city')"></control-messages>
               </mat-form-field>
 
               <mat-form-field class="col-md-4">
