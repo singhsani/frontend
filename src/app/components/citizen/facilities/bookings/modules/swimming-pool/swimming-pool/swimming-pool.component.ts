@@ -41,6 +41,7 @@ export class SwimmingPoolComponent implements OnInit {
   formId: number;
   apiCode: string;
   public tabIndex: number = 0;
+  istodaydate= new Date();
   disableDate = new Date(moment().subtract(1, 'm').format('YYYY-MM-DD'));
   disableBirthDate = new Date(moment().subtract(1, 'y').format('YYYY-MM-DD'));
   minBirthDate = new Date(1900, 0, 1);
@@ -143,7 +144,12 @@ export class SwimmingPoolComponent implements OnInit {
       this.searchObj.isDisplayRenewLicenceForm = true;
       // this.swimmingPoolRenewal = true;
     }
+
+    if(this.istodaydate.getDay() <= 20 ){
+      this.chosenMonthHandler(this.startMinMonth.setMonth(this.startMinMonth.getMonth()));
+    }else{
     this.chosenMonthHandler(this.startMinMonth.setMonth(this.startMinMonth.getMonth() + 1));
+    }
   }
   /**
   * Method is used to get lookup data

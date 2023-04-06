@@ -325,8 +325,7 @@
 						</mat-form-field>
 
 						<div class="col-md-4 ngSelect" formGroupName="applicantBloodGroup">
-							<ng-select placeholder="{{'blood_group' | translate:translateKey}} *" formControlName="code"
-								required>
+							<ng-select placeholder="{{'blood_group' | translate:translateKey}}" formControlName="code">
 								<ng-option *ngFor="let yes_no of BLOOD_GROUP" [value]="yes_no.code">
 									{{yes_no.name}}
 								</ng-option>
