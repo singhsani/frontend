@@ -34,7 +34,13 @@
 	<img src="assets/icons/no-application-found.png" alt="">
 	<br> {{'no_bookings_found' | translate:translateKey}}
 	<span class="noActi">{{'no_activity' | translate:translateKey}}</span>
-	<a mat-stroked-button class="mat-primary" routerLink="../../dashboard">
+	<a *ngIf="searchTicketingsForm?.get('resourceType').value == 'zoo'" mat-stroked-button class="mat-primary" routerLink="/citizen/ticketings/zoo-dashboard/zoo/zoo-ticketing">
+		{{'create_bookings' | translate:translateKey}}
+	</a>
+	<a *ngIf="searchTicketingsForm?.get('resourceType').value == 'zooanimaladoption'" mat-stroked-button class="mat-primary" routerLink="/citizen/ticketings/zoo-dashboard/adoption/animal-adoption">
+		{{'create_bookings' | translate:translateKey}}
+	</a>
+	<a *ngIf="searchTicketingsForm?.get('resourceType').value == 'planetarium'" mat-stroked-button class="mat-primary" routerLink="/citizen/ticketings/planetarium/book">
 		{{'create_bookings' | translate:translateKey}}
 	</a>
 </div>
