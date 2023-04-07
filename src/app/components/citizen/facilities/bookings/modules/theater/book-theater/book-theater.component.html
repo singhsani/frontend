@@ -23,7 +23,7 @@
           <p class="listSize" style="font-size: 21px;margin-top: -17px">ક્લાસિકલ ડાન્સ અથવા વોકલ કોન્સર્ટ, સ્ટ્રીટ પ્લે લેક્ચર્સ, વગેરે જેવી નાની સાંસ્કૃતિક પ્રવૃત્તિઓનું આયોજન કરવા માટેનું આ એક આદર્શ સ્થળ છે.</p>
         </li>
         <li>
-          <p class="listSize" style="font-size: 21px;margin-top: -17px">એમ્ફી થિયેટરનો સમય: - સવારે <b style="font-size: 18px; color: black;">9:00.</b> થી સાંજે <b style="font-size: 18px; color: black;">11:00.</b></p>
+          <p class="listSize" style="font-size: 21px;margin-top: -17px">એમ્ફી થિયેટરનો સમય: - સવારે <b style="font-size: 18px; color: black;">9:00</b> થી સાંજે <b style="font-size: 18px; color: black;">11:00</b></p>
         </li>
         <!--                    <h4>ઉપરોક્ત સૂચનાનો ચૂસ્તપણે અમલ કરવાનો રહેશે અન્યથા કાર્યક્રમ બંધ કરવાની ફરજ પડશે.</h4>-->
       </ol></h4>
@@ -100,8 +100,6 @@
             {{'terms_and_conditions' | translate:translateKey }}
         </h2>
         <div class="pl-2">
-            <mat-checkbox class="d-block" labelPosition="after" (change)="agreeClick($event)">
-                {{'i_agree_with_above_bank_details_are_correct' | translate:translateKey}} </mat-checkbox>
             <mat-checkbox class="d-block" labelPosition="after" (change)="termsConditionClick($event)">
                 {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}} </mat-checkbox>
         </div>
@@ -111,7 +109,7 @@
     <div class="fotButtonBar">
       <div class="col-sm-12 col-md-12 text-right">
         <button mat-raised-button (click)="guideLineFlag = false; showTheaterSearchForm = true; " color="primary"
-        [disabled]="!(theaterBookingForm.get('agree').value && theaterBookingForm.get('termsCondition').value)">
+        [disabled]="!theaterBookingForm.get('termsCondition').value">
           <mat-icon>thumb_up_alt</mat-icon>
           {{'proceed_for_application'| translate: translateKey}}
         </button>
