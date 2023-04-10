@@ -13,6 +13,7 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import { MatDialog,MatDialogConfig } from '@angular/material';
 import { Router } from '@angular/router';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 
 @Injectable({
 	providedIn: 'root'
@@ -372,5 +373,37 @@ export class CommonService {
 	
 	  }
 
+	  createCloneAbstractControl(copyFrom: FormGroup, copyTo : FormGroup){
+		Object.keys(copyFrom.controls).forEach(key => {
+			const control = copyFrom.get(key);
+			if(control instanceof FormControl){
+				copyTo.addControl(key,new FormControl(control.value, control.validator, control.asyncValidator) as any)
+			}else if(control instanceof FormGroup){
+				const formGroup = new FormGroup({}, control.validator, control.asyncValidator);
+				this.createCloneAbstractControl(control,formGroup);
+				copyTo.addControl(key,formGroup);
+		  }
+		});
+	}
+
+	setValueToFromControl(fromControl : FormGroup,toControl : FormGroup){
+		const ary = Object.keys(fromControl.value);
+			ary.forEach(element => {
+				toControl.get(element).setValue(fromControl.get(element).value);
+			});
+	}
+
+	infoAlert(title: string, message: string, type: string) {
+
+		let options = {
+			title: title,
+			text: message,
+			type: type,
+			imageUrl: null,
+			imageClass: 'doneIcon',
+		}
+
+		swal(options as any);
+	}
 
 }

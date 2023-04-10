@@ -59,11 +59,11 @@
       </ng-container>
 
       <ng-container matColumnDef="applicantName">
-        <mat-header-cell class="wMatCell150" *matHeaderCellDef>
+        <mat-header-cell  *matHeaderCellDef>
           {{ (isAmphi == true ? 'schoolAndOrg_name' : 'applicant_name') | translate: translateKey}}
           <!-- {{'applicant_name' | translate:translateKey}} -->
         </mat-header-cell>
-        <mat-cell class="wMatCell150" *matCellDef="let element;">
+        <mat-cell  *matCellDef="let element;">
           {{element.applicantName}}
         </mat-cell>
       </ng-container>
@@ -78,8 +78,8 @@
       </ng-container>
 
       <ng-container matColumnDef="refNumber">
-        <mat-header-cell *matHeaderCellDef> {{'booking_number' | translate:translateKey}}</mat-header-cell>
-        <mat-cell *matCellDef="let element;">
+        <mat-header-cell  class="wMatCell250" *matHeaderCellDef> {{'booking_number' | translate:translateKey}}</mat-header-cell>
+        <mat-cell   class="wMatCell250" *matCellDef="let element;">
           <div class="mobile-label">{{'booking_number' | translate:translateKey}}</div>
           <div class="mobile-label1">:</div>
           <div class="row-inside">{{element.refNumber}}</div>
@@ -88,9 +88,9 @@
       </ng-container>
 
       <ng-container matColumnDef="bookingDate">
-        <mat-header-cell class="wMatCell180" *matHeaderCellDef> {{'date_of_booking' | translate:translateKey}}
+        <mat-header-cell class="wMatCell150" *matHeaderCellDef> {{'date_of_booking' | translate:translateKey}}
         </mat-header-cell>
-        <mat-cell class="wMatCell180" *matCellDef="let element;">
+        <mat-cell class="wMatCell150" *matCellDef="let element;">
           <div class="mobile-label">{{'date_of_booking' | translate:translateKey}}</div>
           <div class="mobile-label1">:</div>
           <div class="row-inside">

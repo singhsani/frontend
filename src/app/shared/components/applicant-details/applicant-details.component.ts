@@ -35,7 +35,7 @@ export class ApplicantDetailsComponent implements OnInit, OnChanges {
 		this.applicantDetailsForm = this.fb.group({
 			applicantName : [null,[Validators.required,ValidationService.nameValidator]],
 			cellNo: [null, [Validators.maxLength(10), Validators.minLength(10)]],
-			email: [null, Validators.email]
+			email: [null, ValidationService.emailValidator]
 		});
 	
 	}

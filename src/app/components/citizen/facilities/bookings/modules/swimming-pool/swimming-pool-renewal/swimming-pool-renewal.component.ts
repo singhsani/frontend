@@ -342,7 +342,8 @@ export class SwimmingPoolRenewalComponent implements OnInit {
       pid: null,
       remarks: null,
       family: false,
-      staffMember: false
+      staffMember: false,
+      birthDate : [null, Validators.required]
     });
   }
 
@@ -391,9 +392,14 @@ export class SwimmingPoolRenewalComponent implements OnInit {
    * Filter details as per pool name selection
    */
   filterAsperBatchName(event: any) {
-    let poolName = this.swimmimgPoolRenewalForm.get('swimmingPoolName').get('code').value;
+    let obj = {
+      batchCode : event,
+      poolName : this.swimmimgPoolRenewalForm.get('swimmingPoolName').get('code').value,
+      birthDate :this.swimmimgPoolRenewalForm.get('birthDate').value,
+      category: this.swimmimgPoolRenewalForm.get('category').get('code').value
+   }
     if (event == 'REGULAR') {
-      this.bookingService.filterBatchCode(this.swimmimgPoolRenewalForm.get('category').get('code').value, poolName).subscribe(rep => {
+      this.bookingService.filterBatchCode(obj).subscribe(rep => {
         this.BATCH_NAME = rep;
       },
         err => {
@@ -401,7 +407,7 @@ export class SwimmingPoolRenewalComponent implements OnInit {
         })
     }
     else if (event) {
-      this.bookingService.filterBatchCode(event, poolName).subscribe(rep => {
+      this.bookingService.filterBatchCode(obj).subscribe(rep => {
         this.BATCH_NAME = rep;
       },
         err => {

@@ -21,9 +21,10 @@
     <mat-card class="cardBox">
       <div class="pageTitle">{{'instruction_of_planetarium_booking'| translate: translateKey}}</div>
       <mat-card-content class="p-4">
-        <h2><b>Instruction Of Planetarium Booking</b></h2>
-        <p class="pb-2">{{head_lines| translate: translateKey}}</p>
-        <h2>{{'rules_and_regulations'| translate: translateKey}}</h2>
+        <h1><b>Instruction Of Planetarium Booking</b></h1>
+        <h4 class="pb-2">{{head_lines| translate: translateKey}}</h4><br>
+        <h2><b>{{'rules_and_regulations'| translate: translateKey}}</b></h2>
+    <h4>
         <ol class="olList">
           <li>
             Citizens follow the VMC Rules.
@@ -41,12 +42,13 @@
           <li>
             Charge:
             <ul>
-                <li> Special show charge per seat 10 Rs.</li>
-                <li> General show charge per seat 20 Rs.</li>
+                <h4><li> Special show charge per seat 10 Rs.</li></h4>
+                <h4><li> General show charge per seat 20 Rs.</li></h4>
             </ul>
           </li>
           <li>Seating Capacity: For Special Show citizen can book 98 seats and for General Show one user can book 4 seats.</li>
         </ol>
+    </h4>
       </mat-card-content>
     </mat-card>
     <div class="fotButtonBar">

@@ -15,8 +15,8 @@
       <span> {{'print_ticket'| translate: translateKey}}</span>
     </div>
     <p class="pb-2">{{head_lines| translate: translateKey}}</p>
-    <h3>{{'zoo_closed' | translate : translateKey}}</h3>
-    <h2>{{'ticket_rate_details'| translate: translateKey}}</h2>
+    <h4>{{'zoo_closed' | translate : translateKey}}</h4><br>
+    <h2><strong>{{'ticket_rate_details'| translate: translateKey}}</strong></h2>
 
     <div class="example-container mat-elevation-z8 borderOne">
 
@@ -55,7 +55,7 @@
 
     <br />
 
-    <h2>{{'zoo_timings'| translate: translateKey}}</h2>
+    <h2><strong>{{'zoo_timings'| translate: translateKey}}</strong></h2>
 
     <div class="example-container mat-elevation-z8 borderOne">
 
@@ -111,7 +111,7 @@
     <div class="pageTitle">{{'ticket_details'| translate: translateKey}}</div>
     <mat-card-content class="p-4">
       <p class="pb-2">{{head_lines| translate: translateKey}}</p>
-      <h2> Note: Zoo will be closed on every Thursday</h2>
+      <h2><strong>Note: Zoo will be closed on every Thursday</strong></h2>
       <h2>{{'ticket_rate_details'| translate: translateKey}}</h2>
 
       <mat-form-field class="col-md-6 col-sm-6 col-xs-4">
@@ -143,7 +143,7 @@
             </td>
             <td>
               <div class="d-md-none">{{'visitors' | translate:translateKey}}:</div>
-              {{row.name}}
+              {{row.name | translate:translateKey}}
             </td>
             <td>
               <div class="d-md-none">{{'number_of_visitors' | translate:translateKey}}</div>
@@ -218,7 +218,7 @@
         </mat-form-field>
         <mat-form-field class="col-md-6" *ngIf="isPanCardVisibleIdNumber">
           <input matInput formControlName="idNumber" class="pancard" minlength="4" maxlength="4"
-            placeholder="{{'id_number' | translate: translateKey}}" required>
+            placeholder="{{'id_number' | translate: translateKey}}" required class="capitalCase">
           <control-messages [control]="ticketBookingForm.get('idNumber')"></control-messages>
           <mat-hint class="mt-3 font-weight-bold fsLarge">
             ({{'last_4_digit_of_ID'| translate: translateKey}})</mat-hint>
@@ -239,7 +239,7 @@
 
     <div class="fotButtonBar">
       <div class="col-sm-12 col-md-12 text-right">
-        <button mat-raised-button (click)="resetForm()" color="primary">
+        <button mat-raised-button type="reset" (click)="resetForm()" color="primary">
           <mat-icon>clear_all</mat-icon>
           {{'reset'| translate: translateKey}}
         </button>

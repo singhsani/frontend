@@ -306,6 +306,7 @@ export class UnitDetailComponent implements OnInit {
           }
           if(form.submitted){
             this.showBuildUpArea = true;
+              form.resetForm();
           }
         },
         (error) => {

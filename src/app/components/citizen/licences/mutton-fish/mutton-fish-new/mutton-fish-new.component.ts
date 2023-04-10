@@ -35,7 +35,9 @@ export class MuttonFishNewComponent implements OnInit {
 	FIRM_ZONE: Array<any> = [];
 	WARD: Array<any> = [];
 	LOOKUP: any;
-
+	wardZoneLevel = [];
+	wardZoneLevel1List = [];
+	wardZoneLevel2List = [];
 	isLandDetailsAllow: boolean = false;
 	isPartnershipDeedAllow: boolean = false;
 	isPoliceVerificationAllow: boolean = false;
@@ -74,6 +76,7 @@ export class MuttonFishNewComponent implements OnInit {
 			this.formId = Number(param.get('id'));
 			this.apiCode = param.get('apiCode');
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+			this.getAllZoneNos();
 		});
 
 		this.getLookupData();
@@ -90,7 +93,13 @@ export class MuttonFishNewComponent implements OnInit {
 	/**
 	 * Method is used to get form data
 	 */
-
+	 getAllZoneNos() {
+		this.formService.getWardZoneFirstLevel(1, "PROPERTYTAX").subscribe(
+		  (data) => {
+			this.wardZoneLevel1List = data;
+		  }
+		)
+	  }
 	getMuttonFishLicNewData() {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
@@ -292,6 +301,8 @@ export class MuttonFishNewComponent implements OnInit {
 			/* Step 1 controls end */
 
 			/* Step 2 controls start */
+			// zoneNo: this.fb.group({code: null}, Validators.required),
+			// wardNo: this.fb.group({code: null}, Validators.required),
 			zoneNo: this.fb.group({ code: [null, Validators.required] }),
 			wardNo: this.fb.group({ code: [null, Validators.required] }),
 			//businessAddressType: this.fb.group({ code: [null, Validators.required] }),
@@ -738,5 +749,19 @@ export class MuttonFishNewComponent implements OnInit {
 		}
 	};
 
+	onChangedZone(event) {
+		this.wardZoneLevel2List =[];
+		if (event == undefined) {
+		  return false
+		}
+		else {
+		  let postData = {};
+		  postData = { parentId: event };
+		  this.formService.getWardZone(postData).subscribe(res => {
+			this.wardZoneLevel2List = res.body;
+		  })
+	
+		}
+	  }
 	}
 

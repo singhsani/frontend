@@ -68,7 +68,7 @@
               </control-messages>
             </mat-form-field>
 
-            <mat-form-field class="col-md-4 ">
+            <!-- <mat-form-field class="col-md-4 ">
               <input matInput type="text" OnlyNumber required minlength="4" maxlength="4" formControlName="yearOfEstablishment"
                 placeholder="Year" (change)="getYearChange($event.target.value)">
               <mat-error class="mat-error ng-star-inserted"
@@ -76,7 +76,7 @@
               </mat-error>
               <control-messages [control]="vendorRegistrationForm.get('yearOfEstablishment')">
               </control-messages>
-            </mat-form-field>
+            </mat-form-field> -->
 
             <mat-form-field class="col-md-4">
               <input matInput autocomplete="off" appDate formControlName="commencementDate" [max]="maxDate"
@@ -127,7 +127,7 @@
 
 
           <div class="row">
-            <h2><b>{{'Address of the factory/works from where material will be supplied'}}</b></h2>
+            <h2><b>{{'Address of the Factory /works from where material will be supplied'}}</b></h2>
 
             <!-- <app-address #officeAddr [requiredFeilds]="true"
               [addressFormGroup]="vendorRegistrationForm.get('factoryAddress')">
@@ -161,11 +161,11 @@
                 <control-messages [control]="vendorRegistrationForm.get('area')"></control-messages>
               </mat-form-field>
 
-
-              <mat-form-field class="col-md-4 ">
-                <input matInput type="text" formControlName="city" placeholder="{{'city' | translate: translateKey }}"
-                  maxlength="100" (change)=" onChangeCity($event)" required>
-                <control-messages [control]="vendorRegistrationForm.get('city')"></control-messages>
+              <mat-form-field class="col-md-4">
+                <input matInput type="text" formControlName="country"
+                 placeholder="{{'country' | translate: translateKey }}" maxlength="100"
+                  (change)=" onChangeCountry($event)" required>
+                <control-messages [control]="vendorRegistrationForm.get('country')"></control-messages>
               </mat-form-field>
 
 
@@ -175,11 +175,10 @@
                 <control-messages [control]="vendorRegistrationForm.get('state')"></control-messages>
               </mat-form-field>
 
-              <mat-form-field class="col-md-4">
-                <input matInput type="text" formControlName="country"
-                  placeholder="{{'country' | translate: translateKey }}" maxlength="100"
-                  (change)=" onChangeCountry($event)" required>
-                <control-messages [control]="vendorRegistrationForm.get('country')"></control-messages>
+              <mat-form-field class="col-md-4 ">
+                <input matInput type="text" formControlName="city" placeholder="{{'city' | translate: translateKey }}"
+                 maxlength="100" (change)=" onChangeCity($event)" required>
+                <control-messages [control]="vendorRegistrationForm.get('city')"></control-messages>
               </mat-form-field>
 
               <mat-form-field class="col-md-4">
@@ -194,7 +193,7 @@
           </div>
 
           <mat-form-field class="col-md-12">
-            <textarea disabled matInput formControlName="factoryAddressDetails" placeholder="{{'factory Address'}}"
+            <textarea disabled matInput formControlName="factoryAddressDetails" placeholder="{{'Factory Address'}}"
               [(ngModel)]="setAddressValue" rows="3"></textarea>
           </mat-form-field>
 
@@ -220,6 +219,12 @@
             </control-messages>
           </mat-form-field>
 
+          <div *ngIf="checkbox">
+            <mat-checkbox class="col-md-12 mt-2" 
+              (change)="onSameAddressChange($event)">{{'Same As Factory/ Works Address' | translate: translateKey}}
+            </mat-checkbox>
+          </div>
+          
           <div class="row">
             <h2><b>{{'Address of the Registered Office / Head Office'}}</b></h2>
             <app-address #resAddr [requiredFeilds]="true"
@@ -338,7 +343,7 @@
           <div class="fotButtonBar clearfix">
             <div class="col-sm-12 col-md-12">
               <button type="button" class="pull-right" mat-raised-button color="primary"
-                (click)="tabIndex = 1">{{'Next'}}</button>
+                (click)="tabIndex = 1">{{'Save And Next'}}</button>
             </div>
           </div>
         </mat-tab>
@@ -452,8 +457,8 @@
 
                   <td>
                     <!-- <div class="col-sm-12 col-md-12 text-right"> -->
-                    <button [hidden]="isPreviewVendorNameDetail" mat-raised-button type="button" color="warn"
-                      style="margin-top: 22px;" (click)="onRemoveRowVendorType(index)">
+                    <button [hidden]="isPreviewVendorNameDetail" mat-icon-button color="warn"
+                      (click)="onRemoveRowVendorType(index)">
                       <mat-icon title="Cancel">cancel</mat-icon>
                     </button>
                     <!-- </div> -->
@@ -528,8 +533,8 @@
 
                       <td>
                         <!-- <div class="col-sm-12 col-md-12 text-right"> -->
-                        <button [hidden]="isListOfItemMaterial" mat-raised-button type="button" color="warn"
-                          style="margin-top: 22px;" (click)="onRemoveRowItemMaterial(index)">
+                        <button [hidden]="isListOfItemMaterial" mat-icon-button color="warn"
+                           (click)="onRemoveRowItemMaterial(index)">
                           <mat-icon title="Cancel">cancel</mat-icon>
                         </button>
                         <!-- </div> -->
@@ -585,7 +590,7 @@
 
           <div class="row">
 
-            <!-- <h2>{{'Whether the factory is owned by the firm (docuemntory evidence of Ownership must be produced). In
+            <!-- <h2>{{'Whether the factory is owned by the firm (documentary evidence of Ownership must be produced). In
               case firm does not own factory but utilize the facility for manufacturing / fabrication of
               equipments/stores for which firm has applied on live & licence or other basis, the Firm should furnish
               valid legal agreement that factory of(here indicate the name of the firm whose factory is being
@@ -606,7 +611,7 @@
 
               <div class="mb-4 mt-12">
                 <mat-label>
-                  <h2>Whether the factory is owned by the firm (docuemntory evidence of Ownership must be produced). In
+                  <h2>Whether the factory is owned by the firm (documentary evidence of Ownership must be produced). In
                     case firm does not own factory but utilize the facility for manufacturing / fabrication of
                     equipments/stores for which firm has applied on live & licence or other basis, the Firm should
                     furnish
@@ -668,7 +673,7 @@
                 <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 0">{{'Back'}}</button>
 
               </span>
-              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 2">{{'Next'
+              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 2">{{'Save And Next'
                 }}</button>
             </div>
           </div>
@@ -923,7 +928,7 @@
               <mat-icon (click)="getFile('CENTRAL_STATE_GOVT_REG_CERTIFICATE')" class="text-info">remove_red_eye
               </mat-icon>
             </div> -->
-            <div class="col-md-2 text-right">
+            <div class="col-sm-12 col-md-12 text-left">
               <button mat-raised-button type="button" color="primary" (click)="addRowVendorRegisteredGovtDetail()">{{'Add
                 New'}}</button>
             </div>
@@ -1008,8 +1013,8 @@
                   </td>
 
                   <td>
-                    <button [hidden]="isRegisteredGovtDetail" mat-raised-button type="button" color="warn"
-                      style="margin-top: 22px;" (click)="onRemoveVendorRegisteredGovtDetail(index)">
+                    <button [hidden]="isRegisteredGovtDetail" mat-icon-button color="warn"
+                       (click)="onRemoveVendorRegisteredGovtDetail(index)">
                       <mat-icon title="Cancel">cancel</mat-icon>
                     </button>
                   </td>
@@ -1024,7 +1029,7 @@
             <!-- <div *ngIf="isFileView" class="col-md-1">
               <mat-icon (click)="getFile('LIST_MACHINERIES')" class="text-info">remove_red_eye</mat-icon>
             </div> -->
-            <div class="col-md-2 text-right">
+            <div class="col-sm-12 col-md-12 text-left">
               <button mat-raised-button type="button" color="primary" (click)="addRowVendorMachineInstalledCapacity()">{{'Add
                 New'}}</button>
             </div>
@@ -1075,8 +1080,8 @@
                   </td>
 
                   <td>
-                    <button [hidden]="isInstalledMachineCapacities" mat-raised-button type="button" color="warn"
-                      style="margin-top: 22px;" (click)="onRemoveVendorMahcineCapacity(index)">
+                    <button [hidden]="isInstalledMachineCapacities" mat-icon-button color="warn"
+                      (click)="onRemoveVendorMahcineCapacity(index)">
                       <mat-icon title="Cancel">cancel</mat-icon>
                     </button>
                   </td>
@@ -1090,7 +1095,7 @@
             <h2 class="col-md-10">{{'A. Qualified personnel working in the factory/office, their academic qualification
               and Experience.'}}</h2>
 
-            <div class="col-md-2 text-right">
+            <div class="col-sm-12 col-md-12 text-left">
               <button mat-raised-button type="button" color="primary" (click)="addacademicQualification()">{{'Add
                 New'}}</button>
             </div>
@@ -1152,8 +1157,8 @@
 
                   <td>
                     <!-- <div class="col-sm-12 col-md-12 text-right"> -->
-                    <button [hidden]="isQualificationDetails" mat-raised-button type="button" color="warn"
-                      style="margin-top: 22px;" (click)="onRemoveacademicQualificationAndExperience(index)">
+                    <button [hidden]="isQualificationDetails" mat-icon-button color="warn"
+                      (click)="onRemoveacademicQualificationAndExperience(index)">
                       <mat-icon title="Cancel">cancel</mat-icon>
                     </button>
                     <!-- </div> -->
@@ -1177,14 +1182,14 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput type="text" maxlength="5" OnlyNumber placeholder="{{'Unskilled'}}"
+              <input matInput type="text" maxlength="5" OnlyNumber placeholder="{{'Semi-Skilled'}}"
                 formControlName="personnelDetailUnSkilled">
               <control-messages [control]="vendorRegistrationForm.get('personnelDetailUnSkilled')">
               </control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput type="text" maxlength="5" OnlyNumber placeholder="{{'Other'}}"
+              <input matInput type="text" maxlength="5" OnlyNumber placeholder="{{'Un-Skilled'}}"
                 formControlName="personnelDetailOther">
               <control-messages [control]="vendorRegistrationForm.get('personnelDetailOther')">
               </control-messages>
@@ -1198,7 +1203,7 @@
                 <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 1">{{'Back'}}</button>
 
               </span>
-              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 3">{{'Next'
+              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 3">{{'Save And Next'
                 }}</button>
             </div>
           </div>
@@ -1286,7 +1291,7 @@
             <mat-form-field class="col-md-12">
               <input matInput type="text" maxlength="1000" appValidationFields
                 validationFieldsType='appAlphanumericNumberWithDashAndComa'
-                placeholder="{{'Maximum production per annum (in qty. as well as value) acheived so far.'}}"
+                placeholder="{{'Maximum production per annum (in qty. as well as value) achieved so far.'}}"
                 formControlName="maximumProductionPerAnnum">
               <control-messages [control]="vendorRegistrationForm.get('maximumProductionPerAnnum')">
               </control-messages>
@@ -1297,7 +1302,7 @@
 
             <h2 class="col-md-6">{{'List of Authorized Distributors in Vadodara city'}}</h2>
 
-            <div class="col-md-6 text-right">
+            <div class="col-sm-12 col-md-12 text-left">
               <button mat-raised-button type="button" color="primary" (click)="addRowvendorNameAuthorized()">{{'Add
                 New'}}</button>
             </div>
@@ -1348,8 +1353,8 @@
 
                   <td>
                     <!-- <div class="col-sm-12 col-md-12 text-right"> -->
-                    <button [hidden]="isVendorNameAuthorizedDetails" mat-raised-button type="button" color="warn"
-                      style="margin-top: 22px;" (click)="onRemovevendorNameAuthorized(index)">
+                    <button [hidden]="isVendorNameAuthorizedDetails" mat-icon-button color="warn"
+                      (click)="onRemovevendorNameAuthorized(index)">
                       <mat-icon title="Cancel">cancel</mat-icon>
                     </button>
                     <!-- </div> -->
@@ -1366,7 +1371,7 @@
 
             <h2 class="col-md-6">{{'Last three years purchasing item detail'}}</h2>
 
-            <div class="col-md-6 text-right">
+            <div class="col-sm-12 col-md-12 text-left">
               <button mat-raised-button type="button" color="primary" type="button" (click)="addRowLastThreeYear()">{{'Add
                 New'}}</button>
             </div>
@@ -1422,8 +1427,8 @@
 
                   <td>
                     <!-- <div class="col-sm-12 col-md-12 text-right"> -->
-                    <button [hidden]="isVendorNameLastYearDetails" mat-raised-button type="button" color="warn"
-                      style="margin-top: 22px;" (click)="onRemoveRowVendorTypeLastYear(index)">
+                    <button [hidden]="isVendorNameLastYearDetails" mat-icon-button color="warn"
+                       (click)="onRemoveRowVendorTypeLastYear(index)">
                       <mat-icon title="Cancel">cancel</mat-icon>
                     </button>
                     <!-- </div> -->
@@ -1441,7 +1446,7 @@
             <h2>{{'A. Deatils of order executed indicating quantity, value for each item/materials to
               be registered for supply, self certified statement to be attached.'}}</h2>
 
-            <div class="col-md-6 text-left">
+            <div class="col-sm-12 col-md-12 text-left">
               <button mat-raised-button type="button" color="primary" type="button"
                 (click)="addRowVendorDetailsOfOrderIndicationQuantity()">{{'Add New'}}</button>
             </div>
@@ -1504,8 +1509,8 @@
 
 
                   <td>
-                    <button [hidden]="isSupplierOrderDetails" mat-raised-button type="button" color="warn"
-                      style="margin-top: 22px;" (click)="onRemoveVendorDetailsOfOrderIndicationQuantity(index)">
+                    <button [hidden]="isSupplierOrderDetails" mat-icon-button color="warn"
+                       (click)="onRemoveVendorDetailsOfOrderIndicationQuantity(index)">
                       <mat-icon title="Cancel">cancel</mat-icon>
                     </button>
                   </td>
@@ -1617,8 +1622,8 @@
 
                     <td>
                       <!-- <div class="col-sm-12 col-md-12 text-right"> -->
-                      <button [hidden]="isVendorNameHoldingDetails" mat-raised-button color="warn" type="button"
-                        style="margin-top: 22px;" (click)="onRemovevendorNameholding(index)">
+                      <button [hidden]="isVendorNameHoldingDetails" mat-icon-button color="warn"
+                       (click)="onRemovevendorNameholding(index)">
                         <mat-icon title="Cancel">cancel</mat-icon>
                       </button>
                       <!-- </div> -->
@@ -1647,7 +1652,7 @@
                 <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 2">{{'Back'}}</button>
 
               </span>
-              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 4">{{'Next'
+              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 4">{{'Save And Next'
                 }}</button>
             </div>
           </div>
@@ -1717,8 +1722,12 @@
 <ng-template #termCondition>
 
   <div class="modal-body">
-    <p>Terms and Condition <br>
-      * If, Registration is not recommended / rejected, registration fee paid is not Refundable.
+    <p><b>Terms and Condition</b><br>
+      <b>1.</b> I/We hereby certify that I/We are not blacklisted or not associated with a blacklisted firm in Vadodara Municipal Corporation or any other Municipal Corporation, Gujarat or other States, Central Public Works Department, Military Engineer Service (MES) or Railways.<br>
+      <b>2.</b> Presently I/we are partner in any of the following firm/s registered as recognized vendor/vendors of the State of Gujarat, State of Maharashtra, Central Public Works Department, Military Engineer Service (MES), Railways or other Municipal Corporations in any firm/s/are not partners. (Ignore if not applicable).<br>
+      <b>3.</b> Before filling the application form I/We have read the rules and instructions regarding vendor registration carefully and I/We are bound to follow them.<br>
+      <b>4.</b> I/We hereby certify that all particulars stated in the application are complete and correct, any fact being incomplete or it has not been hidden, which I/We guarantee.<br>
+      <b>5.</b> If registration is not recommended / rejected, then paid registration form fee’s or any other fee’s are not refundable.
     </p>
   </div>
 

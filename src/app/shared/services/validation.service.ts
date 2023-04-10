@@ -48,7 +48,7 @@ export class ValidationService {
             invalidpetaKendraNumber: 'Should contains only alpha-numeric and numeric value',
             invalidAmount: 'Amount should be in digit and Only two digit allowed after decimal',
             motherMarriageTimeAge: 'Mothers age at marriage time should not be less then 12 Years',
-            invalidGstNo: 'Please enter a valid GSTIN e.g. 29ABCDE1234F2Z5',
+            invalidGstNo: 'Please enter a valid GST Number e.g. 29ABCDE1234F2Z5',
             invalidAccountNo: 'Invalid Account No',
             invalidAcHolderName: 'Invalid Name',
             invalidDrivingLicense: 'Enter valid License number e.g. GJ0620210012122',
@@ -86,7 +86,8 @@ export class ValidationService {
 
     static swimmingPoolMemberValidator(control: FormControl) {
         if (control.value) {
-            const matches = control.value.match(/^[A-Za-z]{2}[0-9]{4}[-][0-9]{2}[A-Za-z]{2}[0-9]{5}$/);
+            const matches = control.value.match(/^[0-9]{11}$/); 
+            // const matches = control.value.match(/^[A-Za-z]{2}[0-9]{4}[-][0-9]{2}[A-Za-z]{2}[0-9]{5}$/);
             return matches ? null : { 'invalidMemberNo': true }
         }
     }
@@ -116,7 +117,8 @@ export class ValidationService {
         if (control.value) {
             //    const matches = control.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/);
             // const matches = control.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
-            const matches = control.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,3}$/);
+            // const matches = control.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,3}$/);
+            const matches = control.value.match(/^[\w-\.]+@[\w-]+(\.[\w-]{2,3}){1,2}$/);
             return matches ? null : { 'invalidEmail': true };
         } else {
             return null;
