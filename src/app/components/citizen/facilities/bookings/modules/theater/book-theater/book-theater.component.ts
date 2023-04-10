@@ -461,10 +461,6 @@ export class BookTheaterComponent implements OnInit {
     }
   }
 
-  agreeClick(event) {
-      this.theaterBookingForm.controls['agree'].setValue(event.checked);
-  }
-
   termsConditionClick(event) {
     this.theaterBookingForm.controls['termsCondition'].setValue(event.checked);
   }
