@@ -21,6 +21,9 @@ export class MuttonFishNewComponent implements OnInit {
 	@ViewChild('permanantAddressEstablishment') permanantAddressEstablishment: any;
 	
 	muttonFishNewForm: FormGroup;
+	applicantDetials : FormGroup;
+	businessDetail :FormGroup;
+	attachmentDetail : FormGroup;
 	translateKey: string = 'muttonFishNewScreen';
 	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
 
@@ -104,6 +107,18 @@ export class MuttonFishNewComponent implements OnInit {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.muttonFishNewForm.patchValue(res);
+				this.applicantDetials.patchValue(res);
+				this.businessDetail.patchValue(res);
+				this.attachmentDetail.patchValue(res)
+				// when form open in perview node 
+				if(res.canEdit == false){
+					this.applicantDetials.disable()
+					this.businessDetail.disable()
+				}
+				else{
+					this.applicantDetials.enable()
+					this.businessDetail.enable()
+				}
 				this.isdisableMode = res.canEdit;
 				this.licenseConfiguration.isAttachmentButtonsVisible = true;
 				if(res.relationshipList.length == 0 && res.canEdit==false){
@@ -111,11 +126,11 @@ export class MuttonFishNewComponent implements OnInit {
 				}else{
 					this.istable = true;
 				}
-				this.onChangeZone(this.muttonFishNewForm.get('zoneNo').value.code);
+				this.onChangeZone(this.businessDetail.get('zoneNo').value.code);
 				//this.onChangeWard(this.muttonFishNewForm.get('wardNo').value.code);
 				//this.onChangeStatusOfBusiness(this.muttonFishNewForm.get('statusOfBusinessId').value.code);
-				if (this.muttonFishNewForm.get('statusOfBusinessId').value.code) {
-					this.onChangeStatusOfBusiness(this.muttonFishNewForm.get('statusOfBusinessId').value.code)
+				if (this.businessDetail.get('statusOfBusinessId').value.code) {
+					this.onChangeStatusOfBusiness(this.businessDetail.get('statusOfBusinessId').value.code)
 				} else {
 					this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
 					this.uploadFileArray.sort((a, b) => 
@@ -132,7 +147,7 @@ export class MuttonFishNewComponent implements OnInit {
 					}
 				}
 				res.relationshipList.forEach(app => {
-					(<FormArray>this.muttonFishNewForm.get('relationshipList')).push(this.createArray(app));
+					(<FormArray>this.businessDetail.get('relationshipList')).push(this.createArray(app));
 				});
 
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
@@ -266,14 +281,8 @@ export class MuttonFishNewComponent implements OnInit {
 	* 'Guj' control is consider as a Gujarati fields
 	*/
 	muttonFishNewFormControls() {
-		this.muttonFishNewForm = this.fb.group({
-			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			serviceCode: 'MF-LIC',
-			applicationDate: [],
-			licenseIssueDate: [null],
-			licenseRenewalDate: [null],
-			loinumber: [null],
-			/* Step 1 controls start */
+		/* Step 1 controls start */
+		this.applicantDetials  = this.fb.group({
 			licenseType: this.fb.group({
 				code: [null, [Validators.required]]
 			}),
@@ -298,13 +307,18 @@ export class MuttonFishNewComponent implements OnInit {
 			holderFaxNo: [null, [Validators.maxLength(12)]],
 			holderAadharNo: [null, [Validators.required, Validators.maxLength(12)]],
 			holderPanNo: [null, [Validators.required, ValidationService.panValidator, Validators.maxLength(10)]],
-			/* Step 1 controls end */
+			isSameAsPermanantAddress: this.fb.group({
+				code: null
+			}),
+		})
+        /* Step 1 controls end */
 
-			/* Step 2 controls start */
-			// zoneNo: this.fb.group({code: null}, Validators.required),
+		/* Step 2 controls start */
+		this.businessDetail = this.fb.group({
+             // zoneNo: this.fb.group({code: null}, Validators.required),
 			// wardNo: this.fb.group({code: null}, Validators.required),
-			zoneNo: this.fb.group({ code: [null, Validators.required] }),
-			wardNo: this.fb.group({ code: [null, Validators.required] }),
+			zoneNo: this.fb.group({ code: [null, [Validators.required]] }),
+			wardNo: this.fb.group({ code: [null, [Validators.required]] }),
 			//businessAddressType: this.fb.group({ code: [null, Validators.required] }),
 			businessAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			// extraDetailsOfBusiness: [null, [Validators.maxLength(500)]],
@@ -315,15 +329,24 @@ export class MuttonFishNewComponent implements OnInit {
 				code: [null, Validators.required]
 			}),
 			relationshipList: this.fb.array([]),
-			/* Step 2 controls end */
-
-			/* Step 3 controls start*/
+		})
+            /* Step 2 controls start */
+			this.attachmentDetail = this.fb.group({
+				attachments: [],		
+			})
+		this.muttonFishNewForm = this.fb.group({
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+			serviceCode: 'MF-LIC',
+			applicationDate: [],
+			licenseIssueDate: [null],
+			licenseRenewalDate: [null],
+			loinumber: [null],
 			attachments: [],
-			isSameAsPermanantAddress: this.fb.group({
-				code: null
-			}),
-			/* Step 3 controls end */
 		});
+		/** Method is used to copy local contoller to Main contoller **/
+		this.commonService.createCloneAbstractControl(this.applicantDetials,this.muttonFishNewForm);
+		this.commonService.createCloneAbstractControl(this.businessDetail,this.muttonFishNewForm);	
+		this.commonService.createCloneAbstractControl(this.attachmentDetail,this.muttonFishNewForm);	
 	}
 
 	/**
@@ -346,7 +369,7 @@ export class MuttonFishNewComponent implements OnInit {
 	 */
 	addItem() {
 		let returnArray: any;
-		returnArray = this.muttonFishNewForm.get('relationshipList') as FormArray;
+		returnArray = this.businessDetail.get('relationshipList') as FormArray;
 		return returnArray;
 	}
 
@@ -354,14 +377,14 @@ export class MuttonFishNewComponent implements OnInit {
 
 		if (event.checked) {
 
-			this.muttonFishNewForm.get('temporaryAddress').patchValue(this.muttonFishNewForm.get('permanantAddress').value);
-			this.muttonFishNewForm.get('temporaryAddress.addressType').setValue('MF_TEMPORARY_ADDRESS');
-			this.muttonFishNewForm.get('isSameAsPermanantAddress').get('code').setValue("YES");
-			this.muttonFishNewForm.get('temporaryAddress').disable();
+			this.applicantDetials.get('temporaryAddress').patchValue(this.applicantDetials.get('permanantAddress').value);
+			this.applicantDetials.get('temporaryAddress.addressType').setValue('MF_TEMPORARY_ADDRESS');
+			this.applicantDetials.get('isSameAsPermanantAddress').get('code').setValue("YES");
+			this.applicantDetials.get('temporaryAddress').disable();
 		} else {
-			this.muttonFishNewForm.get('temporaryAddress').enable();
-			this.muttonFishNewForm.get('temporaryAddress').reset();
-			this.muttonFishNewForm.get('isSameAsPermanantAddress').get('code').setValue("NO");
+			this.applicantDetials.get('temporaryAddress').enable();
+			this.applicantDetials.get('temporaryAddress').reset();
+			this.applicantDetials.get('isSameAsPermanantAddress').get('code').setValue("NO");
 		}
 
 	}
@@ -372,7 +395,7 @@ export class MuttonFishNewComponent implements OnInit {
 	 */
 	addMorePerson() {
 		// let relationshipIdValue = this.muttonFishNewForm.get('relationshipId').value.code;
-		let relationshipIdValue = this.muttonFishNewForm.get('statusOfBusinessId').value.code;
+		let relationshipIdValue = this.businessDetail.get('statusOfBusinessId').value.code;
 
 		if (!relationshipIdValue) {
 			this.toastrService.warning("Please select relationship of applicant first.");
@@ -408,10 +431,10 @@ export class MuttonFishNewComponent implements OnInit {
 	 */
 	 onChangeRelationWithOrg() {
 		try {
-			(<FormArray>this.muttonFishNewForm.get('relationshipList')).controls = [];
-			this.muttonFishNewForm.get('relationshipList').setValue([]);
+			(<FormArray>this.businessDetail.get('relationshipList')).controls = [];
+			this.businessDetail.get('relationshipList').setValue([]);
 
-			if ((<FormArray>this.muttonFishNewForm.get('relationshipList')).length == 0) {
+			if ((<FormArray>this.businessDetail.get('relationshipList')).length == 0) {
 				this.addItem().push(this.createArray());
 				let newlyadded = this.addItem().controls;
 				if (newlyadded.length) {
@@ -541,9 +564,9 @@ export class MuttonFishNewComponent implements OnInit {
 		if (lookupName && lookupName.length) {
 			let dataObj = lookupName.find((obj) => obj.code === selectedValue);
 			if (dataObj && dataObj.gujName) {
-				this.muttonFishNewForm.get(controlName).setValue(dataObj.gujName);
+				this.applicantDetials.get(controlName).setValue(dataObj.gujName);
 			} else {
-				this.muttonFishNewForm.get(controlName).setValue('');
+				this.applicantDetials.get(controlName).setValue('');
 			}
 		}
 
