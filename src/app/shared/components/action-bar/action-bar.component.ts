@@ -112,21 +112,41 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	 * This method is used for save form as draft using API
 	 */
 	saveAsDraft() {
-		this.isSaveBtnDisabled = true;
-		this.formService.saveFormData(this.form.getRawValue()).subscribe(
-			res => {
-				this.form.patchValue(res);
-				this.isSaveBtnDisabled = false;
-				if (this.isstepper) {
-					this.tabIndex.emit(this.stepInfo.next);
-				}
-				this.handleOnSaveAndNext.emit(res);
-				this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully saved`);
-			},
-			err => {
-				this.onSaveError(err);
+		if(this.formService.apiType == 'MFLicense'){
+			if (this.isstepper) {
+				this.tabIndex.emit(this.stepInfo.next);
 			}
-		);
+				this.isSaveBtnDisabled = true;
+				this.formService.saveFormData(this.form.getRawValue()).subscribe(
+					res => {
+						this.form.patchValue(res);
+						this.isSaveBtnDisabled = false;
+						this.handleOnSaveAndNext.emit(res);
+						//this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully saved`);
+					},
+					err => {
+						this.onSaveError(err);
+					}
+				);
+		
+		}
+		else{
+			this.isSaveBtnDisabled = true;
+			this.formService.saveFormData(this.form.getRawValue()).subscribe(
+				res => {
+					this.form.patchValue(res);
+					this.isSaveBtnDisabled = false;
+					if (this.isstepper) {
+						this.tabIndex.emit(this.stepInfo.next);
+					}
+					this.handleOnSaveAndNext.emit(res);
+					this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully saved`);
+				},
+				err => {
+					this.onSaveError(err);
+				}
+			);
+		}
 
 	}
 
