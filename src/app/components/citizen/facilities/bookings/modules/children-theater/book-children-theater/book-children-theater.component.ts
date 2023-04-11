@@ -61,7 +61,7 @@ export class BookChildrenTheaterComponent implements OnInit {
     // BANKS: Array<any> = [];
     availableStots: Array<any> = []
     tabIndex: number = 0;
-
+    purpose :string;
     displayedColumnsFeeDetails: string[] = ['sno', 'programmePurpose', 'bookingRent', 'gst'];
     dataSource = [];
 
@@ -399,11 +399,17 @@ export class BookChildrenTheaterComponent implements OnInit {
       this.dataSource = res.data
       });
     }
-   
+
     getAvaillableSlot(data){
         this.bookingService.getAvailableStots(data[0].code).subscribe(respData => {
           this.endDate = moment(respData.data.endDate, "DD-MM-YYYY").toDate();
         })
       }
-
+      onPurposeChange(event) {
+        this.CATEGORIES.forEach(ele => {
+          if (ele.code == event) {
+            this.purpose = ele.name
+          }
+        })
+      }
 }

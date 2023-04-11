@@ -89,7 +89,7 @@
                       </mat-form-field>
 
                     <div formGroupName="purpose" class="col-md-6 ngSelect">
-                        <ng-select placeholder="{{'category'| translate: translateKey}}" formControlName="code">
+                        <ng-select placeholder="{{'category'| translate: translateKey}}" formControlName="code" (change)="onPurposeChange($event)">
                             <ng-option *ngFor="let purpose of CATEGORIES" [value]="purpose.code">
                                 {{ purpose.name }}
                             </ng-option>
@@ -265,25 +265,37 @@
                 <thead>
                     <tr>
                         <th scope="col">{{'booking_date'| translate: translateKey}}</th>
-                        <th scope="col">{{'rent_amount'| translate: translateKey}}</th>
+
                       <th scope="col">{{'event_date_from'| translate: translateKey}}</th>
                       <th scope="col">{{'event_date_to'| translate: translateKey}}</th>
+                      <th scope="col">{{'rent_amount'| translate: translateKey}}(A)</th>
 <!--                        <th scope="col">{{'deposit_amount'| translate: translateKey}}</th>-->
-                        <th scope="col">{{'GST'| translate: translateKey}}</th>
-                    </tr>
+                        <!-- <th scope="col">{{'GST'| translate: translateKey}}</th> -->
+                        <th scope="col">GST B=(A*GST)</th>
+                        <th scope="col">Total payable Amount (A+B)</th>
+                        </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td scope="col">{{bookingUtils.returnProperDate(paymentObject.BOOKING_DATE)}}</td>
-                        <td scope="col">{{paymentObject.RENT_FEES}}</td>
+
                       <td scope="col">{{paymentObject.EVENT_DATE_FROM}}</td>
                       <td scope="col">{{paymentObject.EVENT_DATE_TO}}</td>
+                      <td scope="col">{{paymentObject.RENT_FEES}}</td>
 <!--                        <td scope="col">{{paymentObject.DEPOSIT_FEES?paymentObject.DEPOSIT_FEES : 0.00}}</td>-->
                         <td scope="col">{{paymentObject.GST}}</td>
+                        <td scope="col">{{paymentObject.TOTAL_AMOUNT}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        <div class="row">
+          <div class="col-md-8 ">
+            <div class="d-flex justify-content-between">
+             <h5  class="detailslist"> Program Purpose :- <span class="detailsNamelist">{{ purpose}} </span>  </h5>
+            </div>
+            </div>
+          </div>
         <div class="fotButtonBar">
             <div class="col-sm-12 col-md-12 text-right">
                 <button type="button" mat-raised-button color="primary" data-dismiss="modal" (click)="showChildrenTheaterApplicationForm = true; this.showPaymentReciept = false;getUserProfile()">
