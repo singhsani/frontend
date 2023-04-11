@@ -6,7 +6,7 @@
   <div class="pageTitle">{{'online_zoo_ticket_booking'| translate: translateKey}}</div>
 
   <!-- Card Content showing Zoo Ticketing Rates and Visiting Time -->
-  <mat-card-content class="p-4" style="margin-top: -30px ;height: 596px">
+  <mat-card-content class="p-4 p-5">
     <div class="guideline-intro">
       <span>{{'ticket_details'| translate: translateKey}} </span>
       <mat-icon class="middle-align">arrow_forward</mat-icon>
@@ -15,16 +15,16 @@
       <span> {{'print_ticket'| translate: translateKey}}</span>
     </div>
     <p class="pb-2">{{head_lines| translate: translateKey}}</p>
-    <h4>{{'zoo_closed' | translate : translateKey}}</h4><br>
-    <h2 style="margin-top: -18px"><strong>{{'ticket_rate_details'| translate: translateKey}}</strong></h2>
+    <h4 class="mt16">{{'zoo_closed' | translate : translateKey}}</h4><br>
+    <h2 class="h2"><strong>{{'ticket_rate_details'| translate: translateKey}}</strong></h2>
 
-    <div class="example-container mat-elevation-z8 borderOne">
+    <div class="example-container mat-elevation-z8 borderOne mt16">
 
       <table mat-table [dataSource]="dataSourceForPricing" class="myTicketPricingTabel">
 
         <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef style="margin-right: 64px;">Sr.No.</mat-header-cell>
-          <mat-cell *matCellDef="let row; let i = index;" class="fullWidth" style="margin-right: 60px;">
+          <mat-header-cell *matHeaderCellDef class="mat-header">Sr.No.</mat-header-cell>
+          <mat-cell *matCellDef="let row; let i = index;" class="fullWidth mat-cell" >
             <div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
             <div class="mobile-label1">:</div>
             <div class="row-inside"> {{i+1}} </div>
@@ -32,8 +32,8 @@
         </ng-container>
 
         <ng-container matColumnDef="description">
-          <mat-header-cell *matHeaderCellDef style="margin-right: 64px;">{{'particulars' | translate:translateKey}}</mat-header-cell>
-          <mat-cell *matCellDef="let row" class="fullWidth" style="margin-right: 180px;">
+          <mat-header-cell *matHeaderCellDef class="mat-header">{{'particulars' | translate:translateKey}}</mat-header-cell>
+          <mat-cell *matCellDef="let row" class="fullWidth mat-cell1">
             <div class="mobile-label">{{'particulars' | translate:translateKey}}</div>
             <div class="mobile-label1">:</div>
             <div class="row-inside"> {{ row.description | translate:translateKey }}</div>
@@ -55,15 +55,15 @@
 
     <br />
 
-    <h2 style="margin-top: -13px"><strong>{{'zoo_timings'| translate: translateKey}}</strong></h2>
+    <h2 class="mt16"><strong>{{'zoo_timings'| translate: translateKey}}</strong></h2>
 
-    <div class="example-container mat-elevation-z8 borderOne">
+    <div class="example-container mat-elevation-z8 borderOne mt16">
 
       <table mat-table [dataSource]="dataSourceForTiming" class="myTicketPricingTabel">
 
         <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef style="margin-right: 64px;">Sr.No.</mat-header-cell>
-          <mat-cell *matCellDef="let row; let i = index;" class="fullWidth" style="margin-right: 60px;">
+          <mat-header-cell *matHeaderCellDef class="mat-header">Sr.No.</mat-header-cell>
+          <mat-cell *matCellDef="let row; let i = index;" class="fullWidth mat-cell">
             <div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
             <div class="mobile-label1">:</div>
             <div class="row-inside"> {{i+1}} </div>
@@ -94,7 +94,7 @@
   </mat-card-content>
   <!-- Card Content showing Zoo Ticketing Rates and Visiting Time Ends here -->
 
-    <div class="col-sm-12 col-md-12 text-right">
+    <div class="col-sm-12 col-md-12 text-right wt mt40">
       <button mat-raised-button (click)="guideLineFlag = false; showTicketsBookingForm= true;" color="primary">
         {{'processed'| translate: translateKey}}
       </button>
