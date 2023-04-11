@@ -429,6 +429,7 @@ export class SwimmingPoolComponent implements OnInit {
       isRenewalForm: false,
       memberNumber: null,
       birthDate :[null, Validators.required],
+      termsCondition : null
     });
   }
 
@@ -742,5 +743,9 @@ export class SwimmingPoolComponent implements OnInit {
     else{
       this.showMsg = false
     }   
+  }
+
+  termsConditionClick(event) {
+    this.swimmimgPoolBookingForm.controls['termsCondition'].setValue(event.checked);
   }
 }

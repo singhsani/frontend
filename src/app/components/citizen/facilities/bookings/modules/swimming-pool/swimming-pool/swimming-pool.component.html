@@ -37,52 +37,96 @@
 
 	<mat-card-content class="footer_container">
 		<div class="head_container">
-		<img _ngcontent-c1="" alt="Vadodara Municipal Corporation" src="assets/images/vmc-logo.png" class="center"><br>
-		<h1><b>Contact Details.</b></h1>
-		<h1><b>Karelibaug Swim.Pool:2483500 , &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	Sardarbaug Swim.Pool: 2335383.</b></h1><br>
-		<h1><b>Lalbaug Swim.Pool: 2651575 ,  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    RajivGandhi Swim.Pool: 2516760.</b></h1><br>
+		<img _ngcontent-c1=""  alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO2.jpg" class="center">
+		<div class="div">
+			<h1 style="margin-top: 10px;"><b>Contact Details</b></h1>
+		</div>
+		 <table class="table">
+			 <tbody>
+				 <tr>
+					 <td class="td"><b>&nbsp;&nbsp;1. &nbsp;&nbsp;Karelibaug Swimming Pool:&nbsp;&nbsp;(0265)&nbsp;&nbsp;2483500</b></td>
+					 <td class="td1"><b>&nbsp;&nbsp;2. &nbsp;&nbsp;Sardarbaug Swimming Pool:&nbsp;&nbsp;(0265)&nbsp;&nbsp;2335383</b></td>
+				 </tr>
+				 <tr>
+					 <td class="td"><b>&nbsp;&nbsp;3. &nbsp;&nbsp;Lalbaug Swimming Pool:&nbsp;&nbsp;(0265)&nbsp;&nbsp;2651575</b></td>
+					 <td class="td1"><b>&nbsp;&nbsp;4. &nbsp;&nbsp;RajivGandhi Swimming Pool:&nbsp;&nbsp;(0265)&nbsp;&nbsp;2516760</b></td>
+				 </tr>
+			 </tbody>
+		 </table>
+
 		<h4> <b>Read all the rules swimming pool-wise before click on proceed, once you click on proceed we consider your acceptance of the rules and regulations.</b></h4>
             <h4> <b>"Proceed" પર ક્લિક કરતા પહેલા સ્વિમિંગ પૂલ મુજબના તમામ નિયમો વાંચો, એકવાર તમે "Proceed" પર ક્લિક કરો પછી અમે નિયમો અને નિયમોની તમારી સ્વીકૃતિને ધ્યાનમાં લઈશું.</b></h4>
 			<br>
-			<p><h4 style="text-align:center">Need To Download For Application</h4>
-			<div class="row p-4">
-				<div class="col-md-4">
-					<h5><b> {{'doctor_certificate' | translate: translateKey}}:
-						<button mat-button (click)="downloadGuidLineDocumemnt('Fitness_Certi_Final_')"
+			<div class="div1">
+			   <h1 style="margin-top: 10px;"><b>Need to Download for Application</b></h1>
+		    </div>
+			<table class="table">
+				<tbody>
+					<tr>
+						<td class="td">
+					       <h5><b> {{'&nbsp;&nbsp;Doctor Fitness Certificate' | translate: translateKey}}:
+						   <button mat-button (click)="downloadGuidLineDocumemnt('Fitness_Certi_Final_')"
+							color="primary" style="margin-right: 106px;">Download</button></b>
+					       </h5>
+						</td>
+				
+						<td class="td">
+					        <h5> <b>{{'Sammati Patra-10-18 Yrs.Main Pool' | translate: translateKey}}:
+						    <button mat-button (click)="downloadGuidLineDocumemnt('Sammati_Patra_0-18_Yrs_Main_Pool')"
 							color="primary">Download</button></b>
-					</h5>
-				</div>
-				<!-- <div class="col-md-3">
-					<h5><b> {{'gazette_certificate' | translate: translateKey}}:
-						<button mat-button (click)="downloadGuidLineDocumemnt('gazette_certificate')"
+					         </h5>
+					    </td>
+			
+						<td class="td">
+					        <h5><b> {{'Sammati Patra-05-12 Yrs.Baby Pool' | translate: translateKey}}:
+						    <button mat-button (click)="downloadGuidLineDocumemnt('Sammati_Patra_05-12_Yrs_BABY_POOL')"
 							color="primary">Download</button></b>
-					</h5>
-				</div> -->
-				<div class="col-md-4">
-					<h5> <b>{{'parent_certificate' | translate: translateKey}}:
-						<button mat-button (click)="downloadGuidLineDocumemnt('parent_certificate')"
-							color="primary">Download</button></b>
-					</h5>
-				</div>
-				<div class="col-md-4">
-					<h5><b> {{'swimming_test_report' | translate: translateKey}}:
+					        </h5>
+					    </td>
+				   </tr>
+				   <tr>
+					<td class="td" style="margin-right: 200px;">
+					   <h5><b> {{'&nbsp;&nbsp;Student Concession' | translate: translateKey}}:
+					   <button mat-button (click)="downloadGuidLineDocumemnt('Student_Concession')"
+						color="primary" class="but">Download</button></b>
+					   </h5>
+					</td>
+			
+					<td class="td" style="margin-right: 200px;">
+						<h5> <b>{{'VMC Employee Concession' | translate: translateKey}}:
+						<button mat-button (click)="downloadGuidLineDocumemnt('VMC_Employee_Concession')"
+						color="primary" class="but">Download</button></b>
+						 </h5>
+					</td>
+		
+					<td class="td" style="margin-right: 200px;">
+						<h5><b> {{'Test Receipt' | translate: translateKey}}:
 						<button mat-button (click)="downloadGuidLineDocumemnt('Test_Receipt__Final_')"
-							color="primary">Download</button></b>
-					</h5>
-				</div>
-		</div>
+						color="primary" class="but">Download</button></b>
+						</h5>
+					</td>
+			   </tr>		
+				</tbody>
+			</table>
 	</div>
 	<!-- <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar> -->
 	<app-swimming-pool-dashboard></app-swimming-pool-dashboard>
 	</mat-card-content>
 		<div class="fotButtonBar proceedButtton">
-			<div class="col-sm-12 col-md-12 text-right">
+			<div class="row">
+				<div class="col-sm-6 col-md-6 ">
+					<mat-checkbox  labelPosition="after" (change)="termsConditionClick($event)" >
+					   <span style="font-size: 25px;">{{'મેં માર્ગદર્શિકા/નિયમો અને શરતો વાંચી છે અને સંમત છું.'}}</span>
+				   </mat-checkbox>	
+			    </div>
+			<div class="col-sm-6 col-md-6 text-right">
 				<button mat-raised-button (click)="showDowlLoadFileTab = true; showSwimmingPoolForm= false;"
-					color="primary">
+					color="primary" [disabled]="!swimmimgPoolBookingForm.get('termsCondition').value">
 					<mat-icon>thumb_up_alt</mat-icon> 
 					{{'proceed'| translate: translateKey}}
 				</button>
-		</div>
+		   </div>
+		   </div>
 	</div>
 </mat-card> 
 
