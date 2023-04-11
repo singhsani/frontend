@@ -229,7 +229,7 @@
                         <div *ngIf="selectedShift.length > 1">
 
                         <td>
-                            <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" 
+                            <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}"
                             (click)="selectedShift = bookingUtils.removeSelectedShift(shifts,selectedShift,  i)">
                                 <mat-icon color="warn">delete</mat-icon>
                             </button>
@@ -370,7 +370,7 @@
                             <control-messages [control]="childrenTheaterApplicationForm.get('applicantMobile')"></control-messages>
                         </mat-form-field>
 
-                        <div class="col-md-4">
+                        <!-- <div class="col-md-4">
                             <mat-form-field>
                                 <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile" placeholder="{{'confirm_mobile' | translate: translateKey}}"
                                     required>
@@ -379,14 +379,14 @@
                             <mat-error *ngIf="!bookingUtils.matcher(childrenTheaterApplicationForm, 'applicantMobile', 'confirmMobile') && childrenTheaterApplicationForm.get('applicantMobile').touched && childrenTheaterApplicationForm.get('confirmMobile').touched">
                                 {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
                             </mat-error>
-                        </div>
+                        </div> -->
 
                         <mat-form-field class="col-md-4">
                             <input matInput type="email" appPreventSpace maxlength="50" formControlName="emailId" placeholder="{{'applicant_email' | translate: translateKey}}" required>
                             <control-messages [control]="childrenTheaterApplicationForm.get('emailId')"></control-messages>
                         </mat-form-field>
 
-                        <div class="col-md-4">
+                        <!-- <div class="col-md-4">
                             <mat-form-field>
                                 <input matInput type="email" appPreventSpace maxlength="50" formControlName="confirmEmailId" placeholder="{{'confirm_email' | translate: translateKey}}"
                                     required>
@@ -395,7 +395,7 @@
                             <mat-error *ngIf="!bookingUtils.matcher(childrenTheaterApplicationForm, 'emailId', 'confirmEmailId') && childrenTheaterApplicationForm.get('emailId').touched && childrenTheaterApplicationForm.get('confirmEmailId').touched">
                                 {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
                             </mat-error>
-                        </div>
+                        </div> -->
 
                       <div class="col-md-4">
                         <mat-form-field>
