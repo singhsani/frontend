@@ -150,7 +150,7 @@ export class AnimalAdoptionComponent implements OnInit {
       adoptionYears: [null],
       message: [null],
       agree: [],
-      termsCondition: [null, Validators.required],
+    //  termsCondition: [null, Validators.required],
       animalNameList: this.fb.array([])
     });
   }
