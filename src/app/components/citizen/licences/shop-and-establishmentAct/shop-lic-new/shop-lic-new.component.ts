@@ -215,7 +215,7 @@ export class ShopLicNewComponent implements OnInit {
 	 */
 	getShopLicNewData() {
 		this.formService.getFormData(this.formId).subscribe(res => {
-			debugger
+
 			try {
 				this.shopLicNewForm.patchValue(res);
 				this.licenseConfiguration.isAttachmentButtonsVisible = true;
@@ -1506,28 +1506,6 @@ export class ShopLicNewComponent implements OnInit {
 	}
 
 	addWomenDocument(){
-		// const localUploadArray = [...this.serverUploadFilesArray];
-		// let count = 0;
-		// for (let file of this.displayDocs) {
-		// 	if(file.documentIdentifier == 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J'){
-		// 			count++;
-		// 	}
-		// }
-		// if(count == 0){
-			
-		// 	if(this.totalNoOfWoman > 0){
-		// 		{
-			
-		// 			this.womanDocument = [
-		// 				{
-		// 					documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
-		// 					mandatory: true
-		// 				},
-		// 			]	
-		// 		}
-		// 		this.returnFile(this.womanDocument);
-		// 		}
-		// 	}
 		const localUploadArray = [...this.serverUploadFilesArray];
 		let count = 0;
 		for (let file of this.displayDocs) {
