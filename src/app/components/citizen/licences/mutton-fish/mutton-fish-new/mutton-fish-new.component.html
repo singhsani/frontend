@@ -5,7 +5,7 @@
 </app-title-bar>
 
 <mat-card class="formClass cardBorder">
-	<form [formGroup]="muttonFishNewForm">
+	<!-- <form [formGroup]="muttonFishNewForm"> -->
 		<mat-tab-group [(selectedIndex)]="licenseConfiguration.currentTabIndex" dynamicHeight="true" mat-stretch-tabs
 			class="stepperNav">
 
@@ -14,14 +14,14 @@
 				<ng-template mat-tab-label>
 					<div>{{'license_holder_detail' | translate:translateKey}}</div>
 				</ng-template>
-
+				<form [formGroup]="applicantDetials">
 				<div class="row">
 					<div class="col-md-4 ngSelect" formGroupName="licenseType">
 						<ng-select placeholder="{{'license_type' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let type of MF_LICENSE_TYPE" [value]="type.code">{{type.name}}
 							</ng-option>
 						</ng-select>
-						<control-messages [control]="muttonFishNewForm.get('licenseType').get('code')">
+						<control-messages [control]="applicantDetials.get('licenseType').get('code')">
 						</control-messages>
 					</div>
 				</div>
@@ -32,29 +32,29 @@
 							(change)="getGujNameFromLookup($event,'personTypeGuj',PERSON_TYPE)">
 							<ng-option *ngFor="let type of PERSON_TYPE" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="muttonFishNewForm.get('personType').get('code')">
+						<control-messages [control]="applicantDetials.get('personType').get('code')">
 						</control-messages>
 					</div>
 					<mat-form-field class="col-md-3">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithOutSpace'
 							required maxlength="30" placeholder="{{'holder_firstname' | translate:translateKey}}"
 							formControlName="holderFirstName" appGujInputSource targetElement="holderFirstNameGuj"
-							[form]="muttonFishNewForm">
-						<control-messages [control]="muttonFishNewForm.get('holderFirstName')"></control-messages>
+							[form]="applicantDetials">
+						<control-messages [control]="applicantDetials.get('holderFirstName')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-3">
 						<input matInput type="text" appValidationFields maxlength="30"
 							placeholder="{{'holder_middlename' | translate:translateKey}}"
 							formControlName="holderMiddleName" appGujInputSource targetElement="holderMiddleNameGuj"
-							[form]="muttonFishNewForm">
-						<control-messages [control]="muttonFishNewForm.get('holderMiddleName')"></control-messages>
+							[form]="applicantDetials">
+						<control-messages [control]="applicantDetials.get('holderMiddleName')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithOutSpace'
 							required maxlength="30" placeholder="{{'holder_lastname' | translate:translateKey}}"
 							formControlName="holderLastName" appGujInputSource targetElement="holderLastNameGuj"
-							[form]="muttonFishNewForm">
-						<control-messages [control]="muttonFishNewForm.get('holderLastName')"></control-messages>
+							[form]="applicantDetials">
+						<control-messages [control]="applicantDetials.get('holderLastName')"></control-messages>
 					</mat-form-field>
 				</div>
 
@@ -67,34 +67,34 @@
 
 					<mat-form-field class="col-md-3">
 						<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj"
-							appGujInputTarget [form]="muttonFishNewForm"
+							appGujInputTarget [form]="applicantDetials"
 							placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">
 						<!--<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj"-->
 						<!--appGujInputTarget [form]="muttonFishNewForm" appValidationFields-->
 						<!--validationFieldsType='onlyNameWithOutSpace'-->
 						<!--placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">-->
-						<control-messages [control]="muttonFishNewForm.get('holderFirstNameGuj')"></control-messages>
+						<control-messages [control]="applicantDetials.get('holderFirstNameGuj')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-3">
 						<input matInput type="text" maxlength="90"
 							placeholder="{{'holder_middlename' | translate:translateKey:'gu'}}"
-							formControlName="holderMiddleNameGuj" appGujInputTarget [form]="muttonFishNewForm">
+							formControlName="holderMiddleNameGuj" appGujInputTarget [form]="applicantDetials">
 						<!--<input matInput type="text" required maxlength="90"-->
 						<!--placeholder="{{'holder_middlename' | translate:translateKey:'gu'}}"-->
 						<!--formControlName="holderMiddleNameGuj" appGujInputTarget [form]="muttonFishNewForm"-->
 						<!--appValidationFields validationFieldsType='onlyNameWithOutSpace'>-->
-						<control-messages [control]="muttonFishNewForm.get('holderMiddleNameGuj')"></control-messages>
+						<control-messages [control]="applicantDetials.get('holderMiddleNameGuj')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="90"
 							placeholder="{{'holder_lastname' | translate:translateKey:'gu'}}"
-							formControlName="holderLastNameGuj" appGujInputTarget [form]="muttonFishNewForm">
+							formControlName="holderLastNameGuj" appGujInputTarget [form]="applicantDetials">
 
 						<!--<input matInput type="text" required maxlength="90"-->
 						<!--placeholder="{{'holder_lastname' | translate:translateKey:'gu'}}"-->
 						<!--formControlName="holderLastNameGuj" appGujInputTarget [form]="muttonFishNewForm"-->
 						<!--appValidationFields validationFieldsType='onlyNameWithOutSpace'>-->
-						<control-messages [control]="muttonFishNewForm.get('holderLastNameGuj')"></control-messages>
+						<control-messages [control]="applicantDetials.get('holderLastNameGuj')"></control-messages>
 					</mat-form-field>
 				</div>
 				<!-- /gujarati -->
@@ -102,50 +102,51 @@
 				<div class="row">
 					<h2>{{'permanat_address' | translate:translateKey}}</h2>
 					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="true"
-						[addressFormGroup]="muttonFishNewForm.get('permanantAddress')">
+						[addressFormGroup]="applicantDetials.get('permanantAddress')">
 					</app-address>
 				</div>
 				<div class="col-md-4" formGroupName="isSameAsPermanantAddress">
 					<mat-checkbox class="col-md-12 mt-2"
-						[checked]="muttonFishNewForm.get('isSameAsPermanantAddress').get('code').value == 'YES'? true : false"
+						[checked]="applicantDetials.get('isSameAsPermanantAddress').get('code').value == 'YES'? true : false"
 						[disabled]="!isdisableMode" (change)="onSameAddressChange($event)">
 						{{'Temporary Address is same as Permanent Address ?'}}</mat-checkbox>
 				</div>
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
 					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment [requiredFeilds]="true"
-						[addressFormGroup]="muttonFishNewForm.get('temporaryAddress')"></app-address>
+						[addressFormGroup]="applicantDetials.get('temporaryAddress')"></app-address>
 				</div>
 
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber maxlength="11" minlength="11" formControlName="holderTelephoneNo"
 						placeholder="{{'holder_telephone_no' | translate:translateKey}}">
-					<control-messages [control]="muttonFishNewForm.get('holderTelephoneNo')"></control-messages>
+					<control-messages [control]="applicantDetials.get('holderTelephoneNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber maxlength="10" minlength="10" required formControlName="holderMobileNo"
 						placeholder="{{'holder_mobile_no' | translate:translateKey}}">
-					<control-messages [control]="muttonFishNewForm.get('holderMobileNo')"></control-messages>
+					<control-messages [control]="applicantDetials.get('holderMobileNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber maxlength="12" minlength="12" formControlName="holderFaxNo"
 						placeholder="{{'holder_fax_no' | translate:translateKey}}">
-					<control-messages [control]="muttonFishNewForm.get('holderFaxNo')"></control-messages>
+					<control-messages [control]="applicantDetials.get('holderFaxNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber maxlength="12" minlength="12" required formControlName="holderAadharNo"
 						placeholder="{{'holder_aadhar_no' | translate:translateKey}}">
-					<control-messages [control]="muttonFishNewForm.get('holderAadharNo')"></control-messages>
+					<control-messages [control]="applicantDetials.get('holderAadharNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput appAlphaNumeric maxlength="10" upperCase required formControlName="holderPanNo"
 						placeholder="{{'holder_pan_no' | translate:translateKey}}"
 						(change)="onCardChange($event,'holderPanNo')">
-					<control-messages [control]="muttonFishNewForm.get('holderPanNo')"></control-messages>
+					<control-messages [control]="applicantDetials.get('holderPanNo')"></control-messages>
 				</mat-form-field>
 
-				<app-action-bar [form]="muttonFishNewForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
+				<app-action-bar [form]="muttonFishNewForm" (tabIndex)="licenseConfiguration.onTabChange($event, applicantDetials, muttonFishNewForm)"
 					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+				</form>
 			</mat-tab>
 			<!-- step 1 Ends -->
 
@@ -154,22 +155,37 @@
 				<ng-template mat-tab-label>
 					<div>{{'business_detail' | translate:translateKey}}</div>
 				</ng-template>
+				<form [formGroup]="businessDetail">
 				<div class="row">
-					<div class="col-md-4 ngSelect" formGroupName="zoneNo">
+					<!-- <div class="col-md-4 ngSelect" formGroupName="zoneNo">
 						<ng-select placeholder="{{'business_under_zone' | translate:translateKey}} *"
 							formControlName="code"
-							(change)="onChangeZone($event);muttonFishNewForm.get('wardNo').reset();">
+							(change)="onChangeZone($event);businessDetail.get('wardNo').reset();">
 							<ng-option *ngFor="let zone of FIRM_ZONE" [value]="zone.code">{{zone.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="muttonFishNewForm.get('zoneNo').get('code')"></control-messages>
+						<control-messages [control]="businessDetail.get('zoneNo').get('code')"></control-messages>
 					</div>
 					<div class="col-md-4 ngSelect" formGroupName="wardNo">
 						<ng-select placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let ward of WARD" [value]="ward.code">{{ward.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="muttonFishNewForm.get('wardNo').get('code')"></control-messages>
-					</div>
-
+					</div> -->
+					<div class="col-md-4 ngSelect" formGroupName="zoneNo">
+						<ng-select  placeholder="{{'business_under_zone' | translate:translateKey}} *" formControlName="code" required (change)="onChangedZone($event);
+						muttonFishNewForm.get('wardNo').reset();">
+						  <ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.parentWardzoneId">
+							{{zone.wardzoneName}}</ng-option>
+						</ng-select>
+						<control-messages [control]="muttonFishNewForm.get('zoneNo').get('code')"></control-messages>
+					  </div>
+					  <div class="col-md-4 ngSelect" formGroupName="wardNo" >
+						<ng-select required placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="code">
+						  <ng-option *ngFor="let ward of wardZoneLevel2List" [value]="ward.wardzoneId">
+							{{ward.wardzoneName}}</ng-option>
+						</ng-select>
+						<control-messages [control]="muttonFishNewForm.get('wardNo').get('code')"></control-messages>
+					  </div>
 				</div>
 				<div class="row">
 					<h2>{{'business_shop_address' | translate:translateKey}}</h2>
@@ -180,7 +196,7 @@
 							<ng-option *ngFor="let statusId of MEATFISH_STATUS_OF_BUSINESS" [value]="statusId.code">
 								{{statusId.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="muttonFishNewForm.get('statusOfBusinessId').get('code')">
+						<control-messages [control]="businessDetail.get('statusOfBusinessId').get('code')">
 						</control-messages>
 					</div>
 
@@ -195,7 +211,7 @@
 					</div> -->
 
 					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment [requiredFeilds]="true"
-						[addressFormGroup]="muttonFishNewForm.get('businessAddress')"></app-address>
+						[addressFormGroup]="businessDetail.get('businessAddress')"></app-address>
 				</div>
 
 				<div class="row">
@@ -232,22 +248,22 @@
 				<!-- table -->
 				<div class="row">
 					<div class="col-md-10" style="padding:0;padding-top:30px;">
-						<h2 *ngIf="muttonFishNewForm.get('statusOfBusinessId').value.code == 'PROPRIETORSHIPFIRM'">
+						<h2 *ngIf="businessDetail.get('statusOfBusinessId').value.code == 'PROPRIETORSHIPFIRM'">
 							{{ 'if_shop_is_in_properitership' | translate:translateKey}}</h2>
 
-						<h2 *ngIf="muttonFishNewForm.get('statusOfBusinessId').value.code == 'PARTNERSHIPFIRM'">
+						<h2 *ngIf="businessDetail.get('statusOfBusinessId').value.code == 'PARTNERSHIPFIRM'">
 							{{ 'if_shop_is_in_partnership' | translate:translateKey}}</h2>
 					</div>
 					<div class="col-md-2 pt-3 text-right">
 
 						<button type="button" *ngIf="muttonFishNewForm.get('canEdit').value"
-							[disabled]="(muttonFishNewForm.get('statusOfBusinessId').value.code == 'TENANT') || (muttonFishNewForm.get('statusOfBusinessId').value.code ? muttonFishNewForm.get('statusOfBusinessId').value.code =='PROPRIETORSHIPFIRM' ? !(muttonFishNewForm.get('relationshipList').length < 1) : !(muttonFishNewForm.get('relationshipList').length < 10) : true) "
+							[disabled]="(businessDetail.get('statusOfBusinessId').value.code == 'TENANT') || (businessDetail.get('statusOfBusinessId').value.code ? businessDetail.get('statusOfBusinessId').value.code =='PROPRIETORSHIPFIRM' ? !(businessDetail.get('relationshipList').length < 1) : !(businessDetail.get('relationshipList').length < 10) : true) "
 							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
 							(click)="addMorePerson('MF_PERSON')">{{'add'| translate:translateKey}}</button>
 					</div>
 				</div>
 
-				<div *ngIf="muttonFishNewForm.get('relationshipList')['controls'].length">
+				<div *ngIf="businessDetail.get('relationshipList')['controls'].length">
 					<div *ngIf = "istable == true ">
 					<table class="table table-striped mb-0 responsiveTableRow" >
 						<thead>
@@ -261,7 +277,7 @@
 						</thead>
 
 						<tbody formArrayName="relationshipList" class="listTable clearfix">
-							<tr *ngFor="let item of muttonFishNewForm.get('relationshipList')['controls']; let indx = index;"
+							<tr *ngFor="let item of businessDetail.get('relationshipList')['controls']; let indx = index;"
 								[formGroupName]="indx">
 
 								<td style="padding-left: 29px;">
@@ -331,8 +347,9 @@
 					</div>
 				</div>
 				<!-- end table -->
-				<app-action-bar [form]="muttonFishNewForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
+				<app-action-bar [form]="muttonFishNewForm" (tabIndex)="licenseConfiguration.onTabChange($event,businessDetail, muttonFishNewForm)"
 					[stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
+					</form>
 			</mat-tab>
 			<!-- step 2 Ends -->
 			<!-- step 4 Attachment Starts -->
@@ -340,6 +357,7 @@
 				<ng-template mat-tab-label>
 					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
+				<form  [formGroup]="muttonFishNewForm">
 				<div class="row">
 					<!-- | filterAttachmentMF:muttonFishNewForm.get('statusOfBusinessId').value.code"  "&& licenseConfiguration.isAttachmentButtonsVisible"-->
 					<ng-container *ngFor="let doc of uploadFileArray ">
@@ -355,13 +373,12 @@
 
 				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="mandatoryUploadFileArray"
 					[form]="muttonFishNewForm" (handleErrors)="handleErrorsOnSubmit($event)"
-					(tabIndex)="licenseConfiguration.onFormTabChange($event) "
 					[stepInfo]="{step: 'final', next:3, back:1} "></app-action-bar>
 
+				</form>
 			</mat-tab>
 			<!-- step Attachment Ends -->
 			<select-payment-gateway #paymentGateway></select-payment-gateway>
 		</mat-tab-group>
-	</form>
 	<!-- {{ muttonFishNewForm.value | json }} -->
 </mat-card>

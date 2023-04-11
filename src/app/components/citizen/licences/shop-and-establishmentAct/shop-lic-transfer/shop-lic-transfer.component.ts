@@ -348,6 +348,10 @@ export class ShopLicTransferComponent implements OnInit {
 					this.isPatners = true;
 				});
 
+				if(res.organizationType.code != 'PARTNERSHIP'){
+					this.isPatners = false;
+				}
+				
 				this.onChangeNoOfHumanWorking(res.registrationType);
 
 				this.getSubCategoryDropdownData(this.shopLicTransferForm.get('establishmentCategory').value.code);
@@ -387,7 +391,7 @@ export class ShopLicTransferComponent implements OnInit {
 				if (this.shopLicTransferForm.get('ownershipType').value,this.shopLicTransferForm.get('organizationType').get('code').value) {
 					this.updateServiceUploadDocument(this.shopLicTransferForm.get('ownershipType').value,this.shopLicTransferForm.get('organizationType').get('code').value);
 				}
-			if(res.waterDrainageZoneId) {
+				if(res.waterDrainageZoneId) {
 					this.getWardZone(res.waterDrainageZoneId,2);
 				}
 
