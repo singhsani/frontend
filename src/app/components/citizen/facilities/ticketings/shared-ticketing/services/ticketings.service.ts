@@ -221,4 +221,10 @@ export class TicketingsService {
     this.requestURL = `api/${this.moduleName}/${this.resourceType}/getLoiDocument/${refNumber}`;
     return this.http.get(this.requestURL);
   }
+
+  animalAdoptionCount(data:any) {
+		let requestURL = `api/${this.moduleName}/${this.resourceType}/updateAnimalCount?animalName=${data.animalName}&animalCount=${data.animalCount}&adoptionAnimalCount=${data.adoptionAnimalCount}`;
+		return this.http.post(requestURL, data);
+
+  }
 }
