@@ -382,6 +382,10 @@ export class CommonService {
 				const formGroup = new FormGroup({}, control.validator, control.asyncValidator);
 				this.createCloneAbstractControl(control,formGroup);
 				copyTo.addControl(key,formGroup);
+		  }else if (control instanceof FormArray) {
+			const formArray = new FormArray([], control.validator, control.asyncValidator);
+			copyTo.addControl(key,new FormArray(control.value, control.validator, control.asyncValidator) as any)
+			copyTo.addControl(key,formArray);
 		  }
 		});
 	}
