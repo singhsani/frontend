@@ -11,7 +11,7 @@ export class LicenseConfiguration extends ComponentConfig {
      * This method use to get output event of tab change
      * @param index - current index
      */
-    public onFormTabChange(index: number, controlName, mainControl) {
+    public onTabChange(index: number, controlName, mainControl) {
         if (controlName.invalid) {
             this.getInvalidFormControlKey(controlName)
         } else {
@@ -107,4 +107,9 @@ export class LicenseConfiguration extends ComponentConfig {
 		  }
 		});
 	}
+
+    public onFormTabChange(index: number) {
+            this.currentTabIndex = index;
+        
+    }
 }

@@ -144,7 +144,7 @@
 					<control-messages [control]="applicantDetials.get('holderPanNo')"></control-messages>
 				</mat-form-field>
 
-				<app-action-bar [form]="muttonFishNewForm" (tabIndex)="licenseConfiguration.onFormTabChange($event, applicantDetials, muttonFishNewForm)"
+				<app-action-bar [form]="muttonFishNewForm" (tabIndex)="licenseConfiguration.onTabChange($event, applicantDetials, muttonFishNewForm)"
 					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 				</form>
 			</mat-tab>
@@ -333,7 +333,7 @@
 					</div>
 				</div>
 				<!-- end table -->
-				<app-action-bar [form]="muttonFishNewForm" (tabIndex)="licenseConfiguration.onFormTabChange($event,businessDetail, muttonFishNewForm)"
+				<app-action-bar [form]="muttonFishNewForm" (tabIndex)="licenseConfiguration.onTabChange($event,businessDetail, muttonFishNewForm)"
 					[stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 					</form>
 			</mat-tab>
