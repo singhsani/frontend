@@ -80,6 +80,9 @@ export class BookAtithigruhComponent implements OnInit {
 	purpose :string;
 	startDate : string;
 	endDate : string;
+	gstAmount : number =0;
+	totalAmount : number =0;
+	totalPayble : number =0;
 
 	feeDetails: any [] = [
 		{sno: 1, atithigruh: 'Sayajibaug 1', rent: '5000', administrative_charge: '1000', gst:'1080' ,total_rent: '7080', deposit: '7500',total: '14580'},
@@ -449,6 +452,9 @@ export class BookAtithigruhComponent implements OnInit {
 						this.paymentObject = payResp.data;
 						this.showPaymentReciept = true;
 						this.confirmRef.hide();
+                        this.gstAmount = (parseInt(this.paymentObject.DEPOSIT_CONCESSION) + parseInt(this.paymentObject.ADMINISTRATION_CHARGES)) * parseInt(this.paymentObject.GST)
+						this.totalAmount = (parseInt(this.paymentObject.DEPOSIT_CONCESSION) + parseInt(this.paymentObject.ADMINISTRATION_CHARGES)) + this.gstAmount;
+                        this.totalPayble = this.totalAmount + (parseInt(this.paymentObject.DEPOSIT_FEES)-parseInt(this.paymentObject.DEPOSIT_CONCESSION))
 
 					}, (err) => {
 						if (err && err.error)

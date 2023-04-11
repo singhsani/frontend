@@ -432,30 +432,50 @@
                 <thead>
                     <tr>
                         <th scope="col">{{'booking_date'| translate: stadiumTranslateKey}}</th>
-                        <th scope="col">{{'rent_amount'| translate: stadiumTranslateKey}}</th>
-                        <th scope="col">Administration Charges</th>
-                        <th scope="col">{{'deposit_amount'| translate: stadiumTranslateKey}}</th>
+                        <th scope="col">Program from date</th>
+                        <th scope="col">Program to date</th>
+                        <th scope="col">Atithigruh Name :- <span class="detailsNamelist">{{atithigruhName}} </span></th>
+                        <th scope="col">Purpose :- <span class="detailsNamelist">{{purpose}} </span> </th>
                         <th scope="col" *ngIf='paymentObject.bookingType=="Advance booking"'>{{'form_charges'| translate: stadiumTranslateKey}}</th>
-                        <th scope="col">{{'GST'| translate: stadiumTranslateKey}}</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td scope="col">{{bookingUtils.returnProperDate(paymentObject.bookingDate)}}</td>
+                        <td scope="col">{{startDate | date:'dd-MM-yyy'}} </td>
+                        <td scope="col">{{endDate | date:'dd-MM-yyy'}}</td>
+                   
+                      
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Rent Amount (A)</th>
+                        <th scope="col">Administrative Charge (B)</th>
+                        <th scope="col">GST (C)=(A+B*GST)</th>
+                        <th scope="col">Total (D)=(A+B+C)</th>
+                        <th scope="col">Deposit Amount (E) </th>
+                        <th scope="col">Total Payble (D+E)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
                         <td scope="col">{{paymentObject.RENT_FEES-paymentObject.RENT_CONCESSION}}</td>
                         <td scope="col">{{paymentObject.ADMINISTRATION_CHARGES}}</td>
+                        <td scope="col">{{gstAmount}}</td> 
+                        <td scope="col">{{totalAmount}}</td> 
                         <td scope="col">{{paymentObject.DEPOSIT_FEES-paymentObject.DEPOSIT_CONCESSION}}</td>
-                        <td scope="col" *ngIf='paymentObject.bookingType=="Advance booking"'>{{paymentObject.FORM_CHARGES}}</td>
-                        <td scope="col">{{paymentObject.GST}}</td>
+                        <td scope="col">{{totalPayble}}</td>                                       
                     </tr>
                 </tbody>
             </table>
              <!-- display Search Details List -->
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-md-8 ">
                 <div class="d-flex justify-content-between">
                   <h5 class="detailslist"> Atithigruh Name :- <span class="detailsNamelist">{{atithigruhName}}  </span> </h5> 
-                  <h5  class="detailslist"> Purpose :- <span class="detailsNamelist">{{purpose}} </span>  </h5> 
                 </div>
                 <div class="mt-2">
                    <h5 class="detailslist"> Date Of Programme :-  <span class="detailsNamelist"> {{startDate | date:'dd-MM-yyy'}}  
@@ -464,7 +484,7 @@
                 </div>
               <div class="col-md-4">
               </div>
-            </div>
+            </div> -->
         </div>
         <div class="fotButtonBar">
             <div class="col-sm-12 col-md-12 text-right">
