@@ -775,6 +775,7 @@ export class MuttonFishNewComponent implements OnInit {
 	onChangedZone(event) {
 		this.wardZoneLevel2List =[];
 		if (event == undefined) {
+		this.muttonFishNewForm.get('wardNo').get('code').setValue(null);
 		  return false
 		}
 		else {
