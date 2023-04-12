@@ -434,8 +434,8 @@
                         <th scope="col">{{'booking_date'| translate: stadiumTranslateKey}}</th>
                         <th scope="col">Program from date</th>
                         <th scope="col">Program to date</th>
-                        <th scope="col">Atithigruh Name :- <span class="detailsNamelist">{{atithigruhName}} </span></th>
-                        <th scope="col">Purpose :- <span class="detailsNamelist">{{purpose}} </span> </th>
+                        <th scope="col">Atithigruh Name</th>
+                        <th scope="col">Purpose </th>
                         <th scope="col" *ngIf='paymentObject.bookingType=="Advance booking"'>{{'form_charges'| translate: stadiumTranslateKey}}</th>
                     </tr>
                 </thead>
@@ -444,8 +444,8 @@
                         <td scope="col">{{bookingUtils.returnProperDate(paymentObject.bookingDate)}}</td>
                         <td scope="col">{{startDate | date:'dd-MM-yyy'}} </td>
                         <td scope="col">{{endDate | date:'dd-MM-yyy'}}</td>
-                         <td></td>
-                         <td></td>
+                         <td scope="col">{{atithigruhName}}</td>
+                         <td scope="col">{{purpose}}</td>
                          <td scope="col" *ngIf='paymentObject.bookingType=="Advance booking"'>{{paymentObject.FORM_CHARGES}}</td>
                       
                     </tr>
