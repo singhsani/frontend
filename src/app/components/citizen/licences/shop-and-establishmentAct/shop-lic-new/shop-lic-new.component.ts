@@ -279,7 +279,6 @@ export class ShopLicNewComponent implements OnInit {
 				if(this.shopLicNewForm.get('otherAddresses')){
 					this.shopLicNewForm.get('otherAddresses').setValue(res.otherAddresses);
 				}
-				debugger
 				if(res.otherDescription != null && (res.businessSubCategory.code == BookingConstants.ANY_METAL_AND_STEEL_SHOPS || res.businessSubCategory.code == BookingConstants.ANY_GARAGE_REPAIRING_Shopes
 					|| res.businessSubCategory.code == BookingConstants.ANY_OFFICES)){
 					this.isSubCategory = true;
