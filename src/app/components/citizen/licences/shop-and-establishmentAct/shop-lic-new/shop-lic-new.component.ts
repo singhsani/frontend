@@ -1009,7 +1009,6 @@ export class ShopLicNewComponent implements OnInit {
 	* @event is value of Type of Organization dropdown
 	*/
 	onChangeTypeOfOrganization(event) {
-		debugger
 		this.shopLicNewForm.get('organizationType').get('code').setValue(event);
 	 	this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value,event);
 		//  this.addWomenDocument();
@@ -1419,7 +1418,6 @@ export class ShopLicNewComponent implements OnInit {
 	 * @param ownershipType 
 	 */
 	filterDocumentList(ownershipType, organizationCode) {
-		debugger
 
 		const isPartnerShipSelected =  (organizationCode == 'PARTNERSHIP') ? true : false;
 
