@@ -396,6 +396,9 @@ export class BookAtithigruhComponent implements OnInit {
 						this.paymentObject = payResp.data;
 						this.showSearchForm = false;
 						this.showPaymentReciept = true;
+						this.gstAmount = (parseInt(this.paymentObject.DEPOSIT_CONCESSION) + parseInt(this.paymentObject.ADMINISTRATION_CHARGES)) * parseInt(this.paymentObject.GST)
+						this.totalAmount = (parseInt(this.paymentObject.DEPOSIT_CONCESSION) + parseInt(this.paymentObject.ADMINISTRATION_CHARGES)) + this.gstAmount;
+                        this.totalPayble = this.totalAmount + (parseInt(this.paymentObject.DEPOSIT_FEES)-parseInt(this.paymentObject.DEPOSIT_CONCESSION))
 					}, (err) => {
 						if (err && err.error)
 							this.toaster.error(err.error[0].message);

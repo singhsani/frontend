@@ -444,7 +444,9 @@
                         <td scope="col">{{bookingUtils.returnProperDate(paymentObject.bookingDate)}}</td>
                         <td scope="col">{{startDate | date:'dd-MM-yyy'}} </td>
                         <td scope="col">{{endDate | date:'dd-MM-yyy'}}</td>
-                   
+                         <td></td>
+                         <td></td>
+                         <td scope="col" *ngIf='paymentObject.bookingType=="Advance booking"'>{{paymentObject.FORM_CHARGES}}</td>
                       
                     </tr>
                 </tbody>
@@ -467,7 +469,7 @@
                         <td scope="col">{{gstAmount}}</td> 
                         <td scope="col">{{totalAmount}}</td> 
                         <td scope="col">{{paymentObject.DEPOSIT_FEES-paymentObject.DEPOSIT_CONCESSION}}</td>
-                        <td scope="col">{{totalPayble}}</td>                                       
+                        <td scope="col">{{totalPayble}}</td>      
                     </tr>
                 </tbody>
             </table>
