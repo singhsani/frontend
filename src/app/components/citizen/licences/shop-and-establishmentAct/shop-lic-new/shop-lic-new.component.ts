@@ -299,7 +299,7 @@ export class ShopLicNewComponent implements OnInit {
 				}
 
 			
-				this.requiredDocumentList();
+				// this.requiredDocumentList();
 
 				
 			} catch (error) {
@@ -1013,7 +1013,7 @@ export class ShopLicNewComponent implements OnInit {
 	onChangeTypeOfOrganization(event) {
 		this.shopLicNewForm.get('organizationType').get('code').setValue(event);
 	 	this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value,event);
-		 this.addWomenDocument();
+		//  this.addWomenDocument();
 		try {
 			// this.updateServiceUploadDocument(event);
 			// when organization Type change Partner List clear  
@@ -1426,7 +1426,6 @@ export class ShopLicNewComponent implements OnInit {
 	 * @param ownershipType 
 	 */
 	filterDocumentList(ownershipType, organizationCode) {
-		
 
 		const isPartnerShipSelected =  (organizationCode == 'PARTNERSHIP') ? true : false;
 
