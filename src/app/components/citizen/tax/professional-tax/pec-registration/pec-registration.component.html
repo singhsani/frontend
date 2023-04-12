@@ -183,12 +183,12 @@
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" minlength="9" maxlength="18" OnlyNumber
 							formControlName="bankAccountNo" type="tel"
-							placeholder="{{'bank_account_no' | translate: translateKey}}" required>
+							placeholder="{{'bank_account_no' | translate: translateKey}}">
 						<control-messages [control]="pecRegForm.get('bankAccountNo')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="bank">
-						<ng-select placeholder="{{'bank_name' | translate: translateKey}} *" formControlName="code">
+						<ng-select placeholder="{{'bank_name' | translate: translateKey}}" formControlName="code">
 							<ng-option *ngFor="let bank of bankNameArray" [value]="bank.code">{{bank.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="pecRegForm.get('bank').get('code')"></control-messages>
@@ -197,7 +197,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput appValidationFields validationFieldsType="onlyNameWithSpace" autocomplete="off"
 							maxlength="100" formControlName="branchName" type="text"
-							placeholder="{{'branch_name' | translate: translateKey}}" required>
+							placeholder="{{'branch_name' | translate: translateKey}}">
 						<control-messages [control]="pecRegForm.get('branchName')"></control-messages>
 					</mat-form-field>
 
@@ -250,7 +250,7 @@
 
 					<mat-form-field class="col-md-6">
 						<input matInput autocomplete="off" maxlength="50" appAlphaNumeric formControlName="companyRegNo"
-							type="text" placeholder="{{'Company Registration No' | translate: translateKey}}">
+							type="text" placeholder="{{'Company Registration Number' | translate: translateKey}}">
 						<control-messages [control]="pecRegForm.get('companyRegNo')"></control-messages>
 					</mat-form-field>
 

@@ -46,6 +46,7 @@ export class ShopLicTransferComponent implements OnInit {
 	isPatners: boolean = false;
 
 	isIntimation: boolean = false;
+	isDisabledMorePerson : boolean = false;
 	totalNoOfWoman: number = 0;
 	womanDocument :Array<any> = [];
 	edit:boolean = true;
@@ -326,6 +327,11 @@ export class ShopLicTransferComponent implements OnInit {
 			} catch (error) {
 				console.log(error.message)
 			}
+			if(res && res.registrationType){ 
+				this.isGuideLineActive = false; //preview
+			}else{
+				this.isGuideLineActive = true; 
+			}	
 		});
 	}
 
@@ -462,9 +468,9 @@ export class ShopLicTransferComponent implements OnInit {
 			waterDrainageBlockId: [null],
 			ownershipType: [null, [Validators.required]],
 
-			pecNumber:[null],
-			prcNumber:[null],
-			censusNumber:[null,Validators.required],
+			pecNumber:[null, ValidationService.pecValidation],
+			prcNumber:[null, ValidationService.prcValidation],
+			censusNumber:[null,ValidationService.censusNumberValidator],
 			number: null,
 			otherAddresses: [null, [Validators.maxLength(100)]],
 			/* Step 1 controls end */
@@ -476,7 +482,7 @@ export class ShopLicTransferComponent implements OnInit {
 			employerMobileNumber: [null, [Validators.required,ValidationService.mobileNumberValidation]],
 			alternateMobileNumber:[null, [ValidationService.mobileNumberValidation]],
 			landlineNumber:null,
-			employerEmailId: null,
+			employerEmailId: [null, ValidationService.emailValidator],
 			residentialAddressOfEmployer: [null, [Validators.required, Validators.maxLength(500)]],
 
 			//nameOfManager: [null, [Validators.required, Validators.maxLength(60)]],
@@ -755,7 +761,7 @@ export class ShopLicTransferComponent implements OnInit {
 		if (!isEditAnotherRow) {
 
 			if (persontype === "PATNERS" && this.getArrayByType(persontype).controls.length >= 2) {
-				this.toastrService.warning("Occuping Person not allowed more than 2");
+				this.toastrService.warning("Occuping Person not allowed more than 2");	
 				return false;
 			}
 
@@ -785,6 +791,11 @@ export class ShopLicTransferComponent implements OnInit {
 		let isEditAnotherRow = this.isTableInEditMode(persontype);
 		if (!isEditAnotherRow) {
 
+			if (persontype === "OCCUPANCY" && this.getArrayByType(persontype).controls.length >= 5) {
+				this.isDisabledMorePerson = true;
+			    this.commonService.openAlert("Warning", "Only 5 Worker Type Available !!", "warning");	
+				return false;
+			}
 			if (persontype === "OCCUPANCY") {
 				this.getArrayByType(persontype).push(this.createArrayWorkOut({
 					personType: persontype
@@ -976,7 +987,9 @@ export class ShopLicTransferComponent implements OnInit {
 		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
 			this.getArrayByType(persontype).removeAt(index);
 			this.toastrService.success("Succesfully deleted", "Deleted");
+			this.getCommonWorkerType()
 		});
+		this.isDisabledMorePerson = false;
 	}
 
 	/**
@@ -1073,6 +1086,12 @@ export class ShopLicTransferComponent implements OnInit {
 	 	this.updateServiceUploadDocument(this.shopLicTransferForm.get('ownershipType').value,event);
 		try {
 			// this.updateServiceUploadDocument(event);
+				// when organization Type change Partner List clear  
+			if (this.shopLicTransferForm.get('shopPartnerList').value.length > 0) {
+				for (let i = 0; i < this.shopLicTransferForm.get('shopPartnerList').value.length; i++) {
+					this.getArrayByType('PATNERS').removeAt(i);
+				}
+			}
 			this.isPatners = false;
 
 			this.shopLicTransferForm.get('attachments').setValue([]);

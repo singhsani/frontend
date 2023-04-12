@@ -61,7 +61,7 @@ export class BookChildrenTheaterComponent implements OnInit {
     // BANKS: Array<any> = [];
     availableStots: Array<any> = []
     tabIndex: number = 0;
-
+    purpose :string;
     displayedColumnsFeeDetails: string[] = ['sno', 'programmePurpose', 'bookingRent', 'gst'];
     dataSource = [];
 
@@ -89,10 +89,10 @@ export class BookChildrenTheaterComponent implements OnInit {
         this.bookingUtils = new BookingUtils(formService, toster);
         this.bookingService.resourceType = this.bookingConstants.CT_RESOURCE_TYPE;
 
-        this.head_lines = `Online Children theater Booking facility
-                            is the convenient and easy way to book the Children Theater
-                            of Vadodara Municiple Corporation. You can view the
-                            availability details of the Children Theater and select booking
+        this.head_lines = `Online Children theatre Booking facility
+                            is the convenient and easy way to book the Children Theatre
+                            of Vadodara Municipal Corporation. You can view the
+                            availability details of the Children Theatre and select booking
                             date. The booking is confirmed on approval from department
                             and the successful payment of the rent amount for selected date.`;
     }
@@ -399,11 +399,17 @@ export class BookChildrenTheaterComponent implements OnInit {
       this.dataSource = res.data
       });
     }
-   
+
     getAvaillableSlot(data){
         this.bookingService.getAvailableStots(data[0].code).subscribe(respData => {
           this.endDate = moment(respData.data.endDate, "DD-MM-YYYY").toDate();
         })
       }
-
+      onPurposeChange(event) {
+        this.CATEGORIES.forEach(ele => {
+          if (ele.code == event) {
+            this.purpose = ele.name
+          }
+        })
+      }
 }

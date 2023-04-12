@@ -13,7 +13,7 @@
 	
 		<mat-form-field class="col-md-4">
 		<!-- <div class="col-md-4"> -->
-			<input matInput type="text" AlphaNumeric required
+			<input matInput type="text" maxlength="15" AlphaNumeric required
 				placeholder="{{'certificate_number' | translate: translateKey}}" [(ngModel)]="certificateNumber">
 		<!-- </div> -->
 		<!-- <control-messages [control]="shopLicTransferForm.get('certificateNumber')"></control-messages> -->
@@ -143,7 +143,6 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text"
-							style="margin-top: 15px !important;"
 							maxlength="21"
 							appMaskCensusNumber
 							required
@@ -209,7 +208,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" required maxlength="500"
+						<input matInput type="text" required maxlength="250" 
 							placeholder="{{'residential_address_of_employer' | translate:translateKey}}"
 							formControlName="residentialAddressOfEmployer" 
 							>
@@ -236,7 +235,7 @@
 
 					<mat-form-field class="col-md-6">
 						<input matInput type="text" 
-							placeholder="Employer Email ID"
+							placeholder="Employer Email ID" maxlength="50"
 							formControlName="employerEmailId"  appValidationFields >
 						<control-messages [control]="shopLicTransferForm.get('employerEmailId')"></control-messages>
 					</mat-form-field>
@@ -352,6 +351,7 @@
 									<th width="110">{{'mobileNo' | translate:translateKey}}</th>
 									<th width="150">{{'emailId' | translate:translateKey}}</th>
 									<th width="60" *ngIf="shopLicTransferForm.get('canEdit').value"></th>
+									<th width="60" *ngIf="!(shopLicTransferForm.get('canEdit').value)"></th>
 								</tr>
 							</thead>
 							<tbody formArrayName="shopPersonList">
@@ -367,7 +367,7 @@
 											<input matInput appValidationFields
 												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
 												required>
-											<control-messages [control]="item.get('name')"></control-messages>
+									<control-messages class="matErrorTwoLine" [control]="item.get('name')"></control-messages>
 										</mat-form-field>
 									</td>
 
@@ -376,7 +376,7 @@
 										<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput formControlName="address" required>
-											<control-messages [control]="item.get('address')"></control-messages>
+											<control-messages class="matErrorTwoLine" [control]="item.get('address')"></control-messages>
 										</mat-form-field>
 									</td>
 
@@ -406,7 +406,7 @@
 											<input matInput appValidationFields
 												[validationFieldsType]="'onlyNameWithSpace'" formControlName="designation"
 												required>
-											<control-messages [control]="item.get('designation')"></control-messages>
+											<control-messages class="matErrorTwoLine" [control]="item.get('designation')"></control-messages>
 										</mat-form-field>
 									</td>
 
@@ -495,7 +495,7 @@
 						<h2 class="pl-0">{{'occupying_position_of_management_table_label' | translate: translateKey }}</h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
-						<button type="button" *ngIf="shopLicTransferForm.get('canEdit').value"
+						<button type="button" *ngIf="shopLicTransferForm.get('canEdit').value"[disabled]="isDisabledMorePerson"
 							matTooltip="Add More Person Occuping" mat-raised-button color="primary"
 							(click)="addMorePersonwork('OCCUPANCY')">{{'add' | translate: translateKey}}</button>
 					</div>
@@ -512,6 +512,7 @@
 									<th>{{'workerType' | translate:translateKey}}</th>
 									<th>{{'total' | translate:translateKey}}</th>
 									<th *ngIf="shopLicTransferForm.get('canEdit').value"></th>
+									<th *ngIf="!(shopLicTransferForm.get('canEdit').value)"></th>
 								</tr>
 							</thead>
 							<tbody formArrayName="workerCounts">
@@ -558,7 +559,7 @@
 
 								<td>
 										<div class="d-md-none">{{'workerType' | translate:translateKey}}</div>
-										<div class="ngSelect" required style="min-width:100px" >
+										<div  class="ngSelect" required style="min-width:100px" >
 										 <!-- <p *ngIf="!item.isEditMode">{{item.get('workersType').value}}</p>  -->
 										  <p class="width80" *ngIf="!item.isEditMode">
 											{{getSelectedDataFromLookUps(workerTypeList,item.get('workersType').value)?.name}} 
@@ -674,6 +675,7 @@
 									<th >{{'Mobile Number' | translate:translateKey}}</th>
 									<th >{{'Email-Id' | translate:translateKey}}</th>
 									<th *ngIf="shopLicTransferForm.get('canEdit').value"></th>
+									<th *ngIf="!(shopLicTransferForm.get('canEdit').value)"></th>
 								</tr>
 							</thead>
 							<tbody formArrayName="shopPartnerList">

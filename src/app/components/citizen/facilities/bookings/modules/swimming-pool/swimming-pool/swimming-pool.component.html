@@ -6,73 +6,129 @@
 		<div>
 			<mat-form-field class="col-md-10">
 				<input matInput required placeholder="{{'search_by_membership_no' | translate:translateKey}}"
-					maxlength="11" [formControl]="memberNumber">
+					maxlength="11" [formControl]="memberNumber" (keyup)="getNumber($event)">
+				<!-- <control-messages [control]="memberNumber">
+				</control-messages> -->
+				<mat-error *ngIf="memberNumber.invalid && !showMsg">Membership Number  is required.
+				</mat-error>
+				<mat-error *ngIf="showMsg && memberNumber.invalid">Please enter valid  Membership number</mat-error>
 			</mat-form-field>
-			<control-messages [control]="memberNumber">
-			</control-messages>
+			
 		</div>
 		<div>
 			<button class="col-md-2" [disabled]="!memberNumber.valid" mat-raised-button color="primary"
-				(click)="getSwimmingPoolData()">{{'search'
+				(click)="getSwimmingPoolData()">{{'Search'
 				| translate:translateKey}}</button>
 		</div>
 
 	</mat-card>
 </div>
 
-
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 <mat-card class="formClass cardBorder" [hidden]="showDowlLoadFileTab" *ngIf="!searchObj.isDisplayRenewLicenceForm">
-
-	<mat-card-header class="p-4">
+	<div class="pageTitle">{{'online_swimming_pool_bookings'| translate: translateKey}}</div>
+	<!-- <mat-card-header class="p-4">
 		<mat-card-title>
 			<div>{{'note_title' | translate:translateKey}}</div>
 		</mat-card-title>
 		<mat-card-subtitle>{{'note_desc' | translate: translateKey}}:
 		</mat-card-subtitle>
-	</mat-card-header>
+	</mat-card-header> -->
 
-	<mat-card-content>
-
-		<div class="row p-4">
-			<div class="col-md-3">
-				<p> {{'doctor_certificate' | translate: translateKey}}:
-					<button mat-button (click)="downloadGuidLineDocumemnt('Fitness_Certi_Final_')"
-						color="primary">Download</button>
-				</p>
-			</div>
-			<div class="col-md-3">
-				<p> {{'gazette_certificate' | translate: translateKey}}:
-					<button mat-button (click)="downloadGuidLineDocumemnt('gazette_certificate')"
-						color="primary">Download</button>
-				</p>
-			</div>
-			<div class="col-md-3">
-				<p> {{'parent_certificate' | translate: translateKey}}:
-					<button mat-button (click)="downloadGuidLineDocumemnt('parent_certificate')"
-						color="primary">Download</button>
-				</p>
-			</div>
-			<div class="col-md-3">
-				<p> {{'swimming_test_report' | translate: translateKey}}:
-					<button mat-button (click)="downloadGuidLineDocumemnt('Test_Receipt__Final_')"
-						color="primary">Download</button>
-				</p>
-			</div>
+	<mat-card-content class="footer_container">
+		<div class="head_container">
+		<img _ngcontent-c1=""  alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg" class="center img">
+		<div class="div">
+			<h1 style="margin-top: 10px;"><b>Contact Details</b></h1>
 		</div>
+		 <table class="table">
+			 <tbody>
+				 <tr>
+					 <td class="td"><b>&nbsp;&nbsp;1. &nbsp;&nbsp;Karelibaug Swimming Pool:&nbsp;&nbsp;(0265)&nbsp;&nbsp;2483500</b></td>
+					 <td class="td1"><b>&nbsp;&nbsp;2. &nbsp;&nbsp;Sardarbaug Swimming Pool:&nbsp;&nbsp;(0265)&nbsp;&nbsp;2335383</b></td>
+				 </tr>
+				 <tr>
+					 <td class="td"><b>&nbsp;&nbsp;3. &nbsp;&nbsp;Lalbaug Swimming Pool:&nbsp;&nbsp;(0265)&nbsp;&nbsp;2651575</b></td>
+					 <td class="td1"><b>&nbsp;&nbsp;4. &nbsp;&nbsp;RajivGandhi Swimming Pool:&nbsp;&nbsp;(0265)&nbsp;&nbsp;2516760</b></td>
+				 </tr>
+			 </tbody>
+		 </table>
 
-
-	</mat-card-content>
-	<div class="fotButtonBar">
-		<div class="col-sm-12 col-md-12 text-right">
-			<button mat-raised-button (click)="showDowlLoadFileTab = true; showSwimmingPoolForm= false; saveFormData()"
-				color="primary">
-				<!-- <mat-icon>thumb_up_alt</mat-icon> -->
-				{{'proceed'| translate: translateKey}}
-			</button>
-		</div>
+		<h4> <b>Read all the rules swimming pool-wise before click on proceed, once you click on proceed we consider your acceptance of the rules and regulations.</b></h4>
+            <h4> <b>"Proceed" પર ક્લિક કરતા પહેલા સ્વિમિંગ પૂલ મુજબના તમામ નિયમો વાંચો, એકવાર તમે "Proceed" પર ક્લિક કરો પછી અમે નિયમો અને નિયમોની તમારી સ્વીકૃતિને ધ્યાનમાં લઈશું.</b></h4>
+			<br>
+			<div class="div1">
+			   <h1 style="margin-top: 10px;"><b>Need to Download for Application</b></h1>
+		    </div>
+			<table class="table">
+				<tbody>
+					<tr>
+						<td class="td">
+					       <h5><b> {{'&nbsp;&nbsp;Doctor Fitness Certificate' | translate: translateKey}}:
+						   <button mat-button (click)="downloadGuidLineDocumemnt('Fitness_Certi_Final_')"
+							color="primary" style="margin-right: 106px;">Download</button></b>
+					       </h5>
+						</td>
+				
+						<td class="td">
+					        <h5> <b>{{'Sammati Patra-10-18 Yrs.Main Pool' | translate: translateKey}}:
+						    <button mat-button (click)="downloadGuidLineDocumemnt('Sammati_Patra_0-18_Yrs_Main_Pool')"
+							color="primary">Download</button></b>
+					         </h5>
+					    </td>
+			
+						<td class="td">
+					        <h5><b> {{'Sammati Patra-05-12 Yrs.Baby Pool' | translate: translateKey}}:
+						    <button mat-button (click)="downloadGuidLineDocumemnt('Sammati_Patra_05-12_Yrs_BABY_POOL')"
+							color="primary">Download</button></b>
+					        </h5>
+					    </td>
+				   </tr>
+				   <tr>
+					<td class="td" style="margin-right: 200px;">
+					   <h5><b> {{'&nbsp;&nbsp;Student Concession' | translate: translateKey}}:
+					   <button mat-button (click)="downloadGuidLineDocumemnt('Student_Concession')"
+						color="primary" class="but">Download</button></b>
+					   </h5>
+					</td>
+			
+					<td class="td" style="margin-right: 200px;">
+						<h5> <b>{{'VMC Employee Concession' | translate: translateKey}}:
+						<button mat-button (click)="downloadGuidLineDocumemnt('VMC_Employee_Concession')"
+						color="primary" class="but">Download</button></b>
+						 </h5>
+					</td>
+		
+					<td class="td" style="margin-right: 200px;">
+						<h5><b> {{'Test Receipt' | translate: translateKey}}:
+						<button mat-button (click)="downloadGuidLineDocumemnt('Test_Receipt__Final_')"
+						color="primary" class="but">Download</button></b>
+						</h5>
+					</td>
+			   </tr>		
+				</tbody>
+			</table>
 	</div>
-</mat-card>
+	<!-- <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar> -->
+	<app-swimming-pool-dashboard></app-swimming-pool-dashboard>
+	</mat-card-content>
+		<div class="fotButtonBar proceedButtton">
+			<div class="row">
+				<div class="col-sm-6 col-md-6 ">
+					<mat-checkbox  labelPosition="after" (change)="termsConditionClick($event)" >
+					   <span style="font-size: 25px;">{{'મેં માર્ગદર્શિકા/નિયમો અને શરતો વાંચી છે અને સંમત છું.'}}</span>
+				   </mat-checkbox>	
+			    </div>
+			<div class="col-sm-6 col-md-6 text-right">
+				<button mat-raised-button (click)="showDowlLoadFileTab = true; showSwimmingPoolForm= false;"
+					color="primary" [disabled]="!swimmimgPoolBookingForm.get('termsCondition').value">
+					<mat-icon>thumb_up_alt</mat-icon> 
+					{{'proceed'| translate: translateKey}}
+				</button>
+		   </div>
+		   </div>
+	</div>
+</mat-card> 
 
 
 <span [hidden]="showSwimmingPoolForm">
@@ -133,6 +189,18 @@
 							</control-messages>
 						</div>
 
+						<mat-form-field class="col-md-4">
+							<input matInput [max]="maxBirthdate" autocomplete="off" appDate [max]="maxBirthdate" 
+								[matDatepicker]="birthDatedatepicker" formControlName="birthDate"
+								placeholder="{{ 'date_of_birth' | translate:translateKey }} (DD/MM/YYYY)" required
+								(dateChange)="dateFormat($event.value,'birthDate');calculateAge($event.value); swimmimgPoolBookingForm.get('batchFor').get('code').reset()" >
+							<mat-datepicker-toggle matSuffix [for]="birthDatedatepicker"></mat-datepicker-toggle>
+							<mat-datepicker #birthDatedatepicker touchUi="true"></mat-datepicker>
+							<div align="end" class="default-show-hint mat-hint mat-right">
+								{{config.DATE_HINT_MSG}}</div>
+						</mat-form-field>
+
+
 						<div class="col-md-4 ngSelect" formGroupName="batchFor">
 							<ng-select placeholder="{{'batch_for' | translate:translateKey}} *" formControlName="code"
 								required
@@ -163,7 +231,7 @@
 								{{'back' | translate:translateKey}}
 							</button>
 							<button mat-raised-button type="button" color="primary"
-								(click)="tabIndex= tabIndex +1;saveFormData()">
+								(click)="saveFormData()">
 								{{'save_and_next'| translate:translateKey}}
 								<mat-icon>navigate_next</mat-icon>
 							</button>
@@ -212,7 +280,7 @@
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput [max]="disableBirthDate" autocomplete="off" appDate
+							<input matInput [max]="maxBirthdate" autocomplete="off" appDate [min]="minBirthDate"
 								[matDatepicker]="datepicker" [min]="minBirthDate" formControlName="applicantBirthDate"
 								placeholder="{{ 'date_of_birth' | translate:translateKey }} (DD/MM/YYYY)" required
 								(dateChange)="dateFormat($event.value,'applicantBirthDate');calculateAge($event.value)">
@@ -283,8 +351,16 @@
 							</control-messages>
 						</mat-form-field>
 
+						<mat-form-field class="col-md-4" *ngIf="isVisibleElectricityBill">
+							<input matInput maxlength="11" upperCase class="electricityBill"
+								formControlName="applicantIDProofNumber"
+								placeholder="{{'id_proof_no' | translate: translateKey}}" required OnlyNumber>
+							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProofNumber')">
+							</control-messages>
+						</mat-form-field>
+						
 						<mat-form-field class="col-md-4" *ngIf="!isVisibleIdNumber && !isPanCardVisibleIdNumber && 
-								!isLicenseVisibleIdNumber && !isElectionCardIdNumber && !isPassportIdNumber">
+								!isLicenseVisibleIdNumber && !isElectionCardIdNumber && !isPassportIdNumber && !isVisibleElectricityBill">
 							<input matInput upperCase maxlength="10" class="others"
 								formControlName="applicantIDProofNumber"
 								placeholder="{{'id_proof_no' | translate: translateKey}}" required appAlphaNumeric>
@@ -293,8 +369,7 @@
 						</mat-form-field>
 
 						<div class="col-md-4 ngSelect" formGroupName="applicantBloodGroup">
-							<ng-select placeholder="{{'blood_group' | translate:translateKey}} *" formControlName="code"
-								required>
+							<ng-select placeholder="{{'blood_group' | translate:translateKey}}" formControlName="code">
 								<ng-option *ngFor="let yes_no of BLOOD_GROUP" [value]="yes_no.code">
 									{{yes_no.name}}
 								</ng-option>

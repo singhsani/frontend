@@ -24,7 +24,7 @@ export class FormsActionsService {
 	 */
 	constructor(private http: HttpService,
 		private commonService: CommonService,
-		private httpClient: HttpClient,) {
+		private httpClient: HttpClient,private https: HttpClient) {
 
 	}
 
@@ -150,6 +150,10 @@ export class FormsActionsService {
 
 	printPaymentReceipt(appId){
 		this.requestURL = `api/form/${this.apiType}/printReceiptForPayment?id=${appId}`;
+		return this.http.get(this.requestURL,'printReceipt');
+	}
+	printPaymentReceiptForShop(appId){
+		this.requestURL = `api/form/${this.apiType}/printReceiptForPaymentForShop?id=${appId}`;
 		return this.http.get(this.requestURL,'printReceipt');
 	}
 	printAfterReschedule(appId){
@@ -566,5 +570,16 @@ export class FormsActionsService {
 
 		return this.http.post(this.requestURL, {});
 	}  
+	getWardZoneFirstLevel(level: any, key: any) {
+		return this.http.post(`master/wardzoneMst/searchByLevel?levelOrderSeq=${level}&moduleKey=${key}`,
+		  { observe: 'response' })
+		  .pipe(map((response: any) => response))
+	  }
+	
+	  getWardZone(data: any) {
+		return this.https.post(`${Constants.baseApiUrl}wardzoneMst/search`, data,
+		  { observe: 'response' })
+		  .pipe(map((response: any) => response))
+	  }
 
 }

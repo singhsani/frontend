@@ -178,7 +178,7 @@ export class PecRegistrationComponent implements OnInit {
 			// second step controls
 			bankAccountNo: null,
 			bank: this.fb.group({
-				code: [null, Validators.required], name: null,
+				code: [null], name: null,
 			}),
 			branchName: null,
 

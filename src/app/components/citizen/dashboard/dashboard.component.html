@@ -9,34 +9,58 @@
 <h2>
     <mat-icon>dashboard</mat-icon>Citizen Services
 </h2>
+<div class="menu">
+    <div class="moduleList">
 
-<div class="moduleList">
     <mat-tab-group [selectedIndex]="1">
+      <mat-tab *ngFor="let module of bookingsAndTicketings">
+        <ng-template mat-tab-label>
+            <div class="mat-tab-label-Container" (click)="openBookingServices($event)">
+            <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
+            <span class="moduleIcon {{ module.code }}" ></span>
+            <div class="moduleName">{{ module.name }}</div>
+            <!-- <div>{{ module.gujName }}</div> -->
+            <span class="count">{{module.services.length}} Services</span>
+        </div>
+        </ng-template>
+        <div class="servicesList row" *ngIf="showBookingServices">
+            <div class="colBtn col-md-3" *ngFor="let service of module.services;">
+                <button mat-stroked-button *ngIf="service.active" color="primary"   routerLink="/{{manageRoutes.getFullRoute(service.code)}}">
+                    {{ service.name }}
+                </button>
+                <button mat-stroked-button *ngIf="!service.active" color="primary">
+                    {{ service.name }}
+                </button>
+            </div>
+        </div>
+    </mat-tab>
         <mat-tab *ngFor="let module of userServicesList">
             <ng-template mat-tab-label>
-                <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
-                <span class="moduleIcon {{ module.code }}"></span>
-                <div class="moduleName" title="{{module.name}}">{{ module.name }}</div>
-                <!-- <div>{{ module.gujName }}</div> -->
-                <span class="count">Services</span>
+                <div class="mat-tab-label-Container" (click)="openModule($event)">
+                    <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
+                    <span class="moduleIcon {{ module.code }}"></span>
+                    <div class="moduleName">{{ module.name }}</div>
+                    <!-- <div>{{ module.gujName }}</div> -->
+                    <span class="count">{{module.services.length}} Services</span>
+                </div>
             </ng-template>
-            <div class="servicesList row">
-                <div class="colBtn col-md-3" *ngFor="let service of module.services;" matTooltip="{{ service.name }}">
+            <div class="servicesList row" *ngIf="showModuleServices">
+                <div class="colBtn col-md-3" *ngFor="let service of module.services;">
                     <button mat-stroked-button color="primary" (click)="createRecord(service.code)">
                         {{ service.name }}
                     </button>
                 </div>
-                <div *ngIf="module.code == 'SHOP-ESTAB-NEW'" class="row">
-                    <div class="colBtn">
-                        <p> {{'For Women workers Form J' }}:
+                <div *ngIf="module.code == 'SHOP-ESTAB-NEW'" class="row" style="margin-left: 2px;">
+                    <div class="colBtn" style="width: 258px;">
+                        <p> <b>{{'For Women workers Form-J' }}</b>
                             <button mat-button (click)="downloadGuidLineDocumemnt('Form-J')"
-                                color="primary">Download</button>
+                                color="primary" class="changeFontColor">Download</button>
                         </p>
                     </div>
                     <div class="colBtn">
-                        <p> {{'Notice for Weekly Holiday Form K' }}:
+                        <p> <b>{{'Notice for Weekly Holiday Form-K' }}</b>
                             <button mat-button (click)="downloadGuidLineDocumemnt('Form-K')"
-                                color="primary">Download</button>
+                                color="primary" class="changeFontColor">Download</button>
                         </p>
                     </div>
                     <!-- <div class="colBtn">
@@ -65,39 +89,42 @@
         </mat-tab> -->
     </mat-tab-group>
 </div>
+</div>
 
-<h2>
+<!-- <h2>
     <mat-icon>dashboard</mat-icon>VMC Facility Booking
 </h2>
 
 <div class="moduleList">
-    <mat-tab-group>
-        <mat-tab *ngFor="let module of bookingsAndTicketings">
-            <ng-template mat-tab-label>
-                <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
-                <span class="moduleIcon {{ module.code }}"></span>
-                <div class="moduleName" title="{{module.name}}">{{ module.name }}</div>
-                <!-- <div>{{ module.gujName }}</div> -->
-                <span class="count">Services</span>
-            </ng-template>
-            <div class="servicesList row">
-                <div class="colBtn col-md-3" *ngFor="let service of module.services;" matTooltip="{{ service.name }}">
-                    <button mat-stroked-button *ngIf="service.active" color="primary"   (click)="onClick(service.code)" routerLink="/{{manageRoutes.getFullRoute(service.code)}}">
-                        {{ service.name }}
-                    </button>
-                    <button mat-stroked-button *ngIf="!service.active" color="primary">
-                        {{ service.name }}
-                    </button>
-                </div>
-            </div>
-        </mat-tab>
-    </mat-tab-group>
-</div>
+  <mat-tab-group>
+      <mat-tab *ngFor="let module of bookingsAndTicketings">
+          <ng-template mat-tab-label>
+              <div class="mat-tab-label-Container" (click)="openBookingServices($event)">
+
+              <span class="moduleIcon {{ module.code }}" ></span>
+              <div class="moduleName" title="{{module.name}}">{{ module.name }}</div>
+
+              <span class="count">Services</span>
+          </div>
+          </ng-template>
+          <div class="servicesList row" *ngIf="showBookingServices">
+              <div class="colBtn col-md-3" *ngFor="let service of module.services;" matTooltip="{{ service.name }}">
+                  <button mat-stroked-button *ngIf="service.active" color="primary"   (click)="onClick(service.code)" routerLink="/{{manageRoutes.getFullRoute(service.code)}}">
+                      {{ service.name }}
+                  </button>
+                  <button mat-stroked-button *ngIf="!service.active" color="primary">
+                      {{ service.name }}
+                  </button>
+              </div>
+          </div>
+      </mat-tab>
+  </mat-tab-group>
+</div> -->
 
 
 
-<h2 *ngIf="!commonService.isGuestUser()">
-    <mat-icon>description</mat-icon>Recent Application
+<h2 class="applicationInformation" *ngIf="!commonService.isGuestUser()">
+    <mat-icon>description</mat-icon>Application Information
 </h2>
 
 <!-- <ul  class="recentList" *ngIf="isRecentApp && !commonService.isGuestUser()">
@@ -111,18 +138,18 @@
 
 <ul  class="recentList" *ngIf="isRecentApp && !commonService.isGuestUser()">
     <li>
-        <div>Citizen Services :</div>
-        <div class="recenText">Please refer your applied application for Citizen Services at <b>'My Applications'</b> section</div>
+        <div>Citizen Services:</div>
+        <div class="recenText">Please refer your applied applications for Citizen Services at <b><a style="color: black;" class="link" routerLink="/citizen/my-applications">'My Applications'</a></b> section</div>
     </li>
 
     <li>
-        <div>Booking facilities:</div>
-        <div class="recenText">Please refer your applied application for Booking  facilities at <b>'My Bookings'</b> section</div>
+        <div>Booking Facilities:</div>
+        <div class="recenText">Please refer your applied applications for Booking Facilities at <b><a style="color: black;" class="link" routerLink="/citizen/bookings/my-bookings">'My Bookings'</a></b> section</div>
     </li>
 
     <li>
-        <div>Ticketing facilities:</div>
-        <div class="recenText">Please refer your applied application for Ticketing facilities at <b>'My Ticketing'</b> section</div>
+        <div>Ticketing Facilities:</div>
+        <div class="recenText">Please refer your applied applications for Ticketing Facilities at <b><a style="color: black;" class="link" routerLink="/citizen/ticketings/my-ticketings">'My Ticketing'</a></b> section</div>
     </li>
 
 </ul>

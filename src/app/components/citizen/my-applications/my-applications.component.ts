@@ -124,7 +124,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return `case4`;
 		} else if(row.departmentName == 'Contractor Registration' && row.fileStatusName == 'Deposit Received'){
 			return `case5`
-		}else if((row.departmentName == 'Contractor Registration' && row.fileStatusName == 'Approved') || (row.departmentName == "Vendor Registration" && row.fileStatusName == 'Approved')){	
+		}else if((row.departmentName == 'Contractor Registration' && row.fileStatusName == 'Approved') || (row.departmentName == "Vendor Registration" && row.fileStatusName == 'Approved')){
 			return `case6`
 		}else{
 			return `case3`
@@ -258,6 +258,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 				this.commonService.openAlert('Error!', err.error[0].message, 'error');
 			}
 		);
+	}
+
+	infoVehiclePending(amount, wardNumber) {
+		this.commonService.infoAlert('Payment Remarks', 'Please make the payment of amount Rs. ' + amount +' at Ward office no. ' + wardNumber, "success");
 	}
 
 	cancelReasonReceipt(row) {
@@ -505,6 +509,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return true;
 		}
 
+		if(row.serviceType == "VENDOR_REG" && row.fileStatus == "PAYMENT_RECEIVED"){
+			return true;
+		}
+
 		if (row.fileStatus === 'REJECTED' && row.serviceType === 'FS_FIRE_CERTIFICATE' ||
 			row.serviceType === 'FS_GAS_CONNECTION_NOC' ||
 			row.serviceType === 'FS_ELECTRIC_CONNECTION_NOC' ||
@@ -525,8 +533,8 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			(row.serviceType === 'DEATH_CORRECTION_REGISTRATION' && row.fileStatus === 'REJECTED')) {
 			return false;
 		}
-		else if (row.serviceType === 'SHOP_ESTAB_APPLICATION' && !(this.commonService.fromAdmin())) {
-			return false;
+		else if (row.serviceType === 'SHOP_ESTAB_APPLICATION' && row.fileStatus == 'CANCELLED' &&!(this.commonService.fromAdmin())) {
+			return true;
 		}
 
 		else if (row.serviceType == 'APL_LICENCE' || row.serviceType == 'APL_RENEWAL' || row.serviceType == 'POND_TRANSFER'
@@ -569,14 +577,25 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		if (row.fileStatus == "PAYMENT_RECEIVED" && row.serviceType == "FS_ELECTRIC_CONNECTION_NOC") {
 			return true;
 		}
+		if (row.fileStatus == 'APPROVED' && (!row.fileNumber.indexOf("SHOP-RT")||!row.fileNumber.indexOf("SHOP-RC")) && row.serviceType == 'SHOP_ESTAB_TRANSFER') {
+			return true;
+		}
+		if (row.fileStatus == 'APPROVED' && (!row.fileNumber.indexOf("SHOP-IR")||!row.fileNumber.indexOf("SHOP-IT")) && row.serviceType == 'SHOP_ESTAB_TRANSFER') {
+			return false;
+		}
+		if (row.fileStatus == 'APPROVED' && (!row.fileNumber.indexOf("SHOP-RT")||!row.fileNumber.indexOf("SHOP-RC")) && row.serviceType == 'SHOP_ESTAB_APPLICATION') {
+			return true;
+		}
+		if (row.fileStatus == 'APPROVED' && (!row.fileNumber.indexOf("SHOP-IR")||!row.fileNumber.indexOf("SHOP-IT")) && row.serviceType == 'SHOP_ESTAB_APPLICATION') {
+			return false;
+		}
 		if (row.fileStatus == "PAYMENT_RECEIVED" && row.serviceType == "FS_GAS_CONNECTION_NOC") {
 			return true;
 		}
-
 		const printReceiptServiceTypeForShopArr = ['SHOP_ESTAB_APPLICATION', 'SHOP_ESTAB_TRANSFER']
-		if (( row.fileStatus == 'APPROVED' || row.fileStatus == 'CANCELLED'  ) 
+		if (( row.fileStatus == 'CANCELLED'  )
 		&& printReceiptServiceTypeForShopArr.indexOf(row.serviceType) >= 0) {
-			return true;
+			return false;
 		}
 		if (row.fileStatus == 'REJECTED' && row.serviceType == 'SHOP_ESTAB_TRANSFER') {
 			return false;
@@ -668,12 +687,20 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		else if (row.fileStatus == 'PAYMENT' && row.serviceType == 'MEAT_FISH_DUPLICATE') {
 			return false;
 		}
-		else if (row.fileStatus == 'PAYMENT')
+		else if (row.fileStatus == 'PAYMENT' )
 			return true;
 		else
 			return false;
 	}
-
+	isPrintReceiptPaymentIntimation(row)
+	{
+		if (row.fileStatus == 'APPROVED' && (!row.fileNumber.indexOf("SHOP-IR")||!row.fileNumber.indexOf("SHOP-IT")) && row.serviceType == 'SHOP_ESTAB_TRANSFER') {
+			return true;
+		}
+		if (row.fileStatus == 'APPROVED' && (!row.fileNumber.indexOf("SHOP-IR")||!row.fileNumber.indexOf("SHOP-IT")) && row.serviceType == 'SHOP_ESTAB_APPLICATION') {
+			return true;
+		}
+	}
 	isPrintReceiptAfterReschedule(row)
 	{
 
@@ -900,6 +927,29 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}
 
 	}
+	printPaymentReceiptInti(apiCode: string, id: number) {
+
+		if (this.urlMap.has(apiCode)) {
+			this.printPropertyACKReceiptAdmin(apiCode, id);
+		} else {
+
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+			this.formService.printPaymentReceiptForShop(id).subscribe(
+				receiptResponse => {
+					let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
+					sectionToPrintReceipt.innerHTML = receiptResponse;
+					setTimeout(() => {
+						window.print();
+					}, 300);
+				},
+				err => {
+					this.commonService.openAlert('Error!', err.error[0].message, 'error');
+				}
+			)
+		}
+
+	}
+
 
 	PrintReceiptAfterReschedule(apiCode: string, id: number) {
 
@@ -1003,7 +1053,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		})
 	}
 
-	//for Deposit Payment in Contractor Registration 
+	//for Deposit Payment in Contractor Registration
 	depositPayment(apiCode: string, id: number, fileStatus:string) {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 		this.formService.contractorDepositePayment(id).subscribe(
@@ -1043,7 +1093,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 							this.paymentGateway.setPaymentDetailsFromActionBar(payData);
 							this.paymentGateway.openModel();
 						}, rj => {
-						
+
 						});
 						return;
 					}

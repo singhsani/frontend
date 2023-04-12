@@ -1,7 +1,6 @@
 import { PaginationService } from './../../../core/services/citizen/data-services/pagination.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { FormsActionsService } from '../../../core/services/citizen/data-services/forms-actions.service';
 
 import { ManageRoutes } from '../../../config/routes-conf';
@@ -15,13 +14,15 @@ import { ShopAndEstablishmentService } from '../licences/shop-and-establishment/
 	templateUrl: './dashboard.component.html',
 	styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
 
 	userServicesList: any;
 	manageRoutes: any = ManageRoutes;
 	services: any = [];
 	isRecentApp: boolean = false;
 	recentApp: any;
+	showModuleServices = false;
+	showBookingServices = false;
 	// bookingsAndTicketings = [];
 	bookingsAndTicketings: any = [
 		{
@@ -31,7 +32,7 @@ export class DashboardComponent implements OnInit {
 			"code": "BOOKINGMODULE",
 			"fieldView": "ALL",
 			"fieldList": null,
-			"name": "Booking Facilities",
+			"name": "Booking/Ticketing Facilities",
 			"gujName": "Booking Facilities",
 			"services": [
 
@@ -55,7 +56,7 @@ export class DashboardComponent implements OnInit {
 				{
 					"code": "THEATERBOOK",
 					"fieldView": "ALL",
-					"name": "Amphi Theater",
+					"name": "Amphi Theatre",
 					"gujName": "એમ્ફી થિયેટર",
 					"appointmentRequired": false,
 					"active": true
@@ -87,7 +88,7 @@ export class DashboardComponent implements OnInit {
 				{
 					"code": "CHILDRENTHEATERBOOK",
 					"fieldView": "ALL",
-					"name": "Children Theater",
+					"name": "Children Theatre",
 					"gujName": "બાળકો થિયેટર",
 					"appointmentRequired": false,
 					"active": true
@@ -100,27 +101,67 @@ export class DashboardComponent implements OnInit {
 					"appointmentRequired": false,
 					"active": true
 				},
+				{
+					"code": "SWIMMINGPOOL",
+					"fieldView": "ALL",
+					"name": "Swimming Pool",
+					"gujName": "સ્નાનાગાર",
+					"appointmentRequired": false,
+					"active": true
+				},
+				{
+					"code": "SWIMMINGPOOLRENEWAL",
+					"fieldView": "ALL",
+					"name": "Swimming Pool Renewal",
+					"gujName": "સ્નાનાગાર",
+					"appointmentRequired": false,
+					"active": true
+				},
 				// {
-				// 	"code": "SWIMMINGPOOL",
+				// 	"code": "SWIMMINGPOOLDASHBOARD",
 				// 	"fieldView": "ALL",
-				// 	"name": "Swimming Pool",
+				// 	"name": "Swimming-Pool-Dashboard",
 				// 	"gujName": "સ્નાનાગાર",
 				// 	"appointmentRequired": false,
 				// 	"active": true
 				// },
+        {
+					"code": "MYTICKETINGS",
+					"fieldView": "ALL",
+					"name": "My Ticketings",
+					"gujName": "મારી ટિકિટિંગ્સ",
+					"appointmentRequired": false,
+					"active": true
+				},
 				// {
-				// 	"code": "SWIMMINGPOOLRENEWAL",
+				// 	"code": "ZOO-DASHBOARD",
 				// 	"fieldView": "ALL",
-				// 	"name": "Swimming Pool Renewal",
-				// 	"gujName": "સ્નાનાગાર",
+				// 	"name": "Zoo",
+				// 	"gujName": "પ્રાણી સંગ્રહાલય",
 				// 	"appointmentRequired": false,
 				// 	"active": true
 				// },
 				{
-					"code": "SWIMMINGPOOLDASHBOARD",
+					"code": "ZOOBOOK",
 					"fieldView": "ALL",
-					"name": "Swimming-Pool-Dashboard",
-					"gujName": "સ્નાનાગાર",
+					"name": "Zoo Ticket",
+					"gujName": "પ્રાણી સંગ્રહાલય",
+					"appointmentRequired": false,
+					"active": true
+				},
+				{
+					"code": "ANIMAL-ADOPTION",
+					"fieldView": "ALL",
+					"name": "Animal Adoption",
+					"gujName": "પ્રાણી સંગ્રહાલય",
+					"appointmentRequired": false,
+					"active": true
+				},
+				{
+					"code": "PLANETARIUMBOOK",
+					"fieldView": "ALL",
+					"name": "Planetarium",
+					"gujName": "પ્લાનેટેરિયમ",
 					"appointmentRequired": false,
 					"active": true
 				},
@@ -133,43 +174,43 @@ export class DashboardComponent implements OnInit {
 				// 	"active": true
 				// },
 			]
-		},
-		{
-			"id": 2,
-			"uniqueId": null,
-			"version": null,
-			"code": "TICKETINGSMODULE",
-			"fieldView": "ALL",
-			"fieldList": null,
-			"name": "Ticketing Facilities",
-			"gujName": "Ticketing Facilities",
-			"services": [
-				{
-					"code": "MYTICKETINGS",
-					"fieldView": "ALL",
-					"name": "My Ticketings",
-					"gujName": "મારી ટિકિટિંગ્સ",
-					"appointmentRequired": false,
-					"active": true
-				},
-				{
-					"code": "ZOO-DASHBOARD",
-					"fieldView": "ALL",
-					"name": "Zoo",
-					"gujName": "પ્રાણી સંગ્રહાલય",
-					"appointmentRequired": false,
-					"active": true
-				},
-				{
-					"code": "PLANETARIUMBOOK",
-					"fieldView": "ALL",
-					"name": "Planetarium",
-					"gujName": "પ્લાનેટેરિયમ",
-					"appointmentRequired": false,
-					"active": true
-				}
-			]
-		},
+		}
+		// {
+		// 	"id": 2,
+		// 	"uniqueId": null,
+		// 	"version": null,
+		// 	"code": "TICKETINGSMODULE",
+		// 	"fieldView": "ALL",
+		// 	"fieldList": null,
+		// 	"name": "Ticketing Facilities",
+		// 	"gujName": "Ticketing Facilities",
+		// 	"services": [
+		// 		{
+		// 			"code": "MYTICKETINGS",
+		// 			"fieldView": "ALL",
+		// 			"name": "My Ticketings",
+		// 			"gujName": "મારી ટિકિટિંગ્સ",
+		// 			"appointmentRequired": false,
+		// 			"active": true
+		// 		},
+		// 		{
+		// 			"code": "ZOO-DASHBOARD",
+		// 			"fieldView": "ALL",
+		// 			"name": "Zoo",
+		// 			"gujName": "પ્રાણી સંગ્રહાલય",
+		// 			"appointmentRequired": false,
+		// 			"active": true
+		// 		},
+		// 		{
+		// 			"code": "PLANETARIUMBOOK",
+		// 			"fieldView": "ALL",
+		// 			"name": "Planetarium",
+		// 			"gujName": "પ્લાનેટેરિયમ",
+		// 			"appointmentRequired": false,
+		// 			"active": true
+		// 		}
+		// 	]
+		// },
 		// {
 		// 	"id": 3,
 		// 	"uniqueId": null,
@@ -309,7 +350,7 @@ export class DashboardComponent implements OnInit {
 			case 'WTR-RNW-PLUMB-LIC':
 			case 'PRO-TAX-TRAS-HISTORY':
 			case 'PROPERTY_UPDATE_EMAIL_AND_MOBILE':
-			case 'AFFORD-HOUSE-STATUS':		
+			case 'AFFORD-HOUSE-STATUS':
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode)]);
 				break;
 			default:
@@ -363,48 +404,116 @@ export class DashboardComponent implements OnInit {
 		}
 	}
 
-	onClick(event){
-		if(event=="STADIUMBOOK"){
-            this.commonService.openAlert("Warring", 'Bookings will not be accepted until the stadium is under construction.(સ્ટેડિયમ નિર્માણાધીન છે, ત્યાં સુધી બુકિંગ સ્વીકારવામાં આવશે નહીં.)', "warning");
-			this.router.navigate(['citizen/dashboard'])
-		}
-	}
 
 	/**
    * This method for download file
    */
 	 downloadGuidLineDocumemnt(fileName: any) {
-		 debugger;
+
 		 this.shopAndEstablishmentService.downloadGuidLineDocumemnt(fileName, 'application/pdf').subscribe(resp => {
-	
+
 		  var newBlob = new Blob([resp], { type: "application/pdf" });
-	
+
 		  // IE doesn't allow using a blob object directly as link href
 		  // instead it is necessary to use msSaveOrOpenBlob
 		  if (window.navigator && window.navigator.msSaveOrOpenBlob) {
 			window.navigator.msSaveOrOpenBlob(newBlob);
 			return;
 		  }
-		  // For other browsers: 
+		  // For other browsers:
 		  // Create a link pointing to the ObjectURL containing the blob.
 		  const data = window.URL.createObjectURL(newBlob);
-	
+
 		  var link = document.createElement('a');
 		  link.href = data;
 		  link.download = fileName;
 		  // this is necessary as link.click() does not work on the latest firefox
 		  link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
-	
+
 		  setTimeout(function () {
 			// For Firefox it is necessary to delay revoking the ObjectURL
 			window.URL.revokeObjectURL(data);
 			link.remove();
 		  }, 100);
 		},
-	
+
 		  err => {
 			this.toastr.error("Server Error");
 		  })
-	
+
 	  }
+
+	  ngAfterViewInit(){
+		setTimeout(() => {
+			var element : any = document.getElementsByClassName('mat-tab-label-active');
+			if(element.length>0){
+				const length = element.length
+				for (let index = 0; index < length; index++) {
+					element[0].classList.remove("mat-tab-label-active");
+				}
+			}
+		}, 500);
+		setTimeout(() => {
+			var element : any = document.getElementsByClassName('mat-tab-label-active');
+			if(element.length>0){
+				const length = element.length
+				for (let index = 0; index < length; index++) {
+					element[0].classList.remove("mat-tab-label-active");
+				}
+			}
+		}, 1000);
+		setTimeout(() => {
+			var element : any = document.getElementsByClassName('mat-tab-label-active');
+			if(element.length>0){
+				const length = element.length
+				for (let index = 0; index < length; index++) {
+					element[0].classList.remove("mat-tab-label-active");
+				}
+			}
+		}, 1250);
+		setTimeout(() => {
+			var element : any = document.getElementsByClassName('mat-tab-label-active');
+			if(element.length>0){
+				const length = element.length
+				for (let index = 0; index < length; index++) {
+					element[0].classList.remove("mat-tab-label-active");
+				}
+			}
+		}, 1500);
+		setTimeout(() => {
+			var element : any = document.getElementsByClassName('mat-tab-label-active');
+			if(element.length>0){
+				const length = element.length
+				for (let index = 0; index < length; index++) {
+					element[0].classList.remove("mat-tab-label-active");
+				}
+			}
+		}, 1000);
+	  }
+
+	openModule(event){
+	    this.showModuleServices = true;
+		var element : any = document.getElementsByClassName('moduleList');
+		if(element.length>0){
+			window.scrollTo({ top: element[0].scrollHeight });
+		}		  
+
+		setTimeout( () => {
+			var elementSer : any = document.getElementsByClassName('servicesList');
+			elementSer[0].classList.add("highlight");
+		}, 1000);
+	}
+
+	openBookingServices(event){
+		this.showBookingServices = true;
+		var element : any = document.getElementsByClassName('moduleList');
+		if(element.length>0){
+			window.scrollTo({ top: element[0].scrollHeight });
+		}
+
+		setTimeout( () => {
+			var elementSer : any = document.getElementsByClassName('servicesList');
+			elementSer[0].classList.add("highlight");
+		}, 1000);
+	}
 }

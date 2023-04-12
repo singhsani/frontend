@@ -71,11 +71,40 @@ export class BookAtithigruhComponent implements OnInit {
 	bookedPageSize: number = 5;
 	confirmRef: BsModalRef;
 	displayedColumns: Array<string> = ['id', 'shiftType', 'bookingDate', 'startTime', 'endTime', 'rent', 'electricCharges', 'administrationCharges', 'showTax', 'subTotal', 'gstAmount', 'total'];
+	displayedColumnsFeeDetails: string[] = ['sno', 'atithigruh', 'rent', 'administrative_charge', 'gst','total_rent', 'deposit','total'];
 	profileObj : any;
 	public formControlNameToTabIndex = new Map();
 	checkProceed : boolean = false;
 	btnProceed: boolean = true; 
+	atithigruhName :string;
+	purpose :string;
+	startDate : string;
+	endDate : string;
+	gstAmount : number =0;
+	totalAmount : number =0;
+	totalPayble : number =0;
 
+	feeDetails: any [] = [
+		{sno: 1, atithigruh: 'Sayajibaug 1', rent: '5000', administrative_charge: '1000', gst:'1080' ,total_rent: '7080', deposit: '7500',total: '14580'},
+		{sno: 2, atithigruh: 'Sayajibaug 2', rent: '5000', administrative_charge: '1000', gst:'1080' ,total_rent: '7080', deposit: '7500',total: '14580'},
+		{sno: 3, atithigruh: 'Sayajibaug 3', rent: '5000', administrative_charge: '1000', gst:'1080' ,total_rent: '7080', deposit: '7500',total: '14580'},
+		{sno: 4, atithigruh: 'Sayaji Lawn', rent: '7500', administrative_charge: '1000', gst:'1530' ,total_rent: '10030', deposit: '10000',total: '20030'},
+		{sno: 5, atithigruh: 'Akota', rent: '12000', administrative_charge: '1000', gst:'2340' ,total_rent: '15340', deposit: '20000',total: '35340'},
+		{sno: 6, atithigruh: 'Sardarbaug', rent: '12000', administrative_charge: '1000', gst:'2340' ,total_rent: '15340', deposit: '20000',total: '35340'},
+		{sno: 7, atithigruh: 'Nijampura', rent: '12000', administrative_charge: '1000', gst:'2340' ,total_rent: '15340', deposit: '20000',total: '35340'},
+		{sno: 8, atithigruh: 'Subhanpura', rent: '12000', administrative_charge: '1000', gst:'2340' ,total_rent: '15340', deposit: '20000',total: '35340'},
+		{sno: 9, atithigruh: 'Dr.Babasaheb Ambedkar', rent: '12000', administrative_charge: '1000', gst:'2340' ,total_rent: '15340', deposit: '20000',total: '35340'},
+		{sno: 10, atithigruh: 'Lalbaug', rent: '12000', administrative_charge: '1000', gst:'2340' ,total_rent: '15340', deposit: '20000',total: '35340'},
+		{sno: 11, atithigruh: 'Premanand', rent: '8000', administrative_charge: '1000', gst:'1620' ,total_rent: '10620', deposit: '10000',total: '20620'},
+		{sno: 12, atithigruh: 'Indrapuri', rent: '10000', administrative_charge: '1000', gst:'1980' ,total_rent: '12980', deposit: '20000',total: '32980'},
+		{sno: 13, atithigruh: 'Sharad Nagar', rent: '8000', administrative_charge: '1000', gst:'1620' ,total_rent: '10620', deposit: '7500',total: '18120'},
+		{sno: 14, atithigruh: 'Vijaynagarko Hall', rent: '3500', administrative_charge: '1000', gst:'810 ' ,total_rent: '5310', deposit: '5000',total: '10310'},
+		{sno: 15, atithigruh: 'Tarasali Hall', rent: '3000', administrative_charge: '1000', gst:'720' ,total_rent: '4720', deposit: '5000',total: '9720'},
+		{sno: 16, atithigruh: 'Chatrapati Shivaji', rent: '8000', administrative_charge: '1000', gst:'1620' ,total_rent: '10620', deposit: '7500',total: '18120'},
+		{sno: 17, atithigruh: 'Diwali Pura', rent: '17000', administrative_charge: '1000', gst:'3240' ,total_rent: '21240', deposit: '20000',total: '41240'},
+		{sno: 18, atithigruh: 'Manjalpur', rent: '20000', administrative_charge: '1000', gst:'3780' ,total_rent: '24780', deposit: '30000',total: '54780'},
+	  ];
+	
 	constructor(
 		private fb: FormBuilder,
 		private toaster: ToastrService,
@@ -121,11 +150,11 @@ export class BookAtithigruhComponent implements OnInit {
 			// accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
 			// accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
 			applicantAddress: this.fb.group(this.addressComp.addressControls()),
-			applicantMobileNo: [{value: '', disabled: true}, Validators.required],
+			applicantMobileNo: [{value: '', disabled: false}, Validators.required],
 			// confirmMobile: [null, Validators.required],
-			applicantName: [{value: '', disabled: true}, Validators.required],
+			applicantName: [{value: '', disabled: false}, Validators.required],
 
-			applicantEmailID:[{value: '', disabled: true}, Validators.required],
+			applicantEmailID:[{value: '', disabled: false}, Validators.required],
 
 			gstNo:[null,ValidationService.gstNoValidator],
 			// confirmEmailID: [null, [Validators.required, ValidationService.emailValidator]],
@@ -333,7 +362,11 @@ export class BookAtithigruhComponent implements OnInit {
 			} else {
 				this.getReferenceForAdvanceBooking();
 			}
-
+			  // display Search Details on Atithigruh Booking Details Tab
+               this.atithigruhName = this.atithigruhName,
+			   this.purpose = this.purpose,
+			   this.startDate = this.BookingTypeForm.get('bookingFrom').value,
+			   this.endDate = this.bookingForRegular ? this.BookingTypeForm.get('bookingTo').value : this.BookingTypeForm.get('bookingFrom').value
 		} else {
 			this.toaster.warning(this.bookingUtils.ALL_FEILD_REQUIRED_MESSAGE);
 			this.bookingUtils.getAllErrors(this.BookingTypeForm);
@@ -419,6 +452,9 @@ export class BookAtithigruhComponent implements OnInit {
 						this.paymentObject = payResp.data;
 						this.showPaymentReciept = true;
 						this.confirmRef.hide();
+                        this.gstAmount = (parseInt(this.paymentObject.DEPOSIT_CONCESSION) + parseInt(this.paymentObject.ADMINISTRATION_CHARGES)) * parseInt(this.paymentObject.GST)
+						this.totalAmount = (parseInt(this.paymentObject.DEPOSIT_CONCESSION) + parseInt(this.paymentObject.ADMINISTRATION_CHARGES)) + this.gstAmount;
+                        this.totalPayble = this.totalAmount + (parseInt(this.paymentObject.DEPOSIT_FEES)-parseInt(this.paymentObject.DEPOSIT_CONCESSION))
 
 					}, (err) => {
 						if (err && err.error)
@@ -432,6 +468,11 @@ export class BookAtithigruhComponent implements OnInit {
 		} else {
 			this.toaster.warning(this.bookingConstants.SELECT_SLOT_MESSAGE);
 		}
+		// display Search Details on Atithigruh Booking Details Tab
+			this.atithigruhName = this.atithigruhName,
+			this.purpose = this.purpose
+			this.startDate = this.selectedShift[0].start
+			this.endDate = this.selectedShift[1].end
 	}
 
 	/**
@@ -611,4 +652,20 @@ export class BookAtithigruhComponent implements OnInit {
 	    }
 	  }
 	
+	onAtithiGruhNameChange(event) {
+		this.ATITHIGRUH.forEach(element => {
+			if (element.code == event) {
+				this.atithigruhName = element.name
+			}
+		});
+	}
+
+	onPurposeChange(event) {
+		this.PURPOSE.forEach(ele => {
+			if (ele.code == event) {
+				this.purpose = ele.name
+			}
+		})
+	}
+
 }

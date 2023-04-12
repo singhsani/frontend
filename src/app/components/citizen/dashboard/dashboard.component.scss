@@ -6,3 +6,46 @@
 //     border-bottom: 1px solid #3f51b5 !important;
     
 // }
+.mat-tab-label-Container{
+    padding: 30px 0 35px !important;
+    height: 180px;
+}
+.menu{
+    width :1190px; 
+}
+
+
+@keyframes highlight {
+    0% {
+        background: #d1c4e9; 
+        // border: 2px solid #673ab7 !important;
+        // margin-left: 0px;
+        box-shadow:2px 2px 9px #d1c4e9, 2px 2px 8px #d1c4e9;
+    }
+    100% {
+        background: none;
+        // border: 0;
+        // margin-left: -15px;
+        box-shadow:none;
+    }
+}
+
+.highlight {
+    animation: highlight 5s;
+}
+
+.applicationInformation{
+    margin-top: 10px;
+}
+
+.link:hover{
+    color: #673ab7 !important;
+}
+
+.changeFontColor{
+    color: #673ab7;
+    top: 12px;
+}
+.changeFontColor:hover{
+    color: white;
+}

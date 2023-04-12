@@ -128,7 +128,6 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text"
-							style="margin-top: 15px !important;"
 							maxlength="21"
 							appMaskCensusNumber
 							required
@@ -340,6 +339,7 @@
 									<th width="110">{{'mobileNo' | translate:translateKey}}</th>
 									<th width="150">{{'emailId' | translate:translateKey}}</th>
 									<th width="60" *ngIf="shopLicNewForm.get('canEdit').value"></th>
+									<th width="60" *ngIf="!(shopLicNewForm.get('canEdit').value)"></th>
 								</tr>
 							</thead>
 							<tbody formArrayName="shopPersonList">
@@ -483,7 +483,7 @@
 						<h2 class="pl-0">{{'occupying_position_of_management_table_label' | translate: translateKey }}</h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
-						<button type="button" *ngIf="shopLicNewForm.get('canEdit').value"  
+						<button type="button" *ngIf="shopLicNewForm.get('canEdit').value" [disabled]="isDisabledMorePerson" 
 							matTooltip="Add More Person Occuping" mat-raised-button color="primary"
 							(click)="addMorePersonwork('OCCUPANCY')">{{'add' | translate: translateKey}}</button>
 							<!-- [disabled]="!(shopLicNewForm.get('workerCounts')['controls'].length < 2)" -->
@@ -503,6 +503,7 @@
 									<th>{{'workerType' | translate:translateKey}}</th>
 									<th>{{'total' | translate:translateKey}}</th>
 									<th *ngIf="shopLicNewForm.get('canEdit').value"></th>
+									<th *ngIf="!(shopLicNewForm.get('canEdit').value)"></th>
 								</tr>
 							</thead>
 							<tbody formArrayName="workerCounts">
@@ -557,7 +558,7 @@
 											<div col-md-6 class="ngSelect" *ngIf="item.isEditMode" >
 												<ng-select *ngIf="item.isEditMode" formControlName="workersType" required  (ngModelChange)="getCommonWorkerType()">
 													<ng-container *ngFor="let gender of workerTypeList">
-														<ng-option *ngIf="!gender.selected"  [value]="gender.code" >
+                                                      <ng-option *ngIf="!gender.selected" [value]="gender.code" >
 															{{gender.name}}</ng-option>
 													</ng-container>
 												</ng-select>
@@ -667,6 +668,7 @@
 									<th width="110">{{'Mobile Number' | translate:translateKey}}</th>
 									<th width="150">{{'Email-Id' | translate:translateKey}}</th>
 									<th width="60" *ngIf="shopLicNewForm.get('canEdit').value"></th>
+									<th width="60" *ngIf="!(shopLicNewForm.get('canEdit').value)"></th>
 								</tr>
 							</thead>
 							<tbody formArrayName="shopPartnerList">

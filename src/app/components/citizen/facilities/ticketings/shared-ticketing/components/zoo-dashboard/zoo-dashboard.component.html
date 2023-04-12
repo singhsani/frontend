@@ -1,7 +1,7 @@
-<app-title-bar [title]="'Zoo Services' | translate: translateKey"></app-title-bar>
+<app-title-bar [title]="'Ticketing / Online Zoo Services' | translate: translateKey"></app-title-bar>
 <div class="moduleList">
 
-          <div class="zooServicesList row">
+          <!-- <div class="zooServicesList row">
               <div class="colBtn col-md-3" *ngFor="let service of modules;" matTooltip="{{ service.name }}">
                   <button mat-stroked-button routerLinkActive="activated-services-button" *ngIf="service.active" color="primary" routerLink="/{{manageRoutes.getFullRoute(service.code)}}">
                       {{ service.name }}
@@ -10,7 +10,7 @@
                       {{ service.name }}
                   </button>
               </div>
-          </div>
+          </div> -->
           <div class="activated-service">
             <router-outlet></router-outlet>
           </div>

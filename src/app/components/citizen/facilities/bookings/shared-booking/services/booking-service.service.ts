@@ -263,8 +263,8 @@ export class BookingService {
     return this.http.get(this.requestURL);
   }
 
-  filterBatchCode(batchCode: any,poolName:any) {
-    this.requestURL = `api/${this.moduleName}/${this.resourceType}/filter/batchName/${batchCode}/${poolName}`;
+  filterBatchCode(data) {
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/filter/batchName/${data.batchCode}/${data.poolName}/${data.category}/${data.birthDate}`;
     return this.http.get(this.requestURL);
   }
 

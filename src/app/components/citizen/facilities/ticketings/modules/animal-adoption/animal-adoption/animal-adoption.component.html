@@ -1,15 +1,15 @@
 <mat-card class="cardBox">
   <div class="pageTitle">{{'animal_adoption' | translate: translateKey}}</div>
-  <div class="row" *ngIf="showAnimalAdoptionPricingTable">
+  <div class="row" *ngIf="showAnimalAdoptionPricingTable" style="height: 448px;">
 
-    <mat-card-content style="margin-top: 45px;" class="p-4 col-md-6">
-      <h2>{{'Rules for adopting wildlife animal /birds (Friends of Zoo)'| translate: translateKey}}</h2>
+    <mat-card-content style="margin-top: 0px;" class="p-4 col-md-6">
+      <h1><b>{{'Expenses for adopting wildlife Animals / Birds'| translate: translateKey}}</b></h1>
       <div class="example-table-container mat-elevation-z8 borderOne">
 
         <table mat-table [dataSource]="dataSourceForPricing" class="myTicketPricingTabel">
 
           <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef>Sr. No.</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef style="text-align:justify">Sr. No.</mat-header-cell>
             <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
               <div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
               <div class="mobile-label1">:</div>
@@ -18,11 +18,11 @@
           </ng-container>
 
           <ng-container matColumnDef="animalBirdName">
-            <mat-header-cell *matHeaderCellDef>{{'animal_or_bird_name' | translate:translateKey}}</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef style="text-align:justify;padding: 15px;">{{'animal_or_bird_name' | translate:translateKey}}</mat-header-cell>
             <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
               <div class="mobile-label">{{'animal_or_bird_name' | translate:translateKey}}</div>
               <div class="mobile-label1">:</div>
-              <div class="row-inside"> {{row?.animalBirdName}} </div>
+              <div class="row-inside"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{row?.animalBirdName}} </div>
             </mat-cell>
           </ng-container>
 
@@ -46,11 +46,11 @@
           </ng-container> -->
 
           <ng-container matColumnDef="totalExpenses">
-            <mat-header-cell *matHeaderCellDef>{{'total_expenses' | translate:translateKey}}</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef style="text-align:justify">{{'total_expenses' | translate:translateKey}}</mat-header-cell>
             <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
               <div class="mobile-label">{{'total_expenses' | translate:translateKey}}</div>
               <div class="mobile-label1">:</div>
-              <div class="row-inside"> {{row?.totalExpenses}} </div>
+              <div class="row-inside"> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{{row?.totalExpenses}} </div>
             </mat-cell>
           </ng-container>
 
@@ -62,14 +62,13 @@
     </mat-card-content>
 
     <mat-card-content class="p-4 col-md-6">
-      <h2>{{'TERMS AND CONDITIONS FOR ADOPTION OF ZOO ANIMALS/BIRDS IN SRI SAYAJIBAUG ZOO, VMC UNDER THE ‘FRIENDS OF
-        ZOO’ PROGRAMME'| translate: translateKey}}</h2>
+      <h5><b>{{'Terms and Conditions for Adoption of Zoo Animals/ Birds in Sri Sayajibaug Zoo, VMC under the ‘Friends of Zoo’ program.'| translate: translateKey}}</b></h5>
         
-      <ol class="olList rules-scrollable">
+      <h5><ol class="olList rules-scrollable">
 
         <li>
           <h5>Hon’ble Municipal Commissioner, Vadodara Municipal Corporation (VMC) reserves all the rights regarding the
-            Adoption of Zoo Animals/Birds under the ‘Friends of Zoo’ Programme.</h5>
+            Adoption of Zoo Animals/Birds under the ‘Friends of Zoo’ program.</h5>
         </li>
 
         <h5>Hon’ble Municipal Commissioner, VMC reserves the right to:</h5>
@@ -120,7 +119,7 @@
         </li>
 
         <li>
-          <h5>The FRIEND may be invited as a Guest for some of the Awareness/Educational Programmes organized by the
+          <h5>The FRIEND may be invited as a Guest for some of the Awareness/Educational programs organized by the
             Zoo.</h5>
         </li>
 
@@ -133,11 +132,11 @@
         <li>
           <h5>In addition to the Point No. 9, during the period of adoption the Animal/Bird under adoption may be
             exchanged with another Zoo and in this case also the amount will not be paid back.</h5>
+            <br>
 
 
-
-          <h4>❖ GENEROUS CONSIDERATIONS:</h4>
-
+          <h3>❖ GENEROUS CONSIDERATIONS:</h3>
+            <br>
           <h5>I. In addition to the Animal Adoption Scheme of Zoo; the Zoo shall be highly obliged to receive
             contributions from Individuals/Corporates in the form of Commodity, which are a special seasonal
             requirements for Animals/Birds for their better upkeep viz. Coolers during Summer, Heaters during Winter,
@@ -153,13 +152,19 @@
           <h5>* Corporate Organizations can include the above Considerations in their CSR activity towards Environment
             and Nature Conservation.</h5>
         </li>
-      </ol>
+      </ol></h5>
+      <div class="checkboxPosition text-right">
+        <mat-checkbox class="col-sm-12 col-md-12" (change)="clickProcess($event)" [checked]="checkProceed">
+          <b>{{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}}</b>
+        </mat-checkbox>
+      </div>
     </mat-card-content>
 
   </div>
   <div class="fotButtonBar" *ngIf="showAnimalAdoptionPricingTable">
-    <div class="col-sm-12 col-md-12 text-right">
-      <button mat-raised-button (click)="showAnimalAdoptionPricingTable = false; showAnimalAdoptionForm= true;"
+    <div class="col-sm-12 col-md-12 text-right" style="height: 34px;
+    margin-top: -16px;">
+      <button mat-raised-button (click)="showAnimalAdoptionPricingTable = false; showAnimalAdoptionForm= true;" [disabled]="btnProceed"
         color="primary">
         <!-- <mat-icon>thumb_up_alt</mat-icon> -->
         {{'submit'| translate: translateKey}}
@@ -198,7 +203,7 @@
           <control-messages [control]="animalAdoptionForm.get('adopterEmailId')"></control-messages>
         </mat-form-field>
 
-        <div class="col-md-4 ngSelect">
+        <div class="col-md-3 ngSelect">
           <ng-select [items]="animalAdoptionPricing" formControlName="animalName" [multiple]="false"
             (clear)="resetCalculations($event);" (change)="getValues($event)"
             placeholder="{{'animal_or_bird_preferred_for_adoption'| translate: translateKey}}"
@@ -208,13 +213,24 @@
           </control-messages>
         </div>
 
+        <mat-form-field class="col-md-3">
+          <input matInput type="text" OnlyNumber maxlength="2"  formControlName="existingCount" disabled
+             placeholder="{{'Existing No of Count' | translate: translateKey}}" required>
+        </mat-form-field>
+
 
         <mat-form-field class="col-md-3">
-          <input matInput type="text" OnlyNumber maxlength="3" (change)="calculateAmount();" [(ngModel)]="selectedAnimalAnnualBoardingExpenses"
-            [ngModelOptions]="{standalone: true}" placeholder="{{'No of Count' | translate: translateKey}}" required>
+          <input matInput type="text" OnlyNumber maxlength="2" (change)="calculateAmount($event);" [(ngModel)]="selectedAnimalAnnualBoardingExpenses"
+            [ngModelOptions]="{standalone: true}" placeholder="{{'No of Adoption Count' | translate: translateKey}}" required>
         </mat-form-field>
 
         <mat-form-field class="col-md-3">
+          <input matInput type="text" OnlyNumber maxlength="2" formControlName="adoptionYears"
+             placeholder="{{'No of Adoption Years' | translate: translateKey}}" required>
+        </mat-form-field>
+
+
+        <mat-form-field class="col-md-4">
           <input matInput type="text" formControlName="totalAdoptionCost"
             placeholder="{{'total_cost_of_adoption' | translate: translateKey}}" readonly>
           <control-messages [control]="animalAdoptionForm.get('totalAdoptionCost')"></control-messages>
@@ -285,12 +301,12 @@
 
       <div class="pl-3">
 
-        <mat-checkbox class="d-block checkBoxLabel" labelPosition="after" required formControlName="termsCondition">
+        <!-- <mat-checkbox class="d-block checkBoxLabel" labelPosition="after" required formControlName="termsCondition">
           {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}}
           <a class="stretchedLink">
 
           </a>
-        </mat-checkbox>
+        </mat-checkbox> -->
 
         <!-- <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition">
           {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}}

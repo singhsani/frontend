@@ -61,16 +61,13 @@ export class TransactionsComponent implements OnInit {
 
 	print(apicode: any) {
 		this.formService.printProfReceipt(apicode).subscribe(data => {
-			let sectionToPrint: any = document.getElementById('sectionToPrint1');
+			let sectionToPrint: any = document.getElementById('sectionToPrint');
 			sectionToPrint.innerHTML = data;
-
 			setTimeout(() => {
 				window.print();
-			});
-
+			},300);
 			this.router.navigateByUrl(this.router.url.split('?')[0]);
 			//sectionToPrint.innerHTML = '';
-
 		});
 	}
 

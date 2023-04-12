@@ -13,27 +13,28 @@
 
     <div class="pageTitle">{{'online_amphi_theater_bookings'| translate: translateKey}}</div>
     <mat-card-content class="p-4">
-      <img _ngcontent-c1="" alt="Vadodara Municipal Corporation" src="assets/images/vmc-logo.png" class="center">
-      <h2>{{'અગત્યની સુચનાઓ'| translate: translateKey}}</h2>
-      <ol class="olList">
+      <img _ngcontent-c1="" width=130 height=150 alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg" class="center">
+      <p style="font-size:24px"><strong>{{'અગત્યની સુચનાઓ'| translate: translateKey}}</strong></p>
+      <h4><ol class="olList">
         <li>
-          <h4>એમ્ફિ થિયેટર જે આકારમાં ગોળાકાર છે, જેની બેઠકની ક્ષમતા 500 ની છે.</h4>
+            <p class="listSize" style="font-size: 21px;margin-top: -17px">એમ્ફિ થિયેટર જે આકારમાં ગોળાકાર છે, જેની બેઠકની ક્ષમતા <b style="font-size: 18px; color: black;">500</b> ની છે.</p>
         </li>
         <li>
-          <h4>ક્લાસિકલ ડાન્સ અથવા વોકલ કોન્સર્ટ, સ્ટ્રીટ પ્લે લેક્ચર્સ, વગેરે જેવી નાની સાંસ્કૃતિક પ્રવૃત્તિઓનું આયોજન કરવા માટેનું આ એક આદર્શ સ્થળ છે.</h4>
+          <p class="listSize" style="font-size: 21px;margin-top: -17px">ક્લાસિકલ ડાન્સ અથવા વોકલ કોન્સર્ટ, સ્ટ્રીટ પ્લે લેક્ચર્સ, વગેરે જેવી નાની સાંસ્કૃતિક પ્રવૃત્તિઓનું આયોજન કરવા માટેનું આ એક આદર્શ સ્થળ છે.</p>
         </li>
         <li>
-          <h4>એમ્ફી થિયેટરનો સમય: - સાંજે 6:00 થી 11: 00.</h4>
+          <p class="listSize" style="font-size: 21px;margin-top: -17px">એમ્ફી થિયેટરનો સમય: - સવારે <b style="font-size: 18px; color: black;">9:00</b> થી સાંજે <b style="font-size: 18px; color: black;">11:00</b></p>
         </li>
         <!--                    <h4>ઉપરોક્ત સૂચનાનો ચૂસ્તપણે અમલ કરવાનો રહેશે અન્યથા કાર્યક્રમ બંધ કરવાની ફરજ પડશે.</h4>-->
-      </ol>
-      <h5><b>એમ્ફી થિયેટર બુકિંગ માટે દરો:</b></h5>
+      </ol></h4>
+      <!-- <h4><b>એમ્ફી થિયેટર બુકિંગ માટે દરો:</b></h4> -->
+      <p style="font-size:24px ;margin-top: -37px"><strong>એમ્ફી થિયેટર બુકિંગ માટે દરો:</strong>
       <div class=" table-responsive">
 
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
             <ng-container matColumnDef="sno">
-                <th mat-header-cell *matHeaderCellDef>અનુક્રમ નંબર</th>
+                <th mat-header-cell class="tableHead" *matHeaderCellDef>અનુક્રમ નંબર</th>
                 <td mat-cell *matCellDef="let element"> {{element.sno}} </td>
             </ng-container>
 
@@ -55,21 +56,21 @@
       </div>
     </mat-card-content>
 
-    <mat-card-content class="p-4">
-      <h3>{{'Important instructions'| translate: translateKey}}</h3>
-      <ol class="olList">
+    <mat-card-content class="p-4" style="height: 355px; margin-top: -45px;">
+      <h3><strong>{{'Important Instructions'| translate: translateKey}}</strong></h3><br>
+      <h4><ol class="olList">
         <li>
-          <h5>The Amphi Theater which is round in shape with a stepped seating capacity of 500.</h5>
+          <P style="font-size: 21px;margin-top: -17px">The Amphi Theatre which is round in shape with a stepped seating capacity of 500.</P>
         </li>
         <li>
-          <h5>This is an ideal place to organize small cultural activities like classical dance or vocal concert, Street play lectures, etc.</h5>
+          <P style="font-size: 21px;margin-top: -17px">This is an ideal place to organize small cultural activities like classical dance or vocal concert, Street play lectures, etc.</P>
         </li>
         <li>
-          <h5>Timings of the Amphi Theater: - 6:00 pm to 11:00 pm.</h5>
+          <P style="font-size: 21px;margin-top: -17px">Timings of the Amphi Theatre: - 9:00 am to 11:00 pm.</P>
         </li>
         <!--                    <h5>The above instruction must be strictly enforced otherwise the program will be forced to close.</h5>-->
-      </ol>
-      <h5><b>Rates for Booking Amphi Theater:</b></h5>
+      </ol></h4>
+      <h4 style="margin-top: -17px"><b>Rates for Booking Amphi Theatre:</b></h4>
       <div class=" table-responsive">
 
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -93,11 +94,22 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumnsFeeDetails;"></tr>
         </table>
       </div>
+
+      <div class="row, p-4">
+        <h2>
+            {{'terms_and_conditions' | translate:translateKey }}
+        </h2>
+        <div class="pl-2">
+            <mat-checkbox class="d-block" labelPosition="after" (change)="termsConditionClick($event)">
+                {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}} </mat-checkbox>
+        </div>
+    </div>
     </mat-card-content>
 
     <div class="fotButtonBar">
       <div class="col-sm-12 col-md-12 text-right">
-        <button mat-raised-button (click)="guideLineFlag = false; showTheaterSearchForm = true; " color="primary">
+        <button mat-raised-button (click)="guideLineFlag = false; showTheaterSearchForm = true; " color="primary"
+        [disabled]="!theaterBookingForm.get('termsCondition').value">
           <mat-icon>thumb_up_alt</mat-icon>
           {{'proceed_for_application'| translate: translateKey}}
         </button>
@@ -397,7 +409,7 @@
                         <mat-form-field>
                           <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile"
                                  placeholder="{{'Confirm Mobile Number' | translate: translateKey}}" required>
-                          <control-messages [control]="theaterBookingForm.get('organizationNumber')"></control-messages>
+                          <control-messages [control]="theaterBookingForm.get('confirmMobile')"></control-messages>
                         </mat-form-field>
                         <mat-error
                           *ngIf="!bookingUtils.matcher(theaterBookingForm, 'organizationNumber', 'confirmMobile') && theaterBookingForm.get('organizationNumber').touched && theaterBookingForm.get('confirmMobile').touched">

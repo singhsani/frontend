@@ -293,6 +293,11 @@
                                 Why Rejected
                             </button>
 
+                            <button mat-menu-item *ngIf="row.serviceType == 'VEHICLE' && row.fileStatus == 'PAYMENT'"
+                                color="primary" (click)="infoVehiclePending(row.amount, row.wardNumber)">
+                                <mat-icon class="m-1" title="Info">help_outline</mat-icon>Payment Remarks
+                            </button>
+
                             <button mat-menu-item
                                 *ngIf="(row.serviceType == 'PEC_REG' || row.serviceType == 'PRC_REG') && isQueryRaiseDisplay(row)"
                                 color="primary"
@@ -320,8 +325,8 @@
 
                         <mat-menu #menuTax="matMenu">
                             <button mat-menu-item
-                                *ngIf="row.fileStatus === 'PAYMENT_RECEIVED' || (row.fileStatus === 'APPROVED' && row.serviceType !='PROPERTY_ASSESSMENT' && row.serviceType !='TRANSFER_OF_PROPERTY' ) 
-                                || (row.serviceType === 'WTR_NEW_WATER_CONNECTION' && row.fileStatus === 'SUBMITTED' && row.newgenStatus === 'SUBMIT_AFTER_SCRUTINY') "
+                                *ngIf="row.fileStatus === 'PAYMENT_RECEIVED' || (row.fileStatus === 'APPROVED' && row.serviceType !='PROPERTY_ASSESSMENT' && row.serviceType !='TRANSFER_OF_PROPERTY' )
+                                || (row.serviceType === 'WTR_NEW_WATER_CONNECTION' && row.fileStatus === 'SUBMITTED' && row.newgenStatus === 'SUBMIT_AFTER_SCRUTINY' ) || (row.fileStatus === 'SUBMITTED' && row.isReceiptGenerated) "
                                 color="primary"
                                 (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
                                 <mat-icon class="m-1" title="{{'print_receipt' | translate:translateKey}}">print
@@ -443,7 +448,7 @@
                                 </mat-icon>
                                 {{'preview_application' | translate:translateKey}}
                             </button>
-                              <ng-container>
+                            <ng-container>
                                 <button mat-menu-item *ngIf="(isPrintReceipt(row))" color="primary"
                                 (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
                                 <mat-icon class="m-1" title="{{'print_receipt' | translate:translateKey}}">print
@@ -468,8 +473,13 @@
                                 </mat-icon>
                                 {{'print_acknolowdgement_receipt' | translate:translateKey}}
                             </button>
-
-
+                            <button mat-menu-item *ngIf="(isPrintReceiptPaymentIntimation(row))" color="primary"
+                            (click)="printPaymentReceiptInti(row.serviceDetail.code,row.serviceFormId)">
+                            <mat-icon class="m-1"
+                                title="{{'print_acknolowdgement_receipt' | translate:translateKey}}">print
+                            </mat-icon>
+                            {{'print_acknolowdgement_receipt' | translate:translateKey}}
+                        </button>
                             <button mat-menu-item *ngIf="(isPrintReceiptAfterReschedule(row)) " color="primary"
                             (click)="PrintReceiptAfterReschedule(row.serviceDetail.code,row.serviceFormId)">
                             <mat-icon class="m-1"

@@ -52,6 +52,7 @@ export class ShopLicNewComponent implements OnInit {
 	isPatners: boolean = false;
 
 	isIntimation: boolean = false;
+	isDisabledMorePerson : boolean = false;
 	isSubCategory: boolean = false;
 	isDisabledBtn: boolean = true;
 	isDisabledOrgType: boolean = false;
@@ -357,9 +358,9 @@ export class ShopLicNewComponent implements OnInit {
 			waterDrainageBlockId: [null],
 			ownershipType: [null, [Validators.required]],
 
-			pecNumber:[null],
-			prcNumber:[null],
-			censusNumber:[null,Validators.required],
+			pecNumber:[null, ValidationService.pecValidation],
+			prcNumber:[null, ValidationService.prcValidation],
+			censusNumber:[null,ValidationService.censusNumberValidator],
 			oldRegistrationNumber: null,
 			oldRegistrationDate: null,
 			number: null,
@@ -693,10 +694,11 @@ export class ShopLicNewComponent implements OnInit {
 		let isEditAnotherRow = this.isTableInEditMode(persontype);
 		if (!isEditAnotherRow) {
 
-			// if (persontype === "OCCUPANCY" && this.getArrayByType(persontype).controls.length >= 2) {
-			// 	this.toastrService.warning("Occuping Person not allowed more than 2");
-			// 	return false;
-			// }
+			if (persontype === "OCCUPANCY" && this.getArrayByType(persontype).controls.length >= 5) {
+				this.isDisabledMorePerson = true;
+			    this.commonService.openAlert("Warning", "Only 5 Worker Type Available", "warning");	
+				return false;
+			}
 
 
 			if (persontype === "OCCUPANCY") {
@@ -1014,6 +1016,12 @@ export class ShopLicNewComponent implements OnInit {
 		//  this.addWomenDocument();
 		try {
 			// this.updateServiceUploadDocument(event);
+			// when organization Type change Partner List clear  
+			if (this.shopLicNewForm.get('shopPartnerList').value.length > 0) {
+				for (let i = 0; i < this.shopLicNewForm.get('shopPartnerList').value.length; i++) {
+					this.getArrayByType('PATNERS').removeAt(i);
+				}
+			}
 			this.isPatners = false;
 
 			this.shopLicNewForm.get('attachments').setValue([]);
@@ -1928,8 +1936,10 @@ export class ShopLicNewComponent implements OnInit {
 		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
 			this.getArrayByType(persontype).removeAt(index);
 			this.toastrService.success("Succesfully deleted", "Deleted");
+         this.getCommonWorkerType()
 		});
-	}
+		this.isDisabledMorePerson = false;
+	}     
 
 	moreThanZeroWomenDocument(res,ownershipType,organizationType){
 		this.totalNoOfWoman = 0;

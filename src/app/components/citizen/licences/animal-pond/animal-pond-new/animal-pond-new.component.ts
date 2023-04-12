@@ -46,6 +46,12 @@ export class AnimalPondNewComponent implements OnInit {
 	BLOCK: Array<any> = [];
 	LOOKUP: any;
 	isEditMode = true
+	wardZoneLevel = [];
+	wardZoneLevel1List = [];
+	wardZoneLevel2List = [];
+	wardZoneLevel3List = [];
+	wardNo: [null];
+	zoneNo: [null];
 
 	// required attachment array
 	public uploadFilesArray: Array<any> = [];
@@ -80,6 +86,7 @@ export class AnimalPondNewComponent implements OnInit {
 			this.formId = Number(param.get('id'));
 			this.apiCode = param.get('apiCode');
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+			this.getAllZoneNos();
 		});
 
 		this.getLookupData();
@@ -160,8 +167,8 @@ export class AnimalPondNewComponent implements OnInit {
 				this.animalPondNewForm.patchValue(res);
 				this.showButtons = true;
 				this.isEditMode = res.canEdit;
-				this.onChangeZone(this.animalPondNewForm.get('zoneNo').value.code);
-				this.onChangeWard(this.animalPondNewForm.get('wardNo').value.code);
+				// this.onChangeZone(this.animalPondNewForm.get('zoneNo').value.code);
+				// this.onChangeWard(this.animalPondNewForm.get('wardNo').value.code);
 
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
@@ -226,11 +233,47 @@ export class AnimalPondNewComponent implements OnInit {
 			// selected animal filter
 			this.getSelectedAnimal();
 
-			this.onChangeZone(this.animalPondNewForm.get('zoneNo').value.code);
-			this.onChangeWard(this.animalPondNewForm.get('wardNo').value.code);
+			// this.onChangeZone(this.animalPondNewForm.get('zoneNo').value.code);
+			// this.onChangeWard(this.animalPondNewForm.get('wardNo').value.code);
 		});
 	}
-
+	getAllZoneNos() {
+		this.animalPondService.getWardZoneFirstLevel(1, "PROPERTYTAX").subscribe(
+		  (data) => {
+			this.wardZoneLevel1List = data;
+		  }
+		)
+	  }
+	onChangedZone(event) {
+		this.wardZoneLevel2List =[];
+		this.wardZoneLevel3List =[];
+		if (event == undefined) {
+			this.animalPondNewForm.get('wardNo').get('code').setValue(null);
+			this.animalPondNewForm.get('blockNo').get('code').setValue(null);
+			return false
+			}
+			else {
+				let postData = {};
+				postData = { parentId: event };
+				this.animalPondService.getWardZone(postData).subscribe(res => {	
+	      		this.wardZoneLevel2List = res.body;
+				})
+			}
+	  }
+	  onChangedWard(event){
+		this.wardZoneLevel3List =[];
+		if (event == undefined) {
+			this.animalPondNewForm.get('blockNo').get('code').setValue(null);
+			return false
+		  }
+		  else {
+			let postData = {};
+			postData = { parentId: event };
+			this.animalPondService.getWardZone(postData).subscribe(res => {	
+			  this.wardZoneLevel3List = res.body;
+			})
+		  }
+	  }
 	updateServiceUploadDocument(event) {
 
 		let array = (<FormArray>this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments'));
@@ -349,9 +392,12 @@ export class AnimalPondNewComponent implements OnInit {
 			/* Step 1 controls end */
 
 			/* Step 2 controls start */
-			zoneNo: this.fb.group({ code: [null, Validators.required] }),
-			wardNo: this.fb.group({ code: [null, Validators.required] }),
-			blockNo: this.fb.group({ code: [null, Validators.required] }),
+			// zoneNo: this.fb.group({ code: [null, Validators.required] }),
+			// wardNo: this.fb.group({ code: [null, Validators.required] }),
+			// blockNo: this.fb.group({ code: [null, Validators.required] }),
+			zoneNo: this.fb.group({code: null, name:null}, Validators.required),
+			wardNo: this.fb.group({code: null , name:null}, Validators.required),
+			blockNo: this.fb.group({code: null, name:null}, Validators.required),
 			businessAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			extraDetailsOfBusiness: [null, [Validators.maxLength(500)]],
 			relationshipId: this.fb.group({

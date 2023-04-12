@@ -82,6 +82,7 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj"
+						appValidationFields validationFieldsType='onlyNameWithOutSpace'
 							appGujInputTarget [form]="animalPondTransferForm"
 							placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">
 						<control-messages [control]="animalPondTransferForm.get('holderFirstNameGuj')">
@@ -90,6 +91,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="90"
 							placeholder="{{'holder_middlename' | translate:translateKey:'gu'}}"
+							appValidationFields validationFieldsType='onlyNameWithOutSpace'
 							formControlName="holderMiddleNameGuj" appGujInputTarget [form]="animalPondTransferForm">
 						<control-messages [control]="animalPondTransferForm.get('holderMiddleNameGuj')">
 						</control-messages>
@@ -97,6 +99,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="90"
 							placeholder="{{'holder_lastname' | translate:translateKey:'gu'}}"
+							appValidationFields validationFieldsType='onlyNameWithOutSpace'
 							formControlName="holderLastNameGuj" appGujInputTarget [form]="animalPondTransferForm">
 						<control-messages [control]="animalPondTransferForm.get('holderLastNameGuj')">
 						</control-messages>

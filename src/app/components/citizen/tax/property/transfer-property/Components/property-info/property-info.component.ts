@@ -138,4 +138,31 @@ export class PropertyInfoComponent implements OnInit {
       }
     }
   }
+
+  onChangedTransferType(itemCode) {
+      this.transferSubTypeList = [];
+      this.applicationModel.transferSubTypeLookupId = null;
+      if (itemCode.itemCode){
+        let transferTypeCode = null;
+        if(itemCode.itemCode == 'HEREDITARY'){
+          transferTypeCode = 'HEREDITARY_TRANSFER_SUBTYPE'
+        }else{
+          transferTypeCode = 'OTHER_TRANSFER_SUBTYPE'
+        }
+        this.getTransferSubTypeLookup(transferTypeCode);
+      }
+  }
+
+  getTransferSubTypeLookup(transferTypeCode) {
+    this.transferSubTypeList = [];
+    this.transferPropertyService.getTransferSubTypeLookup(transferTypeCode).subscribe(
+      (data) => {
+        if (data.status === 200 && data.body.length) {
+          this.transferSubTypeList = data.body[0].items;
+        }
+      },
+      (error) => {
+        this.alertService.error(error.error.message);
+      })
+  }
 }

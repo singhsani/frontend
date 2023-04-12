@@ -75,3 +75,10 @@ table { width: 100%; }
     & > strong {color: #856404; background-color: #ffeeba;}
     &.border {border-color: #ffeeba !important;}
 }
+ .townHallfooter{
+    margin-top: 4.5rem !important;
+}
+
+.mat-table td.mat-cell, .mat-table th.mat-header-cell {
+    font-size: 13px !important;
+}

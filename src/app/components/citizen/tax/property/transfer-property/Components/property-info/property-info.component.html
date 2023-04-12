@@ -29,7 +29,7 @@
                 <div class="ngSelect">
                     <ng-select required placeholder="Transfer Type *" [items]="transferTypeList" bindValue="itemId"
                         bindLabel="itemName" name="transferTypeLookupId"
-                        [(ngModel)]="applicationModel.transferTypeLookupId" #TransferTypeLookupId="ngModel"
+                        [(ngModel)]="applicationModel.transferTypeLookupId" #TransferTypeLookupId="ngModel" (change)="onChangedTransferType($event);" 
                         [ngClass]="{'ng-invalid ng-touched':  propertyInfoForm.submitted && TransferTypeLookupId.invalid}">
                     </ng-select>
                     <div

@@ -5,7 +5,8 @@
 			<input matInput type="text" formControlName="buildingName" [required]="requiredFeilds"
 				placeholder="{{'building_name' | translate: translateKey }}" maxlength="60" appGujInputSource
 				targetElement="buildingNameGuj" [form]="addressFormGroup">
-			<control-messages [control]="addressFormGroup.get('buildingName')"></control-messages>
+         <mat-error *ngIf="addressFormGroup.get('buildingName').invalid">{{addressFormGroup.get('buildingName').errors.required ? 'Flat/House/Plot Number is required' : 'Flat/House/Plot Number is invalid'}}</mat-error>
+        <!-- <control-messages [control]="addressFormGroup.get('buildingName')"></control-messages> -->
 		</mat-form-field>
 
 		<mat-form-field class="col-md-4">

@@ -20,6 +20,7 @@ export class ResetPasswordComponent implements OnInit {
 	userType = 'CITIZEN';
 
 	loading: boolean = false;
+	isvisibleFrom : boolean = true;
 
 	/**
 	 * Constructor to declare defualt propeties of class.
@@ -67,7 +68,7 @@ export class ResetPasswordComponent implements OnInit {
 				//this.resetPassForm.get('code').setValue("");
 				//this.resetPassForm.get('code').enable();
 			}
-
+           this.sendLinkOnEmail(params['uniqueId'], params['code'], this.emailobj )
 		});
 
 	}
@@ -122,17 +123,53 @@ export class ResetPasswordComponent implements OnInit {
 	 * @param formVals - login form values property.
 	 */
 	onResetPassword(formVals: FormGroup) {
-		if (this.resetPassForm.valid) {
-			this.appService.resetPassword(formVals.getRawValue()).subscribe(
-				res => {
-					this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
-					this.commonService.successAlert("Success", "Password reset successful,Please use new password for login", "success");
-
-				},
-				err => {
-					this.toster.error("Please Enter valid OTP for Reset Password OR use latest OTP received in Email/SMS for Reset Password");
-				}
-			);
+		let data = {
+			uniqueId: formVals.value.uniqueId,
+			code: formVals.value.code,
+			email: this.emailobj
 		}
+		this.appService.setEmailLink(data).subscribe(res => {
+			if (res == false) {
+				this.isvisibleFrom = res;
+				this.commonService.openAlert("error", 'Your link is expired please try again for forgot password.', "error", "", cb => {
+					this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
+				})
+			}
+			else {
+				this.isvisibleFrom = res;
+				if (this.resetPassForm.valid) {
+					this.appService.resetPassword(formVals.getRawValue()).subscribe(
+						res => {
+							this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
+							this.commonService.successAlert("Success", "Password reset successful,Please use new password for login", "success");
+
+						},
+						err => {
+							this.toster.error("Please Enter valid OTP for Reset Password OR use latest OTP received in Email/SMS for Reset Password");
+						}
+					);
+				}
+			}
+		});
+
+	}
+
+	sendLinkOnEmail(uniqueId, code, email){
+		let data = {
+			uniqueId: uniqueId,
+			code:code,
+			email:email
+		}
+		this.appService.setEmailLink(data).subscribe(res =>{
+			if(res == false){
+				this.isvisibleFrom = res;
+				this.commonService.openAlert("error",'Your link is expired please try again for forgot password.', "error", "", cb => {
+					this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
+				})
+			}
+			else{
+				this.isvisibleFrom = res;
+			}
+		});
 	}
 }

@@ -6,24 +6,24 @@
     <mat-card class="cardBox">
         <div class="pageTitle">{{'online_children_theater_booking'| translate: translateKey}}</div>
         <mat-card-content class="p-4">
-            <p class="pb-2">{{head_lines| translate: translateKey}}</p>
-            <h2>{{'rules_and_regulations'| translate: translateKey}}</h2>
-            <ol class="olList">
+            <h4 class="pb-2">{{head_lines| translate: translateKey}}</h4><br>
+            <h2><b>{{'rules_and_regulations'| translate: translateKey}}</b></h2>
+            <h4><ol class="olList">
                 <li>
                     All parties/organizers have to observe the VMC Rules
                 </li>
                 <li>
-                    Production of all necessary permission is mandatory for applicant before commencement of Programme.
+                    Production of all necessary permission is mandatory for applicant before commencement of program.
                 </li>
               <li>
-                Sitting capacity :200
+                Seating capacity :200
               </li>
               <li>
-                Theater will be available between 9:00 AM to 8:00 PM
+                Theatre will be available between 9:00 AM to 8:00 PM
               </li>
-            </ol>
+            </ol></h4>
 
-              <h2>{{'fees_structure'| translate: translateKey}}</h2>
+              <h2><b>{{'fees_structure'| translate: translateKey}}</b></h2>
 
               <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
@@ -33,7 +33,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="programmePurpose">
-                  <th mat-header-cell *matHeaderCellDef> Programme Purpose </th>
+                  <th mat-header-cell *matHeaderCellDef> Program Purpose </th>
                   <td mat-cell *matCellDef="let element"> {{element.programmePurpose}} </td>
                 </ng-container>
 
@@ -89,7 +89,7 @@
                       </mat-form-field>
 
                     <div formGroupName="purpose" class="col-md-6 ngSelect">
-                        <ng-select placeholder="{{'category'| translate: translateKey}}" formControlName="code">
+                        <ng-select placeholder="{{'category'| translate: translateKey}}" formControlName="code" (change)="onPurposeChange($event)">
                             <ng-option *ngFor="let purpose of CATEGORIES" [value]="purpose.code">
                                 {{ purpose.name }}
                             </ng-option>
@@ -229,7 +229,7 @@
                         <div *ngIf="selectedShift.length > 1">
 
                         <td>
-                            <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" 
+                            <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}"
                             (click)="selectedShift = bookingUtils.removeSelectedShift(shifts,selectedShift,  i)">
                                 <mat-icon color="warn">delete</mat-icon>
                             </button>
@@ -265,25 +265,37 @@
                 <thead>
                     <tr>
                         <th scope="col">{{'booking_date'| translate: translateKey}}</th>
-                        <th scope="col">{{'rent_amount'| translate: translateKey}}</th>
+
                       <th scope="col">{{'event_date_from'| translate: translateKey}}</th>
                       <th scope="col">{{'event_date_to'| translate: translateKey}}</th>
+                      <th scope="col">{{'rent_amount'| translate: translateKey}}(A)</th>
 <!--                        <th scope="col">{{'deposit_amount'| translate: translateKey}}</th>-->
-                        <th scope="col">{{'GST'| translate: translateKey}}</th>
-                    </tr>
+                        <!-- <th scope="col">{{'GST'| translate: translateKey}}</th> -->
+                        <th scope="col">GST B=(A*GST)</th>
+                        <th scope="col">Total payable Amount (A+B)</th>
+                        </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td scope="col">{{bookingUtils.returnProperDate(paymentObject.BOOKING_DATE)}}</td>
-                        <td scope="col">{{paymentObject.RENT_FEES}}</td>
+
                       <td scope="col">{{paymentObject.EVENT_DATE_FROM}}</td>
                       <td scope="col">{{paymentObject.EVENT_DATE_TO}}</td>
+                      <td scope="col">{{paymentObject.RENT_FEES}}</td>
 <!--                        <td scope="col">{{paymentObject.DEPOSIT_FEES?paymentObject.DEPOSIT_FEES : 0.00}}</td>-->
                         <td scope="col">{{paymentObject.GST}}</td>
+                        <td scope="col">{{paymentObject.TOTAL_AMOUNT}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        <div class="row p-3"  >
+          <div class="col-md-8 ">
+            <div class="d-flex justify-content-between">
+             <h5  class="detailslist"> Program Purpose :- <span class="detailsNamelist">{{ purpose}} </span>  </h5>
+            </div>
+            </div>
+          </div>
         <div class="fotButtonBar">
             <div class="col-sm-12 col-md-12 text-right">
                 <button type="button" mat-raised-button color="primary" data-dismiss="modal" (click)="showChildrenTheaterApplicationForm = true; this.showPaymentReciept = false;getUserProfile()">
@@ -370,7 +382,7 @@
                             <control-messages [control]="childrenTheaterApplicationForm.get('applicantMobile')"></control-messages>
                         </mat-form-field>
 
-                        <div class="col-md-4">
+                        <!-- <div class="col-md-4">
                             <mat-form-field>
                                 <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile" placeholder="{{'confirm_mobile' | translate: translateKey}}"
                                     required>
@@ -379,14 +391,14 @@
                             <mat-error *ngIf="!bookingUtils.matcher(childrenTheaterApplicationForm, 'applicantMobile', 'confirmMobile') && childrenTheaterApplicationForm.get('applicantMobile').touched && childrenTheaterApplicationForm.get('confirmMobile').touched">
                                 {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
                             </mat-error>
-                        </div>
+                        </div> -->
 
                         <mat-form-field class="col-md-4">
                             <input matInput type="email" appPreventSpace maxlength="50" formControlName="emailId" placeholder="{{'applicant_email' | translate: translateKey}}" required>
                             <control-messages [control]="childrenTheaterApplicationForm.get('emailId')"></control-messages>
                         </mat-form-field>
 
-                        <div class="col-md-4">
+                        <!-- <div class="col-md-4">
                             <mat-form-field>
                                 <input matInput type="email" appPreventSpace maxlength="50" formControlName="confirmEmailId" placeholder="{{'confirm_email' | translate: translateKey}}"
                                     required>
@@ -395,7 +407,7 @@
                             <mat-error *ngIf="!bookingUtils.matcher(childrenTheaterApplicationForm, 'emailId', 'confirmEmailId') && childrenTheaterApplicationForm.get('emailId').touched && childrenTheaterApplicationForm.get('confirmEmailId').touched">
                                 {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
                             </mat-error>
-                        </div>
+                        </div> -->
 
                       <div class="col-md-4">
                         <mat-form-field>
