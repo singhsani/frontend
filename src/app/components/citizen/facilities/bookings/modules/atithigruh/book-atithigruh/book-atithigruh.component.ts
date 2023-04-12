@@ -584,7 +584,7 @@ export class BookAtithigruhComponent implements OnInit {
 	}
 
 	setDefaultValue(){
-		this.atithigruhForm.get('applicantName').setValue(this.profileObj.firstName);
+		this.atithigruhForm.get('applicantName').setValue(this.profileObj.firstName + ' ' + this.profileObj.lastName);
 		this.atithigruhForm.get('applicantEmailID').setValue(this.profileObj.email);
 		this.atithigruhForm.get('applicantMobileNo').setValue(this.profileObj.cellNo);
 	}
