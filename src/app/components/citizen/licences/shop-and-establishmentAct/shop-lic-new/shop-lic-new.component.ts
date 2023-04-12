@@ -298,7 +298,7 @@ export class ShopLicNewComponent implements OnInit {
 				}
 
 			
-				this.requiredDocumentList();
+				// this.requiredDocumentList();
 
 				
 			} catch (error) {
@@ -1009,9 +1009,10 @@ export class ShopLicNewComponent implements OnInit {
 	* @event is value of Type of Organization dropdown
 	*/
 	onChangeTypeOfOrganization(event) {
+		debugger
 		this.shopLicNewForm.get('organizationType').get('code').setValue(event);
 	 	this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value,event);
-		 this.addWomenDocument();
+		//  this.addWomenDocument();
 		try {
 			// this.updateServiceUploadDocument(event);
 			this.isPatners = false;
@@ -1418,7 +1419,7 @@ export class ShopLicNewComponent implements OnInit {
 	 * @param ownershipType 
 	 */
 	filterDocumentList(ownershipType, organizationCode) {
-		
+		debugger
 
 		const isPartnerShipSelected =  (organizationCode == 'PARTNERSHIP') ? true : false;
 
