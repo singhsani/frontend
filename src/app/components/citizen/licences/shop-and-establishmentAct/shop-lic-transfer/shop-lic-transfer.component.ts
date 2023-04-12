@@ -397,7 +397,8 @@ export class ShopLicTransferComponent implements OnInit {
 					this.getWardZone(res.waterDrainageWardId, 3);
 				}
 
-				if(res.otherDescription != null){
+				if(res.otherDescription != null && (res.businessSubCategory.code == BookingConstants.ANY_METAL_AND_STEEL_SHOPS || res.businessSubCategory.code == BookingConstants.ANY_GARAGE_REPAIRING_Shopes
+					|| res.businessSubCategory.code == BookingConstants.ANY_OFFICES)){
 					this.isSubCategory = true;
 					this.shopLicTransferForm.get('otherDescription').setValue(res.otherDescription);
 				}
