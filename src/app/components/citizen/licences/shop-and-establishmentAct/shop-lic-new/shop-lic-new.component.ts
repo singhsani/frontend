@@ -17,6 +17,7 @@ import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { ProfessionalTaxService } from 'src/app/core/services/citizen/data-services/professional-tax.service';
 import { ItemsList } from '@ng-select/ng-select/ng-select/items-list';
 import { BookingConstants } from '../../../facilities/bookings/config/booking-config';
+import { C } from '@angular/core/src/render3';
 
 
 @Component({
@@ -299,7 +300,7 @@ export class ShopLicNewComponent implements OnInit {
 				}
 
 			
-				this.requiredDocumentList();
+				// this.requiredDocumentList();
 
 				
 			} catch (error) {
@@ -846,8 +847,8 @@ export class ShopLicNewComponent implements OnInit {
 	editRecord(row: any) {
 		if(this.edit){
 			console.log(this.totalNoOfWoman)
-			this.deleteWomenDocument();
-			this.addWomenDocument();
+			// this.deleteWomenDocument();
+			// this.addWomenDocument();
 		}	
 		this.edit = true;
 		row.isEditMode = true;
@@ -888,7 +889,6 @@ export class ShopLicNewComponent implements OnInit {
 	* @param row: table row id
 	*/
 	saveRecord(row: any) {
-		
 		if (row.valid) {
 				
 			row.isEditMode = false;
@@ -1013,7 +1013,7 @@ export class ShopLicNewComponent implements OnInit {
 	onChangeTypeOfOrganization(event) {
 		this.shopLicNewForm.get('organizationType').get('code').setValue(event);
 	 	this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value,event);
-		 this.addWomenDocument();
+		//  this.addWomenDocument();
 		try {
 			// this.updateServiceUploadDocument(event);
 			// when organization Type change Partner List clear  
@@ -1418,7 +1418,7 @@ export class ShopLicNewComponent implements OnInit {
 	ownershipChange(ownershipType) {
 		this.shopLicNewForm.get('ownershipType').setValue(ownershipType);
 		this.updateServiceUploadDocument(ownershipType,this.shopLicNewForm.get('organizationType').get('code').value)
-		this.addWomenDocument();
+		// this.addWomenDocument();
 	}
 
 	/**
@@ -1426,10 +1426,13 @@ export class ShopLicNewComponent implements OnInit {
 	 * @param ownershipType 
 	 */
 	filterDocumentList(ownershipType, organizationCode) {
-		
-
+		let count = 0
 		const isPartnerShipSelected =  (organizationCode == 'PARTNERSHIP') ? true : false;
-
+		for (let file of this.displayDocs) {
+			if(file.documentIdentifier == 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J'){
+					count++;
+			}
+		}		
 
 		if (this.isIntimation) {
 			return isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument();
@@ -1446,14 +1449,14 @@ export class ShopLicNewComponent implements OnInit {
 						mandatory: true
 					}
 				];
-
-				if(this.totalNoOfWomanForDocu > 0){
-					docArray.push({
-						
-								documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
-								mandatory: true
-					})
-				}
+			
+					if(this.totalNoOfWomanForDocu > 0){
+						docArray.push({
+							
+									documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
+									mandatory: true
+						})
+						}
 
 			return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument());
 	
@@ -1477,14 +1480,14 @@ export class ShopLicNewComponent implements OnInit {
 					}
 				];
 
-
-				if(this.totalNoOfWomanForDocu > 0){
-					docArray.push({
-						
-								documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
-								mandatory: true
-					})
-				}
+				
+					if(this.totalNoOfWomanForDocu > 0){
+						docArray.push({
+							
+									documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
+									mandatory: true
+						})
+						}
 				return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument());
 			}else {
 				return [];
@@ -1521,8 +1524,7 @@ export class ShopLicNewComponent implements OnInit {
 					count++;
 			}
 		}
-		if(count == 0){
-			if(this.totalNoOfWoman > 0){
+		if(this.totalNoOfWoman > 0){
 				{
 					this.womanDocument = [
 						{
@@ -1532,8 +1534,7 @@ export class ShopLicNewComponent implements OnInit {
 
 					];				
 
-				}
-				this.returnFile(this.womanDocument);
+						this.returnFile(this.womanDocument);
 				
 				}
 			
@@ -1572,7 +1573,12 @@ export class ShopLicNewComponent implements OnInit {
 	}
 
 	commonUploadDocument(){
-		
+		let count = 0;
+		for (let file of this.displayDocs) {
+			if(file.documentIdentifier == 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J'){
+					count++;
+			}
+		}		
 		
 	 	const comonDocument = [
 			{
@@ -1626,14 +1632,15 @@ export class ShopLicNewComponent implements OnInit {
 				})
 			}
 
-		if(this.totalNoOfWomanForDocu > 0){
-				comonDocument.push({
-					
-							documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
-							mandatory: true
-				})
-			}
 		
+			if(this.totalNoOfWomanForDocu > 0 && count == 0){
+					comonDocument.push({
+						
+								documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
+								mandatory: true
+					})
+				}
+			
 		
 		return comonDocument;
 	}

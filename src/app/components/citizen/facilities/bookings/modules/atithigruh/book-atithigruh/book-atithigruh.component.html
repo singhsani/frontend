@@ -125,12 +125,12 @@
                 <table mat-table [dataSource]="feeDetails" class="mat-elevation-z8">
 
                     <ng-container matColumnDef="sno">
-                        <th mat-header-cell *matHeaderCellDef> Sr.No. </th>
+                        <th mat-header-cell *matHeaderCellDef class="containerWidth"> Sr.No. </th>
                          <td mat-cell *matCellDef="let element"> {{element.sno}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="atithigruh">
-                        <th mat-header-cell *matHeaderCellDef> Atithigruh </th>
+                        <th mat-header-cell *matHeaderCellDef class="containerWidth"> Atithigruh </th>
                         <td mat-cell *matCellDef="let element"> {{element.atithigruh}} </td>
                    </ng-container>
 
@@ -434,8 +434,8 @@
                         <th scope="col">{{'booking_date'| translate: stadiumTranslateKey}}</th>
                         <th scope="col">Program from date</th>
                         <th scope="col">Program to date</th>
-                        <th scope="col">Atithigruh Name :- <span class="detailsNamelist">{{atithigruhName}} </span></th>
-                        <th scope="col">Purpose :- <span class="detailsNamelist">{{purpose}} </span> </th>
+                        <th scope="col">Atithigruh Name</th>
+                        <th scope="col">Purpose </th>
                         <th scope="col" *ngIf='paymentObject.bookingType=="Advance booking"'>{{'form_charges'| translate: stadiumTranslateKey}}</th>
                     </tr>
                 </thead>
@@ -444,7 +444,9 @@
                         <td scope="col">{{bookingUtils.returnProperDate(paymentObject.bookingDate)}}</td>
                         <td scope="col">{{startDate | date:'dd-MM-yyy'}} </td>
                         <td scope="col">{{endDate | date:'dd-MM-yyy'}}</td>
-                   
+                         <td scope="col">{{atithigruhName}}</td>
+                         <td scope="col">{{purpose}}</td>
+                         <td scope="col" *ngIf='paymentObject.bookingType=="Advance booking"'>{{paymentObject.FORM_CHARGES}}</td>
                       
                     </tr>
                 </tbody>
@@ -464,10 +466,10 @@
                     <tr>
                         <td scope="col">{{paymentObject.RENT_FEES-paymentObject.RENT_CONCESSION}}</td>
                         <td scope="col">{{paymentObject.ADMINISTRATION_CHARGES}}</td>
-                        <td scope="col">{{gstAmount}}</td> 
+                        <td scope="col">{{paymentObject.GST}}</td>
                         <td scope="col">{{totalAmount}}</td> 
                         <td scope="col">{{paymentObject.DEPOSIT_FEES-paymentObject.DEPOSIT_CONCESSION}}</td>
-                        <td scope="col">{{totalPayble}}</td>                                       
+                        <td scope="col">{{totalPayble}}</td>      
                     </tr>
                 </tbody>
             </table>

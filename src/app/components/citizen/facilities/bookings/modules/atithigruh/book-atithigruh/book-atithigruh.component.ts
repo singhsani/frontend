@@ -80,7 +80,6 @@ export class BookAtithigruhComponent implements OnInit {
 	purpose :string;
 	startDate : string;
 	endDate : string;
-	gstAmount : number =0;
 	totalAmount : number =0;
 	totalPayble : number =0;
 
@@ -396,6 +395,8 @@ export class BookAtithigruhComponent implements OnInit {
 						this.paymentObject = payResp.data;
 						this.showSearchForm = false;
 						this.showPaymentReciept = true;
+						this.totalAmount = (parseInt(this.paymentObject.DEPOSIT_CONCESSION) + parseInt(this.paymentObject.ADMINISTRATION_CHARGES)) + parseInt(this.paymentObject.GST);
+                        this.totalPayble = this.totalAmount + (parseInt(this.paymentObject.DEPOSIT_FEES)-parseInt(this.paymentObject.DEPOSIT_CONCESSION))
 					}, (err) => {
 						if (err && err.error)
 							this.toaster.error(err.error[0].message);
@@ -452,8 +453,7 @@ export class BookAtithigruhComponent implements OnInit {
 						this.paymentObject = payResp.data;
 						this.showPaymentReciept = true;
 						this.confirmRef.hide();
-                        this.gstAmount = (parseInt(this.paymentObject.DEPOSIT_CONCESSION) + parseInt(this.paymentObject.ADMINISTRATION_CHARGES)) * parseInt(this.paymentObject.GST)
-						this.totalAmount = (parseInt(this.paymentObject.DEPOSIT_CONCESSION) + parseInt(this.paymentObject.ADMINISTRATION_CHARGES)) + this.gstAmount;
+						this.totalAmount = (parseInt(this.paymentObject.DEPOSIT_CONCESSION) + parseInt(this.paymentObject.ADMINISTRATION_CHARGES)) + parseInt(this.paymentObject.GST);
                         this.totalPayble = this.totalAmount + (parseInt(this.paymentObject.DEPOSIT_FEES)-parseInt(this.paymentObject.DEPOSIT_CONCESSION))
 
 					}, (err) => {
@@ -584,7 +584,7 @@ export class BookAtithigruhComponent implements OnInit {
 	}
 
 	setDefaultValue(){
-		this.atithigruhForm.get('applicantName').setValue(this.profileObj.firstName);
+		this.atithigruhForm.get('applicantName').setValue(this.profileObj.firstName + ' ' + this.profileObj.lastName);
 		this.atithigruhForm.get('applicantEmailID').setValue(this.profileObj.email);
 		this.atithigruhForm.get('applicantMobileNo').setValue(this.profileObj.cellNo);
 	}
