@@ -372,7 +372,7 @@ export class MyBookingComponent implements OnInit {
 				).subscribe(data => {
 					if(data.length == 0){
 
-						this.showReport=true;
+						this.showReport=true; 
 					  }else{
 			
 						this.showReport=false;
