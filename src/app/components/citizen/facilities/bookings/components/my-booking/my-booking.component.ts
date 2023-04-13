@@ -38,6 +38,7 @@ export class MyBookingComponent implements OnInit {
 	element: any;
 	isBookingNoSlotNo = false;
 	rejectedMessage: any;
+	showReport:boolean=false;
 
 	/**
 	 * Common for all bookings
@@ -369,6 +370,13 @@ export class MyBookingComponent implements OnInit {
 						return observableOf([]);
 					})
 				).subscribe(data => {
+					if(data.length == 0){
+
+						this.showReport=true;
+					  }else{
+			
+						this.showReport=false;
+					  }
 					this.isLoadingResults = false;
 					this.bookingList.data = data;
 				});

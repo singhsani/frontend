@@ -30,7 +30,7 @@
 </mat-card>
 
 <!-- If Bookings Not Found -->
-<div class="noApplication" *ngIf="resultsLength==0 && !isLoadingResults">
+<div class="noApplication" *ngIf="resultsLength==0 && !isLoadingResults &&showReport">
   <img src="assets/icons/no-application-found.png" alt="">
   <br> {{'no_bookings_found' | translate:translateKey}}
   <!--<span class="noActi">{{'no_activity' | translate:translateKey}}</span>
