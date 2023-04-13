@@ -120,10 +120,9 @@ export class BookAtithigruhComponent implements OnInit {
 
 	ngOnInit() {
 		this.head_lines = `Online AtithiGruh Booking facility is the convenient and
-		easy way to book the town hall of Vadodara Municpal Corporation. You can
-		view the availiblity details of the town hall and select select one of multiple shifts for
-		booking. The booking is confirmed on the successfull online payment of the rent amount
-		for selected shift(s).`;
+		easy way to book the Atithigruh of Vadodara Municpal Corporation. You can
+		view the availiblity details of the Atithigruh and select booking date. 
+		The booking is confirmed on the successfull online / offline payment of the rent amount for selected dates.`;
 
 		this.createBookingSearchForm();
 		this.createAtithigruhForm();
