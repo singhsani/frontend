@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { HttpService } from 'src/app/shared/services/http.service';
 
 @Injectable({
@@ -73,5 +74,30 @@ export class EngineeringService {
   getLookups() {
     return this.http.get('api/contractor/lookups');
   }
+  /**
+    * Method is used to return array 
+    */
 
+  createArray(control: FormGroup) {
+    const formGroup = new FormGroup({}, control.validator, control.asyncValidator);
+    this.createCloneAbstractControl(control, formGroup);
+    return formGroup;
+  }
+
+  createCloneAbstractControl(copyFrom: FormGroup, copyTo: FormGroup) {
+    Object.keys(copyFrom.controls).forEach(key => {
+      const control = copyFrom.get(key);
+      if (control instanceof FormControl) {
+        copyTo.addControl(key, new FormControl(control.value, control.validator, control.asyncValidator) as any)
+      } else if (control instanceof FormGroup) {
+        const formGroup = new FormGroup({}, control.validator, control.asyncValidator);
+        this.createCloneAbstractControl(control, formGroup);
+        copyTo.addControl(key, formGroup);
+      } else if (control instanceof FormArray) {
+        const formArray = new FormArray([], control.validator, control.asyncValidator);
+        copyTo.addControl(key, new FormArray(control.value, control.validator, control.asyncValidator) as any)
+        copyTo.addControl(key, formArray);
+      }
+    });
+  }
 }
