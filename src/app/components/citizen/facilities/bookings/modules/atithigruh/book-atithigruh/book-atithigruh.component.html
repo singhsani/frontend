@@ -125,12 +125,12 @@
                 <table mat-table [dataSource]="feeDetails" class="mat-elevation-z8">
 
                     <ng-container matColumnDef="sno">
-                        <th mat-header-cell *matHeaderCellDef> Sr.No. </th>
+                        <th mat-header-cell *matHeaderCellDef class="containerWidth"> Sr.No. </th>
                          <td mat-cell *matCellDef="let element"> {{element.sno}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="atithigruh">
-                        <th mat-header-cell *matHeaderCellDef> Atithigruh </th>
+                        <th mat-header-cell *matHeaderCellDef class="containerWidth"> Atithigruh </th>
                         <td mat-cell *matCellDef="let element"> {{element.atithigruh}} </td>
                    </ng-container>
 
