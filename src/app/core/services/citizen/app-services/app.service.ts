@@ -66,6 +66,10 @@ export class AppService {
 
 		return this.http.post('public/user/forgetPassword', forgotPwdData, this.getCommonHeaders());
 	}
+  resendOTP(forgotPwdData) {
+
+		return this.http.post('public/user/resendOTP', forgotPwdData, this.getCommonHeaders());
+	}
 
 	/**
 	 * This method is used to perform user reset password operation.

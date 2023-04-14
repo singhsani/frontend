@@ -24,16 +24,16 @@ export class ForgotPasswordComponent implements OnInit {
 	issingupbtn : boolean = false;
 
 	/**
-	 * 
+	 *
 	 * @param appService - Declare App Service property.
 	 * @param fb - Declare formbuilder property.
 	 * @param router - Declare Routing Property.
 	 */
-	constructor( 
+	constructor(
 		private fb: FormBuilder,
 		private toaster: ToastrService,
 		private route: ActivatedRoute,
-		private router: Router, 
+		private router: Router,
 		private commonService: CommonService,
 		private appService: AppService
 	) {
@@ -54,7 +54,7 @@ export class ForgotPasswordComponent implements OnInit {
 	*/
 	onForgotPassword(formVals: FormGroup) {
 
-        
+
         if (this.forgotPassForm.valid) {
             this.loading = true;
             this.issingupbtn = true;
@@ -70,16 +70,18 @@ export class ForgotPasswordComponent implements OnInit {
                 /**
                  * Redirect to reset password
                  */
-                this.commonService.successAlert("Success", "For OTP and reset link update you can check your registered mail ID and Mobile number. Thank you.", "success");
-                let url = this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHRESETPASS')], { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp,email : this.forgotPassForm.get('email').value } });
+                this.commonService.successAlert("Success", "For OTP and Password Reset Link, please check your registered Email ID and Mobile Number. Thank you", "success");
+                let url = this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHRESETPASS')],
+                // { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp,email : this.forgotPassForm.get('email').value } }
+                { queryParams: { uniqueId: res.data.uniqueId} });
 
-            }, err => {
+          }, err => {
                 this.loading = false;
                 this.issingupbtn = false;
                 this.toaster.error(err.error[0].code);
             })
         } else {
             this.isValidFlag = true;
-        }; 
+        };
     }
 }
