@@ -268,6 +268,11 @@ export class BookingService {
     return this.http.get(this.requestURL);
   }
 
+  countBatch(data) {
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/BatchCount?poolName=${data.poolName}&category=${data.category}&batchfor=${data.batchfor}&batchTimming=${data.batchTimming}`;
+    return this.http.get(this.requestURL);
+  }
+
   filterBatchDuration(categotyCode: any,poolName:any) {
     this.requestURL = `api/${this.moduleName}/${this.resourceType}/filter/batchDuration/${categotyCode}/${poolName}`;
     return this.http.get(this.requestURL);

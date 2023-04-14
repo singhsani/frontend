@@ -256,6 +256,25 @@ export class SwimmingPoolComponent implements OnInit {
         }) ;
       })
   }
+
+  filterBatch(event : any){
+    let obj = {
+      poolName : this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value,
+      category: this.swimmimgPoolBookingForm.get('category').get('code').value,
+      batchfor : this.swimmimgPoolBookingForm.get('batchFor').get('code').value,
+      batchTimming : event
+   }
+    this.bookingService.countBatch(obj).subscribe(rep => {
+     // this.BATCH_NAME = rep.get('name').value;
+    },
+    err => {
+      this.swimmimgPoolBookingForm.get('batchName').get('code').reset();
+      this.commonService.openAlert('warning',err.error[0].message,'warning');
+    });
+
+    
+  }
+
   
 
   /**
