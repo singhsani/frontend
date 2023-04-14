@@ -394,7 +394,7 @@ export class BookAtithigruhComponent implements OnInit {
 						this.paymentObject = payResp.data;
 						this.showSearchForm = false;
 						this.showPaymentReciept = true;
-						this.totalAmount = (parseInt(this.paymentObject.DEPOSIT_CONCESSION) + parseInt(this.paymentObject.ADMINISTRATION_CHARGES)) + parseInt(this.paymentObject.GST);
+						this.totalAmount = (parseInt(this.paymentObject.RENT)-parseInt(this.paymentObject.RENT_CONCESSION) + parseInt(this.paymentObject.ADMINISTRATION_CHARGES)) + parseInt(this.paymentObject.GST);
                         this.totalPayble = this.totalAmount + (parseInt(this.paymentObject.DEPOSIT_FEES)-parseInt(this.paymentObject.DEPOSIT_CONCESSION))
 					}, (err) => {
 						if (err && err.error)
@@ -452,7 +452,7 @@ export class BookAtithigruhComponent implements OnInit {
 						this.paymentObject = payResp.data;
 						this.showPaymentReciept = true;
 						this.confirmRef.hide();
-						this.totalAmount = (parseInt(this.paymentObject.DEPOSIT_CONCESSION) + parseInt(this.paymentObject.ADMINISTRATION_CHARGES)) + parseInt(this.paymentObject.GST);
+						this.totalAmount = (parseInt(this.paymentObject.RENT)-parseInt(this.paymentObject.RENT_CONCESSION) + parseInt(this.paymentObject.ADMINISTRATION_CHARGES)) + parseInt(this.paymentObject.GST);
                         this.totalPayble = this.totalAmount + (parseInt(this.paymentObject.DEPOSIT_FEES)-parseInt(this.paymentObject.DEPOSIT_CONCESSION))
 
 					}, (err) => {
