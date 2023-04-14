@@ -214,7 +214,7 @@
 
 						<div class="col-md-4 ngSelect" formGroupName="batchName">
 							<ng-select placeholder="{{'batch_name' | translate:translateKey}} *" formControlName="code"
-								required>
+								 (change)="filterBatch($event)" required>
 								<ng-option *ngFor="let batchName of BATCH_NAME" [value]="batchName.code">
 									{{batchName.name}}
 								</ng-option>
