@@ -258,7 +258,6 @@ export class SwimmingPoolComponent implements OnInit {
   }
 
   filterBatch(event : any){
-    debugger
     let obj = {
       poolName : this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value,
       category: this.swimmimgPoolBookingForm.get('category').get('code').value,
