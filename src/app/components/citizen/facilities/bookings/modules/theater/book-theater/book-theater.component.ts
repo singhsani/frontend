@@ -464,4 +464,21 @@ export class BookTheaterComponent implements OnInit {
   termsConditionClick(event) {
     this.theaterBookingForm.controls['termsCondition'].setValue(event.checked);
   }
+
+  /**
+	 * Get user data
+	 */
+	getUserProfile() {
+		this.bookingService.getUserProfile().subscribe(resp => {
+ 
+			this.theaterBookingForm.get('organizationEmail').setValue(resp.data.email);
+			this.theaterBookingForm.get('organizationNumber').setValue(resp.data.cellNo);
+            this.theaterBookingForm.get('confirmEmailID').setValue(resp.data.email);
+			this.theaterBookingForm.get('confirmMobile').setValue(resp.data.cellNo);
+		
+		},
+			err => {
+				this.toster.error("Server Error");
+			});
+	}
 }
