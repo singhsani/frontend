@@ -230,16 +230,14 @@ export class AnimalAdoptionComponent implements OnInit {
         animalCount: this.animalCount,
         adoptionAnimalCount:event.target.value
       }
-      this.ticketingService.animalAdoptionCount(data).subscribe(res =>{
-        this.animalAdoptionForm.get('totalAdoptionCost').setValue(this.selectedAnimalAnnualBoardingExpenses * this.animalName.totalExpenses);
-      }, err => {
-        if (err.status == 400) {
-          this.commonService.openAlert('Warning', err.error[0].message , 'warning', '', cd =>{
+      let adoptionYear=this.animalAdoptionForm.get('adoptionYears').value;
+      if(this.animalCount>=event.target.value){
+        this.animalAdoptionForm.get('totalAdoptionCost').setValue(this.selectedAnimalAnnualBoardingExpenses * this.animalName.totalExpenses * adoptionYear);
+      } else {
+          this.commonService.openAlert('Warning','Please Enter Valid Count' , 'warning', '',)
             this.selectedAnimalAnnualBoardingExpenses = undefined;
-          })
-  
-        }
-      });
+
+      }
     }
   }
   createOTDetailArray(data?: any) {
