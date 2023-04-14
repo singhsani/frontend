@@ -505,7 +505,7 @@
 <div [hidden]="isBookingFormHidden">
     <mat-card class="formClass cardBorder">
         <!-- <button (click)="patchValue2()" >Patch</button> -->
-        <form [formGroup]="atithigruhForm" (ngSubmit)="submit()">
+        <!-- <form [formGroup]="atithigruhForm" (ngSubmit)="submit()"> -->
 
             <mat-tab-group mat-stretch-tabs dynamicHeight="true" [(selectedIndex)]="tabIndex" class="stepperNav">
 
@@ -513,6 +513,7 @@
                     <ng-template mat-tab-label>
                         <div>{{'applicant_details' | translate:stadiumTranslateKey}}</div>
                     </ng-template>
+                    <form [formGroup]="applicationDetails">
                     <h2>
                         {{'applicant_details' | translate:stadiumTranslateKey}}
                     </h2>
@@ -522,13 +523,13 @@
                             <input matInput maxlength="50" appValidationFields
                                 [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="applicantName"
                                 placeholder="{{'applicant_name' | translate: stadiumTranslateKey}}">
-                            <control-messages [control]="atithigruhForm.get('applicantName')"></control-messages>
+                            <control-messages [control]="applicationDetails.get('applicantName')"></control-messages>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
                             <input matInput OnlyNumber  minlength="10" maxlength="10" formControlName="applicantMobileNo"
                                 placeholder="{{'applicant_mobile' | translate: stadiumTranslateKey}}">
-                            <control-messages [control]="atithigruhForm.get('applicantMobileNo')"></control-messages>
+                            <control-messages [control]="applicationDetails.get('applicantMobileNo')"></control-messages>
                         </mat-form-field>
 
                         <!-- <div class="col-md-4">
@@ -546,7 +547,7 @@
                         <mat-form-field class="col-md-4">
                             <input matInput type="email" disabled formControlName="applicantEmailID"
                                 placeholder="{{'applicant_email' | translate: stadiumTranslateKey}}">
-                            <control-messages [control]="atithigruhForm.get('applicantEmailID')"></control-messages>
+                            <control-messages [control]="applicationDetails.get('applicantEmailID')"></control-messages>
                         </mat-form-field>
 
                         <!-- <div class="col-md-6">
@@ -563,12 +564,12 @@
 
                     </div>
 
-                    <div class="col-md-4" *ngIf = "atithigruhForm.contains('samuhLaganCoupleCount')">
+                    <div class="col-md-4" *ngIf = "applicationDetails.contains('samuhLaganCoupleCount')">
                         <mat-form-field>
                           <input matInput OnlyNumber formControlName="samuhLaganCoupleCount" maxlength="2"
 
                             placeholder="{{'samuh_lagan_couple_count' | translate: translateKey}}" required>
-                          <control-messages [control]="atithigruhForm.get('samuhLaganCoupleCount')"></control-messages>
+                          <control-messages [control]="applicationDetails.get('samuhLaganCoupleCount')"></control-messages>
                         </mat-form-field>
                       </div>
 
@@ -577,13 +578,13 @@
                             {{'applicant_address' | translate:stadiumTranslateKey}}
                         </h2>
                         <app-address #address [requiredFeilds]="true"
-                            [addressFormGroup]="atithigruhForm.get('applicantAddress')"></app-address>
+                            [addressFormGroup]="applicationDetails.get('applicantAddress')"></app-address>
 
 
                         <mat-form-field class="col-md-4">
                             <input matInput maxlength="15" formControlName="gstNo"
                             placeholder="{{'GSTIN_Number' | translate: translateKey}}">
-                            <control-messages [control]="atithigruhForm.get('gstNo')"></control-messages>
+                            <control-messages [control]="applicationDetails.get('gstNo')"></control-messages>
                         </mat-form-field>
 
                     </div>
@@ -601,12 +602,13 @@
                   <div class="row mt-4 fotButtonBar">
                     <div class="col-sm-12 col-md-12 text-right">
                       <button mat-raised-button type="button" color="primary"
-                              (click)="tabIndex= tabIndex +1;">
+                              (click)="checkValidation(applicationDetails,false)">
                         {{'next'| translate:stadiumTranslateKey}}
                         <mat-icon>navigate_next</mat-icon>
                       </button>
                     </div>
                   </div>
+                </form>
                 </mat-tab>
 
                 <mat-tab>
@@ -618,7 +620,9 @@
                         {{'bank_details' | translate:stadiumTranslateKey}}
                     </h2>
 
-                    <bank-details [form]="atithigruhForm"></bank-details>
+                    <form [formGroup]="bookingDetails">
+
+                    <bank-details [form]="bookingDetails"></bank-details>
 
                     <div class="row">
                         <h2>
@@ -640,15 +644,16 @@
                                 <mat-icon>navigate_before</mat-icon>
                                 {{'back' | translate:stadiumTranslateKey}}
                             </button>
-                            <button mat-raised-button color="primary" type="submit">
+                            <button mat-raised-button color="primary" type="submit" (click)="checkValidation(bookingDetails,true)">
                                 <mat-icon>check_circle_outline</mat-icon>
                                 {{bookingForRegular ? ' Confirm & Pay' : 'Submit Application' | translate: translateKey}}
                             </button>
                         </div>
                     </div>
+                    </form>
                 </mat-tab>
             </mat-tab-group>
-        </form>
+        <!-- </form> -->
     </mat-card>
 </div>
 <!-- Booking slot end-->
