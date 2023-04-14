@@ -203,6 +203,11 @@ export class ValidationFieldsDirective {
           event.preventDefault();
           break;
 
+        case "appAlphanumericNumberWithSpace":
+          this.el.nativeElement.value = this.el.nativeElement.value.replace(/[^ A-Za-z0-9]/g, '')
+          event.preventDefault();
+          break;
+
           case "appAlphanumericNumberWithDashAndComa":
             this.el.nativeElement.value = this.el.nativeElement.value.replace(/[^_.()0-9a-zA-Z\s,-]+$/g, '')
             event.preventDefault();

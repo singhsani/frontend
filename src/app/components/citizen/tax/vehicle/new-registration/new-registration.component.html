@@ -67,7 +67,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" type="text" maxlength="20" formControlName="vehicleNo"
 							#vehicleNo [value]="vehicleNo.value.toUpperCase()"
-							placeholder="{{'vehicle_no' | translate: translateKey}}">
+							placeholder="{{'Dealer Ref. / Temp. Reg. Number' | translate: translateKey}}">
 						<control-messages [control]="vehicleRegistrationForm.get('vehicleNo')"></control-messages>
 					</mat-form-field>
 
@@ -89,7 +89,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" #makeModel [value]="makeModel.value.toUpperCase()"
-							appValidationFields [validationFieldsType]="'appAlphanumericNumber'" type="text"
+							appValidationFields [validationFieldsType]="'appAlphanumericNumberWithSpace'" type="text"
 							maxlength="100" formControlName="makeModel"
 							placeholder="{{'make_model' | translate: translateKey}}" required>
 						<control-messages [control]="vehicleRegistrationForm.get('makeModel')"></control-messages>
