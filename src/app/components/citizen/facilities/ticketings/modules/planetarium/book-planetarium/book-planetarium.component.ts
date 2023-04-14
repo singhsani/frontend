@@ -56,10 +56,11 @@ export class BookPlanetariumComponent implements OnInit {
   PURPOSE: Array<any> = [];
   resourceName: Array<any> = [];
   DateFormate: string = 'Hint: DD/MM/YYYY';
-  showFotButtonBar = false;
+  showFotButtonBar = true;
   guideLineFlag: boolean = true;
     showPlanetariumSearchForm: boolean = false;
     head_lines: string;
+    checkProceed: boolean = false;
 
   /**
    * @param fb - Declare FormBuilder property.
@@ -483,7 +484,6 @@ export class BookPlanetariumComponent implements OnInit {
         name: null,
         code: null
       }),
-      termsCondition: [null, [Validators.required]],
       agree: null,
       attachment: null
     })
@@ -638,7 +638,7 @@ export class BookPlanetariumComponent implements OnInit {
       this.commonService.openAlert("Field Error", this.ticketingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
       this.markFormGroupTouched(this.ticketBookingForm);
     }
-    else if (this.ticketBookingForm.get('termsCondition').value) {
+    else if (this.showFotButtonBar) {
       if (!this.isFileUploaded) {
         this.commonService.openAlert(this.ticketingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
         return;
@@ -701,7 +701,7 @@ export class BookPlanetariumComponent implements OnInit {
       this.commonService.openAlert("Field Error", this.ticketingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
       this.markFormGroupTouched(this.ticketBookingForm);
     }
-    else if (!this.ticketBookingForm.get('termsCondition').value) {//for general show
+    else if (this.showFotButtonBar) {//for general show
       this.isLoadingResults = false;
       this.commonService.openAlert('Field Error', this.ticketingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning');
       this.markFormGroupTouched(this.ticketBookingForm);
@@ -752,11 +752,11 @@ export class BookPlanetariumComponent implements OnInit {
 
   }
 
-  checkingSelectOrNot(){
-    if(!this.ticketBookingForm.get('termsCondition').value){
-        this.showFotButtonBar = true;
+  checkingSelectOrNot(event){
+    if(event.checked){
+        this.showFotButtonBar = false;
     }else{
-      this.showFotButtonBar = false;
+      this.showFotButtonBar = true;
     }
   }
 

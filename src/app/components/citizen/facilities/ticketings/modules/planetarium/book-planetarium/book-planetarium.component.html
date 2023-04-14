@@ -49,11 +49,16 @@
           <li>Seating Capacity: For Special Show citizen can book 98 seats and for General Show one user can book 4 seats.</li>
         </ol>
     </h4>
+    <mat-checkbox class="d-block checkBoxLabel" labelPosition="after" required [checked]="checkProceed" (change)="checkingSelectOrNot($event)" >
+        {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}}
+        <a  class="stretchedLink" >
+        </a>
+    </mat-checkbox>
       </mat-card-content>
     </mat-card>
     <div class="fotButtonBar">
       <div class="col-sm-12 col-md-12 text-right">
-        <button mat-raised-button (click)="guideLineFlag = false;showPlanetariumSearchForm= true;" color="primary">
+        <button mat-raised-button [disabled]="showFotButtonBar" (click)="guideLineFlag = false;showPlanetariumSearchForm= true;" color="primary">
           <mat-icon>thumb_up_alt</mat-icon>
           {{'proceed'| translate: translateKey}}
         </button>
@@ -290,20 +295,13 @@
                 </div>
 
                 <div>
-                    <span>
-                        {{'terms_and_conditions' | translate:translateKey }}
-                    </span>
                     <div class="pl-2">
-                        <mat-checkbox class="d-block checkBoxLabel" labelPosition="after" required formControlName="termsCondition" (click)="checkingSelectOrNot()" >
-                            {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}}
-                            <a  class="stretchedLink" >
-                            </a>
-                        </mat-checkbox>
+                        
                     </div>
                 </div>
 
                 <div class="row fotButtonBar">
-                    <div class="col-sm-12 col-md-12 text-right" *ngIf="showFotButtonBar">
+                    <div class="col-sm-12 col-md-12 text-right">
 
                         <button  [disabled]="ticketBookingForm.invalid" mat-raised-button color="primary" type="submit" (click)="redirecToPayment()"
                             *ngIf="ticketBookingForm.get('showCategory').get('code').value != 'PLANETARIUM_SPECIAL_SHOW'">
