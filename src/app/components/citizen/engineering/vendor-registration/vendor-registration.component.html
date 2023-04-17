@@ -199,7 +199,7 @@
 
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" OnlyNumber required maxlength="11" minlength="10"
+            <input matInput type="text" OnlyNumber required maxlength="11" minlength="11"
               placeholder="{{'Telephone Number'}}" formControlName="officeContactNumber">
             <control-messages [control]="firmDetails.get('officeContactNumber')">
             </control-messages>
@@ -233,7 +233,7 @@
           </div>
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" OnlyNumber required maxlength="11" minlength="10"
+            <input matInput type="text" OnlyNumber required maxlength="11" minlength="11"
               placeholder="{{'Telephone Number'}}" formControlName="resContactNumber">
             <control-messages [control]="firmDetails.get('resContactNumber')">
             </control-messages>
@@ -255,12 +255,12 @@
 
           <div class="row">
             <h2><b>{{'Branch Office address'}}</b></h2>
-            <app-address #resAddr [requiredFeilds]="true"
+            <app-address #resAddr 
               [addressFormGroup]="firmDetails.get('branchAddress')">
             </app-address>
           </div>
           <mat-form-field class="col-md-3">
-            <input matInput type="text" required OnlyNumber maxlength="10" placeholder="{{'Mobile number'}}"
+            <input matInput type="text" required OnlyNumber maxlength="10" placeholder="{{'Mobile Number'}}"
               formControlName="branchMobileNumber">
             <control-messages [control]="firmDetails.get('branchMobileNumber')">
             </control-messages>
@@ -301,7 +301,7 @@
               </control-messages>
             </mat-form-field>
             <mat-form-field class="col-md-4">
-              <input matInput type="text" required OnlyNumber maxlength="10" placeholder="{{'Mobile number'}}"
+              <input matInput type="text" required OnlyNumber maxlength="10" placeholder="{{'Mobile Number'}}"
                 formControlName="headMobileNumber">
               <control-messages [control]="firmDetails.get('headMobileNumber')">
               </control-messages>
@@ -313,7 +313,7 @@
               </control-messages>
             </mat-form-field>
             <mat-form-field class="col-md-3">
-              <input matInput type="text" OnlyNumber maxlength="10" minlength="10" placeholder="{{'Telephone Number'}}"
+              <input matInput type="text" OnlyNumber maxlength="11" minlength="11" placeholder="{{'Telephone Number'}}"
                 formControlName="headAlterMobileNumber">
               <control-messages [control]="firmDetails.get('headAlterMobileNumber')">
               </control-messages>
@@ -1705,7 +1705,7 @@
           </div> -->
 
           <app-action-bar [uploadFiles]="uploadFilesArray" [form]="vendorRegistrationForm"
-            (tabIndex)="onFinalTabChange($event)" [paymentGateway]="paymentGateway"
+          (tabIndex)="onFormTabChange($event)"  [paymentGateway]="paymentGateway"
             (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next:6, back:3} ">
           </app-action-bar>
 
