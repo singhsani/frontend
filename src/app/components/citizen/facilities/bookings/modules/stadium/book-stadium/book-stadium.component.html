@@ -137,7 +137,7 @@
 
     </mat-card-content>
   </mat-card>
-  <div class="fotButtonBar">
+  <div class="fotButtonBarr">
     <div class="col-sm-12 col-md-12 text-right">
       <button mat-raised-button (click)="guideLineFlag = false;showStadiumSearchForm= true;" color="primary">
         <mat-icon>thumb_up_alt</mat-icon>
@@ -207,7 +207,7 @@
                     </mat-form-field>
 
                 </div>
-                <div class="row fotButtonBar">
+                <div class="row fotButtonBarr">
                     <div class="col-sm-12 col-md-12 text-right">
                         <button mat-raised-button color="primary" type="submit">
                             <mat-icon>search</mat-icon>
@@ -261,7 +261,7 @@
                 </mat-expansion-panel>
             </mat-accordion>
 
-            <div class="fotButtonBar">
+            <div class="fotButtonBarr">
                 <div class="col-sm-12 col-md-12 text-right">
                     <button mat-raised-button data-toggle="modal" (click)="shortlistShifts(confirmationModel)" data-target="#confirmShortlistModel"
                         type="button" [disabled]="selectedShift.length == 0" color="primary">
@@ -342,26 +342,41 @@
                         <th scope="col">{{'booking_date'| translate: translateKey}}</th>
                         <th scope="col">{{'event_date_from'| translate: translateKey}}</th>
                         <th scope="col">{{'event_date_to'| translate: translateKey}}</th>
-                        <th scope="col">{{'rent_amount'| translate: translateKey}}</th>
-                        <th scope="col">{{'administrative_charge'| translate: translateKey}}</th>
-                        <th scope="col">{{'deposit_amount'| translate: translateKey}}</th>
-                        <th scope="col">{{'GST'| translate: translateKey}}</th>
                     </tr>
-                </thead>
-                <tbody>
+                 </thead>
+                 <tbody>
                     <tr>
                         <td scope="col">{{bookingUtils.returnProperDate(paymentObject.BOOKING_DATE)}}</td>
                         <td scope="col">{{paymentObject.EVENT_DATE_FROM}}</td>
                         <td scope="col">{{paymentObject.EVENT_DATE_TO}}</td>
-                        <td scope="col">{{paymentObject.RENT_FEES}}</td>
-                        <td scope="col">{{paymentObject.ADMINISTRATIVE_CHARGE}}</td>
-                        <td scope="col">{{paymentObject.DEPOSIT_FEES}}</td>
-                        <td scope="col">{{paymentObject.GST}}</td>
+                    </tr>
+                 </tbody>
+            </table>
+            <table class="table1">
+                <thead class="thead">
+                    <tr >
+                        <th scope="col" class="th">{{'rent_amount'| translate: translateKey}}(A)</th>
+                        <th scope="col" class="th">{{'administrative_charge'| translate: translateKey}}(B)</th>
+                        <th scope="col" class="th">{{'GST'| translate: translateKey}}(C)=(A+B*GST/100)</th>
+                        <th scope="col" class="th">{{'Total'| translate: translateKey}}(D)=(A+B+C)</th>
+                        <th scope="col" class="th">{{'deposit_amount'|translate: translateKey}}(E)</th>
+                        <th scope="col" class="th">{{'Total Payable'| translate: translateKey}}(F)=(D+E)</th>
+                    </tr>
+                </thead>
+                 <tbody>
+                     <tr>
+                        <td scope="col" class="td">{{paymentObject.RENT_FEES}}</td>
+                        <td scope="col" class="td">{{paymentObject.ADMINISTRATIVE_CHARGE}}</td>
+                        <td scope="col" class="td">{{paymentObject.GST}}</td>
+                        <td scope="col" class="td">{{Total}}</td>
+                        <td scope="col" class="td">{{paymentObject.DEPOSIT_FEES}}</td> 
+                        <td scope="col" class="td">{{totalAmount}}</td>
                     </tr>
                 </tbody>
             </table>
+            
         </div>
-        <div class="fotButtonBar">
+        <div class="fotButtonBarr">
             <div class="col-sm-12 col-md-12 text-right">
                 <button type="button" mat-raised-button color="primary" data-dismiss="modal" (click)="showStadiumApplicationForm = true; this.showPaymentReciept = false;getUserProfile();">
                     {{'proceed_for_appication'| translate: translateKey}}
@@ -473,7 +488,7 @@
                         <app-address #address [requiredFeilds]="true" [addressFormGroup]="stadiumApplicationForm.get('applicantAddress')"></app-address>
                     </div>
 
-                    <div class="row mt-4 fotButtonBar">
+                    <div class="row mt-4 fotButtonBarr">
                         <div class="col-sm-12 col-md-12 text-right">
                             <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">
                                 {{'next'| translate:translateKey}}
@@ -514,7 +529,7 @@
                     </div>
 
 
-                    <div class="row mt-4 fotButtonBar">
+                    <div class="row mt-4 fotButtonBarr">
                         <div class="col-sm-12 col-md-12 justify-content-between d-flex">
                             <button type="button" color="primary" mat-raised-button (click)="tabIndex= tabIndex -1; ">
                                 <mat-icon>navigate_before</mat-icon>
