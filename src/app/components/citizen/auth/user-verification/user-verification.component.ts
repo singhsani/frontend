@@ -80,23 +80,25 @@ if(this.verifyForm.valid){
 					this.toster.error("Please enter valid OTP to signup OR use latest OTP received in Email/SMS to signup");
 				});
 			}
-		
+
 	}
 
 	onForgotPassword() {
 		this.loading = true;
-		let obj = {'email':this.emailobj,
-					'userType' : this.userType
-		}
+		let obj = {
+      'userType' : this.userType,
+     'uniqueId': this.verifyForm.get('uniqueId').value
+}
 
-		this.appService.forgotPassword(obj).subscribe(
+
+		this.appService.resendOTP(obj).subscribe(
 			res => {
 				this.loading = false;
 				/**
 				 * Redirect to reset password
 				 */
-				this.commonService.successAlert("Success", "For OTP update you can check your registered mail ID and Mobile number. Thank you.", "success");
-				
+				this.commonService.successAlert("Success", " OTP and Authentication Link re-sent on your registered Email ID and Mobile Number. Thank you.", "success");
+
 			}, err => {
 				this.loading = false;
 				this.toster.error(err.error[0].code);

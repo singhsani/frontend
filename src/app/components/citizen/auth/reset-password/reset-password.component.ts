@@ -86,7 +86,7 @@ export class ResetPasswordComponent implements OnInit {
 				/**
 				 * Redirect to reset password
 				 */
-				this.commonService.successAlert("Success", "For OTP and reset link update you can check your registered mail ID and Mobile number. Thank you.", "success");
+				this.commonService.successAlert("Success", "For OTP and Password Reset Link, please check your registered Email ID and Mobile Number. Thank you.", "success");
 
 			}, err => {
 				this.loading = false;
@@ -141,7 +141,7 @@ export class ResetPasswordComponent implements OnInit {
 					this.appService.resetPassword(formVals.getRawValue()).subscribe(
 						res => {
 							this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
-							this.commonService.successAlert("Success", "Password reset successful,Please use new password for login", "success");
+							this.commonService.successAlert("Success", "Password reset sucessfully, Please use the new password for login.", "success");
 
 						},
 						err => {
