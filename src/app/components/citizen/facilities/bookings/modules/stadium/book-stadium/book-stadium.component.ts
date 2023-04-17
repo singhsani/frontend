@@ -89,6 +89,8 @@ export class BookStadiumComponent implements OnInit {
     startMinDate: Date = moment(new Date()).add(1, 'day').toDate();
     endMinDate: Date = moment(new Date()).add(1, 'day').toDate();
     maxEndDate:any;
+    totalAmount: number=0;
+    Total: number=0;
 
 
     constructor(private bookingService: BookingService,
@@ -344,6 +346,8 @@ export class BookStadiumComponent implements OnInit {
                         this.stadiumApplicationForm.get('eventToDate').setValue(payResp.data.EVENT_DATE_TO);
                         this.stadiumApplicationForm.get('eventToDate').disable();
                         this.paymentObject = payResp.data;
+                        this.Total=(parseFloat(this.paymentObject.RENT_FEES.replace(',', ''))+parseFloat(this.paymentObject.ADMINISTRATIVE_CHARGE.replace(',', ''))+parseFloat(this.paymentObject.GST.replace(',', '')));
+                        this.totalAmount = (parseFloat(this.paymentObject.RENT_FEES.replace(',', ''))+parseFloat(this.paymentObject.GST.replace(',', ''))+parseFloat(this.paymentObject.DEPOSIT_FEES.replace(',', ''))+parseFloat(this.paymentObject.ADMINISTRATIVE_CHARGE.replace(',', '')));
                         this.showPaymentReciept = true;
                         this.confirmRef.hide();
                     })

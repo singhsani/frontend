@@ -3,7 +3,7 @@
     width: 100px;
     height: 100px;
 }
-table { width: 100%; }
+.table { width: 60%; }
 
 .customthead{
     background-color: #673ab7;
@@ -80,3 +80,26 @@ i {
     & > strong {color: #856404; background-color: #ffeeba;}
     &.border {border-color: #ffeeba !important;}
 }
+
+.table1{ width: 100%; }
+.th{
+    border-bottom: 1px solid #dee2e6;
+    border-top: 1px solid #dee2e6;
+    font-size: 12px;
+    padding-bottom: 7px;
+    padding-top: 7px;
+   
+}
+.td{
+    text-align: left;
+    padding-left: 28px;
+}
+.thead{
+    padding-bottom: 5px;
+}
+.table-responsive {
+    max-height: 400px;
+    max-width: 1000px;
+}
+.fotButtonBarr {background: #f2f2f2;
+    padding: 20px 0 7px; margin-top: 10px !important;}
