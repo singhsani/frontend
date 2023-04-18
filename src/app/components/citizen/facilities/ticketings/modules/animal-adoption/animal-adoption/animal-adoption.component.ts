@@ -162,8 +162,8 @@ export class AnimalAdoptionComponent implements OnInit {
     this.animalBirdName = animal.animalBirdName
     this.animalCount = animal.animalCount
     this.animalAdoptionForm.get('existingCount').setValue(this.animalCount)
-    this.animalAdoptionForm.get('existingCount').disable()
-
+    this.animalAdoptionForm.get('existingCount').disable();
+    this.animalAdoptionForm.get('adoptionYears').reset();
   }
 
   deleteOT(OTData: any, index: number) {
@@ -191,7 +191,10 @@ export class AnimalAdoptionComponent implements OnInit {
   }
 
   openDialog() {
-
+    if(this.validateAnimalAdoptionYear()){
+      this.toster.warning('Select Adoption Year');
+      return;
+    }
     if (this.validateAnimal()) {
       this.toster.warning('Select Animal and No of count');
       return;
@@ -276,6 +279,13 @@ export class AnimalAdoptionComponent implements OnInit {
     }
   }
 
+  validateAnimalAdoptionYear(){
+    if(this.animalAdoptionForm.get('adoptionYears').value == null){
+      return true;
+    }else{
+      return false;
+    }
+  }
 
 
   submitAnimalAdoptionRequest() {
@@ -309,7 +319,16 @@ export class AnimalAdoptionComponent implements OnInit {
 	    }
 	  }
 
-
+    validateAdoptionYear(event){
+      if(event.target.value == '' || event.target.value == undefined){
+        return false
+      }
+      let adoptionYear=this.animalAdoptionForm.get('adoptionYears').value;
+      if(adoptionYear == 0){
+        this.commonService.openAlert('Warning','Adoption Year Must Be Greater Than 0' , 'warning', '',);
+        this.animalAdoptionForm.get('adoptionYears').reset();
+      }
+    }
   /**
    * Link for agreement.
    */
