@@ -336,7 +336,7 @@
             </app-address>
           </div>
 
-          <div class="fotButtonBar clearfix">
+          <div class="fotButtonBar1 clearfix">
             <div class="col-sm-12 col-md-12">
               <button type="button" class="pull-right" mat-raised-button color="primary"
                 (click)="onTabChange(1,firmDetails, vendorRegistrationForm)">{{'Save And Next'}}</button>
@@ -389,7 +389,7 @@
           </div>
           <div class="row">
             <h2>{{'Name of the Proprietor / Partners / Directors'}}</h2>
-            <div class="col-sm-12 col-md-12 text-left">
+            <div class="col-sm-12 col-md-12 text-right">
               <button [disabled]="vendorArrayNameButtons" mat-raised-button color="primary" type="button"
                 (click)="addRowVendorName()">{{'Add
                 New'}}</button>
@@ -471,9 +471,8 @@
           <div class="row">
             <h2>{{'List of Items/Materials to be registered for supply with rating/description. The relevant IS number
               shall be Mentioned.'}}</h2>
-            <div class="col-sm-12 col-md-12 text-left">
-              <button mat-raised-button type="button" color="primary" (click)="addRow()">{{'Add New
-                Item/Material'}}</button>
+            <div class="col-sm-12 col-md-12 text-right">
+              <button mat-raised-button type="button" color="primary" (click)="addRow()">{{'Add New'}}</button>
             </div>
           </div>
 
@@ -664,7 +663,7 @@
             </mat-form-field>
           </div>
 
-          <div class="fotButtonBar clearfix">
+          <div class="fotButtonBar1 clearfix">
             <div class="col-sm-12 col-md-12">
               <span class="pull-left">
                 <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 0">{{'Back'}}</button>
@@ -927,7 +926,7 @@
               <mat-icon (click)="getFile('CENTRAL_STATE_GOVT_REG_CERTIFICATE')" class="text-info">remove_red_eye
               </mat-icon>
             </div> -->
-            <div class="col-sm-12 col-md-12 text-left">
+            <div class="col-sm-12 col-md-12 text-right">
               <button mat-raised-button type="button" color="primary" (click)="addRowVendorRegisteredGovtDetail()">{{'Add
                 New'}}</button>
             </div>
@@ -1028,7 +1027,7 @@
             <!-- <div *ngIf="isFileView" class="col-md-1">
               <mat-icon (click)="getFile('LIST_MACHINERIES')" class="text-info">remove_red_eye</mat-icon>
             </div> -->
-            <div class="col-sm-12 col-md-12 text-left">
+            <div class="col-sm-12 col-md-12 text-right">
               <button mat-raised-button type="button" color="primary" (click)="addRowVendorMachineInstalledCapacity()">{{'Add
                 New'}}</button>
             </div>
@@ -1094,7 +1093,7 @@
             <h2 class="col-md-10">{{'A. Qualified personnel working in the factory/office, their academic qualification
               and Experience.'}}</h2>
 
-            <div class="col-sm-12 col-md-12 text-left">
+            <div class="col-sm-12 col-md-12 text-right">
               <button mat-raised-button type="button" color="primary" (click)="addacademicQualification()">{{'Add
                 New'}}</button>
             </div>
@@ -1196,7 +1195,7 @@
 
           </div>
 
-          <div class="fotButtonBar clearfix">
+          <div class="fotButtonBar1 clearfix">
             <div class="col-sm-12 col-md-12">
               <span class="pull-left">
                 <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 1">{{'Back'}}</button>
@@ -1302,7 +1301,7 @@
 
             <h2 class="col-md-6">{{'List of Authorized Distributors in Vadodara city'}}</h2>
 
-            <div class="col-sm-12 col-md-12 text-left">
+            <div class="col-sm-12 col-md-12 text-right">
               <button mat-raised-button type="button" color="primary" (click)="addRowvendorNameAuthorized()">{{'Add
                 New'}}</button>
             </div>
@@ -1371,7 +1370,7 @@
 
             <h2 class="col-md-6">{{'Last three years purchasing item detail'}}</h2>
 
-            <div class="col-sm-12 col-md-12 text-left">
+            <div class="col-sm-12 col-md-12 text-right">
               <button mat-raised-button type="button" color="primary" type="button" (click)="addRowLastThreeYear()">{{'Add
                 New'}}</button>
             </div>
@@ -1444,7 +1443,7 @@
             <h2>{{'A. Deatils of order executed indicating quantity, value for each item/materials to
               be registered for supply, self certified statement to be attached.'}}</h2>
 
-            <div class="col-sm-12 col-md-12 text-left">
+            <div class="col-sm-12 col-md-12 text-right">
               <button mat-raised-button type="button" color="primary" type="button"
                 (click)="addRowVendorDetailsOfOrderIndicationQuantity()">{{'Add New'}}</button>
             </div>
@@ -1580,9 +1579,9 @@
               </control-messages>
             </mat-form-field> -->
 
-            <div class="row">
+            <div class="row1">
               <h2>{{'List of items holding ISO 9001 Certificate'}}</h2>
-              <div class="col-sm-12 col-md-12 text-left">
+              <div class="col-sm-12 col-md-12 text-right">
                 <button mat-raised-button color="primary" type="button" (click)="addRowvendorNameholding()">{{'Add
                   New'}}</button>
               </div>
@@ -1644,7 +1643,7 @@
 
 
           </div>
-          <div class="fotButtonBar clearfix">
+          <div class="fotButtonBar1 clearfix">
             <div class="col-sm-12 col-md-12">
               <span class="pull-left">
                 <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 2">{{'Back'}}</button>

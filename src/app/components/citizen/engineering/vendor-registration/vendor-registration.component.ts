@@ -128,6 +128,7 @@ export class VendorRegistrationComponent implements OnInit {
   }
 
   ngOnInit() {
+    window.scrollTo(0, 0)
     this.vendorRegistrationControl();
     this.vendorRegistrationForm.addControl('listOfItemMaterialSupplier', this.listOfItemMaterialSupplier);
     this.vendorRegistrationForm.addControl('vendorNameArray', this.vendorNameArray);
