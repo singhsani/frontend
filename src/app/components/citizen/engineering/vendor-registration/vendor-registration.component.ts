@@ -440,7 +440,7 @@ export class VendorRegistrationComponent implements OnInit {
       branchSTDNumber: [null, [Validators.maxLength(11)]],
 
       headMobileNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
-      headAlterMobileNumber: [null, [Validators.maxLength(10), Validators.minLength(10)]],
+      headAlterMobileNumber: [null, [Validators.maxLength(11), Validators.minLength(11)]],
       headISDNumber: [null, [Validators.maxLength(12)]],
       headSTDNumber: [null, [Validators.maxLength(11)]],
       headName: [null, [Validators.required, Validators.maxLength(150)]],
@@ -1210,4 +1210,7 @@ export class VendorRegistrationComponent implements OnInit {
     }
   }
   
+  onFormTabChange(evt) {
+    this.tabIndex = evt;
+  }
 }

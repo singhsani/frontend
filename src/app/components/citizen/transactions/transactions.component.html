@@ -1,7 +1,7 @@
-<div class="example-container mat-elevation-z8 borderOne" >
+<div class="example-container mat-elevation-z8 borderOne mb140" [hidden]="resultsLength==0">
 
 
-	<mat-table #table [dataSource]="dataSource" class="myApplication" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
+	<table mat-table [dataSource]="dataSource" class="myApplication" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
 
 		<ng-container matColumnDef="id">
 			<mat-header-cell *matHeaderCellDef>Sr No.</mat-header-cell>
@@ -63,7 +63,7 @@
 		<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 		<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
-	</mat-table>
+	</table>
 
 	<mat-paginator showFirstLastButtons [hidden]="resultsLength==0" [pageSizeOptions]="[5, 10, 25, 100]" [length]="resultsLength">
     </mat-paginator>
