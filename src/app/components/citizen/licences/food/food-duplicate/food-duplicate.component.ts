@@ -264,7 +264,7 @@ export class FoodDuplicateComponent implements OnInit {
 			firmCity: [null, [Validators.required, Validators.maxLength(10)]],
 			firmPincode: [null, [Validators.required, Validators.maxLength(6), Validators.minLength(6)]],
 			mobileNo: [null, [Validators.maxLength(10)]],
-			firmLandLineNo: [null, [Validators.maxLength(10)]],
+			firmLandLineNo: [null, [ValidationService.telPhoneNumberValidator]],
 			firmEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 
 			businessType: this.fb.group({
