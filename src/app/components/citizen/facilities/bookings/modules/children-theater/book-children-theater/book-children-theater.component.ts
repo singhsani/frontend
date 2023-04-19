@@ -43,11 +43,18 @@ export class BookChildrenTheaterComponent implements OnInit {
     showPaymentReciept: boolean = false;
     showChildrenTheaterApplicationForm: boolean = false;
 
+    public formControlNameToTabIndex = new Map();
+
     /**
       * Forms declaration
       */
     childrenTheaterSearchForm: FormGroup;
     childrenTheaterApplicationForm: FormGroup;
+    organizationdetails : FormGroup;
+    applicantdetails: FormGroup;
+    bookingDetails : FormGroup;
+
+
 
     /**
      * Local Arrays and Maps
@@ -112,6 +119,8 @@ export class BookChildrenTheaterComponent implements OnInit {
             this.endMinDate = data;
             return;
         })
+
+        this.setFormControlToTabIndexMap();
     }
 
     /**
@@ -163,14 +172,16 @@ export class BookChildrenTheaterComponent implements OnInit {
     }
 
     createCTApplicationForm() {
-        this.childrenTheaterApplicationForm = this._fb.group({
             //step 1
+        this.organizationdetails = this._fb.group({    
             organizationName: [null, [Validators.required, Validators.maxLength(100)]],
             orgTelephoneNo: [null, [Validators.required, ValidationService.telPhoneNumberValidator]],
             organizationAddress: this._fb.group(this.addressComp.addressControls()),
-            programPurpose: [null, [Validators.required, Validators.maxLength(200)]],
-
+            programPurpose: [null, [Validators.required, Validators.maxLength(200)]]
+          
+        })
             //step 2
+        this.applicantdetails=this._fb.group({    
             applicantName: [null, [Validators.required, Validators.maxLength(100)]],
             applicantMobile: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
             confirmMobile: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
@@ -178,26 +189,22 @@ export class BookChildrenTheaterComponent implements OnInit {
             confirmEmailId: [null, [Validators.required, ValidationService.emailValidator , Validators.maxLength(50)]],
             relationshipWithOrg: [null, [Validators.required, Validators.maxLength(20)]],
             panCard:[null, ValidationService.panValidator],
-            gstNo:[null, ValidationService.gstNoValidator],
-
+            gstNo:[null, ValidationService.gstNoValidator]
+            
+        })    
             //step 3
-            // accountHolderName: [null, [Validators.required, Validators.maxLength(50)]],
-            // accountNo: [null, [Validators.required, Validators.maxLength(20)]],
-            // bankName: this._fb.group({
-            //     code: [null, [Validators.required]],
-            //     name: null
-            // }),
-            // ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator, Validators.maxLength(11), Validators.minLength(11)]],
-            agree: [null, [Validators.required]],
-            termsCondition: [null, [Validators.required]],
-
-            attachments: [],
-            bookingPurposeMaster: this._fb.group({
+        this.bookingDetails=this._fb.group({
+            accountHolderName: [null, [Validators.required, Validators.maxLength(50)]],
+            accountNo: [null, [Validators.required, Validators.maxLength(20)]],
+            bankName: this._fb.group({
                 code: [null, [Validators.required]],
-                name: null
+                // name: null
             }),
-
+            ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator, Validators.maxLength(11), Validators.minLength(11)]],
+           
+        })
             //other attributes
+        this.childrenTheaterApplicationForm = this._fb.group({
             id: null,
             uniqueId: null,
             version: null,
@@ -208,8 +215,20 @@ export class BookChildrenTheaterComponent implements OnInit {
             resourceType: null,
             payableServiceType: null,
             resourceCode: null,
-            bookingFormId :null
-        })
+            bookingFormId :null,
+            bookingPurposeMaster: this._fb.group({
+                code: [null, [Validators.required]],
+                name: null
+            }),
+            attachments: [],
+            agree: [null, [Validators.required]],
+            termsCondition: [null, [Validators.required]]
+          
+        });
+
+        this.commonService.createCloneAbstractControl(this.organizationdetails,this.childrenTheaterApplicationForm);
+		this.commonService.createCloneAbstractControl(this.applicantdetails,this.childrenTheaterApplicationForm);
+		this.commonService.createCloneAbstractControl(this.bookingDetails,this.childrenTheaterApplicationForm);
 
     }
 
@@ -217,18 +236,15 @@ export class BookChildrenTheaterComponent implements OnInit {
      * Method is used to submit stadium application form.
      */
     submitStadiumApplication(): void {
-        let errCount = this.bookingUtils.getAllErrors(this.childrenTheaterApplicationForm);
-        if (this.childrenTheaterApplicationForm.invalid) {
-            this.handleErrorsOnSubmit(errCount);
+        // let errCount = this.bookingUtils.getAllErrors(this.childrenTheaterApplicationForm);
+        if (this.bookingDetails.invalid) {
             this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
             return;
         }
         else if (!this.bookingUtils.matcher(this.childrenTheaterApplicationForm, 'emailId', 'confirmEmailId') || !this.bookingUtils.matcher(this.childrenTheaterApplicationForm, 'applicantMobile', 'confirmMobile')) {
-            this.handleErrorsOnSubmit(7);
             this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, !this.bookingUtils.matcher(this.childrenTheaterApplicationForm, 'emailId', 'confirmEmailId') ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning')
             return;
         } else if (!this.isFileUploaded) {
-            this.handleErrorsOnSubmit(11);
             this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'School Or Institute letter Attachment Required!', 'warning')
             return;
         } else if (!this.childrenTheaterApplicationForm.get('agree').value) {
@@ -348,20 +364,25 @@ export class BookChildrenTheaterComponent implements OnInit {
 	 * Method is used to handle error/validation on submit
 	 * @param count - count of invalid control.
 	 */
-    handleErrorsOnSubmit(count) {
-        let step1 = 4;
-        let step2 = 10;
-        let step3 = 16;
-        if (count < step1) {
-            this.tabIndex = 0;
-            return false;
-        } else if (count < step2) {
-            this.tabIndex = 1;
-            return false;
-        } else if (count < step3) {
-            this.tabIndex = 2;
-            return false;
-        }
+    handleErrorsOnSubmit(controlName) {
+        // let step1 = 4;
+        // let step2 = 10;
+        // let step3 = 16;
+        // if (count < step1) {
+        //     this.tabIndex = 0;
+        //     return false;
+        // } else if (count < step2) {
+        //     this.tabIndex = 1;
+        //     return false;
+        // } else if (count < step3) {
+        //     this.tabIndex = 2;
+        //     return false;
+        // }
+        const key = this.bookingUtils.getInvalidFormControlKey(controlName);
+		const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 0;
+
+		this.tabIndex = index;
+		return false;
     }
 
 
@@ -371,16 +392,45 @@ export class BookChildrenTheaterComponent implements OnInit {
   getUserProfile() {
     this.bookingService.getUserProfile().subscribe(resp => {
         console.log(resp);
-        this.childrenTheaterApplicationForm.get('applicantName').setValue(resp.data.firstName + ' ' + resp.data.lastName);
-        this.childrenTheaterApplicationForm.get('emailId').setValue(resp.data.email);
-        this.childrenTheaterApplicationForm.get('applicantMobile').setValue(resp.data.cellNo);
-        this.childrenTheaterApplicationForm.get('confirmEmailId').setValue(resp.data.email);
-        this.childrenTheaterApplicationForm.get('confirmMobile').setValue(resp.data.cellNo);
-        this.childrenTheaterApplicationForm.get('accountHolderName').setValue(resp.data.firstName + ' ' + resp.data.lastName);
+        this.applicantdetails.get('applicantName').setValue(resp.data.firstName + ' ' + resp.data.lastName);
+        this.applicantdetails.get('emailId').setValue(resp.data.email);
+        this.applicantdetails.get('applicantMobile').setValue(resp.data.cellNo);
+        this.applicantdetails.get('confirmEmailId').setValue(resp.data.email);
+        this.applicantdetails.get('confirmMobile').setValue(resp.data.cellNo);
+        this.bookingDetails.get('accountHolderName').setValue(resp.data.firstName + ' ' + resp.data.lastName);
     },
       err => {
         this.toster.error("Server Error");
       });
+      this.organizationdetails.get('organizationAddress').get('country').setValue('INDIA');
+      this.organizationdetails.get('organizationAddress').get('state').setValue('GUJARAT');
+      this.organizationdetails.get('organizationAddress').get('city').setValue('Vadodara');  
+  }
+
+  setFormControlToTabIndexMap(){
+    // index 0
+		this.formControlNameToTabIndex.set("organizationName", 0);
+		this.formControlNameToTabIndex.set("orgTelephoneNo", 0);
+		this.formControlNameToTabIndex.set("organizationAddress", 0);
+		this.formControlNameToTabIndex.set("program_purpose", 0);
+
+		// index 1
+		this.formControlNameToTabIndex.set("applicantName", 1);
+		this.formControlNameToTabIndex.set("applicantMobile", 1);
+		this.formControlNameToTabIndex.set("emailId", 1);
+		this.formControlNameToTabIndex.set("panCard", 1);
+		this.formControlNameToTabIndex.set("gstNo", 1);
+		this.formControlNameToTabIndex.set("relationshipWithOrg", 1);
+		
+
+		// index 2
+		this.formControlNameToTabIndex.set('bankName', 2)
+		this.formControlNameToTabIndex.set('accountHolderName', 2)
+		this.formControlNameToTabIndex.set('accountNo', 2)
+		this.formControlNameToTabIndex.set('ifscCode', 2)
+        this.formControlNameToTabIndex.set('agree', 2)
+        this.formControlNameToTabIndex.set('termsCondition', 2)
+	
   }
 
   maxSlotDate(){
@@ -388,7 +438,7 @@ export class BookChildrenTheaterComponent implements OnInit {
   }
 
   onSameApplicantHolderName(event){
-    this.childrenTheaterApplicationForm.get('accountHolderName').setValue(event.value);
+    this.bookingDetails.get('accountHolderName').setValue(event.value);
   }
 
    getFeesStructure(){
@@ -412,4 +462,20 @@ export class BookChildrenTheaterComponent implements OnInit {
           }
         })
       }
+
+      checkValidation(controlName,isSubmitted){
+		if(controlName.invalid){
+			this.handleErrorsOnSubmit(controlName)
+		}else{
+			const organizationalAry = Object.keys(controlName.value);
+			organizationalAry.forEach(element => {
+				this.childrenTheaterApplicationForm.get(element).setValue(controlName.get(element).value);
+			});
+			this.commonService.setValueToFromControl(controlName,this.childrenTheaterApplicationForm);
+			this.tabIndex= this.tabIndex +1;
+			if(isSubmitted){
+				this.submitStadiumApplication(); 
+			}
+		}
+    }
 }
