@@ -225,8 +225,10 @@
         </mat-form-field>
 
         <mat-form-field class="col-md-3">
-          <input matInput type="text" OnlyNumber maxlength="2" formControlName="adoptionYears"
+          <input matInput type="text" OnlyNumber maxlength="2" (change)="validateAdoptionYear($event);" formControlName="adoptionYears"
              placeholder="{{'No of Adoption Years' | translate: translateKey}}" required>
+             <control-messages [control]="animalAdoptionForm.get('adoptionYears')">
+            </control-messages>
         </mat-form-field>
 
 
