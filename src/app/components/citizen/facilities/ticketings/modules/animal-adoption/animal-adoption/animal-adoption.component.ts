@@ -27,7 +27,7 @@ export class AnimalAdoptionComponent implements OnInit {
 
   // animpal adoption pricing
   animalAdoptionPricing: any[];
-  selectedAnimalAnnualBoardingExpenses: number = 0;
+  // selectedAnimalAnnualBoardingExpenses: number = 0;
   selectedAnimalAnnualMaintainanceExpenses: number = 0;
 
 
@@ -60,7 +60,7 @@ export class AnimalAdoptionComponent implements OnInit {
   animalCount : number = 0;
   animalBirdName : string;
   checkProceed : boolean = false;
-	btnProceed: boolean = true; 
+  btnProceed: boolean = true; 
   /**
    * language translate key.
   */
@@ -145,6 +145,7 @@ export class AnimalAdoptionComponent implements OnInit {
       adopterContactNumber: [null, Validators.required],
       adopterEmailId: [null, [ValidationService.emailValidator]],
       animalName: [null],
+      noOfAdoptionCount:[null],
       existingCount :[null, {disable:true }],
       totalAdoptionCost: [null],
       adoptionYears: [null],
@@ -154,16 +155,26 @@ export class AnimalAdoptionComponent implements OnInit {
       animalNameList: this.fb.array([])
     });
   }
+  getAnimalAdoptionFormStatus(){
+    if(this.animalAdoptionForm.get('adoptingPersonOrganizationName').value != '' && 
+    this.animalAdoptionForm.get('adoptersAddress').value != '' &&
+    this.animalAdoptionForm.get('adopterContactNumber').value != '' &&
+    (this.animalAdoptionForm.get('animalNameList').value).length < 1
+    ){
+      return true;
+    }else{
+      return false;
+    }
+  }
 
   getValues(animal) {
-    this.selectedAnimalAnnualBoardingExpenses = null;
-    this.animalAdoptionForm.get('totalAdoptionCost').setValue(null);
+    this.animalAdoptionForm.get('noOfAdoptionCount').setValue(null)
+    this.animalAdoptionForm.get('totalAdoptionCost').setValue(null)
     this.animalName = animal;
     this.animalBirdName = animal.animalBirdName
     this.animalCount = animal.animalCount
     this.animalAdoptionForm.get('existingCount').setValue(this.animalCount)
-    this.animalAdoptionForm.get('existingCount').disable();
-    this.animalAdoptionForm.get('adoptionYears').reset();
+    this.animalAdoptionForm.get('existingCount').disable()
   }
 
   deleteOT(OTData: any, index: number) {
@@ -212,7 +223,7 @@ export class AnimalAdoptionComponent implements OnInit {
       }
    }
 
-    this.animalName['totalQty'] = this.selectedAnimalAnnualBoardingExpenses;
+    this.animalName['totalQty'] = this.animalAdoptionForm.get('noOfAdoptionCount').value;
     this.animalName.totalExpenses = this.animalAdoptionForm.get('totalAdoptionCost').value;
     if (this.animalAdoptionForm.get('canEdit').value) {
       returnArray.push(this.createOTDetailArray(this.animalName));
@@ -222,8 +233,7 @@ export class AnimalAdoptionComponent implements OnInit {
   }
 
   calculateAmount(event) {
-    this.selectedAnimalAnnualBoardingExpenses;
-    this.animalName;
+  
     if(event.target.value == '' || event.target.value == undefined){
       return false
     }
@@ -235,10 +245,10 @@ export class AnimalAdoptionComponent implements OnInit {
       }
       let adoptionYear=this.animalAdoptionForm.get('adoptionYears').value;
       if(this.animalCount>=event.target.value){
-        this.animalAdoptionForm.get('totalAdoptionCost').setValue(this.selectedAnimalAnnualBoardingExpenses * this.animalName.totalExpenses * adoptionYear);
+        this.animalAdoptionForm.get('totalAdoptionCost').setValue(this.animalAdoptionForm.get('noOfAdoptionCount').value * this.animalName.totalExpenses * adoptionYear);
       } else {
           this.commonService.openAlert('Warning','Please Enter Valid Count' , 'warning', '',)
-            this.selectedAnimalAnnualBoardingExpenses = undefined;
+    
 
       }
     }
@@ -265,14 +275,16 @@ export class AnimalAdoptionComponent implements OnInit {
     this.totalExpenses = 0;
     this.animalAdoptionForm.get('animalName').setValue(null);
     this.animalAdoptionForm.get('totalAdoptionCost').setValue(null);
+    this.animalAdoptionForm.get('noOfAdoptionCount').reset();
+    this.animalAdoptionForm.get('adoptionYears').reset();
     //this.animalAdoptionForm.get('totalAdoptionCost').setValue(0);
-    this.selectedAnimalAnnualMaintainanceExpenses = 0;
-    this.selectedAnimalAnnualBoardingExpenses = 0;
+    this.selectedAnimalAnnualMaintainanceExpenses=0;
+    
   }
 
 
   validateAnimal() {
-    if (this.animalAdoptionForm.get('animalName').value == null || this.animalAdoptionForm.get('totalAdoptionCost').value == null || this.selectedAnimalAnnualBoardingExpenses == 0) {
+    if (this.animalAdoptionForm.get('animalName').value == null || this.animalAdoptionForm.get('totalAdoptionCost').value == null || this.animalAdoptionForm.get('noOfAdoptionCount').value == 0) {
       return true;
     } else {
       return false;
@@ -312,12 +324,12 @@ export class AnimalAdoptionComponent implements OnInit {
   }
 
   clickProcess(event){
-		if(event.checked == true){
+    if(event.checked == true){
             this.btnProceed = false;
-	    }else{
-	        this.btnProceed = true;
-	    }
-	  }
+      }else{
+          this.btnProceed = true;
+      }
+    }
 
     validateAdoptionYear(event){
       if(event.target.value == '' || event.target.value == undefined){
