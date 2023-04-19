@@ -48,8 +48,8 @@
 							</control-messages>
 						</mat-form-field> -->
 
-					<div class="col-md-4 ngSelect" formGroupName="vehicleType">
-						<ng-select [placeholder]="getName('vehicle_type',translateKey)" formControlName="code">
+					<div class="col-md-4 ngSelect" formGroupName="vehicleType">vehicle_type
+						<ng-select placeholder="{{'vehicleType' | translate: translateKey}}" formControlName="code">
 							<ng-option *ngFor="let vehicleType of vehicleTypeArray" [value]="vehicleType.code">
 								{{vehicleType.name}}</ng-option>
 						</ng-select>
