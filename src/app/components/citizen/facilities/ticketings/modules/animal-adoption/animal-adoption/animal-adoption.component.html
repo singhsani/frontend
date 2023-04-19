@@ -203,7 +203,8 @@
           <control-messages [control]="animalAdoptionForm.get('adopterEmailId')"></control-messages>
         </mat-form-field>
 
-        <div class="col-md-3 ngSelect">
+
+        <div class="col-md-4 ngSelect">
           <ng-select [items]="animalAdoptionPricing" formControlName="animalName" [multiple]="false"
             (clear)="resetCalculations($event);" (change)="getValues($event)"
             placeholder="{{'animal_or_bird_preferred_for_adoption'| translate: translateKey}}"
@@ -212,25 +213,36 @@
           <control-messages [control]="animalAdoptionForm.get('animalName')">
           </control-messages>
         </div>
-
-        <mat-form-field class="col-md-3">
+        
+        <mat-form-field class="col-md-4">
           <input matInput type="text" OnlyNumber maxlength="2"  formControlName="existingCount" disabled
              placeholder="{{'Existing No of Count' | translate: translateKey}}" required>
+             <control-messages [control]="animalAdoptionForm.get('existingCount')">
+            </control-messages>
         </mat-form-field>
 
-
-        <mat-form-field class="col-md-3">
-          <input matInput type="text" OnlyNumber maxlength="2" (change)="calculateAmount($event);" [(ngModel)]="selectedAnimalAnnualBoardingExpenses"
-            [ngModelOptions]="{standalone: true}" placeholder="{{'No of Adoption Count' | translate: translateKey}}" required>
-        </mat-form-field>
-
-        <mat-form-field class="col-md-3">
-          <input matInput type="text" OnlyNumber maxlength="2" (change)="validateAdoptionYear($event);" formControlName="adoptionYears"
+        <mat-form-field class="col-md-4">
+          <input matInput type="text" OnlyNumber maxlength="2" formControlName="adoptionYears"
              placeholder="{{'No of Adoption Years' | translate: translateKey}}" required>
              <control-messages [control]="animalAdoptionForm.get('adoptionYears')">
             </control-messages>
         </mat-form-field>
 
+        <mat-form-field class="col-md-4">
+          <input matInput type="text" maxlength="2" OnlyNumber (change)="calculateAmount($event);"
+          formControlName="noOfAdoptionCount" placeholder="{{'No of Adoption Count' | translate: translateKey}}" required>
+            <control-messages [control]="animalAdoptionForm.get('noOfAdoptionCount')">
+            </control-messages>
+            <!-- <mat-error class="mat-error ng-star-inserted errors-massage"
+								*ngIf="noOfAdoptionCount.invalid &&  noOfAdoptionCount.touched">
+								<div *ngIf="noOfAdoptionCount.errors.required">
+								  No of Adoption Count is Required.
+								</div>	
+								</mat-error> -->
+        </mat-form-field>
+        
+
+       
 
         <mat-form-field class="col-md-4">
           <input matInput type="text" formControlName="totalAdoptionCost"
@@ -238,8 +250,8 @@
           <control-messages [control]="animalAdoptionForm.get('totalAdoptionCost')"></control-messages>
         </mat-form-field>
 
-        <div class="col-md-2 pt-2" style="text-align: right;">
-          <button (click)="openDialog()" type="button" mat-raised-button color="primary">
+        <div class="col-md-4 pt-2" style="text-align: right;">
+          <button (click)="openDialog()" type="button"  mat-raised-button color="primary">
             {{'Add' | translate:translateKey}}
           </button>
         </div>
@@ -328,14 +340,22 @@
           <!-- <mat-icon>navigate_before</mat-icon> -->
           {{'back' | translate:translateKey}}
         </button>
-        <button mat-raised-button color="primary" type="button" [disabled]="animalAdoptionForm.invalid"
+        <button mat-raised-button color="primary" type="button" [disabled]="getAnimalAdoptionFormStatus()"
           (click)="submitAnimalAdoptionRequest()">
           <!-- <mat-icon>check_circle_outline</mat-icon> -->
           {{'submit_application'| translate: translateKey}}
         </button>
       </div>
     </div>
-
+    <!-- <div class="float-right">
+      <button *ngIf="!isFromOnlineApp" [disabled]="getAnimalAdoptionFormStatus()" mat-raised-button
+        (click)="submitAnimalAdoptionRequest()" color="success">{{'submit_application'| translate:
+        translateKey}}</button>
+      <button *ngIf="isFromOnlineApp" [disabled]="getAnimalAdoptionFormStatus()" mat-raised-button color="success"
+        (click)="onSubmit()">{{'accept' | translate:translateKey}}</button>
+      <button *ngIf="isFromOnlineApp" type="button" color="warn" [disabled]="animalAdoptionForm.invalid"
+        mat-raised-button (click)="onRejectApp()"> {{'reject' | translate:translateKey}} </button>
+    </div> -->
   </mat-card-content>
 </mat-card>
 
