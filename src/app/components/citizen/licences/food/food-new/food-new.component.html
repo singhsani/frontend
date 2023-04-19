@@ -73,7 +73,7 @@
             <control-messages [control]="foodLicNewForm.get('mobileNo')"></control-messages>
           </mat-form-field>
           <mat-form-field class="col-md-4">
-            <input matInput OnlyNumber maxlength="10" required formControlName="firmLandLineNo" required placeholder="{{'tel_no' | translate:translateKey}}">
+            <input matInput OnlyNumber maxlength="11" minlength="11" required formControlName="firmLandLineNo" required placeholder="{{'tel_no' | translate:translateKey}}">
             <control-messages [control]="foodLicNewForm.get('firmLandLineNo')"></control-messages>
           </mat-form-field>
           <mat-form-field class="col-md-4">

@@ -59,7 +59,8 @@ export class ValidationService {
             invalidCensusNumber: `Census Number length should be 21`,
             invalidPrcNumber : `Enter valid PRC number e.g. PRC123456789`,
             invalidPecNumber : `Enter valid PEC number e.g. PEC123456789`,
-            inValidelectricityBill  :`Enter valid Election Card Number e.g. 12345678901`
+            inValidelectricityBill  :`Enter valid Election Card Number e.g. 12345678901`,
+            invalidTelPhoneNumber : `Minimum length should be 11 digit`
         }
 
         return config[validatorName];
@@ -89,6 +90,13 @@ export class ValidationService {
             const matches = control.value.match(/^[0-9]{11}$/); 
             // const matches = control.value.match(/^[A-Za-z]{2}[0-9]{4}[-][0-9]{2}[A-Za-z]{2}[0-9]{5}$/);
             return matches ? null : { 'invalidMemberNo': true }
+        }
+    }
+
+    static telPhoneNumberValidator(control: FormControl) {
+        if (control.value) {
+            const matches = control.value.match(/^[0-9]{11}$/); 
+            return matches ? null : { 'invalidTelPhoneNumber': true }
         }
     }
 

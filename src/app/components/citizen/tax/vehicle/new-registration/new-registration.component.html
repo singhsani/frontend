@@ -34,7 +34,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" #engineNo [value]="engineNo.value.toUpperCase()"
 							appAlphaNumeric type="text" maxlength="20" formControlName="engineNo"
-							placeholder="{{'engine_no' | translate: translateKey}}" required>
+							[placeholder]="getName('engine_no',translateKey)" required>
 						<control-messages [control]="vehicleRegistrationForm.get('engineNo')"></control-messages>
 					</mat-form-field>
 
@@ -49,7 +49,7 @@
 						</mat-form-field> -->
 
 					<div class="col-md-4 ngSelect" formGroupName="vehicleType">
-						<ng-select placeholder="{{'vehicle_type' | translate: translateKey}} *" formControlName="code">
+						<ng-select [placeholder]="getName('vehicle_type',translateKey)" formControlName="code">
 							<ng-option *ngFor="let vehicleType of vehicleTypeArray" [value]="vehicleType.code">
 								{{vehicleType.name}}</ng-option>
 						</ng-select>
