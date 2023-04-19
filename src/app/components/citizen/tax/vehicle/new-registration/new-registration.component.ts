@@ -14,7 +14,6 @@ import * as _ from 'lodash';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { ProfessionalTaxService } from '../../../../../core/services/citizen/data-services/professional-tax.service';
 import { PftConfig } from '../../professional-tax/pftConfig';
-import { CommonInternalServiceService } from 'src/app/vmcshared/Services/common-internal-service.service';
 
 @Component({
   selector: 'app-new-registration',
@@ -75,8 +74,7 @@ export class NewRegistrationComponent implements OnInit {
     private toastr: ToastrService,
     private commonService: CommonService,
     private modalService: BsModalService,
-    private profeService: ProfessionalTaxService,
-    private internalService: CommonInternalServiceService
+    private profeService: ProfessionalTaxService    
   ) {
     this.formService.apiType = 'vehicle';
     this.vehicleServise.apiType = 'vehicle';
@@ -679,9 +677,5 @@ export class NewRegistrationComponent implements OnInit {
     "vehicleApplicableRate": 1.25,
     "totalPayable": 5294.2875,
   };
-
-  getName(label,translateKey){
-    return this.internalService.getName(label,translateKey);
-	  }
 
 }

@@ -34,7 +34,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" #engineNo [value]="engineNo.value.toUpperCase()"
 							appAlphaNumeric type="text" maxlength="20" formControlName="engineNo"
-							[placeholder]="getName('engine_no',translateKey)" required>
+							placeholder="{{'engine_no' | translate: translateKey}}" required>
 						<control-messages [control]="vehicleRegistrationForm.get('engineNo')"></control-messages>
 					</mat-form-field>
 
