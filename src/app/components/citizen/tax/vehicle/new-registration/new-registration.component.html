@@ -19,23 +19,24 @@
 
 <mat-card class="formClass cardBorder">
 	<!--Start  form  -->
-	<form [formGroup]="vehicleRegistrationForm">
+	<!-- <form [formGroup]="vehicleRegistrationForm"> -->
 		
 		<mat-tab-group mat-stretch-tabs class="stepperNav" (selectedTabChange)="calculateTax($event)"
 		[(selectedIndex)]="tabIndex" dynamicHeight="true">
 		
 		<!-- first step start-->
-			<mat-tab [label]="stepLable1 | translate: translateKey">
+			<mat-tab [label]="stepLable1 | translate: translateKey" disabled>
 
 				<h6 class="text-left pl-1"><span class=""> Note:-</span> Need to Ensure that the 'Basic Value' which you have to enter is without GST.</h6>
 				<h6 class="text-left pl-5">તમારે એ સુનિશ્ચિત કરવાની જરૂર છે કે તમારે જે 'મૂળભૂત મૂલ્ય' દાખલ કરવાનું છે તે GST વગરનું છે.</h6>
 				<hr>
+				<form [formGroup]="vehicleDetails">
 					<div class="row stepperMinHeight">
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" #engineNo [value]="engineNo.value.toUpperCase()"
 							appAlphaNumeric type="text" maxlength="20" formControlName="engineNo"
 							placeholder="{{'engine_no' | translate: translateKey}}" required>
-						<control-messages [control]="vehicleRegistrationForm.get('engineNo')"></control-messages>
+						<control-messages [control]="vehicleDetails.get('engineNo')"></control-messages>
 					</mat-form-field>
 
 					<!-- <mat-form-field class="col-md-4" formGroupName="vehicleType">
@@ -48,12 +49,12 @@
 							</control-messages>
 						</mat-form-field> -->
 
-					<div class="col-md-4 ngSelect" formGroupName="vehicleType">vehicle_type
-						<ng-select placeholder="{{'vehicleType' | translate: translateKey}}" formControlName="code">
+					<div class="col-md-4 ngSelect" formGroupName="vehicleType">
+						<ng-select placeholder="{{'vehicle_type' | translate: translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let vehicleType of vehicleTypeArray" [value]="vehicleType.code">
 								{{vehicleType.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="vehicleRegistrationForm.get('vehicleType').get('code')">
+						<control-messages [control]="vehicleDetails.get('vehicleType').get('code')">
 						</control-messages>
 					</div>
 
@@ -61,14 +62,14 @@
 						<input matInput autocomplete="off" #chasisNo [value]="chasisNo.value.toUpperCase()"
 							maxlength="20" type="text" formControlName="chasisNo"
 							placeholder="{{'chasis_no' | translate: translateKey}}" required>
-						<control-messages [control]="vehicleRegistrationForm.get('chasisNo')"></control-messages>
+						<control-messages [control]="vehicleDetails.get('chasisNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" type="text" maxlength="20" formControlName="vehicleNo"
 							#vehicleNo [value]="vehicleNo.value.toUpperCase()"
 							placeholder="{{'Dealer Ref. / Temp. Reg. Number' | translate: translateKey}}">
-						<control-messages [control]="vehicleRegistrationForm.get('vehicleNo')"></control-messages>
+						<control-messages [control]="vehicleDetails.get('vehicleNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -76,14 +77,14 @@
 							appMaskRegistrationNumVt #registrationNo [value]="registrationNo.value.toUpperCase()"
 							placeholder="{{'registration_no' | translate: translateKey}}">
 							<mat-hint align="center">GJ-06-AD-123</mat-hint>
-							<control-messages [control]="vehicleRegistrationForm.get('registrationNo')"></control-messages>
+							<control-messages [control]="vehicleDetails.get('registrationNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" type="text" maxlength="10" OnlyNumber
 							formControlName="vehicleBasicValue"
 							placeholder="{{'basic_value' | translate: translateKey}}" required>
-						<control-messages [control]="vehicleRegistrationForm.get('vehicleBasicValue')">
+						<control-messages [control]="vehicleDetails.get('vehicleBasicValue')">
 						</control-messages>
 					</mat-form-field>
 
@@ -92,21 +93,21 @@
 							appValidationFields [validationFieldsType]="'appAlphanumericNumberWithSpace'" type="text"
 							maxlength="100" formControlName="makeModel"
 							placeholder="{{'make_model' | translate: translateKey}}" required>
-						<control-messages [control]="vehicleRegistrationForm.get('makeModel')"></control-messages>
+						<control-messages [control]="vehicleDetails.get('makeModel')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" maxlength="200" appValidationFields
 							[validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="dealerName"
 							placeholder="{{'dealer_name' | translate: translateKey}}" required>
-						<control-messages [control]="vehicleRegistrationForm.get('dealerName')"></control-messages>
+						<control-messages [control]="vehicleDetails.get('dealerName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" maxlength="100" appPreventSpace
 							placeholder="{{'dealer_email' | translate:translateKey}}" type="email"
 							formControlName="dealerEmail">
-						<control-messages [control]="vehicleRegistrationForm.get('dealerEmail')"></control-messages>
+						<control-messages [control]="vehicleDetails.get('dealerEmail')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -114,7 +115,7 @@
 						<input required matInput autocomplete="off" type="tel" OnlyNumber
 							formControlName="dealerMobileNo" minlength="10" maxlength="10"
 							placeholder="{{'dealer_mobile_no' | translate: translateKey}}">
-						<control-messages [control]="vehicleRegistrationForm.get('dealerMobileNo')"></control-messages>
+						<control-messages [control]="vehicleDetails.get('dealerMobileNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -123,7 +124,7 @@
 							placeholder="{{'purchase_date' | translate: translateKey}} (DD/MM/YYYY)" required>
 						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #picker></mat-datepicker>
-						<control-messages [control]="vehicleRegistrationForm.get('purchaseDate')"></control-messages>
+						<control-messages [control]="vehicleDetails.get('purchaseDate')"></control-messages>
 						<!-- <div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div> -->
 					</mat-form-field>
 
@@ -138,33 +139,34 @@
 				</div>
 
 				<div class="fotButtonBar clearfix">
-					<div class="col-sm-12 col-md-12" *ngIf="vehicleRegistrationForm.get('canEdit').value">
+					<div class="col-sm-12 col-md-12" *ngIf="this.vehicleRegistrationForm.get('formStatus').value == 'DRAFT'">
 						<button type="button" class=" pull-right" mat-raised-button color="primary"
-							(click)="tabIndex = 1">{{'save_and_next' |
+							(click)="onTabChange(1, vehicleDetails, vehicleRegistrationForm,false)">{{'save_and_next' |
 							translate:
 							actionBarKey}}</button>
 						<!-- <button type="button" mat-raised-button color="warn" (click)="resetForm()">{{'clear' | translate: actionBarKey}}</button> -->
 					</div>
-					<div class="col-sm-12 col-md-12" *ngIf="!vehicleRegistrationForm.get('canEdit').value">
+					<div class="col-sm-12 col-md-12" *ngIf="this.vehicleRegistrationForm.get('formStatus').value == 'SUBMITTED'">
 						<button type="button" class=" pull-right" mat-raised-button color="primary"
 							(click)="tabIndex = 1">{{'Next' |
 							translate:actionBarKey}}</button>
 					</div>
 				</div>
+				</form>
 
 			</mat-tab>
 			<!-- end first step -->
 
 			<!-- second step start-->
-			<mat-tab [label]="stepLable2 | translate: translateKey">
-
+			<mat-tab [label]="stepLable2 | translate: translateKey" disabled>
+            <form [formGroup]="ownerDetails">
 				<div class="row stepperMinHeight">
 
 					<mat-form-field class="col-md-4">
 						<input appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" matInput
 							autocomplete="off" maxlength="100" type="text" formControlName="firstName"
 							placeholder="{{'first_name' | translate: translateKey}}" required>
-						<control-messages [control]="vehicleRegistrationForm.get('firstName')"></control-messages>
+						<control-messages [control]="ownerDetails.get('firstName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -177,13 +179,13 @@
 						<input appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" matInput
 							autocomplete="off" maxlength="100" type="text" formControlName="lastName"
 							placeholder="{{'last_name' | translate: translateKey}}" required>
-						<control-messages [control]="vehicleRegistrationForm.get('lastName')"></control-messages>
+						<control-messages [control]="ownerDetails.get('lastName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" type="text" OnlyNumber minlength="12" maxlength="12"
 							formControlName="aadhaarNo" placeholder="{{'aadhaar_no' | translate: translateKey}}">
-						<control-messages [control]="vehicleRegistrationForm.get('aadhaarNo')"></control-messages>
+						<control-messages [control]="ownerDetails.get('aadhaarNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -191,13 +193,13 @@
 						<input matInput type="tel" autocomplete="off" OnlyNumber formControlName="mobileNo"
 							minlength="10" maxlength="10" placeholder="{{'mobile_no' | translate: translateKey}}"
 							required>
-						<control-messages [control]="vehicleRegistrationForm.get('mobileNo')"></control-messages>
+						<control-messages [control]="ownerDetails.get('mobileNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" maxlength="100" appPreventSpace
 							placeholder="{{'email' | translate:translateKey}}" type="email" formControlName="email">
-						<control-messages [control]="vehicleRegistrationForm.get('email')"></control-messages>
+						<control-messages [control]="ownerDetails.get('email')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="wardZoneMst">
@@ -207,7 +209,7 @@
 								{{wardNo.wardzoneName}}
 							</ng-option>
 						</ng-select>
-						<mat-error *ngIf="vehicleRegistrationForm.get('wardZoneMst').touched && vehicleRegistrationForm.get('wardZoneMst').get('wardzoneId').value == null">
+						<mat-error *ngIf="ownerDetails.get('wardZoneMst').touched && ownerDetails.get('wardZoneMst').get('wardzoneId').value == null">
 							{{"Ward is Required"}}
 						</mat-error>
 						<!-- <control-messages [control]="vehicleRegistrationForm.get('wardZoneMst').get('wardzoneId')">
@@ -218,7 +220,7 @@
 
 					<h2>{{'office_address' | translate: translateKey}}</h2>
 					<app-address #address [requiredFeilds]="true"
-						[addressFormGroup]="vehicleRegistrationForm.get('address')"></app-address>
+						[addressFormGroup]="ownerDetails.get('address')"></app-address>
 
 				</div>
 
@@ -228,23 +230,23 @@
 							(click)="tabIndex = 0">{{'back' |
 							translate: actionBarKey}}</button>
 						<button type="button" mat-raised-button class="pull-right" color="primary"
-							*ngIf="vehicleRegistrationForm.get('canEdit').value"
-							(click)="tabIndex = 2">{{'save_and_next' | translate:
+							*ngIf="this.vehicleRegistrationForm.get('formStatus').value == 'DRAFT'"
+							(click)="onTabChange(2, ownerDetails, vehicleRegistrationForm, false)">{{'save_and_next' | translate:
 							actionBarKey}}</button>
 						<button type="button" class="pull-right" mat-raised-button color="primary"
-							*ngIf="!vehicleRegistrationForm.get('canEdit').value" (click)="tabIndex = 2">{{'Next' |
+							*ngIf="this.vehicleRegistrationForm.get('formStatus').value == 'SUBMITTED'" (click)="tabIndex = 2">{{'Next' |
 							translate:actionBarKey}}</button>
 
 						<!-- <button type="button" mat-raised-button color="warn" (click)="resetForm()">{{'clear' | translate: actionBarKey}}</button> -->
 					</div>
 				</div>
-
+            </form>
 			</mat-tab>
 			<!-- second step end-->
 
 			<!-- third step start-->
-			<mat-tab [label]="stepLable3 | translate: translateKey">
-
+			<mat-tab [label]="stepLable3 | translate: translateKey" disabled>
+            <form [formGroup]="taxDetails">
 				<div class="row stepperMinHeight">
 
 					<div class="col-md-4 ngSelect" formGroupName="billingPeriod">
@@ -253,7 +255,7 @@
 							<ng-option *ngFor="let billingPeriod of billingPeriodArray" [value]="billingPeriod.code">
 								{{billingPeriod.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="vehicleRegistrationForm.get('billingPeriod').get('code')">
+						<control-messages [control]="taxDetails.get('billingPeriod').get('code')">
 						</control-messages>
 					</div>
 
@@ -261,7 +263,7 @@
 						<input type="text" matInput autocomplete="off" maxlength="50" OnlyNumber
 							formControlName="vehicleApplicableRate"
 							placeholder="{{'applicable_tax' | translate: translateKey }}" required>
-						<control-messages [control]="vehicleRegistrationForm.get('vehicleApplicableRate')">
+						<control-messages [control]="taxDetails.get('vehicleApplicableRate')">
 						</control-messages>
 					</mat-form-field>
 
@@ -269,14 +271,14 @@
 						<input type="text" matInput autocomplete="off" maxlength="50" OnlyNumber
 							formControlName="vehicleTax"
 							placeholder="{{'applicable_rate_(%)' | translate: translateKey }}" required>
-						<control-messages [control]="vehicleRegistrationForm.get('vehicleTax')"></control-messages>
+						<control-messages [control]="taxDetails.get('vehicleTax')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input type="text" matInput autocomplete="off" maxlength="5" OnlyNumber
 							formControlName="tokenFees" placeholder="{{'token_fees' | translate: translateKey }}"
 							required>
-						<control-messages [control]="vehicleRegistrationForm.get('tokenFees')"></control-messages>
+						<control-messages [control]="taxDetails.get('tokenFees')"></control-messages>
 					</mat-form-field>
 
 					<!-- <mat-form-field class="col-md-4">
@@ -297,7 +299,7 @@
 						<input type="text" matInput autocomplete="off" maxlength="50" OnlyNumber
 							formControlName="totalPayable" placeholder="{{'total_payble' | translate: translateKey }}"
 							required>
-						<control-messages [control]="vehicleRegistrationForm.get('totalPayable')"></control-messages>
+						<control-messages [control]="taxDetails.get('totalPayable')"></control-messages>
 					</mat-form-field>
 
 					<!-- <mat-form-field class="col-md-4">
@@ -317,11 +319,11 @@
 							(click)="tabIndex = 1">{{'back' |
 							translate: actionBarKey}}</button>
 						<button type="button" mat-raised-button class="pull-right" color="primary"
-							*ngIf="vehicleRegistrationForm.get('canEdit').value"
-							(click)="tabIndex = 3">{{'save_and_next' | translate:
+							*ngIf="this.vehicleRegistrationForm.get('formStatus').value == 'DRAFT'"
+							(click)="onTabChange(3, taxDetails, vehicleRegistrationForm, false)">{{'save_and_next' | translate:
 							actionBarKey}}</button>
 						<button type="button" class="pull-right" mat-raised-button color="primary"
-							*ngIf="!vehicleRegistrationForm.get('canEdit').value" (click)="tabIndex = 3">{{'Next' |
+							*ngIf="this.vehicleRegistrationForm.get('formStatus').value == 'SUBMITTED'" (click)="tabIndex = 3">{{'Next' |
 							translate:actionBarKey}}</button>
 						<!-- <button [disabled]="!isSubmitBtnVisible" mat-raised-button class="pull-right" color="success" (click)="onSubmit()">{{'submit'
 							| translate:
@@ -331,9 +333,10 @@
 				</div>
 				<!-- <button *ngIf="makePaymentBtn" mat-raised-button color="success" (click)="processPayment()">{{'process_payment' |
 						translate: actionBarKey}}</button> -->
+			</form>
 			</mat-tab>
 
-			<mat-tab>
+			<mat-tab disabled>
 				<ng-template mat-tab-label>
 					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
@@ -343,7 +346,7 @@
 					{{'File size more than 2 MB not allowed, Upload only JPG,PNG JPEG and PDF file.' |
 					translate:translateKey}}
 				</div>
-
+                <form [formGroup]="vehicleRegistrationForm">
 				<div class="row">
 					<div class="col-md-4" *ngFor="let doc of attachmentList">
 						<div *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButton">
@@ -362,12 +365,14 @@
 						<button type="button" class="pull-left" color="primary" type="button" mat-raised-button
 							(click)="tabIndex = 2">{{'back' | translate:actionBarKey}}</button>
 						<!-- <button *ngIf="isDeleteBtnShow" class="pull-right" mat-raised-button color="success" (click)="onSubmit()">{{'submit' | translate:actionBarKey}}</button> -->
-						<button [disabled]="vehicleRegistrationForm.get('canSubmit').value == false" mat-raised-button
-							class="pull-right" color="success" (click)="onSubmit()">{{'submit' | translate:
-							actionBarKey}}</button>
+						<ng-container *ngIf="this.vehicleRegistrationForm.get('formStatus').value == 'DRAFT'">
+							<button [disabled]="this.vehicleRegistrationForm.get('canEdit').value == false" mat-raised-button 
+								class="pull-right" color="success" (click)="onSubmit()">{{'submit' | translate:
+								actionBarKey}}</button>
+						</ng-container>
 					</div>
 				</div>
-
+            </form>
 			</mat-tab>
 			<!-- third step end-->
 
@@ -436,7 +441,7 @@
 			<!-- fourth step end-->
 
 		</mat-tab-group>
-	</form>
+	<!-- </form> -->
 </mat-card>
 
 <ng-template #template>
