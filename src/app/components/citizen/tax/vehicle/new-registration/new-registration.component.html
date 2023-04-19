@@ -48,7 +48,7 @@
 							</control-messages>
 						</mat-form-field> -->
 
-					<div class="col-md-4 ngSelect" formGroupName="vehicleType">vehicle_type
+					<div class="col-md-4 ngSelect" formGroupName="vehicleType">
 						<ng-select placeholder="{{'vehicleType' | translate: translateKey}}" formControlName="code">
 							<ng-option *ngFor="let vehicleType of vehicleTypeArray" [value]="vehicleType.code">
 								{{vehicleType.name}}</ng-option>
