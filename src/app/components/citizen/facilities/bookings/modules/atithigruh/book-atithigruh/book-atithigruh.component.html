@@ -509,7 +509,7 @@
 
             <mat-tab-group mat-stretch-tabs dynamicHeight="true" [(selectedIndex)]="tabIndex" class="stepperNav">
 
-                <mat-tab>
+                <mat-tab disabled>
                     <ng-template mat-tab-label>
                         <div>{{'applicant_details' | translate:stadiumTranslateKey}}</div>
                     </ng-template>
@@ -522,13 +522,13 @@
                         <mat-form-field class="col-md-4">
                             <input matInput maxlength="50" appValidationFields
                                 [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="applicantName"
-                                placeholder="{{'applicant_name' | translate: stadiumTranslateKey}}">
+                                placeholder="{{'applicant_name' | translate: stadiumTranslateKey}}" required>
                             <control-messages [control]="applicationDetails.get('applicantName')"></control-messages>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
                             <input matInput OnlyNumber  minlength="10" maxlength="10" formControlName="applicantMobileNo"
-                                placeholder="{{'applicant_mobile' | translate: stadiumTranslateKey}}">
+                                placeholder="{{'applicant_mobile' | translate: stadiumTranslateKey}}" required>
                             <control-messages [control]="applicationDetails.get('applicantMobileNo')"></control-messages>
                         </mat-form-field>
 
@@ -546,7 +546,7 @@
 
                         <mat-form-field class="col-md-4">
                             <input matInput type="email" disabled formControlName="applicantEmailID"
-                                placeholder="{{'applicant_email' | translate: stadiumTranslateKey}}">
+                                placeholder="{{'applicant_email' | translate: stadiumTranslateKey}}" required>
                             <control-messages [control]="applicationDetails.get('applicantEmailID')"></control-messages>
                         </mat-form-field>
 
@@ -611,7 +611,7 @@
                 </form>
                 </mat-tab>
 
-                <mat-tab>
+                <mat-tab disabled>
                     <ng-template mat-tab-label>
                         <div>{{'bank_details' | translate:stadiumTranslateKey}}</div>
                     </ng-template>
