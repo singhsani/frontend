@@ -310,16 +310,16 @@
 
 <div [hidden]="!showChildrenTheaterApplicationForm">
     <mat-card class="formClass cardBorder">
-        <form [formGroup]="childrenTheaterApplicationForm" (ngSubmit)="submitStadiumApplication()">
+        <!-- <form [formGroup]="childrenTheaterApplicationForm" (ngSubmit)="submitStadiumApplication()"> -->
 
             <mat-tab-group mat-stretch-tabs dynamicHeight="true" [(selectedIndex)]="tabIndex" class="stepperNav">
 
-                <mat-tab>
+                <mat-tab disabled>
 
                     <ng-template mat-tab-label>
                         <div>{{'organization_details' | translate:translateKey}}</div>
                     </ng-template>
-
+                    <form [formGroup]="organizationdetails"> 
                     <!-- <h2>
                         {{'organization_details' | translate:translateKey}}
                     </h2> -->
@@ -328,25 +328,25 @@
                         <mat-form-field class="col-md-6">
                             <input  matInput  appValidationFields [validationFieldsType]="'onlyNameWithSpace'" maxlength="100" type="text" formControlName="organizationName" placeholder="{{'organization_name' | translate: translateKey}}"
                                 required>
-                            <control-messages [control]="childrenTheaterApplicationForm.get('organizationName')"></control-messages>
+                            <control-messages [control]="organizationdetails.get('organizationName')"></control-messages>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-6">
                             <input matInput OnlyNumber minlength="10" maxlength="11" formControlName="orgTelephoneNo" placeholder="{{'org_telephone_no' | translate: translateKey}}"
                                 required>
-                            <control-messages [control]="childrenTheaterApplicationForm.get('orgTelephoneNo')"></control-messages>
+                            <control-messages [control]="organizationdetails.get('orgTelephoneNo')"></control-messages>
                         </mat-form-field>
 
                         <h2>
                             {{'organization_address' | translate:translateKey}}
                         </h2>
 
-                        <app-address #address [requiredFeilds]="true" [addressFormGroup]="childrenTheaterApplicationForm.get('organizationAddress')"></app-address>
+                        <app-address #address [requiredFeilds]="true" [addressFormGroup]="organizationdetails.get('organizationAddress')"></app-address>
 
                         <mat-form-field class="col-md-12">
                             <textarea matInput type="text" maxlength="200" formControlName="programPurpose" placeholder="{{'program_purpose' | translate: translateKey}}"
                                 required></textarea>
-                            <control-messages [control]="childrenTheaterApplicationForm.get('programPurpose')"></control-messages>
+                            <control-messages [control]="organizationdetails.get('programPurpose')"></control-messages>
                         </mat-form-field>
                     </div>
 
@@ -355,31 +355,33 @@
                     </h2> -->
                     <div class="row mt-4 fotButtonBar">
                         <div class="col-sm-12 col-md-12 text-right">
-                            <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">
+                            <button mat-raised-button type="button" color="primary" 
+                            (click)="checkValidation(organizationdetails,false)">
                                 {{'next'| translate:translateKey}}
                                 <mat-icon>navigate_next</mat-icon>
                             </button>
                         </div>
                     </div>
+                   </form> 
 
                 </mat-tab>
 
-                <mat-tab>
+                <mat-tab disabled>
                     <ng-template mat-tab-label>
                         <div>{{'applicant_details' | translate:translateKey}}</div>
                     </ng-template>
-
+                    <form [formGroup]="applicantdetails">
                     <div class="row">
                         <mat-form-field class="col-md-4">
                             <input matInput maxlength="100" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="applicantName"
                                 placeholder="{{'applicant_name' | translate: translateKey}}" required (change)="onSameApplicantHolderName(childrenTheaterApplicationForm.get('applicantName'))">
-                            <control-messages [control]="childrenTheaterApplicationForm.get('applicantName')"></control-messages>
+                            <control-messages [control]="applicantdetails.get('applicantName')"></control-messages>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
                             <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobile" placeholder="{{'applicant_mobile' | translate: translateKey}}"
                                 required>
-                            <control-messages [control]="childrenTheaterApplicationForm.get('applicantMobile')"></control-messages>
+                            <control-messages [control]="applicantdetails.get('applicantMobile')"></control-messages>
                         </mat-form-field>
 
                         <!-- <div class="col-md-4">
@@ -395,7 +397,7 @@
 
                         <mat-form-field class="col-md-4">
                             <input matInput type="email" appPreventSpace maxlength="50" formControlName="emailId" placeholder="{{'applicant_email' | translate: translateKey}}" required>
-                            <control-messages [control]="childrenTheaterApplicationForm.get('emailId')"></control-messages>
+                            <control-messages [control]="applicantdetails.get('emailId')"></control-messages>
                         </mat-form-field>
 
                         <!-- <div class="col-md-4">
@@ -412,21 +414,21 @@
                       <div class="col-md-4">
                         <mat-form-field>
                           <input matInput type="text" formControlName="panCard" autocomplete="off" class="capitalCase" maxlength="10" minlength="10"  placeholder="{{'pancard' | translate : translateKey}}" required >
-                          <control-messages [control]="childrenTheaterApplicationForm.get('panCard')"></control-messages>
+                          <control-messages [control]="applicantdetails.get('panCard')"></control-messages>
                         </mat-form-field>
                       </div>
 
                       <div class="col-md-4">
                         <mat-form-field>
                           <input  matInput type="text" minlength="15" maxlength="15"  formControlName="gstNo" placeholder="{{'gstNo' | translate : translateKey}}" >
-                          <control-messages [control]="childrenTheaterApplicationForm.get('gstNo')"></control-messages>
+                          <control-messages [control]="applicantdetails.get('gstNo')"></control-messages>
                         </mat-form-field>
                       </div>
 
                         <mat-form-field class="col-md-4">
                             <input matInput type="text" maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="relationshipWithOrg"
                                 placeholder="{{'relationship_with_org' | translate: translateKey}}" required>
-                            <control-messages [control]="childrenTheaterApplicationForm.get('relationshipWithOrg')"></control-messages>
+                            <control-messages [control]="applicantdetails.get('relationshipWithOrg')"></control-messages>
                         </mat-form-field>
                     </div>
 
@@ -436,16 +438,16 @@
                                 <mat-icon>navigate_before</mat-icon>
                                 {{'back' | translate:translateKey}}
                             </button>
-                            <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">
+                            <button mat-raised-button type="button" color="primary" (click)="checkValidation(applicantdetails,false)">
                                 {{'next'| translate:translateKey}}
                                 <mat-icon>navigate_next</mat-icon>
                             </button>
                         </div>
                     </div>
-
+                    </form>
                 </mat-tab>
 
-                <mat-tab>
+                <mat-tab disabled>
                     <ng-template mat-tab-label>
                         <div>{{'bank_details' | translate:translateKey}}</div>
                     </ng-template>
@@ -453,14 +455,15 @@
                     <h2>
                         {{'bank_details' | translate:translateKey}}
                     </h2>
-
-                    <bank-details [form]="childrenTheaterApplicationForm"></bank-details>
-
+                    <form [formGroup]="bookingDetails">
+                    <bank-details [form]="bookingDetails"></bank-details>
+                </form>
+                <form [formGroup]="childrenTheaterApplicationForm">
                     <div class="row">
                         <div class="col-md-6">
                             <label labelPosition="after">{{'school_or_institute_letter' | translate:translateKey}}
                                 <span class="mandatory">*</span></label>
-                            <booking-file-upload (uploaded)="isFileUploaded = $event" [form]="childrenTheaterApplicationForm" [uploadModel]="{dmsUpload:true,fieldIdentifier:'1', labelName:'school or institute letter', formPart:'1.1', refNumber:
+                            <booking-file-upload (uploaded)="isFileUploaded = $event" [form]="bookingDetails" [uploadModel]="{dmsUpload:true,fieldIdentifier:'1', labelName:'school or institute letter', formPart:'1.1', refNumber:
                                                                          childrenTheaterApplicationForm.get('refNumber').value, bookingFormId : childrenTheaterApplicationForm.get('bookingFormId').value, variableName: 'school_letter'}">
                             </booking-file-upload>
                         </div>
@@ -469,9 +472,9 @@
                             {{'terms_and_conditions' | translate:translateKey }}
                         </h2>
                         <div class="pl-2">
-                            <mat-checkbox class="d-block" labelPosition="after" formControlName="agree">
+                            <mat-checkbox class="d-block" labelPosition="after" formControlName="agree" >
                                 {{'i_agree_with_above_bank_details_are_correct' | translate:translateKey}} </mat-checkbox>
-                            <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition">
+                            <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition" >
                                 {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}} </mat-checkbox>
                         </div>
                     </div>
@@ -482,16 +485,16 @@
                                 <mat-icon>navigate_before</mat-icon>
                                 {{'back' | translate:translateKey}}
                             </button>
-                            <button mat-raised-button color="primary" type="submit">
+                            <button mat-raised-button color="primary" type="submit" (click)="checkValidation(bookingDetails,true)">
                                 <mat-icon>check_circle_outline</mat-icon>
                                 {{'submit_application'| translate: translateKey}}
                             </button>
                         </div>
                     </div>
-
+                </form>
                 </mat-tab>
             </mat-tab-group>
-        </form>
+        <!-- </form> -->
     </mat-card>
 </div>
 
