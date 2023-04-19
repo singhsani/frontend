@@ -224,6 +224,7 @@ export class AnimalAdoptionComponent implements OnInit {
    }
 
     this.animalName['totalQty'] = this.animalAdoptionForm.get('noOfAdoptionCount').value;
+    this.animalName['noOfYear'] = this.animalAdoptionForm.get('adoptionYears').value;
     this.animalName.totalExpenses = this.animalAdoptionForm.get('totalAdoptionCost').value;
     if (this.animalAdoptionForm.get('canEdit').value) {
       returnArray.push(this.createOTDetailArray(this.animalName));
@@ -265,6 +266,7 @@ export class AnimalAdoptionComponent implements OnInit {
       annualMaintainanceExpenses: data.annualMaintainanceExpenses ? data.annualMaintainanceExpenses : null,
       totalExpenses: data.totalExpenses ? data.totalExpenses : null,
       totalQty: data.totalQty ? data.totalQty : null,
+      noOfYear : data.noOfYear ? data.noOfYear :null,
 
     })
 
