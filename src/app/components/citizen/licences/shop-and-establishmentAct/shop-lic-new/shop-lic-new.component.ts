@@ -1633,7 +1633,7 @@ export class ShopLicNewComponent implements OnInit {
 			}
 
 		
-			if(this.totalNoOfWomanForDocu > 0 && count == 0){
+			if(this.totalNoOfWomanForDocu > 0){
 					comonDocument.push({
 						
 								documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
