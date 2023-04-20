@@ -139,7 +139,7 @@
 			<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
 				<!-- Tab 1 Starts -->
-				<mat-tab #tab1>
+				<mat-tab #tab1 disabled>
 					<ng-template mat-tab-label>
 						<div>{{'general_details' | translate:translateKey}}</div>
 					</ng-template>
@@ -247,7 +247,7 @@
 				<!-- Tab 1 Ends -->
 
 				<!-- Tab 2 for applicant details -->
-				<mat-tab #tab2>
+				<mat-tab #tab2 disabled>
 
 					<ng-template mat-tab-label>
 						<div>{{'applicant_details' | translate:translateKey}}</div>
@@ -290,7 +290,7 @@
 							<input matInput [max]="maxBirthdate" autocomplete="off" appDate [min]="minBirthDate"
 								[matDatepicker]="datepicker" [min]="minBirthDate" formControlName="applicantBirthDate"
 								placeholder="{{ 'date_of_birth' | translate:translateKey }} (DD/MM/YYYY)" required
-								(dateChange)="dateFormat2($event.value,'applicantBirthDate');calculateAge($event.value)">
+								(dateChange)="dateFormat2($event.value,'applicantBirthDate');calculateAge($event.value)" [readonly]="true">
 							<mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
 							<mat-datepicker #datepicker touchUi="true"></mat-datepicker>
 							<div align="end" class="default-show-hint mat-hint mat-right">
@@ -425,7 +425,7 @@
 
 
 				<!-- step Attachment Starts -->
-				<mat-tab #tab3>
+				<mat-tab #tab3 disabled>
 					<ng-template mat-tab-label>
 						<div>{{'attachment' | translate: translateKey}}</div>
 					</ng-template>
