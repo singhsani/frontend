@@ -95,7 +95,7 @@ export class ValidationService {
 
     static telPhoneNumberValidator(control: FormControl) {
         if (control.value) {
-            const matches = control.value.match(/^[0-9]{10}$/); 
+            const matches = control.value.match(/^[0-9]{10,11}$/); 
             return matches ? null : { 'invalidTelPhoneNumber': true }
         }
     }
