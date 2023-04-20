@@ -24,6 +24,8 @@ export class MuttonFishRenewalComponent implements OnInit {
 	@ViewChild('permanantAddressEstablishment') permanantAddressEstablishment: any;
 
 	muttonFishRenewalForm: FormGroup;
+	applicantDetials : FormGroup;
+	businessDetail :FormGroup;
 	translateKey: string = 'muttonFisheRenewScreen';
 	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
 
@@ -131,14 +133,13 @@ export class MuttonFishRenewalComponent implements OnInit {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		this.formService.createFormData().subscribe(res => {
 			this.formId = res.serviceFormId;
-			this.muttonFishRenewalForm.patchValue(searchData);
-
+			//this.muttonFishRenewalForm.patchValue(searchData);
 			this.muttonFishRenewalForm.patchValue({
 				id: res.id,
 				uniqueId: res.uniqueId,
 				version: res.version,
 				serviceFormId: res.serviceFormId,
-				refNumber: this.serachLicenceObj.searchLicenceNumber,
+				//refNumber: this.serachLicenceObj.searchLicenceNumber,
 				createdDate: res.createdDate,
 				updatedDate: res.createdDate,
 				serviceType: res.serviceType,
@@ -168,13 +169,41 @@ export class MuttonFishRenewalComponent implements OnInit {
 				attachments: []
 			});
 
+			this.applicantDetials.patchValue({
+				refNumber: this.serachLicenceObj.searchLicenceNumber,
+				licenseIssueDate: searchData.licenseIssueDate,
+			    licenseType: searchData.licenseType.code,
+				personType: searchData.personType,
+				holderFirstName: searchData.holderFirstName,
+				holderMiddleName: searchData.holderMiddleName,
+				holderLastName:  searchData.holderLastName,
+				holderFirstNameGuj: searchData.holderFirstNameGuj,
+				holderMiddleNameGuj: searchData.holderMiddleNameGuj,
+				holderLastNameGuj: searchData.holderLastNameGuj,
+				permanantAddress: searchData.permanantAddress,
+				temporaryAddress: searchData.temporaryAddress,
+				holderTelephoneNo: searchData.holderTelephoneNo,
+				holderMobileNo: searchData.holderMobileNo,
+				holderFaxNo: searchData.holderFaxNo,
+				holderAadharNo: searchData.holderAadharNo,
+				holderPanNo: searchData.holderPanNo,
+			})
+
+			this.businessDetail.patchValue({
+				zoneNo: searchData.zoneNo,
+				wardNo: searchData.wardNo,
+				businessAddress: searchData.businessAddress,
+				statusOfBusinessId:searchData.statusOfBusinessId.code,
+				relationshipList: searchData.relationshipList,
+			})
+
 			this.licenseConfiguration.isAttachmentButtonsVisible = true;
 
-			(<FormArray>this.muttonFishRenewalForm.get('relationshipList')).controls = [];
+			(<FormArray>this.businessDetail.get('relationshipList')).controls = [];
 			searchData.relationshipList.forEach(app => {
 				app.id = null;
 				app.serviceFormId = null;
-				(<FormArray>this.muttonFishRenewalForm.get('relationshipList')).push(this.createArray(app));
+				(<FormArray>this.businessDetail.get('relationshipList')).push(this.createArray(app));
 			});
 
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
@@ -212,6 +241,8 @@ export class MuttonFishRenewalComponent implements OnInit {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.muttonFishRenewalForm.patchValue(res);
+				this.applicantDetials.patchValue(res);
+				this.businessDetail.patchValue(res);
 				this.isdisableMode = res.canEdit;
 				if(res.relationshipList.length == 0 && res.canEdit==false){
 					this.istable = false;
@@ -219,10 +250,10 @@ export class MuttonFishRenewalComponent implements OnInit {
 					this.istable = true;
 				}
 				this.licenseConfiguration.isAttachmentButtonsVisible = true;
-				this.onChangeZone(this.muttonFishRenewalForm.get('zoneNo').value.code);
+				this.onChangeZone(this.businessDetail.get('zoneNo').value.code);
 				//	this.onChangeWard(this.muttonFishRenewalForm.get('wardNo').value.code);
-				if (this.muttonFishRenewalForm.get('statusOfBusinessId').value.code) {
-					this.onChangeStatusOfBusiness(this.muttonFishRenewalForm.get('statusOfBusinessId').value.code)
+				if (this.businessDetail.get('statusOfBusinessId').value.code) {
+					this.onChangeStatusOfBusiness(this.businessDetail.get('statusOfBusinessId').value.code)
 				}
 
 				this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
@@ -239,13 +270,13 @@ export class MuttonFishRenewalComponent implements OnInit {
 				}
 
 				res.relationshipList.forEach(app => {
-					(<FormArray>this.muttonFishRenewalForm.get('relationshipList')).push(this.createArray(app));
+					(<FormArray>this.businessDetail.get('relationshipList')).push(this.createArray(app));
 				});
 				// this.muttonFishRenewalForm.disable();
 				this.enableFielList();
 
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
-					(<FormArray>this.muttonFishRenewalForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
+					(<FormArray>this.businessDetail.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 				});
 
 				//this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishRenewalForm);
@@ -352,11 +383,10 @@ export class MuttonFishRenewalComponent implements OnInit {
 	* 'Guj' control is consider as a Gujarati fields
 	*/
 	muttonFishRenewalFormControls() {
-		this.muttonFishRenewalForm = this.fb.group({
-			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			serviceCode: 'MF-LIC',
+		/* Step 1 controls start */
+		this.applicantDetials = this.fb.group({
 			refNumber: [null],
-			/* Step 1 controls start */
+			licenseIssueDate: [null],
 			licenseType: this.fb.group({
 				code: [null, [Validators.required]]
 			}),
@@ -364,10 +394,10 @@ export class MuttonFishRenewalComponent implements OnInit {
 				code: [null, [Validators.required]]
 			}),
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30)]],
-			holderMiddleName: [null, [ Validators.maxLength(30)]],
+			holderMiddleName: [null, [Validators.maxLength(30)]],
 			holderLastName: [null, [Validators.required, Validators.maxLength(30)]],
 			holderFirstNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
-			holderMiddleNameGuj: [null, [ Validators.maxLength(90)]],
+			holderMiddleNameGuj: [null, [Validators.maxLength(90)]],
 			holderLastNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
 
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
@@ -378,9 +408,14 @@ export class MuttonFishRenewalComponent implements OnInit {
 			holderFaxNo: [null, [Validators.maxLength(12)]],
 			holderAadharNo: [null, [Validators.required, Validators.maxLength(12)]],
 			holderPanNo: [null, [Validators.required, Validators.maxLength(10)]],
-			/* Step 1 controls end */
+			isSameAsPermanantAddress: this.fb.group({
+				code: null
+			}),
+		})
+		/* Step 1 controls end */
 
-			/* Step 2 controls start */
+		/* Step 2 controls start */
+		this.businessDetail = this.fb.group({
 			zoneNo: this.fb.group({ code: [null, Validators.required] }),
 			wardNo: this.fb.group({ code: [null, Validators.required] }),
 			//blockNo: this.fb.group({ code: [null, Validators.required] }),
@@ -392,21 +427,23 @@ export class MuttonFishRenewalComponent implements OnInit {
 			statusOfBusinessId: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			/* Step 2 controls end */
-
-			/* Step 3 controls start */
 			relationshipList: this.fb.array([]),
-			/* Step 3 controls end */
+		})
+		/* Step 2 controls end */
 
+		this.muttonFishRenewalForm = this.fb.group({
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+			serviceCode: 'MF-LIC',
 			applicationDate: [],
-			licenseIssueDate: [null],
 			licenseRenewalDate: [null],
 			loinumber: [null],
-
 			/* Step 4 controls start*/
 			attachments: []
 			/* Step 4 controls end */
 		});
+		/** Method is used to copy local contoller to Main contoller **/
+		this.commonService.createCloneAbstractControl(this.applicantDetials, this.muttonFishRenewalForm);
+		this.commonService.createCloneAbstractControl(this.businessDetail, this.muttonFishRenewalForm);
 	}
 
 	/**
@@ -431,7 +468,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 	 */
 	addItem() {
 		let returnArray: any;
-		returnArray = this.muttonFishRenewalForm.get('relationshipList') as FormArray;
+		returnArray = this.businessDetail.get('relationshipList') as FormArray;
 		return returnArray;
 	}
 
@@ -440,7 +477,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 	 */
 	addMorePerson() {
 		// let relationshipIdValue = this.muttonFishRenewalForm.get('relationshipId').value.code;
-		let relationshipIdValue = this.muttonFishRenewalForm.get('statusOfBusinessId').value.code;
+		let relationshipIdValue = this.businessDetail.get('statusOfBusinessId').value.code;
 		if (!relationshipIdValue) {
 			this.toastrService.warning("Please select relationship of applicant first.");
 			return false;
@@ -581,24 +618,24 @@ export class MuttonFishRenewalComponent implements OnInit {
 
 	onSameAddressChange(event){
 		if(event.checked){
-			this.muttonFishRenewalForm.get('temporaryAddress').patchValue(this.muttonFishRenewalForm.get('permanantAddress').value);
-			this.muttonFishRenewalForm.get('temporaryAddress').disable();
+			this.applicantDetials.get('temporaryAddress').patchValue(this.applicantDetials.get('permanantAddress').value);
+			this.applicantDetials.get('temporaryAddress').disable();
 			this.checkboxValue = true;
 		}else{
-			this.muttonFishRenewalForm.get('temporaryAddress').enable();
-			this.muttonFishRenewalForm.get('temporaryAddress').reset();
+			this.applicantDetials.get('temporaryAddress').enable();
+			this.applicantDetials.get('temporaryAddress').reset();
 			this.checkboxValue = false;
 		}
 	}
 
 	disableField(){
-		this.muttonFishRenewalForm.get('refNumber').disable();
-		this.muttonFishRenewalForm.get('licenseIssueDate').disable();
+		this.applicantDetials.get('refNumber').disable();
+		this.applicantDetials.get('licenseIssueDate').disable();
 	}
 
 	valueChangeOnPermantAddress(){
 		if(this.checkboxValue){
-			this.muttonFishRenewalForm.get('temporaryAddress').patchValue(this.muttonFishRenewalForm.get('permanantAddress').value);
+			this.applicantDetials.get('temporaryAddress').patchValue(this.applicantDetials.get('permanantAddress').value);
 		}
 	}
 }

@@ -15,7 +15,7 @@ export class LicenseConfiguration extends ComponentConfig {
         if (controlName.invalid) {
             this.getInvalidFormControlKey(controlName)
         } else {
-            const organizationalAry = Object.keys(controlName.value);
+            const organizationalAry = Object.keys(controlName.getRawValue());
             organizationalAry.forEach((element:any) => {
                    // push form Array data into main Controller
                 if (controlName.get(element) instanceof FormArray) {
