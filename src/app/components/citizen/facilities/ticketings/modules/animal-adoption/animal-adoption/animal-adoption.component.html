@@ -286,6 +286,7 @@
                   <th scope="col" width="56">{{'Sr.No'| translate: translateKey}}</th>
                   <th scope="col">{{'Animal BirdName'| translate: translateKey}}</th>
                   <th scope="col">{{'No of Count'| translate: translateKey}}</th>
+                  <th scope="col">{{'No of Adoption Year'| translate: translateKey}}</th>
                   <th scope="col">{{'Total Expenses'| translate: translateKey}}</th>
 
                   <th scope="col" *ngIf="animalAdoptionForm.get('canEdit').value">{{'Action'| translate: translateKey}}
@@ -297,8 +298,9 @@
                   [formGroupName]="i">
                   <th scope="row">{{i+1}}</th>
                   <td>{{item.get('animalBirdName').value}}</td>
-                  <td>{{item.get('totalQty').value}}</td>
-                  <td>{{item.get('totalExpenses').value}}</td>
+                  <td class="td">{{item.get('totalQty').value}}</td>
+                  <td class="td">{{item.get('noOfYear').value}}</td>
+                  <td class="td">{{item.get('totalExpenses').value}}</td>
                   <td *ngIf="animalAdoptionForm.get('canEdit').value">
                     <button type="button" mat-icon-button (click)="deleteOT(item.value, i)" class="m-1">
                       <mat-icon matTooltip="Delete" color="warn">delete</mat-icon>
@@ -333,7 +335,7 @@
       <select-payment-gateway #paymentGateway [applicationType]="'Zooticketing'"></select-payment-gateway>
     </form>
 
-    <div class="row mt-4 fotButtonBar">
+    <div class="row mt-4 fotButtonBar1">
       <div class="col-sm-12 col-md-12 justify-content-between d-flex">
         <button type="button" color="primary" mat-raised-button
           (click)="showAnimalAdoptionPricingTable = true; showAnimalAdoptionForm = false;">

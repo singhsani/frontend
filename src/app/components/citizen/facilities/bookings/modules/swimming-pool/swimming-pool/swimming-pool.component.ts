@@ -470,6 +470,8 @@ export class SwimmingPoolComponent implements OnInit {
     // this.applicantagedays = bday.diff(bday.add(this.applicantageyear, 'years'), 'days', false);
     this.applicantDetail.get('applicantBirthDate').setValue(this.generalDetails.get('birthDate').value)
     this.applicantDetail.get("applicantAge").setValue(this.applicantageyear);
+    this.applicantDetail.get('applicantBirthDate').disable()
+    this.applicantDetail.get("applicantAge").disable()
     if (this.applicantageyear <= 18) {
       this.isApplicateAgeGreaterThanEighteen = true;
     }
@@ -783,7 +785,7 @@ export class SwimmingPoolComponent implements OnInit {
 		if(controlName.invalid){
 			this.handleErrorsOnSubmit(controlName)
 		}else{
-			const organizationalAry = Object.keys(controlName.value);
+			const organizationalAry = Object.keys(controlName.getRawValue());
 			organizationalAry.forEach(element => {
 				this.swimmimgPoolBookingForm.get(element).setValue(controlName.get(element).value);
 			});
@@ -811,8 +813,9 @@ export class SwimmingPoolComponent implements OnInit {
 	}
 
   setFormControlToTabIndexMap() {
+    //index0
+    this.formControlNameToTabIndex.set("birthDate", 0);
 		// index 1
-	
 		this.formControlNameToTabIndex.set("applicantMobileNumber", 1);
     this.formControlNameToTabIndex.set("applicantName", 1);
 		this.formControlNameToTabIndex.set("applicantEmergencyNumber", 1);

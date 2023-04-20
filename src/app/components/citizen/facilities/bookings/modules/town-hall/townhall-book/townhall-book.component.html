@@ -507,7 +507,7 @@
 
             <mat-tab-group mat-stretch-tabs dynamicHeight="true" [(selectedIndex)]="tabIndex" class="stepperNav">
 
-                <mat-tab>
+                <mat-tab disabled>
                     <ng-template mat-tab-label>
                         <div>{{'organization_details' | translate:translateKey}}</div>
                     </ng-template>
@@ -526,7 +526,7 @@
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
-                            <input matInput OnlyNumber minlength="11" maxlength="11" formControlName="orgTelephoneNo"
+                            <input matInput OnlyNumber minlength="10" maxlength="11" formControlName="orgTelephoneNo"
                                 placeholder="{{'orgTelephone_no' | translate: translateKey}}" required>
                             <control-messages [control]="organizationDetails.get('orgTelephoneNo')">
                             </control-messages>
@@ -580,7 +580,7 @@
             </form>
                 </mat-tab>
 
-                <mat-tab>
+                <mat-tab disabled>
                     <ng-template mat-tab-label>
                         <div>{{'applicant_details' | translate:translateKey}}</div>
                     </ng-template>
@@ -675,7 +675,7 @@
                 </form>
                 </mat-tab>
 
-                <mat-tab>
+                <mat-tab disabled>
                     <ng-template mat-tab-label>
                         <div>{{'bank_details' | translate:translateKey}}</div>
                     </ng-template>

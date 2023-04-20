@@ -789,7 +789,7 @@
 							<div class="col-md-4"
 								*ngIf="doc.requiredOnCitizenPortal && doc.isActive && licenseConfiguration.isAttachmentButtonsVisible">
 								<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
-									<span *ngIf="doc.mandatory">*</span></label>
+									<span *ngIf="doc.mandatory"  class="mandatory">*</span></label>
 								<file-upload [form]="shopLicTransferForm" [uploadModel]="doc"></file-upload>
 							</div>
 						</ng-container>
