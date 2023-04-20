@@ -96,20 +96,22 @@
       </div>
 
       <div class="row, p-4">
-        <h2>
+        <!-- <h2>
             {{'terms_and_conditions' | translate:translateKey }}
         </h2>
         <div class="pl-2">
             <mat-checkbox class="d-block" labelPosition="after" (change)="termsConditionClick($event)">
                 {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}} </mat-checkbox>
-        </div>
+        </div> -->
+        <mat-checkbox (change)="clickProcess($event)" [checked]="checkProceed"> <b>Agree And Continue</b>
+        </mat-checkbox>
     </div>
     </mat-card-content>
 
     <div class="fotButtonBar">
       <div class="col-sm-12 col-md-12 text-right">
         <button mat-raised-button (click)="guideLineFlag = false; showTheaterSearchForm = true; " color="primary"
-        [disabled]="!theaterBookingForm.get('termsCondition').value">
+        [disabled]="btnProceed">
           <mat-icon>thumb_up_alt</mat-icon>
           {{'proceed_for_application'| translate: translateKey}}
         </button>
@@ -265,7 +267,7 @@
                         <!-- <th scope="col">{{'occupancy'| translate: translateKey}}</th> -->
                         <div *ngIf="selectedShift.length > 1">
                         <th scope="col" width="65">{{'action'| translate: translateKey}}</th>
-                         </div>   
+                         </div>
                     </tr>
                 </thead>
                 <tbody>
@@ -348,156 +350,303 @@
 <!-- Unpaid receipt view ends -->
 
 <!-- Booking Details -->
+<!--<div [hidden]="!showTheaterBookingForm">-->
+<!--    &lt;!&ndash; <mat-card class="cardH1">-->
+<!--        <h1>-->
+<!--            {{'theater_application_form'| translate: translateKey}}-->
+<!--        </h1>-->
+<!--    </mat-card> &ndash;&gt;-->
+<!--    <mat-card class="formClass cardBorder">-->
+<!--        <form [formGroup]="theaterBookingForm" (ngSubmit)="submitTheaterApplication()">-->
+<!--            <mat-tab-group mat-stretch-tabs dynamicHeight="true" [(selectedIndex)]="tabIndex" class="stepperNav">-->
+
+<!--                &lt;!&ndash; Tab 1 for booking details &ndash;&gt;-->
+<!--                <mat-tab>-->
+<!--                    <ng-template mat-tab-label>-->
+<!--                        <div>{{'theater_booking_details' | translate:translateKey}}</div>-->
+<!--                    </ng-template>-->
+
+<!--                    <div class="row">-->
+<!--                        <mat-form-field class="col-md-4">-->
+<!--                            <mat-label>{{'event_date_from' | translate:translateKey}}</mat-label>-->
+<!--                            <input matInput formControlName="eventFromDate" readonly>-->
+<!--                            <control-messages [control]="theaterBookingForm.get('eventFromDate')"></control-messages>-->
+<!--                          </mat-form-field>-->
+
+
+<!--                        <mat-form-field class="col-md-4">-->
+<!--                            <mat-label>{{'event_to_date' | translate:translateKey}}</mat-label>-->
+<!--                            <input matInput formControlName="eventToDate" readonly>-->
+<!--                            <control-messages [control]="theaterBookingForm.get('eventToDate')"></control-messages>-->
+<!--                          </mat-form-field>-->
+
+
+
+<!--                        <mat-form-field class="col-md-4">-->
+<!--                            <mat-label>{{'purpose_of_booking'| translate: translateKey}}</mat-label>-->
+<!--                            <input matInput formControlName="programmePurpose" readonly>-->
+<!--                            <control-messages [control]="theaterBookingForm.get('programmePurpose')"></control-messages>-->
+<!--                          </mat-form-field>-->
+<!--                    </div>-->
+
+<!--                    <h2>-->
+<!--                        {{'organization_details' | translate:translateKey}}-->
+<!--                    </h2>-->
+
+<!--                    <div class="row">-->
+<!--                        <mat-form-field class="col-md-4">-->
+<!--                            <input matInput appValidationFields-->
+<!--                                   [validationFieldsType]="'onlyNameWithSpace'" maxlength="50" type="text" formControlName="organizationName"-->
+<!--                                placeholder="{{'organization_name' | translate: translateKey}}" required>-->
+<!--                            <control-messages [control]="theaterBookingForm.get('organizationName')"></control-messages>-->
+<!--                        </mat-form-field>-->
+
+<!--                        <mat-form-field class="col-md-4">-->
+<!--                            <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="organizationNumber" placeholder="{{'mobile_number' | translate: translateKey}}"-->
+<!--                                required>-->
+<!--                            <control-messages [control]="theaterBookingForm.get('organizationNumber')"></control-messages>-->
+<!--                        </mat-form-field>-->
+
+<!--                      <div class="col-md-4">-->
+<!--                        <mat-form-field>-->
+<!--                          <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile"-->
+<!--                                 placeholder="{{'Confirm Mobile Number' | translate: translateKey}}" required>-->
+<!--                          <control-messages [control]="theaterBookingForm.get('confirmMobile')"></control-messages>-->
+<!--                        </mat-form-field>-->
+<!--                        <mat-error-->
+<!--                          *ngIf="!bookingUtils.matcher(theaterBookingForm, 'organizationNumber', 'confirmMobile') && theaterBookingForm.get('organizationNumber').touched && theaterBookingForm.get('confirmMobile').touched">-->
+<!--                          {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}-->
+<!--                        </mat-error>-->
+<!--                      </div>-->
+
+<!--                        <mat-form-field class="col-md-4">-->
+<!--                            <input matInput type="email" maxlength="50" formControlName="organizationEmail" placeholder="{{'organization_email' | translate: translateKey}}"-->
+<!--                                required>-->
+<!--                            <control-messages [control]="theaterBookingForm.get('organizationEmail')"></control-messages>-->
+<!--                        </mat-form-field>-->
+
+<!--                      <div class="col-md-4">-->
+<!--                        <mat-form-field>-->
+<!--                          <input matInput type="email" formControlName="confirmEmailID"-->
+<!--                                 placeholder="{{'Confirm Email' | translate: translateKey}}" required>-->
+<!--                          <control-messages [control]="theaterBookingForm.get('confirmEmailID')"></control-messages>-->
+<!--                        </mat-form-field>-->
+<!--                        <mat-error-->
+<!--                          *ngIf="!bookingUtils.matcher(theaterBookingForm, 'organizationEmail', 'confirmEmailID') && theaterBookingForm.get('organizationEmail').touched && theaterBookingForm.get('confirmEmailID').touched">-->
+<!--                          {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}-->
+<!--                        </mat-error>-->
+<!--                      </div>-->
+
+
+<!--                    </div>-->
+
+<!--                    <div>-->
+<!--                        <h2>-->
+<!--                            {{'organization_address' | translate:translateKey}}-->
+<!--                        </h2>-->
+<!--                        <app-address #address [requiredFeilds]="true" [addressFormGroup]="theaterBookingForm.get('organizationAddress')"></app-address>-->
+<!--                    </div>-->
+
+<!--                    <div class="row mt-4 fotButtonBar">-->
+<!--                        <div class="col-sm-12 col-md-12 text-right">-->
+<!--                            <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">-->
+<!--                                {{'next' | translate:translateKey}}-->
+<!--                                <mat-icon>navigate_next</mat-icon>-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </mat-tab>-->
+<!--                &lt;!&ndash; Tab 1 Ends &ndash;&gt;-->
+
+<!--                &lt;!&ndash; Tab 2 for bank details &ndash;&gt;-->
+<!--                <mat-tab>-->
+<!--                    <ng-template mat-tab-label>-->
+<!--                        <div>-->
+<!--                            {{'applicant_bank_details' | translate:translateKey}}-->
+<!--                        </div>-->
+<!--                    </ng-template>-->
+
+<!--                    <h2>-->
+<!--                        {{'bank_details' | translate:translateKey}}-->
+<!--                    </h2>-->
+
+<!--                    <bank-details [form]="theaterBookingForm"></bank-details>-->
+
+<!--                    <div class="row">-->
+<!--                        <h2>-->
+<!--                            {{'terms_and_conditions' | translate:translateKey }}-->
+<!--                        </h2>-->
+<!--                        <div class="pl-2">-->
+<!--                            <mat-checkbox class="d-block" labelPosition="after" formControlName="agree">-->
+<!--                                {{'i_agree_with_above_bank_details_are_correct' | translate:translateKey}} </mat-checkbox>-->
+<!--                            <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition">-->
+<!--                                {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}} </mat-checkbox>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div class="row mt-4 fotButtonBar">-->
+<!--                        <div class="col-sm-12 col-md-12 justify-content-between d-flex">-->
+<!--                            <button type="button" color="primary" mat-raised-button (click)="tabIndex= tabIndex -1; ">-->
+<!--                                <mat-icon>navigate_before</mat-icon>-->
+<!--                                {{'back' | translate:translateKey}}-->
+<!--                            </button>-->
+<!--                            <button mat-raised-button [disabled]="!theaterBookingForm.valid" color="primary" type="submit">-->
+<!--                                <mat-icon>check_circle_outline</mat-icon>-->
+<!--                                {{'submit_application'| translate: translateKey}}-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </mat-tab>-->
+<!--                &lt;!&ndash; Tab 2 Ends &ndash;&gt;-->
+<!--            </mat-tab-group>-->
+<!--        </form>-->
+<!--    </mat-card>-->
+<!--</div>-->
+
 <div [hidden]="!showTheaterBookingForm">
-    <!-- <mat-card class="cardH1">
-        <h1>
-            {{'theater_application_form'| translate: translateKey}}
-        </h1>
-    </mat-card> -->
-    <mat-card class="formClass cardBorder">
-        <form [formGroup]="theaterBookingForm" (ngSubmit)="submitTheaterApplication()">
-            <mat-tab-group mat-stretch-tabs dynamicHeight="true" [(selectedIndex)]="tabIndex" class="stepperNav">
 
-                <!-- Tab 1 for booking details -->
-                <mat-tab>
-                    <ng-template mat-tab-label>
-                        <div>{{'theater_booking_details' | translate:translateKey}}</div>
-                    </ng-template>
+  <mat-card class="formClass cardBorder">
 
-                    <div class="row">
-                        <mat-form-field class="col-md-4">
-                            <mat-label>{{'event_date_from' | translate:translateKey}}</mat-label>
-                            <input matInput formControlName="eventFromDate" readonly>
-                            <control-messages [control]="theaterBookingForm.get('eventFromDate')"></control-messages>
-                          </mat-form-field>
+      <mat-tab-group mat-stretch-tabs dynamicHeight="true" [(selectedIndex)]="tabIndex" class="stepperNav">
+        <!-- Tab 1 for booking details -->
+        <mat-tab disabled>
+          <ng-template mat-tab-label>
+            <div>{{'theater_booking_details' | translate:translateKey}}</div>
+          </ng-template>
+
+          <form [formGroup]="firstTheaterBookingForm">
+          <div class="row">
+            <mat-form-field class="col-md-4">
+              <mat-label>{{'event_date_from' | translate:translateKey}}</mat-label>
+              <input matInput formControlName="eventFromDate" readonly>
+              <control-messages [control]="firstTheaterBookingForm.get('eventFromDate')"></control-messages>
+            </mat-form-field>
 
 
-                        <mat-form-field class="col-md-4">
-                            <mat-label>{{'event_to_date' | translate:translateKey}}</mat-label>
-                            <input matInput formControlName="eventToDate" readonly>
-                            <control-messages [control]="theaterBookingForm.get('eventToDate')"></control-messages>
-                          </mat-form-field>
+            <mat-form-field class="col-md-4">
+              <mat-label>{{'event_to_date' | translate:translateKey}}</mat-label>
+              <input matInput formControlName="eventToDate" readonly>
+              <control-messages [control]="firstTheaterBookingForm.get('eventToDate')"></control-messages>
+            </mat-form-field>
 
 
 
-                        <mat-form-field class="col-md-4">
-                            <mat-label>{{'purpose_of_booking'| translate: translateKey}}</mat-label>
-                            <input matInput formControlName="programmePurpose" readonly>
-                            <control-messages [control]="theaterBookingForm.get('programmePurpose')"></control-messages>
-                          </mat-form-field>
-                    </div>
+            <mat-form-field class="col-md-4">
+              <mat-label>{{'purpose_of_booking'| translate: translateKey}}</mat-label>
+              <input matInput formControlName="programmePurpose" readonly>
+              <control-messages [control]="firstTheaterBookingForm.get('programmePurpose')"></control-messages>
+            </mat-form-field>
+          </div>
 
-                    <h2>
-                        {{'organization_details' | translate:translateKey}}
-                    </h2>
+          <h2>
+            {{'organization_details' | translate:translateKey}}
+          </h2>
 
-                    <div class="row">
-                        <mat-form-field class="col-md-4">
-                            <input matInput appValidationFields
-                                   [validationFieldsType]="'onlyNameWithSpace'" maxlength="50" type="text" formControlName="organizationName"
-                                placeholder="{{'organization_name' | translate: translateKey}}" required>
-                            <control-messages [control]="theaterBookingForm.get('organizationName')"></control-messages>
-                        </mat-form-field>
+          <div class="row">
+            <mat-form-field class="col-md-4">
+              <input matInput appValidationFields
+                     [validationFieldsType]="'onlyNameWithSpace'" maxlength="50" type="text" formControlName="organizationName"
+                     placeholder="{{'organization_name' | translate: translateKey}}" required>
+              <control-messages [control]="firstTheaterBookingForm.get('organizationName')"></control-messages>
+            </mat-form-field>
 
-                        <mat-form-field class="col-md-4">
-                            <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="organizationNumber" placeholder="{{'mobile_number' | translate: translateKey}}"
-                                required>
-                            <control-messages [control]="theaterBookingForm.get('organizationNumber')"></control-messages>
-                        </mat-form-field>
+            <mat-form-field class="col-md-4">
+              <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="organizationNumber" placeholder="{{'mobile_number' | translate: translateKey}}"
+                     required>
+              <control-messages [control]="firstTheaterBookingForm.get('organizationNumber')"></control-messages>
+            </mat-form-field>
 
-                      <div class="col-md-4">
-                        <mat-form-field>
-                          <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile"
-                                 placeholder="{{'Confirm Mobile Number' | translate: translateKey}}" required>
-                          <control-messages [control]="theaterBookingForm.get('confirmMobile')"></control-messages>
-                        </mat-form-field>
-                        <mat-error
-                          *ngIf="!bookingUtils.matcher(theaterBookingForm, 'organizationNumber', 'confirmMobile') && theaterBookingForm.get('organizationNumber').touched && theaterBookingForm.get('confirmMobile').touched">
-                          {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
-                        </mat-error>
-                      </div>
+            <div class="col-md-4">
+              <mat-form-field>
+                <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile"
+                       placeholder="{{'Confirm Mobile Number' | translate: translateKey}}" required>
+                <control-messages [control]="firstTheaterBookingForm.get('confirmMobile')"></control-messages>
+              </mat-form-field>
+              <mat-error
+                *ngIf="!bookingUtils.matcher(firstTheaterBookingForm, 'organizationNumber', 'confirmMobile') && firstTheaterBookingForm.get('organizationNumber').touched && firstTheaterBookingForm.get('confirmMobile').touched">
+                {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
+              </mat-error>
+            </div>
 
-                        <mat-form-field class="col-md-4">
-                            <input matInput type="email" maxlength="50" formControlName="organizationEmail" placeholder="{{'organization_email' | translate: translateKey}}"
-                                required>
-                            <control-messages [control]="theaterBookingForm.get('organizationEmail')"></control-messages>
-                        </mat-form-field>
+            <mat-form-field class="col-md-4">
+              <input matInput type="email" maxlength="50" formControlName="organizationEmail" placeholder="{{'organization_email' | translate: translateKey}}"
+                     required>
+              <control-messages [control]="firstTheaterBookingForm.get('organizationEmail')"></control-messages>
+            </mat-form-field>
 
-                      <div class="col-md-4">
-                        <mat-form-field>
-                          <input matInput type="email" formControlName="confirmEmailID"
-                                 placeholder="{{'Confirm Email' | translate: translateKey}}" required>
-                          <control-messages [control]="theaterBookingForm.get('confirmEmailID')"></control-messages>
-                        </mat-form-field>
-                        <mat-error
-                          *ngIf="!bookingUtils.matcher(theaterBookingForm, 'organizationEmail', 'confirmEmailID') && theaterBookingForm.get('organizationEmail').touched && theaterBookingForm.get('confirmEmailID').touched">
-                          {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
-                        </mat-error>
-                      </div>
+            <div class="col-md-4">
+              <mat-form-field>
+                <input matInput type="email" formControlName="confirmEmailID"
+                       placeholder="{{'Confirm Email' | translate: translateKey}}" required>
+                <control-messages [control]="firstTheaterBookingForm.get('confirmEmailID')"></control-messages>
+              </mat-form-field>
+              <mat-error
+                *ngIf="!bookingUtils.matcher(firstTheaterBookingForm, 'organizationEmail', 'confirmEmailID') && firstTheaterBookingForm.get('organizationEmail').touched && firstTheaterBookingForm.get('confirmEmailID').touched">
+                {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
+              </mat-error>
+            </div>
+          </div>
 
+          <div>
+            <h2>
+              {{'organization_address' | translate:translateKey}}
+            </h2>
+            <app-address #address [requiredFeilds]="true" [addressFormGroup]="firstTheaterBookingForm.get('organizationAddress')"></app-address>
+          </div>
+          <div class="row mt-4 fotButtonBar">
+            <div class="col-sm-12 col-md-12 text-right">
+              <button mat-raised-button type="button" color="primary"
+                      (click)="checkValidation(firstTheaterBookingForm,false)">
+                    {{'next' | translate:translateKey}}
+                    <mat-icon>navigate_next</mat-icon>
+                </button>
+            </div>
+          </div>
+          </form>
+        </mat-tab>
 
-                    </div>
+        <mat-tab disabled>
+          <ng-template mat-tab-label>
+            <div>
+              {{'applicant_bank_details' | translate:translateKey}}
+            </div>
+          </ng-template>
+          <form [formGroup]="bankTheaterBookingForm">
+            <h2>
+              {{'bank_details' | translate:translateKey}}
+            </h2>
 
-                    <div>
-                        <h2>
-                            {{'organization_address' | translate:translateKey}}
-                        </h2>
-                        <app-address #address [requiredFeilds]="true" [addressFormGroup]="theaterBookingForm.get('organizationAddress')"></app-address>
-                    </div>
+            <bank-details [form]="bankTheaterBookingForm"></bank-details>
 
-                    <div class="row mt-4 fotButtonBar">
-                        <div class="col-sm-12 col-md-12 text-right">
-                            <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">
-                                {{'next' | translate:translateKey}}
-                                <mat-icon>navigate_next</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                </mat-tab>
-                <!-- Tab 1 Ends -->
+            <div class="row">
+              <h2>
+                {{'terms_and_conditions' | translate:translateKey }}
+              </h2>
+              <div class="pl-2">
+                <mat-checkbox class="d-block" labelPosition="after" formControlName="agree">
+                  {{'i_agree_with_above_bank_details_are_correct' | translate:translateKey}} </mat-checkbox>
+                <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition">
+                  {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}} </mat-checkbox>
+              </div>
+            </div>
 
-                <!-- Tab 2 for bank details -->
-                <mat-tab>
-                    <ng-template mat-tab-label>
-                        <div>
-                            {{'applicant_bank_details' | translate:translateKey}}
-                        </div>
-                    </ng-template>
+            <div class="row mt-4 fotButtonBar">
+              <div class="col-sm-12 col-md-12 justify-content-between d-flex">
+                <button type="button" color="primary" mat-raised-button (click)="tabIndex= tabIndex -1; ">
+                  <mat-icon>navigate_before</mat-icon>
+                  {{'back' | translate:translateKey}}
+                </button>
+                <button mat-raised-button color="primary" type="submit" (click)="checkValidation(bankTheaterBookingForm,true)">
+                  <mat-icon>check_circle_outline</mat-icon>
+                  {{'submit_application'| translate: translateKey}}
+                </button>
+              </div>
+            </div>
+          </form>
+        </mat-tab>
 
-                    <h2>
-                        {{'bank_details' | translate:translateKey}}
-                    </h2>
-
-                    <bank-details [form]="theaterBookingForm"></bank-details>
-
-                    <div class="row">
-                        <h2>
-                            {{'terms_and_conditions' | translate:translateKey }}
-                        </h2>
-                        <div class="pl-2">
-                            <mat-checkbox class="d-block" labelPosition="after" formControlName="agree">
-                                {{'i_agree_with_above_bank_details_are_correct' | translate:translateKey}} </mat-checkbox>
-                            <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition">
-                                {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}} </mat-checkbox>
-                        </div>
-                    </div>
-
-                    <div class="row mt-4 fotButtonBar">
-                        <div class="col-sm-12 col-md-12 justify-content-between d-flex">
-                            <button type="button" color="primary" mat-raised-button (click)="tabIndex= tabIndex -1; ">
-                                <mat-icon>navigate_before</mat-icon>
-                                {{'back' | translate:translateKey}}
-                            </button>
-                            <button mat-raised-button [disabled]="!theaterBookingForm.valid" color="primary" type="submit">
-                                <mat-icon>check_circle_outline</mat-icon>
-                                {{'submit_application'| translate: translateKey}}
-                            </button>
-                        </div>
-                    </div>
-                </mat-tab>
-                <!-- Tab 2 Ends -->
-            </mat-tab-group>
-        </form>
-    </mat-card>
+      </mat-tab-group>
+  </mat-card>
 </div>
+
 <select-payment-gateway #paymentGateway [applicationType]="'booking'"></select-payment-gateway>
