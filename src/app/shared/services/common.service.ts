@@ -409,5 +409,25 @@ export class CommonService {
 
 		swal(options as any);
 	}
-
+/**
+	 * Marks all controls in a form group as touched
+	 * @param formGroup - The group to caress
+	*/
+	markFormGroupTouched(formGroup: FormGroup) {
+		if (Reflect.getOwnPropertyDescriptor(formGroup, 'controls')) {
+			(<any>Object).values(formGroup.controls).forEach(control => {
+				if (control instanceof FormGroup) {
+					// FormGroup
+					this.markFormGroupTouched(control);
+				} else if (control instanceof FormArray) {
+					control.controls.forEach(c => {
+						if (c instanceof FormGroup)
+							this.markFormGroupTouched(c);
+					});
+				}
+				// FormControl
+				control.markAsTouched();
+			});
+		}
+	}
 }

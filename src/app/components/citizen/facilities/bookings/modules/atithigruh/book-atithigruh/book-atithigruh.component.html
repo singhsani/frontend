@@ -125,12 +125,12 @@
                 <table mat-table [dataSource]="feeDetails" class="mat-elevation-z8">
 
                     <ng-container matColumnDef="sno">
-                        <th mat-header-cell *matHeaderCellDef> Sr.No. </th>
+                        <th mat-header-cell *matHeaderCellDef class="containerWidth"> Sr.No. </th>
                          <td mat-cell *matCellDef="let element"> {{element.sno}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="atithigruh">
-                        <th mat-header-cell *matHeaderCellDef> Atithigruh </th>
+                        <th mat-header-cell *matHeaderCellDef class="containerWidth"> Atithigruh </th>
                         <td mat-cell *matCellDef="let element"> {{element.atithigruh}} </td>
                    </ng-container>
 
@@ -434,8 +434,8 @@
                         <th scope="col">{{'booking_date'| translate: stadiumTranslateKey}}</th>
                         <th scope="col">Program from date</th>
                         <th scope="col">Program to date</th>
-                        <th scope="col">Atithigruh Name :- <span class="detailsNamelist">{{atithigruhName}} </span></th>
-                        <th scope="col">Purpose :- <span class="detailsNamelist">{{purpose}} </span> </th>
+                        <th scope="col">Atithigruh Name</th>
+                        <th scope="col">Purpose </th>
                         <th scope="col" *ngIf='paymentObject.bookingType=="Advance booking"'>{{'form_charges'| translate: stadiumTranslateKey}}</th>
                     </tr>
                 </thead>
@@ -444,7 +444,9 @@
                         <td scope="col">{{bookingUtils.returnProperDate(paymentObject.bookingDate)}}</td>
                         <td scope="col">{{startDate | date:'dd-MM-yyy'}} </td>
                         <td scope="col">{{endDate | date:'dd-MM-yyy'}}</td>
-                   
+                         <td scope="col">{{atithigruhName}}</td>
+                         <td scope="col">{{purpose}}</td>
+                         <td scope="col" *ngIf='paymentObject.bookingType=="Advance booking"'>{{paymentObject.FORM_CHARGES}}</td>
                       
                     </tr>
                 </tbody>
@@ -454,7 +456,7 @@
                     <tr>
                         <th scope="col">Rent Amount (A)</th>
                         <th scope="col">Administrative Charge (B)</th>
-                        <th scope="col">GST (C)=(A+B*GST)</th>
+                        <th scope="col">GST (C)=(A+B*GST/100)</th>
                         <th scope="col">Total (D)=(A+B+C)</th>
                         <th scope="col">Deposit Amount (E) </th>
                         <th scope="col">Total Payble (D+E)</th>
@@ -464,10 +466,10 @@
                     <tr>
                         <td scope="col">{{paymentObject.RENT_FEES-paymentObject.RENT_CONCESSION}}</td>
                         <td scope="col">{{paymentObject.ADMINISTRATION_CHARGES}}</td>
-                        <td scope="col">{{gstAmount}}</td> 
+                        <td scope="col">{{paymentObject.GST}}</td>
                         <td scope="col">{{totalAmount}}</td> 
                         <td scope="col">{{paymentObject.DEPOSIT_FEES-paymentObject.DEPOSIT_CONCESSION}}</td>
-                        <td scope="col">{{totalPayble}}</td>                                       
+                        <td scope="col">{{totalPayble}}</td>      
                     </tr>
                 </tbody>
             </table>
@@ -503,14 +505,15 @@
 <div [hidden]="isBookingFormHidden">
     <mat-card class="formClass cardBorder">
         <!-- <button (click)="patchValue2()" >Patch</button> -->
-        <form [formGroup]="atithigruhForm" (ngSubmit)="submit()">
+        <!-- <form [formGroup]="atithigruhForm" (ngSubmit)="submit()"> -->
 
             <mat-tab-group mat-stretch-tabs dynamicHeight="true" [(selectedIndex)]="tabIndex" class="stepperNav">
 
-                <mat-tab>
+                <mat-tab disabled>
                     <ng-template mat-tab-label>
                         <div>{{'applicant_details' | translate:stadiumTranslateKey}}</div>
                     </ng-template>
+                    <form [formGroup]="applicationDetails">
                     <h2>
                         {{'applicant_details' | translate:stadiumTranslateKey}}
                     </h2>
@@ -519,14 +522,14 @@
                         <mat-form-field class="col-md-4">
                             <input matInput maxlength="50" appValidationFields
                                 [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="applicantName"
-                                placeholder="{{'applicant_name' | translate: stadiumTranslateKey}}">
-                            <control-messages [control]="atithigruhForm.get('applicantName')"></control-messages>
+                                placeholder="{{'applicant_name' | translate: stadiumTranslateKey}}" required>
+                            <control-messages [control]="applicationDetails.get('applicantName')"></control-messages>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
                             <input matInput OnlyNumber  minlength="10" maxlength="10" formControlName="applicantMobileNo"
-                                placeholder="{{'applicant_mobile' | translate: stadiumTranslateKey}}">
-                            <control-messages [control]="atithigruhForm.get('applicantMobileNo')"></control-messages>
+                                placeholder="{{'applicant_mobile' | translate: stadiumTranslateKey}}" required>
+                            <control-messages [control]="applicationDetails.get('applicantMobileNo')"></control-messages>
                         </mat-form-field>
 
                         <!-- <div class="col-md-4">
@@ -543,8 +546,8 @@
 
                         <mat-form-field class="col-md-4">
                             <input matInput type="email" disabled formControlName="applicantEmailID"
-                                placeholder="{{'applicant_email' | translate: stadiumTranslateKey}}">
-                            <control-messages [control]="atithigruhForm.get('applicantEmailID')"></control-messages>
+                                placeholder="{{'applicant_email' | translate: stadiumTranslateKey}}" required>
+                            <control-messages [control]="applicationDetails.get('applicantEmailID')"></control-messages>
                         </mat-form-field>
 
                         <!-- <div class="col-md-6">
@@ -561,12 +564,12 @@
 
                     </div>
 
-                    <div class="col-md-4" *ngIf = "atithigruhForm.contains('samuhLaganCoupleCount')">
+                    <div class="col-md-4" *ngIf = "applicationDetails.contains('samuhLaganCoupleCount')">
                         <mat-form-field>
                           <input matInput OnlyNumber formControlName="samuhLaganCoupleCount" maxlength="2"
 
                             placeholder="{{'samuh_lagan_couple_count' | translate: translateKey}}" required>
-                          <control-messages [control]="atithigruhForm.get('samuhLaganCoupleCount')"></control-messages>
+                          <control-messages [control]="applicationDetails.get('samuhLaganCoupleCount')"></control-messages>
                         </mat-form-field>
                       </div>
 
@@ -575,13 +578,13 @@
                             {{'applicant_address' | translate:stadiumTranslateKey}}
                         </h2>
                         <app-address #address [requiredFeilds]="true"
-                            [addressFormGroup]="atithigruhForm.get('applicantAddress')"></app-address>
+                            [addressFormGroup]="applicationDetails.get('applicantAddress')"></app-address>
 
 
                         <mat-form-field class="col-md-4">
                             <input matInput maxlength="15" formControlName="gstNo"
                             placeholder="{{'GSTIN_Number' | translate: translateKey}}">
-                            <control-messages [control]="atithigruhForm.get('gstNo')"></control-messages>
+                            <control-messages [control]="applicationDetails.get('gstNo')"></control-messages>
                         </mat-form-field>
 
                     </div>
@@ -599,15 +602,16 @@
                   <div class="row mt-4 fotButtonBar">
                     <div class="col-sm-12 col-md-12 text-right">
                       <button mat-raised-button type="button" color="primary"
-                              (click)="tabIndex= tabIndex +1;">
+                              (click)="checkValidation(applicationDetails,false)">
                         {{'next'| translate:stadiumTranslateKey}}
                         <mat-icon>navigate_next</mat-icon>
                       </button>
                     </div>
                   </div>
+                </form>
                 </mat-tab>
 
-                <mat-tab>
+                <mat-tab disabled>
                     <ng-template mat-tab-label>
                         <div>{{'bank_details' | translate:stadiumTranslateKey}}</div>
                     </ng-template>
@@ -616,7 +620,9 @@
                         {{'bank_details' | translate:stadiumTranslateKey}}
                     </h2>
 
-                    <bank-details [form]="atithigruhForm"></bank-details>
+                    <form [formGroup]="bookingDetails">
+
+                    <bank-details [form]="bookingDetails"></bank-details>
 
                     <div class="row">
                         <h2>
@@ -638,15 +644,16 @@
                                 <mat-icon>navigate_before</mat-icon>
                                 {{'back' | translate:stadiumTranslateKey}}
                             </button>
-                            <button mat-raised-button color="primary" type="submit">
+                            <button mat-raised-button color="primary" type="submit" (click)="checkValidation(bookingDetails,true)">
                                 <mat-icon>check_circle_outline</mat-icon>
                                 {{bookingForRegular ? ' Confirm & Pay' : 'Submit Application' | translate: translateKey}}
                             </button>
                         </div>
                     </div>
+                    </form>
                 </mat-tab>
             </mat-tab-group>
-        </form>
+        <!-- </form> -->
     </mat-card>
 </div>
 <!-- Booking slot end-->

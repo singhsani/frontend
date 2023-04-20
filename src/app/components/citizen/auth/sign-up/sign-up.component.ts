@@ -105,17 +105,19 @@ export class SignUpComponent implements OnInit {
 		if (formVals.email) {
 			formVals.email = _.trim(formVals.email);
 		}
-		
+
 		if (this.regForm.valid) {
 			this.loading = true;
 			this.issingupbtn = true;
 		this.appService.registerUser(formVals).subscribe(
 			res => {
 				this.loading = false;
-				this.commonService.successAlert("Success", "For OTP and link update you can check your registered mail ID and Mobile number. Thank you for the Registration.", "success");
+				this.commonService.successAlert("Success", "For OTP and Authentication Link, please check your registered Email ID and Mobile Number. Thank you for the Registration.", "success");
 				//this.toster.success("We have sent a authentication link on your email");
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHVERIFY')],
-					{ queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp , email : this.regForm.get('email').value } });
+					// { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp , email : this.regForm.get('email').value } }
+          { queryParams: { uniqueId: res.data.uniqueId } }
+          );
 			},
 			err => {
 				this.loading = false;

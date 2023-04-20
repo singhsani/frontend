@@ -27,7 +27,13 @@ export class SwimmingPoolComponent implements OnInit {
 
   public config = new ComponentConfig;
 
+  /**
+	 * form groups.
+	 */
   swimmimgPoolBookingForm: FormGroup;
+  generalDetails: FormGroup;
+  applicantDetail:FormGroup;
+
   translateKey: string = 'swimmingPoolScreen';
   showDowlLoadFileTab: boolean = false;
   showSwimmingPoolForm: boolean = true;
@@ -150,6 +156,8 @@ export class SwimmingPoolComponent implements OnInit {
     }else{
     this.chosenMonthHandler(this.startMinMonth.setMonth(this.startMinMonth.getMonth() + 1));
     }
+
+    this.setFormControlToTabIndexMap();
   }
   /**
   * Method is used to get lookup data
@@ -199,7 +207,7 @@ export class SwimmingPoolComponent implements OnInit {
   * Filter details as per category selection
   */
   filterAsperCategory(event: any) {
-    let poolName = this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value;
+    let poolName = this.generalDetails.get('swimmingPoolName').get('code').value;
     if (event) {
       this.bookingService.filterBatchDuration(event, poolName).subscribe(rep => {
         this.BATCH_DURATION = rep;
@@ -220,7 +228,7 @@ export class SwimmingPoolComponent implements OnInit {
     }
   }
   defaultAsperPool() {
-    this.bookingService.filterPoolCode(this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value).subscribe(rep => {
+    this.bookingService.filterPoolCode(this.generalDetails.get('swimmingPoolName').get('code').value).subscribe(rep => {
       this.BATCH_FOR = rep;
     },
       err => {
@@ -234,9 +242,9 @@ export class SwimmingPoolComponent implements OnInit {
   filterAsperBatchName(event: any) {
     let obj = {
        batchCode : event,
-       poolName : this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value,
-       category: this.swimmimgPoolBookingForm.get('category').get('code').value,
-       birthDate : this.swimmimgPoolBookingForm.get('birthDate').value
+       poolName : this.generalDetails.get('swimmingPoolName').get('code').value,
+       category: this.generalDetails.get('category').get('code').value,
+       birthDate : this.generalDetails.get('birthDate').value
     }
     this.BATCH_NAME = []
     this.bookingService.filterBatchCode(obj).subscribe(rep => {
@@ -244,18 +252,37 @@ export class SwimmingPoolComponent implements OnInit {
     },
       err => {
         this.commonService.openAlert("Warning", err.error[0].message, "warning" , "", cb => {
-        this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').reset();
-        this.swimmimgPoolBookingForm.get('membershipType').get('code').reset();
-        this.swimmimgPoolBookingForm.get('category').get('code').reset();
-        this.swimmimgPoolBookingForm.get('batchDuration').get('code').reset();
-        this.swimmimgPoolBookingForm.get('birthDate').reset();
-        this.swimmimgPoolBookingForm.get('batchFor').get('code').reset();
-        this.swimmimgPoolBookingForm.get('batchName').get('code').reset();
-        this.swimmimgPoolBookingForm.get('applicantBirthDate').reset();
-        this.swimmimgPoolBookingForm.get('applicantAge').reset()
+        this.generalDetails.get('swimmingPoolName').get('code').reset();
+        this.generalDetails.get('membershipType').get('code').reset();
+        this.generalDetails.get('category').get('code').reset();
+        this.generalDetails.get('batchDuration').get('code').reset();
+        this.generalDetails.get('birthDate').reset();
+        this.generalDetails.get('batchFor').get('code').reset();
+        this.generalDetails.get('batchName').get('code').reset();
+        this.applicantDetail.get('applicantBirthDate').reset();
+        this.applicantDetail.get('applicantAge').reset()
         }) ;
       })
   }
+
+  filterBatch(event : any){
+    let obj = {
+      poolName : this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value,
+      category: this.swimmimgPoolBookingForm.get('category').get('code').value,
+      batchfor : this.swimmimgPoolBookingForm.get('batchFor').get('code').value,
+      batchTimming : event
+   }
+    this.bookingService.countBatch(obj).subscribe(rep => {
+     // this.BATCH_NAME = rep.get('name').value;
+    },
+    err => {
+      this.swimmimgPoolBookingForm.get('batchName').get('code').reset();
+      this.commonService.openAlert('warning',err.error[0].message,'warning');
+    });
+
+    
+  }
+
   
 
   /**
@@ -263,7 +290,7 @@ export class SwimmingPoolComponent implements OnInit {
    */
   changeBatchDuration(event) {
     if (event == 'LEARNER') {
-      this.swimmimgPoolBookingForm.get('batchDuration').get('code').setValue('MONTHLY');
+      this.generalDetails.get('batchDuration').get('code').setValue('MONTHLY');
       this.durationisReadOnly = true;
     } else {
       this.durationisReadOnly = false;
@@ -288,20 +315,21 @@ export class SwimmingPoolComponent implements OnInit {
    */
   getUserProfile() {
     this.bookingService.getUserProfile().subscribe(resp => {
-      this.swimmimgPoolBookingForm.get('applicantName').setValue(resp.data.firstName + ' ' + resp.data.lastName);
-      this.swimmimgPoolBookingForm.get('applicantEmail').setValue(resp.data.email);
-      this.swimmimgPoolBookingForm.get('applicantMobileNumber').setValue(resp.data.cellNo);
+      this.applicantDetail.get('applicantName').setValue(resp.data.firstName + ' ' + resp.data.lastName);
+      this.applicantDetail.get('applicantEmail').setValue(resp.data.email);
+      this.applicantDetail.get('applicantMobileNumber').setValue(resp.data.cellNo);
     },
       err => {
         this.toastr.error("Server Error");
       });
-    this.swimmimgPoolBookingForm.get('applicantAddress').get('country').setValue('INDIA');
-    this.swimmimgPoolBookingForm.get('applicantAddress').get('state').setValue('GUJARAT');
-    this.swimmimgPoolBookingForm.get('applicantAddress').get('city').setValue('Vadodara');
-    this.swimmimgPoolBookingForm.get('applicantAddress').get('country').disable();
-    this.swimmimgPoolBookingForm.get('applicantAddress').get('state').disable();
-    this.swimmimgPoolBookingForm.get('applicantAddress').get('city').disable();
-    this.swimmimgPoolBookingForm.get('applicantJoiningMonth').disable();
+
+     this.applicantDetail.get('applicantAddress').get('country').setValue('INDIA');
+     this.applicantDetail.get('applicantAddress').get('state').setValue('GUJARAT');
+     this.applicantDetail.get('applicantAddress').get('city').setValue('Vadodara');
+    //  this.applicantDetail.get('applicantAddress').get('country').disable();
+    //  this.applicantDetail.get('applicantAddress').get('state').disable();
+    //  this.applicantDetail.get('applicantAddress').get('city').disable();
+    //this.applicantDetail.get('applicantJoiningMonth').disable();
 
 
   }
@@ -359,6 +387,19 @@ export class SwimmingPoolComponent implements OnInit {
       resourceType: null,
       payableServiceType: null,
       resourceCode: null,
+      scheduleList: null,
+      attachments: [],
+      fileStatus: null,
+      pid: null,
+      remarks: null,
+      family: false,
+      staffMember: false,
+      isRenewalForm: false,
+      memberNumber: null,
+      termsCondition : null
+    });
+    /*General Details*/
+    this.generalDetails = this.fb.group({
       swimmingPoolName: this.fb.group({
         code: [null, [Validators.required]],
         name: null,
@@ -389,14 +430,17 @@ export class SwimmingPoolComponent implements OnInit {
         name: null,
         gujName: null
       }),
-
+      birthDate :[null, Validators.required],
+    });
+     /*Applicant Details*/
+     this.applicantDetail = this.fb.group({
       applicantName: [null, Validators.required],
       applicantPhoto: null,
       applicantMobileNumber: [null, Validators.required],
       applicantEmergencyNumber: null,
-      applicantBirthDate: [{ value:null, disabled: true }],
-      applicantJoiningMonth: [null, Validators.required],
+      applicantBirthDate: [null, {disabled: true }],
       applicantAge: null,
+      applicantJoiningMonth: [null, Validators.required],
       applicantIDProof: this.fb.group({
         code: null,
         name: null,
@@ -411,26 +455,10 @@ export class SwimmingPoolComponent implements OnInit {
       }),
       applicantAddress: this.fb.group(this.addressComp.addressControls()),
 
-      // accountHolderName: [null,  [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
-      // accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
-      // bankName: this.fb.group({
-      //   code: [null, Validators.required],
-      //   name: null,
-      //   gujName: null
-      // }),
-      // ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
-      scheduleList: null,
-      attachments: [],
-      fileStatus: null,
-      pid: null,
-      remarks: null,
-      family: false,
-      staffMember: false,
-      isRenewalForm: false,
-      memberNumber: null,
-      birthDate :[null, Validators.required],
-      termsCondition : null
-    });
+     });
+
+    this.commonService.createCloneAbstractControl(this.generalDetails,this.swimmimgPoolBookingForm);
+    this.commonService.createCloneAbstractControl(this.applicantDetail,this.swimmimgPoolBookingForm);
   }
 
   /**
@@ -440,8 +468,8 @@ export class SwimmingPoolComponent implements OnInit {
 
     this.applicantageyear = moment().diff(event, 'years', false);
     // this.applicantagedays = bday.diff(bday.add(this.applicantageyear, 'years'), 'days', false);
-    this.swimmimgPoolBookingForm.get('applicantBirthDate').setValue(this.swimmimgPoolBookingForm.get('birthDate').value)
-    this.swimmimgPoolBookingForm.get("applicantAge").setValue(this.applicantageyear);
+    this.applicantDetail.get('applicantBirthDate').setValue(this.generalDetails.get('birthDate').value)
+    this.applicantDetail.get("applicantAge").setValue(this.applicantageyear);
     if (this.applicantageyear <= 18) {
       this.isApplicateAgeGreaterThanEighteen = true;
     }
@@ -456,40 +484,46 @@ export class SwimmingPoolComponent implements OnInit {
    * @param controlType : form control name
    */
   dateFormat(date, controlType: string) {
-    this.swimmimgPoolBookingForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+    this.applicantDetail.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
   }
+  dateFormatt(date, controlType: string) {
+    this.generalDetails.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+  }
+  dateFormat2(date, controlType: string) {
+    this.applicantDetail.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+  }
+
 
 
   /**
    * This method required for final form submition.
    * @param count - flag of invalid control.
    */
-  handleErrorsonSubmit(count) {
-    let step1 = 15;
-    let step2 = 27;
-    let step3 = 40;
-    if (count <= step1) {
-      this.tabIndex = 0;
-      return false;
-    } else if (count <= step2) {
-      this.tabIndex = 1;
-      return false;
-    } else if (count <= step3) {
-      this.tabIndex = 2;
-      return false;
-    }
-  }
+  // handleErrorsonSubmit(count) {
+  //   let step1 = 15;
+  //   let step2 = 27;
+  //   let step3 = 40;
+  //   if (count <= step1) {
+  //     this.tabIndex = 0;
+  //     return false;
+  //   } else if (count <= step2) {
+  //     this.tabIndex = 1;
+  //     return false;
+  //   } else if (count <= step3) {
+  //     this.tabIndex = 2;
+  //     return false;
+  //   }
+  // }
   /**
    * Save form data
    */
   saveFormData() {
     // this.swimmimgPoolBookingForm.get('swimmingPoolName').setValue(this.swimmimgPoolBookingForm.get('resourceCodeLK').get('code').value);
-    if (this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value) {
-      this.bookingService.saveDraftform(this.swimmimgPoolBookingForm.getRawValue(), this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value).subscribe(
+    if (this.generalDetails.get('swimmingPoolName').get('code').value) {
+      this.bookingService.saveDraftform(this.swimmimgPoolBookingForm.getRawValue(), this.generalDetails.get('swimmingPoolName').get('code').value).subscribe(
         res => {
           this.swimmimgPoolBookingForm.get('refNumber').setValue(res.refNumber);
           this.swimmimgPoolBookingForm.patchValue(res);
-          this.tabIndex= this.tabIndex +1
         },
         err => {
           this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
@@ -504,28 +538,24 @@ export class SwimmingPoolComponent implements OnInit {
   submitApplication(): void {
     let errCount = this.bookingUtils.getAllErrors(this.swimmimgPoolBookingForm);
     if (this.swimmimgPoolBookingForm.invalid) {
-      this.handleErrorsonSubmit(errCount);
       this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
       return;
     }
     else if (this.isApplicateAgeGreaterThanEighteen == true && !this.isFileUploaded3) {
-      this.handleErrorsonSubmit(errCount);
       this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
       return;
     }
     else if (!this.isRenewalForm && (!this.isFileUploaded1 || !this.isFileUploaded2 || !this.isFileUploaded4 || !this.isFileUploaded5)) {
-      this.handleErrorsonSubmit(errCount);
       this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
       return;
     }
     else if (this.isSwimmingTestReportShow == true && !this.isFileUploaded6) {
-      this.handleErrorsonSubmit(errCount);
       this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
       return;
     }
     else {
       // save call
-      this.swimmingPoolService.submitData(this.swimmimgPoolBookingForm.getRawValue(), this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value).subscribe(
+      this.swimmingPoolService.submitData(this.swimmimgPoolBookingForm.getRawValue(), this.generalDetails.get('swimmingPoolName').get('code').value).subscribe(
         res => {
           let refNumber = this.swimmimgPoolBookingForm.get("refNumber").value;
           // this.sendSms(refNumber, "SUBMIT");
@@ -598,9 +628,9 @@ export class SwimmingPoolComponent implements OnInit {
       this.isElectionCardIdNumber = false;
       this.isPassportIdNumber = false;
       this.isVisibleElectricityBill = false;
-      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValue('');
-      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.aadharValidation]);
-      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
+      this.applicantDetail.controls['applicantIDProofNumber'].setValue('');
+      this.applicantDetail.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.aadharValidation]);
+      this.applicantDetail.controls['applicantIDProofNumber'].updateValueAndValidity();
     }
     else if (idCode === 'PAN_CARD') {
       this.isPanCardVisibleIdNumber = true;
@@ -609,9 +639,9 @@ export class SwimmingPoolComponent implements OnInit {
       this.isPassportIdNumber = false;
       this.isElectionCardIdNumber = false;
       this.isVisibleElectricityBill = false;
-      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValue('');
-      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.panValidator]);
-      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
+      this.applicantDetail.controls['applicantIDProofNumber'].setValue('');
+      this.applicantDetail.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.panValidator]);
+      this.applicantDetail.controls['applicantIDProofNumber'].updateValueAndValidity();
     }
     else if (idCode === 'DRIVING_LICENSE') {
       this.isVisibleIdNumber = false;
@@ -620,9 +650,9 @@ export class SwimmingPoolComponent implements OnInit {
       this.isPassportIdNumber = false;
       this.isLicenseVisibleIdNumber = true;
       this.isVisibleElectricityBill = false;
-      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValue('');
-      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.drivingLicenseValidator])
-      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
+      this.applicantDetail.controls['applicantIDProofNumber'].setValue('');
+      this.applicantDetail.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.drivingLicenseValidator])
+      this.applicantDetail.controls['applicantIDProofNumber'].updateValueAndValidity();
     }
     else if (idCode === 'ELECTION_CARD') {
       this.isVisibleIdNumber = false;
@@ -631,9 +661,9 @@ export class SwimmingPoolComponent implements OnInit {
       this.isPassportIdNumber = false;
       this.isElectionCardIdNumber = true;
       this.isVisibleElectricityBill = false;
-      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValue('');
-      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.electionCardValidator])
-      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
+      this.applicantDetail.controls['applicantIDProofNumber'].setValue('');
+      this.applicantDetail.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.electionCardValidator])
+      this.applicantDetail.controls['applicantIDProofNumber'].updateValueAndValidity();
     }
     else if (idCode === 'PASSPORT') {
       this.isVisibleIdNumber = false;
@@ -642,9 +672,9 @@ export class SwimmingPoolComponent implements OnInit {
       this.isElectionCardIdNumber = false;
       this.isPassportIdNumber = true;
       this.isVisibleElectricityBill = false;
-      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValue('');
-      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.passportValidator])
-      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
+      this.applicantDetail.controls['applicantIDProofNumber'].setValue('');
+      this.applicantDetail.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.passportValidator])
+      this.applicantDetail.controls['applicantIDProofNumber'].updateValueAndValidity();
     }
    else if (idCode === 'ELECTRICITY_BILL') {
       this.isVisibleIdNumber = false;
@@ -653,9 +683,9 @@ export class SwimmingPoolComponent implements OnInit {
       this.isElectionCardIdNumber = false;
       this.isPassportIdNumber = false;
       this.isVisibleElectricityBill = true;
-      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValue('');
-      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.electricityBillValidation]);
-      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
+      this.applicantDetail.controls['applicantIDProofNumber'].setValue('');
+      this.applicantDetail.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.electricityBillValidation]);
+      this.applicantDetail.controls['applicantIDProofNumber'].updateValueAndValidity();
     }
     else {
       this.isVisibleIdNumber = false;
@@ -663,9 +693,9 @@ export class SwimmingPoolComponent implements OnInit {
       this.isLicenseVisibleIdNumber = false;
       this.isElectionCardIdNumber = false;
       this.isPassportIdNumber = false;
-      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValue('');
-      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required]);
-      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
+      this.applicantDetail.controls['applicantIDProofNumber'].setValue('');
+      this.applicantDetail.controls['applicantIDProofNumber'].setValidators([Validators.required]);
+      this.applicantDetail.controls['applicantIDProofNumber'].updateValueAndValidity();
     }
 
   }
@@ -727,7 +757,7 @@ export class SwimmingPoolComponent implements OnInit {
         this.isRenewalForm = true;
         this.swimmimgPoolBookingForm.get('isRenewalForm').setValue(true);
         // this.swimmimgPoolBookingForm.get('remarks').enable();
-        this.filterAsperBatchName(this.swimmimgPoolBookingForm.get('category').get('code').value);
+        this.filterAsperBatchName(this.generalDetails.get('category').get('code').value);
       }, (error: any) => {
         this.commonService.openAlert("Error", error.error[0].message, "warning")
       })
@@ -748,4 +778,57 @@ export class SwimmingPoolComponent implements OnInit {
   termsConditionClick(event) {
     this.swimmimgPoolBookingForm.controls['termsCondition'].setValue(event.checked);
   }
+
+  checkValidation(controlName,isSubmitted){
+		if(controlName.invalid){
+			this.handleErrorsOnSubmit(controlName)
+		}else{
+			const organizationalAry = Object.keys(controlName.value);
+			organizationalAry.forEach(element => {
+				this.swimmimgPoolBookingForm.get(element).setValue(controlName.get(element).value);
+			});
+			this.commonService.setValueToFromControl(controlName,this.swimmimgPoolBookingForm);
+			this.tabIndex= this.tabIndex +1;
+			if(isSubmitted){
+				this.submitApplication(); 
+			}else{
+        this.saveFormData();
+      }
+		}
+  }
+
+  /**
+	 * Method is used to handle error/validation on submit
+	 * @param count - count of invalid control.
+	 */
+   public formControlNameToTabIndex = new Map();
+	handleErrorsOnSubmit(controlName) {
+		const key = this.bookingUtils.getInvalidFormControlKey(controlName);
+		const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 0;
+
+		this.tabIndex = index;
+		return false;
+	}
+
+  setFormControlToTabIndexMap() {
+		// index 1
+	
+		this.formControlNameToTabIndex.set("applicantMobileNumber", 1);
+    this.formControlNameToTabIndex.set("applicantName", 1);
+		this.formControlNameToTabIndex.set("applicantEmergencyNumber", 1);
+		this.formControlNameToTabIndex.set("applicantEmail", 1);
+		this.formControlNameToTabIndex.set("applicantBirthDate", 1);
+		this.formControlNameToTabIndex.set("applicantAge", 1);
+		this.formControlNameToTabIndex.set("applicantIDProof", 1);
+    this.formControlNameToTabIndex.set("applicantIDProofNumber", 1);
+    this.formControlNameToTabIndex.set("applicantBloodGroup", 1);
+    this.formControlNameToTabIndex.set("applicantJoiningMonth", 1);
+    this.formControlNameToTabIndex.set("applicantAddress", 1);
+    //index 2
+    this.formControlNameToTabIndex.set('bankName', 2)
+		this.formControlNameToTabIndex.set('accountHolderName', 2)
+		this.formControlNameToTabIndex.set('accountNo', 2)
+		this.formControlNameToTabIndex.set('ifscCode', 2)
+		
+	}
 }

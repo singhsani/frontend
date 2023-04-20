@@ -64,6 +64,9 @@ export class BookAtithigruhComponent implements OnInit {
 
 	atithigruhForm: FormGroup;
 	BookingTypeForm: FormGroup;
+	bookingDetails : FormGroup;
+	bankDetails : FormGroup;
+	applicationDetails : FormGroup
 
 	dataSource = new MatTableDataSource();
 
@@ -80,7 +83,6 @@ export class BookAtithigruhComponent implements OnInit {
 	purpose :string;
 	startDate : string;
 	endDate : string;
-	gstAmount : number =0;
 	totalAmount : number =0;
 	totalPayble : number =0;
 
@@ -121,10 +123,9 @@ export class BookAtithigruhComponent implements OnInit {
 
 	ngOnInit() {
 		this.head_lines = `Online AtithiGruh Booking facility is the convenient and
-		easy way to book the town hall of Vadodara Municpal Corporation. You can
-		view the availiblity details of the town hall and select select one of multiple shifts for
-		booking. The booking is confirmed on the successfull online payment of the rent amount
-		for selected shift(s).`;
+		easy way to book the Atithigruh of Vadodara Municpal Corporation. You can
+		view the availiblity details of the Atithigruh and select booking date. 
+		The booking is confirmed on the successfull online / offline payment of the rent amount for selected dates.`;
 
 		this.createBookingSearchForm();
 		this.createAtithigruhForm();
@@ -141,6 +142,30 @@ export class BookAtithigruhComponent implements OnInit {
 	}
 
 	createAtithigruhForm(): void {
+			
+			/*Applicant Details */
+			this.applicationDetails = this.fb.group({
+				applicantName: [null, [Validators.required]],
+				applicantMobileNo: [null, [Validators.required]],
+				applicantEmailID: [null, [Validators.required, ValidationService.emailValidator, Validators.maxLength(50)]],
+				applicantAddress: this.fb.group(this.addressComp.addressControls()),
+				gstNo:[null,ValidationService.gstNoValidator],
+			}),
+			/* Booking Details */
+			this.bookingDetails = this.fb.group({
+				/*** Bank Accoount Details*/
+				bankName: this.fb.group({
+				code: [null, [Validators.required]]
+				}),
+				accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
+				accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
+				ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
+				/*** Booking Details*/
+				termsCondition: null,
+				agree: null
+			}),
+
+			/** * form details*/
 		this.atithigruhForm = this.fb.group({
 
 
@@ -149,14 +174,14 @@ export class BookAtithigruhComponent implements OnInit {
 			 */
 			// accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
 			// accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
-			applicantAddress: this.fb.group(this.addressComp.addressControls()),
-			applicantMobileNo: [{value: '', disabled: false}, Validators.required],
+			// applicantAddress: this.fb.group(this.addressComp.addressControls()),
+			// applicantMobileNo: [{value: '', disabled: false}, Validators.required],
 			// confirmMobile: [null, Validators.required],
-			applicantName: [{value: '', disabled: false}, Validators.required],
+			// applicantName: [{value: '', disabled: false}, Validators.required],
 
-			applicantEmailID:[{value: '', disabled: false}, Validators.required],
+			// applicantEmailID:[{value: '', disabled: false}, Validators.required],
 
-			gstNo:[null,ValidationService.gstNoValidator],
+			// gstNo:[null,ValidationService.gstNoValidator],
 			// confirmEmailID: [null, [Validators.required, ValidationService.emailValidator]],
 
 			/**
@@ -170,9 +195,9 @@ export class BookAtithigruhComponent implements OnInit {
 			/**
 			 * Booking Details
 			*/
-			programPurpose: null,
-			termsCondition: null,
-			agree: null,
+			// programPurpose: null,
+			// termsCondition: null,
+			// agree: null,
 
 			concessionRequired: null,
 			rentConcessionPercentage: null,
@@ -213,6 +238,8 @@ export class BookAtithigruhComponent implements OnInit {
 			resourceCode: null,
 			scheduleList: []
 		});
+		this.commonService.createCloneAbstractControl(this.applicationDetails,this.atithigruhForm);
+		this.commonService.createCloneAbstractControl(this.bookingDetails,this.atithigruhForm);	
 	}
 
 	createBookingSearchForm(): void {
@@ -387,8 +414,11 @@ export class BookAtithigruhComponent implements OnInit {
 		this.bookingService.generateReference(shortListData).subscribe(resp => {
 			if (resp) {
 				this.atithigruhForm.patchValue(resp.data);
+				this.applicationDetails.patchValue(resp.data);
+				this.bookingDetails.patchValue(resp.data);
         //this.atithigruhForm.get('bookingDate').setValue(moment(resp.data.bookingDate).format("DD-MM-YYYY"));
 				if(resp.data.bookingPurposeMaster.code == 'SAMUH_LAGAN'){
+					this.applicationDetails.addControl('samuhLaganCoupleCount',new FormControl(5, [Validators.required, Validators.max(25),Validators.min(5)]));
 					this.atithigruhForm.addControl('samuhLaganCoupleCount',new FormControl(5, [Validators.required, Validators.max(25),Validators.min(5)]));
 				  }
 				if (resp.data.status == this.bookingConstants.DRAFT) {
@@ -396,6 +426,8 @@ export class BookAtithigruhComponent implements OnInit {
 						this.paymentObject = payResp.data;
 						this.showSearchForm = false;
 						this.showPaymentReciept = true;
+						this.totalAmount = (parseInt(this.paymentObject.RENT)-parseInt(this.paymentObject.RENT_CONCESSION) + parseInt(this.paymentObject.ADMINISTRATION_CHARGES)) + parseInt(this.paymentObject.GST);
+                        this.totalPayble = this.totalAmount + (parseInt(this.paymentObject.DEPOSIT_FEES)-parseInt(this.paymentObject.DEPOSIT_CONCESSION))
 					}, (err) => {
 						if (err && err.error)
 							this.toaster.error(err.error[0].message);
@@ -442,8 +474,11 @@ export class BookAtithigruhComponent implements OnInit {
 
 				this.showSearchForm = false;
 				this.atithigruhForm.patchValue(resp.data);
+				this.applicationDetails.patchValue(resp.data);
+				this.bookingDetails.patchValue(resp.data);
 				//this.atithigruhForm.get('bookingDate').setValue(moment(resp.data.bookingDate).format("DD-MM-YYYY"));
 				if(resp.data.bookingPurposeMaster.code == 'SAMUH_LAGAN'){
+					this.applicationDetails.addControl('samuhLaganCoupleCount',new FormControl(5, [Validators.required, Validators.max(25),Validators.min(5)]));
 					this.atithigruhForm.addControl('samuhLaganCoupleCount',new FormControl(5, [Validators.required, Validators.max(25),Validators.min(5)]));
 				  }
 				this.addressComp.getCountryLists();
@@ -452,8 +487,7 @@ export class BookAtithigruhComponent implements OnInit {
 						this.paymentObject = payResp.data;
 						this.showPaymentReciept = true;
 						this.confirmRef.hide();
-                        this.gstAmount = (parseInt(this.paymentObject.DEPOSIT_CONCESSION) + parseInt(this.paymentObject.ADMINISTRATION_CHARGES)) * parseInt(this.paymentObject.GST)
-						this.totalAmount = (parseInt(this.paymentObject.DEPOSIT_CONCESSION) + parseInt(this.paymentObject.ADMINISTRATION_CHARGES)) + this.gstAmount;
+						this.totalAmount = (parseInt(this.paymentObject.RENT)-parseInt(this.paymentObject.RENT_CONCESSION) + parseInt(this.paymentObject.ADMINISTRATION_CHARGES)) + parseInt(this.paymentObject.GST);
                         this.totalPayble = this.totalAmount + (parseInt(this.paymentObject.DEPOSIT_FEES)-parseInt(this.paymentObject.DEPOSIT_CONCESSION))
 
 					}, (err) => {
@@ -482,7 +516,7 @@ export class BookAtithigruhComponent implements OnInit {
 
 		let errCount = this.bookingUtils.getAllErrors(this.atithigruhForm);
 		if (this.atithigruhForm.invalid) {
-			this.handleErrorsOnSubmit();
+			//this.handleErrorsOnSubmit();
 			this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
 			return;
 		}
@@ -545,8 +579,8 @@ export class BookAtithigruhComponent implements OnInit {
 		this.tabIndex = evt;
 	}
 
-	handleErrorsOnSubmit() {
-		const key = this.bookingUtils.getInvalidFormControlKey(this.atithigruhForm);
+	handleErrorsOnSubmit(controlName) {
+		const key = this.bookingUtils.getInvalidFormControlKey(controlName);
 		const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 1;
 		if (index) {
 			this.tabIndex = index - 1;
@@ -584,9 +618,9 @@ export class BookAtithigruhComponent implements OnInit {
 	}
 
 	setDefaultValue(){
-		this.atithigruhForm.get('applicantName').setValue(this.profileObj.firstName);
-		this.atithigruhForm.get('applicantEmailID').setValue(this.profileObj.email);
-		this.atithigruhForm.get('applicantMobileNo').setValue(this.profileObj.cellNo);
+		this.applicationDetails.get('applicantName').setValue(this.profileObj.firstName + ' ' + this.profileObj.lastName);
+		this.applicationDetails.get('applicantEmailID').setValue(this.profileObj.email);
+		this.applicationDetails.get('applicantMobileNo').setValue(this.profileObj.cellNo);
 	}
 
 	patchValue2(){
@@ -668,4 +702,19 @@ export class BookAtithigruhComponent implements OnInit {
 		})
 	}
 
+	checkValidation(controlName,isSubmitted){
+		if(controlName.invalid){
+			this.handleErrorsOnSubmit(controlName)
+		}else{
+			const organizationalAry = Object.keys(controlName.value);
+			organizationalAry.forEach(element => {
+				this.atithigruhForm.get(element).setValue(controlName.get(element).value);
+			});
+			this.commonService.setValueToFromControl(controlName,this.atithigruhForm);
+			this.tabIndex= this.tabIndex +1;
+			if(isSubmitted){
+				this.submit(); 
+			}
+		}
+	}
 }

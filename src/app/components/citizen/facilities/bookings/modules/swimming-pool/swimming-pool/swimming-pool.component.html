@@ -135,7 +135,7 @@
 	<!-- <p class="pb-2">{{head_lines| translate: translateKey}}</p> -->
 
 	<mat-card class="formClass cardBorder">
-		<form [formGroup]="swimmimgPoolBookingForm" (ngSubmit)="submitApplication()" autocomplete="off">
+		<!-- <form [formGroup]="swimmimgPoolBookingForm" (ngSubmit)="submitApplication()" autocomplete="off"> -->
 			<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
 				<!-- Tab 1 Starts -->
@@ -144,17 +144,22 @@
 						<div>{{'general_details' | translate:translateKey}}</div>
 					</ng-template>
 
-					<div class="row">
+					<form [formGroup]="generalDetails">
+						<h2>
+							{{'General Details' | translate:translateKey}}
+						</h2>
+
+					   <div class="row">
 
 						<div formGroupName="swimmingPoolName" class="col-md-4 ngSelect">
 							<ng-select required placeholder="{{'swimming_pool_name' | translate:translateKey}} *"
 								formControlName="code"
-								(change)="filterAsperPool($event);swimmimgPoolBookingForm.get('batchName').reset();swimmimgPoolBookingForm.get('batchFor').reset()">
+								(change)="filterAsperPool($event);generalDetails.get('batchName').reset();generalDetails.get('batchFor').reset()">
 								<ng-option *ngFor="let pool of SWIMMING_POOL_NAME" [value]="pool.code">
 									{{pool.name}}
 								</ng-option>
 							</ng-select>
-							<control-messages [control]="swimmimgPoolBookingForm.get('swimmingPoolName').get('code')">
+							<control-messages [control]="generalDetails.get('swimmingPoolName').get('code')">
 							</control-messages>
 						</div>
 
@@ -164,17 +169,17 @@
 								<ng-option *ngFor="let member of MEMBERSHIP_TYPE" [value]="member.code">{{member.name}}
 								</ng-option>
 							</ng-select>
-							<control-messages [control]="swimmimgPoolBookingForm.get('membershipType').get('code')">
+							<control-messages [control]="generalDetails.get('membershipType').get('code')">
 							</control-messages>
 						</div>
 
 						<div class="col-md-4 ngSelect" formGroupName="category">
 							<ng-select placeholder="{{'category' | translate:translateKey}} *" formControlName="code"
-								required (change)="filterAsperCategory($event);swimmimgPoolBookingForm.get('batchFor').reset();
-								swimmimgPoolBookingForm.get('batchDuration').reset()">
+								required (change)="filterAsperCategory($event);generalDetails.get('batchFor').reset();
+								generalDetails.get('batchDuration').reset()">
 								<ng-option *ngFor="let cat of CATEGORY" [value]="cat.code">{{cat.name}}</ng-option>
 							</ng-select>
-							<control-messages [control]="swimmimgPoolBookingForm.get('category').get('code')">
+							<control-messages [control]="generalDetails.get('category').get('code')">
 							</control-messages>
 						</div>
 
@@ -185,7 +190,7 @@
 									[disabled]='durationisReadOnly'>{{time.name}}
 								</ng-option>
 							</ng-select>
-							<control-messages [control]="swimmimgPoolBookingForm.get('batchDuration').get('code')">
+							<control-messages [control]="generalDetails.get('batchDuration').get('code')">
 							</control-messages>
 						</div>
 
@@ -193,7 +198,7 @@
 							<input matInput [max]="maxBirthdate" autocomplete="off" appDate [max]="maxBirthdate" 
 								[matDatepicker]="birthDatedatepicker" formControlName="birthDate"
 								placeholder="{{ 'date_of_birth' | translate:translateKey }} (DD/MM/YYYY)" required
-								(dateChange)="dateFormat($event.value,'birthDate');calculateAge($event.value); swimmimgPoolBookingForm.get('batchFor').get('code').reset()" >
+								(dateChange)="dateFormatt($event.value,'birthDate');calculateAge($event.value); generalDetails.get('batchFor').get('code').reset()" >
 							<mat-datepicker-toggle matSuffix [for]="birthDatedatepicker"></mat-datepicker-toggle>
 							<mat-datepicker #birthDatedatepicker touchUi="true"></mat-datepicker>
 							<div align="end" class="default-show-hint mat-hint mat-right">
@@ -204,40 +209,41 @@
 						<div class="col-md-4 ngSelect" formGroupName="batchFor">
 							<ng-select placeholder="{{'batch_for' | translate:translateKey}} *" formControlName="code"
 								required
-								(change)="filterAsperBatchName($event);swimmimgPoolBookingForm.get('batchName').reset()">
+								(change)="filterAsperBatchName($event);generalDetails.get('batchName').reset()">
 								<ng-option *ngFor="let batchFor of BATCH_FOR" [value]="batchFor.code">{{batchFor.name}}
 								</ng-option>
 							</ng-select>
-							<control-messages [control]="swimmimgPoolBookingForm.get('batchFor').get('code')">
+							<control-messages [control]="generalDetails.get('batchFor').get('code')">
 							</control-messages>
 						</div>
 
 						<div class="col-md-4 ngSelect" formGroupName="batchName">
 							<ng-select placeholder="{{'batch_name' | translate:translateKey}} *" formControlName="code"
-								required>
+								 (change)="filterBatch($event)" required>
 								<ng-option *ngFor="let batchName of BATCH_NAME" [value]="batchName.code">
 									{{batchName.name}}
 								</ng-option>
 							</ng-select>
-							<control-messages [control]="swimmimgPoolBookingForm.get('batchName').get('code')">
+							<control-messages [control]="generalDetails.get('batchName').get('code')">
 							</control-messages>
 						</div>
 					</div>
 
-					<div class="row mt-4 fotButtonBar">
+					 <div class="row mt-4 fotButtonBar">
 						<div class="col-sm-12 col-md-12 justify-content-between d-flex">
 							<button type="button" color="primary" mat-raised-button
 								(click)="showDowlLoadFileTab = false; showSwimmingPoolForm = true;">
 								{{'back' | translate:translateKey}}
 							</button>
 							<button mat-raised-button type="button" color="primary"
-								(click)="saveFormData()">
+							(click)="checkValidation(generalDetails,false)">
 								{{'save_and_next'| translate:translateKey}}
 								<mat-icon>navigate_next</mat-icon>
 							</button>
 						</div>
-					</div>
-				</mat-tab>
+					 </div>
+				    </form>
+			    </mat-tab>
 				<!-- Tab 1 Ends -->
 
 				<!-- Tab 2 for applicant details -->
@@ -246,173 +252,176 @@
 					<ng-template mat-tab-label>
 						<div>{{'applicant_details' | translate:translateKey}}</div>
 					</ng-template>
-					<div class="row">
+					<form [formGroup]="applicantDetail">
+					  <div class="row">
 
-						<mat-form-field class="col-md-4">
+						 <mat-form-field class="col-md-4">
 							<input matInput type="text" formControlName="applicantName" appValidationFields
 								[validationFieldsType]="'onlyNameWithSpace'"
 								placeholder="{{'applicant_name' | translate: translateKey }}" maxlength="50">
-							<control-messages [control]="swimmimgPoolBookingForm.get('applicantName')">
+							<control-messages [control]="applicantDetail.get('applicantName')">
 							</control-messages>
-						</mat-form-field>
+						 </mat-form-field>
 
-						<mat-form-field class="col-md-4">
+						 <mat-form-field class="col-md-4">
 							<input matInput OnlyNumber minlength="10" maxlength="10"
 								formControlName="applicantMobileNumber"
 								placeholder="{{'mobile_number' | translate: translateKey}}" required>
-							<control-messages [control]="swimmimgPoolBookingForm.get('applicantMobileNumber')">
+							<control-messages [control]="applicantDetail.get('applicantMobileNumber')">
 							</control-messages>
-						</mat-form-field>
+						 </mat-form-field>
 
-						<mat-form-field class="col-md-4">
+						 <mat-form-field class="col-md-4">
 							<input matInput OnlyNumber minlength="10" maxlength="10"
 								formControlName="applicantEmergencyNumber"
 								placeholder="{{'applicant_emergency_number' | translate: translateKey}}" required>
-							<control-messages [control]="swimmimgPoolBookingForm.get('applicantEmergencyNumber')">
+							<control-messages [control]="applicantDetail.get('applicantEmergencyNumber')">
 							</control-messages>
-						</mat-form-field>
+						 </mat-form-field>
 
-						<mat-form-field class="col-md-4">
+						 <mat-form-field class="col-md-4">
 							<input matInput type="text" maxlength="50" formControlName="applicantEmail"
 								placeholder="{{'email_id' | translate: translateKey}}" required>
-							<control-messages [control]="swimmimgPoolBookingForm.get('applicantEmail')">
+							<control-messages [control]="applicantDetail.get('applicantEmail')">
 							</control-messages>
-						</mat-form-field>
+						 </mat-form-field>
 
-						<mat-form-field class="col-md-4">
+						 <mat-form-field class="col-md-4">
 							<input matInput [max]="maxBirthdate" autocomplete="off" appDate [min]="minBirthDate"
 								[matDatepicker]="datepicker" [min]="minBirthDate" formControlName="applicantBirthDate"
 								placeholder="{{ 'date_of_birth' | translate:translateKey }} (DD/MM/YYYY)" required
-								(dateChange)="dateFormat($event.value,'applicantBirthDate');calculateAge($event.value)">
+								(dateChange)="dateFormat2($event.value,'applicantBirthDate');calculateAge($event.value)">
 							<mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
 							<mat-datepicker #datepicker touchUi="true"></mat-datepicker>
 							<div align="end" class="default-show-hint mat-hint mat-right">
 								{{config.DATE_HINT_MSG}}</div>
-							<control-messages [control]="swimmimgPoolBookingForm.get('applicantBirthDate')">
+							<control-messages [control]="applicantDetail.get('applicantBirthDate')">
 							</control-messages>
-						</mat-form-field>
+						 </mat-form-field>
 
-						<mat-form-field class="col-md-4">
+						 <mat-form-field class="col-md-4">
 							<input matInput OnlyNumber maxlength="10" formControlName="applicantAge"
 								placeholder="{{'age' | translate: translateKey}}" [readonly]="true">
-							<control-messages [control]="swimmimgPoolBookingForm.get('applicantAge')">
+							<control-messages [control]="applicantDetail.get('applicantAge')">
 							</control-messages>
-						</mat-form-field>
+						 </mat-form-field>
 
-						<div class="col-md-4 ngSelect" formGroupName="applicantIDProof">
+						 <div class="col-md-4 ngSelect" formGroupName="applicantIDProof">
 							<ng-select placeholder="{{'id_proof' | translate:translateKey}} *" formControlName="code"
 								(change)="CheckType($event)" required>
 								<ng-option *ngFor="let proof of APPLICANT_PROOF" [value]="proof.code">
 									{{proof.name}}
 								</ng-option>
 							</ng-select>
-							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProof').get('code')">
+							<control-messages [control]="applicantDetail.get('applicantIDProof').get('code')">
 							</control-messages>
-						</div>
+						 </div>
 
-						<mat-form-field class="col-md-4" *ngIf="isVisibleIdNumber">
+						 <mat-form-field class="col-md-4" *ngIf="isVisibleIdNumber">
 							<input matInput maxlength="12" upperCase class="aadharcard"
 								formControlName="applicantIDProofNumber"
 								placeholder="{{'id_proof_no' | translate: translateKey}}" required OnlyNumber>
-							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProofNumber')">
+							<control-messages [control]="applicantDetail.get('applicantIDProofNumber')">
 							</control-messages>
-						</mat-form-field>
+						 </mat-form-field>
 
 
-						<mat-form-field class="col-md-4" *ngIf="isPanCardVisibleIdNumber">
+						 <mat-form-field class="col-md-4" *ngIf="isPanCardVisibleIdNumber">
 							<input matInput maxlength="10" upperCase class="pancard"
 								formControlName="applicantIDProofNumber"
 								placeholder="{{'id_proof_no' | translate: translateKey}}" required>
-							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProofNumber')">
+							<control-messages [control]="applicantDetail.get('applicantIDProofNumber')">
 							</control-messages>
-						</mat-form-field>
+						 </mat-form-field>
 
-						<mat-form-field class="col-md-4" *ngIf="isLicenseVisibleIdNumber">
+						 <mat-form-field class="col-md-4" *ngIf="isLicenseVisibleIdNumber">
 							<input matInput upperCase maxlength="15" class="drivinglicense"
 								formControlName="applicantIDProofNumber"
 								placeholder="{{'id_proof_no' | translate: translateKey}}" required>
-							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProofNumber')">
+							<control-messages [control]="applicantDetail.get('applicantIDProofNumber')">
 							</control-messages>
-						</mat-form-field>
+						 </mat-form-field>
 
-						<mat-form-field class="col-md-4" *ngIf="isElectionCardIdNumber">
+						 <mat-form-field class="col-md-4" *ngIf="isElectionCardIdNumber">
 							<input matInput upperCase maxlength="10" class="electioncard"
 								formControlName="applicantIDProofNumber"
 								placeholder="{{'id_proof_no' | translate: translateKey}}" required>
-							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProofNumber')">
+							<control-messages [control]="applicantDetail.get('applicantIDProofNumber')">
 							</control-messages>
-						</mat-form-field>
+						 </mat-form-field>
 
-						<mat-form-field class="col-md-4" *ngIf="isPassportIdNumber">
+						 <mat-form-field class="col-md-4" *ngIf="isPassportIdNumber">
 							<input matInput upperCase maxlength="10" class="passport"
 								formControlName="applicantIDProofNumber"
 								placeholder="{{'id_proof_no' | translate: translateKey}}" required>
-							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProofNumber')">
+							<control-messages [control]="applicantDetail.get('applicantIDProofNumber')">
 							</control-messages>
-						</mat-form-field>
+						 </mat-form-field>
 
-						<mat-form-field class="col-md-4" *ngIf="isVisibleElectricityBill">
+						 <mat-form-field class="col-md-4" *ngIf="isVisibleElectricityBill">
 							<input matInput maxlength="11" upperCase class="electricityBill"
 								formControlName="applicantIDProofNumber"
 								placeholder="{{'id_proof_no' | translate: translateKey}}" required OnlyNumber>
-							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProofNumber')">
+							<control-messages [control]="applicantDetail.get('applicantIDProofNumber')">
 							</control-messages>
-						</mat-form-field>
+						 </mat-form-field>
 						
-						<mat-form-field class="col-md-4" *ngIf="!isVisibleIdNumber && !isPanCardVisibleIdNumber && 
+						 <mat-form-field class="col-md-4" *ngIf="!isVisibleIdNumber && !isPanCardVisibleIdNumber && 
 								!isLicenseVisibleIdNumber && !isElectionCardIdNumber && !isPassportIdNumber && !isVisibleElectricityBill">
 							<input matInput upperCase maxlength="10" class="others"
 								formControlName="applicantIDProofNumber"
 								placeholder="{{'id_proof_no' | translate: translateKey}}" required appAlphaNumeric>
-							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProofNumber')">
+							<control-messages [control]="applicantDetail.get('applicantIDProofNumber')">
 							</control-messages>
-						</mat-form-field>
+						 </mat-form-field>
 
-						<div class="col-md-4 ngSelect" formGroupName="applicantBloodGroup">
+						 <div class="col-md-4 ngSelect" formGroupName="applicantBloodGroup">
 							<ng-select placeholder="{{'blood_group' | translate:translateKey}}" formControlName="code">
 								<ng-option *ngFor="let yes_no of BLOOD_GROUP" [value]="yes_no.code">
 									{{yes_no.name}}
 								</ng-option>
 							</ng-select>
 							<control-messages
-								[control]="swimmimgPoolBookingForm.get('applicantBloodGroup').get('code')">
+								[control]="applicantDetail.get('applicantBloodGroup').get('code')">
 							</control-messages>
-						</div>
+						 </div>
 
-						<div class="col-md-4">
+						 <div class="col-md-4">
 							<month-picker formControlName="applicantJoiningMonth" [min]="startMinMonth"
 								(change)="chosenMonthHandler($event)"></month-picker>
 							<div align="end" class="default-show-hint mat-hint mat-right">
 								{{config.MONTH_HINT_MSG}}</div>
-							<control-messages [control]="swimmimgPoolBookingForm.get('applicantJoiningMonth')">
+							<control-messages [control]="applicantDetail.get('applicantJoiningMonth')">
 							</control-messages>
-						</div>
+						 </div>
 
 
-					</div>
+					  </div>
 
-					<h2>
+					  <h2>
 						{{'applicant_address' | translate:translateKey}}
-					</h2>
-					<app-address #address [requiredFeilds]="true" [isDisplayGujFields]="false"
-						[addressFormGroup]="swimmimgPoolBookingForm.get('applicantAddress')"></app-address>
+					  </h2>
+					       <app-address #address [requiredFeilds]="true" [isDisplayGujFields]="false"
+						     [addressFormGroup]="applicantDetail.get('applicantAddress')" ></app-address>
 
 
-					<div class="row mt-4 fotButtonBar">
-						<div class="col-sm-12 col-md-12 justify-content-between d-flex">
-							<button type="button" color="primary" mat-raised-button (click)="tabIndex= tabIndex -1; ">
-								<mat-icon>navigate_before</mat-icon>
-								{{'back' | translate:translateKey}}
-							</button>
-							<button mat-raised-button type="button" color="primary"
-								(click)="tabIndex= tabIndex +1;saveFormData()">
-								{{'save_and_next'| translate:translateKey}}
-								<mat-icon>navigate_next</mat-icon>
-							</button>
+					   <div class="row mt-4 fotButtonBar">
+						    <div class="col-sm-12 col-md-12 justify-content-between d-flex">
+							     <button type="button" color="primary" mat-raised-button (click)="tabIndex= tabIndex -1; ">
+								  <mat-icon>navigate_before</mat-icon>
+								  {{'back' | translate:translateKey}}
+							     </button>
+							   <button mat-raised-button type="button" color="primary"
+							   (click)="checkValidation(applicantDetail,false)">
+								  {{'save_and_next'| translate:translateKey}}
+								  <mat-icon>navigate_next</mat-icon>
+							   </button>
 						</div>
-					</div>
+					 </div>
+
+				  </form>
 				</mat-tab>
-				<!-- Tab 1 Ends -->
+				<!-- Tab 2 Ends -->
 
 
 				<!-- step Attachment Starts -->
@@ -528,7 +537,7 @@
 								<mat-icon>navigate_before</mat-icon>
 								{{'back' | translate:translateKey}}
 							</button>
-							<button mat-raised-button color="primary" type="submit">
+							<button mat-raised-button color="primary" type="submit" (click)="checkValidation(swimmimgPoolBookingForm,true)">
 								{{'submit_application'| translate: translateKey}}
 							</button>
 						</div>
@@ -537,7 +546,6 @@
 				<!-- step Attachment Ends -->
 
 			</mat-tab-group>
-		</form>
 	</mat-card>
 </span>
 <!-- {{ swimmimgPoolBookingForm.value | json }} -->

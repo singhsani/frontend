@@ -34,7 +34,11 @@ export class VendorRegistrationComponent implements OnInit {
   academicQualifications: FormArray;
   vendorNameArray: FormArray;
   vendorRegistrationForm: FormGroup;
-
+  firmDetails : FormGroup;
+  registrationDetail : FormGroup;
+  factoryAndEmployeeDetail : FormGroup;
+  productAndSupplierDetail : FormGroup;
+  refrenceDocument : FormGroup
   vendorMachinesCapacities: FormArray;
   vendorRegisteredGovtDetail: FormArray;
 
@@ -124,6 +128,7 @@ export class VendorRegistrationComponent implements OnInit {
   }
 
   ngOnInit() {
+    window.scrollTo(0, 0)
     this.vendorRegistrationControl();
     this.vendorRegistrationForm.addControl('listOfItemMaterialSupplier', this.listOfItemMaterialSupplier);
     this.vendorRegistrationForm.addControl('vendorNameArray', this.vendorNameArray);
@@ -211,67 +216,72 @@ export class VendorRegistrationComponent implements OnInit {
     this.formService.getFormData(id).subscribe(res => {
       console.log("tresr", res)
       this.vendorRegistrationForm.patchValue(res);
+      this.firmDetails.patchValue(res);
+      this.registrationDetail.patchValue(res);
+      this.factoryAndEmployeeDetail.patchValue(res);
+      this.productAndSupplierDetail.patchValue(res)
       if (res.formStatus != 'REJECTED') {
-        this.locationChange(res.applyingFor);
+        let obj = {value : res.applyingFor }
+        this.locationChange(obj);
       }
 
       //this.showButtons = false;
 
       if (res.formStatus == 'PAYMENT_RECEIVED' || res.formStatus == 'SUBMITTED') {
         this.vendorRegistrationForm.disable();
+        this.firmDetails.disable();
+        this.registrationDetail.disable();
+        this.factoryAndEmployeeDetail.disable()
+        this.productAndSupplierDetail.disable();
+        this.canAddressEdit = false
         this.vendorRegistrationForm.get('canEdit').setValue(false);
       }
-    
-      if (res.formStatus == 'PAYMENT_RECEIVED' || res.formStatus == 'SUBMITTED' || res.formStatus == 'DRAFT') {
-        this.canAddressEdit = false
-      }
-
       // to remove the intaial (frist index) of data 
-      (<FormArray>this.vendorRegistrationForm.get('vendorNameDetails')).removeAt(this.vendorRegistrationForm.controls.vendorNameDetails.value[0]);
-      (<FormArray>this.vendorRegistrationForm.get('listOfItemMaterial')).removeAt(this.vendorRegistrationForm.controls.listOfItemMaterial.value[0]);
+      (<FormArray>this.registrationDetail.get('vendorNameDetails')).removeAt(this.registrationDetail.controls.vendorNameDetails.value[0]);
+      (<FormArray>this.registrationDetail.get('listOfItemMaterial')).removeAt(this.registrationDetail.controls.listOfItemMaterial.value[0]);
 
       res.vendorNameDetails.forEach(app => {
-        (<FormArray>this.vendorRegistrationForm.get('vendorNameDetails')).push(this.createFormGroupVendor('vendorNameDetails', app));
+        (<FormArray>this.registrationDetail.get('vendorNameDetails')).push(this.createFormGroupVendor('vendorNameDetails', app));
       });
       this.isPreviewVendorNameDetail = true;
 
       res.listOfItemMaterial.forEach(app => {
-        (<FormArray>this.vendorRegistrationForm.get('listOfItemMaterial')).push(this.createFormGroupVendor('listOfItemMaterial', app));
+        (<FormArray>this.registrationDetail.get('listOfItemMaterial')).push(this.createFormGroupVendor('listOfItemMaterial', app));
       });
       this.isListOfItemMaterial = true;
 
       res.vendorNameHoldingDetails.forEach(app => {
-        (<FormArray>this.vendorRegistrationForm.get('vendorNameHoldingDetails')).push(this.createFormGroupVendor('vendorNameHoldingDetails', app));
+        (<FormArray>this.productAndSupplierDetail.get('vendorNameHoldingDetails')).push(this.createFormGroupVendor('vendorNameHoldingDetails', app));
       });
       this.isVendorNameHoldingDetails = true;
 
       res.vendorNameAuthorizedDetails.forEach(app => {
-        (<FormArray>this.vendorRegistrationForm.get('vendorNameAuthorizedDetails')).push(this.createFormGroupVendor('vendorNameAuthorizedDetails', app));
+        (<FormArray>this.productAndSupplierDetail.get('vendorNameAuthorizedDetails')).push(this.createFormGroupVendor('vendorNameAuthorizedDetails', app));
       });
       this.isVendorNameAuthorizedDetails = true;
 
       res.vendorNameLastYearDetails.forEach(app => {
-        (<FormArray>this.vendorRegistrationForm.get('vendorNameLastYearDetails')).push(this.createFormGroupVendor('vendorNameLastYearDetails', app));
+        (<FormArray>this.productAndSupplierDetail.get('vendorNameLastYearDetails')).push(this.createFormGroupVendor('vendorNameLastYearDetails', app));
       });
       this.isVendorNameLastYearDetails = true;
 
       res.supplierOrderDetails.forEach(app => {
-        (<FormArray>this.vendorRegistrationForm.get('supplierOrderDetails')).push(this.createFormGroupVendor('supplierOrderDetails', app));
+        (<FormArray>this.productAndSupplierDetail.get('supplierOrderDetails')).push(this.createFormGroupVendor('supplierOrderDetails', app));
       });
       this.isSupplierOrderDetails = true;
 
       res.qualificationDetails.forEach(app => {
-        (<FormArray>this.vendorRegistrationForm.get('qualificationDetails')).push(this.createFormGroupVendor('qualificationDetails', app));
+        (<FormArray>this.factoryAndEmployeeDetail.get('qualificationDetails')).push(this.createFormGroupVendor('qualificationDetails', app));
       });
       this.isQualificationDetails = true;
 
       res.installedMachineCapacities.forEach(app => {
-        (<FormArray>this.vendorRegistrationForm.get('installedMachineCapacities')).push(this.createFormGroupVendor('installedMachineCapacities', app));
+        (<FormArray>this.factoryAndEmployeeDetail.get('installedMachineCapacities')).push(this.createFormGroupVendor('installedMachineCapacities', app));
       });
       this.isInstalledMachineCapacities = true;
 
       res.registeredGovtDetail.forEach(app => {
-        (<FormArray>this.vendorRegistrationForm.get('registeredGovtDetail')).push(this.createFormGroupVendor('registeredGovtDetail', app));
+        (<FormArray>this.factoryAndEmployeeDetail.get('registeredGovtDetail')).push(this.createFormGroupVendor('registeredGovtDetail', app));
       });
       this.isRegisteredGovtDetail = true;
 
@@ -409,15 +419,8 @@ export class VendorRegistrationComponent implements OnInit {
   }
 
   vendorRegistrationControl() {
-
-    this.vendorRegistrationForm = this.fb.group({
-
-      apiType: "vendor",
-      serviceCode: null,
-      serviceFormId: this.formId,
-      applicationNumber: null,
-      canEdit: [true],
-
+    	/* Step 1 controls start */
+    this.firmDetails = this.fb.group({
       applyingFor: [null, [Validators.required]],
       typeOfFirm: [null, Validators.required],
       nameOfTheFirm: [null, [Validators.required, Validators.maxLength(150)]],
@@ -438,7 +441,7 @@ export class VendorRegistrationComponent implements OnInit {
       branchSTDNumber: [null, [Validators.maxLength(11)]],
 
       headMobileNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
-      headAlterMobileNumber: [null, [Validators.maxLength(10), Validators.minLength(10)]],
+      headAlterMobileNumber: [null, [Validators.maxLength(11), Validators.minLength(11)]],
       headISDNumber: [null, [Validators.maxLength(12)]],
       headSTDNumber: [null, [Validators.maxLength(11)]],
       headName: [null, [Validators.required, Validators.maxLength(150)]],
@@ -453,103 +456,12 @@ export class VendorRegistrationComponent implements OnInit {
       registeredAddress: this.fb.group(this.resAddrComponent.addressControls()),
       branchAddress: this.fb.group(this.resAddrComponent.addressControls()),
       contactAddress: this.fb.group(this.resAddrComponent.addressControls()),
-
       namesOfTheOwner: null,
-      //manufacturingOwnedDetails: null,
-
-      listOfItemMaterial: this.listOfItemMaterialSupplier,
-      qualificationDetails: this.academicQualificationAndExperience,
-      vendorNameDetails: this.vendorNameArray,
-      vendorNameLastYearDetails: this.vendorNameLastYear,
-      vendorNameAuthorizedDetails: this.vendorNameAuthorized,
-      vendorNameHoldingDetails: this.vendorNameholding,
-      supplierOrderDetails: this.vendorDetailsOfOrderIndicationQuantity,
-
-      installedMachineCapacities: this.vendorMachinesCapacities,
-      registeredGovtDetail: this.vendorRegisteredGovtDetail,
-
-      registrationBank: this.fb.group({
-        code: [{ value: null, disabled: true }],
-        name: null
-      }),
-      registrationDDNumber: [{ value: null, disabled: true }],
-      registrationAmount: [{ value: null, disabled: true }],
-      registrationDDIssuingDate: [{ value: null, disabled: true }],
 
       locationOfFactoryWorks: this.fb.group({
         code: [null, [Validators.required]],
         name: null
       }),
-
-      incomeTaxDetails: [null, [Validators.required]],
-      isManufacturingOwnedDetails: [null],
-
-      manufacturingOwnedDetails: this.fb.group({
-        code: [null, [Validators.required]],
-        name: null
-      }),
-
-      detailsOfLandDocumentsFactory: null,
-      buildingPermissionDetail: null,
-      factoryLicenseStartDate: [null],
-      factoryLicenseEndDate: [null],
-      certificateMSMENSISSIStartDate: [null],
-      certificateMSMENSISSIEndDate: [null],
-
-      productManufacturedISI: [null],
-      licencesISIBISCE: null,
-      totalInvestmentDetail: [null],
-      lastThreeYearsCopies: [null],
-      copyOfITCClearanceCertificate: [null],
-      registrationOfficeACT: [null],
-      registeredByGovt: [null],
-      testingRecordMaintainedDetail: [null],
-      personInChargeProductionControl: [null],
-      firmUnderDealBlacklisted: [null],
-      resultSampleTesting: [null],
-
-      totalTurnoverLastThreeYears: null,
-      loanCapitalWithBankLimit: null,
-      productManufacturedDescription: null,
-      areaOfLandFactory: null,
-      builtAreaFactory: null,
-      noOfWorkingShifts: null,
-      factoryLicenceNumber: [null],
-      sscNSICCertificateNumber: null,
-      valueOfPlantAndMachinery: null,
-      detailsEquipmentCapacity: null,
-      detailsMachineryCapacity: null,
-      testStandardGovtLabApproved: null,
-      adoptedForQualityControl: null,
-      methodEmployeeIdentify: null,
-      sourceOfRawMaterialAddress: null,
-      productionCapacityPerAnnum: null,
-      maximumProductionPerAnnum: null,
-      estimationOfStocks: null,
-      numberOfItemsHoldingISOCertificate: null,
-      remarks: [null],
-
-      // purchaserName: null,
-      // orderNo: null,
-      // orderDate: null,
-      // quantitySuppliedCompletionDate: null,
-
-      // managerialFullName: null,
-      // managerialQualification: null,
-      // managerialExperienceInYears: null,
-      // productionStaffFullName: null,
-      // productionStaffQualification: null,
-      // productionStaffExperienceInYears: null,
-      // qualityControlStaffFullName: null,
-      // qualityControlStaffQualification: null,
-      // qualityControlStaffExperienceInYears: null,
-      personnelDetailSkilled: null,
-      personnelDetailUnSkilled: null,
-      personnelDetailOther: null,
-
-      attachments: [],
-      acceptAndCondition: [null],
-      createdByCitizen: [true],
       buildingName: [null, [ValidationService.buildingNameValidator, Validators.maxLength(60)]],
       streetName: [null, Validators.maxLength(60)],
       landmark: [null, Validators.maxLength(100)],
@@ -559,23 +471,102 @@ export class VendorRegistrationComponent implements OnInit {
       city: [null, [Validators.maxLength(60)]],
       country: [null, [Validators.maxLength(60)]],
       pincode: [null, [Validators.maxLength(6)]],
+    })
+	/* Step 1 controls end */
+
+  	/* Step 2 controls start */
+    this.registrationDetail = this.fb.group({
+      incomeTaxDetails: [null, [Validators.required]],
+      isManufacturingOwnedDetails: [null],
+      manufacturingOwnedDetails: this.fb.group({
+        code: [null, [Validators.required]],
+        name: null
+      }),
+      totalInvestmentDetail: [null],
+      totalTurnoverLastThreeYears: null,
+      lastThreeYearsCopies: [null],
+      vendorNameDetails: this.vendorNameArray,
+      listOfItemMaterial: this.listOfItemMaterialSupplier,
+      registrationBank: [{ value: null, disabled: true }],
+      registrationAmount: [{ value: null, disabled: true }],
+      registrationDDNumber: null,
+      registrationDDIssuingDate: [{ value: null, disabled: true }],
+    })
+/* Step 2 controls end */
+
+/* Step 3 controls start */
+    this.factoryAndEmployeeDetail = this.fb.group({
+      copyOfITCClearanceCertificate: [null],
+      loanCapitalWithBankLimit: null,
+      productManufacturedDescription: null,
+      areaOfLandFactory: null,
+      builtAreaFactory: null,
+      detailsOfLandDocumentsFactory: null,
+      buildingPermissionDetail: null,
+      noOfWorkingShifts: null,
+      factoryLicenceNumber: [null],
+      sscNSICCertificateNumber: null,
+      factoryLicenseStartDate: [null],
+      factoryLicenseEndDate: [null],
+      certificateMSMENSISSIStartDate: [null],
+      certificateMSMENSISSIEndDate: [null],
+      licencesISIBISCE: null,
+      valueOfPlantAndMachinery: null,
+      registrationOfficeACT: [null],
+      productManufacturedISI: [null],
+      registeredByGovt: [null],
+      detailsEquipmentCapacity: null,
+      detailsMachineryCapacity: null,
+      numberOfItemsHoldingISOCertificate: null,
+      registeredGovtDetail: this.vendorRegisteredGovtDetail,
+      installedMachineCapacities: this.vendorMachinesCapacities,
+      qualificationDetails: this.academicQualificationAndExperience,
+      personnelDetailSkilled: null,
+      personnelDetailUnSkilled: null,
+      personnelDetailOther: null,
+    })
+    /* Step 3 controls end */
+
+    /* Step 4 controls start */
+    this.productAndSupplierDetail = this.fb.group({
+      testingRecordMaintainedDetail: [null],
+      testStandardGovtLabApproved: null,
+      methodEmployeeIdentify: null,
+      adoptedForQualityControl: null,
+      personInChargeProductionControl: [null],
+      sourceOfRawMaterialAddress: null,
+      productionCapacityPerAnnum: null,
+      maximumProductionPerAnnum: null,
+      vendorNameAuthorizedDetails: this.vendorNameAuthorized,
+      vendorNameLastYearDetails: this.vendorNameLastYear,
+      supplierOrderDetails: this.vendorDetailsOfOrderIndicationQuantity,
+      firmUnderDealBlacklisted: [null],
+      estimationOfStocks: null,
+      resultSampleTesting: [null],
+      vendorNameHoldingDetails: this.vendorNameholding,
+      remarks: [null],
+
+    })
+    /* Step 4 controls end */
+
+    this.vendorRegistrationForm = this.fb.group({
+      apiType: "vendor",
+      serviceCode: null,
+      serviceFormId: this.formId,
+      applicationNumber: null,
+      canEdit: [true],
+      attachments: [],
+      acceptAndCondition: [null],
+      createdByCitizen: [true],
     });
-
-    // this.academicQualifications.push(this.createEducationQualification());
-    //  this.academicQualificationAndExperience.push(this.createEducationQualification());
-    this.vendorNameArray.push(this.createVendorNameArray());
-    this.listOfItemMaterialSupplier.push(this.createItemMaterialSupplier());
-    // this.vendorNameLastYear.push(this.createItemMaterialSupplierLastThreeYear());
-    // this.vendorNameAuthorized.push(this.createItemAuthorized());
-    // this.vendorNameholding.push(this.createItemHolding());
-    // this.vendorDetailsOfOrderIndicationQuantity.push(this.createDetailsOfIndicatingQuantity());
-    // this.vendorMachinesCapacities.push(this.createDetailsOfMahineInstalledCapacities());
-    // this.vendorRegisteredGovtDetail.push(this.createRegisteredGovtDetail());
+    /** Method is used to copy local contoller to Main contoller **/
+    this.commonService.createCloneAbstractControl(this.firmDetails,this.vendorRegistrationForm);
+		this.commonService.createCloneAbstractControl(this.registrationDetail,this.vendorRegistrationForm);
+		this.commonService.createCloneAbstractControl(this.factoryAndEmployeeDetail,this.vendorRegistrationForm);	
+		this.commonService.createCloneAbstractControl(this.productAndSupplierDetail,this.vendorRegistrationForm);
   }
 
-  onTabChange(evt) {
-    this.tabIndex = evt;
-  }
+
 
   getAllDocumentLists() {
     this.engineer.getAllDocuments().subscribe(res => {
@@ -595,19 +586,26 @@ export class VendorRegistrationComponent implements OnInit {
   }
 
   handleErrorsOnSubmit(key) {
-
     const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 0;
-
     this.tabIndex = index;
+    if(this.tabIndex == 0){
+      this.onTabChange(1,this.firmDetails, this.vendorRegistrationForm)
+    }
+    else if(this.tabIndex == 1){
+      this.onTabChange(2,this.registrationDetail, this.vendorRegistrationForm)
+    }
     return false;
 
 
   }
 
   onDateChange(fieldName, date) {
-    this.vendorRegistrationForm.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
+    this.firmDetails.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
   }
 
+  onDatesChange(fieldName, date) {
+    this.factoryAndEmployeeDetail.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
+  }
   onDateChangePurchaseDate(control, date, obj) {
     obj.get(control).setValue(moment(date).format("YYYY-MM-DD"));
   }
@@ -625,18 +623,22 @@ export class VendorRegistrationComponent implements OnInit {
   }
 
   locationChange(event) {
+    if(event == null || event.value == null){
+      return false
+    }
+    else{
     this.engineer.getFeeFromLocation(event.value).subscribe(res => {
-      this.vendorRegistrationForm.get('registrationAmount').setValue(res.fee);
+      this.registrationDetail.get('registrationAmount').setValue(res.fee);     
     })
-    this.vendorRegistrationForm.get('locationOfFactoryWorks').get('code').setValue(event.value);
+    this.firmDetails.get('locationOfFactoryWorks').get('code').setValue(event.value);
     if (event.value == "IN_GUJARAT") {
       this.resetAddressValue()
-      this.vendorRegistrationForm.get('state').setValue('GUJARAT')
-      this.vendorRegistrationForm.get('city').setValue('Vadodara')
-      this.vendorRegistrationForm.get('country').setValue('INDIA')
-      this.vendorRegistrationForm.get('state').disable()
-      this.vendorRegistrationForm.get('city').enable()
-      this.vendorRegistrationForm.get('country').disable()
+      this.firmDetails.get('state').setValue('GUJARAT')
+      this.firmDetails.get('city').setValue('Vadodara')
+      this.firmDetails.get('country').setValue('INDIA')
+      this.firmDetails.get('state').disable()
+      this.firmDetails.get('city').enable()
+      this.firmDetails.get('country').disable()
       this.state = 'Gujarat'
       this.city = '';
       this.country = 'India'
@@ -644,29 +646,36 @@ export class VendorRegistrationComponent implements OnInit {
     }
     else if (event.value == "OUTSIDE_GUJARAT") {
       this.resetAddressValue()
-      this.vendorRegistrationForm.get('country').setValue('INDIA')
-      this.vendorRegistrationForm.get('state').enable()
-      this.vendorRegistrationForm.get('city').enable()
-      this.vendorRegistrationForm.get('country').disable()
+      this.firmDetails.get('country').setValue('INDIA')
+      this.firmDetails.get('state').enable()
+      this.firmDetails.get('city').enable()
+      this.firmDetails.get('country').disable()
       this.state = ''
       this.city = ''
       this.country = 'India'
     }
     else {
       this.resetAddressValue()
-      this.vendorRegistrationForm.get('state').enable()
-      this.vendorRegistrationForm.get('city').enable()
-      this.vendorRegistrationForm.get('country').enable()
+      this.firmDetails.get('state').enable()
+      this.firmDetails.get('city').enable()
+      this.firmDetails.get('country').enable()
       this.state = ''
       this.city = ''
       this.country = ''
     }
   }
+  // call for deafult open tab 
+  if(this.vendorRegistrationForm.get('canEdit').value == true){
+    this.vendorNameArray.removeAt(0);
+    this.listOfItemMaterialSupplier.removeAt(0)
+    this.vendorNameArray.push(this.createVendorNameArray())
+    this.listOfItemMaterialSupplier.push(this.createItemMaterialSupplier())
+  }
+  }
 
   typeOfFirmChange(event) {
-
     this.vendorTypeFirm = [...this.vendorTypeFirmUpdate];
-    this.vendorRegistrationForm.get('vendorNameDetails').reset();
+    this.registrationDetail.get('vendorNameDetails').reset();
     this.vendorTypeFirm = this.vendorTypeFirm.filter(o => o.code === event.value);
 
     if (event.value == 'PROPRIETORSHIP') {
@@ -675,7 +684,6 @@ export class VendorRegistrationComponent implements OnInit {
     } else {
       this.vendorArrayNameButtons = false;
     }
-
   }
 
   addRow() {
@@ -1131,21 +1139,21 @@ export class VendorRegistrationComponent implements OnInit {
       + this.city + ' ' + this.state + ' ' + this.country + ' ' + this.pinCode
     //console.log('setAddressValue', this.setAddressValue);
 
-    this.vendorRegistrationForm.get('factoryAddressDetails').setValue(this.setAddressValue)
-    this.vendorRegistrationForm.get('factoryAddressDetails').disable()
+    this.firmDetails.get('factoryAddressDetails').setValue(this.setAddressValue)
+    this.firmDetails.get('factoryAddressDetails').disable()
     // console.log(this.vendorRegistrationForm.get('factoryAddressDetails').value);
 
   }
 
   resetAddressValue() {
-    this.vendorRegistrationForm.get('buildingName').setValue(null)
-    this.vendorRegistrationForm.get('streetName').setValue(null)
-    this.vendorRegistrationForm.get('landmark').setValue(null)
-    this.vendorRegistrationForm.get('area').setValue(null)
-    this.vendorRegistrationForm.get('pincode').setValue(null)
-    this.vendorRegistrationForm.get('state').setValue(null)
-    this.vendorRegistrationForm.get('city').setValue(null)
-    this.vendorRegistrationForm.get('country').setValue(null)
+    this.firmDetails.get('buildingName').setValue(null)
+    this.firmDetails.get('streetName').setValue(null)
+    this.firmDetails.get('landmark').setValue(null)
+    this.firmDetails.get('area').setValue(null)
+    this.firmDetails.get('pincode').setValue(null)
+    this.firmDetails.get('state').setValue(null)
+    this.firmDetails.get('city').setValue(null)
+    this.firmDetails.get('country').setValue(null)
     this.setAddressValue = ''
     this.buildingName = ''
     this.streetName = ''
@@ -1159,25 +1167,51 @@ export class VendorRegistrationComponent implements OnInit {
 
   onSameAddressChange(event){
     if(event.checked){  
-      this.vendorRegistrationForm.get('registeredAddress').get('buildingName').setValue(this.vendorRegistrationForm.get('buildingName').value)
-      this.vendorRegistrationForm.get('registeredAddress').get('streetName').setValue(this.vendorRegistrationForm.get('streetName').value)
-      this.vendorRegistrationForm.get('registeredAddress').get('city').setValue(this.vendorRegistrationForm.get('city').value)
-      this.vendorRegistrationForm.get('registeredAddress').get('country').setValue(this.vendorRegistrationForm.get('country').value)
-      this.vendorRegistrationForm.get('registeredAddress').get('pincode').setValue(this.vendorRegistrationForm.get('pincode').value)
-      this.vendorRegistrationForm.get('registeredAddress').get('state').setValue(this.vendorRegistrationForm.get('state').value)
-      this.vendorRegistrationForm.get('registeredAddress').get('landmark').setValue(this.vendorRegistrationForm.get('landmark').value)
-      this.vendorRegistrationForm.get('registeredAddress').get('area').setValue(this.vendorRegistrationForm.get('area').value)
+      this.firmDetails.get('registeredAddress').get('buildingName').setValue(this.firmDetails.get('buildingName').value)
+      this.firmDetails.get('registeredAddress').get('streetName').setValue(this.firmDetails.get('streetName').value)
+      this.firmDetails.get('registeredAddress').get('city').setValue(this.firmDetails.get('city').value)
+      this.firmDetails.get('registeredAddress').get('country').setValue(this.firmDetails.get('country').value)
+      this.firmDetails.get('registeredAddress').get('pincode').setValue(this.firmDetails.get('pincode').value)
+      this.firmDetails.get('registeredAddress').get('state').setValue(this.firmDetails.get('state').value)
+      this.firmDetails.get('registeredAddress').get('landmark').setValue(this.firmDetails.get('landmark').value)
+      this.firmDetails.get('registeredAddress').get('area').setValue(this.firmDetails.get('area').value)
     }
     else{
-      this.vendorRegistrationForm.get('registeredAddress').get('buildingName').setValue(null)
-      this.vendorRegistrationForm.get('registeredAddress').get('streetName').setValue(null)
-      this.vendorRegistrationForm.get('registeredAddress').get('city').setValue(null)
-      this.vendorRegistrationForm.get('registeredAddress').get('country').setValue(null)
-      this.vendorRegistrationForm.get('registeredAddress').get('pincode').setValue(null)
-      this.vendorRegistrationForm.get('registeredAddress').get('state').setValue(null)
-      this.vendorRegistrationForm.get('registeredAddress').get('landmark').setValue(null)
-      this.vendorRegistrationForm.get('registeredAddress').get('area').setValue(null)
+      this.firmDetails.get('registeredAddress').get('buildingName').setValue(null)
+      this.firmDetails.get('registeredAddress').get('streetName').setValue(null)
+      this.firmDetails.get('registeredAddress').get('city').setValue(null)
+      this.firmDetails.get('registeredAddress').get('country').setValue(null)
+      this.firmDetails.get('registeredAddress').get('pincode').setValue(null)
+      this.firmDetails.get('registeredAddress').get('state').setValue(null)
+      this.firmDetails.get('registeredAddress').get('landmark').setValue(null)
+      this.firmDetails.get('registeredAddress').get('area').setValue(null)
+    }
+  }
+
+  public onTabChange(index: number, controlName, mainControl) {
+    if (controlName.invalid) {
+        this.commonService.markFormGroupTouched(controlName);
+    } else {
+        const organizationalAry = Object.keys(controlName.value);
+        organizationalAry.forEach((element:any) => {
+               // push form Array data into main Controller
+            if (controlName.get(element) instanceof FormArray) {
+                const formGroupAry = this.engineer.createArray(controlName.get(element));
+                mainControl.get(element).value.push()
+                for(let i = 0; i < controlName.get(element).controls.length; i++) {
+                    mainControl.get(element).value.push(formGroupAry.value[i]);
+                    mainControl.get(element).controls.push(formGroupAry.controls[i]);
+                }   
+            }
+            else {
+                mainControl.get(element).setValue(controlName.get(element).value);
+            }
+        });
+        this.tabIndex = index;
     }
   }
   
+  onFormTabChange(evt) {
+    this.tabIndex = evt;
+  }
 }

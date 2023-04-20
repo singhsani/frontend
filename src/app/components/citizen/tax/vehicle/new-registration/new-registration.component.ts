@@ -61,6 +61,7 @@ export class NewRegistrationComponent implements OnInit {
   attachmentList: any = [];
   showButton: boolean = false;
   placeHolderMessage = 'Please enter valid Registration no. e.g. GJ-06-AB-1234';
+  
 
   public config: PftConfig;
 
@@ -73,7 +74,7 @@ export class NewRegistrationComponent implements OnInit {
     private toastr: ToastrService,
     private commonService: CommonService,
     private modalService: BsModalService,
-    private profeService: ProfessionalTaxService
+    private profeService: ProfessionalTaxService    
   ) {
     this.formService.apiType = 'vehicle';
     this.vehicleServise.apiType = 'vehicle';
@@ -671,7 +672,6 @@ export class NewRegistrationComponent implements OnInit {
     },
     "canEdit": true,
     "canDelete": false,
-    "canSubmit": true,
     "tokenFees": 100,
     "dishonorCharges": 0,
     "vehicleApplicableRate": 1.25,
