@@ -40,7 +40,7 @@ export class BookTheaterComponent implements OnInit {
     showPaymentReciept: boolean = false;
     showTheaterSearchForm: boolean = false;
     guideLineFlag: boolean = true;
-    btnProceed: boolean = true; 
+    btnProceed: boolean = true;
 
     /**
      * Translation Key.
@@ -127,7 +127,7 @@ export class BookTheaterComponent implements OnInit {
 
         this.getFeesStructure();
         this.createSearchTheaterForm();
-        this.createTheaterBookingForm();        
+        this.createTheaterBookingForm();
         this.getResourceList();
         this.getLookUps();
         this.setFormControlToTabIndexMap();
@@ -213,20 +213,20 @@ export class BookTheaterComponent implements OnInit {
                 organizationEmail: [null, [Validators.required, ValidationService.emailValidator]],
                 confirmEmailID: [null, [Validators.required, ValidationService.emailValidator]],
                 organizationAddress: this.fb.group(this.addressComp.addressControls())
-                
+
             }),
-            this.bankTheaterBookingForm = this.fb.group({   
+            this.bankTheaterBookingForm = this.fb.group({
                 bankName: this.fb.group({
                     code: [null, [Validators.required]]
                     }),
                     accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
                     accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
-                    ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],              
-                    termsCondition: null,       
-                    agree: null                 
+                    ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
+                    termsCondition: null,
+                    agree: null
              }),
-            this.theaterBookingForm = this.fb.group({       
-                        
+            this.theaterBookingForm = this.fb.group({
+
                 id: null,
                 refNumber: null,
                 status: null,
@@ -241,11 +241,11 @@ export class BookTheaterComponent implements OnInit {
             });
 
             this.commonService.createCloneAbstractControl(this.firstTheaterBookingForm,this.theaterBookingForm);
-		this.commonService.createCloneAbstractControl(this.bankTheaterBookingForm,this.theaterBookingForm);	
-            
-        } 
-        
-  
+		this.commonService.createCloneAbstractControl(this.bankTheaterBookingForm,this.theaterBookingForm);
+
+        }
+
+
 
     /**
      * Method is used to filter slots on specific date.
@@ -308,7 +308,7 @@ export class BookTheaterComponent implements OnInit {
             }
 
             this.bookingService.shortListBookings(shortListData).subscribe(resp => {
-                
+
                 if (resp.success) {
                     this.showTheaterSearchForm = false;
                     this.firstTheaterBookingForm.patchValue(resp.data);
@@ -492,7 +492,6 @@ export class BookTheaterComponent implements OnInit {
     }
 
     handleErrorsOnSubmit(controlName) {
-        debugger;
         const key = this.bookingUtils.getInvalidFormControlKey(controlName);
         const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 1;
         if (index) {
@@ -502,7 +501,6 @@ export class BookTheaterComponent implements OnInit {
     }
 
     checkValidation(controlName, isSubmitted) {
-        debugger;
         if (controlName.invalid) {
             this.handleErrorsOnSubmit(controlName)
         } else {
