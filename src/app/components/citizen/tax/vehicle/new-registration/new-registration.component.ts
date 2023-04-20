@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { ToastrService } from 'ngx-toastr';
@@ -42,6 +42,10 @@ export class NewRegistrationComponent implements OnInit {
     new Date().getDate()
   );
   vehicleRegistrationForm: FormGroup;
+  vehicleDetails : FormGroup;
+  ownerDetails : FormGroup;
+  taxDetails : FormGroup;
+  attachmentDetails : FormGroup;
   paymentForm: FormGroup;
   // purchasingTypeArray: any = [{ code: 'OLD_RATE', name: 'Old Rate' }, { code: 'NEW_RATE', name: 'New Rate' }];
   purchasingTypeArray: any = [];
@@ -110,68 +114,85 @@ export class NewRegistrationComponent implements OnInit {
    * this method is used to initialize the form control for vehicle registration
    */
   vehicleRegistrationFormControls() {
+    /* Step 1 controls start */
+    this.vehicleDetails = this.fb.group({
+      engineNo: [null, [Validators.required, ValidationService.alphaNumericValidation]],
+      vehicleType: this.fb.group({
+        code: [null, Validators.required],
+        name: null
+      }),
+      chasisNo: [null, [Validators.required, ValidationService.alphaNumericValidation]],
+      vehicleNo: [null],
+      registrationNo: ["GJ-06-", ValidationService.alphaNumericValidation],
+      vehicleBasicValue: null,
+      makeModel: null,
+      dealerName: [null, Validators.required],
+      dealerEmail: ['', [ValidationService.emailValidator]],
+      dealerMobileNo: [null, ValidationService.mobileNumberValidationVehicle],
+      purchaseDate: [null, Validators.required],
+    })
+    /* Step 1 controls end */
+    
+      /* Step 2 controls start */
+    this.ownerDetails = this.fb.group({
+      firstName: [null, Validators.required],
+      middleName: null,
+      lastName: [null, Validators.required],
+      aadhaarNo: null,
+      mobileNo: [null, ValidationService.mobileNumberValidationVehicle],
+      email: ['', [ValidationService.emailValidator]],
+      wardZoneMst: this.fb.group({
+        wardzoneId: null,
+        wardzoneName: null
+      }),
+      address: this.fb.group(this.addrComponent.addressControls()),
+    })
+    /* Step 2 controls end */
+
+    /* Step 3 controls start */
+     this.taxDetails = this.fb.group({
+      billingPeriod: this.fb.group({
+        code: [null, Validators.required],
+        name: null
+      }),
+      vehicleApplicableRate: [{ value: 0, disabled: true }],
+      vehicleTax: [{ value: 0, disabled: true }],
+      tokenFees: [{ value: 100, disabled: true }],
+      tokenNo: null,
+      totalPayable: [{ value: 0, disabled: true }],
+     })
+    /* Step 3 controls end */
+
+  
 
     this.vehicleRegistrationForm = this.fb.group({
-
       id: null,
       uniqueId: null,
       version: null,
       code: null,
       fieldView: null,
       fieldList: null,
-      vehicleNo: [null],
-      vehicleType: this.fb.group({
-        code: [null, Validators.required],
-        name: null
-      }),
-      engineNo: [null, [Validators.required, ValidationService.alphaNumericValidation]],
-      chasisNo: [null, [Validators.required, ValidationService.alphaNumericValidation]],
-      registrationNo: ["GJ-06-", ValidationService.alphaNumericValidation],
-      vehicleBasicValue: null,
-      makeModel: null,
-      dealerName: [null, Validators.required],
-      purchaseDate: [null, Validators.required],
       // purchasingType: this.fb.group({
       // 	code: [null, Validators.required],
       // 	name: null
       // }),
       purchasingType: ["NEW_RATE", Validators.required],
       refNumber: null,
-      tokenNo: null,
-      firstName: [null, Validators.required],
-      middleName: null,
-      lastName: [null, Validators.required],
       applicantAadhaarNo: null,
-      mobileNo: [null, ValidationService.mobileNumberValidationVehicle],
-      aadhaarNo: null,
-      email: ['', [ValidationService.emailValidator]],
-      address: this.fb.group(this.addrComponent.addressControls()),
       // city: "Vadodra",
-      billingPeriod: this.fb.group({
-        code: [null, Validators.required],
-        name: null
-      }),
       // billingPeriod: "2016-17",
-      wardZoneMst: this.fb.group({
-        wardzoneId: null,
-        wardzoneName: null
-      }),
       paid: false,
       vehicleReceipts: [],
       canEdit: true,
       canDelete: null,
       canSubmit: true,
-      tokenFees: [{ value: 100, disabled: true }],
       adminFees: [{ value: 0, disabled: true }],
       dishonorCharges: [{ value: 0, disabled: true }],
-      vehicleApplicableRate: [{ value: 0, disabled: true }],
-      totalPayable: [{ value: 0, disabled: true }],
-      attachments: [],
       serviceFormId: null,
       formStatus: null,
-      dealerEmail: ['', [ValidationService.emailValidator]],
-      dealerMobileNo: [null, ValidationService.mobileNumberValidationVehicle],
-      vehicleTax: [{ value: 0, disabled: true }],
+    /* Step 4 controls start */
+     attachments: [],
+    /* Step 4 controls end */
     });
 
     this.vehicleRegistrationForm.patchValue({
@@ -189,6 +210,10 @@ export class NewRegistrationComponent implements OnInit {
       instrumentDate: null,
       instrumentNumber: null
     });
+
+    this.commonService.createCloneAbstractControl(this.vehicleDetails , this.vehicleRegistrationForm)
+    this.commonService.createCloneAbstractControl(this.ownerDetails , this.vehicleRegistrationForm)
+    this.commonService.createCloneAbstractControl(this.taxDetails , this.vehicleRegistrationForm)
   }
 
   /**
@@ -220,7 +245,7 @@ export class NewRegistrationComponent implements OnInit {
         key.name = _.replace(key.name, /&/g, "and");
       });
       //   this.setBillingPeriod( this.billingPeriodArray);
-      this.vehicleRegistrationForm.get('billingPeriod').disable();
+      this.taxDetails.get('billingPeriod').disable();
     });
 
   }
@@ -237,13 +262,19 @@ export class NewRegistrationComponent implements OnInit {
    */
   getVehicleData(id: number) {
     this.formService.getFormData(id).subscribe(res => {
-      this.formService.getFormData(id).subscribe(res => {
+   //   this.formService.getFormData(id).subscribe(res => {
 
         this.vehicleRegistrationForm.patchValue(res);
+        this.vehicleDetails.patchValue(res);
+        this.ownerDetails.patchValue(res);
+        this.taxDetails.patchValue(res)
         this.showButton = true;
 
-        if (!this.vehicleRegistrationForm.get('canEdit').value) {
+        if (!this.vehicleRegistrationForm.get('canEdit').value || this.vehicleRegistrationForm.get('formStatus').value == 'SUBMITTED') {
           this.vehicleRegistrationForm.disable();
+          this.vehicleDetails.disable();
+          this.ownerDetails.disable();
+          this.taxDetails.disable()
         }
 
 
@@ -258,12 +289,12 @@ export class NewRegistrationComponent implements OnInit {
         }
 
       });
-    });
+  //  });
   }
 
   getFinancialYear() {
     var fiscalyear = "";
-    var today = this.vehicleRegistrationForm.get('purchaseDate').value;
+    var today = this.vehicleDetails.get('purchaseDate').value;
     console.log(today);
     if ((today.getMonth() + 1) <= 3) {
       fiscalyear = "" + (today.getFullYear() - 1)
@@ -278,17 +309,17 @@ export class NewRegistrationComponent implements OnInit {
    * @param date get the selected vehicle purchasing date
    */
   onDateChange(date) {
-    this.vehicleRegistrationForm.get('purchaseDate').value.toISOString().split('T')[0];
+    this.vehicleDetails.get('purchaseDate').value.toISOString().split('T')[0];
     // this.vehicleRegistrationForm.get('purchaseDate').setValue(moment(date).format("YYYY-MM-DD"));
     var billingPeriod = this.getFinancialYear();
-    this.vehicleRegistrationForm.get('purchaseDate').setValue(moment(date).format("YYYY-MM-DD"));
+    this.vehicleDetails.get('purchaseDate').setValue(moment(date).format("YYYY-MM-DD"));
     console.log(billingPeriod);
     this.billingPeriodArray.forEach(element => {
 
       if (billingPeriod == element.code.substr(0, 4)) {
         console.log(element);
         console.log(element.code);
-        this.vehicleRegistrationForm.get('billingPeriod').patchValue(element);
+        this.taxDetails.get('billingPeriod').patchValue(element);
       }
     });
 
@@ -346,35 +377,36 @@ export class NewRegistrationComponent implements OnInit {
    * This method is used to submit the Vehicle registration data
    */
   onSubmit() {
-
-    if (this.vehicleRegistrationForm.invalid) {
+    if (!this.vehicleRegistrationForm.invalid) {
       let count = this.config.getAllErrors(this.vehicleRegistrationForm);
       this.commonService.openAlert("Warning", this.config.ALL_FEILD_REQUIRED_MESSAGE, "warning", "", cb => {
 
         switch (true) {
           case (count <= 16):
+            this.markFormGroupTouched(this.vehicleDetails)
             this.tabIndex = 0;
             break;
           case (count <= 27):
+            this.markFormGroupTouched(this.ownerDetails)
             this.tabIndex = 1;
             break;
           case (count <= 33):
+            this.markFormGroupTouched(this.taxDetails)
             this.tabIndex = 2;
             break;
           default:
+            this.markFormGroupTouched(this.vehicleDetails)
             this.tabIndex = 0;
         }
       });
       return;
     }
-
-    this.vehicleRegistrationForm.get('formStatus').setValue('SUBMITTED');
-
     this.mandatoryFileCheck().then(data => {
       if (data.status) {
         this.vehicleServise.saveFormData(this.vehicleRegistrationForm.getRawValue()).subscribe(res => {
           this.toastr.success('Vehicle Registration Successful');
           this.router.navigate(['/citizen/my-applications']);
+          this.vehicleRegistrationForm.get('formStatus').setValue('SUBMITTED');
           // this.showVehicleTaxDetails(this.modalTemplate);
           // this.getVehicleTaxForPayment(res.id);
           // this.onVehicleTaxSubmit();
@@ -384,8 +416,6 @@ export class NewRegistrationComponent implements OnInit {
         return
       }
     });
-
-
   }
 
   /**
@@ -553,27 +583,28 @@ export class NewRegistrationComponent implements OnInit {
    * @param event - get the previous step index
    */
   calculateTax(event: any) {
-
-    if (event.index === 2 && (this.vehicleRegistrationForm.get('purchaseDate').value == null || this.vehicleRegistrationForm.get('vehicleBasicValue').value == null || this.vehicleRegistrationForm.get('vehicleType').get('code').value == null)) {
+    if (event.index === 1 && (this.vehicleDetails.get('purchaseDate').value == null || this.vehicleDetails.get('vehicleBasicValue').value == null || this.vehicleDetails.get('vehicleType').get('code').value == null)) {
       this.commonService.openAlert("Warning", "Enter Vehicle Type, Basic Value and Purchase Date", "warning");
       return;
     }
-    else if (event.index === 2 && this.vehicleRegistrationForm.get('canEdit').value) {
-      this.vehicleServise.calculateTax(this.vehicleRegistrationForm.getRawValue()).subscribe(res => {
-
+    else if (event.index === 1 && this.vehicleRegistrationForm.get('canEdit').value) {
+      this.vehicleServise.calculateTax(this.vehicleDetails.getRawValue()).subscribe(res => {
         this.vehicleRegistrationForm.patchValue({
           adminFees: res.amountFields.adminFee,
-          tokenFess: res.amountFields.vehicleTokenFee,
+       //   tokenFess: res.amountFields.vehicleTokenFee,
           dishonorCharges: res.amountFields.dishonorCharges ? res.amountFields.dishonorCharges : 0,
+        });
+        this.taxDetails.patchValue({
           vehicleApplicableRate: res.amountFields.vehicleBasicValue,
+          tokenFess : res.amountFields.vehicleTokenFee,
           // totalPayable: res.amountFields.vehicleBasicValue,
           vehicleTax: res.vehicleApplicableRate
-        });
+        })
 
         let totalPayable = res.amountFields.adminFee + res.amountFields.interest +
           res.amountFields.penalty + res.amountFields.vehicleBasicValue + res.amountFields.vehicleTokenFee;
 
-        this.vehicleRegistrationForm.get('totalPayable').setValue(totalPayable);
+        this.taxDetails.get('totalPayable').setValue(totalPayable);
       });
     }
   }
@@ -612,6 +643,28 @@ export class NewRegistrationComponent implements OnInit {
       });
     }
   }
+
+   /**
+     * This method use to get output event of tab change
+     * @param index - current index
+     * @param controlName - local Form Group
+     * @param mainControl - gobal form Group
+     */
+     onTabChange(index: number, controlName, mainControl, isSubmitted) {
+    if (controlName.invalid) {
+        this.markFormGroupTouched(controlName)
+    } else {
+        const organizationalAry = Object.keys(controlName.getRawValue());
+        organizationalAry.forEach((element:any) => {
+          mainControl.get(element).setValue(controlName.get(element).value);
+        });
+        this.tabIndex = index;
+        if(isSubmitted){
+          this.onSubmit()
+        }
+    }
+
+}
 
   patchValue() {
     this.vehicleRegistrationForm.patchValue(this.dummyJSON);
