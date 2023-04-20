@@ -112,7 +112,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	 * This method is used for save form as draft using API
 	 */
 	saveAsDraft() {
-		if(this.formService.apiType == 'MFLicense'){
+		if(this.formService.apiType == 'MFLicense' || this.formService.apiType == 'MFRenewal' || this.formService.apiType == 'vendor'  ){
 			if (this.isstepper) {
 				this.tabIndex.emit(this.stepInfo.next);
 			}
