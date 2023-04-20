@@ -154,6 +154,7 @@ export class TownHallBookComponent implements OnInit {
 		/**
 		 * Static headlines
 		 */
+		window.scrollTo(0, 0);
 		this.head_lines = `Online Town Hall Booking facility is the convenient and
 		easy way to book the town hall of Vadodara Municpal Corporation. You can
 		view the availiblity details of the town hall and select select one of multiple shifts for

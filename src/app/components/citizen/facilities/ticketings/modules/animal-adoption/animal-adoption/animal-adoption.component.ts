@@ -175,6 +175,7 @@ export class AnimalAdoptionComponent implements OnInit {
     this.animalCount = animal.animalCount
     this.animalAdoptionForm.get('existingCount').setValue(this.animalCount)
     this.animalAdoptionForm.get('existingCount').disable()
+    this.animalAdoptionForm.get('adoptionYears').reset();
   }
 
   deleteOT(OTData: any, index: number) {
