@@ -787,6 +787,8 @@ export class ShopLicTransferComponent implements OnInit {
 	 * @param persontype : person array type
 	 */
 	addMorePersonwork(persontype: string) {
+		let workerGrid = <FormArray>this.shopLicTransferForm.get('workerCounts');
+		this.shopAndEstablishmentService.getSelectedWorkerType(this.workerTypeList,workerGrid);
 		this.edit = false;
 		let isEditAnotherRow = this.isTableInEditMode(persontype);
 		if (!isEditAnotherRow) {
