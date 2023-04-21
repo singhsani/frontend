@@ -280,6 +280,7 @@ export class AnimalAdoptionComponent implements OnInit {
     this.animalAdoptionForm.get('totalAdoptionCost').setValue(null);
     this.animalAdoptionForm.get('noOfAdoptionCount').reset();
     this.animalAdoptionForm.get('adoptionYears').reset();
+    this.animalAdoptionForm.get('existingCount').reset();
     //this.animalAdoptionForm.get('totalAdoptionCost').setValue(0);
     this.selectedAnimalAnnualMaintainanceExpenses=0;
     
