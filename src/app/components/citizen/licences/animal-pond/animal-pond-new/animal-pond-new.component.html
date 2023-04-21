@@ -173,23 +173,23 @@
 					<div class="col-md-4 ngSelect" formGroupName="zoneNo">
 						<ng-select placeholder="{{'business_under_zone' | translate:translateKey}}"
 							formControlName="code"
-							(change)="onChangeZone($event);animalPondNewForm.get('wardNo').reset();animalPondNewForm.get('blockNo').reset()">
+							(change)="onChangeZone($event);businessDetail.get('wardNo').reset();businessDetail.get('blockNo').reset()">
 							<ng-option *ngFor="let zone of FIRM_ZONE" [value]="zone.code">{{zone.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="animalPondNewForm.get('zoneNo').get('code')"></control-messages>
+						<control-messages [control]="businessDetail.get('zoneNo').get('code')"></control-messages>
 					</div>
 					<div class="col-md-4 ngSelect" formGroupName="wardNo">
 						<ng-select placeholder="{{'ward_no' | translate:translateKey}}" formControlName="code"
-							(change)="onChangeWard($event);animalPondNewForm.get('blockNo').reset()">
+							(change)="onChangeWard($event);businessDetail.get('blockNo').reset()">
 							<ng-option *ngFor="let ward of WARD" [value]="ward.code">{{ward.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="animalPondNewForm.get('wardNo').get('code')"></control-messages>
+						<control-messages [control]="businessDetail.get('wardNo').get('code')"></control-messages>
 					</div>
 					<div class="col-md-4 ngSelect" formGroupName="blockNo">
 						<ng-select placeholder="{{'block_no' | translate:translateKey}}" formControlName="code">
 							<ng-option *ngFor="let block of BLOCK" [value]="block.code">{{block.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="animalPondNewForm.get('blockNo').get('code')"></control-messages>
+						<control-messages [control]="businessDetail.get('blockNo').get('code')"></control-messages>
 					</div>
 				</div>
 				<div class="row">

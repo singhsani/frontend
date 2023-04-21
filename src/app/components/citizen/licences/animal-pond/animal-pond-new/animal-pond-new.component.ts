@@ -175,8 +175,8 @@ export class AnimalPondNewComponent implements OnInit {
 				this.attachmentDetail.patchValue(res);
 				this.showButtons = true;
 				this.isEditMode = res.canEdit;
-				this.onChangeZone(this.animalPondNewForm.get('zoneNo').value.code);
-				this.onChangeWard(this.animalPondNewForm.get('wardNo').value.code);
+				this.onChangeZone(this.businessDetail.get('zoneNo').value.code);
+				this.onChangeWard(this.businessDetail.get('wardNo').value.code);
 
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
@@ -241,8 +241,8 @@ export class AnimalPondNewComponent implements OnInit {
 			// selected animal filter
 			this.getSelectedAnimal();
 
-			this.onChangeZone(this.animalPondNewForm.get('zoneNo').value.code);
-			this.onChangeWard(this.animalPondNewForm.get('wardNo').value.code);
+			this.onChangeZone(this.businessDetail.get('zoneNo').value.code);
+			this.onChangeWard(this.businessDetail.get('wardNo').value.code);
 		});
 	}
 	getAllZoneNos() {
@@ -256,8 +256,8 @@ export class AnimalPondNewComponent implements OnInit {
 		this.wardZoneLevel2List =[];
 		this.wardZoneLevel3List =[];
 		if (event == undefined) {
-			this.animalPondNewForm.get('wardNo').get('code').setValue(null);
-			this.animalPondNewForm.get('blockNo').get('code').setValue(null);
+			this.businessDetail.get('wardNo').get('code').setValue(null);
+			this.businessDetail.get('blockNo').get('code').setValue(null);
 			return false
 			}
 			else {
@@ -408,9 +408,9 @@ export class AnimalPondNewComponent implements OnInit {
 			// wardNo: this.fb.group({ code: [null, Validators.required] }),
 			// blockNo: this.fb.group({ code: [null, Validators.required] }),
 			this.businessDetail = this.fb.group({
-			zoneNo: this.fb.group({code: null, name:null}, Validators.required),
-			wardNo: this.fb.group({code: null , name:null}, Validators.required),
-			blockNo: this.fb.group({code: null, name:null}, Validators.required),
+			zoneNo: this.fb.group({ code: [null, Validators.required] }),
+			wardNo: this.fb.group({ code: [null, Validators.required] }),
+			blockNo: this.fb.group({ code: [null, Validators.required] }),
 			businessAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			extraDetailsOfBusiness: [null, [Validators.maxLength(500)]],
 			relationshipId: this.fb.group({

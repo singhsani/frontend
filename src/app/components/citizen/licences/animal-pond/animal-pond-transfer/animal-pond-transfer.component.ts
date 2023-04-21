@@ -314,8 +314,8 @@ export class AnimalPondTransferComponent implements OnInit {
 				this.businessDetail.patchValue(res);
 				this.insertAnimalDetail.patchValue(res);
 				this.showButtons = true;
-				this.onChangeZone(this.animalPondTransferForm.get('zoneNo').value.code);
-				this.onChangeWard(this.animalPondTransferForm.get('wardNo').value.code);
+				this.onChangeZone(this.businessDetail.get('zoneNo').value.code);
+				this.onChangeWard(this.businessDetail.get('wardNo').value.code);
 
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
@@ -369,8 +369,8 @@ export class AnimalPondTransferComponent implements OnInit {
 			this.ANIMAL_POND_STATUS_OF_BUSINESS = res.ANIMAL_POND_STATUS_OF_BUSINESS
 			// selected animal filter
 			this.getSelectedAnimal();
-			this.onChangeZone(this.animalPondTransferForm.get('zoneNo').value.code);
-			this.onChangeWard(this.animalPondTransferForm.get('wardNo').value.code);
+			this.onChangeZone(this.businessDetail.get('zoneNo').value.code);
+			this.onChangeWard(this.businessDetail.get('wardNo').value.code);
 		});
 	}
 
