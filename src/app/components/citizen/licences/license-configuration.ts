@@ -12,25 +12,29 @@ export class LicenseConfiguration extends ComponentConfig {
      * @param index - current index
      */
     public onTabChange(index: number, controlName, mainControl) {
-        if (controlName.invalid) {
-            this.getInvalidFormControlKey(controlName)
-        } else {
-            const organizationalAry = Object.keys(controlName.getRawValue());
-            organizationalAry.forEach((element:any) => {
-                   // push form Array data into main Controller
-                if (controlName.get(element) instanceof FormArray) {
-                    const formGroupAry = this.createArray(controlName.get(element));
-                    mainControl.get(element).value.push()
-                    for(let i = 0; i < controlName.get(element).controls.length; i++) {
-                        mainControl.get(element).value.push(formGroupAry.value[i]);
-                        mainControl.get(element).controls.push(formGroupAry.controls[i]);
-                    }   
-                }
-                else {
-                    mainControl.get(element).setValue(controlName.get(element).value);
-                }
-            });
-            this.currentTabIndex = index;
+        if(index > this.currentTabIndex){
+            if (controlName.invalid) {
+                this.getInvalidFormControlKey(controlName)
+            } else {
+                const organizationalAry = Object.keys(controlName.getRawValue());
+                organizationalAry.forEach((element:any) => {
+                       // push form Array data into main Controller
+                    if (controlName.get(element) instanceof FormArray) {
+                        const formGroupAry = this.createArray(controlName.get(element));
+                        mainControl.get(element).value.push()
+                        for(let i = 0; i < controlName.get(element).controls.length; i++) {
+                            mainControl.get(element).value.push(formGroupAry.value[i]);
+                            mainControl.get(element).controls.push(formGroupAry.controls[i]);
+                        }   
+                    }
+                    else {
+                        mainControl.get(element).setValue(controlName.get(element).value);
+                    }
+                });
+                this.currentTabIndex = index;
+            }
+        }else{
+            this.currentTabIndex= index;
         }
 
     }

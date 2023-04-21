@@ -19,11 +19,10 @@ import { LicenseConfiguration } from '../../license-configuration';
 export class MuttonFishNewComponent implements OnInit {
 
 	@ViewChild('permanantAddressEstablishment') permanantAddressEstablishment: any;
-	
+
 	muttonFishNewForm: FormGroup;
 	applicantDetials : FormGroup;
 	businessDetail :FormGroup;
-	attachmentDetail : FormGroup;
 	translateKey: string = 'muttonFishNewScreen';
 	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
 
@@ -55,7 +54,7 @@ export class MuttonFishNewComponent implements OnInit {
 	/**
 	 * @param fb - Declare FormBuilder property.
 	 * @param validationError - Declare validation service property
-	 * @param formService - Declare form service property 
+	 * @param formService - Declare form service property
 	 * @param uploadFileService - Declare upload file service property.
 	 * @param commonService - Declare sweet alert.
 	 * @param toastrService - Show massage with timer.
@@ -109,8 +108,7 @@ export class MuttonFishNewComponent implements OnInit {
 				this.muttonFishNewForm.patchValue(res);
 				this.applicantDetials.patchValue(res);
 				this.businessDetail.patchValue(res);
-				this.attachmentDetail.patchValue(res)
-				// when form open in perview node 
+				// when form open in perview node
 				if(res.canEdit == false){
 					this.applicantDetials.disable()
 					this.businessDetail.disable()
@@ -126,16 +124,16 @@ export class MuttonFishNewComponent implements OnInit {
 				}else{
 					this.istable = true;
 				}
-				this.onChangeZone(this.businessDetail.get('zoneNo').value.code);
+				this.onChangeZone(this.businessDetail.get('zoneNo').value);
 				//this.onChangeWard(this.muttonFishNewForm.get('wardNo').value.code);
 				//this.onChangeStatusOfBusiness(this.muttonFishNewForm.get('statusOfBusinessId').value.code);
 				if (this.businessDetail.get('statusOfBusinessId').value.code) {
 					this.onChangeStatusOfBusiness(this.businessDetail.get('statusOfBusinessId').value.code)
 				} else {
 					this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
-					this.uploadFileArray.sort((a, b) => 
+					this.uploadFileArray.sort((a, b) =>
 							a.orderSequence - b.orderSequence);
-					
+
 				}
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
@@ -182,7 +180,7 @@ export class MuttonFishNewComponent implements OnInit {
 			this.PERSON_TYPE = res.PERSON_TYPE;
 			this.FIRM_ZONE = res.FIRM_ZONE;
 
-			this.onChangeZone(this.muttonFishNewForm.get('zoneNo').value.code);
+			this.onChangeZone(this.muttonFishNewForm.get('zoneNo').value);
 			//this.onChangeWard(this.muttonFishNewForm.get('wardNo').value.code);
 		});
 	}
@@ -195,7 +193,7 @@ export class MuttonFishNewComponent implements OnInit {
 		this.WARD = [];
 		if (event && this.LOOKUP && this.LOOKUP.hasOwnProperty(event)) {
 			this.WARD = this.LOOKUP[event];
-			this.WARD = this.WARD.sort((a, b) => {			
+			this.WARD = this.WARD.sort((a, b) => {
 			var itemA = a.name.split("-");
 			var itemB = b.name.split("-");
 				return itemA[1] - itemB[1];
@@ -317,8 +315,8 @@ export class MuttonFishNewComponent implements OnInit {
 		this.businessDetail = this.fb.group({
              // zoneNo: this.fb.group({code: null}, Validators.required),
 			// wardNo: this.fb.group({code: null}, Validators.required),
-			zoneNo: this.fb.group({ code: [null, [Validators.required]] }),
-			wardNo: this.fb.group({ code: [null, [Validators.required]] }),
+			zoneNo: [null,Validators.required] ,
+			wardNo: [null,Validators.required],
 			//businessAddressType: this.fb.group({ code: [null, Validators.required] }),
 			businessAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			// extraDetailsOfBusiness: [null, [Validators.maxLength(500)]],
@@ -331,9 +329,6 @@ export class MuttonFishNewComponent implements OnInit {
 			relationshipList: this.fb.array([]),
 		})
             /* Step 2 controls start */
-			this.attachmentDetail = this.fb.group({
-				attachments: [],		
-			})
 		this.muttonFishNewForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'MF-LIC',
@@ -345,8 +340,7 @@ export class MuttonFishNewComponent implements OnInit {
 		});
 		/** Method is used to copy local contoller to Main contoller **/
 		this.commonService.createCloneAbstractControl(this.applicantDetials,this.muttonFishNewForm);
-		this.commonService.createCloneAbstractControl(this.businessDetail,this.muttonFishNewForm);	
-		this.commonService.createCloneAbstractControl(this.attachmentDetail,this.muttonFishNewForm);	
+		this.commonService.createCloneAbstractControl(this.businessDetail,this.muttonFishNewForm);
 	}
 
 	/**
@@ -427,7 +421,7 @@ export class MuttonFishNewComponent implements OnInit {
 	}
 
 	/**
-	 * Method is use for reset relationship 
+	 * Method is use for reset relationship
 	 */
 	 onChangeRelationWithOrg() {
 		try {
@@ -447,10 +441,10 @@ export class MuttonFishNewComponent implements OnInit {
 		}
 	}
 
-	
+
 
 	/**
-	 * Method is use for change dynamic file attachment 
+	 * Method is use for change dynamic file attachment
 	 */
 	// onChangeStatusOfBusiness() {
 	// 	this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishNewForm);
@@ -784,7 +778,7 @@ export class MuttonFishNewComponent implements OnInit {
 		  this.formService.getWardZone(postData).subscribe(res => {
 			this.wardZoneLevel2List = res.body;
 		  })
-	
+
 		}
 	  }
 	}

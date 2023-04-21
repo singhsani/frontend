@@ -175,6 +175,7 @@ export class AnimalAdoptionComponent implements OnInit {
     this.animalCount = animal.animalCount
     this.animalAdoptionForm.get('existingCount').setValue(this.animalCount)
     this.animalAdoptionForm.get('existingCount').disable()
+    this.animalAdoptionForm.get('adoptionYears').reset();
   }
 
   deleteOT(OTData: any, index: number) {
@@ -279,6 +280,7 @@ export class AnimalAdoptionComponent implements OnInit {
     this.animalAdoptionForm.get('totalAdoptionCost').setValue(null);
     this.animalAdoptionForm.get('noOfAdoptionCount').reset();
     this.animalAdoptionForm.get('adoptionYears').reset();
+    this.animalAdoptionForm.get('existingCount').reset();
     //this.animalAdoptionForm.get('totalAdoptionCost').setValue(0);
     this.selectedAnimalAnnualMaintainanceExpenses=0;
     
