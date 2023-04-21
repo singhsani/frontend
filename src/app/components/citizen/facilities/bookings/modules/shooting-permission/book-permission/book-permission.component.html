@@ -262,57 +262,58 @@
 
 <div [hidden]="!showPermissionApplicationForm">
   <mat-card class="formClass cardBorder">
-    <form [formGroup]="bookPermissionApplicationForm" (ngSubmit)="submitPermissionApplication()">
+    <!-- <form [formGroup]="bookPermissionApplicationForm" (ngSubmit)="submitPermissionApplication()"> -->
 
       <mat-tab-group mat-stretch-tabs dynamicHeight="true" [(selectedIndex)]="tabIndex" class="stepperNav">
 
-        <mat-tab>
+        <mat-tab disabled>
           <ng-template mat-tab-label>
             <div>{{'applicant_or_organization_details' | translate:translateKey}}</div>
           </ng-template>
+
           <!-- <h2>
             {{'applicant_details' | translate:translateKey}}
           </h2> -->
-
+          <form [formGroup]="organizationdetails">
           <div class="row">
             <mat-form-field class="col-md-4">
               <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
                 type="text" formControlName="orgName" placeholder="{{'organization_name' | translate: translateKey}}"
                 required>
-              <control-messages [control]="bookPermissionApplicationForm.get('orgName')"></control-messages>
+              <control-messages [control]="organizationdetails.get('orgName')"></control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
               <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="orgContactNo"
                 placeholder="{{'org_contact_no' | translate: translateKey}}" required>
-              <control-messages [control]="bookPermissionApplicationForm.get('orgContactNo')"></control-messages>
+              <control-messages [control]="organizationdetails.get('orgContactNo')"></control-messages>
             </mat-form-field>
 
             <h2>
               {{'organization_address' | translate:translateKey}}
             </h2>
             <app-address #orgAddress [requiredFeilds]="true"
-              [addressFormGroup]="bookPermissionApplicationForm.get('organizationAddress')"></app-address>
+              [addressFormGroup]="organizationdetails.get('organizationAddress')"></app-address>
 
 
             <mat-form-field class="col-md-4">
               <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
                 type="text" formControlName="applicantName" placeholder="{{'applicant_name' | translate: translateKey}}"
                 required>
-              <control-messages [control]="bookPermissionApplicationForm.get('applicantName')"></control-messages>
+              <control-messages [control]="organizationdetails.get('applicantName')"></control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
               <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobile"
                 placeholder="{{'applicant_mobile' | translate: translateKey}}" required >
-              <control-messages [control]="bookPermissionApplicationForm.get('applicantMobile')"></control-messages>
+              <control-messages [control]="organizationdetails.get('applicantMobile')"></control-messages>
             </mat-form-field>
 
             <div class="col-md-4">
               <mat-form-field>
                 <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile"
-                  placeholder="{{'confirm_mobile' | translate: translateKey}}" required (focus)="onConfirmMobileNumber($event)">
-                <control-messages [control]="bookPermissionApplicationForm.get('confirmMobile')"></control-messages>
+                  placeholder="{{'confirm_mobile' | translate: translateKey}}" required>
+                <control-messages [control]="organizationdetails.get('confirmMobile')"></control-messages>
               </mat-form-field>
               <!-- <mat-error *ngIf="!mobileNumberMatcher() && bookPermissionApplicationForm.get('applicantMobile').touched && bookPermissionApplicationForm.get('confirmMobile').touched">
                 {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
@@ -323,7 +324,7 @@
                 {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
               </mat-error> -->
               <mat-error
-                *ngIf="isConfirmMobileNumber == true && !bookingUtils.matcher(bookPermissionApplicationForm, 'applicantMobile', 'confirmMobile') && bookPermissionApplicationForm.get('applicantMobile').touched && bookPermissionApplicationForm.get('confirmMobile').touched">
+                *ngIf="!bookingUtils.matcher(organizationdetails, 'applicantMobile', 'confirmMobile') && organizationdetails.get('applicantMobile').touched && organizationdetails.get('confirmMobile').touched">
                 {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
               </mat-error>
             </div>
@@ -331,20 +332,20 @@
             <mat-form-field class="col-md-4">
               <input matInput type="email" formControlName="emailId"
                 placeholder="{{'applicant_email' | translate: translateKey}}" required maxlength="50">
-              <control-messages [control]="bookPermissionApplicationForm.get('emailId')"></control-messages>
+              <control-messages [control]="organizationdetails.get('emailId')"></control-messages>
             </mat-form-field>
 
             <div class="col-md-4">
               <mat-form-field>
                 <input matInput type="email" formControlName="confirmEmailId"
                   placeholder="{{'confirm_email' | translate: translateKey}}" required maxlength="50">
-                <control-messages [control]="bookPermissionApplicationForm.get('confirmEmailId')"></control-messages>
+                <control-messages [control]="organizationdetails.get('confirmEmailId')"></control-messages>
               </mat-form-field>
               <!-- <mat-error *ngIf="!emailMatcher() && bookPermissionApplicationForm.get('emailId').touched && bookPermissionApplicationForm.get('confirmEmailId').touched">
                 {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
               </mat-error> -->
               <mat-error
-                *ngIf="!bookingUtils.matcher(bookPermissionApplicationForm, 'emailId', 'confirmEmailId') && bookPermissionApplicationForm.get('emailId').touched && bookPermissionApplicationForm.get('confirmEmailId').touched">
+                *ngIf="!bookingUtils.matcher(organizationdetails, 'emailId', 'confirmEmailId') && organizationdetails.get('emailId').touched && organizationdetails.get('confirmEmailId').touched">
                 {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
               </mat-error>
 
@@ -357,20 +358,22 @@
               {{'applicant_address' | translate:translateKey}}
             </h2>
             <app-address #applicantAddress [requiredFeilds]="true"
-              [addressFormGroup]="bookPermissionApplicationForm.get('applicantAddress')"></app-address>
+              [addressFormGroup]="organizationdetails.get('applicantAddress')"></app-address>
           </div>
 
           <div class="row mt-4 fotButtonBar">
             <div class="col-sm-12 col-md-12 text-right">
-              <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">{{'next' |
-                translate:translateKey}}
+              <!-- <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">{{'next' |
+                translate:translateKey}} -->
+                <button mat-raised-button type="button" color="primary" (click)="checkValidation(organizationdetails,false)">{{'next' |
+                  translate:translateKey}}
               </button>
             </div>
           </div>
-
+        </form>
         </mat-tab>
 
-        <mat-tab>
+        <mat-tab disabled>
           <ng-template mat-tab-label>
             <div>{{'bank_details' | translate:translateKey}}</div>
           </ng-template>
@@ -378,9 +381,10 @@
           <h2>
             {{'bank_details' | translate:translateKey}}
           </h2>
-
-          <bank-details [form]="bookPermissionApplicationForm"></bank-details>
-
+          <form [formGroup]="bookingDetails">
+          <bank-details [form]="bookingDetails"></bank-details>
+          </form>
+          <form [formGroup]="bookPermissionApplicationForm">
           <h2>
             {{'attchaments' | translate:translateKey}}
           </h2>
@@ -406,16 +410,19 @@
             <div class="col-sm-12 col-md-12 justify-content-between d-flex">
               <button type="button" mat-raised-button color="primary" (click)="tabIndex= tabIndex -1; ">{{'back' |
                 translate:translateKey}}</button>
-              <button mat-raised-button color="primary" type="submit"
+              <!-- <button mat-raised-button color="primary" type="submit"
                 [disabled]="bookPermissionApplicationForm.invalid">
                 {{'submit_application'| translate: translateKey}}
-              </button>
+              </button> -->
+              <button mat-raised-button color="primary" type="submit" (click)="checkValidation(bookingDetails,true)">
+              {{'submit_application'| translate: translateKey}}
+            </button>
             </div>
           </div>
-
+        </form>
         </mat-tab>
       </mat-tab-group>
-    </form>
+    <!-- </form> -->
   </mat-card>
 </div>
 
