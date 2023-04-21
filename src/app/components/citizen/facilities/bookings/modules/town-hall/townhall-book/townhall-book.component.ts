@@ -377,6 +377,9 @@ export class TownHallBookComponent implements OnInit {
 			this.bookingService.shortListBookings(shortListData).subscribe(resp => {
 				this.showSearchForm = false;
 				this.townHallApplicationForm.patchValue(resp.data);
+				this.bookingDetails.patchValue(resp.data);
+				this.organizationDetails.patchValue(resp.data);
+				this.applicationDetails.patchValue(resp.data);
 				this.addressComp.getCountryLists();
 				this.appAddressComp.getCountryLists();
 				this.refNumber = resp.data.refNumber;
