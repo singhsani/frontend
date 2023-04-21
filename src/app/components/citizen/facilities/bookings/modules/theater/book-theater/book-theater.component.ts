@@ -201,30 +201,30 @@ export class BookTheaterComponent implements OnInit {
     /**
      * Method is used to craete theater booking form.
      */
-        createTheaterBookingForm() {
+    createTheaterBookingForm() {
 
-            this.firstTheaterBookingForm = this.fb.group({
-                eventFromDate: [null],
-                eventToDate: [null],
-                programmePurpose: [null],
-                organizationName: [null, [Validators.required, Validators.maxLength(50)]],
-                organizationNumber: [null, [Validators.required]],
-                confirmMobile: [null, Validators.required],
-                organizationEmail: [null, [Validators.required, ValidationService.emailValidator]],
-                confirmEmailID: [null, [Validators.required, ValidationService.emailValidator]],
-                organizationAddress: this.fb.group(this.addressComp.addressControls())
+        this.firstTheaterBookingForm = this.fb.group({
+            eventFromDate: [null],
+            eventToDate: [null],
+            programmePurpose: [null],
+            organizationName: [null, [Validators.required, Validators.maxLength(50)]],
+            organizationNumber: [null, [Validators.required]],
+            confirmMobile: [null, Validators.required],
+            organizationEmail: [null, [Validators.required, ValidationService.emailValidator]],
+            confirmEmailID: [null, [Validators.required, ValidationService.emailValidator]],
+            organizationAddress: this.fb.group(this.addressComp.addressControls())
 
-            }),
+        }),
             this.bankTheaterBookingForm = this.fb.group({
                 bankName: this.fb.group({
                     code: [null, [Validators.required]]
-                    }),
-                    accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
-                    accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
-                    ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
-                    termsCondition: null,
-                    agree: null
-             }),
+                }),
+                accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
+                accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
+                ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
+                termsCondition: null,
+                agree: null
+            }),
             this.theaterBookingForm = this.fb.group({
 
                 id: null,
@@ -240,10 +240,10 @@ export class BookTheaterComponent implements OnInit {
                 })
             });
 
-            this.commonService.createCloneAbstractControl(this.firstTheaterBookingForm,this.theaterBookingForm);
-		this.commonService.createCloneAbstractControl(this.bankTheaterBookingForm,this.theaterBookingForm);
+        this.commonService.createCloneAbstractControl(this.firstTheaterBookingForm, this.theaterBookingForm);
+        this.commonService.createCloneAbstractControl(this.bankTheaterBookingForm, this.theaterBookingForm);
 
-        }
+    }
 
 
 
@@ -517,28 +517,28 @@ export class BookTheaterComponent implements OnInit {
     }
 
     setFormControlToTabIndexMap() {
-		// First tab
-		this.formControlNameToTabIndex.set('organizationName', 1)
-		this.formControlNameToTabIndex.set('organizationNumber', 1)
-		this.formControlNameToTabIndex.set('confirmMobile', 1)
-		this.formControlNameToTabIndex.set('organizationEmail', 1)
+        // First tab
+        this.formControlNameToTabIndex.set('organizationName', 1)
+        this.formControlNameToTabIndex.set('organizationNumber', 1)
+        this.formControlNameToTabIndex.set('confirmMobile', 1)
+        this.formControlNameToTabIndex.set('organizationEmail', 1)
         this.formControlNameToTabIndex.set('confirmEmailID', 1)
-		this.formControlNameToTabIndex.set('organizationAddress', 1)
+        this.formControlNameToTabIndex.set('organizationAddress', 1)
 
 
-		// second tab
+        // second tab
 
-		this.formControlNameToTabIndex.set('bankName', 2)
-		this.formControlNameToTabIndex.set('accountHolderName', 2)
-		this.formControlNameToTabIndex.set('accountNo', 2)
-		this.formControlNameToTabIndex.set('ifscCode', 2)
-	  }
+        this.formControlNameToTabIndex.set('bankName', 2)
+        this.formControlNameToTabIndex.set('accountHolderName', 2)
+        this.formControlNameToTabIndex.set('accountNo', 2)
+        this.formControlNameToTabIndex.set('ifscCode', 2)
+    }
 
-      clickProcess(event){
-		if(event.checked == true){
+    clickProcess(event) {
+        if (event.checked == true) {
             this.btnProceed = false;
-	    }else{
-	        this.btnProceed = true;
-	    }
-	  }
+        } else {
+            this.btnProceed = true;
+        }
+    }
 }
