@@ -56,7 +56,10 @@ export class BookPermissionComponent implements OnInit {
    */
   bookPermissionSearchForm: FormGroup;
   bookPermissionApplicationForm: FormGroup;
+  organizationdetails : FormGroup;
+  bookingDetails : FormGroup;
 
+  public formControlNameToTabIndex = new Map();
   /**
    * resources
    */
@@ -123,8 +126,9 @@ export class BookPermissionComponent implements OnInit {
     		/**
 		     * Update Permanent Address If 'officeResidentialAddressSame' is checked.
 		     */
-		this.bookPermissionApplicationForm.controls.organizationAddress.valueChanges.subscribe(data => {
-			if (this.bookPermissionApplicationForm.get('officeResidentialAddressSame').value) {
+
+		this.organizationdetails.controls.organizationAddress.valueChanges.subscribe(data => {
+			if (this.organizationdetails.get('officeResidentialAddressSame').value) {
 				this.onSameAddressChange({ checked: true });
 				return;
 			}
@@ -136,16 +140,16 @@ export class BookPermissionComponent implements OnInit {
  * @param event - checkbox event
  */
 	onSameAddressChange(event) {
-		let id = this.bookPermissionApplicationForm.get('applicantAddress.id').value;
+		let id = this.organizationdetails.get('applicantAddress.id').value;
 		if (event.checked) {
-			this.bookPermissionApplicationForm.get('applicantAddress').patchValue(this.bookPermissionApplicationForm.get('organizationAddress').value);
-			if (this.bookPermissionApplicationForm.get('organizationAddress').get('country').value) {
-				this.applicantAddress.getStateLists(this.bookPermissionApplicationForm.get('organizationAddress').get('country').value);
+			this.organizationdetails.get('applicantAddress').patchValue(this.organizationdetails.get('organizationAddress').value);
+			if (this.organizationdetails.get('organizationAddress').get('country').value) {
+				this.applicantAddress.getStateLists(this.organizationdetails.get('organizationAddress').get('country').value);
 			}
 		} else {
-			this.bookPermissionApplicationForm.get('applicantAddress').reset();
+			this.organizationdetails.get('applicantAddress').reset();
 		}
-		this.bookPermissionApplicationForm.get('applicantAddress.id').setValue(id);
+		this.organizationdetails.get('applicantAddress.id').setValue(id);
 	}
 
   /**
@@ -307,8 +311,70 @@ export class BookPermissionComponent implements OnInit {
   }
 
   createPermissionApplicationForm() {
-    this.bookPermissionApplicationForm = this._fb.group({
-      uniqueId: [null],
+   // step 1
+    this.organizationdetails = this._fb.group({
+      organizationAddress: this._fb.group(this.orgAddress.addressControls()),
+      applicantAddress: this._fb.group(this.applicantAddress.addressControls()),
+      emailId: [null, [Validators.required, ValidationService.emailValidator]],
+      confirmEmailId: [null, [Validators.required, ValidationService.emailValidator]],
+      applicantMobile: [null, [Validators.required, ValidationService. mobileNumberValidation]],
+      confirmMobile: [null, [Validators.required, ValidationService. mobileNumberValidation]],
+      relationshipWithOrg: [null],
+      presidentName: [null],
+      orgName: [null],
+      orgContactNo: [null],
+      applicantName: [null],
+      officeResidentialAddressSame:null,
+  })
+
+   // step 2
+   this.bookingDetails=this._fb.group({
+    accountHolderName: [null, [Validators.required, Validators.maxLength(50)]],
+    accountNo: [null, [Validators.required, Validators.maxLength(20)]],
+    bankName: this._fb.group({
+        code: [null, [Validators.required]],
+        // name: null
+    }),
+    ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator, Validators.maxLength(11), Validators.minLength(11)]],
+
+})
+
+    // this.bookPermissionApplicationForm = this._fb.group({
+    //   uniqueId: [null],
+    //   version: [null],
+    //   cancelledDate: [null],
+    //   status: [null],
+    //   refNumber: [null],
+    //   resourceType: [null],
+    //   resourceCode: [null],
+    //   scheduleList: [],
+    //   bookingPurposeMaster: this._fb.group({
+    //     code: [null, [Validators.required]],
+    //     name: null
+    //   }),
+    //   gardenPark: [null],
+    //   bookingFrom: [null],
+    //   bookingTo: [null],
+    //   remarks: [null],
+    //   organizationAddress: this._fb.group(this.orgAddress.addressControls()),
+    //   applicantAddress: this._fb.group(this.applicantAddress.addressControls()),
+    //   officeResidentialAddressSame:null,
+    //   orgName: [null],
+    //   orgContactNo: [null],
+    //   confirmMobile: [null],
+    //   applicantName: [null],
+    //   applicantMobile: [null],
+    //   emailId: [null, [Validators.required, ValidationService.emailValidator]],
+    //   confirmEmailId: [null, [Validators.required, ValidationService.emailValidator]],
+    //   relationshipWithOrg: [null],
+    //   presidentName: [null],
+    //   shootingPurpose: [null],
+    //   bookingDate: [null],
+
+
+  //for All Form remaining Data
+      this.bookPermissionApplicationForm = this._fb.group({
+        uniqueId: [null],
       version: [null],
       cancelledDate: [null],
       status: [null],
@@ -324,20 +390,16 @@ export class BookPermissionComponent implements OnInit {
       bookingFrom: [null],
       bookingTo: [null],
       remarks: [null],
-      organizationAddress: this._fb.group(this.orgAddress.addressControls()),
-      applicantAddress: this._fb.group(this.applicantAddress.addressControls()),
       officeResidentialAddressSame:null,
-      orgName: [null],
-      orgContactNo: [null],
-      confirmMobile: [null],
       applicantName: [null],
       applicantMobile: [null],
-      emailId: [null, [Validators.required, ValidationService.emailValidator]],
-      confirmEmailId: [null, [Validators.required, ValidationService.emailValidator]],
       relationshipWithOrg: [null],
       presidentName: [null],
       shootingPurpose: [null],
       bookingDate: [null],
+      bookingFormId : null,
+        attachments: [],
+        });
 
       // accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
       // accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
@@ -346,27 +408,29 @@ export class BookPermissionComponent implements OnInit {
       //   name: null
       // }),
       // ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
-      attachment: [null],
-      bookingFormId : null
-    });
+      this.commonService.createCloneAbstractControl(this.organizationdetails,this.bookPermissionApplicationForm);
+      this.commonService.createCloneAbstractControl(this.bookingDetails,this.bookPermissionApplicationForm);
+
+
   }
 
   /**
    * Method is used to submit shooting permission application form.
    */
   submitPermissionApplication(): void {
-    let errCount = this.bookingUtils.getAllErrors(this.bookPermissionApplicationForm);
+   // let errCount = this.bookingUtils.getAllErrors(this.bookPermissionApplicationForm);
     if (this.bookPermissionApplicationForm.invalid) {
-      this.handleErrorsOnSubmit(errCount);
+     // this.handleErrorsOnSubmit(errCount);
       this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
       return;
     }
-    else if (!this.bookingUtils.matcher(this.bookPermissionApplicationForm, 'emailId', 'confirmEmailId') || !this.bookingUtils.matcher(this.bookPermissionApplicationForm, 'applicantMobile', 'confirmMobile')) {
-      this.commonService.openAlert("Field Error", !this.bookingUtils.matcher(this.bookPermissionApplicationForm, 'emailId', 'confirmEmailId') ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning');
-      this.handleErrorsOnSubmit(7);
+
+    else if (!this.bookingUtils.matcher(this.organizationdetails, 'emailId', 'confirmEmailId') || !this.bookingUtils.matcher(this.organizationdetails, 'applicantMobile', 'confirmMobile')) {
+      this.commonService.openAlert("Field Error", !this.bookingUtils.matcher(this.organizationdetails, 'emailId', 'confirmEmailId') ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning');
+      //this.handleErrorsOnSubmit(7);
       return;
     } else if (!this.isFileUploaded) {
-      this.handleErrorsOnSubmit(32);
+     // this.handleErrorsOnSubmit(32);
       this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
       return;
     }
@@ -422,6 +486,8 @@ export class BookPermissionComponent implements OnInit {
       this.bookingService.shortListBookings(shortListData).subscribe(resp => {
         this.showPermissionSearchForm = false;
         this.bookPermissionApplicationForm.patchValue(resp.data);
+        this.organizationdetails.patchValue(resp.data);
+        this.bookingDetails.patchValue(resp.data);
         this.orgAddress.getCountryLists();
         this.applicantAddress.getCountryLists();
         if (resp.data.status == this.bookingConstants.DRAFT) {
@@ -488,25 +554,30 @@ export class BookPermissionComponent implements OnInit {
 
 	/**
 	 * Method is used to handle error/validation on submit
-	 * @param count - count of invalid control.
+	 * @param controlName - count of invalid control.
 	 */
-  handleErrorsOnSubmit(count) {
-		/**
-		 * No Of controls on perticular tab
-		 */
-    let step1 = 26;
-    let step2 = 31;
+  handleErrorsOnSubmit(controlName) {
+		// /**
+		//  * No Of controls on perticular tab
+		//  */
+    // let step1 = 26;
+    // let step2 = 31;
 
-		/**
-		 * Redirection
-		 */
-    if (count < step1) {
-      this.tabIndex = 0;
-      return false;
-    } else if (count < step2) {
-      this.tabIndex = 1;
-      return false;
-    }
+		// /**
+		//  * Redirection
+		//  */
+    // if (count < step1) {
+    //   this.tabIndex = 0;
+    //   return false;
+    // } else if (count < step2) {
+    //   this.tabIndex = 1;
+    //   return false;
+    // }
+    const key = this.bookingUtils.getInvalidFormControlKey(controlName);
+		const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 0;
+
+		this.tabIndex = index;
+		return false;
   }
 
   getWardZoneFirstLevel() {
@@ -553,7 +624,22 @@ export class BookPermissionComponent implements OnInit {
   onConfirmMobileNumber(event){
     if(event.target.value != '' )
     this.isConfirmMobileNumber = true
- 
+
   }
-  
+  checkValidation(controlName,isSubmitted){
+		if(controlName.invalid){
+			this.handleErrorsOnSubmit(controlName)
+		}else{
+			const organizationalAry = Object.keys(controlName.value);
+			organizationalAry.forEach(element => {
+				this.bookPermissionApplicationForm.get(element).setValue(controlName.get(element).value);
+			});
+			this.commonService.setValueToFromControl(controlName,this.bookPermissionApplicationForm);
+			this.tabIndex= this.tabIndex +1;
+			if(isSubmitted){
+				this.submitPermissionApplication();
+			}
+		}
+    }
+
 }
