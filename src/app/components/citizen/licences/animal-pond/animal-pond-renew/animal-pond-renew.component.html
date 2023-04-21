@@ -10,7 +10,7 @@
 		| translate:translateKey}}</button>
 </mat-card>
 <mat-card [hidden]="!serachLicenceObj.isDisplayRenewLicenceForm" class="formClass cardBorder">
-	<form [formGroup]="animalPondRenewForm">
+	<!-- <form [formGroup]="animalPondRenewForm"> -->
 		<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
 			<!-- step 1 Starts -->
@@ -19,11 +19,12 @@
 					<div>{{'license_holder_detail' | translate:translateKey}}</div>
 				</ng-template>
 
+				<form [formGroup]="licenseHolderDetail"> 
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput readonly required placeholder="{{'license_no' | translate:translateKey}}"
 							formControlName="refNumber">
-						<control-messages [control]="animalPondRenewForm.get('refNumber')"></control-messages>
+						<control-messages [control]="licenseHolderDetail.get('refNumber')"></control-messages>
 					</mat-form-field>
 					<!-- <mat-form-field class="col-md-4">
 						<input matInput readonly placeholder="{{'issue_date' | translate:translateKey}}"
@@ -38,7 +39,7 @@
 						<mat-datepicker touchUi="true" #DateOflicenseIssueDate></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">
 							{{licenseConfiguration.DATE_HINT_MSG}}</div>
-						<control-messages [control]="animalPondRenewForm.get('licenseIssueDate')">
+						<control-messages [control]="licenseHolderDetail.get('licenseIssueDate')">
 						</control-messages>
 					</mat-form-field>
 				</div>
@@ -48,7 +49,7 @@
 						<ng-select placeholder="{{'person_type' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let type of PERSON_TYPE" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="animalPondRenewForm.get('personType').get('code')">
+						<control-messages [control]="licenseHolderDetail.get('personType').get('code')">
 						</control-messages>
 					</div>
 					<mat-form-field class="col-md-2">
@@ -56,24 +57,24 @@
 							validationFieldsType='onlyNameWithOutSpace'
 							placeholder="{{'holder_firstname' | translate:translateKey}}"
 							formControlName="holderFirstName" appGujInputSource targetElement="holderFirstNameGuj"
-							[form]="animalPondRenewForm">
-						<control-messages [control]="animalPondRenewForm.get('holderFirstName')"></control-messages>
+							[form]="licenseHolderDetail">
+						<control-messages [control]="licenseHolderDetail.get('holderFirstName')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="30" appValidationFields
 							validationFieldsType='onlyNameWithOutSpace'
 							placeholder="{{'holder_middlename' | translate:translateKey}}"
 							formControlName="holderMiddleName" appGujInputSource targetElement="holderMiddleNameGuj"
-							[form]="animalPondRenewForm">
-						<control-messages [control]="animalPondRenewForm.get('holderMiddleName')"></control-messages>
+							[form]="licenseHolderDetail">
+						<control-messages [control]="licenseHolderDetail.get('holderMiddleName')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="30" appValidationFields
 							validationFieldsType='onlyNameWithOutSpace'
 							placeholder="{{'holder_lastname' | translate:translateKey}}"
 							formControlName="holderLastName" appGujInputSource targetElement="holderLastNameGuj"
-							[form]="animalPondRenewForm">
-						<control-messages [control]="animalPondRenewForm.get('holderLastName')"></control-messages>
+							[form]="licenseHolderDetail">
+						<control-messages [control]="licenseHolderDetail.get('holderLastName')"></control-messages>
 					</mat-form-field>
 
 
@@ -84,23 +85,23 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj"
 						appValidationFields validationFieldsType='onlyNameWithOutSpace'
-							appGujInputTarget [form]="animalPondRenewForm"
+							appGujInputTarget [form]="licenseHolderDetail"
 							placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">
-						<control-messages [control]="animalPondRenewForm.get('holderFirstNameGuj')"></control-messages>
+						<control-messages [control]="licenseHolderDetail.get('holderFirstNameGuj')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="90"
 						appValidationFields validationFieldsType='onlyNameWithOutSpace'
 							placeholder="{{'holder_middlename' | translate:translateKey:'gu'}}"
-							formControlName="holderMiddleNameGuj" appGujInputTarget [form]="animalPondRenewForm">
-						<control-messages [control]="animalPondRenewForm.get('holderMiddleNameGuj')"></control-messages>
+							formControlName="holderMiddleNameGuj" appGujInputTarget [form]="licenseHolderDetail">
+						<control-messages [control]="licenseHolderDetail.get('holderMiddleNameGuj')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="90"
 						appValidationFields validationFieldsType='onlyNameWithOutSpace'
 							placeholder="{{'holder_lastname' | translate:translateKey:'gu'}}"
-							formControlName="holderLastNameGuj" appGujInputTarget [form]="animalPondRenewForm">
-						<control-messages [control]="animalPondRenewForm.get('holderLastNameGuj')"></control-messages>
+							formControlName="holderLastNameGuj" appGujInputTarget [form]="licenseHolderDetail">
+						<control-messages [control]="licenseHolderDetail.get('holderLastNameGuj')"></control-messages>
 					</mat-form-field>
 				</div>
 				<!-- /gujarati -->
@@ -111,14 +112,14 @@
 						<ng-option *ngFor="let type of ANIMAL_POND_STATUS_OF_BUSINESS" [value]="type.code">{{type.name}}
 						</ng-option>
 					</ng-select>
-					<control-messages [control]="animalPondRenewForm.get('businessType').get('code')">
+					<control-messages [control]="licenseHolderDetail.get('businessType').get('code')">
 					</control-messages>
 				</div>
 
 				<div class="row">
 					<h2>{{'permanat_address' | translate:translateKey}}</h2>
 					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="true"
-						[addressFormGroup]="animalPondRenewForm.get('permanantAddress')"
+						[addressFormGroup]="licenseHolderDetail.get('permanantAddress')"
 						(change)=valueChangeOnPermantAddress()></app-address>
 				</div>
 
@@ -130,39 +131,40 @@
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
 					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="true"
-						[addressFormGroup]="animalPondRenewForm.get('temporaryAddress')"></app-address>
+						[addressFormGroup]="licenseHolderDetail.get('temporaryAddress')"></app-address>
 				</div>
 
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber maxlength="11" minlength="10" formControlName="holderTelephoneNo"
 						placeholder="{{'holder_telephone_no' | translate:translateKey}}">
-					<control-messages [control]="animalPondRenewForm.get('holderTelephoneNo')"></control-messages>
+					<control-messages [control]="licenseHolderDetail.get('holderTelephoneNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber minlength="10" maxlength="10" formControlName="holderMobileNo"
 						placeholder="{{'holder_mobile_no' | translate:translateKey}} *">
-					<control-messages [control]="animalPondRenewForm.get('holderMobileNo')"></control-messages>
+					<control-messages [control]="licenseHolderDetail.get('holderMobileNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber maxlength="10" minlength="10" formControlName="holderFaxNo"
 						placeholder="{{'holder_fax_no' | translate:translateKey}}">
-					<control-messages [control]="animalPondRenewForm.get('holderFaxNo')"></control-messages>
+					<control-messages [control]="licenseHolderDetail.get('holderFaxNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber minlength="12" maxlength="12" formControlName="holderAadharNo"
 						placeholder="{{'holder_aadhar_no' | translate:translateKey}} *">
-					<control-messages [control]="animalPondRenewForm.get('holderAadharNo')"></control-messages>
+					<control-messages [control]="licenseHolderDetail.get('holderAadharNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput type="text" formControlName="holderPanNo" autocomplete="off" minlength="10"
 						maxlength="10" class="capitalCase" placeholder="{{'holder_pan_no' | translate : translateKey}}"
 						required>
-					<control-messages [control]="animalPondRenewForm.get('holderPanNo')"></control-messages>
+					<control-messages [control]="licenseHolderDetail.get('holderPanNo')"></control-messages>
 				</mat-form-field>
 
-				<app-action-bar [form]="animalPondRenewForm" (tabIndex)="onTabChange($event)"
-					(handleOnSaveAndNext)="onChangeStatusOfBusiness()" [stepInfo]="{step: 'step1', next: 1, back: 0}">
+				<app-action-bar [form]="animalPondRenewForm" (tabIndex)="onTabChange($event,licenseHolderDetail,animalPondRenewForm)"
+					(handleOnSaveAndNext)="handleOnSaveAndNext($event)" [stepInfo]="{step: 'step1', next: 1, back: 0}">
 				</app-action-bar>
+				</form>
 			</mat-tab>
 			<!-- step 1 Ends -->
 
@@ -171,6 +173,8 @@
 				<ng-template mat-tab-label>
 					<div>{{'business_detail' | translate:translateKey}}</div>
 				</ng-template>
+
+				<form [formGroup]="businessDetail"> 
 				<div class="row">
 					<div class="col-md-4 ngSelect" formGroupName="zoneNo">
 						<ng-select placeholder="{{'business_under_zone' | translate:translateKey}} *"
@@ -197,7 +201,7 @@
 				<div class="row">
 					<h2>{{'business_address' | translate:translateKey}}</h2>
 					<app-address #temporaryAddressEstablishment [isDisplayGujFields]="true" [requiredFeilds]="true"
-						[addressFormGroup]="animalPondRenewForm.get('businessAddress')"></app-address>
+						[addressFormGroup]="businessDetail.get('businessAddress')"></app-address>
 				</div>
 
 				<div class="row">
@@ -206,7 +210,7 @@
 						<input matInput type="text" required maxlength="500"
 							placeholder="{{'extra_details_of_business' | translate:translateKey}}"
 							formControlName="extraDetailsOfBusiness">
-						<control-messages [control]="animalPondRenewForm.get('extraDetailsOfBusiness')">
+						<control-messages [control]="businessDetail.get('extraDetailsOfBusiness')">
 						</control-messages>
 					</mat-form-field> -->
 					<div class="col-md-4 ngSelect" formGroupName="relationshipId">
@@ -215,7 +219,7 @@
 							<ng-option *ngFor="let id of MF_RELATIONSHIP_OF_APPLICANT" [value]="id.code">{{id.name}}
 							</ng-option>
 						</ng-select>
-						<control-messages [control]="animalPondRenewForm.get('relationshipId').get('code')">
+						<control-messages [control]="businessDetail.get('relationshipId').get('code')">
 						</control-messages>
 					</div>
 
@@ -225,7 +229,7 @@
 							<ng-option *ngFor="let statusId of MF_STATUS_OF_BUSINESS" [value]="statusId.code">
 								{{statusId.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="animalPondRenewForm.get('statusOfBusinessId').get('code')">
+						<control-messages [control]="businessDetail.get('statusOfBusinessId').get('code')">
 						</control-messages>
 					</div>
 				</div>
@@ -233,27 +237,27 @@
 				<!-- table -->
 				<div class="row">
 					<div class="col-md-10">
-						<h2 *ngIf="animalPondRenewForm.get('relationshipId').value.code === 'PROPRIETOR'">{{
+						<h2 *ngIf="businessDetail.get('relationshipId').value.code === 'PROPRIETOR'">{{
 							'if_apl_is_in_properitership'|
 							translate:translateKey}}</h2>
-						<h2 *ngIf="animalPondRenewForm.get('relationshipId').value.code === 'PARTNER'">{{
+						<h2 *ngIf="businessDetail.get('relationshipId').value.code === 'PARTNER'">{{
 							'if_apl_is_in_partnership' |
 							translate:translateKey}}</h2>
 					</div>
 					<div class="col-md-2 pt-3 text-right">
 						<button type="button"
-							[disabled]="animalPondRenewForm.get('relationshipId').value.code ? animalPondRenewForm.get('relationshipId').value.code=='PROPRIETOR' ? !(animalPondRenewForm.get('relationshipList')['controls'].length < 1) : !(animalPondRenewForm.get('relationshipList')['controls'].length < 10) : true"
-							[hidden]="animalPondRenewForm.get('relationshipId').value.code === 'DIRECTOR' || animalPondRenewForm.get('relationshipId').value.code === 'AUTHORIZEDSIGNATORY'"
+							[disabled]="businessDetail.get('relationshipId').value.code ? businessDetail.get('relationshipId').value.code=='PROPRIETOR' ? !(businessDetail.get('relationshipList')['controls'].length < 1) : !(businessDetail.get('relationshipList')['controls'].length < 10) : true"
+							[hidden]="businessDetail.get('relationshipId').value.code === 'DIRECTOR' || businessDetail.get('relationshipId').value.code === 'AUTHORIZEDSIGNATORY'"
 							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
 							(click)="addMorePerson('APL_PERSON')">{{'add'|
 							translate:translateKey}}</button>
 					</div>
 				</div>
 
-				<div *ngIf="animalPondRenewForm.get('relationshipList')['controls'].length">
+				<div *ngIf="businessDetail.get('relationshipList')['controls'].length">
 					<div>
 						<table class="table table-striped mb-0 responsiveTableRow"
-							[hidden]="animalPondRenewForm.get('relationshipId').value.code === 'DIRECTOR' || animalPondRenewForm.get('relationshipId').value.code === 'AUTHORIZEDSIGNATORY'">
+							[hidden]="businessDetail.get('relationshipId').value.code === 'DIRECTOR' || businessDetail.get('relationshipId').value.code === 'AUTHORIZEDSIGNATORY'">
 							<thead>
 								<tr class="mo-d-none">
 									<th *ngIf="animalPondRenewForm.get('canEdit').value">Sr. No.</th>
@@ -265,7 +269,7 @@
 							</thead>
 
 							<tbody formArrayName="relationshipList">
-								<tr *ngFor="let item of animalPondRenewForm.get('relationshipList')['controls']; let indx = index;"
+								<tr *ngFor="let item of businessDetail.get('relationshipList')['controls']; let indx = index;"
 									[formGroupName]="indx">
 
 									<td>
@@ -334,9 +338,10 @@
 					</div>
 				</div>
 				<!-- end table -->
-				<app-action-bar [form]="animalPondRenewForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="animalPondRenewForm" (tabIndex)="onTabChange($event,businessDetail,animalPondRenewForm)"
 					(handleOnSaveAndNext)="onChangeStatusOfBusiness()" [stepInfo]="{step: 'step2', next: 2, back: 0}">
 				</app-action-bar>
+				</form>
 			</mat-tab>
 			<!-- step 2 Ends -->
 
@@ -346,6 +351,7 @@
 					<div>{{'insert_animal_detail' | translate:translateKey}}</div>
 				</ng-template>
 
+				<form [formGroup]="insertAnimalDetail"> 
 				<!-- table -->
 				<div class="row  pb-3">
 					<div class="col-md-10">
@@ -353,14 +359,14 @@
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
 						<button type="button" (click)="addMoreAnimal()"
-							[disabled]="animalPondRenewForm.get('animalDetails')['controls'].length >= ANIMAL_TYPE.length"
+							[disabled]="insertAnimalDetail.get('animalDetails')['controls'].length >= ANIMAL_TYPE.length"
 							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button
 							color="primary">{{'add'|
 							translate:translateKey}}</button>
 					</div>
 				</div>
 
-				<div *ngIf="animalPondRenewForm.get('animalDetails')['controls'].length">
+				<div *ngIf="insertAnimalDetail.get('animalDetails')['controls'].length">
 					<div class="table-responsive">
 						<table class="table table-striped mb-0 responsiveTableRow">
 							<thead>
@@ -373,7 +379,7 @@
 							</thead>
 
 							<tbody formArrayName="animalDetails">
-								<tr *ngFor="let item of animalPondRenewForm.get('animalDetails')['controls']; let indx = index;"
+								<tr *ngFor="let item of insertAnimalDetail.get('animalDetails')['controls']; let indx = index;"
 									[formGroupName]="indx">
 
 									<td>
@@ -426,11 +432,11 @@
 									</td>
 									<td style="width: 40px;" *ngIf="animalPondRenewForm.get('canEdit').value">
 										<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
-											(click)="deleteRecord(indx,'animalDetails')">
+											(click)="deleteAnimalRecord(indx,'animalDetails')">
 											<mat-icon title="Delete">delete</mat-icon>
 										</button>
 										<button mat-icon-button color="warn" *ngIf="item.isEditMode"
-											(click)="cancelRecord(item,indx,'animalDetails')">
+											(click)="cancelAnimalRecord(item,indx,'animalDetails')">
 											<mat-icon title="Delete">cancel</mat-icon>
 										</button>
 									</td>
@@ -450,9 +456,10 @@
 						</div>
 					</div> -->
 				<!-- end table -->
-				<app-action-bar [form]="animalPondRenewForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="animalPondRenewForm" (tabIndex)="onTabChange($event,insertAnimalDetail,animalPondRenewForm)"
 					(handleOnSaveAndNext)="onChangeStatusOfBusiness()" [stepInfo]="{step: 'step3', next: 3, back: 1}">
 				</app-action-bar>
+				</form>
 			</mat-tab>
 			<!-- step 3 end -->
 
@@ -461,7 +468,7 @@
 				<ng-template mat-tab-label>
 					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
-
+				<form [formGroup]="animalPondRenewForm"> 
 				<div class="row">
 					<div class="col-md-4"
 						*ngFor="let doc of animalPondRenewForm.get('serviceDetail').get('serviceUploadDocuments').value">
@@ -475,13 +482,12 @@
 				</div>
 
 				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray"
-					[form]="animalPondRenewForm" (handleOnSaveAndNext)="onChangeStatusOfBusiness()"
-					(handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onTabChange($event) "
+					[form]="animalPondRenewForm"  (tabIndex)="onFormTabChange($event) "
+					(handleErrors)="handleErrorsOnSubmit($event)"
 					[stepInfo]="{step: 'final', next:4, back:2} "></app-action-bar>
-
+				</form>
 			</mat-tab>
 			<!-- step Attachment Ends -->
 			<select-payment-gateway #paymentGateway></select-payment-gateway>
 		</mat-tab-group>
-	</form>
 </mat-card>
