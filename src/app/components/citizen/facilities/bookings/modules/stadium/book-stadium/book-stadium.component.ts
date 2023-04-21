@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Form, FormBuilder, FormGroup, Validators } from "@angular/forms";
 //import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
 import { BookingConstants, BookingUtils } from '../../../config/booking-config';
 import { MatPaginator, MatSort } from '@angular/material';
@@ -51,6 +51,8 @@ export class BookStadiumComponent implements OnInit {
      */
     stadiumSearchForm: FormGroup;
     stadiumApplicationForm: FormGroup;
+    applicationDetails : FormGroup;
+    bankDetails : FormGroup;
 
     /**
      * resources
@@ -92,7 +94,7 @@ export class BookStadiumComponent implements OnInit {
     totalAmount: number=0;
     Total: number=0;
 
-
+    public formControlNameToTabIndex = new Map();
     constructor(private bookingService: BookingService,
         private router: Router,
         private _fb: FormBuilder, private toster: ToastrService,
@@ -119,6 +121,7 @@ export class BookStadiumComponent implements OnInit {
         this.getLookUpData();
         this.getResourceList();
         this.getFeesStructure();
+        this.setFormControlToTabIndexMap();
         /**
          * Subscribe changes of start date.
          */
@@ -156,23 +159,52 @@ export class BookStadiumComponent implements OnInit {
     }
 
     createStadiumApplicationForm() {
+        /* Applicant Details */
+        this.applicationDetails = this._fb.group({
+            applicantName: [null, [Validators.required, Validators.maxLength(100)]],
+            applicantMobile: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+            confirmMobile: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+            emailId: [null, [Validators.required, ValidationService.emailValidator]],
+            confirmEmailId: [null, [Validators.required, ValidationService.emailValidator]],
+            panCard:[null, ValidationService.panValidator],
+            gstNo:[null, ValidationService.gstNoValidator],
+            attachment: [null],
+            applicantAddress: this._fb.group(this.addressComp.addressControls()),
+            eventFromDate: null,
+            eventToDate: null,
+            programmePurpose: null,
+        }),
+
+        /* Bank Details */
+        this.bankDetails = this._fb.group({
+            bankName: this._fb.group({
+              code: [null, [Validators.required]],
+              name: null
+            }),
+            accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
+            accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
+            ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
+            eventDetails: [null, Validators.required],
+            termsCondition: null,
+            agree: null,
+        }),
         this.stadiumApplicationForm = this._fb.group({
             // accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
 			// accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
-            applicantAddress: this._fb.group(this.addressComp.addressControls()),
-            applicantMobile: null,
-            confirmMobile: null,
-            applicantName: null,
-            attachment: null,
-            panCard:[null, ValidationService.panValidator],
-            gstNo:[null, ValidationService.gstNoValidator],
+            // applicantAddress: this._fb.group(this.addressComp.addressControls()),
+            // applicantMobile: null,
+            // confirmMobile: null,
+            // applicantName: null,
+            // attachment: null,
+            // panCard:[null, ValidationService.panValidator],
+            // gstNo:[null, ValidationService.gstNoValidator],
             // bankName: this._fb.group({
             //     code: [null, [Validators.required]],
             //     name: null
             // }),
             bookingDate: null,
             bookingFrom: null,
-            eventDetails: [null, Validators.required],
+            // eventDetails: [null, Validators.required],
             bookingPurposeMaster: this._fb.group({
                 code: [null, [Validators.required]],
                 name: null
@@ -181,8 +213,8 @@ export class BookStadiumComponent implements OnInit {
             cancelledDate: null,
             concessionPercentage: 0,
             concessionRequired: false,
-			emailId: [null, [Validators.required, ValidationService.emailValidator]],
-			confirmEmailId: [null, [Validators.required, ValidationService.emailValidator]],
+			// emailId: [null, [Validators.required, ValidationService.emailValidator]],
+			// confirmEmailId: [null, [Validators.required, ValidationService.emailValidator]],
             id: 3,
             // ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
             refNumber: null,
@@ -196,8 +228,10 @@ export class BookStadiumComponent implements OnInit {
             agree: null,
             eventFromDate: null,
             eventToDate: null,
-            programmePurpose: null,
+            // programmePurpose: null,
         });
+        this.commonService.createCloneAbstractControl(this.applicationDetails,this.stadiumApplicationForm);
+		this.commonService.createCloneAbstractControl(this.bankDetails,this.stadiumApplicationForm);		
     }
 
     /**
@@ -265,18 +299,18 @@ export class BookStadiumComponent implements OnInit {
     submitStadiumApplication(): void {
       let errCount = this.bookingUtils.getAllErrors(this.stadiumApplicationForm);
         if (this.stadiumApplicationForm.invalid) {
-            this.handleErrorsOnSubmit(errCount);
+            // this.handleErrorsOnSubmit(errCount);
             this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
             return;
         }
-        else if (!this.bookingUtils.matcher(this.stadiumApplicationForm, 'emailId', 'confirmEmailId') || !this.bookingUtils.matcher(this.stadiumApplicationForm, 'applicantMobile', 'confirmMobile')) {
-            this.handleErrorsOnSubmit(7);
-            this.commonService.openAlert("Field Error", !this.bookingUtils.matcher(this.stadiumApplicationForm, 'emailId', 'confirmEmailId') ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning')
+        else if (!this.bookingUtils.matcher(this.applicationDetails, 'emailId', 'confirmEmailId') || !this.bookingUtils.matcher(this.applicationDetails, 'applicantMobile', 'confirmMobile')) {
+            // this.handleErrorsOnSubmit(7);
+            this.commonService.openAlert("Field Error", !this.bookingUtils.matcher(this.applicationDetails, 'emailId', 'confirmEmailId') ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning')
             return;
-        } else if (!this.stadiumApplicationForm.get('agree').value) {
+        } else if (!this.bankDetails.get('agree').value) {
             this.commonService.openAlert("Field Error", this.bookingConstants.AGREE_MESSAGE, 'warning')
             return;
-        } else if (!this.stadiumApplicationForm.get('termsCondition').value) {
+        } else if (!this.bankDetails.get('termsCondition').value) {
             this.commonService.openAlert("Field Error", this.bookingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning')
             return;
         } else {
@@ -334,17 +368,19 @@ export class BookStadiumComponent implements OnInit {
             }
             this.bookingService.shortListBookings(shortListData).subscribe(resp => {
 
-                this.stadiumApplicationForm.get('programmePurpose').setValue(resp.data.bookingPurposeMaster.name);
-                this.stadiumApplicationForm.get('programmePurpose').disable();
+                this.applicationDetails.get('programmePurpose').setValue(resp.data.bookingPurposeMaster.name);
+                this.applicationDetails.get('programmePurpose').disable();
                 this.showStadiumSearchForm = false;
+                this.applicationDetails.patchValue(resp.data);
+                this.bankDetails.patchValue(resp.data);
                 this.stadiumApplicationForm.patchValue(resp.data);
                 this.addressComp.getCountryLists();
                 if (resp.data.status == this.bookingConstants.DRAFT) {
                     this.bookingService.searchPayment(resp.data.refNumber).subscribe(payResp => {
-                        this.stadiumApplicationForm.get('eventFromDate').setValue(payResp.data.EVENT_DATE_FROM);
-                        this.stadiumApplicationForm.get('eventFromDate').disable();
-                        this.stadiumApplicationForm.get('eventToDate').setValue(payResp.data.EVENT_DATE_TO);
-                        this.stadiumApplicationForm.get('eventToDate').disable();
+                        this.applicationDetails.get('eventFromDate').setValue(payResp.data.EVENT_DATE_FROM);
+                        this.applicationDetails.get('eventFromDate').disable();
+                        this.applicationDetails.get('eventToDate').setValue(payResp.data.EVENT_DATE_TO);
+                        this.applicationDetails.get('eventToDate').disable();
                         this.paymentObject = payResp.data;
                         this.Total=(parseFloat(this.paymentObject.RENT_FEES.replace(',', ''))+parseFloat(this.paymentObject.ADMINISTRATIVE_CHARGE.replace(',', ''))+parseFloat(this.paymentObject.GST.replace(',', '')));
                         this.totalAmount = (parseFloat(this.paymentObject.RENT_FEES.replace(',', ''))+parseFloat(this.paymentObject.GST.replace(',', ''))+parseFloat(this.paymentObject.DEPOSIT_FEES.replace(',', ''))+parseFloat(this.paymentObject.ADMINISTRATIVE_CHARGE.replace(',', '')));
@@ -367,44 +403,52 @@ export class BookStadiumComponent implements OnInit {
     onTabChange(evt) {
         this.tabIndex = evt;
     }
-
 	/**
 	 * Method is used to handle error/validation on submit
 	 * @param count - count of invalid control.
 	 */
-    handleErrorsOnSubmit(count) {
-        let step1 = 4;
-        let step2 = 11;
-        let step3 = 17;
-        if (count < step1) {
-            this.tabIndex = 0;
-            return false;
-        } else if (count < step2) {
-            this.tabIndex = 1;
-            return false;
-        } else if (count < step3) {
-            this.tabIndex = 2;
-            return false;
+    // handleErrorsOnSubmit(count) {
+    //     let step1 = 4;
+    //     let step2 = 11;
+    //     let step3 = 17;
+    //     if (count < step1) {
+    //         this.tabIndex = 0;
+    //         return false;
+    //     } else if (count < step2) {
+    //         this.tabIndex = 1;
+    //         return false;
+    //     } else if (count < step3) {
+    //         this.tabIndex = 2;
+    //         return false;
+    //     }
+    // }
+
+    handleErrorsOnSubmit(controlName) {
+        const key = this.bookingUtils.getInvalidFormControlKey(controlName);
+        const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 1;
+        if (index) {
+          this.tabIndex = index -1 ;
+          return false;
         }
-    }
+      }
 
       /**
        * Get user data
        */
       getUserProfile() {
         this.bookingService.getUserProfile().subscribe(resp => {
-            this.stadiumApplicationForm.get('applicantName').setValue(resp.data.firstName + ' ' + resp.data.lastName);
-            this.stadiumApplicationForm.get('applicantMobile').setValue(resp.data.cellNo);
-            this.stadiumApplicationForm.get('confirmMobile').setValue(resp.data.cellNo);
-            this.stadiumApplicationForm.get('emailId').setValue(resp.data.email);
-            this.stadiumApplicationForm.get('confirmEmailId').setValue(resp.data.email);
+            this.applicationDetails.get('applicantName').setValue(resp.data.firstName + ' ' + resp.data.lastName);
+            this.applicationDetails.get('applicantMobile').setValue(resp.data.cellNo);
+            this.applicationDetails.get('confirmMobile').setValue(resp.data.cellNo);
+            this.applicationDetails.get('emailId').setValue(resp.data.email);
+            this.applicationDetails.get('confirmEmailId').setValue(resp.data.email);
           },
           err => {
             this.toster.error("Server Error");
           });
-        this.stadiumApplicationForm.get('applicantAddress').get('country').setValue('INDIA');
-        this.stadiumApplicationForm.get('applicantAddress').get('state').setValue('GUJARAT');
-        this.stadiumApplicationForm.get('applicantAddress').get('city').setValue('Vadodara');
+        this.applicationDetails.get('applicantAddress').get('country').setValue('INDIA');
+        this.applicationDetails.get('applicantAddress').get('state').setValue('GUJARAT');
+        this.applicationDetails.get('applicantAddress').get('city').setValue('Vadodara');
       }
 
       getFeesStructure(){
@@ -420,5 +464,42 @@ export class BookStadiumComponent implements OnInit {
         var  str = _.startCase(headerName);
        return (headerName == "RELIGION_BASE_SEMINAR_CULTURAL") ? "RELIGION BASE/SEMINAR/CULTURAL" : str;
      }
+     checkValidation(controlName,isSubmitted){
+		if(controlName.invalid){
+			this.handleErrorsOnSubmit(controlName)
+		}else{
+			const organizationalAry = Object.keys(controlName.value);
+			organizationalAry.forEach(element => {
+				this.stadiumApplicationForm.get(element).setValue(controlName.get(element).value);
+			});
+			this.commonService.setValueToFromControl(controlName,this.stadiumApplicationForm);
+			this.tabIndex= this.tabIndex +1;
+			if(isSubmitted){
+				this.submitStadiumApplication(); 
+			}
+		}
+	}
 
+    setFormControlToTabIndexMap() {
+
+        // First tab
+        this.formControlNameToTabIndex.set('applicantName', 1)
+        this.formControlNameToTabIndex.set('applicantMobile', 1)
+        this.formControlNameToTabIndex.set('confirmMobile', 1)
+        this.formControlNameToTabIndex.set('emailId', 1)
+        this.formControlNameToTabIndex.set('confirmEmailId', 1)
+        this.formControlNameToTabIndex.set('panCard', 1)
+        this.formControlNameToTabIndex.set('gstNo', 1)
+        this.formControlNameToTabIndex.set('applicantAddress',1)
+    
+    
+        // second tab
+        this.formControlNameToTabIndex.set('bankName', 2)
+        this.formControlNameToTabIndex.set('accountHolderName', 2)
+        this.formControlNameToTabIndex.set('accountNo', 2)
+        this.formControlNameToTabIndex.set('ifscCode', 2)
+        this.formControlNameToTabIndex.set('eventDetails',2)
+        this.formControlNameToTabIndex.set('termsCondition',2)
+        this.formControlNameToTabIndex.set('agree',2)
+      }
 }

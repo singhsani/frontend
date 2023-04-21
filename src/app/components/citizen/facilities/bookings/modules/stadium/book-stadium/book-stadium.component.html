@@ -390,32 +390,32 @@
 
 <div [hidden]="!showStadiumApplicationForm">
     <mat-card class="formClass cardBorder">
-        <form [formGroup]="stadiumApplicationForm" (ngSubmit)="submitStadiumApplication()">
+        <!-- <form [formGroup]="stadiumApplicationForm" (ngSubmit)="submitStadiumApplication()"> -->
 
             <mat-tab-group mat-stretch-tabs dynamicHeight="true" [(selectedIndex)]="tabIndex" class="stepperNav">
 
-                <mat-tab>
+                <mat-tab disabled>
                     <ng-template mat-tab-label>
                         <div>{{'applicant_or_organization_details' | translate:translateKey}}</div>
                     </ng-template>
-
+                <form [formGroup]="applicationDetails">
                     <div class="row">
                       <mat-form-field class="col-md-4">
                         <mat-label>{{'event_date_from' | translate:translateKey}}</mat-label>
                         <input matInput formControlName="eventFromDate">
-                        <control-messages [control]="stadiumApplicationForm.get('eventFromDate')"></control-messages>
+                        <control-messages [control]="applicationDetails.get('eventFromDate')"></control-messages>
                       </mat-form-field>
 
                       <mat-form-field class="col-md-4">
                         <mat-label>{{'event_date_to' | translate:translateKey}}</mat-label>
                         <input matInput formControlName="eventToDate">
-                        <control-messages [control]="stadiumApplicationForm.get('eventToDate')"></control-messages>
+                        <control-messages [control]="applicationDetails.get('eventToDate')"></control-messages>
                       </mat-form-field>
 
                       <mat-form-field class="col-md-4">
                         <mat-label>{{'purpose_of_booking'| translate: translateKey}}</mat-label>
                         <input matInput formControlName="programmePurpose">
-                        <control-messages [control]="stadiumApplicationForm.get('programmePurpose')"></control-messages>
+                        <control-messages [control]="applicationDetails.get('programmePurpose')"></control-messages>
                       </mat-form-field>
                     </div>
 
@@ -428,22 +428,22 @@
                         <mat-form-field class="col-md-4">
                             <input matInput maxlength="100" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="applicantName"
                                 placeholder="{{'applicant_name' | translate: translateKey}}" required>
-                            <control-messages [control]="stadiumApplicationForm.get('applicantName')"></control-messages>
+                            <control-messages [control]="applicationDetails.get('applicantName')"></control-messages>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
                             <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobile" placeholder="{{'applicant_mobile' | translate: translateKey}}"
                                 required>
-                            <control-messages [control]="stadiumApplicationForm.get('applicantMobile')"></control-messages>
+                            <control-messages [control]="applicationDetails.get('applicantMobile')"></control-messages>
                         </mat-form-field>
 
                         <div class="col-md-4">
                             <mat-form-field>
                                 <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile" placeholder="{{'confirm_mobile' | translate: translateKey}}"
                                     required>
-                                <control-messages [control]="stadiumApplicationForm.get('confirmMobile')"></control-messages>
+                                <control-messages [control]="applicationDetails.get('confirmMobile')"></control-messages>
                             </mat-form-field>
-                            <mat-error *ngIf="!bookingUtils.matcher(stadiumApplicationForm, 'applicantMobile', 'confirmMobile') && stadiumApplicationForm.get('applicantMobile').touched && stadiumApplicationForm.get('confirmMobile').touched">
+                            <mat-error *ngIf="!bookingUtils.matcher(applicationDetails, 'applicantMobile', 'confirmMobile') && applicationDetails.get('applicantMobile').touched && applicationDetails.get('confirmMobile').touched">
                                 {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
                             </mat-error>
                         </div>
@@ -451,16 +451,16 @@
 
                         <mat-form-field class="col-md-4">
                             <input matInput type="email" maxlength="50" formControlName="emailId" placeholder="{{'applicant_email' | translate: translateKey}}" required>
-                            <control-messages [control]="stadiumApplicationForm.get('emailId')"></control-messages>
+                            <control-messages [control]="applicationDetails.get('emailId')"></control-messages>
                         </mat-form-field>
 
                         <div class="col-md-4">
                             <mat-form-field>
                                 <input matInput type="email" maxlength="50" formControlName="confirmEmailId" placeholder="{{'confirm_email' | translate: translateKey}}"
                                     required>
-                                <control-messages [control]="stadiumApplicationForm.get('confirmEmailId')"></control-messages>
+                                <control-messages [control]="applicationDetails.get('confirmEmailId')"></control-messages>
                             </mat-form-field>
-                            <mat-error *ngIf="!bookingUtils.matcher(stadiumApplicationForm, 'emailId', 'confirmEmailId') && stadiumApplicationForm.get('emailId').touched && stadiumApplicationForm.get('confirmEmailId').touched">
+                            <mat-error *ngIf="!bookingUtils.matcher(applicationDetails, 'emailId', 'confirmEmailId') && applicationDetails.get('emailId').touched && applicationDetails.get('confirmEmailId').touched">
                                 {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
                             </mat-error>
                         </div>
@@ -468,14 +468,14 @@
                         <div class="col-md-4">
                             <mat-form-field>
                                 <input matInput type="text" formControlName="panCard" autocomplete="off" maxlength="10" class="capitalCase" placeholder="{{'pancard' | translate : translateKey}}" required>
-                                <control-messages [control]="stadiumApplicationForm.get('panCard')"></control-messages>
+                                <control-messages [control]="applicationDetails.get('panCard')"></control-messages>
                             </mat-form-field>
                         </div>
 
                         <div class="col-md-4">
                             <mat-form-field>
                                 <input matInput type="text" maxlength="15" formControlName="gstNo" placeholder="{{'gstno' | translate : translateKey}}">
-                                <control-messages [control]="stadiumApplicationForm.get('gstNo')"></control-messages>
+                                <control-messages [control]="applicationDetails.get('gstNo')"></control-messages>
                             </mat-form-field>
                         </div>
 
@@ -485,21 +485,21 @@
                         <h2>
                             {{'applicant_address' | translate:translateKey}}
                         </h2>
-                        <app-address #address [requiredFeilds]="true" [addressFormGroup]="stadiumApplicationForm.get('applicantAddress')"></app-address>
+                        <app-address #address [requiredFeilds]="true" [addressFormGroup]="applicationDetails.get('applicantAddress')"></app-address>
                     </div>
 
                     <div class="row mt-4 fotButtonBarr">
                         <div class="col-sm-12 col-md-12 text-right">
-                            <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">
+                            <button mat-raised-button type="button" color="primary"  (click)="checkValidation(applicationDetails,false);">
                                 {{'next'| translate:translateKey}}
                                 <mat-icon>navigate_next</mat-icon>
                             </button>
                         </div>
                     </div>
-
+                </form> 
                 </mat-tab>
 
-                <mat-tab>
+                <mat-tab disabled>
                     <ng-template mat-tab-label>
                         <div>{{'bank_details' | translate:translateKey}}</div>
                     </ng-template>
@@ -507,8 +507,8 @@
                     <h2>
                         {{'bank_details' | translate:translateKey}}
                     </h2>
-
-                    <bank-details [form]="stadiumApplicationForm"></bank-details>
+                    <form [formGroup]="bankDetails">
+                    <bank-details [form]="bankDetails"></bank-details>
                     <div class="row">
                         <mat-form-field class="col-md-12">
                             <input matInput maxlength="250" type="text" formControlName="eventDetails"
@@ -535,16 +535,16 @@
                                 <mat-icon>navigate_before</mat-icon>
                                 {{'back' | translate:translateKey}}
                             </button>
-                            <button mat-raised-button color="primary" type="submit">
+                            <button mat-raised-button color="primary" type="submit" (click)="checkValidation(bankDetails,true);">
                                 <mat-icon>check_circle_outline</mat-icon>
                                 {{'submit_application'| translate: translateKey}}
                             </button>
                         </div>
                     </div>
-
+                </form>
                 </mat-tab>
             </mat-tab-group>
-        </form>
+        <!-- </form> -->
     </mat-card>
 </div>
 
