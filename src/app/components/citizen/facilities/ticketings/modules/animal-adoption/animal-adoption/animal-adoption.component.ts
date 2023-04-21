@@ -58,6 +58,7 @@ export class AnimalAdoptionComponent implements OnInit {
   totalExpenses: any = 0;
   annualMaintainanceExpenses: Number = 0;
   animalCount : number = 0;
+  animalAdoptionYear:Number=0;
   animalBirdName : string;
   checkProceed : boolean = false;
   btnProceed: boolean = true; 
@@ -213,7 +214,14 @@ export class AnimalAdoptionComponent implements OnInit {
     }
 
     let returnArray = this.animalAdoptionForm.get('animalNameList') as FormArray;
-    
+    this.animalAdoptionYear=this.animalAdoptionForm.get('adoptionYears').value;
+    if(returnArray.length!=0 && returnArray.value[0].noOfYear != this.animalAdoptionYear){
+      this.toster.warning('Please Enter Same Year');
+      this.animalAdoptionForm.get('animalName').setValue(null);
+      this.animalAdoptionForm.get('totalAdoptionCost').setValue(null);
+      this.animalAdoptionForm.get('noOfAdoptionCount').reset();
+      this.animalAdoptionForm.get('adoptionYears').reset();
+    }else{
     for (let control of returnArray.controls) {
       if (control instanceof FormGroup) {
         
@@ -231,9 +239,8 @@ export class AnimalAdoptionComponent implements OnInit {
       returnArray.push(this.createOTDetailArray(this.animalName));
       this.resetCalculations("");
     }
-
   }
-
+}
   calculateAmount(event) {
   
     if(event.target.value == '' || event.target.value == undefined){
@@ -311,7 +318,7 @@ export class AnimalAdoptionComponent implements OnInit {
       this.toster.warning('Please add Animal');
       return false;
     }
-
+    this.animalAdoptionForm.get('adoptionYears').setValue(this.animalAdoptionYear);
     this.ticketingService.animalAdoptionRequest(this.animalAdoptionForm.value).subscribe(resp => {
 
     },
