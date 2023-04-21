@@ -31,30 +31,33 @@ export class BookTheaterComponent implements OnInit {
     bookingUtils: BookingUtils;
     bookingConstants = BookingConstants;
 
-	/**
-	 * boolean flags to handle view.
-	 */
+    /**
+     * boolean flags to handle view.
+     */
     showTheaterBookingForm: boolean = false;
     showBookingInfo: boolean = false;
     showShortListData: boolean = false;
     showPaymentReciept: boolean = false;
     showTheaterSearchForm: boolean = false;
     guideLineFlag: boolean = true;
+    btnProceed: boolean = true;
 
-	/**
-	 * Translation Key.
-	 */
+    /**
+     * Translation Key.
+     */
     translateKey = "citizenTheaterBookingScreen";
 
-	/**
-	 * Forms.
-	 */
+    /**
+     * Forms.
+     */
     searchTheaterForm: FormGroup;
     theaterBookingForm: FormGroup;
+    firstTheaterBookingForm: FormGroup;
+    bankTheaterBookingForm: FormGroup;
 
-	/**
-	 * LookUps & Arrays.
-	 */
+    /**
+     * LookUps & Arrays.
+     */
     THEATERS: Array<any> = [];
     CATEGORIES: Array<any> = [];
     availableStots: Array<any> = [];
@@ -63,45 +66,46 @@ export class BookTheaterComponent implements OnInit {
     // BANKS: Array<any> = [];
 
 
-	/**
-	 * Function Objects.
-	 */
+    /**
+     * Function Objects.
+     */
     bookingObject: any;
     categoryObject: any;
     paymentObject: any;
     filteredReponse: any;
     tabIndex: number = 0;
 
-	/**
-	 * display colums in table.
-	 */
+    /**
+     * display colums in table.
+     */
     displayedColumns: Array<string> = ['id', 'start', 'end', 'slotStatus', 'action'];
-    displayedColumnsFeeDetails: string[] = ['sno', 'programmePurpose','bookingRent'];
+    displayedColumnsFeeDetails: string[] = ['sno', 'programmePurpose', 'bookingRent'];
 
 
-	/**
-	 * Min date should be current date.
-	 */
+    /**
+     * Min date should be current date.
+     */
     startMinDate: Date = moment(new Date()).add(1, 'day').toDate();
     endMinDate: Date = moment(new Date()).add(1, 'day').toDate();
-    maxEndDate:any;
+    maxEndDate: any;
 
     /**
        * ngx-bootstrap models.
        */
     confirmRef: BsModalRef;
     dataSource = [];
+    public formControlNameToTabIndex = new Map();
 
-	/**
-	 * Constructor
-	 * @param fb - formbuilder.
-	 * @param bookingService - booking service for api reference.
-	 * @param toster - toaster service.
-	 * @param validationService - validation service.
-	 * @param router -routing service.
-	 * @param formService - form service for api reference.
-	 * @param commonService - common services for popups.
-	 */
+    /**
+     * Constructor
+     * @param fb - formbuilder.
+     * @param bookingService - booking service for api reference.
+     * @param toster - toaster service.
+     * @param validationService - validation service.
+     * @param router -routing service.
+     * @param formService - form service for api reference.
+     * @param commonService - common services for popups.
+     */
     constructor(
         private fb: FormBuilder,
         private bookingService: BookingService,
@@ -111,14 +115,14 @@ export class BookTheaterComponent implements OnInit {
         protected formService: FormsActionsService,
         private router: Router,
         private route: ActivatedRoute
-        ) {
+    ) {
         this.bookingUtils = new BookingUtils(formService, toster);
         this.bookingService.resourceType = 'amphiTheater';
     }
 
-	/**
-	 * Method Initialzes first.
-	 */
+    /**
+     * Method Initialzes first.
+     */
     ngOnInit() {
 
         this.getFeesStructure();
@@ -126,6 +130,7 @@ export class BookTheaterComponent implements OnInit {
         this.createTheaterBookingForm();
         this.getResourceList();
         this.getLookUps();
+        this.setFormControlToTabIndexMap();
 
         //this.getCategoryLookUps();
 
@@ -143,15 +148,15 @@ export class BookTheaterComponent implements OnInit {
      * This method is used to set endDate 30 days after the selected start date
      * @param date - selected start date
      */
-    onDateChange(date){
+    onDateChange(date) {
         this.Dates = [];
         let futureMonth = moment(date).add(30, 'day');
         // this.maxEndDate = moment(futureMonth).format("YYYY-MM-DD");
     }
 
-	/**
-	 * Create theater search f
-	 */
+    /**
+     * Create theater search f
+     */
     createSearchTheaterForm() {
         this.searchTheaterForm = this.fb.group({
             code: [null, [Validators.required]],
@@ -163,15 +168,15 @@ export class BookTheaterComponent implements OnInit {
         });
     }
 
-	/**
-	 * Get all theater resource list.
-	 */
+    /**
+     * Get all theater resource list.
+     */
     getResourceList() {
         this.bookingService.getResourceList().subscribe(res => {
             if (res.data.length) {
                 //this.searchTheaterForm.get('code').setValue(res.data[0].code);
                 this.searchTheaterForm.get('code').setValue(res.data[0].name);
-                                          this.searchTheaterForm.get('code').disable();
+                this.searchTheaterForm.get('code').disable();
                 this.bookingObject = res.data[0];
             }
             this.THEATERS = res.data;
@@ -183,9 +188,9 @@ export class BookTheaterComponent implements OnInit {
         );
     }
 
-	/**
-	 * Get all booking category list from api.
-	 */
+    /**
+     * Get all booking category list from api.
+     */
     getLookUps() {
         this.bookingService.getDataFromLookups().subscribe((respData) => {
             this.CATEGORIES = respData.PURPOSE;
@@ -193,63 +198,64 @@ export class BookTheaterComponent implements OnInit {
         });
     }
 
-	/**
-	 * Method is used to craete theater booking form.
-	 */
+    /**
+     * Method is used to craete theater booking form.
+     */
     createTheaterBookingForm() {
-        this.theaterBookingForm = this.fb.group({
-            /**
-             * Organization Details
-             */
-            eventFromDate:[null],
-            eventToDate:[null],
-            programmePurpose:[null],
+
+        this.firstTheaterBookingForm = this.fb.group({
+            eventFromDate: [null],
+            eventToDate: [null],
+            programmePurpose: [null],
             organizationName: [null, [Validators.required, Validators.maxLength(50)]],
             organizationNumber: [null, [Validators.required]],
             confirmMobile: [null, Validators.required],
             organizationEmail: [null, [Validators.required, ValidationService.emailValidator]],
-            organizationAddress: this.fb.group(this.addressComp.addressControls()),
-          confirmEmailID: [null, [Validators.required, ValidationService.emailValidator]],
-			/**
-			 * Bank Accoount Details
-			 */
-            // bankName: this.fb.group({
-            //     code: [null, [Validators.required]]
-            // }),
-            // accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
-			// accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
-            // ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
-			/**
-			 * Booking Details
-			 */
-            termsCondition: null,
-            agree: null,
-			/**
-			 * form details
-			 */
-            id: null,
-            refNumber: null,
-            status: null,
-            uniqueId: null,
-            version: 0,
-            bookingDate: [null],
-            cancelledDate: null,
-            bookingPurposeMaster: this.fb.group({
-                code: [null],
-                name: null
-            })
-        })
+            confirmEmailID: [null, [Validators.required, ValidationService.emailValidator]],
+            organizationAddress: this.fb.group(this.addressComp.addressControls())
+
+        }),
+            this.bankTheaterBookingForm = this.fb.group({
+                bankName: this.fb.group({
+                    code: [null, [Validators.required]]
+                }),
+                accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
+                accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
+                ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
+                termsCondition: null,
+                agree: null
+            }),
+            this.theaterBookingForm = this.fb.group({
+
+                id: null,
+                refNumber: null,
+                status: null,
+                uniqueId: null,
+                version: 0,
+                bookingDate: [null],
+                cancelledDate: null,
+                bookingPurposeMaster: this.fb.group({
+                    code: [null],
+                    name: null
+                })
+            });
+
+        this.commonService.createCloneAbstractControl(this.firstTheaterBookingForm, this.theaterBookingForm);
+        this.commonService.createCloneAbstractControl(this.bankTheaterBookingForm, this.theaterBookingForm);
+
     }
 
-	/**
-	 * Method is used to filter slots on specific date.
-	 */
+
+
+    /**
+     * Method is used to filter slots on specific date.
+     */
     searchBooking() {
         this.selectedShift = [];
         if (this.searchTheaterForm.valid) {
             let filterData = {
                 // resourceName: this.searchTheaterForm.get('code').value,
-                resourceName:this.THEATERS[0].code,
+                resourceName: this.THEATERS[0].code,
                 startDate: moment(this.searchTheaterForm.get('startDate').value).format("YYYY-MM-DD"),
                 endDate: moment(this.searchTheaterForm.get('endDate').value).format("YYYY-MM-DD"),
             }
@@ -288,9 +294,9 @@ export class BookTheaterComponent implements OnInit {
         this.confirmRef = this.modalService.show(confirmationModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-md customWidth' }));
     }
 
-	/**
-	 * Method is used to shortlist theater.
-	 */
+    /**
+     * Method is used to shortlist theater.
+     */
     confirmShortlist() {
         if (this.selectedShift.length > 0) {
             let shortListData = {
@@ -302,21 +308,24 @@ export class BookTheaterComponent implements OnInit {
             }
 
             this.bookingService.shortListBookings(shortListData).subscribe(resp => {
+
                 if (resp.success) {
                     this.showTheaterSearchForm = false;
+                    this.firstTheaterBookingForm.patchValue(resp.data);
+                    this.bankTheaterBookingForm.patchValue(resp.data);
                     this.theaterBookingForm.patchValue(resp.data);
-                    if(resp.data.bookingPurposeMaster){
-                        this.theaterBookingForm.get('programmePurpose').setValue(resp.data.bookingPurposeMaster.name)
-                        this.theaterBookingForm.get('programmePurpose').disable();
+                    if (resp.data.bookingPurposeMaster) {
+                        this.firstTheaterBookingForm.get('programmePurpose').setValue(resp.data.bookingPurposeMaster.name)
+                        this.firstTheaterBookingForm.get('programmePurpose').disable();
                     }
                     this.addressComp.getCountryLists();
                     if (resp.data.status == this.bookingConstants.DRAFT) {
                         this.bookingService.searchPayment(resp.data.refNumber).subscribe(payResp => {
                             this.paymentObject = payResp.data;
-                            this.theaterBookingForm.get('eventFromDate').setValue(this.paymentObject.EVENT_FROM_DATE);
-                            this.theaterBookingForm.get('eventFromDate').disable();
-                            this.theaterBookingForm.get('eventToDate').setValue(this.paymentObject.EVENT_TO_DATE);
-                            this.theaterBookingForm.get('eventToDate').disable();
+                            this.firstTheaterBookingForm.get('eventFromDate').setValue(this.paymentObject.EVENT_FROM_DATE);
+                            this.firstTheaterBookingForm.get('eventFromDate').disable();
+                            this.firstTheaterBookingForm.get('eventToDate').setValue(this.paymentObject.EVENT_TO_DATE);
+                            this.firstTheaterBookingForm.get('eventToDate').disable();
                             this.showPaymentReciept = true;
                             this.confirmRef.hide();
                         })
@@ -332,9 +341,9 @@ export class BookTheaterComponent implements OnInit {
         }
     }
 
-	/**
-	 * Method is used to confirm theater booking.
-	 */
+    /**
+     * Method is used to confirm theater booking.
+     */
     confirmBooking() {
         this.bookingService.commonBookSlot(this.theaterBookingForm.getRawValue()).subscribe(respData => {
             if (respData.success) {
@@ -358,7 +367,7 @@ export class BookTheaterComponent implements OnInit {
     submitTheaterApplication() {
         let errCount = this.bookingUtils.getAllErrors(this.theaterBookingForm);
         if (this.theaterBookingForm.invalid) {
-            this.handleErrorsOnSubmit(errCount);
+            //this.handleErrorsOnSubmit(errCount);
             this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
             return;
         } else if (!this.theaterBookingForm.get('agree').value) {
@@ -371,13 +380,13 @@ export class BookTheaterComponent implements OnInit {
             this.bookingService.commonBookSlot(this.theaterBookingForm.value).subscribe(resp => {
             }, (err) => {
                 if (err.status == 402) {
-                    
+
                     let refNumber = this.theaterBookingForm.get("refNumber").value;
-                    this.sendMail(refNumber,"SUBMIT");
-                    
+                    this.sendMail(refNumber, "SUBMIT");
+
                     // this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService, this.theaterBookingForm, this.router);
-                    this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway ,this.theaterBookingForm, this.router);
-                    this.router.navigate(['../../my-bookings'], {relativeTo: this.route});
+                    this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway, this.theaterBookingForm, this.router);
+                    this.router.navigate(['../../my-bookings'], { relativeTo: this.route });
                     return;
                 } else if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {
                     this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "", cb => {
@@ -392,93 +401,144 @@ export class BookTheaterComponent implements OnInit {
     }
 
     /**
-	 * Method is used to handle error/validation on submit
-	 * @param count - count of invalid control.
-	 */
-    handleErrorsOnSubmit(count) {
-        let step1 = 4;
-        let step2 = 11;
-        let step3 = 17;
-        if (count < step1) {
-            this.tabIndex = 0;
-            return false;
-        } else if (count < step2) {
-            this.tabIndex = 1;
-            return false;
-        } else if (count < step3) {
-            this.tabIndex = 2;
-            return false;
-        }
+     * Method is used to handle error/validation on submit
+     * @param count - count of invalid control.
+     */
+    //     handleErrorsOnSubmit(count) {
+    //         let step1 = 4;
+    //         let step2 = 11;
+    //         let step3 = 17;
+    //         if (count < step1) {
+    //             this.tabIndex = 0;
+    //             return false;
+    //         } else if (count < step2) {
+    //             this.tabIndex = 1;
+    //             return false;
+    //         } else if (count < step3) {
+    //             this.tabIndex = 2;
+    //             return false;
+    //         }
+    //     }
+
+    getFeesStructure() {
+        this.bookingService.getFeesStructure().subscribe(res => {
+            if (!res.success) {
+                this.commonService.openAlert("Error", res.message, "warning")
+            }
+            this.dataSource = res.data
+        });
     }
 
-    getFeesStructure(){
-        this.bookingService.getFeesStructure().subscribe(res =>{
-          if(!res.success){
-            this.commonService.openAlert("Error", res.message, "warning")
-          }
-          this.dataSource = res.data
-        });
-      }
-
-      covertReadableString(headerName: string){
-        if(headerName ==  "ORG"){
-           headerName =   "For Organization";
-        }else if(headerName == "SCHOOL"){
+    covertReadableString(headerName: string) {
+        if (headerName == "ORG") {
+            headerName = "For Organization";
+        } else if (headerName == "SCHOOL") {
             headerName = " For School";
         }
         return headerName;
-      }
+    }
 
-      covertGujaratiString(headerName: string){
-        if(headerName ==  "ORG"){
-            headerName =   "સંસ્થા માટે";
-         }else if(headerName == "SCHOOL"){
-             headerName = "શાળા માટે";
-         }
-         return headerName;
-      }
+    covertGujaratiString(headerName: string) {
+        if (headerName == "ORG") {
+            headerName = "સંસ્થા માટે";
+        } else if (headerName == "SCHOOL") {
+            headerName = "શાળા માટે";
+        }
+        return headerName;
+    }
 
-      getAvaillableSlot(data){
+    getAvaillableSlot(data) {
         this.bookingService.getAvailableStots(data[0].code).subscribe(respData => {
             this.maxEndDate = moment(respData.data.endDate, "DD-MM-YYYY").toDate();
         })
-      }
-
-        /**
-          * Method is used to send mail on submit
-          * @param refNumber 
-          * @param eventType 
-          * 
-          */
-  sendMail(refNumber: any, eventType: any) {
-    if (refNumber) {
-      this.bookingService.sendMail(refNumber, eventType).subscribe(resp => {
-      }, err => {
-        this.toster.error("Something went wrong");
-      })
-    } else {
-      this.toster.error("Invalid request");
     }
-  }
 
-  termsConditionClick(event) {
-    this.theaterBookingForm.controls['termsCondition'].setValue(event.checked);
-  }
+    /**
+      * Method is used to send mail on submit
+      * @param refNumber
+      * @param eventType
+      *
+      */
+    sendMail(refNumber: any, eventType: any) {
+        if (refNumber) {
+            this.bookingService.sendMail(refNumber, eventType).subscribe(resp => {
+            }, err => {
+                this.toster.error("Something went wrong");
+            })
+        } else {
+            this.toster.error("Invalid request");
+        }
+    }
 
-  /**
-	 * Get user data
-	 */
-	getUserProfile() {
-		this.bookingService.getUserProfile().subscribe(resp => {
- 
-			this.theaterBookingForm.get('organizationEmail').setValue(resp.data.email);
-			this.theaterBookingForm.get('organizationNumber').setValue(resp.data.cellNo);
-            this.theaterBookingForm.get('confirmEmailID').setValue(resp.data.email);
-			this.theaterBookingForm.get('confirmMobile').setValue(resp.data.cellNo);
-		
-		},
-			err => {
-				this.toster.error("Server Error");
-			});
-	}
+    termsConditionClick(event) {
+        this.theaterBookingForm.controls['termsCondition'].setValue(event.checked);
+    }
+
+    /**
+       * Get user data
+       */
+    getUserProfile() {
+        this.bookingService.getUserProfile().subscribe(resp => {
+
+            this.firstTheaterBookingForm.get('organizationEmail').setValue(resp.data.email);
+            this.firstTheaterBookingForm.get('organizationNumber').setValue(resp.data.cellNo);
+            this.firstTheaterBookingForm.get('confirmEmailID').setValue(resp.data.email);
+            this.firstTheaterBookingForm.get('confirmMobile').setValue(resp.data.cellNo);
+
+        },
+            err => {
+                this.toster.error("Server Error");
+            });
+    }
+
+    handleErrorsOnSubmit(controlName) {
+        const key = this.bookingUtils.getInvalidFormControlKey(controlName);
+        const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 1;
+        if (index) {
+            this.tabIndex = index - 1;
+            return false;
+        }
+    }
+
+    checkValidation(controlName, isSubmitted) {
+        if (controlName.invalid) {
+            this.handleErrorsOnSubmit(controlName)
+        } else {
+            const organizationalAry = Object.keys(controlName.value);
+            organizationalAry.forEach(element => {
+                this.theaterBookingForm.get(element).setValue(controlName.get(element).value);
+            });
+            this.commonService.setValueToFromControl(controlName, this.theaterBookingForm);
+            this.tabIndex = this.tabIndex + 1;
+            if (isSubmitted) {
+                this.submitTheaterApplication();
+            }
+        }
+    }
+
+    setFormControlToTabIndexMap() {
+        // First tab
+        this.formControlNameToTabIndex.set('organizationName', 1)
+        this.formControlNameToTabIndex.set('organizationNumber', 1)
+        this.formControlNameToTabIndex.set('confirmMobile', 1)
+        this.formControlNameToTabIndex.set('organizationEmail', 1)
+        this.formControlNameToTabIndex.set('confirmEmailID', 1)
+        this.formControlNameToTabIndex.set('organizationAddress', 1)
+
+
+        // second tab
+
+        this.formControlNameToTabIndex.set('bankName', 2)
+        this.formControlNameToTabIndex.set('accountHolderName', 2)
+        this.formControlNameToTabIndex.set('accountNo', 2)
+        this.formControlNameToTabIndex.set('ifscCode', 2)
+    }
+
+    clickProcess(event) {
+        if (event.checked == true) {
+            this.btnProceed = false;
+        } else {
+            this.btnProceed = true;
+        }
+    }
 }
