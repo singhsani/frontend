@@ -18,12 +18,12 @@
 
 <mat-card class="formClass cardBorder">
 	<!--Start  form  -->
-	<form [formGroup]="pecRegForm">
+	<!-- <form [formGroup]="pecRegForm"> -->
 		<mat-tab-group mat-stretch-tabs class="stepperNav" [(selectedIndex)]="tabIndex" dynamicHeight="true">
 
 			<!-- first step start-->
-			<mat-tab [label]="stepLable1 | translate: translateKey">
-
+			<mat-tab [label]="stepLable1 | translate: translateKey" disabled>
+<form [formGroup]="employerDetail">
 				<div class="row stepperMinHeight">
 
 					<!-- <mat-form-field class="col-md-4">
@@ -47,7 +47,7 @@
 						<input matInput appBlockCopyPaste autocomplete="off" appValidationFields
 							validationFieldsType="onlyNameWithSpace" maxlength="100" formControlName="applicantFullName"
 							type="text" placeholder="{{'applicant_full_name' | translate: translateKey}}" required>
-						<control-messages [control]="pecRegForm.get('applicantFullName')"></control-messages>
+						<control-messages [control]="employerDetail.get('applicantFullName')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 radioBtnError" formGroupName="gender">
@@ -56,27 +56,27 @@
 							<mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name}}
 							</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="pecRegForm.get('gender').get('code')"></control-messages>
+						<control-messages [control]="employerDetail.get('gender').get('code')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4">
 						<input matInput appValidationFields validationFieldsType="onlyNameWithSpace" autocomplete="off"
 							maxlength="100" type="text" formControlName="establishmentName"
 							placeholder="{{'establishment_name' | translate: translateKey}}" required>
-						<control-messages [control]="pecRegForm.get('establishmentName')"></control-messages>
+						<control-messages [control]="employerDetail.get('establishmentName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<span matPrefix>+91 &nbsp;</span>
 						<input matInput OnlyNumber placeholder="{{'contact_no' | translate:translateKey}}" type="tel"
 							maxlength="10" minlength="10" formControlName="contactNo" required>
-						<control-messages [control]="pecRegForm.get('contactNo')"></control-messages>
+						<control-messages [control]="employerDetail.get('contactNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" maxlength="50"
 							placeholder="{{'email' | translate:translateKey}}" type="email" formControlName="email">
-						<control-messages [control]="pecRegForm.get('email')"></control-messages>
+						<control-messages [control]="employerDetail.get('email')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -86,7 +86,7 @@
 						<mat-datepicker-toggle matSuffix [for]="rcpicker"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #rcpicker></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
-						<control-messages [control]="pecRegForm.get('rcDate')"></control-messages>
+						<control-messages [control]="employerDetail.get('rcDate')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="ward">
@@ -96,10 +96,10 @@
 							</ng-option>
 						</ng-select>
 						<mat-error
-							*ngIf="pecRegForm.get('ward').touched && pecRegForm.get('ward').get('wardzoneId').value == null">
+							*ngIf="employerDetail.get('ward').touched && employerDetail.get('ward').get('wardzoneId').value == null">
 							{{"Ward is Required"}}
 						</mat-error>
-						<!-- <control-messages [control]="pecRegForm.get('ward').get('wardzoneId')"></control-messages> -->
+						<!-- <control-messages [control]="employerDetail.get('ward').get('wardzoneId')"></control-messages> -->
 					</div>
 
 					<div class="col-md-4 ngSelect" formGroupName="block" *ngIf="isBlockNo == false">
@@ -108,10 +108,10 @@
 								{{block.wardzoneName}}</ng-option>
 						</ng-select>
 						<!-- <mat-error
-							*ngIf="pecRegForm.get('block').touched && pecRegForm.get('block').get('wardzoneId').value == null">
+							*ngIf="employerDetail.get('block').touched && employerDetail.get('block').get('wardzoneId').value == null">
 							{{"Block is Required"}}
 						</mat-error> -->
-						<!-- <control-messages [control]="pecRegForm.get('block').get('wardzoneId')"></control-messages> -->
+						<!-- <control-messages [control]="employerDetail.get('block').get('wardzoneId')"></control-messages> -->
 					</div>
 					<div class="col-md-4 ngSelect" formGroupName="block" *ngIf="isBlockNo == true">
 						<ng-select placeholder="{{'block_no' | translate: translateKey}} "
@@ -128,7 +128,7 @@
 						<mat-datepicker-toggle matSuffix [for]="dobpicker"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #dobpicker></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
-						<control-messages [control]="pecRegForm.get('applicantDob')"></control-messages>
+						<control-messages [control]="employerDetail.get('applicantDob')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -138,25 +138,25 @@
 						<mat-datepicker-toggle matSuffix [for]="docpicker"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #docpicker></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
-						<control-messages [control]="pecRegForm.get('commencementDate')"></control-messages>
+						<control-messages [control]="employerDetail.get('commencementDate')"></control-messages>
 					</mat-form-field>
 
 					<!-- <mat-form-field class="col-md-4">
 						<input matInput appAlphaNumeric autocomplete="off" type="text" maxlength="20"
 							formControlName="vatNo" placeholder="{{'vat_no' | translate: translateKey}}">
-						<control-messages [control]="pecRegForm.get('vatNo')"></control-messages>
+						<control-messages [control]="employerDetail.get('vatNo')"></control-messages>
 					</mat-form-field> -->
 
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" type="tel" formControlName="aadharNo" OnlyNumber
 							minlength="12" maxlength="12" placeholder="{{'aadhaar_no' | translate: translateKey}}">
-						<control-messages [control]="pecRegForm.get('aadharNo')"></control-messages>
+						<control-messages [control]="employerDetail.get('aadharNo')"></control-messages>
 					</mat-form-field>
 
 
 					<h2>{{'office_address' | translate: translateKey}}</h2>
 					<app-address #officeAddr [requiredFeilds]="true" [formType]="'PFT'"
-						[addressFormGroup]="pecRegForm.get('officeAddress')"></app-address>
+						[addressFormGroup]="employerDetail.get('officeAddress')"></app-address>
 
 					<mat-checkbox class="col-md-12 mt-2" formControlName="officeResidentialAddressSame"
 						(change)="onSameAddressChange($event)">{{'same_address' | translate: translateKey}}
@@ -164,41 +164,43 @@
 
 					<h2>{{'residential_address' | translate: translateKey}}</h2>
 					<app-address #resAddr [requiredFeilds]="true" [formType]="'PFT'"
-						[addressFormGroup]="pecRegForm.get('residentialAddress')"></app-address>
+						[addressFormGroup]="employerDetail.get('residentialAddress')"></app-address>
 				</div>
 
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">
 						<button class="pull-right" type="button" mat-raised-button color="primary"
-							(click)="tabIndex = 1">{{'next' | translate:actionBarKey}}</button>
+							(click)="onTabChange(1,employerDetail, pecRegForm)">{{'next' | translate:actionBarKey}}</button>
 					</div>
 				</div>
+</form>
 
 			</mat-tab>
 			<!-- end first step -->
 
 			<!-- second step start-->
-			<mat-tab [label]="stepLable2 | translate: translateKey">
+			<mat-tab [label]="stepLable2 | translate: translateKey" disabled>
+<form [formGroup]="bankDetail">				
 				<div class="row stepperMinHeight">
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" minlength="9" maxlength="18" OnlyNumber
 							formControlName="bankAccountNo" type="tel"
 							placeholder="{{'bank_account_no' | translate: translateKey}}">
-						<control-messages [control]="pecRegForm.get('bankAccountNo')"></control-messages>
+						<control-messages [control]="bankDetail.get('bankAccountNo')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="bank">
 						<ng-select placeholder="{{'bank_name' | translate: translateKey}}" formControlName="code">
 							<ng-option *ngFor="let bank of bankNameArray" [value]="bank.code">{{bank.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="pecRegForm.get('bank').get('code')"></control-messages>
+						<control-messages [control]="bankDetail.get('bank').get('code')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4">
 						<input matInput appValidationFields validationFieldsType="onlyNameWithSpace" autocomplete="off"
 							maxlength="100" formControlName="branchName" type="text"
 							placeholder="{{'branch_name' | translate: translateKey}}">
-						<control-messages [control]="pecRegForm.get('branchName')"></control-messages>
+						<control-messages [control]="bankDetail.get('branchName')"></control-messages>
 					</mat-form-field>
 
 				</div>
@@ -208,20 +210,22 @@
 						<button class="liteBorder pull-left" type="button" mat-raised-button
 							(click)="tabIndex = 0">{{'back' | translate:actionBarKey}}</button>
 						<button class="pull-right" type="button" mat-raised-button color="primary"
-							(click)="tabIndex = 2">{{'next' | translate:actionBarKey}}</button>
+						(click)="onTabChange(2,bankDetail, pecRegForm)">{{'next' | translate:actionBarKey}}</button>
 					</div>
 				</div>
+</form>
 			</mat-tab>
 			<!-- second step end-->
 
 			<!-- third step start-->
-			<mat-tab [label]="stepLable3 | translate: translateKey">
+			<mat-tab [label]="stepLable3 | translate: translateKey" disabled>
+<form [formGroup]="registrationDetail">
 				<div class="row stepperMinHeight">
 					<mat-form-field class="col-md-6">
 						<input matInput autocomplete="off" maxlength="10" appAlphaNumeric formControlName="pancardNo"
 							type="text" placeholder="{{'pan_card_no' | translate: translateKey}}" required
 							class="capitalCase">
-						<control-messages [control]="pecRegForm.get('pancardNo')"></control-messages>
+						<control-messages [control]="registrationDetail.get('pancardNo')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-6">
@@ -229,7 +233,7 @@
 							<input matInput class="capitalCase" autocomplete="off" maxlength="15" appGst
 								formControlName="gstNo" type="text" (change)="onGstNumber($event)"
 								placeholder="{{'gst_no' | translate: translateKey}}">
-							<control-messages [control]="pecRegForm.get('gstNo')"></control-messages>
+							<control-messages [control]="registrationDetail.get('gstNo')"></control-messages>
 						</mat-form-field>
 						<div class="">
 							<span>GSTIN e.g. 29ABCDE1234F2Z5</span>
@@ -240,37 +244,37 @@
 						<input matInput autocomplete="off" maxlength="20" appAlphaNumeric
 							formControlName="shopAndLicenseNo" type="text"
 							placeholder="{{'shop_and_license_no' | translate: translateKey}}" required>
-						<control-messages [control]="pecRegForm.get('shopAndLicenseNo')"></control-messages>
+						<control-messages [control]="registrationDetail.get('shopAndLicenseNo')"></control-messages>
 					</mat-form-field>
 
 					<!-- <mat-form-field class="col-md-6">
 							<input matInput autocomplete="off" maxlength="50" appAlphaNumeric formControlName="professionalTax" type="text" placeholder="{{'professional_tax' | translate: translateKey}}">
-							<control-messages [control]="pecRegForm.get('professionalTax')"></control-messages>
+							<control-messages [control]="registrationDetail.get('professionalTax')"></control-messages>
 						</mat-form-field> -->
 
 					<mat-form-field class="col-md-6">
 						<input matInput autocomplete="off" maxlength="50" appAlphaNumeric formControlName="companyRegNo"
 							type="text" placeholder="{{'Company Registration Number' | translate: translateKey}}">
-						<control-messages [control]="pecRegForm.get('companyRegNo')"></control-messages>
+						<control-messages [control]="registrationDetail.get('companyRegNo')"></control-messages>
 					</mat-form-field>
 
 
 					<!-- This section is for adding multiple census number-->
 					<div *ngIf="CanEdit == false">
 						<div class="width100p" formArrayName="censusNo">
-							<div class="row" *ngFor="let item of pecRegForm.get('censusNo')['controls']; let i = index;"
+							<div class="row" *ngFor="let item of registrationDetail.get('censusNo')['controls']; let i = index;"
 								[formGroupName]="i">
-								<div class="row" *ngIf="this.pecRegForm.get('censusNo')['controls'][i].value != null && this.pecRegForm.get('censusNo')['controls'][i].value.census != null  && this.pecRegForm.get('censusNo')['controls'][i].value.census.length > 0">
+								<div class="row" *ngIf="this.registrationDetail.get('censusNo')['controls'][i].value != null && this.registrationDetail.get('censusNo')['controls'][i].value.census != null  && this.registrationDetail.get('censusNo')['controls'][i].value.census.length > 0">
 									<div class="col-md-6">
 										<mat-form-field>
-											<div *ngIf="this.pecRegForm.get('censusNo')['controls'][i].value.census.length > 18">
+											<div *ngIf="this.registrationDetail.get('censusNo')['controls'][i].value.census.length > 18">
 												<mat-select style="margin-top: 15px !important;"
 													placeholder="{{'census_no' | translate: translateKey}}"
 													value="CensusNo" disabled>
 													<mat-option value="CensusNo">Census No</mat-option>
 												</mat-select>
 											</div>
-											<div *ngIf="this.pecRegForm.get('censusNo')['controls'][i].value.census.length <= 18">
+											<div *ngIf="this.registrationDetail.get('censusNo')['controls'][i].value.census.length <= 18">
 												<mat-select style="margin-top: 15px !important;"
 													placeholder="{{'census_no' | translate: translateKey}}"
 													value="PropertyNo" disabled>
@@ -297,7 +301,7 @@
 					</div>
 					<div *ngIf="CanEdit == true">
 						<div class="width100p" formArrayName="censusNo">
-							<div class="row" *ngFor="let item of pecRegForm.get('censusNo')['controls']; let i = index;"
+							<div class="row" *ngFor="let item of registrationDetail.get('censusNo')['controls']; let i = index;"
 								[formGroupName]="i">
 								<div class="col-md-6">
 									<mat-form-field>
@@ -313,7 +317,7 @@
 									<input style="margin-top: 15px !important;" matInput autocomplete="off"
 										appMaskCensusNumber maxlength="21" formControlName="census" type="text"
 										(focusout)="isExistPropertyNo($event.target.value,i)" disabled>
-									<button *ngIf="pecRegForm.get('censusNo')['controls'].length > 1 && isDeleteBtnShow"
+									<button *ngIf="registrationDetail.get('censusNo')['controls'].length > 1 && isDeleteBtnShow"
 										title="Remove Census" class="deleteBtn pull-right text-right" type="button"
 										mat-icon-button color="warn" (click)="removeCensus(i)">
 										<i class="fa fa-times"></i>
@@ -324,7 +328,7 @@
 									<input style="margin-top: 15px !important;" matInput autocomplete="off"
 										appMaskPropertNumber maxlength="21" formControlName="census" type="text"
 										(focusout)="isExistPropertyNo($event.target.value,i)" required disabled>
-									<button *ngIf="pecRegForm.get('censusNo')['controls'].length > 1 && isDeleteBtnShow"
+									<button *ngIf="registrationDetail.get('censusNo')['controls'].length > 1 && isDeleteBtnShow"
 										title="Remove Census" class="deleteBtn pull-right text-right" type="button"
 										mat-icon-button color="warn" (click)="removeCensus(i)">
 										<i class="fa fa-times"></i>
@@ -347,15 +351,16 @@
 						<button class="liteBorder pull-left" type="button" mat-raised-button
 							(click)="tabIndex = 1">{{'back' | translate:actionBarKey}}</button>
 						<button class="pull-right" type="button" mat-raised-button color="primary"
-							(click)="tabIndex = 3">{{'next' | translate:actionBarKey}}</button>
+						(click)="onTabChange(3,registrationDetail, pecRegForm)">{{'next' | translate:actionBarKey}}</button>
 					</div>
 				</div>
-
+</form>
 			</mat-tab>
 			<!-- third step end-->
 
 			<!-- fourth step start-->
-			<mat-tab [label]="stepLable4 | translate: translateKey">
+			<mat-tab [label]="stepLable4 | translate: translateKey" disabled>
+<form [formGroup]="actDetail">
 				<div class="row stepperMinHeight">
 					<div class="col-md-4 ngSelect" formGroupName="entry">
 						<ng-select placeholder="{{'entry_no' | translate: translateKey}} *" formControlName="code"
@@ -363,10 +368,10 @@
 							<ng-option *ngFor="let entry of entryNoArray" [value]="entry.code">{{entry.name}}
 							</ng-option>
 						</ng-select>
-						<control-messages [control]="pecRegForm.get('entry').get('code')"></control-messages>
+						<control-messages [control]="actDetail.get('entry').get('code')"></control-messages>
 					</div>
 
-					<div class="col-md-4 ngSelect selectCategoryDropdown" formGroupName="subEntry">
+					<div class="col-md-4 ngSelect selectCategoryDropdown subEntry" formGroupName="subEntry">
 						<ng-select placeholder="{{'sub_entry_no' | translate: translateKey}} *" [disabled]="true"
 							[items]="subEntryNoArray" bindLabel="name" bindValue="code" formControlName="code"
 							title="{{findSubEntryName()}}" (change)="onSubEntryChange($event)">
@@ -374,17 +379,17 @@
 								<div title="{{item.name}}">{{item.name}}</div>
 							</ng-template>
 						</ng-select>
-						<control-messages [control]="pecRegForm.get('subEntry').get('code')"></control-messages>
+						<control-messages [control]="actDetail.get('subEntry').get('code')"></control-messages>
 					</div>
 
-					<div class="col-md-4 ngSelect selectCategoryDropdown" formGroupName="professionConstitution">
+					<div class="col-md-4 ngSelect selectCategoryDropdown profession" formGroupName="professionConstitution">
 						<ng-select placeholder="{{'profession' | translate: translateKey}} *" [items]="professionArray"
 							bindLabel="name" bindValue="code" formControlName="code" title="{{findProfConstitution()}}">
 							<ng-template ng-option-tmp let-item="item">
 								<div title="{{item.name}}">{{item.name}}</div>
 							</ng-template>
 						</ng-select>
-						<control-messages [control]="pecRegForm.get('professionConstitution').get('code')">
+						<control-messages [control]="actDetail.get('professionConstitution').get('code')">
 						</control-messages>
 					</div>
 
@@ -394,7 +399,7 @@
 							<ng-option *ngFor="let constitution of constitutionArray" [value]="constitution.code">
 								{{constitution.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="pecRegForm.get('constitution').get('code')"></control-messages>
+						<control-messages [control]="actDetail.get('constitution').get('code')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4">
@@ -403,11 +408,11 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4"
-						*ngIf="pecRegForm.get('professionConstitution.code').value == 'OTHER'">
+						*ngIf="actDetail.get('professionConstitution.code').value == 'OTHER'">
 						<input matInput autocomplete="off" maxlength="100" formControlName="otherProfession" type="text"
 							appValidationFields validationFieldsType="appAlphanumericNumberWithSpace"
 							placeholder="{{'other_profession' | translate: translateKey}}" required>
-						<control-messages [control]="pecRegForm.get('otherProfession')"></control-messages>
+						<control-messages [control]="actDetail.get('otherProfession')"></control-messages>
 					</mat-form-field>
 				</div>
 
@@ -416,16 +421,17 @@
 						<button class="liteBorder pull-left" type="button" mat-raised-button
 							(click)="tabIndex = 2">{{'back' | translate:actionBarKey}}</button>
 						<button class="pull-right" type="button" mat-raised-button color="primary"
-							(click)="tabIndex = 4">{{'next' | translate:actionBarKey}}</button>
+						(click)="onTabChange(4,actDetail, pecRegForm)">{{'next' | translate:actionBarKey}}</button>
 					</div>
 				</div>
-
+</form>
 			</mat-tab>
 
-			<mat-tab>
+			<mat-tab disabled>
 				<ng-template mat-tab-label>
 					<div>{{'attachment' | translate: proTranslateKey}}</div>
 				</ng-template>
+<form [formGroup]="pecRegForm">
 				<div class="row">
 					<div class="col-md-4" *ngFor="let doc of attachmentList">
 						<div *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
@@ -445,11 +451,12 @@
 							(click)="getUserDetailsAndSubmit()">{{'submit' | translate:actionBarKey}}</button>
 					</div>
 				</div>
+</form>
 
 			</mat-tab>
 
 			<!-- fourth step end-->
 
 		</mat-tab-group>
-	</form>
+	<!-- </form> -->
 </mat-card>

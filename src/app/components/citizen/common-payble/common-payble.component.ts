@@ -450,6 +450,10 @@ export class CommonPaybleComponent implements OnInit {
             this.paymentsForm.get('id').setValue(this.responseData.serviceFormId);
             this.paymentsForm.get('amount').setValue(this.responseData.dueAmount);
 
+            if (res.data.messageForValidation != null) {
+              this.toaster.warning(res.data.messageForValidation);
+            }
+
             // this.profeService.saveReceiptDetails(this.responseData).subscribe(res => {
 
             //     this.receiptEntry = res.data;

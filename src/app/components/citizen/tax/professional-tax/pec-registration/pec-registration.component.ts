@@ -15,6 +15,9 @@ import * as _ from 'lodash';
 import { MatDialog } from '@angular/material';
 import { ApplicantDetailsComponent } from 'src/app/shared/components/applicant-details/applicant-details.component';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
+import { EngineeringService } from '../../../engineering/engineering.service';
+
+declare var $: any;
 
 @Component({
 	selector: 'app-pec-registration',
@@ -37,6 +40,11 @@ export class PecRegistrationComponent implements OnInit {
 	stepLable2: string = "bank_detail";
 	stepLable3: string = "registration_detail";
 	stepLable4: string = "act_detail";
+
+	employerDetail: FormGroup;
+	bankDetail: FormGroup;
+	registrationDetail: FormGroup;
+	actDetail: FormGroup;
 
 	genderArray: any = [];
 	professionArray: any = [];
@@ -77,7 +85,8 @@ export class PecRegistrationComponent implements OnInit {
 		private profeService: ProfessionalTaxService,
 		private alertService: AlertService,
 		private commonService: CommonService,
-		private dialog: MatDialog
+		private dialog: MatDialog,
+		private engineer: EngineeringService
 	) {
 
 		this.profeService.apiType = "pecForm";
@@ -87,6 +96,7 @@ export class PecRegistrationComponent implements OnInit {
 	ngOnInit() {
 
 		this.pecRegistrationFormControls();
+		this.pecRegistrationFornControlsStepWise();
 
 		this.route.paramMap.subscribe(param => {
 			this.isQryParamExist = false;
@@ -123,6 +133,130 @@ export class PecRegistrationComponent implements OnInit {
 			}
 		});
 
+	}
+
+	pecRegistrationFornControlsStepWise() {
+		this.employerDetail = this.fb.group({
+			pecNo: [{ value: null, disabled: true }],
+			prcNo: [{ value: null, disabled: true }],
+			registrationDate: [{ value: null, disabled: true }],
+			applicantFullNameGuj: null,
+			applicantFullName: null,
+			gender: this.fb.group({
+				code: ['MALE', Validators.required], name: null,
+			}),
+			establishmentName: null,
+			contactNo: null,
+			email: [null, ValidationService.emailValidator],
+			ward: this.fb.group({
+				wardzoneId: null,
+				wardzoneName: null
+			}),
+			block: this.fb.group({
+				wardzoneId: null,
+				wardzoneName: null
+			}),
+			applicantDob: null,
+			rcDate: [{ value: null, disabled: true }],
+			commencementDate: null,
+			vatNo: null,
+			aadharNo: null,
+			officeAddress: this.fb.group(this.officeAddrComponent.addressControls()),
+			residentialAddress: this.fb.group(this.resAddrComponent.addressControls()),
+			officeResidentialAddressSame: null
+		});
+
+		this.bankDetail = this.fb.group({
+			bankAccountNo: null,
+			bank: this.fb.group({
+				code: [null], name: null,
+			}),
+			branchName: null
+		});
+
+		this.registrationDetail = this.fb.group({
+			pancardNo: [null, ValidationService.panValidator],
+			centralSalesTax: null,
+			shopAndLicenseNo: [null, Validators.required],
+			gujaratSalesTax: null,
+			professionalTax: null,
+			companyRegNo: null,
+			gstNo: [null],
+			censusNo: this.fb.array([])
+		});
+
+		this.actDetail = this.fb.group({
+			entry: this.fb.group({
+				code: [null, Validators.required], name: null,
+			}),
+			subEntry: this.fb.group({
+				code: [null, Validators.required], name: null,
+			}),
+			constitution: this.fb.group({
+				code: [null, Validators.required], name: null,
+			}),
+			professionConstitution: this.fb.group({
+				code: [null, Validators.required], name: null,
+			}),
+			applicableRate: [{ value: 0, disabled: true }],
+			otherProfession: [null, ValidationService.alphaNumericValidation]
+		});
+		
+		this.commonService.createCloneAbstractControl(this.employerDetail,this.pecRegForm);
+		this.commonService.createCloneAbstractControl(this.bankDetail,this.pecRegForm);
+		this.commonService.createCloneAbstractControl(this.registrationDetail,this.pecRegForm);
+		this.commonService.createCloneAbstractControl(this.actDetail,this.pecRegForm);
+		
+		this.setDefaultFeildsStepWise();		
+	}
+
+	setDefaultFeildsStepWise() {
+		this.employerDetail.patchValue({
+			officeAddress: {
+				addressType: "PF_PEC_OFFICE_ADDRESS",
+			},
+			residentialAddress: {
+				addressType: "PF_PEC_RESIDENTIAL_ADDRESS",
+			},
+			gender: this.fb.group({
+				code: ['MALE', Validators.required],
+			}),
+			registrationDate: moment(new Date()).format('YYYY-MM-DD')
+		});
+		this.actDetail.patchValue({			
+			applicableRate: 0
+		});
+	}
+
+	public onTabChange(index: number, controlName, mainControl) {
+		if (controlName.invalid) {
+			this.commonService.markFormGroupTouched(controlName);
+		} else {
+			const organizationalAry = Object.keys(controlName.getRawValue());
+			organizationalAry.forEach((element:any) => {
+				   // push form Array data into main Controller
+				if (controlName.get(element) instanceof FormArray) {
+					const formGroupAry = this.engineer.createArray(controlName.get(element));
+					mainControl.get(element).value.push()
+					for(let i = 0; i < controlName.get(element).controls.length; i++) {
+						mainControl.get(element).value.push(formGroupAry.value[i]);
+						mainControl.get(element).controls.push(formGroupAry.controls[i]);
+					}   
+				}
+				else {
+					mainControl.get(element).setValue(controlName.get(element).value);
+				}
+			});
+			this.tabIndex = index;
+			if (!this.CanEdit) {
+				setTimeout( function(){ 
+					$('.closeAttachFile').remove();
+					$('.subEntry ng-select').addClass('ng-select-disabled');
+					$('.profession ng-select').addClass('ng-select-disabled');
+				}, 300);
+			}
+			
+		}
 	}
 
 	/**
@@ -267,7 +401,7 @@ export class PecRegistrationComponent implements OnInit {
 	 * Declared census formArray property
 	 */
 	get censusCollection(): FormArray {
-		return this.pecRegForm.get('censusNo') as FormArray;
+		return this.registrationDetail.get('censusNo') as FormArray;
 	};
 
 	/**
@@ -295,7 +429,7 @@ export class PecRegistrationComponent implements OnInit {
 	 * @param propertyNo -entered property code
 	*/
 	isExistPropertyNo(propertyNo?: any, index?: any) {
-		var censusNoArray = this.pecRegForm.get('censusNo').value;
+		var censusNoArray = this.registrationDetail.get('censusNo').value;
 		delete censusNoArray[censusNoArray.length - 1];
 		censusNoArray.forEach(element => {
 			if (censusNoArray.length > 1) {
@@ -330,19 +464,19 @@ export class PecRegistrationComponent implements OnInit {
 	addMoreCenus() {
 		this.isCensusNo = true;
 		let isValid = true;
-		if (this.pecRegForm.get('censusNo')['controls'].length == 5) {
+		if (this.registrationDetail.get('censusNo')['controls'].length == 5) {
 			this.toastr.warning('maximum 5 census number allow');
 			return;
 		}
-		for (let i = 0; i < this.pecRegForm.get('censusNo')['controls'].length; i++) {
-			if (this.pecRegForm.get('censusNo')['controls'][i].invalid) {
+		for (let i = 0; i < this.registrationDetail.get('censusNo')['controls'].length; i++) {
+			if (this.registrationDetail.get('censusNo')['controls'][i].invalid) {
 				isValid = false;
 				if (this.isCensusSelected) {
 					this.placeHolderMessage = "Census No is Required";
 				} else {
 					this.placeHolderMessage = "Property No is Required";
 				}
-				this.config.getAllErrors(this.pecRegForm.get('censusNo')['controls'][i]);
+				this.config.getAllErrors(this.registrationDetail.get('censusNo')['controls'][i]);
 				break;
 			}
 		}
@@ -376,17 +510,17 @@ export class PecRegistrationComponent implements OnInit {
 	 */
 	onEntryChange(event) {
 
-		this.pecRegForm.get('subEntry').get('code').setValue(null);
-		this.pecRegForm.get('applicableRate').setValue(0);
-		this.pecRegForm.get('professionConstitution').get('code').setValue(null);
-		this.pecRegForm.get('constitution').get('code').setValue(null);
+		this.actDetail.get('subEntry').get('code').setValue(null);
+		this.actDetail.get('applicableRate').setValue(0);
+		this.actDetail.get('professionConstitution').get('code').setValue(null);
+		this.actDetail.get('constitution').get('code').setValue(null);
 
 		this.getAllSubEntries(event);
 	}
 
 	onGstNumber(event) {
 		if (event.target.value.length < 15) {
-			this.pecRegForm.get('gstNo').setValue(null);
+			this.employerDetail.get('gstNo').setValue(null);
 		}
 	}
 	/**
@@ -395,9 +529,9 @@ export class PecRegistrationComponent implements OnInit {
 	 */
 	onSubEntryChange(event) {
 		if (event)
-			this.pecRegForm.get('applicableRate').setValue(event.taxRate);
+			this.actDetail.get('applicableRate').setValue(event.taxRate);
 		else
-			this.pecRegForm.get('applicableRate').setValue(null);
+			this.actDetail.get('applicableRate').setValue(null);
 	}
 
 	/**
@@ -407,6 +541,7 @@ export class PecRegistrationComponent implements OnInit {
 	 */
 	onDateChange(fieldName, date) {
 		this.pecRegForm.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
+		this.employerDetail.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
 	}
 
 	/**
@@ -514,6 +649,10 @@ export class PecRegistrationComponent implements OnInit {
 	 */
 	resetForm() {
 		this.pecRegForm.reset();
+		this.employerDetail.reset();
+		this.bankDetail.reset();
+		this.registrationDetail.reset();
+		this.actDetail.reset();
 	}
 
 	/**
@@ -542,6 +681,11 @@ export class PecRegistrationComponent implements OnInit {
 					this.CanEdit = res.canEditForm;
 					this.isBlockNo = true;
 					this.pecRegForm.disable();
+					this.employerDetail.disable();
+					this.bankDetail.disable();
+					this.registrationDetail.disable();
+					this.actDetail.disable();					
+					this.isDeleteBtnShow = false;
 				}
 				if (!(res.censusNo.length == 0)) {
 					if (res.censusNo[0].census.length > 16) {
@@ -553,6 +697,7 @@ export class PecRegistrationComponent implements OnInit {
 				}
 				if (res.formStatus == "SUBMITTED") {
 					this.pecRegForm.disable();
+
 				}
 			});
 
@@ -564,6 +709,10 @@ export class PecRegistrationComponent implements OnInit {
 		if (res && Object.keys(res).length) {
 
 			this.pecRegForm.patchValue(res);
+			this.employerDetail.patchValue(res);
+			this.bankDetail.patchValue(res);
+			this.registrationDetail.patchValue(res);
+			this.actDetail.patchValue(res);
 
 			this.showButtons = true;
 
@@ -582,6 +731,11 @@ export class PecRegistrationComponent implements OnInit {
 
 			if (!this.isQryParamExist && fromPRC) {
 				this.pecRegForm.disable();
+				this.employerDetail.disable();
+				this.bankDetail.disable();
+				this.registrationDetail.disable();
+				this.actDetail.disable();
+
 				this.isDeleteBtnShow = false;
 				this.censusCollection.controls.forEach(control => {
 					if (control instanceof FormGroup) {
@@ -589,15 +743,15 @@ export class PecRegistrationComponent implements OnInit {
 					}
 				});
 			} else if (this.isQryParamExist && fromPRC) {
-				this.pecRegForm.get('pecNo').disable();
-				this.pecRegForm.get('rcDate').disable();
-				this.pecRegForm.get('registrationDate').disable();
-				this.pecRegForm.get('commencementDate').disable();
-				this.pecRegForm.get('entry').disable();
-				this.pecRegForm.get('subEntry').disable();
-				this.pecRegForm.get('professionConstitution').disable();
-				this.pecRegForm.get('constitution').disable();
-				this.pecRegForm.get('otherProfession').disable();
+				this.employerDetail.get('pecNo').disable();
+				this.employerDetail.get('rcDate').disable();
+				this.employerDetail.get('registrationDate').disable();
+				this.employerDetail.get('commencementDate').disable();
+				this.actDetail.get('entry').disable();
+				this.actDetail.get('subEntry').disable();
+				this.actDetail.get('professionConstitution').disable();
+				this.actDetail.get('constitution').disable();
+				this.actDetail.get('otherProfession').disable();
 			}
 
 			/* call subentry service on entry basis */
@@ -612,10 +766,15 @@ export class PecRegistrationComponent implements OnInit {
 		} else {
 			this.toastr.warning('No record found!');
 			this.resetForm();
-			this.pecRegForm.get('commencementDate').enable();
+			this.employerDetail.get('commencementDate').enable();
 			this.isDeleteBtnShow = true;
 			this.pecRegForm.enable();
+			this.employerDetail.enable();
+			this.bankDetail.enable();
+			this.registrationDetail.enable();
+			this.actDetail.enable();
 			this.setDefaultFeilds();
+			this.setDefaultFeildsStepWise();
 			this.defaultDisabledField();
 		}
 	}
@@ -625,16 +784,16 @@ export class PecRegistrationComponent implements OnInit {
 	 * This method is use for set default disable field
 	 */
 	defaultDisabledField() {
-		this.pecRegForm.get('pecNo').disable();
-		this.pecRegForm.get('prcNo').disable();
-		this.pecRegForm.get('applicableRate').disable();
-		this.pecRegForm.get('registrationDate').disable();
-		this.pecRegForm.get('rcDate').disable();
+		this.employerDetail.get('pecNo').disable();
+		this.employerDetail.get('prcNo').disable();
+		this.employerDetail.get('applicableRate').disable();
+		this.employerDetail.get('registrationDate').disable();
+		this.employerDetail.get('rcDate').disable();
 
 		this.censusCollection.controls.splice(0);
 		this.addMoreCenus();
 
-		this.pecRegForm.get('commencementDate').enable();
+		this.employerDetail.get('commencementDate').enable();
 	}
 
 	/**
@@ -643,18 +802,22 @@ export class PecRegistrationComponent implements OnInit {
 	editPECDetail() {
 		this.isDeleteBtnShow = true;
 		this.pecRegForm.enable();
-		this.pecRegForm.get('pecNo').disable();
-		this.pecRegForm.get('prcNo').disable();
-		this.pecRegForm.get('rcDate').disable();
-		this.pecRegForm.get('registrationDate').disable();
-		this.pecRegForm.get('commencementDate').disable();
+		this.employerDetail.enable();
+		this.bankDetail.enable();
+		this.registrationDetail.enable();
+		this.actDetail.enable();
+		this.employerDetail.get('pecNo').disable();
+		this.employerDetail.get('prcNo').disable();
+		this.employerDetail.get('rcDate').disable();
+		this.employerDetail.get('registrationDate').disable();
+		this.employerDetail.get('commencementDate').disable();
 
-		this.pecRegForm.get('applicableRate').disable();
-		this.pecRegForm.get('entry').disable();
-		this.pecRegForm.get('subEntry').disable();
-		this.pecRegForm.get('professionConstitution').disable();
-		this.pecRegForm.get('constitution').disable();
-		this.pecRegForm.get('otherProfession').disable();
+		this.actDetail.get('applicableRate').disable();
+		this.actDetail.get('entry').disable();
+		this.actDetail.get('subEntry').disable();
+		this.actDetail.get('professionConstitution').disable();
+		this.actDetail.get('constitution').disable();
+		this.actDetail.get('otherProfession').disable();
 
 	}
 
@@ -682,22 +845,22 @@ export class PecRegistrationComponent implements OnInit {
 				if (entryCode == 'ENTRY_009') code = '009_A';
 				if (entryCode == 'ENTRY_010') code = '010_A';
 
-				this.pecRegForm.get('subEntry.code').setValue(code);
-				this.pecRegForm.get('applicableRate').setValue(this.subEntryNoArray[0].taxRate);
-				this.pecRegForm.get('professionConstitution.code').setValue('OTHER');
+				this.actDetail.get('subEntry.code').setValue(code);
+				this.actDetail.get('applicableRate').setValue(this.subEntryNoArray[0].taxRate);
+				this.actDetail.get('professionConstitution.code').setValue('OTHER');
 
-				this.pecRegForm.get('subEntry').disable();
-				this.pecRegForm.get('professionConstitution').disable();
-				this.pecRegForm.get('otherProfession').setValidators([Validators.required]);
-				this.pecRegForm.get('otherProfession').updateValueAndValidity();
+				this.actDetail.get('subEntry').disable();
+				this.actDetail.get('professionConstitution').disable();
+				this.actDetail.get('otherProfession').setValidators([Validators.required]);
+				this.actDetail.get('otherProfession').updateValueAndValidity();
 			} else {
-				this.pecRegForm.get('otherProfession').setValue(null);
-				this.pecRegForm.get('otherProfession').clearValidators();
-				this.pecRegForm.get('otherProfession').updateValueAndValidity();
+				this.actDetail.get('otherProfession').setValue(null);
+				this.actDetail.get('otherProfession').clearValidators();
+				this.actDetail.get('otherProfession').updateValueAndValidity();
 
-				if (!this.pecRegForm.get('pecNo').value) {
-					this.pecRegForm.get('subEntry').enable();
-					this.pecRegForm.get('professionConstitution').enable();
+				if (!this.employerDetail.get('pecNo').value) {
+					this.actDetail.get('subEntry').enable();
+					this.actDetail.get('professionConstitution').enable();
 				}
 			}
 		});
@@ -752,9 +915,9 @@ export class PecRegistrationComponent implements OnInit {
 	 * This method return the title of selected subEntry
 	 */
 	findSubEntryName() {
-		if (this.subEntryNoArray.length > 0 && this.pecRegForm.get('subEntry').get('code').value) {
+		if (this.subEntryNoArray.length > 0 && this.actDetail.get('subEntry').get('code').value) {
 			for (let i = 0; i < this.subEntryNoArray.length; i++) {
-				if (this.subEntryNoArray[i].code == this.pecRegForm.get('subEntry').get('code').value) {
+				if (this.subEntryNoArray[i].code == this.actDetail.get('subEntry').get('code').value) {
 					return this.subEntryNoArray[i].name;
 				}
 			}
@@ -765,9 +928,9 @@ export class PecRegistrationComponent implements OnInit {
 	 * This method return the title of selected subEntry
 	 */
 	findProfConstitution() {
-		if (this.professionArray.length > 0 && this.pecRegForm.get('professionConstitution').get('code').value) {
+		if (this.professionArray.length > 0 && this.actDetail.get('professionConstitution').get('code').value) {
 			for (let i = 0; i < this.professionArray.length; i++) {
-				if (this.professionArray[i].code == this.pecRegForm.get('professionConstitution').get('code').value) {
+				if (this.professionArray[i].code == this.actDetail.get('professionConstitution').get('code').value) {
 					return this.professionArray[i].name;
 				}
 			}
@@ -775,17 +938,17 @@ export class PecRegistrationComponent implements OnInit {
 	}
 
 	onSameAddressChange(event) {
-		let id = this.pecRegForm.get('residentialAddress.id').value;
+		let id = this.employerDetail.get('residentialAddress.id').value;
 		if (event.checked) {
-			this.pecRegForm.get('residentialAddress').patchValue(this.pecRegForm.get('officeAddress').value);
-			if (this.pecRegForm.get('officeAddress').get('country').value) {
-				this.resAddrComponent.getStateLists(this.pecRegForm.get('officeAddress').get('country').value);
+			this.employerDetail.get('residentialAddress').patchValue(this.employerDetail.get('officeAddress').value);
+			if (this.employerDetail.get('officeAddress').get('country').value) {
+				this.resAddrComponent.getStateLists(this.employerDetail.get('officeAddress').get('country').value);
 			}
 		} else {
-			this.pecRegForm.get('residentialAddress').reset();
+			this.employerDetail.get('residentialAddress').reset();
 		}
-		this.pecRegForm.get('residentialAddress.addressType').setValue('PF_PEC_RESIDENTIAL_ADDRESS');
-		this.pecRegForm.get('residentialAddress.id').setValue(id);
+		this.employerDetail.get('residentialAddress.addressType').setValue('PF_PEC_RESIDENTIAL_ADDRESS');
+		this.employerDetail.get('residentialAddress.id').setValue(id);
 	}
 
 	patchValue() {
