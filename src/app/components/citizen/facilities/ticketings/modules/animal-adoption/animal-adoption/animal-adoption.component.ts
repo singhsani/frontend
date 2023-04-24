@@ -157,14 +157,13 @@ export class AnimalAdoptionComponent implements OnInit {
     });
   }
   getAnimalAdoptionFormStatus(){
-    if(this.animalAdoptionForm.get('adoptingPersonOrganizationName').value != '' && 
-    this.animalAdoptionForm.get('adoptersAddress').value != '' &&
-    this.animalAdoptionForm.get('adopterContactNumber').value != '' &&
-    (this.animalAdoptionForm.get('animalNameList').value).length < 1
-    ){
-      return true;
-    }else{
+    if((this.animalAdoptionForm.get('adoptingPersonOrganizationName').value && this.animalAdoptionForm.get('adoptingPersonOrganizationName').value.trim().length > 0) && 
+    (this.animalAdoptionForm.get('adoptersAddress').value && this.animalAdoptionForm.get('adoptersAddress').value.trim().length > 0) &&
+    (this.animalAdoptionForm.get('adopterContactNumber').value && this.animalAdoptionForm.get('adopterContactNumber').value.trim().length > 0 && this.animalAdoptionForm.get('adopterContactNumber').status == 'VALID') &&
+    (this.animalAdoptionForm.get('animalNameList').value).length > 0){
       return false;
+    }else{
+      return true;
     }
   }
 
