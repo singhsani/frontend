@@ -36,6 +36,8 @@ export class MuttonFishTransferComponent implements OnInit {
 	PERSON_TYPE: Array<any> = [];
 	FIRM_ZONE: Array<any> = [];
 	WARD: Array<any> = [];
+	wardZoneLevel1List = [];
+	wardZoneLevel2List = [];
 	isdisableMode :boolean =true;
 	istable : boolean = true;
 	//BLOCK: Array<any> = [];
@@ -101,6 +103,7 @@ export class MuttonFishTransferComponent implements OnInit {
 			this.formId = Number(param.get('id'));
 			this.apiCode = param.get('apiCode');
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+			this.getAllZoneNos();
 		});
 
 		this.getLookupData();
@@ -186,7 +189,13 @@ export class MuttonFishTransferComponent implements OnInit {
 		});
 
 	}
-
+    getAllZoneNos() {
+		this.formService.getWardZoneFirstLevel(1, "PROPERTYTAX").subscribe(
+		  (data) => {
+			this.wardZoneLevel1List = data;
+		  }
+		)
+	  }
 	/**
 	 * Method is used to get form data
 	 */
@@ -201,7 +210,7 @@ export class MuttonFishTransferComponent implements OnInit {
 					this.istable = true;
 				}
 				this.licenseConfiguration.isAttachmentButtonsVisible = true;
-				this.onChangeZone(this.muttonFishTransferForm.get('zoneNo').value.code);
+				this.onChangeZone(this.muttonFishTransferForm.get('zoneNo').value);
 			//	this.onChangeWard(this.muttonFishTransferForm.get('wardNo').value.code);
 			if (this.muttonFishTransferForm.get('statusOfBusinessId').value.code) {
 				this.onChangeStatusOfBusiness(this.muttonFishTransferForm.get('statusOfBusinessId').value.code,false)
@@ -246,7 +255,7 @@ export class MuttonFishTransferComponent implements OnInit {
 			this.PERSON_TYPE = res.PERSON_TYPE;
 			this.FIRM_ZONE = res.FIRM_ZONE;
 
-			this.onChangeZone(this.muttonFishTransferForm.get('zoneNo').value.code);
+			this.onChangeZone(this.muttonFishTransferForm.get('zoneNo').value);
 			//this.onChangeWard(this.muttonFishTransferForm.get('wardNo').value.code);
 		});
 	}
@@ -363,8 +372,8 @@ export class MuttonFishTransferComponent implements OnInit {
 			/* Step 1 controls end */
 
 			/* Step 2 controls start */
-			zoneNo: this.fb.group({ code: [null, Validators.required] }),
-			wardNo: this.fb.group({ code: [null, Validators.required] }),
+			zoneNo: [null,Validators.required],
+			wardNo: [null,Validators.required],
 		//	blockNo: this.fb.group({ code: [null, Validators.required] }),
 			businessAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 		//	extraDetailsOfBusiness: [null, [Validators.maxLength(500)]],
@@ -623,5 +632,20 @@ export class MuttonFishTransferComponent implements OnInit {
 		this.muttonFishTransferForm.get('refNumber').disable();
 		this.muttonFishTransferForm.get('licenseIssueDate').disable();
 	}
+	onChangedZone(event) {
+		this.wardZoneLevel2List =[];
+		if (event == undefined) {
+		this.muttonFishTransferForm.get('wardNo').get('code').setValue(null);
+		  return false
+		}
+		else {
+		  let postData = {};
+		  postData = { parentId: event };
+		  this.formService.getWardZone(postData).subscribe(res => {
+			this.wardZoneLevel2List = res.body;
+		  })
+
+		}
+	  }
 
 }

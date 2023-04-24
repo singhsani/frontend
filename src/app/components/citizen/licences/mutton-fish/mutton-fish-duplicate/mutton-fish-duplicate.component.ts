@@ -132,8 +132,6 @@ export class MuttonFishDuplicateComponent implements OnInit {
 				createdDate: res.createdDate,
 				updatedDate: res.createdDate,
 				serviceType: res.serviceType,
-				wardNo: res.wardNo,
-				zoneNo: res.zoneNo,
 				// deptFileStatus: res.deptFileStatus,
 				serviceName: res.serviceName,
 				fileNumber: res.fileNumber,
@@ -157,7 +155,10 @@ export class MuttonFishDuplicateComponent implements OnInit {
 				// licenseIssueDate: res.licenseIssueDate,
 				// licenseRenewalDate: res.licenseRenewalDate,
 				// loinumber: res.loinumber,
-				attachments: []
+				attachments: [],
+				
+				wardNo:searchData.wardNo,
+				zoneNo:searchData.zoneNo
 			});
 			this.muttonFishDuplicateForm.disable();
 			this.enableFielList();
@@ -276,14 +277,8 @@ export class MuttonFishDuplicateComponent implements OnInit {
 			licenseDuplicatealDate: [null],
 			loinumber: [null],
 			noOfCopies: [1, [Validators.required]],
-			wardNo: this.fb.group({
-				code: null,
-				name: null
-			}),
-			zoneNo: this.fb.group({
-				code: null,
-				name: null
-			}),
+			zoneNo: [null],
+			wardNo: [null],
 			/* Step 4 controls start*/
 			attachments: []
 			/* Step 4 controls end */
