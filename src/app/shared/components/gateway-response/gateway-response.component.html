@@ -59,14 +59,21 @@
 				<div class="col mb-2" *ngIf="responseObj.getway == 'CCAVENUE'">
 					Payment Type : &nbsp;{{responseObj.payment_mode}}
 				</div>
-				<div class="col">
-					<!-- Service Name : &nbsp;{{resourceType}} -->
-					<!-- Service Name : &nbsp;{{responseObj.additional_info.additional_info1}} -->
-					Service Name : &nbsp;{{dispData.txtadditionalInfo1 ? dispData.txtadditionalInfo1 :
-					dispData.resourceType ?
-					dispData.resourceType : serviceType ? serviceType : payableServiceType}}
-					<!-- Service Name : &nbsp;{{serviceType ? serviceType : payableServiceType}} -->
-				</div>
+				<ng-container *ngIf="dispData.resourceType !='amphiTheater'&& dispData.txtadditionalInfo1 !='amphiTheater'" >
+					<div class="col">
+						<!-- Service Name : &nbsp;{{resourceType}} -->
+						<!-- Service Name : &nbsp;{{responseObj.additional_info.additional_info1}} -->
+						Service Name : &nbsp;{{dispData.txtadditionalInfo1 ? dispData.txtadditionalInfo1 :
+						dispData.resourceType ?
+						dispData.resourceType : serviceType ? serviceType : payableServiceType}}
+						<!-- Service Name : &nbsp;{{serviceType ? serviceType : payableServiceType}} -->
+					</div>
+				</ng-container>
+				<ng-container *ngIf="(dispData.resourceType =='amphiTheater'&& dispData.txtadditionalInfo1 =='amphiTheater')" >
+					<div class="col">
+						Service Name : &nbsp;{{serviceName}}
+					</div>
+				</ng-container>
 			</div>
 			<div class="row">
 				<div class="col mb-3">

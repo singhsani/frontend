@@ -36,6 +36,7 @@ export class GatewayResponseComponent implements OnInit {
 	bookingUtils: BookingUtils = new BookingUtils();
 	refNumber: any;
 	paybleServiceType: any;
+	serviceName : string;
 
 	constructor(
 		private formService: FormsActionsService,
@@ -45,6 +46,9 @@ export class GatewayResponseComponent implements OnInit {
 		private sessionStore: SessionStorageService
 	) {
 		this.dispData = JSON.parse(this.sessionStore.get('paymentData'));
+		if(this.dispData.resourceType == 'amphiTheater' && this.dispData.txtadditionalInfo1 == 'amphiTheater' ){
+			this.serviceName = 'amphiTheatre'
+		}
 		console.log('this.dispData', this.dispData);
 	}
 	Tickting: String[] = [
