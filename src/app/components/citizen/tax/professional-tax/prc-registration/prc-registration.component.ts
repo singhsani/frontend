@@ -16,6 +16,9 @@ import { ProfessionalTaxService } from '../../../../../core/services/citizen/dat
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
+import { EngineeringService } from '../../../engineering/engineering.service';
+
+declare var $: any;
 
 @Component({
 	selector: 'app-prc-registration',
@@ -73,6 +76,8 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	apiCode: string = '';
 	serviceFormId: number;
 
+	pecNumber: string = null;
+
 	constructor(
 		private fb: FormBuilder,
 		private router: Router,
@@ -82,6 +87,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 		private profeService: ProfessionalTaxService,
 		private commonService: CommonService,
 		private formService: FormsActionsService,
+		private engineer: EngineeringService
 	) {
 	}
 
@@ -103,6 +109,32 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 		this.getAllWardNos();
 
 		this.searchInput.focus();
+	}
+
+	public onTabChange(index: number, controlName, mainControl) {
+		if (controlName.invalid || this.pecNumber == null) {
+			this.commonService.markFormGroupTouched(controlName);
+			$('.pecNumber mat-form-field .displayNone').remove();
+			$('.pecNumber mat-form-field').append("<span class='displayNone' style='color:#f44336;top: -15px !important;position: inherit;'>PEC Number is required</span>");
+		} else {
+			$('.pecNumber mat-form-field .displayNone').remove();
+			const organizationalAry = Object.keys(controlName.getRawValue());
+			organizationalAry.forEach((element:any) => {
+				   // push form Array data into main Controller
+				if (controlName.get(element) instanceof FormArray) {
+					const formGroupAry = this.engineer.createArray(controlName.get(element));
+					mainControl.get(element).value.push()
+					for(let i = 0; i < controlName.get(element).controls.length; i++) {
+						mainControl.get(element).value.push(formGroupAry.value[i]);
+						mainControl.get(element).controls.push(formGroupAry.controls[i]);
+					}   
+				}
+				else {
+					mainControl.get(element).setValue(controlName.get(element).value);
+				}
+			});
+			this.tabIndex = index;			
+		}
 	}
 
 	forPreview() {
@@ -444,7 +476,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	 * @param pecNo - employer registartion pec no.
 	 */
 	searchEmpRegByECRCNo(event, ecrcNo) {
-
+		$('.pecNumber mat-form-field .displayNone').remove();
 		event.stopPropagation();
 
 		if (ecrcNo == '') {
@@ -463,6 +495,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 		this.profeService.getSearchDetails(ecrcNo).subscribe(res => {
 			this.setValuesInForm(res, null);
 		});
+		this.pecNumber = ecrcNo;
 	}
 
 	/**
@@ -667,7 +700,6 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 
 		this.mode = 'edit';
 		this.empDetailObj = obj;
-		console.log(this.empDetailObj);
 		this.totalEmployees = obj.totEmpCount;
 		this.empDetailMonth = obj.month;
 		this.empDetailYear = obj.year;
