@@ -29,6 +29,13 @@ export class ShopLicTransferComponent implements OnInit {
 	@ViewChild('postalAddressEstablishment') postalAddressEstablishment: any;
 
 	shopLicTransferForm: FormGroup;
+
+	establishmentdetails: FormGroup;
+	employerdetails: FormGroup;
+	employerfamily: FormGroup;
+	personoccuping: FormGroup;
+	partnerlist: FormGroup;
+	attachmentdetail: FormGroup;
 	translateKey: string = 'shopLicTransferScreen';
 	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
 
@@ -176,22 +183,22 @@ export class ShopLicTransferComponent implements OnInit {
 	}
 
 	calculateWorkers(indx) {
-		let men = Number(this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('noOfMen').value);
-		let woman = Number(this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('noOfWomen').value);
-		if(this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('noOfWomen').value != null){
+		let men = Number(this.personoccuping.get('workerCounts')['controls'][indx].get('noOfMen').value);
+		let woman = Number(this.personoccuping.get('workerCounts')['controls'][indx].get('noOfWomen').value);
+		if(this.personoccuping.get('workerCounts')['controls'][indx].get('noOfWomen').value != null){
 			if(men == 0 && woman == 0){
 				
 				this.toastrService.warning("please enter woman or men number more than 0")
-				this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('noOfMen').reset();
-				this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('noOfWomen').reset();
-				this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('total').reset();
+				this.personoccuping.get('workerCounts')['controls'][indx].get('noOfMen').reset();
+				this.personoccuping.get('workerCounts')['controls'][indx].get('noOfWomen').reset();
+				this.personoccuping.get('workerCounts')['controls'][indx].get('total').reset();
 			}
 		} 
 		let total = men + woman;
 		if(total == 0){
-			this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('total').reset();
+			this.personoccuping.get('workerCounts')['controls'][indx].get('total').reset();
 		}else{
-			this.shopLicTransferForm.get('workerCounts')['controls'][indx].get('total').setValue(total);
+			this.personoccuping.get('workerCounts')['controls'][indx].get('total').setValue(total);
 		}
 	}
 
@@ -207,7 +214,7 @@ export class ShopLicTransferComponent implements OnInit {
 					this.isSubCategory = true;
 				}
 				this.setFormDataFromLatestApplication(res)
-				if (this.shopLicTransferForm.get('organizationType').value != null) {
+				if (this.partnerlist.get('organizationType').value != null) {
 					this.isGuideLineActive = flag;
 				}
 				return;
@@ -228,7 +235,7 @@ export class ShopLicTransferComponent implements OnInit {
 					this.isSubCategory = true;
 				}
 				this.setFormDataFromLatestApplication(res)
-				if(this.shopLicTransferForm.get('organizationType').value != null){
+				if(this.partnerlist.get('organizationType').value != null){
 					this.isGuideLineActive = flag;
 				}
 				return;
@@ -251,34 +258,9 @@ export class ShopLicTransferComponent implements OnInit {
 	}
 
 	setFormDataFromLatestApplication(res){
-		
-        this.shopLicTransferForm.patchValue({
-			aadhaarNo: res.aadhaarNo,
-			alternateMobileNumber : res.alternateMobileNumber,
-			businessSubCategory : res.businessSubCategory,
-			censusNumber : res.censusNumber,
-			commencementOfBusinessDate : res.commencementOfBusinessDate,
-			contactNo : res.contactNo,
-			email : res.email,
-			landlineNumber : res.landlineNumber,
-			employerDesignation : res.employerDesignation,
-			employerMobileNumber : res.employerMobileNumber,
-			employerEmailId : res.employerEmailId,
-			establishmentCategory : res.establishmentCategory,
+        this.establishmentdetails.patchValue({
+			// 1
 			establishmentName : res.establishmentName,
-			nameOfEmployer : res.nameOfEmployer,
-			natureOfBusiness : res.natureOfBusiness,
-			organizationType : res.organizationType,
-			otherAddresses : res.otherAddresses,
-			ownershipType : res.ownershipType,
-			pecNumber : res.pecNumber,
-			postalAddress : res.postalAddress,
-			prcNumber : res.prcNumber,
-			previousRegistrationNo : res.previousRegistrationNo,
-			registrationType : res.registrationType,
-			residentialAddressOfEmployer : res.residentialAddressOfEmployer,
-			// shopPersonList : res.shopPersonList,
-			// shopPartnerList : res.shopPartnerList,
 			waterDrainageBlockId : res.waterDrainageBlockId,
 			waterDrainageBlockName : res.waterDrainageBlockName,
 			waterDrainageWardId : res.waterDrainageWardId,
@@ -287,11 +269,50 @@ export class ShopLicTransferComponent implements OnInit {
 			waterDrainageZoneName : res.waterDrainageZoneName,
 			oldRegistrationNumber : res.oldRegistrationNumber,
 			oldRegistrationDate : res.oldRegistrationDate,
-			otherDescription : res.otherDescription
-			// workerCounts : res.workerCounts
+			censusNumber : res.censusNumber,
+			pecNumber : res.pecNumber,
+			postalAddress : res.postalAddress,
+			prcNumber : res.prcNumber,
+			previousRegistrationNo : res.previousRegistrationNo,
+			otherAddresses : res.otherAddresses,
+			ownershipType : res.ownershipType
+		});
 
+			//2 
+		this.employerdetails.patchValue({	
+			commencementOfBusinessDate : res.commencementOfBusinessDate,
+			establishmentCategory : res.establishmentCategory,
+			alternateMobileNumber : res.alternateMobileNumber,
+			businessSubCategory : res.businessSubCategory,
+			landlineNumber : res.landlineNumber,
+			employerDesignation : res.employerDesignation,
+			employerMobileNumber : res.employerMobileNumber,
+			employerEmailId : res.employerEmailId,
+			nameOfEmployer : res.nameOfEmployer,
+			natureOfBusiness : res.natureOfBusiness,
+			residentialAddressOfEmployer : res.residentialAddressOfEmployer,
+			otherDescription : res.otherDescription
+		});
+
+			//3
+		this.employerfamily.patchValue({
+			email : res.email
+		});
+
+			//5
+		this.partnerlist.patchValue({
+			organizationType : res.organizationType
+		});
+
+		this.shopLicTransferForm.patchValue	({
+			aadhaarNo: res.aadhaarNo,
+			contactNo : res.contactNo,
+			registrationType : res.registrationType,
+			
+			// shopPersonList : res.shopPersonList,
+			// shopPartnerList : res.shopPartnerList,
+			// workerCounts : res.workerCounts
 		 });
-		 
 		let formObj = this.shopLicTransferForm.getRawValue();
 		formObj['shopPersonList'] = res.shopPersonList;
 		formObj['shopPartnerList'] = res.shopPartnerList;
@@ -317,6 +338,12 @@ export class ShopLicTransferComponent implements OnInit {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.shopLicTransferForm.patchValue(res);
+				this.establishmentdetails.patchValue(res);
+				this.employerdetails.patchValue(res);
+				this.employerfamily.patchValue(res);
+				this.personoccuping.patchValue(res);
+				this.partnerlist.patchValue(res);
+				this.attachmentdetail.patchValue(res);
 				this.setDropdownAndListDataFromRes(res);
 				if(res.transferCertificateNumber) {
 					this.shopLicTransferForm.get('transferCertificateNumber').disable();
@@ -332,19 +359,30 @@ export class ShopLicTransferComponent implements OnInit {
 			}else{
 				this.isGuideLineActive = true; 
 			}	
+			
+			res.shopPersonList.forEach(app => {
+				(<FormArray>this.employerfamily.get('shopPersonList')).push(this.createArray(app));
+			});
+			res.workerCounts.forEach(app => {
+				(<FormArray>this.personoccuping.get('workerCounts')).push(this.createArrayWorkOut(app));
+			});
+			res.shopPartnerList.forEach(app => {
+				(<FormArray>this.partnerlist.get('shopPartnerList')).push(this.createArrayPatner(app));
+				this.isPatners = true;
+			});
 		});
 	}
 
 	setDropdownAndListDataFromRes(res){
 		this.licenseConfiguration.isAttachmentButtonsVisible = true;
 				res.shopPersonList.forEach(app => {
-					(<FormArray>this.shopLicTransferForm.get('shopPersonList')).push(this.createArray(app));
+					(<FormArray>this.employerfamily.get('shopPersonList')).push(this.createArray(app));
 				});
 				res.workerCounts.forEach(app => {
-					(<FormArray>this.shopLicTransferForm.get('workerCounts')).push(this.createArrayWorkOut(app));
+					(<FormArray>this.personoccuping.get('workerCounts')).push(this.createArrayWorkOut(app));
 				});
 				res.shopPartnerList.forEach(app => {
-					(<FormArray>this.shopLicTransferForm.get('shopPartnerList')).push(this.createArrayPatner(app));
+					(<FormArray>this.partnerlist.get('shopPartnerList')).push(this.createArrayPatner(app));
 					this.isPatners = true;
 				});
 
@@ -354,7 +392,7 @@ export class ShopLicTransferComponent implements OnInit {
 				
 				this.onChangeNoOfHumanWorking(res.registrationType);
 
-				this.getSubCategoryDropdownData(this.shopLicTransferForm.get('establishmentCategory').value.code);
+				this.getSubCategoryDropdownData(this.employerdetails.get('establishmentCategory').value.code);
 			
 
 				// if (this.shopLicTransferForm.get('ownershipType').value) {
@@ -363,21 +401,20 @@ export class ShopLicTransferComponent implements OnInit {
 			
 				// if(res.serviceDetail)
 				// //this.isGuideLineActive = false;
-
-				if(this.shopLicTransferForm.get('waterDrainageZoneId')){
-					this.shopLicTransferForm.get('zone').setValue(res.waterDrainageZoneName);
+				if(this.establishmentdetails.get('waterDrainageZoneId')){
+					this.establishmentdetails.get('zone').setValue(res.waterDrainageZoneName);
 				}
 
-				if(this.shopLicTransferForm.get('waterDrainageWardId')){
-					this.shopLicTransferForm.get('ward').setValue(res.waterDrainageWardName);
+				if(this.establishmentdetails.get('waterDrainageWardId')){
+					this.establishmentdetails.get('ward').setValue(res.waterDrainageWardName);
 				}
 
-				if(this.shopLicTransferForm.get('waterDrainageBlockId')){
-					this.shopLicTransferForm.get('block').setValue(res.waterDrainageBlockName);
+				if(this.establishmentdetails.get('waterDrainageBlockId')){
+					this.establishmentdetails.get('block').setValue(res.waterDrainageBlockName);
 				}
 
-				if(this.shopLicTransferForm.get('workerType')){
-					this.shopLicTransferForm.get('workerType').setValue(res.workerType);
+				if(this.personoccuping.get('workerType')){
+					this.personoccuping.get('workerType').setValue(res.workerType);
 				}
 
 				
@@ -388,8 +425,8 @@ export class ShopLicTransferComponent implements OnInit {
 				
 				this.totalNoOfWomanForJDocument(res);
 
-				if (this.shopLicTransferForm.get('ownershipType').value,this.shopLicTransferForm.get('organizationType').get('code').value) {
-					this.updateServiceUploadDocument(this.shopLicTransferForm.get('ownershipType').value,this.shopLicTransferForm.get('organizationType').get('code').value);
+				if (this.establishmentdetails.get('ownershipType').value,this.partnerlist.get('organizationType').get('code').value) {
+					this.updateServiceUploadDocument(this.establishmentdetails.get('ownershipType').value,this.partnerlist.get('organizationType').get('code').value);
 				}
 				if(res.waterDrainageZoneId) {
 					this.getWardZone(res.waterDrainageZoneId,2);
@@ -406,12 +443,12 @@ export class ShopLicTransferComponent implements OnInit {
 				if(res.otherDescription != null && (res.businessSubCategory.code == BookingConstants.ANY_METAL_AND_STEEL_SHOPS || res.businessSubCategory.code == BookingConstants.ANY_GARAGE_REPAIRING_Shopes
 					|| res.businessSubCategory.code == BookingConstants.ANY_OFFICES)){
 					this.isSubCategory = true;
-					this.shopLicTransferForm.get('otherDescription').setValue(res.otherDescription);
+					this.employerdetails.get('otherDescription').setValue(res.otherDescription);
 				}
 
-				if(this.shopLicTransferForm.get('otherAddresses')){
-					this.shopLicTransferForm.get('otherAddresses').setValue(res.otherAddresses);
-				}
+				// if(this.establishmentdetails.get('otherAddresses')){
+				// 	this.establishmentdetails.get('otherAddresses').setValue(res.otherAddresses);
+				// }
 				
 			
 	}
@@ -452,8 +489,14 @@ export class ShopLicTransferComponent implements OnInit {
 			renewal: null,
 			adminCharges: null,
       		netAmount: null,
+			  agree: [false, null],
+			// agree: [false, null],
+			  /*  */
+			// transferCertificateNumber : [null,Validators.required]
+		});
     //   certificateNumber: [null],
 			/* Step 1 controls start */
+		this.establishmentdetails = this.fb.group({
 			//previousRegistrationNo :  [null, [Validators.maxLength(150)]],//count=4
 			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],//count=4
 			postalAddress: this.fb.group(this.postalAddressEstablishment.addressControls()),
@@ -465,6 +508,7 @@ export class ShopLicTransferComponent implements OnInit {
 			 
 			waterDrainageZoneId: [null,Validators.required],
 			waterDrainageWardId: [null,Validators.required],
+			waterDrainageWardName:[null,Validators.required],
 			waterDrainageBlockId: [null],
 			ownershipType: [null, [Validators.required]],
 
@@ -473,9 +517,11 @@ export class ShopLicTransferComponent implements OnInit {
 			censusNumber:[null,ValidationService.censusNumberValidator],
 			number: null,
 			otherAddresses: [null, [Validators.maxLength(100)]],
+			});
 			/* Step 1 controls end */
-
+			
 			/* Step 2 controls start */
+		this.employerdetails = this.fb.group({
 			nameOfEmployer: [null, [Validators.required, Validators.maxLength(100)]],
 
 			employerDesignation: [null, [Validators.required, Validators.maxLength(100)]],
@@ -501,35 +547,43 @@ export class ShopLicTransferComponent implements OnInit {
 			}),
 			commencementOfBusinessDate: [null, Validators.required],
 			otherDescription : null,
+		});
 			/* Step 2 controls end */
 
 
 			/* Step 3 controls start */
+		this.employerfamily = this.fb.group({
 			shopPersonList: this.fb.array([]),
+		});
 
 			/* Step 3 controls end */
 
 
 			/* Step 4 controls start */
+		this.personoccuping = this.fb.group({
 			workerCounts: this.fb.array([]),
+		});
 
 			/* Step 4 controls end */
 
 
 			/* Step 5 controls start */
+		this.partnerlist = this.fb.group({
 			organizationType: this.fb.group({
 				code: [null, Validators.required]
 			}),
 
 
 			shopPartnerList: this.fb.array([]),
+		});
 
 
 			/* Step 5 controls end */
 
 			/*  */
+		this.attachmentdetail = this.fb.group({
 			attachments: [''],
-			agree: [false, null],
+			
 			/*  */
 			transferCertificateNumber : [null,Validators.required],
 		});
@@ -546,7 +600,12 @@ export class ShopLicTransferComponent implements OnInit {
 		// this.shopLicTransferForm.get('block').valueChanges.subscribe(data => {
 		// 	this.shopLicTransferForm.get('waterDrainageBlockId').setValue(data);
 		// });
-
+		this.commonService.createCloneAbstractControl(this.establishmentdetails,this.shopLicTransferForm);
+		this.commonService.createCloneAbstractControl(this.employerdetails,this.shopLicTransferForm);
+		this.commonService.createCloneAbstractControl(this.employerfamily,this.shopLicTransferForm);
+		this.commonService.createCloneAbstractControl(this.personoccuping,this.shopLicTransferForm);
+		this.commonService.createCloneAbstractControl(this.partnerlist,this.shopLicTransferForm);
+		this.commonService.createCloneAbstractControl(this.attachmentdetail,this.shopLicTransferForm);	
 		
 	}
 
@@ -677,13 +736,13 @@ export class ShopLicTransferComponent implements OnInit {
 			this.wardZoneLevel3List = [];
 			this.wardZoneLevel4List = [];
 			if (!value) {
-				this.shopLicTransferForm.patchValue({
+				this.establishmentdetails.patchValue({
 					waterDrainageZoneId: null,
 					// zone: null,
 					waterDrainageZoneName : null
 				});
 			}
-			this.shopLicTransferForm.patchValue({
+			this.establishmentdetails.patchValue({
 				waterDrainageWardId: null,
 				waterDrainageBlockId: null,
 				waterDrainageWardName: null,
@@ -694,12 +753,12 @@ export class ShopLicTransferComponent implements OnInit {
 			this.wardZoneLevel3List = [];
 			this.wardZoneLevel4List = [];
 			if (!value) {
-				this.shopLicTransferForm.patchValue({
+				this.establishmentdetails.patchValue({
 					waterDrainageWardId: null,
 					waterDrainageWardName: null
 				});
 			}
-			this.shopLicTransferForm.patchValue({
+			this.establishmentdetails.patchValue({
 				waterDrainageBlockId: null,
 				waterDrainageBlockName: null
 			});
@@ -741,13 +800,13 @@ export class ShopLicTransferComponent implements OnInit {
 		let returnArray: any;
 		switch (type) {
 			case 'EMPLOYER_FAMILY':
-				returnArray = this.shopLicTransferForm.get('shopPersonList') as FormArray;
+				returnArray = this.employerfamily.get('shopPersonList') as FormArray;
 				break;
 			case 'OCCUPANCY':
-				returnArray = this.shopLicTransferForm.get('workerCounts') as FormArray;
+				returnArray = this.personoccuping.get('workerCounts') as FormArray;
 				break;
 			case 'PATNERS':
-				returnArray = this.shopLicTransferForm.get('shopPartnerList') as FormArray;
+				returnArray = this.partnerlist.get('shopPartnerList') as FormArray;
 				break;
 
 		}
@@ -808,7 +867,7 @@ export class ShopLicTransferComponent implements OnInit {
 				}));
 			}
 
-			this.shopLicTransferForm.get('workerCounts').clearValidators();
+			this.personoccuping.get('workerCounts').clearValidators();
 
 			this.CD.detectChanges();
 			let newlyadded = this.getArrayByType(persontype).controls;
@@ -833,11 +892,11 @@ export class ShopLicTransferComponent implements OnInit {
 			}
 			
 			if (persontype === "PARTNER") {
-				if (this.shopLicTransferForm.get('organizationType').value.code === 'SHOP_LIC_SELF_OWNERSHIP' && this.getArrayByType(persontype).controls.length >= 1) {
+				if (this.partnerlist.get('organizationType').value.code === 'SHOP_LIC_SELF_OWNERSHIP' && this.getArrayByType(persontype).controls.length >= 1) {
 					this.toastrService.warning("You can add only one partner becouse you are self ownership");
 					return false;
 				}
-				if (this.shopLicTransferForm.get('organizationType').value.code != 'SHOP_LIC_SELF_OWNERSHIP' && this.getArrayByType(persontype).controls.length >= 10) {
+				if (this.partnerlist.get('organizationType').value.code != 'SHOP_LIC_SELF_OWNERSHIP' && this.getArrayByType(persontype).controls.length >= 10) {
 					this.toastrService.warning("Parners not allowed more than 10");
 					return false;
 				}
@@ -848,7 +907,7 @@ export class ShopLicTransferComponent implements OnInit {
 				}));
 				
 			
-			 this.shopLicTransferForm.get('shopPersonList').clearValidators();
+			 this.employerfamily.get('shopPersonList').clearValidators();
 			 this.CD.detectChanges();
 			let newlyadded = this.getArrayByType(persontype).controls;
 			if (newlyadded.length) {
@@ -947,7 +1006,7 @@ export class ShopLicTransferComponent implements OnInit {
 		if(this.edit){
 			console.log(this.totalNoOfWoman)
 			this.deleteWomenDocument();
-			this.updateServiceUploadDocument(this.shopLicTransferForm.get('ownershipType').value,this.shopLicTransferForm.get('organizationType').get('code').value)
+			this.updateServiceUploadDocument(this.establishmentdetails.get('ownershipType').value,this.partnerlist.get('organizationType').get('code').value)
 		}
 		this.edit = true;
 		row.isEditMode = true;
@@ -962,7 +1021,7 @@ export class ShopLicTransferComponent implements OnInit {
 				this.totalNoOfWomanForDocu = this.totalNoOfWomanForDocu - Rnumber
 			}	
 			this.deleteWomenDocument();
-			this.updateServiceUploadDocument(this.shopLicTransferForm.get('ownershipType').value,this.shopLicTransferForm.get('organizationType').get('code').value)
+			this.updateServiceUploadDocument(this.establishmentdetails.get('ownershipType').value,this.partnerlist.get('organizationType').get('code').value)
 		}
 		this.edit = true;
 		row.isEditMode = true;
@@ -1071,7 +1130,7 @@ export class ShopLicTransferComponent implements OnInit {
 	*/
 	onChangeCategorySelect(event) {
 		try {
-			this.shopLicTransferForm.get('businessSubCategory').reset();
+			this.employerdetails.get('businessSubCategory').reset();
 			this.getSubCategoryDropdownData(event);
 		} catch (error) {
 			console.log(error.message)
@@ -1084,13 +1143,13 @@ export class ShopLicTransferComponent implements OnInit {
 	*/
 	onChangeTypeOfOrganization(event) {
 
-		this.shopLicTransferForm.get('organizationType').get('code').setValue(event);
-	 	this.updateServiceUploadDocument(this.shopLicTransferForm.get('ownershipType').value,event);
+		this.partnerlist.get('organizationType').get('code').setValue(event);
+	 	this.updateServiceUploadDocument(this.establishmentdetails.get('ownershipType').value,event);
 		try {
 			// this.updateServiceUploadDocument(event);
 				// when organization Type change Partner List clear  
-			if (this.shopLicTransferForm.get('shopPartnerList').value.length > 0) {
-				for (let i = 0; i < this.shopLicTransferForm.get('shopPartnerList').value.length; i++) {
+			if (this.partnerlist.get('shopPartnerList').value.length > 0) {
+				for (let i = 0; i < this.partnerlist.get('shopPartnerList').value.length; i++) {
 					this.getArrayByType('PATNERS').removeAt(i);
 				}
 			}
@@ -1489,8 +1548,8 @@ export class ShopLicTransferComponent implements OnInit {
 	
 
 	ownershipChange(ownershipType) {
-		this.shopLicTransferForm.get('ownershipType').setValue(ownershipType);
-		this.updateServiceUploadDocument(ownershipType,this.shopLicTransferForm.get('organizationType').get('code').value);
+		this.establishmentdetails.get('ownershipType').setValue(ownershipType);
+		this.updateServiceUploadDocument(ownershipType,this.partnerlist.get('organizationType').get('code').value);
 	}
 
 	/**
@@ -1829,7 +1888,7 @@ export class ShopLicTransferComponent implements OnInit {
 		this.totalNoOfWomanForDocu =  this.totalNoOfWomanForDocu + Rnumber;
 		let grandTotal = 0;
 		if (this.registrationType === this.regiTyep[0].code) {
-			let control = this.shopLicTransferForm.get('workerCounts')['controls'];
+			let control = this.personoccuping.get('workerCounts')['controls'];
 			for (let i = 0; i < control.length; i++) {
 				grandTotal += control[i].get('total').value;
 			}
@@ -1849,13 +1908,13 @@ export class ShopLicTransferComponent implements OnInit {
 			this.saveRecord(row);
 
 		}
-		this.updateServiceUploadDocument(this.shopLicTransferForm.get('ownershipType').value,this.shopLicTransferForm.get('organizationType').get('code').value)
+		this.updateServiceUploadDocument(this.establishmentdetails.get('ownershipType').value,this.partnerlist.get('organizationType').get('code').value)
 		
 	}
 	
 	
 	getCommonWorkerType(){
-		let workerGrid = <FormArray>this.shopLicTransferForm.get('workerCounts');
+		let workerGrid = <FormArray>this.personoccuping.get('workerCounts');
 		this.shopAndEstablishmentService.getSelectedWorkerType(this.workerTypeList,workerGrid)
 	}
 
@@ -1902,7 +1961,7 @@ export class ShopLicTransferComponent implements OnInit {
 			})
 			this.totalNoOfWoman = this.totalNoOfWomanForDocu;
 		}else{
-			this.shopLicTransferForm.get('workerCounts').value.forEach(element => {
+			this.personoccuping.get('workerCounts').value.forEach(element => {
 				this.totalNoOfWomanForDocu = this.totalNoOfWomanForDocu + element.value;
 			});
 			this.totalNoOfWoman = this.totalNoOfWomanForDocu;

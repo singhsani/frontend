@@ -13,6 +13,7 @@ import { FormsActionsService } from 'src/app/core/services/citizen/data-services
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { ManageRoutes } from 'src/app/config/routes-conf';
 import { CitizenConfig } from '../../citizen-config';
+import { ValidatorService } from 'src/app/vmcshared/data-table/validator.service';
 
 @Component({
   selector: 'app-vendor-registration',
@@ -431,7 +432,7 @@ export class VendorRegistrationComponent implements OnInit {
       gstNo: [null, [ValidationService.gstNoValidator]],
       gstRegiDate: [null],
 
-      officeContactNumber: [null, [Validators.required]],
+      officeContactNumber: [null, [Validators.required,ValidationService.telPhoneNumberValidator]],
       officeFaxNumber: [null, [ValidationService.faxValidation]],
       officeEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 
@@ -441,14 +442,14 @@ export class VendorRegistrationComponent implements OnInit {
       branchSTDNumber: [null, [Validators.maxLength(11)]],
 
       headMobileNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
-      headAlterMobileNumber: [null, [Validators.maxLength(11), Validators.minLength(11)]],
+      headAlterMobileNumber: [null, [ValidationService.telPhoneNumberValidator]],
       headISDNumber: [null, [Validators.maxLength(12)]],
       headSTDNumber: [null, [Validators.maxLength(11)]],
       headName: [null, [Validators.required, Validators.maxLength(150)]],
       headDesignation: [null],
       headEmail: [null, [Validators.required, ValidationService.emailValidator]],
 
-      resContactNumber: [null, [Validators.required]],
+      resContactNumber: [null, [Validators.required,ValidationService.telPhoneNumberValidator]],
       resFaxNumber: [null, [ValidationService.faxValidation]],
       resEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 

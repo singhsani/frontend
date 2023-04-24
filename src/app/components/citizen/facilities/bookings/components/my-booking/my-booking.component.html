@@ -6,7 +6,7 @@
   <form [formGroup]="searchBookingsForm" (ngSubmit)="getAllBooking()" autocomplete="off" ngNativeValidate>
     <div class="row">
       <div class="col-md-4 ngSelect">
-        <ng-select placeholder="{{'select_booking_resources' | translate:translateKey}}" formControlName="resourceType"
+        <ng-select placeholder="{{'select_booking_resources' | translate:translateKey}} *" formControlName="resourceType"
           (change)="selectBookingResource($event)">
           <ng-option *ngFor="let resource of resources" [value]="resource.type">
             {{ resource.name }}
@@ -31,7 +31,7 @@
 
 <!-- If Bookings Not Found -->
 <div class="noApplication" *ngIf="resultsLength==0 && !isLoadingResults &&showReport">
-  <img src="assets/icons/no-application-found.png" alt=""> 
+  <img src="assets/icons/no-application-found.png" alt="">
   <br> {{'no_bookings_found' | translate:translateKey}}
   <!--<span class="noActi">{{'no_activity' | translate:translateKey}}</span>
     <a mat-stroked-button class="mat-primary" routerLink="../../dashboard">
@@ -173,21 +173,21 @@
                 {{'deposit_payment' | translate:translateKey}}
               </button>
 
-              <div *ngIf="element.resourceType== 'TOWNHALL'"> 
+              <div *ngIf="element.resourceType== 'TOWNHALL'">
                 <button *ngIf="showRecieptReprint(element)" mat-menu-item color="primary" (click)="printReceipt(element, element.payableServiceType=this.bookingConstant.TOWNHALL_FEES)">
                    <mat-icon title="Print Receipt" color="primary">print</mat-icon>
                    {{'receipt_reprint' | translate:translateKey}}
                </button>
                 </div>
 
-              <button *ngIf="element.resourceType == 'SWIMMING_POOL' && 
+              <button *ngIf="element.resourceType == 'SWIMMING_POOL' &&
                 element.status === this.bookingConstant.BOOKED" mat-menu-item color="primary"
                 (click)="printReceiptSwimmingFees(element, 'SWIMMING_POOL_FEES')">
                 <mat-icon title="Print Receipt" color="primary">print</mat-icon>
                 {{'receipt_reprint' | translate:translateKey}}
               </button>
 
-              <div *ngIf="element.resourceType!= 'TOWNHALL'"> 
+              <div *ngIf="element.resourceType!= 'TOWNHALL'">
               <button *ngIf="showRecieptReprint(element)" mat-menu-item color="primary"
                 (click)="printReceipt(element, element.payableServiceType)">
                 <mat-icon title="Print Receipt" color="primary">print</mat-icon>
@@ -533,7 +533,7 @@
       </div>
       <div class="row">
         <div class="col-md-12 ngSelect" formGroupName="bank">
-          <ng-select placeholder="{{'bank_name' | translate: translateKey}}" required formControlName="code">
+          <ng-select placeholder="{{'bank_name' | translate: translateKey}} *" required formControlName="code">
             <ng-option *ngFor="let bank of bankLists" [value]="bank.code">{{ bank.name }}</ng-option>
             <control-messages [control]="refundBankDetailsForm.get('bank')"></control-messages>
           </ng-select>
