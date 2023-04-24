@@ -176,24 +176,24 @@
 					<div>{{'business_detail' | translate:translateKey}}</div>
 				</ng-template>
 				<div class="row">
-					<div class="col-md-4 ngSelect" formGroupName="zoneNo">
+					<!-- <div class="col-md-4 ngSelect" formGroupName="zoneNo">
 						<ng-select placeholder="{{'business_under_zone' | translate:translateKey}} *"
 							formControlName="code"
 							(change)="onChangeZone($event);muttonFishTransferForm.get('wardNo').reset();">
-							<!-- muttonFishTransferForm.get('blockNo').reset()" -->
+							 muttonFishTransferForm.get('blockNo').reset()" 
 							<ng-option *ngFor="let zone of FIRM_ZONE" [value]="zone.code">{{zone.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="muttonFishTransferForm.get('zoneNo').get('code')">
 						</control-messages>
-					</div>
-					<div class="col-md-4 ngSelect" formGroupName="wardNo">
+					</div> -->
+					<!-- <div class="col-md-4 ngSelect" formGroupName="wardNo">
 						<ng-select placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="code">
-							<!-- (change)="onChangeWard($event);muttonFishTransferForm.get('blockNo').reset()" -->
+							 (change)="onChangeWard($event);muttonFishTransferForm.get('blockNo').reset()" 
 							<ng-option *ngFor="let ward of WARD" [value]="ward.code">{{ward.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="muttonFishTransferForm.get('wardNo').get('code')">
 						</control-messages>
-					</div>
+					</div> -->
 					<!-- <div class="col-md-4 ngSelect" formGroupName="blockNo">
 						<ng-select placeholder="{{'block_no' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let block of BLOCK" [value]="block.code">{{block.name}}</ng-option>
@@ -201,6 +201,22 @@
 						<control-messages [control]="muttonFishTransferForm.get('blockNo').get('code')">
 						</control-messages>
 					</div> -->
+					<div class="col-md-4 ngSelect">
+						<ng-select  placeholder="{{'business_under_zone' | translate:translateKey}} *" formControlName="zoneNo" required (change)="onChangedZone($event);">
+						  <ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.parentWardzoneId">
+							{{zone.wardzoneName}}</ng-option>
+						</ng-select>
+						<control-messages [control]="muttonFishTransferForm.get('zoneNo')"></control-messages>
+					  </div>
+					  <div class="col-md-4 ngSelect" >
+						<ng-select required placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="wardNo">
+						  <ng-option *ngFor="let ward of wardZoneLevel2List" [value]="ward.wardzoneId">
+							{{ward.wardzoneName}}</ng-option>
+						</ng-select>
+						<control-messages [control]="muttonFishTransferForm.get('wardNo')"></control-messages>
+					  </div>
+
+				
 				</div>
 				<div class="row">
 					<h2>{{'business_shop_address' | translate:translateKey}}</h2>

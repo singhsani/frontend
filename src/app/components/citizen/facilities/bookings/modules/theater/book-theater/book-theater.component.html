@@ -12,31 +12,29 @@
 </mat-card-title> -->
 
     <div class="pageTitle">{{'online_amphi_theater_bookings'| translate: translateKey}}</div>
-    <mat-card-content class="p-4">
-      <img _ngcontent-c1="" width=130 height=150 alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg"
+    <mat-card-content class="p-4 header_lines">
+      <img _ngcontent-c1="" width=130 height=130 alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg"
         class="center">
-      <p style="font-size:24px"><strong>{{'અગત્યની સુચનાઓ'| translate: translateKey}}</strong></p>
-      <h4>
+      <p class="headline mb-4"><strong>{{'અગત્યની સુચનાઓ'| translate: translateKey}}</strong></p>
+      <h4 >
         <ol class="olList">
           <li>
-            <p class="listSize" style="font-size: 21px;margin-top: -17px">એમ્ફિ થિયેટર જે આકારમાં ગોળાકાર છે, જેની
-              બેઠકની ક્ષમતા <b style="font-size: 18px; color: black;">500</b> ની છે.</p>
+            <p class="listSize">૧. એમ્ફિ થિયેટર જે આકારમાં ગોળાકાર છે, જેની
+              બેઠકની ક્ષમતા <b  class="bold">500</b> ની છે.</p>
           </li>
           <li>
-            <p class="listSize" style="font-size: 21px;margin-top: -17px">ક્લાસિકલ ડાન્સ અથવા વોકલ કોન્સર્ટ, સ્ટ્રીટ
+            <p class="listSize">૨. ક્લાસિકલ ડાન્સ અથવા વોકલ કોન્સર્ટ, સ્ટ્રીટ
               પ્લે લેક્ચર્સ, વગેરે જેવી નાની સાંસ્કૃતિક પ્રવૃત્તિઓનું આયોજન કરવા માટેનું આ એક આદર્શ સ્થળ છે.</p>
           </li>
           <li>
-            <p class="listSize" style="font-size: 21px;margin-top: -17px">એમ્ફી થિયેટરનો સમય: - સવારે <b
-                style="font-size: 18px; color: black;">9:00</b> થી સાંજે <b
-                style="font-size: 18px; color: black;">11:00</b></p>
+            <p class="listSize">૩. એમ્ફી થિયેટરનો સમય: - સવારે <b>9:00</b> થી સાંજે <b>11:00</b></p>
           </li>
           <!--                    <h4>ઉપરોક્ત સૂચનાનો ચૂસ્તપણે અમલ કરવાનો રહેશે અન્યથા કાર્યક્રમ બંધ કરવાની ફરજ પડશે.</h4>-->
         </ol>
       </h4>
       <!-- <h4><b>એમ્ફી થિયેટર બુકિંગ માટે દરો:</b></h4> -->
-      <p style="font-size:24px ;margin-top: -37px"><strong>એમ્ફી થિયેટર બુકિંગ માટે દરો:</strong>
-      <div class=" table-responsive">
+      <p class="headline"><strong>એમ્ફી થિયેટર બુકિંગ માટે દરો:</strong></p>
+      <div class="table">
 
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
@@ -63,26 +61,26 @@
       </div>
     </mat-card-content>
 
-    <mat-card-content class="p-4" style="height: 355px; margin-top: -45px;">
-      <h3><strong>{{'Important Instructions'| translate: translateKey}}</strong></h3><br>
+    <mat-card-content class="p-4">
+      <h3 class="engTitle"><strong>{{'Important Instructions'| translate: translateKey}}</strong></h3>
       <h4>
-        <ol class="olList">
-          <li>
-            <P style="font-size: 21px;margin-top: -17px">The Amphi Theatre which is round in shape with a stepped
+        <ol>
+          <li class="engInstructions">
+            <P >The Amphi Theatre which is round in shape with a stepped
               seating capacity of 500.</P>
           </li>
-          <li>
-            <P style="font-size: 21px;margin-top: -17px">This is an ideal place to organize small cultural activities
+          <li class="engInstructions">
+            <P >This is an ideal place to organize small cultural activities
               like classical dance or vocal concert, Street play lectures, etc.</P>
           </li>
-          <li>
-            <P style="font-size: 21px;margin-top: -17px">Timings of the Amphi Theatre: - 9:00 am to 11:00 pm.</P>
+          <li class="engInstructions">
+            <P>Timings of the Amphi Theatre: - 9:00 am to 11:00 pm.</P>
           </li>
           <!--                    <h5>The above instruction must be strictly enforced otherwise the program will be forced to close.</h5>-->
         </ol>
-      </h4>
-      <h4 style="margin-top: -17px"><b>Rates for Booking Amphi Theatre:</b></h4>
-      <div class=" table-responsive">
+      </h4><br>
+      <h4><b>Rates for Booking Amphi Theatre:</b></h4>
+      <div class="table">
 
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
@@ -106,7 +104,7 @@
         </table>
       </div>
 
-      <div class="row, p-4">
+      <div class="row pl-3">
         <mat-checkbox (change)="clickProcess($event)" [checked]="checkProceed"> <b>Agree And Continue</b>
         </mat-checkbox>
       </div>
