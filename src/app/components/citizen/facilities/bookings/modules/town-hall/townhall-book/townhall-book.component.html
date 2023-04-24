@@ -4,37 +4,37 @@
 <div *ngIf="guideLineFlag">
     <mat-card class="cardBox">
         <div class="pageTitle">{{'online_townhall_bookings'| translate: translateKey}}</div>
-        <mat-card-content class="p-4">
+        <mat-card-content class="p-4 header_lines">
             <!-- <p class="pb-2">{{head_lines| translate: translateKey}}</p> -->
             <!-- <h2>{{'rules_and_regulations'| translate: translateKey}}</h2> -->
-            <img _ngcontent-c1="" width=130 height=150 alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg" class="center">
-            <h5> <b>Read all the rules town hall-wise before click on proceed, once you click on proceed we consider your acceptance of the rules and regulations.</b></h5>
-            <p style="font-size:90%"> <b>"Proceed" પર ક્લિક કરતા પહેલા ટાઉન હોલ મુજબના તમામ નિયમો વાંચો, એકવાર તમે "Proceed" પર ક્લિક કરો પછી અમે નિયમો અને નિયમોની તમારી સ્વીકૃતિને ધ્યાનમાં લઈશું.</b></p>
+            <img _ngcontent-c1="" width=130 height=130 alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg" class="center">
+            <h5 class="titleHeader"> <b>Read all the rules town hall-wise before click on proceed, once you click on proceed we consider your acceptance of the rules and regulations.</b></h5>
+            <p  class="titleparagraph"> <b>"Proceed" પર ક્લિક કરતા પહેલા ટાઉન હોલ મુજબના તમામ નિયમો વાંચો, એકવાર તમે "Proceed" પર ક્લિક કરો પછી અમે નિયમો અને નિયમોની તમારી સ્વીકૃતિને ધ્યાનમાં લઈશું.</b></p>
             <mat-card-content>
 
                 <div class="row p-3">
                     <div class="col-md-3">
-                        <h5><b> {{'MG'| translate: translateKey}}: <br/>
+                        <h5 class="text-center"><b> {{'MG'| translate: translateKey}}: <br/>
                             <button mat-button (click)="downloadGuidLineDocumemnt('MG_Nagar_Gruh_Seating_Arrangement_&_Rules')"
                                 color="primary">Download</button></b>
                         </h5>
                     </div>
-                    <div class="col-md-3">
-                        <h5><b>{{'PDUN' | translate: translateKey}}:<br/>
+                    <div class="col-md-5">
+                        <h5 class="text-center"><b>{{'PDUN' | translate: translateKey}}:<br/>
                             <button mat-button (click)="downloadGuidLineDocumemnt('Pndt_DU_Nagar_Gruh_Seating_Arrangement_&_Rules')"
                                 color="primary">Download</button></b>
                         </h5>
                     </div>
-                    <div class="col-md-3">
-                        <h5><b>{{'SSR' | translate: translateKey}}: <br/>
+                    <div class="col-md-4">
+                        <h5 class="text-center"><b>{{'SSR' | translate: translateKey}}: <br/>
                             <button mat-button (click)="downloadGuidLineDocumemnt('Sir_Sayaji_Nagar_Gruh_Seating_Arrangement_&_Rules')"
                                 color="primary">Download</button></b>
                         </h5>
                     </div>
                     </div>
                     </mat-card-content>
-            <p style="font-size:100%"><strong>{{'અગત્યની સુચનાઓ'| translate: translateKey}}</strong></p>
-            <h4>
+            <p class="headline"><strong>{{'અગત્યની સુચનાઓ'| translate: translateKey}}</strong></p>
+            <h4 class="gujratiInstructions">
                 <!-- <li>
                     All parties/organizers have to observe the VMC Rules(
                     <a href="javascript:void(0)" class="stretched-link" (click)="loadGuideLine()">
@@ -57,69 +57,70 @@
                         અને સંસ્થાનું નામ લખવું ફરજીયાત છે.</p>
                 
                     <p class="listSize"> ૬. જાહેર જનતાની સુરક્ષાને ધ્યાનમાં લેતા કોઈપણ સંજોગોમાં પ્રથમ અને બીજી શીફ્ટમાં નિયત સમયમાં
-                        પ્રોગ્રામ શરૂ કરવો તેમજ પૂરો કરવાનો રહેશે તથા ત્રીજી શીફ્ટ પણ રાત્રે ૧-૦૦ વાગ્યા બાદ કાર્યક્રમ
-                        બંધ કરવો &nbsp;&nbsp;&nbsp;&nbsp;ફરજીયાત છે.</p>
-                    <p class="listSize">&nbsp;&nbsp;&nbsp;&nbsp;પ્રથમ શીફ્ટ - સવારે ૦૯-૦૦ થી ૧૨-૩૦ કલાકે</p>
+                        પ્રોગ્રામ શરૂ કરવો તેમજ પૂરો કરવાનો રહેશે તથા ત્રીજી શીફ્ટ પણ રાત્રે ૧-૦૦ 
+                        &nbsp;&nbsp;&nbsp;&nbsp;વાગ્યા બાદ કાર્યક્રમ બંધ કરવો ફરજીયાત છે.</p>
+                    <p class="listSize">૭. પ્રથમ શીફ્ટ - સવારે ૦૯-૦૦ થી ૧૨-૩૦ કલાકે</p>
                     <p class="listSize">&nbsp;&nbsp;&nbsp;&nbsp;દ્રિતીય શીફ્ટ - બપોરે ૦૩-૦૦ થી ૬-૩૦ કલાકે</p>
                     <p class="listSize">&nbsp;&nbsp;&nbsp;&nbsp;તૃતીય શીફ્ટ - રાત્રે ૦૯-૦૦ થી ૧૨-૩૦ કલાકે</p>
-                
 
-               
-                    <p class="listSize"> ૭. નગરગૃહના ઠરાવેલ નિયમો ઉપરાંત હાલની સ્થળ સ્થિતિને ધ્યાનમાં લેતા તથા. પ્રેક્ષકોની સુવિધાઓ અને
-                        સુરક્ષાની બાબતને ધ્યાનમાં લેતા ઉપરોક્ત અનુક્રમ નંબર: ૧ થી ૬ ના સૂચનોનું અરજદાર અને સંસ્થાએ અચૂક
-                        &nbsp;&nbsp;&nbsp;&nbsp;પાલન કરવાનું રહેશે.</p>
+                    <p class="listSize"> ૮. નગરગૃહના ઠરાવેલ નિયમો ઉપરાંત હાલની સ્થળ સ્થિતિને ધ્યાનમાં લેતા તથા. પ્રેક્ષકોની સુવિધાઓ અને
+                        સુરક્ષાની બાબતને ધ્યાનમાં લેતા ઉપરોક્ત અનુક્રમ નંબર: ૧ થી ૬ ના 
+                        &nbsp;&nbsp;&nbsp;&nbsp;સૂચનોનું અરજદાર અને સંસ્થાએ અચૂક પાલન કરવાનું રહેશે.</p>
                 
-                <p class="listSize">ઉપરોક્ત સૂચનાનો ચૂસ્તપણે અમલ કરવાનો રહેશે અન્યથા કાર્યક્રમ બંધ કરવાની ફરજ પડશે.</p>
+                <p class="readline">ઉપરોક્ત સૂચનાનો ચૂસ્તપણે અમલ કરવાનો રહેશે અન્યથા કાર્યક્રમ બંધ કરવાની ફરજ પડશે.</p>
                 <!-- </p> -->
             </h4>
         </mat-card-content>
         <mat-card-content class="p-4">
-            <h3><strong>{{'Important Instructions'| translate: translateKey}}</strong></h3><br>
+            <h3 class="engTitle"><strong>{{'Important Instructions'| translate: translateKey}}</strong></h3>
             <h4><ol class="listSize">
 
-                <li>
+                <li class="engInstructions">
                     <h4>It is compulsory to deposit ₹ 15,000 / - in reserve and Police Performance License in the town
                         house office before the date of the program.</h4>
                 </li>
 
-                <li>
-                    <h4>Arranging metal detectors and dress code security staff is mandatory for the safety of the
+                <li class="engInstructions">
+                    <h4 >Arranging metal detectors and dress code security staff is mandatory for the safety of the
                         spectators.</h4>
                 </li>
 
-                <li>
+                <li class="engInstructions">
                     <h4>In any case, inviting more than 911 spectators is prohibited.</h4>
                 </li>
 
-                <li>
+                <li class="engInstructions">
                     <h4>Experiments with flames and explosives, as well as incense-burning incense, are prohibited in
                         the town hall complex.</h4>
                 </li>
 
-                <li>
+                <li class="engInstructions">
                     <h4> It is mandatory to write the name of the applicant and the name of the organization in the
                         banners and invitation cards or tickets prepared for the presentation of the program.</h4>
                 </li>
 
-                <li>
+                <li class="engInstructions">
                     <h4>In any case, considering the safety of the public, the program must be started and completed
                         within the stipulated time in the first and second shifts and it is also mandatory to close the
                         program after 1:00 pm in the third shift.</h4>
                 </li>
 
-                <li>
+                <li class="engInstructions">
                     <h4>First shift - 09-00 to 12-30 hours in the morning</h4>
                     <h4>Second shift - 03-00 to 6-30 hours</h4>
                     <h4>Third shift - 09:00 to 12-30 hours at night</h4>
                 </li>
 
-                <li>
+                <li class="engInstructions">
                     <h4>In addition to the rules laid down by the township, taking into account the current site
                         conditions and. Considering the facilities and safety of the audience, the applicant and the
                         organization must strictly follow the instructions of the above sequence number: 1 to 6.</h4>
                 </li>
-                <h4>The above instruction must be strictly enforced otherwise the program will be forced to close.</h4>
-            </ol></h4>
+            </ol>
+            <div class="engInstructions">
+                <h4 >The above instruction must be strictly enforced otherwise the program will be forced to close.</h4>
+            </div>
+        </h4>
         </mat-card-content>
     </mat-card>
     <div class="fotButtonBar">

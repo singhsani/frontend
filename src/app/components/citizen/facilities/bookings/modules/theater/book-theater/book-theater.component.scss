@@ -57,3 +57,72 @@ table { width: 100%; }
       &.border {border-color: #ffeeba !important;}
   }
   
+  .cardBox {
+      .pageTitle {
+          margin-bottom: 0px;
+      }
+
+      .header_lines {
+          padding-top: 7px !important;
+          margin-bottom: 0px;
+
+          img {
+              margin-bottom: 7px;
+          }
+
+          .headline {
+              font-size: 20px;
+          }
+
+          .olList {
+              list-style-type: none;
+
+              li {
+                  .listSize {
+                      font-size: 15px;
+                      margin-top: -15px;
+                  }
+              }
+          }
+
+          .table {
+              tr.mat-header-row {
+                  height: 43px;
+              }
+
+              td,
+              th {
+                  border: 1px solid #000000;
+                  padding: 8px;
+              }
+          }
+      }
+
+      .engTitle {
+          font-size: 20px;
+      }
+
+      .engInstructions {
+          p {
+              font-size: 18px;
+              line-height: 0.9px;
+          }
+      }
+
+      .table {
+          tr.mat-header-row {
+              height: 43px;
+          }
+
+          td,
+          th {
+              border: 1px solid #000000;
+              padding: 8px;
+          }
+      }
+
+      .fotButtonBar {
+          margin-top: 0 !important;
+      }
+
+  }

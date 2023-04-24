@@ -82,3 +82,45 @@ table { width: 100%; }
 .mat-table td.mat-cell, .mat-table th.mat-header-cell {
     font-size: 13px !important;
 }
+
+.cardBox {
+    .pageTitle {
+        margin-bottom: 0px;
+    }
+
+    .header_lines {
+        padding-top: 7px !important;
+        margin-bottom: 0px;
+
+        img {
+            margin-bottom: 7px;
+        }
+        .titleHeader {
+            font-size: 18px;
+        }
+        .titleparagraph{
+            font-size: 17px;
+        }
+    }
+
+    .headline {
+        font-size: 18px;
+    }
+    .gujratiInstructions {
+        .listSize {
+            font-size: 15px;
+            margin-left: 10px;
+        }
+        .readline{
+            font-size: 15px;
+        }
+    }
+    .engTitle{
+       font-size: 24px;
+    }
+    .engInstructions {
+        h4{
+            font-size: 18px;
+        }
+    }
+}
