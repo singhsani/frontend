@@ -70,7 +70,7 @@ export class ForgotPasswordComponent implements OnInit {
                 /**
                  * Redirect to reset password
                  */
-                this.commonService.successAlert("Success", "For OTP and Password Reset Link, please check your registered Email ID and Mobile Number. Thank you", "success");
+                this.commonService.successAlert("Success", "For OTP and Password reset link, please check your registered email ID and mobile number. Thank you", "success");
                 let url = this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHRESETPASS')],
                 // { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp,email : this.forgotPassForm.get('email').value } }
                 { queryParams: { uniqueId: res.data.uniqueId} });
