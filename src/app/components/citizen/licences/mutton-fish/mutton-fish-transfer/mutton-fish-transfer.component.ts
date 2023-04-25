@@ -210,7 +210,7 @@ export class MuttonFishTransferComponent implements OnInit {
 					this.istable = true;
 				}
 				this.licenseConfiguration.isAttachmentButtonsVisible = true;
-				this.onChangeZone(this.muttonFishTransferForm.get('zoneNo').value);
+				this.onChangedZone(this.muttonFishTransferForm.get('zoneNo').value);
 			//	this.onChangeWard(this.muttonFishTransferForm.get('wardNo').value.code);
 			if (this.muttonFishTransferForm.get('statusOfBusinessId').value.code) {
 				this.onChangeStatusOfBusiness(this.muttonFishTransferForm.get('statusOfBusinessId').value.code,false)
