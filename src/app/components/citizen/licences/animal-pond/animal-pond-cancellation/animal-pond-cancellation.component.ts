@@ -11,6 +11,7 @@ import { FormsActionsService } from '../../../../../core/services/citizen/data-s
 import { Location } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { LicenseConfiguration } from '../../license-configuration';
+import { ValidatorService } from 'src/app/vmcshared/data-table/validator.service';
 
 @Component({
 	selector: 'app-animal-pond-cancellation',
@@ -229,7 +230,7 @@ export class AnimalPondCancellationComponent implements OnInit {
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			temporaryAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 
-			holderTelephoneNo: [null, [Validators.maxLength(11), Validators.minLength(11)]],
+			holderTelephoneNo: [null, [ValidationService.telPhoneNumberValidator]],
 			holderMobileNo: [null, [Validators.required, Validators.maxLength(11), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
 			holderAadharNo: [null, [Validators.required, Validators.maxLength(12), Validators.minLength(12)]],
