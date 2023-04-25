@@ -258,6 +258,7 @@ export class ShopLicTransferComponent implements OnInit {
 	}
 
 	setFormDataFromLatestApplication(res){
+		debugger
         this.establishmentdetails.patchValue({
 			// 1
 			establishmentName : res.establishmentName,
@@ -1756,7 +1757,7 @@ export class ShopLicTransferComponent implements OnInit {
 			}
 		}
 		if(count == 0){
-			if(this.totalNoOfWoman > 0){
+			if(this.totalNoOfWoman > 0 && count == 0){
 				{
 					this.womanDocument = [
 						{
