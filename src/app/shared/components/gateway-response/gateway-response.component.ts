@@ -49,6 +49,13 @@ export class GatewayResponseComponent implements OnInit {
 		if(this.dispData.resourceType == 'amphiTheater' && this.dispData.txtadditionalInfo1 == 'amphiTheater' ){
 			this.serviceName = 'amphiTheatre'
 		}
+		else if(this.dispData.resourceType == 'atithigruh' && (this.dispData.txtadditionalInfo1 == 'atithigruh' || this.dispData.txtadditionalInfo1 == 'ATITHIGRUH')){
+			this.serviceName = 'Atithigruh'
+		}
+		else{
+			this.serviceName = this.dispData.txtadditionalInfo1 ? this.dispData.txtadditionalInfo1 :this.dispData.resourceType ?
+								this.dispData.resourceType : this.serviceType ? this.serviceType : this.dispData.payableServiceType;
+		}
 		console.log('this.dispData', this.dispData);
 	}
 	Tickting: String[] = [
@@ -132,7 +139,6 @@ export class GatewayResponseComponent implements OnInit {
 	 * @param token - token from api
 	 */
 	gatewayResponse(token, isSearchanble) {
-
 		// this.formService.getPaymentResponse(token).subscribe(res => {
 		this.isSearchanble = isSearchanble;
 		if (isSearchanble == "true") {
