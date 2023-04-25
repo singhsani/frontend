@@ -112,11 +112,11 @@
             <h4>Booking time : Monday to Friday from 9:30 am to 1:00 pm.</h4>
             <h4>Saturday : 9:30 am to 11:00 am (Booking office will be closed on public holidays.)</h4>
           </ol></h4><br>
-          <p class="pb-2 headLines">{{head_lines| translate: translateKey}}</p>      
+          <p class="pb-2 headLines">{{head_lines| translate: translateKey}}</p>
                   <div class="rate-chart">
                     <h4><b>Atithigruh Booking Rate Chart</b></h4>
                   </div>
-                    
+
                 <mat-card class="cardBox">
                   <div class="pageTitle">
                     <h4 align="center"><b>Atithigruh One Day Booking Charges</b></h4>
@@ -376,7 +376,8 @@
             <table class="table">
                 <thead class="customthead">
                     <tr>
-                        <th scope="col" width="56">{{'s_no'| translate: stadiumTranslateKey}}</th>
+                        <!-- <th scope="col" width="56">{{'s_no'| translate: stadiumTranslateKey}}</th> -->
+                        <th scope="col" width="56">Sr.No.</th>
                         <th scope="col">{{'date_of_programme'| translate: translateKey}}</th>
                         <!-- <th scope="col">{{'end_date'| translate: translateKey}}</th> -->
                         <th scope="col">{{'slot_status'| translate: stadiumTranslateKey}}</th>
@@ -394,7 +395,8 @@
                         </td>
                         <!-- <td>{{shifts.occupancy}}</td> -->
                         <td>
-                            <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}"
+                            <!-- <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" -->
+                              <button mat-icon-button title="Remove Slot"
                                 [disabled]="selectedShift.length == 1"
                                 (click)="selectedShift = bookingUtils.removeSelectedShift(shifts,selectedShift,  i)">
                                 <mat-icon color="warn">delete</mat-icon>
@@ -447,7 +449,7 @@
                          <td scope="col">{{atithigruhName}}</td>
                          <td scope="col">{{purpose}}</td>
                          <td scope="col" *ngIf='paymentObject.bookingType=="Advance booking"'>{{paymentObject.FORM_CHARGES}}</td>
-                      
+
                     </tr>
                 </tbody>
             </table>
@@ -467,9 +469,9 @@
                         <td scope="col">{{paymentObject.RENT_FEES-paymentObject.RENT_CONCESSION}}</td>
                         <td scope="col">{{paymentObject.ADMINISTRATION_CHARGES}}</td>
                         <td scope="col">{{paymentObject.GST}}</td>
-                        <td scope="col">{{totalAmount}}</td> 
+                        <td scope="col">{{totalAmount}}</td>
                         <td scope="col">{{paymentObject.DEPOSIT_FEES-paymentObject.DEPOSIT_CONCESSION}}</td>
-                        <td scope="col">{{totalPayble}}</td>      
+                        <td scope="col">{{totalPayble}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -477,11 +479,11 @@
             <!-- <div class="row">
               <div class="col-md-8 ">
                 <div class="d-flex justify-content-between">
-                  <h5 class="detailslist"> Atithigruh Name :- <span class="detailsNamelist">{{atithigruhName}}  </span> </h5> 
+                  <h5 class="detailslist"> Atithigruh Name :- <span class="detailsNamelist">{{atithigruhName}}  </span> </h5>
                 </div>
                 <div class="mt-2">
-                   <h5 class="detailslist"> Date Of Programme :-  <span class="detailsNamelist"> {{startDate | date:'dd-MM-yyy'}}  
-                    <ng-container *ngIf="bookingForRegular"> - {{endDate | date:'dd-MM-yyy'}}</ng-container> </span></h5>   
+                   <h5 class="detailslist"> Date Of Programme :-  <span class="detailsNamelist"> {{startDate | date:'dd-MM-yyy'}}
+                    <ng-container *ngIf="bookingForRegular"> - {{endDate | date:'dd-MM-yyy'}}</ng-container> </span></h5>
                 </div>
                 </div>
               <div class="col-md-4">

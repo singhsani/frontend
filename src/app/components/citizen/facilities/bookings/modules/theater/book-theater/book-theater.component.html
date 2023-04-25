@@ -268,14 +268,15 @@
       <table class="table">
         <thead class="customthead">
           <tr>
-            <th scope="col" width="56">{{'s_no'| translate: translateKey}}</th>
+            <!-- <th scope="col" width="56">{{'s_no'| translate: translateKey}}</th> -->
+            <th scope="col" width="56">Sr.No.</th>
             <th scope="col">{{'date_of_programme'| translate: translateKey}}</th>
             <!-- <th scope="col">{{'end_date'| translate: translateKey}}</th> -->
             <th scope="col">{{'slot_status'| translate: translateKey}}</th>
             <!-- <th scope="col">{{'occupancy'| translate: translateKey}}</th> -->
-            <div *ngIf="selectedShift.length > 1">
+            <!-- <div *ngIf="selectedShift.length >=1"> -->
               <th scope="col" width="65">{{'action'| translate: translateKey}}</th>
-            </div>
+            <!-- </div> -->
           </tr>
         </thead>
         <tbody>
@@ -286,9 +287,10 @@
             <td>{{shifts.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : shifts.slotStatus
               }}</td>
             <!-- <td>{{shifts.occupancy}}</td> -->
-            <div *ngIf="selectedShift.length > 1">
+            <div *ngIf="selectedShift.length >= 1">
               <td>
-                <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}"
+                <!-- <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" -->
+                  <button mat-icon-button title="Remove Slot"
                   (click)="selectedShift = bookingUtils.removeSelectedShift(shifts,selectedShift,  i)">
                   <mat-icon color="warn">delete</mat-icon>
                 </button>
