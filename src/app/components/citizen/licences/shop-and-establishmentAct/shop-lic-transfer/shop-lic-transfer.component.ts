@@ -258,7 +258,6 @@ export class ShopLicTransferComponent implements OnInit {
 	}
 
 	setFormDataFromLatestApplication(res){
-		debugger
         this.establishmentdetails.patchValue({
 			// 1
 			establishmentName : res.establishmentName,

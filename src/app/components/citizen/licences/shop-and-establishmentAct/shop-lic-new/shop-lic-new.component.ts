@@ -1472,7 +1472,6 @@ export class ShopLicNewComponent implements OnInit {
 	 * @param ownershipType 
 	 */
 	filterDocumentList(ownershipType, organizationCode) {
-		debugger
 		let count = 0
 		const isPartnerShipSelected =  (organizationCode == 'PARTNERSHIP') ? true : false;
 		for (let file of this.displayDocs) {
