@@ -60,7 +60,7 @@ export class ValidationService {
             invalidPrcNumber : `Enter valid PRC number e.g. PRC123456789`,
             invalidPecNumber : `Enter valid PEC number e.g. PEC123456789`,
             inValidelectricityBill  :`Enter valid Election Card Number e.g. 12345678901`,
-            invalidTelPhoneNumber : `Minimum length should be 10 digit`
+            invalidTelPhoneNumber : `Minimum length should be 11 digit`
         }
 
         return config[validatorName];
