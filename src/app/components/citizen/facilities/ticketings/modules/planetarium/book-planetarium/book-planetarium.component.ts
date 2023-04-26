@@ -638,7 +638,7 @@ export class BookPlanetariumComponent implements OnInit {
       this.commonService.openAlert("Field Error", this.ticketingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
       this.markFormGroupTouched(this.ticketBookingForm);
     }
-    else if (this.showFotButtonBar) {
+    else if (!this.showFotButtonBar) {
       if (!this.isFileUploaded) {
         this.commonService.openAlert(this.ticketingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
         return;
