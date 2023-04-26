@@ -671,4 +671,24 @@ export class BookPermissionComponent implements OnInit {
 		}
     }
 
+     /**
+       * Get user data
+       */
+     getUserProfile() {
+      this.bookingService.getUserProfile().subscribe(resp => {
+          this.organizationdetails.get('applicantName').setValue(resp.data.firstName + ' ' + resp.data.lastName);
+          this.organizationdetails.get('applicantMobile').setValue(resp.data.cellNo);
+          this.organizationdetails.get('confirmMobile').setValue(resp.data.cellNo);
+          this.organizationdetails.get('emailId').setValue(resp.data.email);
+          this.organizationdetails.get('confirmEmailId').setValue(resp.data.email);
+        },
+        err => {
+          this.toster.error("Server Error");
+        });
+      this.organizationdetails.get('applicantAddress').get('country').setValue('INDIA');
+      this.organizationdetails.get('applicantAddress').get('state').setValue('GUJARAT');
+      this.organizationdetails.get('applicantAddress').get('city').setValue('Vadodara');
+    }
+
+
 }

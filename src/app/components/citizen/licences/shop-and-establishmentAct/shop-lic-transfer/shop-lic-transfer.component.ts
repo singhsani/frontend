@@ -1756,7 +1756,7 @@ export class ShopLicTransferComponent implements OnInit {
 			}
 		}
 		if(count == 0){
-			if(this.totalNoOfWoman > 0){
+			if(this.totalNoOfWoman > 0 && count == 0){
 				{
 					this.womanDocument = [
 						{

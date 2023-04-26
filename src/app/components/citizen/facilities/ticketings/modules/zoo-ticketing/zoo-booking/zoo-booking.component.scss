@@ -155,10 +155,6 @@ table { width: 100%; }
     vertical-align: middle;
 }
 
-.guideline-intro {
-    font-size: 18px;
-    font-weight: 500;
-}
 
 .row {
   margin: 0;
@@ -176,9 +172,6 @@ table { width: 100%; }
     margin-top: -50px ;
     height: 596px
 }
-.h2{
-    margin-top: -18px;
-}
 .wt{
     width: 98%;
 }
@@ -191,9 +184,27 @@ table { width: 100%; }
 .mat-cell1{
     margin-right: 180px;
 }
-.mt16{
-    margin-top: -16px;
-}
+
 .mt40{
-    margin-top: -45px;
+    margin-top: 40px;
+}
+
+.cardBox{
+    .guideline-intro {
+        font-size: 22px;
+        font-weight: bold;
+    }
+    .note{
+        font-size: 17px;
+        line-height: 1.5;
+    }
+    .ticketDetails{
+        margin-bottom: 5px;
+    }
+    table{
+        td,th {
+            border: 1px solid #000000;
+            padding: 8px;
+        }
+    }
 }

@@ -1496,7 +1496,7 @@ export class ShopLicNewComponent implements OnInit {
 					}
 				];
 			
-					if(this.totalNoOfWomanForDocu > 0){
+					if(this.totalNoOfWomanForDocu > 0 && count == 0){
 						docArray.push({
 							
 									documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
@@ -1527,7 +1527,7 @@ export class ShopLicNewComponent implements OnInit {
 				];
 
 				
-					if(this.totalNoOfWomanForDocu > 0){
+					if(this.totalNoOfWomanForDocu > 0 && count == 0){
 						docArray.push({
 							
 									documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
@@ -1584,7 +1584,7 @@ export class ShopLicNewComponent implements OnInit {
 				
 				}
 			
-			}else if(this.totalNoOfWomanForDocu > 0){
+			}else if(this.totalNoOfWomanForDocu > 0 && count == 0){
 				{
 					this.womanDocument = [
 						{
@@ -2011,7 +2011,7 @@ export class ShopLicNewComponent implements OnInit {
 			}
 		}
 		if(count == 0){
-			if(this.totalNoOfWoman > 0){
+			if(this.totalNoOfWoman > 0 && count == 0){
 				{
 					this.womanDocument = [
 						{

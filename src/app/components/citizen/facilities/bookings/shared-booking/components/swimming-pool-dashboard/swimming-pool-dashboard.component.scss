@@ -21,3 +21,40 @@
   float: left;
 }
 .example-container { max-height: 400px; overflow: auto; }
+
+.cardBox {
+  .headline {
+    font-size: 20px;
+  }
+
+  .mat-card-content {
+    .cardtitle {
+      font-size: 17px;
+      margin-bottom: 0.4rem;
+    }
+  }
+
+  .olList {
+    list-style-type: none;
+    margin-left: -14px;
+
+    li {
+      padding-bottom: 0;
+      line-height: 27px;
+    }
+
+    .listSize {
+      font-size: 17px;
+      margin-bottom: 4px;
+    }
+
+    .oltype {
+      font-size: 15px;
+      margin-left: -14px;
+    }
+  }
+
+  .listSize {
+    font-size: 17px;
+  }
+}

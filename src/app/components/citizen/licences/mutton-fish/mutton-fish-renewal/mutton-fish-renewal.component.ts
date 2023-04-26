@@ -198,7 +198,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 		    this.formService.getWardZone(postData).subscribe(res => {
 			   this.wardZoneLevel2List = res.body;
 		    })
-			console.log(this.wardZoneLevel2List)
+			//console.log(this.wardZoneLevel2List)
 			this.businessDetail.patchValue({
 				zoneNo: searchData.zoneNo,
 				wardNo: searchData.wardNo,
@@ -324,7 +324,6 @@ export class MuttonFishRenewalComponent implements OnInit {
 	 * @param event : selected zone code
 	 */
 	onChangeZone(event) {
-		debugger
 		this.WARD = [];
 		if (event && this.LOOKUP.hasOwnProperty(event)) {
 			this.WARD = this.LOOKUP[event];
