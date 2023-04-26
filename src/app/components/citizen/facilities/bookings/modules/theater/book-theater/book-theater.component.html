@@ -182,7 +182,7 @@
 
         </div>
 
-        <div class="row fotButtonBarSearchForm">
+        <div class="fotButtonBar">
           <div class="col-sm-12 col-md-12 text-right">
             <button mat-raised-button color="primary" type="submit">
               <mat-icon>search</mat-icon>
@@ -240,7 +240,7 @@
         </mat-expansion-panel>
       </mat-accordion>
 
-      <div class="fotButtonBarSearchForm">
+      <div class="fotButtonBar">
         <div class="col-sm-12 col-md-12 text-right">
           <button mat-raised-button data-toggle="modal" (click)="shortListTheater(confirmationModel)"
             data-target="#confirmShortlistModel" type="button" [disabled]="selectedShift.length == 0" color="primary">
@@ -348,7 +348,7 @@
         </tbody>
       </table>
     </div>
-    <div class="fotButtonBarSearchForm">
+    <div class="fotButtonBar">
       <div class="col-sm-12 col-md-12 text-right">
         <button type="button" mat-raised-button color="primary" data-dismiss="modal"
           (click)="showTheaterBookingForm = true; this.showPaymentReciept = false;getUserProfile();">
@@ -452,7 +452,7 @@
             <app-address #address [requiredFeilds]="true"
               [addressFormGroup]="firstTheaterBookingForm.get('organizationAddress')"></app-address>
           </div>
-          <div class="row mt-4 fotButtonBarSearchForm">
+          <div class="row mt-4 fotButtonBar">
             <div class="col-sm-12 col-md-12 text-right">
               <button mat-raised-button type="button" color="primary"
                 (click)="checkValidation(firstTheaterBookingForm,false)">
@@ -489,7 +489,7 @@
             </div>
           </div>
 
-          <div class="row mt-4 fotButtonBarSearchForm">
+          <div class="row mt-4 fotButtonBar">
             <div class="col-sm-12 col-md-12 justify-content-between d-flex">
               <button type="button" color="primary" mat-raised-button (click)="tabIndex= tabIndex -1; ">
                 <mat-icon>navigate_before</mat-icon>
