@@ -72,12 +72,7 @@ h1{
    .th{
        text-align: center;
    }
-   .div{
-       border: 1px solid hsl(0, 0%, 6%);
-       margin-top: 10px;
-       margin-bottom: 1px;
-       width: 98%;
-   }
+  
 
    .div1{
     border: 1px solid hsl(0, 0%, 6%);
@@ -88,6 +83,39 @@ h1{
 .but{
     margin-right: 200px;
 }
-.img{
-    height: 100px;
+
+
+.cardBox {
+    .pageTitle {
+        margin-bottom: 6px;
+    }
+    .head_container
+    {
+        .img{
+            width: 130px;
+            height: 130px;
+        }
+        .titleHeader{
+            font-size: 18px;
+        }
+        .titleparagraph{
+            font-size: 17px;
+        }
+        .tableTop{
+            border: 1px solid hsl(0, 0%, 6%);
+            margin-top: 6px;
+            margin-bottom: 1px;
+            width: 98%;
+            .tableTitle{
+                margin-bottom: 0;
+            }
+        }
+
+    }
+}
+
+.fotButtonBar{
+    .listSize{
+        font-size: 17px;
+    }
 }

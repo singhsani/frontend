@@ -133,6 +133,7 @@ export class BookPermissionComponent implements OnInit {
 				return;
 			}
 		});
+    this.setFormControlToTabIndexMap();
   }
 
 /**
@@ -339,6 +340,8 @@ export class BookPermissionComponent implements OnInit {
 
 })
 
+
+
     // this.bookPermissionApplicationForm = this._fb.group({
     //   uniqueId: [null],
     //   version: [null],
@@ -419,7 +422,7 @@ export class BookPermissionComponent implements OnInit {
    */
   submitPermissionApplication(): void {
    // let errCount = this.bookingUtils.getAllErrors(this.bookPermissionApplicationForm);
-    if (this.bookPermissionApplicationForm.invalid) {
+    if (this.bookingDetails.invalid) {
      // this.handleErrorsOnSubmit(errCount);
       this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
       return;
@@ -552,6 +555,7 @@ export class BookPermissionComponent implements OnInit {
     this.tabIndex = evt;
   }
 
+
 	/**
 	 * Method is used to handle error/validation on submit
 	 * @param controlName - count of invalid control.
@@ -578,6 +582,31 @@ export class BookPermissionComponent implements OnInit {
 
 		this.tabIndex = index;
 		return false;
+  }
+  setFormControlToTabIndexMap(){
+    // // index 0
+		// this.formControlNameToTabIndex.set("organizationName", 0);
+		// this.formControlNameToTabIndex.set("orgTelephoneNo", 0);
+		// this.formControlNameToTabIndex.set("organizationAddress", 0);
+		// this.formControlNameToTabIndex.set("program_purpose", 0);
+
+		// // index 1
+		// this.formControlNameToTabIndex.set("applicantName", 1);
+		// this.formControlNameToTabIndex.set("applicantMobile", 1);
+		// this.formControlNameToTabIndex.set("emailId", 1);
+		// this.formControlNameToTabIndex.set("panCard", 1);
+		// this.formControlNameToTabIndex.set("gstNo", 1);
+		// this.formControlNameToTabIndex.set("relationshipWithOrg", 1);
+
+
+		// index 2
+		this.formControlNameToTabIndex.set('bankName', 1)
+		this.formControlNameToTabIndex.set('accountHolderName', 1)
+		this.formControlNameToTabIndex.set('accountNo', 1)
+		this.formControlNameToTabIndex.set('ifscCode', 1)
+        this.formControlNameToTabIndex.set('agree', 1)
+        this.formControlNameToTabIndex.set('termsCondition', 1)
+
   }
 
   getWardZoneFirstLevel() {
@@ -641,5 +670,25 @@ export class BookPermissionComponent implements OnInit {
 			}
 		}
     }
+
+     /**
+       * Get user data
+       */
+     getUserProfile() {
+      this.bookingService.getUserProfile().subscribe(resp => {
+          this.organizationdetails.get('applicantName').setValue(resp.data.firstName + ' ' + resp.data.lastName);
+          this.organizationdetails.get('applicantMobile').setValue(resp.data.cellNo);
+          this.organizationdetails.get('confirmMobile').setValue(resp.data.cellNo);
+          this.organizationdetails.get('emailId').setValue(resp.data.email);
+          this.organizationdetails.get('confirmEmailId').setValue(resp.data.email);
+        },
+        err => {
+          this.toster.error("Server Error");
+        });
+      this.organizationdetails.get('applicantAddress').get('country').setValue('INDIA');
+      this.organizationdetails.get('applicantAddress').get('state').setValue('GUJARAT');
+      this.organizationdetails.get('applicantAddress').get('city').setValue('Vadodara');
+    }
+
 
 }

@@ -41,32 +41,32 @@
                         Mahatma Gandhi Nagar Gruh, Sir Sayaji Rao Nagar Gruh,Pandit Dindayal Upadhyay Nagar,Deepak Open Air theater
                     </a>)
                 </li> -->
-         
+
                     <p class="listSize"> ૧. અનામત પેટે ₹ ૧૫,૦૦૦/- તથા પોલીસ પરફેૉન્સ લાયસન્સ નગર ગૃહની કચેરીમાં કાર્યક્રમની તારીખ પૂર્વે જમા
                         કરાવવું ફરજીયાત છે.</p>
-              
+
                     <p class="listSize"> ૨. પ્રેક્ષકોની સુરક્ષા માટે મેટલ ડીટેક્ટર અને ડ્રેસ કોડ સહિત સિક્યુરિટી સ્ટાફની વ્યવસ્થા કરવી
                         ફરજીયાત છે.</p>
-            
+
                     <p class="listSize"> ૩. કોઈ પણ સંજોગોમાં ૯૧૧ થી વધુ દર્શકોને આમંત્રિત કરવા પર પ્રતિબંધ છે.</p>
-             
+
                     <p class="listSize"> ૪. નગર ગૃહ સંકુલમાં અગ્નિની જવાળાઓ થાય તેવા પ્રયોગો તથા સ્ફોટક ઘડાકાવાળા પ્રયોગો તેમજ ધુમાડો થાય
                         તેવા ધૂપ-દીપ કરવા પ્રતિબંધિત છે.</p>
-               
+
                     <p class="listSize"> ૫. કાર્યક્રમની રજુઆત માટે તૈયાર કરવામાં આવતા બેનરો તથા નિમંત્રણ કાર્ડ અથવા ટીકીટમાં અરજદારનું નામ
                         અને સંસ્થાનું નામ લખવું ફરજીયાત છે.</p>
-                
+
                     <p class="listSize"> ૬. જાહેર જનતાની સુરક્ષાને ધ્યાનમાં લેતા કોઈપણ સંજોગોમાં પ્રથમ અને બીજી શીફ્ટમાં નિયત સમયમાં
-                        પ્રોગ્રામ શરૂ કરવો તેમજ પૂરો કરવાનો રહેશે તથા ત્રીજી શીફ્ટ પણ રાત્રે ૧-૦૦ 
+                        પ્રોગ્રામ શરૂ કરવો તેમજ પૂરો કરવાનો રહેશે તથા ત્રીજી શીફ્ટ પણ રાત્રે ૧-૦૦
                         &nbsp;&nbsp;&nbsp;&nbsp;વાગ્યા બાદ કાર્યક્રમ બંધ કરવો ફરજીયાત છે.</p>
                     <p class="listSize">૭. પ્રથમ શીફ્ટ - સવારે ૦૯-૦૦ થી ૧૨-૩૦ કલાકે</p>
                     <p class="listSize">&nbsp;&nbsp;&nbsp;&nbsp;દ્રિતીય શીફ્ટ - બપોરે ૦૩-૦૦ થી ૬-૩૦ કલાકે</p>
                     <p class="listSize">&nbsp;&nbsp;&nbsp;&nbsp;તૃતીય શીફ્ટ - રાત્રે ૦૯-૦૦ થી ૧૨-૩૦ કલાકે</p>
 
                     <p class="listSize"> ૮. નગરગૃહના ઠરાવેલ નિયમો ઉપરાંત હાલની સ્થળ સ્થિતિને ધ્યાનમાં લેતા તથા. પ્રેક્ષકોની સુવિધાઓ અને
-                        સુરક્ષાની બાબતને ધ્યાનમાં લેતા ઉપરોક્ત અનુક્રમ નંબર: ૧ થી ૬ ના 
+                        સુરક્ષાની બાબતને ધ્યાનમાં લેતા ઉપરોક્ત અનુક્રમ નંબર: ૧ થી ૬ ના
                         &nbsp;&nbsp;&nbsp;&nbsp;સૂચનોનું અરજદાર અને સંસ્થાએ અચૂક પાલન કરવાનું રહેશે.</p>
-                
+
                 <p class="readline">ઉપરોક્ત સૂચનાનો ચૂસ્તપણે અમલ કરવાનો રહેશે અન્યથા કાર્યક્રમ બંધ કરવાની ફરજ પડશે.</p>
                 <!-- </p> -->
             </h4>
@@ -263,7 +263,7 @@
 <div class="modal fade" id="confirmShortlistModel" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header customthead">
                 <h4 class="modal-title" id="exampleModalLabel">
                     {{'list_selected_slot'| translate: translateKey}}
                 </h4>
@@ -274,15 +274,17 @@
             <div class="modal-body scrollModel">
                 <div class="table-responsive">
                     <table class="table">
-                        <thead>
+                        <thead class="customthead">
                             <tr>
-                                <th scope="col" width="56">{{'s_no'| translate: translateKey}}</th>
+                                <!-- <th scope="col" width="56">{{'s_no'| translate: translateKey}}</th> -->
+                                <th scope="col" width="56">Sr.No.</th>
                                 <th scope="col">{{'date_of_programme'| translate: translateKey}}</th>
                                 <!-- <th scope="col">{{'end_date'| translate: translateKey}}</th> -->
                                 <th scope="col">{{'shift'| translate: translateKey}}</th>
-                                <div *ngIf="selectedShift.length > 1">
+                                <!-- <div *ngIf="selectedShift.length > 1">
                                     <th scope="col" width="65">{{'action'| translate: translateKey}}</th>
-                                </div>
+                                </div> -->
+                                <th scope="col" width="65">{{'action'| translate: translateKey}}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -291,9 +293,10 @@
                                 <td>{{bookingUtils.returnProperDate(shifts.start)}}</td>
                                 <!-- <td>{{bookingUtils.returnProperDate(shifts.end)}}</td> -->
                                 <td>{{shifts.shiftType}}</td>
-                                <div *ngIf="selectedShift.length > 1">
+                                <div *ngIf="selectedShift.length >= 1">
                                     <td>
-                                        <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}"
+                                        <!-- <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" -->
+                                          <button mat-icon-button title="Remove Slot"
                                             (click)="selectedShift = bookingUtils.removeSelectedShift(shifts, selectedShift, i)">
                                             <mat-icon color="warn">delete</mat-icon>
                                         </button>
@@ -478,7 +481,7 @@
 
         <div class="fotButtonBar">
             <div class="col-sm-12 col-md-12 text-right">
-                <button mat-raised-button color="primary" type="button" 
+                <button mat-raised-button color="primary" type="button"
                     (click)="canclebtn()">{{'Cancel'}}
                 </button>
 
@@ -517,7 +520,7 @@
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
-                            <input matInput OnlyNumber minlength="10" maxlength="11" formControlName="orgTelephoneNo"
+                            <input matInput OnlyNumber minlength="11" maxlength="11" formControlName="orgTelephoneNo"
                                 placeholder="{{'orgTelephone_no' | translate: translateKey}}" required>
                             <control-messages [control]="organizationDetails.get('orgTelephoneNo')">
                             </control-messages>
@@ -556,10 +559,10 @@
 
                     <div class="row mt-4 fotButtonBar townHallfooter">
                         <div class="col-sm-12 col-md-12 text-right">
-                            <button mat-raised-button color="primary" type="button" 
+                            <button mat-raised-button color="primary" type="button"
                                 (click)="canclebtn()">{{'Cancel'}}
                             </button>
-                            
+
                             <button mat-raised-button type="button" color="primary"
                                 (click)="checkValidation(organizationDetails,false)">{{'next'
                                 | translate:translateKey}}
@@ -653,10 +656,10 @@
                                 {{'back' | translate:translateKey}}
                             </button>
                             <div class="col-sm-9 col-md-9 text-right">
-                            <button mat-raised-button color="primary" type="button" 
+                            <button mat-raised-button color="primary" type="button"
                                 (click)="canclebtn()">{{'Cancel'}}
                             </button>
-                            </div>    
+                            </div>
                             <button mat-raised-button type="button" color="primary" (click)="checkValidation(applicationDetails,false)">
                                 {{'next'| translate:translateKey}}
                                 <mat-icon>navigate_next</mat-icon>
@@ -719,10 +722,10 @@
                                 {{'back' | translate:translateKey}}
                             </button>
                             <div class="col-sm-8 col-md-8 text-right">
-                                <button mat-raised-button color="primary" type="button" 
+                                <button mat-raised-button color="primary" type="button"
                                     (click)="canclebtn()">{{'Cancel'}}
                                 </button>
-                            </div>  
+                            </div>
                             <button mat-raised-button color="primary" type="submit" (click)="checkValidation(bookingDetails,true)">
                                 <mat-icon>check_circle_outline</mat-icon>
                                 {{'submit_application'| translate: translateKey}}
