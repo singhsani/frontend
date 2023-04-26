@@ -46,8 +46,7 @@ table { width: 100%; }
     // .mat-column-serviceType {width: 220px;}
     .mat-column-fileStatus {max-width: 145px; /*width: 100px; justify-content: center;*/}
     .mat-column-action {max-width: 60px; padding-right: 0;
-        .mat-icon-button {background:#fff;margin:2px 5px 2px 0; border: 1px solid $colorBlue; width:28px; height:28px; line-height: normal;
-             .mat-icon-button .mat-icon, .mat-icon-button i {line-height: 22px;}
+        .mat-icon-button {background:#fff;margin:2px 5px 2px 0; border: 1px solid $colorBlue; width:28px; height:28px; line-height: 0px;
              .mat-icon {font-size: 17px;}
              &:hover {background:$colorBlue;
                 .mat-icon {color:#fff;}
@@ -166,7 +165,7 @@ table { width: 100%; }
 }
 
 .fotButtonBar {
-  margin-top: 62px !important;
+  margin-top: 102px !important;
 }
 .td{
     text-align: left;
@@ -176,4 +175,24 @@ table { width: 100%; }
     background: #f2f2f2;
     padding: 20px 0 10px;
     margin-top: -10px !important;
+}
+.noteClass{
+    font-weight: bolder;
+    font-size: 16.25px;
+    text-align: left;
+    margin-left: 20px;
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+
+}
+.mat-checkbox {
+      margin-left: 0;
+      margin-right: 120px;
+}
+.mat-icon-button .mat-icon, .mat-icon-button i {
+    line-height: 0px;
+}
+.h1{
+    font-weight: bolder;
+    font-size: 16.25px; 
+    font-family: Roboto,"Helvetica Neue",sans-serif;
 }
