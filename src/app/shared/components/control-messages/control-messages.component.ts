@@ -10,24 +10,30 @@ import { ValidationService } from '../../services/validation.service';
 export class ControlMessagesComponent {
 
 	@Input() control: FormControl;
+	@Input() errorMsg: string = '';
 
 	constructor() { }
 
-	/**
-	 * This method is use to return validation errors
-	 */
-	get errorMessage() {
+ /**
+     * This method is use to return validation errors
+     */
+  get errorMessage() {
+	if(!this.errorMsg){
 		for (let propertyName in this.control.errors) {
 			if (this.control.errors.hasOwnProperty(propertyName) && this.control.touched) {
 				return ValidationService.getValidatorErrorMessage(this.getName(this.control), propertyName, this.control.errors[propertyName]);
 			}
-			if (this.control.valueChanges) {
-				return ValidationService.showValidatorErrorMessage(propertyName, this.control.errors[propertyName])
-			}
 		}
 
 		return null;
+	}else{
+		return this.errorMsg;
 	}
+}
+
+set errorMessage(temp :string){
+	this.errorMessage = temp;
+}
 
 	/**
 	 * This method used to find the control name
