@@ -73,10 +73,13 @@ table { width: 100%; }
           .headline {
               font-size: 20px;
           }
+          .headlines{
+            font-size: 18px;
+          }
 
           .olList {
               list-style-type: none;
-
+              margin-left: -16px;
               li {
                   .listSize {
                       font-size: 15px;

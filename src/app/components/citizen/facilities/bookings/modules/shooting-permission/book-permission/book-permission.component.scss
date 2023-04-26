@@ -1,109 +1,23 @@
-.fotButtonBar1 {
-    background: #f2f2f2;
-    padding: 25px 0 10px;
-    margin-top: 5px !important;
-}
-
-.imageSize{
-    width: 100px;
-    height: 100px;
-}
-.table { width: 102%; }
-
-.customthead{
-    background-color: #673ab7;
-    color: white;
-}
-
-.mat-error{
-    margin-top: -10px;
-    font-size: 11px
-}
-
-.mat-paginator-sticky {
-  bottom: 0px;
-  position: sticky;
-  z-index: 10;
-}
-
-.scrollModel{
-    overflow-y:auto;
-    max-height: 500px;
-}
-
-.fsLarge{
-    font-size: large;
-}
-
-input[type="file"] {
-    display: none;
-}
-.custom-file-upload {
-    border: none;
-    display: inline-block;
-    padding: 0;
-    cursor: pointer;
-    float: left;
-    margin-bottom: 20px;
-    a {
-        color: #0000ee;
+.cardBox {
+    .headlines {
+        font-size: 18px;
     }
 
-    a:hover {
-        color: #0000ee;
-        text-decoration: underline;
+    h2 {
+        margin-bottom: 10px;
+    }
+
+    .headline {
+        font-size: 20px;
+    }
+
+    .olList {
+        .engInstructions {
+            font-size: 18px;
+        }
     }
 }
 
-i {
-    font-size: 20px;
+.fotButtonBar {
+    margin-top: 0 !important;
 }
-
-.modal-md {
-    max-width: 400;
-}
-
-::ng-deep .mat-progress-bar-fill::after { background-color: #6ff05a;}
-::ng-deep .mat-progress-bar-buffer { background: #eaeaff; }
-
-.availableDate {background-color: #eaf6ed; color: #155724;
-    & > strong {color: #155724; background-color: #c3e6cb;}
-    &.border {border-color: #c3e6cb !important;}
-}
-
-.checkDate {background-color: #eff1fc; color: #251c72;
-    & > strong {color: #251c72; background-color: #cbc6f5 ;}
-    &.border {border-color: #cbc6f5  !important;}
-}
-
-.bookDate, .blockDate {background-color: #fceff0; color: #721c24;
-    & > strong {color: #721c24; background-color: #f5c6cb;}
-    &.border {border-color: #f5c6cb !important;}
-}
-
-.holiyDay {background-color: #fffbee; color: #856404;
-    & > strong {color: #856404; background-color: #ffeeba;}
-    &.border {border-color: #ffeeba !important;}
-}
-
-.table1{ width: 100%; }
-.th{
-    border-bottom: 1px solid #dee2e6;
-    border-top: 1px solid #dee2e6;
-    font-size: 12px;
-    padding-bottom: 7px;
-    padding-top: 7px;
-   
-}
-.td{
-    text-align: left;
-    padding-left: 28px;
-}
-.thead{
-    padding-bottom: 5px;
-}
-// .table-responsive {
-//     max-height: 400px;
-//     max-width: 1000px;
-//     width:84%;
-// }

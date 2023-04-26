@@ -541,4 +541,20 @@ export class BookTheaterComponent implements OnInit {
             this.btnProceed = true;
         }
     }
+
+    covertGujaratinumber(headerName) {
+        if (headerName == 1) {
+            headerName = '૧'
+        }
+        else if (headerName == 2) {
+            headerName = '૨'
+        }
+        else if (headerName == 2500) {
+            headerName = '૨૫૦૦'
+        }
+        else if (headerName == 600) {
+            headerName = '૬૦૦'
+        }
+        return headerName
+    }
 }
