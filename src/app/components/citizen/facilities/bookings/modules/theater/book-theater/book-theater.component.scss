@@ -36,27 +36,27 @@ table { width: 100%; }
 
   ::ng-deep .mat-progress-bar-fill::after { background-color: #6ff05a;}
   ::ng-deep .mat-progress-bar-buffer { background: #eaeaff; }
-  
+
   .availableDate {background-color: #eaf6ed; color: #155724;
       & > strong {color: #155724; background-color: #c3e6cb;}
       &.border {border-color: #c3e6cb !important;}
   }
-  
+
   .checkDate {background-color: #eff1fc; color: #251c72;
       & > strong {color: #251c72; background-color: #cbc6f5 ;}
       &.border {border-color: #cbc6f5  !important;}
   }
-  
+
   .bookDate, .blockDate {background-color: #fceff0; color: #721c24;
       & > strong {color: #721c24; background-color: #f5c6cb;}
       &.border {border-color: #f5c6cb !important;}
   }
-  
+
   .holiyDay {background-color: #fffbee; color: #856404;
       & > strong {color: #856404; background-color: #ffeeba;}
       &.border {border-color: #ffeeba !important;}
   }
-  
+
   .cardBox {
       .pageTitle {
           margin-bottom: 0px;
@@ -129,3 +129,7 @@ table { width: 100%; }
       }
 
   }
+
+  .fotButtonBar{
+          margin-top: 45px !important;
+    }
