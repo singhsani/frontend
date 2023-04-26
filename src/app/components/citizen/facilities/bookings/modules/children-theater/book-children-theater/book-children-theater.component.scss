@@ -36,3 +36,29 @@
 }
 
 table { width: 100%; }
+
+.cardBox {
+    .headlines
+    {
+        font-size: 18px;
+    }
+    .headline{
+        font-size: 20px;
+    }
+    .olList{
+        .engInstructions{
+            font-size: 18px;
+        }
+    }
+    .table{
+        tr.mat-header-row {
+            height: 43px;
+        }
+
+        td,
+        th {
+            border: 1px solid #000000;
+            padding: 8px;
+        }
+    }
+}

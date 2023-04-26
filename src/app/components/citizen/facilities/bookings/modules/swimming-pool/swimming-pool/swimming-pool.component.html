@@ -25,7 +25,7 @@
 </div>
 
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-<mat-card class="formClass cardBorder" [hidden]="showDowlLoadFileTab" *ngIf="!searchObj.isDisplayRenewLicenceForm">
+<mat-card class="formClass cardBox" [hidden]="showDowlLoadFileTab" *ngIf="!searchObj.isDisplayRenewLicenceForm">
 	<div class="pageTitle">{{'online_swimming_pool_bookings'| translate: translateKey}}</div>
 	<!-- <mat-card-header class="p-4">
 		<mat-card-title>
@@ -38,8 +38,8 @@
 	<mat-card-content class="footer_container">
 		<div class="head_container">
 		<img _ngcontent-c1=""  alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg" class="center img">
-		<div class="div">
-			<h1 style="margin-top: 10px;"><b>Contact Details</b></h1>
+		<div class="tableTop">
+			<h1 class="tableTitle py-2"><b>Contact Details</b></h1>
 		</div>
 		 <table class="table">
 			 <tbody>
@@ -54,8 +54,8 @@
 			 </tbody>
 		 </table>
 
-		<h4> <b>Read all the rules swimming pool-wise before click on proceed, once you click on proceed we consider your acceptance of the rules and regulations.</b></h4>
-            <h4> <b>"Proceed" પર ક્લિક કરતા પહેલા સ્વિમિંગ પૂલ મુજબના તમામ નિયમો વાંચો, એકવાર તમે "Proceed" પર ક્લિક કરો પછી અમે નિયમો અને નિયમોની તમારી સ્વીકૃતિને ધ્યાનમાં લઈશું.</b></h4>
+		<h4 class="titleHeader"> <b>Read all the rules swimming pool-wise before click on proceed, once you click on proceed we consider your acceptance of the rules and regulations.</b></h4>
+            <h4 class="titleparagraph"> <b>"Proceed" પર ક્લિક કરતા પહેલા સ્વિમિંગ પૂલ મુજબના તમામ નિયમો વાંચો, એકવાર તમે "Proceed" પર ક્લિક કરો પછી અમે નિયમો અને નિયમોની તમારી સ્વીકૃતિને ધ્યાનમાં લઈશું.</b></h4>
 			<br>
 			<div class="div1">
 			   <h1 style="margin-top: 10px;"><b>Need to Download for Application</b></h1>
@@ -112,11 +112,11 @@
 	<!-- <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar> -->
 	<app-swimming-pool-dashboard></app-swimming-pool-dashboard>
 	</mat-card-content>
-		<div class="fotButtonBar proceedButtton">
+		<div class="fotButtonBar proceedButtton px-3">
 			<div class="row">
 				<div class="col-sm-6 col-md-6 ">
 					<mat-checkbox  labelPosition="after" (change)="termsConditionClick($event)" >
-					   <span style="font-size: 25px;">{{'મેં માર્ગદર્શિકા/નિયમો અને શરતો વાંચી છે અને સંમત છું.'}}</span>
+					   <span class="listSize">{{'મેં માર્ગદર્શિકા/નિયમો અને શરતો વાંચી છે અને સંમત છું.'}}</span>
 				   </mat-checkbox>	
 			    </div>
 			<div class="col-sm-6 col-md-6 text-right">
