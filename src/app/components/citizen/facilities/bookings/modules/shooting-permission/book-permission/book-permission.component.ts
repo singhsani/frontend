@@ -577,7 +577,6 @@ export class BookPermissionComponent implements OnInit {
     //   this.tabIndex = 1;
     //   return false;
     // }
-    debugger
     const key = this.bookingUtils.getInvalidFormControlKey(controlName);
 		const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 0;
 
