@@ -11,6 +11,7 @@ import { BookingService } from '../../../shared-booking/services/booking-service
 import { ValidationService } from 'src/app/shared/services/validation.service';
 import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
 import * as _ from 'lodash';
+import { Constants } from 'src/app/vmcshared/Constants';
 
 @Component({
     selector: 'app-book-children-theater',
@@ -35,6 +36,7 @@ export class BookChildrenTheaterComponent implements OnInit {
        */
     bookingConstants = BookingConstants;
     bookingUtils: BookingUtils;
+    constants = Constants;
 
     /**
       * Flags for hide/show
@@ -77,7 +79,8 @@ export class BookChildrenTheaterComponent implements OnInit {
      */
     startMinDate: Date = moment(new Date()).add(7, 'day').toDate();
     endMinDate: Date = moment(new Date()).add(7, 'day').toDate();
-    endMaxDate:any = new Date();;
+    endMaxDate:any = new Date();
+    rupeeSign: string;
     endDate:any;
 
     /**
@@ -121,6 +124,7 @@ export class BookChildrenTheaterComponent implements OnInit {
         })
 
         this.setFormControlToTabIndexMap();
+        this.rupeeSign = this.constants.rupeeSymbol;
     }
 
     /**

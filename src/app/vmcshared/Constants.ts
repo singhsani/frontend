@@ -50,6 +50,7 @@ export class Constants {
     static propertyBillTypeIdSelected: string = "NORMAL";
     static pageSize: number = 5;
     static pageRecord: Array<number> = [5,25,100];
+    static rupeeSymbol = "₹";
 
     static LookupCodes = {
         Water_Within_Limit: "WATER_WITHIN_LIMIT",
