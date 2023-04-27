@@ -340,8 +340,8 @@
                 <thead>
                     <tr>
                         <th scope="col">{{'booking_date'| translate: translateKey}}</th>
-                        <th scope="col">{{'event_date_from'| translate: translateKey}}</th>
-                        <th scope="col">{{'event_date_to'| translate: translateKey}}</th>
+                        <th scope="col">{{'program_date_from'| translate: translateKey}}</th>
+                        <th scope="col">{{'program_date_to'| translate: translateKey}}</th>
                     </tr>
                  </thead>
                  <tbody>
@@ -401,13 +401,13 @@
                 <form [formGroup]="applicationDetails">
                     <div class="row">
                       <mat-form-field class="col-md-4">
-                        <mat-label>{{'event_date_from' | translate:translateKey}}</mat-label>
+                        <mat-label>{{'program_date_from' | translate:translateKey}}</mat-label>
                         <input matInput formControlName="eventFromDate">
                         <control-messages [control]="applicationDetails.get('eventFromDate')"></control-messages>
                       </mat-form-field>
 
                       <mat-form-field class="col-md-4">
-                        <mat-label>{{'event_date_to' | translate:translateKey}}</mat-label>
+                        <mat-label>{{'program_date_to' | translate:translateKey}}</mat-label>
                         <input matInput formControlName="eventToDate">
                         <control-messages [control]="applicationDetails.get('eventToDate')"></control-messages>
                       </mat-form-field>
