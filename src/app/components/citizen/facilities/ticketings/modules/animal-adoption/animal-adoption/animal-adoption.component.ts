@@ -232,10 +232,10 @@ export class AnimalAdoptionComponent implements OnInit {
          }
       }
    }
-
+   this.toster.success(this.animalBirdName +' Added Successfully');
     this.animalName['totalQty'] = this.animalAdoptionForm.get('noOfAdoptionCount').value;
     this.animalName['noOfYear'] = this.animalAdoptionForm.get('adoptionYears').value;
-    this.animalName.totalExpenses = this.animalAdoptionForm.get('totalAdoptionCost').value;
+   // this.animalName['total'] = this.animalName.totalExpenses;
     if (this.animalAdoptionForm.get('canEdit').value) {
       returnArray.push(this.createOTDetailArray(this.animalName));
       this.resetCalculations("");
@@ -273,9 +273,10 @@ export class AnimalAdoptionComponent implements OnInit {
       animalBirdName: data.animalBirdName ? data.animalBirdName : null,
       annualBoardingExpenses: data.annualBoardingExpenses ? data.annualBoardingExpenses : null,
       annualMaintainanceExpenses: data.annualMaintainanceExpenses ? data.annualMaintainanceExpenses : null,
-      totalExpenses: data.totalExpenses ? data.totalExpenses : null,
+      totalExpenses: this.animalAdoptionForm.get('totalAdoptionCost').value ? this.animalAdoptionForm.get('totalAdoptionCost').value : null,
       totalQty: data.totalQty ? data.totalQty : null,
       noOfYear : data.noOfYear ? data.noOfYear :null,
+      total:this.animalAdoptionForm.get('totalAdoptionCost').value?this.animalAdoptionForm.get('totalAdoptionCost').value:null
 
     })
 
