@@ -112,11 +112,11 @@
             <h4 class="exterInst">Booking time : Monday to Friday from 9:30 am to 1:00 pm.</h4>
             <h4 class="exterInst">Saturday : 9:30 am to 11:00 am (Booking office will be closed on public holidays.)</h4>
           </ol></h4>
-          <p class="pb-2 headLines">{{head_lines| translate: translateKey}}</p> <br>   
+          <p class="pb-2 headLines">{{head_lines| translate: translateKey}}</p> <br>
                   <div class="rate-chart">
                     <h4 class="engTitle"><b>Atithigruh Booking Rate Chart</b></h4>
                   </div>
-                    
+
                 <mat-card class="cardBox mt-3">
                   <div class="pageTitle">
                     <h4 align="center"><b>Atithigruh One Day Booking Charges</b></h4>
@@ -396,7 +396,6 @@
                         <td>
                             <!-- <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" -->
                               <button mat-icon-button title="Remove Slot"
-                                [disabled]="selectedShift.length == 1"
                                 (click)="selectedShift = bookingUtils.removeSelectedShift(shifts,selectedShift,  i)">
                                 <mat-icon color="warn">delete</mat-icon>
                             </button>
