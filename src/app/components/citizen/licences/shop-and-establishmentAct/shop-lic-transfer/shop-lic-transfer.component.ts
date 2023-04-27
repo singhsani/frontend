@@ -317,6 +317,7 @@ export class ShopLicTransferComponent implements OnInit {
 		formObj['shopPersonList'] = res.shopPersonList;
 		formObj['shopPartnerList'] = res.shopPartnerList;
 		formObj['workerCounts'] = res.workerCounts;
+		formObj['organizationType'] = res.organizationType
 		// Intimation or certificate number.
 		formObj['transferCertificateNumber'] =  this.certificateNumber
 		
@@ -360,16 +361,16 @@ export class ShopLicTransferComponent implements OnInit {
 				this.isGuideLineActive = true; 
 			}	
 			
-			res.shopPersonList.forEach(app => {
-				(<FormArray>this.employerfamily.get('shopPersonList')).push(this.createArray(app));
-			});
-			res.workerCounts.forEach(app => {
-				(<FormArray>this.personoccuping.get('workerCounts')).push(this.createArrayWorkOut(app));
-			});
-			res.shopPartnerList.forEach(app => {
-				(<FormArray>this.partnerlist.get('shopPartnerList')).push(this.createArrayPatner(app));
-				this.isPatners = true;
-			});
+			// res.shopPersonList.forEach(app => {
+			// 	(<FormArray>this.employerfamily.get('shopPersonList')).push(this.createArray(app));
+			// });
+			// res.workerCounts.forEach(app => {
+			// 	(<FormArray>this.personoccuping.get('workerCounts')).push(this.createArrayWorkOut(app));
+			// });
+			// res.shopPartnerList.forEach(app => {
+			// 	(<FormArray>this.partnerlist.get('shopPartnerList')).push(this.createArrayPatner(app));
+			// 	this.isPatners = true;
+			// });
 		});
 	}
 
@@ -846,7 +847,7 @@ export class ShopLicTransferComponent implements OnInit {
 	 * @param persontype : person array type
 	 */
 	addMorePersonwork(persontype: string) {
-		let workerGrid = <FormArray>this.shopLicTransferForm.get('workerCounts');
+		let workerGrid = <FormArray>this.personoccuping.get('workerCounts');
 		this.shopAndEstablishmentService.getSelectedWorkerType(this.workerTypeList,workerGrid);
 		this.edit = false;
 		let isEditAnotherRow = this.isTableInEditMode(persontype);

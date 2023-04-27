@@ -4,6 +4,9 @@
     height: 100px;
 }
 .table { width: 102%; }
+.FeeTable{
+    width: 100%;
+}
 
 .customthead{
     background-color: #673ab7;
@@ -104,3 +107,71 @@ i {
 // }
 .fotButtonBarr {background: #f2f2f2;
     padding: 20px 0 7px; margin-top: 10px !important;}
+    .containerWidth{
+        width: 60px;
+    } 
+    th.mat-header-cell:first-of-type{
+        padding-left: 0px;
+    }  
+    td.mat-cell:first-of-type{
+        padding-left: 9px; 
+    }
+    th.mat-header-cell:last-of-type{
+        padding-right: 0px;
+    } 
+    td.mat-cell:last-of-type{
+        padding-right: 0px;
+    }  
+    td.mat-cell{
+        font-size: 1.25rem;
+    }  
+    th.mat-header-cell{
+        font-size: 1.25rem;
+    }
+.fotproceedButton{
+    margin-top: 0px !important;
+    padding: 10px 0px 0px;
+    
+} 
+.checkboxSize{
+    margin-left: 16px;
+}
+.buttonPosition{
+    right: 18px;
+}
+hr{
+    margin: 0px 0px;
+}
+.acceptTerms{
+    font-size: 14px; 
+    font-weight: bold;
+    padding-top: 20px;
+}
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+.gujfont{
+    list-style: none;
+    margin-left: -35px;
+}
+.TitleFont{
+    font-size: 20px;
+    font-weight: bold;
+}
+.listSize{
+    font-size: 15px;
+    text-align: justify;
+
+}
+.headlineSize{
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+.feeFont{
+    font-size: 1.25rem;
+}
+
+
+
