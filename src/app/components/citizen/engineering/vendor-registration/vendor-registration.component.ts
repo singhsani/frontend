@@ -436,7 +436,7 @@ export class VendorRegistrationComponent implements OnInit {
       officeFaxNumber: [null, [ValidationService.faxValidation]],
       officeEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 
-      branchMobileNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      branchMobileNumber: [null],
       branchAlterMobileNumber: [null, [Validators.maxLength(10), Validators.minLength(10)]],
       branchISDNumber: [null, [Validators.maxLength(12)]],
       branchSTDNumber: [null, [Validators.maxLength(11)]],
