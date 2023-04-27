@@ -403,10 +403,10 @@ export class NewRegistrationComponent implements OnInit {
     }
     this.mandatoryFileCheck().then(data => {
       if (data.status) {
+        this.vehicleRegistrationForm.get('formStatus').setValue('SUBMITTED');
         this.vehicleServise.saveFormData(this.vehicleRegistrationForm.getRawValue()).subscribe(res => {
           this.toastr.success('Vehicle Registration Successful');
           this.router.navigate(['/citizen/my-applications']);
-          this.vehicleRegistrationForm.get('formStatus').setValue('SUBMITTED');
           // this.showVehicleTaxDetails(this.modalTemplate);
           // this.getVehicleTaxForPayment(res.id);
           // this.onVehicleTaxSubmit();
