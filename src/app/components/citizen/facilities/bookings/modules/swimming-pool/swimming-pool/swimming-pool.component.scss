@@ -63,6 +63,7 @@ h1{
        border: 1px solid hsl(0, 0%, 6%);
        text-align: left;
        padding: 8px;
+       font-weight: bold;
    }
    .td1{
        border: 1px solid hsl(0, 0%, 6%);
@@ -96,7 +97,7 @@ h1{
             height: 130px;
         }
         .titleHeader{
-            font-size: 18px;
+            font-size: 17px;
         }
         .titleparagraph{
             font-size: 17px;
@@ -110,7 +111,15 @@ h1{
                 margin-bottom: 0;
             }
         }
-
+        .vl{
+            border-left: 1px solid hsl(0, 0%, 6%);
+            height: 113px;
+            padding-top: 10px;
+            padding-bottom: 12px;
+           }
+           .swimmingPoolFees{
+            text-align: left;
+        }
     }
 }
 

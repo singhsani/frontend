@@ -24,37 +24,45 @@
 
 .cardBox {
   .headline {
-    font-size: 20px;
-  }
-
-  .mat-card-content {
-    .cardtitle {
-      font-size: 17px;
-      margin-bottom: 0.4rem;
-    }
-  }
-
-  .olList {
-    list-style-type: none;
-    margin-left: -14px;
-
-    li {
-      padding-bottom: 0;
-      line-height: 27px;
-    }
-
-    .listSize {
-      font-size: 17px;
-      margin-bottom: 4px;
-    }
-
-    .oltype {
-      font-size: 15px;
-      margin-left: -14px;
-    }
-  }
-
-  .listSize {
     font-size: 17px;
   }
-}
+
+    .mat-card-content {
+      .cardtitle {
+        font-size: 17px;
+        margin-bottom: 0.4rem;
+        text-align: center;
+        font-weight: bold;
+      }
+    }
+  
+    .olList {
+      list-style-type: none;
+      margin-left: -14px;
+  
+      li {
+        padding-bottom: 0;
+        line-height: 27px;
+      }
+  
+      .link {
+        font-weight: 600;
+      }
+  
+      .listSize {
+        font-size: 17px;
+        line-height: 26px;
+      }
+  
+      .oltype {
+        font-size: 15px;
+        margin-left: -14px;
+      }
+  
+      .headerLine {
+        font-size: 17px;
+        font-weight: 600;
+      }
+    }
+  
+    }
