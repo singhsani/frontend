@@ -79,10 +79,10 @@ table { width: 100%; }
 
           .olList {
               list-style-type: none;
-              margin-left: -16px;
+              margin-left: -18px;
               li {
                   .listSize {
-                      font-size: 15px;
+                     font-size: 17px;
                       margin-top: -15px;
                   }
               }
@@ -123,6 +123,16 @@ table { width: 100%; }
               padding: 8px;
           }
       }
+      .olList{
+        list-style-type: none;
+        margin-left: -18px;
+          .listSize {
+            font-size: 17px;
+            margin-top: -15px;
+            line-height: 30px;
+        }
+      }
+
 
       .fotButtonBar {
           margin-top: 0 !important;

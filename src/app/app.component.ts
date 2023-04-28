@@ -31,6 +31,7 @@ export class AppComponent {
 					this.isRoutingChange = false;
 					this.isLoading = false;
 					this.commonService.loading.next({ loading: false });
+					window.scroll(0,0);
 				}
 			});
 
