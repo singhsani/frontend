@@ -45,9 +45,12 @@ table { width: 100%; }
 }
 
 .fotButtonBar{
-    background: #f2f2f2;
-    padding: 25px 0 10px;
+    padding: 15px 0 10px;
     margin-top: 0px !important;
+    align-items: center;
+    .checkbox{
+        font-size: 17px;
+    }
 }
 .modal-md {
     max-width: 400;
@@ -112,7 +115,6 @@ table { width: 100%; }
     .gujratiInstructions {
         .listSize {
             font-size: 15px;
-            margin-left: 10px;
         }
         .readline{
             font-size: 15px;
