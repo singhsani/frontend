@@ -410,7 +410,7 @@
                                 <mat-icon class="m-1" title="Why Cancelled?">help_outline</mat-icon>
                                 Remarks
                             </button> -->
-                             <button mat-menu-item
+                             <button mat-menu-item 
                                 *ngIf="(row.serviceType == 'MEAT_FISH_CANCELLATION' && row.fileStatus == 'APPROVED')"
                                 color="primary" (click)="openModal(rejectTemplate);remarksDisplay(row)">
                                 <mat-icon class="m-1" title="Why Cancelled?">help_outline</mat-icon>
