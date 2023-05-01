@@ -26,6 +26,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 	muttonFishRenewalForm: FormGroup;
 	applicantDetials : FormGroup;
 	businessDetail :FormGroup;
+	attachmentDetails : FormGroup;
 	translateKey: string = 'muttonFisheRenewScreen';
 	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
 
@@ -447,6 +448,12 @@ export class MuttonFishRenewalComponent implements OnInit {
 		})
 		/* Step 2 controls end */
 
+		/* Start 3 controls end */
+		this.attachmentDetails = this.fb.group({
+			attachments: []
+		})
+		/* Step 3 controls end */
+
 		this.muttonFishRenewalForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'MF-LIC',
@@ -460,6 +467,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 		/** Method is used to copy local contoller to Main contoller **/
 		this.commonService.createCloneAbstractControl(this.applicantDetials, this.muttonFishRenewalForm);
 		this.commonService.createCloneAbstractControl(this.businessDetail, this.muttonFishRenewalForm);
+		this.commonService.createCloneAbstractControl(this.attachmentDetails, this.muttonFishRenewalForm);
 	}
 
 	/**

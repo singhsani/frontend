@@ -362,7 +362,7 @@
 				<ng-template mat-tab-label>
 					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
-				<form  [formGroup]="muttonFishRenewalForm">
+				<form  [formGroup]="attachmentDetails">
 				<div class="row">
 					<!-- muttonFishRenewalForm.get('serviceDetail').get('serviceUploadDocuments').value 
 					filterAttachmentMF:muttonFishRenewalForm.get('statusOfBusinessId').value.code-->
@@ -378,7 +378,7 @@
 
 				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="mandatoryUploadFileArray"
 					[form]="muttonFishRenewalForm" (handleErrors)="handleErrorsOnSubmit($event)"
-					(tabIndex)="licenseConfiguration.onFormTabChange($event) "
+					(tabIndex)="licenseConfiguration.onTabChange($event, attachmentDetails, muttonFishRenewalForm) "
 					[stepInfo]="{step: 'final', next:3, back:1} "></app-action-bar>
                </form>
 			</mat-tab>

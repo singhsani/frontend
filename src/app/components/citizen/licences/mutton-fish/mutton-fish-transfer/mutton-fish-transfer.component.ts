@@ -23,6 +23,9 @@ export class MuttonFishTransferComponent implements OnInit {
 	@ViewChild('permanantAddressEstablishment') permanantAddressEstablishment: any;
 
 	muttonFishTransferForm: FormGroup;
+	applicantDetials : FormGroup;
+	businessDetail :FormGroup;
+	attachmentDetails : FormGroup;
 	translateKey: string = 'muttonFishTransferScreen';
 
 	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
@@ -132,14 +135,14 @@ export class MuttonFishTransferComponent implements OnInit {
 		this.formService.createFormData().subscribe(res => {
 
 			this.formId = res.serviceFormId;
-			this.muttonFishTransferForm.patchValue(searchData);
+			//this.muttonFishTransferForm.patchValue(searchData);
 
 			this.muttonFishTransferForm.patchValue({
 				id: res.id,
 				uniqueId: res.uniqueId,
 				version: res.version,
 				serviceFormId: res.serviceFormId,
-				refNumber: this.serachLicenceObj.searchLicenceNumber,
+				//refNumber: this.serachLicenceObj.searchLicenceNumber,
 				createdDate: res.createdDate,
 				updatedDate: res.createdDate,
 				serviceType: res.serviceType,
@@ -168,14 +171,47 @@ export class MuttonFishTransferComponent implements OnInit {
 				// loinumber: res.loinumber,
 				attachments: []
 			});
+			this.applicantDetials.patchValue({
+				refNumber: this.serachLicenceObj.searchLicenceNumber,
+				licenseIssueDate: searchData.licenseIssueDate,
+			    licenseType: searchData.licenseType,
+				personType: searchData.personType,
+				holderFirstName: searchData.holderFirstName,
+				holderMiddleName: searchData.holderMiddleName,
+				holderLastName:  searchData.holderLastName,
+				holderFirstNameGuj: searchData.holderFirstNameGuj,
+				holderMiddleNameGuj: searchData.holderMiddleNameGuj,
+				holderLastNameGuj: searchData.holderLastNameGuj,
+				permanantAddress: searchData.permanantAddress,
+				temporaryAddress: searchData.temporaryAddress,
+				holderTelephoneNo: searchData.holderTelephoneNo,
+				holderMobileNo: searchData.holderMobileNo,
+				holderFaxNo: searchData.holderFaxNo,
+				holderAadharNo: searchData.holderAadharNo,
+				holderPanNo: searchData.holderPanNo,
+			})
+
+			let postData = {};
+		    postData = { parentId:searchData.zoneNo };
+		    this.formService.getWardZone(postData).subscribe(res => {
+			   this.wardZoneLevel2List = res.body;
+		    })
+
+			this.businessDetail.patchValue({
+				zoneNo: searchData.zoneNo,
+				wardNo: searchData.wardNo,
+				businessAddress: searchData.businessAddress,
+				statusOfBusinessId:searchData.statusOfBusinessId,
+				relationshipList: searchData.relationshipList,
+			})
 
 			this.licenseConfiguration.isAttachmentButtonsVisible = true;
 
-			(<FormArray>this.muttonFishTransferForm.get('relationshipList')).controls = [];
+			(<FormArray>this.businessDetail.get('relationshipList')).controls = [];
 			searchData.relationshipList.forEach(app => {
 				app.id = null;
 				app.serviceFormId = null;
-				(<FormArray>this.muttonFishTransferForm.get('relationshipList')).push(this.createArray(app));
+				(<FormArray>this.businessDetail.get('relationshipList')).push(this.createArray(app));
 			});
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
 				(<FormArray>this.muttonFishTransferForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
@@ -203,6 +239,9 @@ export class MuttonFishTransferComponent implements OnInit {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.muttonFishTransferForm.patchValue(res);
+				this.applicantDetials.patchValue(res);
+				this.businessDetail.patchValue(res);
+				this.attachmentDetails.patchValue(res)
 				this.isdisableMode = res.canEdit;
 				if(res.relationshipList.length == 0 && res.canEdit==false){
 					this.istable = false;
@@ -210,10 +249,10 @@ export class MuttonFishTransferComponent implements OnInit {
 					this.istable = true;
 				}
 				this.licenseConfiguration.isAttachmentButtonsVisible = true;
-				this.onChangedZone(this.muttonFishTransferForm.get('zoneNo').value);
+				this.onChangedZone(this.businessDetail.get('zoneNo').value);
 			//	this.onChangeWard(this.muttonFishTransferForm.get('wardNo').value.code);
-			if (this.muttonFishTransferForm.get('statusOfBusinessId').value.code) {
-				this.onChangeStatusOfBusiness(this.muttonFishTransferForm.get('statusOfBusinessId').value.code,false)
+			if (this.businessDetail.get('statusOfBusinessId').value.code) {
+				this.onChangeStatusOfBusiness(this.businessDetail.get('statusOfBusinessId').value.code,false)
 			} else {
 				this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
 				this.uploadFileArray.sort((a, b) => 
@@ -230,7 +269,7 @@ export class MuttonFishTransferComponent implements OnInit {
 				}
 
 				res.relationshipList.forEach(app => {
-					(<FormArray>this.muttonFishTransferForm.get('relationshipList')).push(this.createArray(app));
+					(<FormArray>this.businessDetail.get('relationshipList')).push(this.createArray(app));
 				});
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.muttonFishTransferForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
@@ -343,11 +382,10 @@ export class MuttonFishTransferComponent implements OnInit {
 	* 'Guj' control is consider as a Gujarati fields
 	*/
 	muttonFishTransferFormControls() {
-		this.muttonFishTransferForm = this.fb.group({
-			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			serviceCode: 'MF-LIC',
+		/* Step 1 controls start */
+		this.applicantDetials = this.fb.group({
 			refNumber: [null],
-			/* Step 1 controls start */
+			licenseIssueDate: [null],
 			licenseType: this.fb.group({
 				code: [null, [Validators.required]]
 			}),
@@ -355,7 +393,7 @@ export class MuttonFishTransferComponent implements OnInit {
 				code: [null, [Validators.required]]
 			}),
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30)]],
-			holderMiddleName: [null, [ Validators.maxLength(30)]],
+			holderMiddleName: [null, [Validators.maxLength(30)]],
 			holderLastName: [null, [Validators.required, Validators.maxLength(30)]],
 			holderFirstNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
 			holderMiddleNameGuj: [null, [Validators.maxLength(90)]],
@@ -367,33 +405,43 @@ export class MuttonFishTransferComponent implements OnInit {
 			holderTelephoneNo: [null, [ValidationService.telPhoneNumberValidator]],
 			holderMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
-			holderAadharNo: [null, [Validators.required,Validators.maxLength(12)]],
-			holderPanNo: [null, [Validators.required, ValidationService.panValidator,Validators.maxLength(10)]],
-			/* Step 1 controls end */
+			holderAadharNo: [null, [Validators.required, Validators.maxLength(12)]],
+			holderPanNo: [null, [Validators.required, Validators.maxLength(10)]],
+			isSameAsPermanantAddress: this.fb.group({
+				code: null
+			}),
+		})
+		/* Step 1 controls end */
 
-			/* Step 2 controls start */
+		/* Step 2 controls start */
+		this.businessDetail = this.fb.group({
 			zoneNo: [null,Validators.required],
 			wardNo: [null,Validators.required],
-		//	blockNo: this.fb.group({ code: [null, Validators.required] }),
+			//blockNo: this.fb.group({ code: [null, Validators.required] }),
 			businessAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
-		//	extraDetailsOfBusiness: [null, [Validators.maxLength(500)]],
+			//extraDetailsOfBusiness: [null, [Validators.maxLength(500)]],
 			// relationshipId: this.fb.group({
 			// 	code: [null, Validators.required]
 			// }),
 			statusOfBusinessId: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			/* Step 2 controls end */
-
-			/* Step 3 controls start */
 			relationshipList: this.fb.array([]),
-			/* Step 3 controls end */
+		})
+		/* Step 2 controls end */
 
+		/* Step 3 controls start*/
+		this.attachmentDetails = this.fb.group({
+			attachments: []
+		})
+		/* Step 3 controls end */
+		this.muttonFishTransferForm = this.fb.group({
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+			serviceCode: 'MF-LIC',
 			applicationDate: [],
 			licenseIssueDate: [null],
 			licenseRenewalDate: [null],
 			loinumber: [null],
-
 			/* Step 4 controls start*/
 			attachments: []
 			/* Step 4 controls end */
@@ -422,7 +470,7 @@ export class MuttonFishTransferComponent implements OnInit {
 	 */
 	addItem() {
 		let returnArray: any;
-		returnArray = this.muttonFishTransferForm.get('relationshipList') as FormArray;
+		returnArray = this.businessDetail.get('relationshipList') as FormArray;
 		return returnArray;
 	}
 
@@ -431,7 +479,7 @@ export class MuttonFishTransferComponent implements OnInit {
 	 */
 	addMorePerson() {
 		// let relationshipIdValue = this.muttonFishTransferForm.get('relationshipId').value.code;
-		let relationshipIdValue = this.muttonFishTransferForm.get('statusOfBusinessId').value.code;
+		let relationshipIdValue = this.businessDetail.get('statusOfBusinessId').value.code;
 
 		if (!relationshipIdValue) {
 			this.toastrService.warning("Please select relationship of applicant first.");
@@ -467,8 +515,8 @@ export class MuttonFishTransferComponent implements OnInit {
 	 */
 	onChangeRelationWithOrg() {
 		try {
-			(<FormArray>this.muttonFishTransferForm.get('relationshipList')).controls = [];
-			this.muttonFishTransferForm.get('relationshipList').setValue([]);
+			(<FormArray>this.businessDetail.get('relationshipList')).controls = [];
+			this.businessDetail.get('relationshipList').setValue([]);
 		} catch (error) {
 			console.log(error.message);
 		}
@@ -584,7 +632,7 @@ export class MuttonFishTransferComponent implements OnInit {
    * @param controlType : form control name
    */
   dateFormat(date, controlType: string) {
-    this.muttonFishTransferForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+    this.applicantDetials.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
   }
 
   removeAddressDetail(){
@@ -612,30 +660,30 @@ export class MuttonFishTransferComponent implements OnInit {
 
 	onSameAddressChange(event){
 		if(event.checked){
-			this.muttonFishTransferForm.get('temporaryAddress').patchValue(this.muttonFishTransferForm.get('permanantAddress').value);
-			this.muttonFishTransferForm.get('temporaryAddress').disable();
+			this.applicantDetials.get('temporaryAddress').patchValue(this.applicantDetials.get('permanantAddress').value);
+			this.applicantDetials.get('temporaryAddress').disable();
 			this.checkboxValue = true;
 		}else{
 			this.checkboxValue = false;
-			this.muttonFishTransferForm.get('temporaryAddress').enable();
-			this.muttonFishTransferForm.get('temporaryAddress').reset();
+			this.applicantDetials.get('temporaryAddress').enable();
+			this.applicantDetials.get('temporaryAddress').reset();
 		}
 	}
 
 	valueChangeOnPermantAddress(){
 		if(this.checkboxValue){
-			this.muttonFishTransferForm.get('temporaryAddress').patchValue(this.muttonFishTransferForm.get('permanantAddress').value);
+			this.applicantDetials.get('temporaryAddress').patchValue(this.muttonFishTransferForm.get('permanantAddress').value);
 		}
 	}
 
 	disableField(){
-		this.muttonFishTransferForm.get('refNumber').disable();
-		this.muttonFishTransferForm.get('licenseIssueDate').disable();
+		this.applicantDetials.get('refNumber').disable();
+		this.applicantDetials.get('licenseIssueDate').disable();
 	}
 	onChangedZone(event) {
 		this.wardZoneLevel2List =[];
 		if (event == undefined) {
-		this.muttonFishTransferForm.get('wardNo').get('code').setValue(null);
+		this.businessDetail.get('wardNo').get('code').setValue(null);
 		  return false
 		}
 		else {

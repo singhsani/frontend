@@ -356,7 +356,7 @@
 				<ng-template mat-tab-label>
 					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
-				<form  [formGroup]="muttonFishNewForm">
+				<form  [formGroup]="attachmentDetails">
 				<div class="row">
 					<!-- | filterAttachmentMF:muttonFishNewForm.get('statusOfBusinessId').value.code"  "&& licenseConfiguration.isAttachmentButtonsVisible"-->
 					<ng-container *ngFor="let doc of uploadFileArray ">
@@ -371,7 +371,7 @@
 				</div>
 
 				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="mandatoryUploadFileArray"
-					[form]="muttonFishNewForm" (handleErrors)="handleErrorsOnSubmit($event)"
+					[form]="muttonFishNewForm" (handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="licenseConfiguration.onTabChange($event,attachmentDetails, muttonFishNewForm)"
 					[stepInfo]="{step: 'final', next:3, back:1} "></app-action-bar>
 
 				</form>
