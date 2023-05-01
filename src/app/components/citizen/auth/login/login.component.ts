@@ -5,11 +5,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SessionStorageService } from 'angular-web-storage';
 
 import * as _ from 'lodash';
-
 import { AppService } from '../../../../core/services/citizen/app-services/app.service';
 import { ToastrService } from 'ngx-toastr';
 import { ManageRoutes } from '../../../../config/routes-conf';
-
+import { CommonService as CommonService2} from 'src/app/shared/services/common.service';
+import { CommonService } from 'src/app/shared/services/common.service';
 @Component({
 	selector: 'app-login',
 	templateUrl: './login.component.html',
@@ -26,6 +26,9 @@ export class LoginComponent implements OnInit {
 	loading: boolean = false;
 	manageRoutes: any = ManageRoutes;
 	userNameId = new Date().getTime();
+  userType = 'CITIZEN';
+
+
 	/**
 	 * Constructor to declare defualt propeties of class
 	 * @param appService - Declare App Service property.
@@ -37,7 +40,9 @@ export class LoginComponent implements OnInit {
 		private session: SessionStorageService,
 		private router: Router,
 		private fb: FormBuilder,
-		private toster: ToastrService
+		private toster: ToastrService,
+    private commonService2: CommonService2,
+    private commonService: CommonService,
 	) { }
 
 
@@ -102,8 +107,17 @@ export class LoginComponent implements OnInit {
 				},
 				err => {
 					this.loading = false;
-					if (err.error.error_description)
-						this.toster.error(err.error.error_description);
+          //  if(err.error.error_description){
+					// 	this.toster.error(err.error.error_description);}
+          if(err.status !== 401){
+            this.toster.error(err.error.error_description);
+
+          }
+					else{
+              this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGINRESENDOTP')],
+              { queryParams: { username: this.loginForm.get('username').value } }
+            );
+          }
 				}
 			);
 		} else {
@@ -111,6 +125,7 @@ export class LoginComponent implements OnInit {
 		}
 
 	}
+
 
 	/**
 	 * This method will store Token to the Session Storage.
@@ -121,5 +136,4 @@ export class LoginComponent implements OnInit {
 
 		this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 	}
-
 }

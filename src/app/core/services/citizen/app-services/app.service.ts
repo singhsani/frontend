@@ -70,7 +70,10 @@ export class AppService {
 
 		return this.http.post('public/user/resendOTP', forgotPwdData, this.getCommonHeaders());
 	}
+  resendOTPLogin(forgotPwdData) {
 
+		return this.http.post('public/user/resendOTPLogin', forgotPwdData, this.getCommonHeaders());
+	}
 	/**
 	 * This method is used to perform user reset password operation.
 	 * @param resetPasswordData - parameters to reset password.

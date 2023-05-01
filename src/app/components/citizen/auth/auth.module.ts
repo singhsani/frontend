@@ -16,6 +16,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { LoginThroughAdminComponent } from './login-through-admin/login-through-admin.component';
 import { LoginLayoutComponent } from './../../../layouts/login-layout/login-layout.component';
+import { LoginResendOTPComponent } from './login-resend-otp/login-resend-otp.component';
 /* Import citizen auth components end */
 
 @NgModule({
@@ -34,7 +35,8 @@ import { LoginLayoutComponent } from './../../../layouts/login-layout/login-layo
 		SignUpComponent,
 		ForgotPasswordComponent,
 		LoginThroughAdminComponent,
-		LoginLayoutComponent
+		LoginLayoutComponent,
+		LoginResendOTPComponent
 	]
 })
 export class AuthModule { }
