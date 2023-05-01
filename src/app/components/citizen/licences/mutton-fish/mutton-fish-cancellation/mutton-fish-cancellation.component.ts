@@ -133,8 +133,6 @@ export class MuttonFishCancellationComponent implements OnInit {
 				createdDate: res.createdDate,
 				updatedDate: res.createdDate,
 				serviceType: res.serviceType,
-				wardNo: res.wardNo,
-				zoneNo: res.zoneNo,
 				// deptFileStatus: res.deptFileStatus,
 				serviceName: res.serviceName,
 				fileNumber: res.fileNumber,
@@ -158,7 +156,9 @@ export class MuttonFishCancellationComponent implements OnInit {
 				//licenseIssueDate: res.licenseIssueDate,
 				// licenseRenewalDate: res.licenseRenewalDate,
 				// loinumber: res.loinumber,
-				attachments: []
+				attachments: [],
+				wardNo:searchData.wardNo,
+				zoneNo:searchData.zoneNo
 			});
 			this.muttonFishCancellationForm.disable();
 			this.enableFielList();
@@ -268,14 +268,8 @@ export class MuttonFishCancellationComponent implements OnInit {
 			licenseIssueDate: [null],
 			licenseCancellationalDate: [null],
 			loinumber: [null],
-			wardNo: this.fb.group({
-				code: null,
-				name: null
-			}),
-			zoneNo: this.fb.group({
-				code: null,
-				name: null
-			}),
+			zoneNo: [null,Validators.required],
+			wardNo: [null,Validators.required],
 			reason: [],
 			/* Step 4 controls start*/
 			attachments: []

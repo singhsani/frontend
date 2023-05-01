@@ -502,4 +502,8 @@ export class BookStadiumComponent implements OnInit {
         this.formControlNameToTabIndex.set('termsCondition',2)
         this.formControlNameToTabIndex.set('agree',2)
       }
+
+      termsConditionClick(event) {
+        this.stadiumApplicationForm.controls['termsCondition'].setValue(event.checked);
+      }
 }

@@ -327,7 +327,7 @@
                             <button mat-raised-button class="ml-3" color="primary" type="submit">
                                 <mat-icon>save</mat-icon> {{isEditMode ? 'Update Unit':'Save Unit' }}
                             </button>
-                            <button mat-raised-button class="ml-3" type="button" color="warn" (click)="clearUnitData()">
+                            <button mat-raised-button class="ml-3" type="button" color="warn" (click)="clearUnitData(form)">
                                 <mat-icon>clear_all</mat-icon>{{'clear' | translate:translateKey }}
                             </button>
                         </div>

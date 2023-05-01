@@ -15,9 +15,12 @@
   position: sticky;
   z-index: 10;
 }
+.customthead{
+  background-color: #673ab7;
+  color: white;
+}
 
-
-//For material Table 
+//For material Table
 
 
 /* Structure */
@@ -42,9 +45,12 @@ table { width: 100%; }
 }
 
 .fotButtonBar{
-    background: #f2f2f2;
-    padding: 25px 0 10px;
+    padding: 15px 0 10px;
     margin-top: 0px !important;
+    align-items: center;
+    .checkbox{
+        font-size: 17px;
+    }
 }
 .modal-md {
     max-width: 400;
@@ -81,4 +87,45 @@ table { width: 100%; }
 
 .mat-table td.mat-cell, .mat-table th.mat-header-cell {
     font-size: 13px !important;
+}
+
+.cardBox {
+    .pageTitle {
+        margin-bottom: 0px;
+    }
+
+    .header_lines {
+        padding-top: 7px !important;
+        margin-bottom: 0px;
+
+        img {
+            margin-bottom: 7px;
+        }
+        .titleHeader {
+            font-size: 18px;
+        }
+        .titleparagraph{
+            font-size: 17px;
+        }
+    }
+
+    .headline {
+        font-size: 18px;
+    }
+    .gujratiInstructions {
+        .listSize {
+            font-size: 15px;
+        }
+        .readline{
+            font-size: 15px;
+        }
+    }
+    .engTitle{
+       font-size: 24px;
+    }
+    .engInstructions {
+        h4{
+            font-size: 18px;
+        }
+    }
 }

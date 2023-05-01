@@ -138,7 +138,7 @@
 				</div>
 
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="11" minlength="10" formControlName="holderTelephoneNo"
+					<input matInput OnlyNumber maxlength="11" minlength="11" formControlName="holderTelephoneNo"
 						placeholder="{{'holder_telephone_no' | translate:translateKey}}">
 					<control-messages [control]="applicantDetials.get('holderTelephoneNo')"></control-messages>
 				</mat-form-field>
@@ -175,7 +175,7 @@
 				</ng-template>
 				<form [formGroup]="businessDetail">
 				<div class="row">
-					<div class="col-md-4 ngSelect" formGroupName="zoneNo">
+					<!-- <div class="col-md-4 ngSelect" formGroupName="zoneNo">
 						<ng-select placeholder="{{'business_under_zone' | translate:translateKey}} *"
 							formControlName="code"
 							(change)="onChangeZone($event);businessDetail.get('wardNo').reset();">
@@ -186,12 +186,8 @@
 					</div>
 					<div class="col-md-4 ngSelect" formGroupName="wardNo">
 						<ng-select placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="code">
-							<!-- (change)="onChangeWard($event);businessDetail.get('blockNo').reset()" -->
-							<ng-option *ngFor="let ward of WARD" [value]="ward.code">{{ward.name}}</ng-option>
-						</ng-select>
-						<control-messages [control]="businessDetail.get('wardNo').get('code')">
-						</control-messages>
-					</div>
+							(change)="onChangeWard($event);businessDetail.get('blockNo').reset()" -->
+							
 					<!-- <div class="col-md-4 ngSelect" formGroupName="blockNo">
 						<ng-select placeholder="{{'block_no' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let block of BLOCK" [value]="block.code">{{block.name}}</ng-option>
@@ -199,6 +195,20 @@
 						<control-messages [control]="businessDetail.get('blockNo').get('code')">
 						</control-messages>
 					</div> -->
+					<div class="col-md-4 ngSelect">
+						<ng-select  placeholder="{{'business_under_zone' | translate:translateKey}} *" formControlName="zoneNo" required (change)="onChangedZone($event);">
+						  <ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.parentWardzoneId">
+							{{zone.wardzoneName}}</ng-option>
+						</ng-select>
+						<control-messages [control]="businessDetail.get('zoneNo')"></control-messages>
+					  </div>
+					  <div class="col-md-4 ngSelect" >
+						<ng-select required placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="wardNo">
+						  <ng-option *ngFor="let ward of wardZoneLevel2List" [value]="ward.wardzoneId">
+							{{ward.wardzoneName}}</ng-option>
+						</ng-select>
+						<control-messages [control]="businessDetail.get('wardNo')"></control-messages>
+					  </div>
 				</div>
 				<div class="row">
 					<h2>{{'business_shop_address' | translate:translateKey}}</h2>
@@ -352,7 +362,7 @@
 				<ng-template mat-tab-label>
 					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
-				<form  [formGroup]="muttonFishRenewalForm">
+				<form  [formGroup]="attachmentDetails">
 				<div class="row">
 					<!-- muttonFishRenewalForm.get('serviceDetail').get('serviceUploadDocuments').value 
 					filterAttachmentMF:muttonFishRenewalForm.get('statusOfBusinessId').value.code-->
@@ -368,7 +378,7 @@
 
 				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="mandatoryUploadFileArray"
 					[form]="muttonFishRenewalForm" (handleErrors)="handleErrorsOnSubmit($event)"
-					(tabIndex)="licenseConfiguration.onFormTabChange($event) "
+					(tabIndex)="licenseConfiguration.onTabChange($event, attachmentDetails, muttonFishRenewalForm) "
 					[stepInfo]="{step: 'final', next:3, back:1} "></app-action-bar>
                </form>
 			</mat-tab>

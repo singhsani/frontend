@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { ValidationService } from '../../../../../../../shared/services/validation.service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslatePipe } from 'src/app/shared/modules/translate/translate.pipe';
+import { Constants } from 'src/app/vmcshared/Constants';
 
 @Component({
   selector: 'app-book-planetarium',
@@ -62,6 +63,9 @@ export class BookPlanetariumComponent implements OnInit {
     head_lines: string;
     checkProceed: boolean = false;
 
+  constants = Constants;
+  rupeeSign: string;
+
   /**
    * @param fb - Declare FormBuilder property.
    * @param ticketingService - Declare Ticketing Service
@@ -89,6 +93,7 @@ export class BookPlanetariumComponent implements OnInit {
     this.getListData();
     this.profileData();
     this.setDefaultDate();
+    this.rupeeSign = this.constants.rupeeSymbol;
   }
 
   setDefaultDate(){
@@ -638,7 +643,7 @@ export class BookPlanetariumComponent implements OnInit {
       this.commonService.openAlert("Field Error", this.ticketingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
       this.markFormGroupTouched(this.ticketBookingForm);
     }
-    else if (this.showFotButtonBar) {
+    else if (!this.showFotButtonBar) {
       if (!this.isFileUploaded) {
         this.commonService.openAlert(this.ticketingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
         return;

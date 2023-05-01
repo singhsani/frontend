@@ -318,6 +318,7 @@ export class ShopLicTransferComponent implements OnInit {
 		formObj['shopPersonList'] = res.shopPersonList;
 		formObj['shopPartnerList'] = res.shopPartnerList;
 		formObj['workerCounts'] = res.workerCounts;
+		formObj['organizationType'] = res.organizationType
 		// Intimation or certificate number.
 		formObj['transferCertificateNumber'] =  this.certificateNumber
 		
@@ -376,6 +377,7 @@ export class ShopLicTransferComponent implements OnInit {
 				this.partnerlist.disable();
 			}
 			
+
 			// res.shopPersonList.forEach(app => {
 			// 	(<FormArray>this.employerfamily.get('shopPersonList')).push(this.createArray(app));
 			// });
@@ -863,7 +865,7 @@ export class ShopLicTransferComponent implements OnInit {
 	 * @param persontype : person array type
 	 */
 	addMorePersonwork(persontype: string) {
-		let workerGrid = <FormArray>this.shopLicTransferForm.get('workerCounts');
+		let workerGrid = <FormArray>this.personoccuping.get('workerCounts');
 		this.shopAndEstablishmentService.getSelectedWorkerType(this.workerTypeList,workerGrid);
 		this.edit = false;
 		let isEditAnotherRow = this.isTableInEditMode(persontype);

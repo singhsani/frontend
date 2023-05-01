@@ -26,6 +26,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 	muttonFishRenewalForm: FormGroup;
 	applicantDetials : FormGroup;
 	businessDetail :FormGroup;
+	attachmentDetails : FormGroup;
 	translateKey: string = 'muttonFisheRenewScreen';
 	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
 
@@ -39,6 +40,8 @@ export class MuttonFishRenewalComponent implements OnInit {
 	PERSON_TYPE: Array<any> = [];
 	FIRM_ZONE: Array<any> = [];
 	WARD: Array<any> = [];
+	wardZoneLevel1List = [];
+	wardZoneLevel2List = [];
 	//BLOCK: Array<any> = [];
 	LOOKUP: any;
 	businessCategory: Array<any> = [];
@@ -109,6 +112,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 			this.formId = Number(param.get('id'));
 			this.apiCode = param.get('apiCode');
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+			this.getAllZoneNos();
 		});
 		
 		this.getLookupData();
@@ -130,6 +134,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 	 * @param searchData: exciting licence number data
 	 */
 	createRecordPatchSerachData(searchData: any) {
+
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		this.formService.createFormData().subscribe(res => {
 			this.formId = res.serviceFormId;
@@ -188,7 +193,13 @@ export class MuttonFishRenewalComponent implements OnInit {
 				holderAadharNo: searchData.holderAadharNo,
 				holderPanNo: searchData.holderPanNo,
 			})
-
+			
+		  let postData = {};
+		    postData = { parentId:searchData.zoneNo };
+		    this.formService.getWardZone(postData).subscribe(res => {
+			   this.wardZoneLevel2List = res.body;
+		    })
+			//console.log(this.wardZoneLevel2List)
 			this.businessDetail.patchValue({
 				zoneNo: searchData.zoneNo,
 				wardNo: searchData.wardNo,
@@ -232,7 +243,13 @@ export class MuttonFishRenewalComponent implements OnInit {
 	enableFielList() {
 		this.muttonFishRenewalForm.get('serviceCode').enable();
 	}
-
+	getAllZoneNos() {
+		this.formService.getWardZoneFirstLevel(1, "PROPERTYTAX").subscribe(
+		  (data) => {
+			this.wardZoneLevel1List = data;
+		  }
+		)
+	  }
 	/**
 	 * Method is used to get form data
 	 */
@@ -250,7 +267,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 					this.istable = true;
 				}
 				this.licenseConfiguration.isAttachmentButtonsVisible = true;
-				this.onChangeZone(this.businessDetail.get('zoneNo').value.code);
+				this.onChangeZone(this.businessDetail.get('zoneNo').value);
 				//	this.onChangeWard(this.muttonFishRenewalForm.get('wardNo').value.code);
 				if (this.businessDetail.get('statusOfBusinessId').value.code) {
 					this.onChangeStatusOfBusiness(this.businessDetail.get('statusOfBusinessId').value.code)
@@ -298,7 +315,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 			this.MEATFISH_STATUS_OF_BUSINESS = res.MEATFISH_STATUS_OF_BUSINESS;
 			this.PERSON_TYPE = res.PERSON_TYPE;
 			this.FIRM_ZONE = res.FIRM_ZONE;
-			this.onChangeZone(this.muttonFishRenewalForm.get('zoneNo').value.code);
+			this.onChangeZone(this.muttonFishRenewalForm.get('zoneNo').value);
 			//this.onChangeWard(this.muttonFishRenewalForm.get('wardNo').value.code);
 		});
 	}
@@ -416,8 +433,8 @@ export class MuttonFishRenewalComponent implements OnInit {
 
 		/* Step 2 controls start */
 		this.businessDetail = this.fb.group({
-			zoneNo: this.fb.group({ code: [null, Validators.required] }),
-			wardNo: this.fb.group({ code: [null, Validators.required] }),
+			zoneNo: [null,Validators.required],
+			wardNo: [null,Validators.required],
 			//blockNo: this.fb.group({ code: [null, Validators.required] }),
 			businessAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			//extraDetailsOfBusiness: [null, [Validators.maxLength(500)]],
@@ -430,6 +447,12 @@ export class MuttonFishRenewalComponent implements OnInit {
 			relationshipList: this.fb.array([]),
 		})
 		/* Step 2 controls end */
+
+		/* Start 3 controls end */
+		this.attachmentDetails = this.fb.group({
+			attachments: []
+		})
+		/* Step 3 controls end */
 
 		this.muttonFishRenewalForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
@@ -444,6 +467,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 		/** Method is used to copy local contoller to Main contoller **/
 		this.commonService.createCloneAbstractControl(this.applicantDetials, this.muttonFishRenewalForm);
 		this.commonService.createCloneAbstractControl(this.businessDetail, this.muttonFishRenewalForm);
+		this.commonService.createCloneAbstractControl(this.attachmentDetails, this.muttonFishRenewalForm);
 	}
 
 	/**
@@ -638,4 +662,20 @@ export class MuttonFishRenewalComponent implements OnInit {
 			this.applicantDetials.get('temporaryAddress').patchValue(this.applicantDetials.get('permanantAddress').value);
 		}
 	}
+	onChangedZone(event) {
+		debugger
+		this.wardZoneLevel2List =[];
+		if (event == undefined) {
+		this.businessDetail.get('wardNo').get('code').setValue(null);
+		  return false
+		}
+		else {
+		  let postData = {};
+		  postData = { parentId: event };
+		  this.formService.getWardZone(postData).subscribe(res => {
+			this.wardZoneLevel2List = res.body;
+		  })
+
+		}
+	  }
 }

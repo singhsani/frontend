@@ -127,7 +127,7 @@
 
 
           <div class="row">
-            <h2><b>{{'Address of the Factory /works from where material will be supplied'}}</b></h2>
+            <h2><b>{{'Address of the Factory / Works from where material will be supplied'}}</b></h2>
 
             <!-- <app-address #officeAddr [requiredFeilds]="true"
               [addressFormGroup]="vendorRegistrationForm.get('factoryAddress')">
@@ -199,10 +199,12 @@
 
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" OnlyNumber required maxlength="11" minlength="10"
+            <input matInput type="text" OnlyNumber required maxlength="11" minlength="11"
               placeholder="{{'Telephone Number'}}" formControlName="officeContactNumber">
-            <control-messages [control]="firmDetails.get('officeContactNumber')">
-            </control-messages>
+              <control-messages *ngIf="firmDetails.get('officeContactNumber').getError('required') && firmDetails.get('officeContactNumber').touched" [control]="firmDetails.get('officeContactNumber')" errorMsg="Office Telephone number is required">
+              </control-messages>
+              <control-messages *ngIf="firmDetails.get('officeContactNumber').getError('minlength')" [control]="firmDetails.get('officeContactNumber')">
+              </control-messages>
           </mat-form-field>
 
           <mat-form-field class="col-md-4">
@@ -233,10 +235,12 @@
           </div>
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" OnlyNumber required maxlength="11" minlength="10"
+            <input matInput type="text" OnlyNumber required maxlength="11" minlength="11"
               placeholder="{{'Telephone Number'}}" formControlName="resContactNumber">
-            <control-messages [control]="firmDetails.get('resContactNumber')">
-            </control-messages>
+              <control-messages *ngIf="firmDetails.get('resContactNumber').getError('required') && firmDetails.get('resContactNumber').touched" [control]="firmDetails.get('resContactNumber')" errorMsg="Head Office Telephone number is required">
+              </control-messages>
+              <control-messages *ngIf="firmDetails.get('resContactNumber').getError('minlength')" [control]="firmDetails.get('resContactNumber')">
+              </control-messages>
           </mat-form-field>
 
           <mat-form-field class="col-md-4">
@@ -255,12 +259,12 @@
 
           <div class="row">
             <h2><b>{{'Branch Office address'}}</b></h2>
-            <app-address #resAddr 
+            <app-address #resAddr [requiredFeilds]="false"
               [addressFormGroup]="firmDetails.get('branchAddress')">
             </app-address>
           </div>
           <mat-form-field class="col-md-3">
-            <input matInput type="text" required OnlyNumber maxlength="10" placeholder="{{'Mobile Number'}}"
+            <input matInput type="text"  OnlyNumber maxlength="10" placeholder="{{'Mobile Number'}}"
               formControlName="branchMobileNumber">
             <control-messages [control]="firmDetails.get('branchMobileNumber')">
             </control-messages>
@@ -313,7 +317,7 @@
               </control-messages>
             </mat-form-field>
             <mat-form-field class="col-md-3">
-              <input matInput type="text" OnlyNumber maxlength="11" minlength="10" placeholder="{{'Telephone Number'}}"
+              <input matInput type="text" OnlyNumber maxlength="11" minlength="11" placeholder="{{'Telephone Number'}}"
                 formControlName="headAlterMobileNumber">
               <control-messages [control]="firmDetails.get('headAlterMobileNumber')">
               </control-messages>

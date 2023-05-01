@@ -8,28 +8,28 @@
 
     <mat-card-content class="p-4">
 
-      <h4 class="pb-2">{{head_lines| translate: translateKey}}</h4>
+      <h4 class="pb-2 headlines">{{head_lines| translate: translateKey}}</h4>
       <br>
-      <h2><b>{{'rules_and_regulations'| translate: translateKey}}</b></h2>
+      <h2 class="headline"><b>{{'rules_and_regulations'| translate: translateKey}}</b></h2>
 
       <h4><ol class="olList">
 
-        <li>
+        <li class="engInstructions">
           All parties/organizers have to observe the VMC Rules
         </li>
 
-        <li>
+        <li class="engInstructions">
           Production of all necessary permission is mandatory for applicant before commencement of program.
         </li>
 
-        <li>
+        <li class="engInstructions">
           Deduction as per the rules will be made in the event of cancellation.
         </li>
 
       </ol></h4>
     </mat-card-content>
   </mat-card>
-  <div class="fotButtonBar">
+  <div class="fotButtonBar1">
     <div class="col-sm-12 col-md-12 text-right">
       <button mat-raised-button (click)="guideLineFlag = false;showPermissionSearchForm= true;" color="primary">
         {{'submit'| translate: translateKey}}
@@ -115,48 +115,47 @@
   </mat-card>
 
   <div *ngIf="Dates.length>0" class="mt-4">
-
     <mat-card class="formClass cardBorder">
+        <div class="pageTitle">{{'list_of_book_permission'| translate: translateKey}}</div>
+        <mat-accordion *ngFor="let month of bookingUtils.filterMonths(Dates); let i = index;">
+            <mat-expansion-panel [expanded]="i === 0">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{month.monthName}}
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+<!--                    <div>-->
+<!--                        <mat-checkbox [checked]="!bookingUtils.checkedAllinMonth(month, Dates)" [disabled]="bookingUtils.checkAllDisabledInmonth(month,Dates)"-->
+<!--                            labelPosition="after" (change)="selectedShift = bookingUtils.selectAllShiftsInMonth($event.checked, month, Dates, selectedShift, i)">-->
+<!--                            {{'select_all_shift_in'| translate: translateKey}} {{month.monthName}}-->
+<!--                        </mat-checkbox>-->
+<!--                    </div>-->
 
-      <div class="pageTitle">{{'list_of_book_permission'| translate: translateKey}}</div>
-
-      <mat-accordion *ngFor="let month of filterMonths(); let i = index;">
-        <mat-expansion-panel [expanded]="i === 0">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              {{month.monthName}}
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div>
-            <mat-checkbox [checked]="!checkedAllinMonth(month)" labelPosition="after"
-              (change)="selectAllShiftsInMonth($event.checked, month, i)">
-              {{'select_all_days_in'| translate: translateKey}} {{month.monthName}}
-            </mat-checkbox>
-          </div>
-
-          <div class="row">
-            <div *ngFor="let date of filterAcc(month.id)" class="col-6 col-md-3 col-lg-2 mb-1 p-1">
-              <div class="dateBox rounded border">
-                <strong>
-                  {{bookingUtils.returnProperDate(date.key)}}
-                </strong>
-                <div class="dateCon">
-                  <mat-checkbox (change)="selectShift(days, $event.checked)"
-                    *ngFor="let days of date.slotList; let i = index"
-                    [disabled]="days.slotStatus == bookingConstants.BOOKED || days.slotStatus == bookingConstants.TEMPORARY_BLOCKED"
-                    [checked]="days.slotStatus != bookingConstants.AVAILABLE">
-                    &nbsp;{{days.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE :
-                    days.slotStatus }}
-                  </mat-checkbox>
+                <div class="row">
+                    <div *ngFor="let date of bookingUtils.filterAcc(month.id, Dates)" class="col-6 col-md-3 col-lg-2 mb-1 p-1">
+                        <div class="dateBox rounded border">
+                            <div class="dateBox rounded border availableDate" *ngFor="let shift of date.slotList; let i = index"
+                            [ngClass]="{'bookDate': shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED,
+                           'checkDate': shift.slotStatus != bookingConstants.AVAILABLE,
+                           'blockDate': shift.slotStatus == 'TEMPORARY_BLOCKED',
+                           'holiyDay': shift.slotStatus == bookingConstants.RESERVED || shift.slotStatus == bookingConstants.HOLIDAY || shift.slotStatus == bookingConstants.FESTIVAL}">
+                            <strong>
+                                {{bookingUtils.returnProperDate(date.key)}}
+                            </strong>
+                            <div class="dateCon">
+                                <mat-checkbox (change)="selectedShift = bookingUtils.selectShift(shift, $event.checked, selectedShift)" *ngFor="let shift of date.slotList; let i = index"
+                                    [disabled]="shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED"
+                                    [checked]="shift.slotStatus != bookingConstants.AVAILABLE">
+                                    &nbsp;{{shift.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : shift.slotStatus }}
+                                </mat-checkbox>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-
-            </div>
-          </div>
-        </mat-expansion-panel>
-      </mat-accordion>
-
-      <div class="fotButtonBar">
+            </mat-expansion-panel>
+        </mat-accordion>
+      <div class="fotButtonBar1">
         <div class="col-sm-12 col-md-12 text-right">
           <button mat-raised-button data-toggle="modal" (click)="shortlistShifts(confirmationModel)"
             data-target="#confirmShortlistModel" type="button" [disabled]="selectedShift.length == 0" color="primary">
@@ -253,7 +252,7 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn mat-raised-button mat-primary" data-dismiss="modal"
-      (click)="showPermissionApplicationForm = true; receiptRef.hide()">
+      (click)="showPermissionApplicationForm = true; receiptRef.hide(); getUserProfile();">
       {{'proceed_for_appication'| translate: translateKey}}
     </button>
   </div>
@@ -361,7 +360,7 @@
               [addressFormGroup]="organizationdetails.get('applicantAddress')"></app-address>
           </div>
 
-          <div class="row mt-4 fotButtonBar">
+          <div class="row mt-4 fotButtonBar1">
             <div class="col-sm-12 col-md-12 text-right">
               <!-- <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">{{'next' |
                 translate:translateKey}} -->
@@ -406,7 +405,7 @@
             </booking-file-upload>
           </div>
 
-          <div class="row mt-4 fotButtonBar">
+          <div class="row mt-4 fotButtonBar1">
             <div class="col-sm-12 col-md-12 justify-content-between d-flex">
               <button type="button" mat-raised-button color="primary" (click)="tabIndex= tabIndex -1; ">{{'back' |
                 translate:translateKey}}</button>

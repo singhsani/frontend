@@ -23,6 +23,7 @@ export class MuttonFishNewComponent implements OnInit {
 	muttonFishNewForm: FormGroup;
 	applicantDetials : FormGroup;
 	businessDetail :FormGroup;
+	attachmentDetails : FormGroup;
 	translateKey: string = 'muttonFishNewScreen';
 	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
 
@@ -329,6 +330,9 @@ export class MuttonFishNewComponent implements OnInit {
 			relationshipList: this.fb.array([]),
 		})
             /* Step 2 controls start */
+		this.attachmentDetails = this.fb.group({
+			attachments: [],
+		})
 		this.muttonFishNewForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'MF-LIC',
@@ -341,6 +345,8 @@ export class MuttonFishNewComponent implements OnInit {
 		/** Method is used to copy local contoller to Main contoller **/
 		this.commonService.createCloneAbstractControl(this.applicantDetials,this.muttonFishNewForm);
 		this.commonService.createCloneAbstractControl(this.businessDetail,this.muttonFishNewForm);
+		this.commonService.createCloneAbstractControl(this.attachmentDetails,this.muttonFishNewForm);
+		
 	}
 
 	/**

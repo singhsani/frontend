@@ -18,10 +18,10 @@ export class LicenseConfiguration extends ComponentConfig {
             } else {
                 const organizationalAry = Object.keys(controlName.getRawValue());
                 organizationalAry.forEach((element:any) => {
-                       // push form Array data into main Controller
+                    // push form Array data into main Controller
                     if (controlName.get(element) instanceof FormArray) {
                         const formGroupAry = this.createArray(controlName.get(element));
-                        mainControl.get(element).value.push()
+                        mainControl.get(element).removeAt()
                         for(let i = 0; i < controlName.get(element).controls.length; i++) {
                             mainControl.get(element).value.push(formGroupAry.value[i]);
                             mainControl.get(element).controls.push(formGroupAry.controls[i]);

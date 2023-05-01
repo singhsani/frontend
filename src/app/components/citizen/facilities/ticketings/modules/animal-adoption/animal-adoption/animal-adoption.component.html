@@ -1,9 +1,10 @@
 <mat-card class="cardBox">
   <div class="pageTitle">{{'animal_adoption' | translate: translateKey}}</div>
   <div class="row" *ngIf="showAnimalAdoptionPricingTable" style="height: 448px;">
-
+  <div class="noteClass"><b> Note: An applicant can mention only specific number of years for all adoption entries under the 'Friends of Zoo' program.</b> </div>
+   <br> <br>
     <mat-card-content style="margin-top: 0px;" class="p-4 col-md-6">
-      <h1><b>{{'Expenses for adopting wildlife Animals / Birds'| translate: translateKey}}</b></h1>
+      <h1 class="h1"><b>{{'Expenses for adopting wildlife Animals / Birds'| translate: translateKey}}</b></h1>
       <div class="example-table-container mat-elevation-z8 borderOne">
 
         <table mat-table [dataSource]="dataSourceForPricing" class="myTicketPricingTabel">
@@ -136,7 +137,6 @@
 
 
           <h3>❖ GENEROUS CONSIDERATIONS:</h3>
-            <br>
           <h5>I. In addition to the Animal Adoption Scheme of Zoo; the Zoo shall be highly obliged to receive
             contributions from Individuals/Corporates in the form of Commodity, which are a special seasonal
             requirements for Animals/Birds for their better upkeep viz. Coolers during Summer, Heaters during Winter,
@@ -203,6 +203,12 @@
           <control-messages [control]="animalAdoptionForm.get('adopterEmailId')"></control-messages>
         </mat-form-field>
 
+        <mat-form-field class="col-md-4">
+          <input matInput type="text" OnlyNumber maxlength="2" formControlName="adoptionYears" (change)="validateAdoptionYear($event);" 
+             placeholder="{{'No of Adoption Years' | translate: translateKey}}" required>
+             <control-messages [control]="animalAdoptionForm.get('adoptionYears')">
+            </control-messages>
+        </mat-form-field>
 
         <div class="col-md-4 ngSelect">
           <ng-select [items]="animalAdoptionPricing" formControlName="animalName" [multiple]="false"
@@ -218,13 +224,6 @@
           <input matInput type="text" OnlyNumber maxlength="2"  formControlName="existingCount" disabled
              placeholder="{{'Existing No of Count' | translate: translateKey}}" required>
              <control-messages [control]="animalAdoptionForm.get('existingCount')">
-            </control-messages>
-        </mat-form-field>
-
-        <mat-form-field class="col-md-4">
-          <input matInput type="text" OnlyNumber maxlength="2" formControlName="adoptionYears" (change)="validateAdoptionYear($event);" 
-             placeholder="{{'No of Adoption Years' | translate: translateKey}}" required>
-             <control-messages [control]="animalAdoptionForm.get('adoptionYears')">
             </control-messages>
         </mat-form-field>
 

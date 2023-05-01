@@ -175,7 +175,7 @@ export class AnimalAdoptionComponent implements OnInit {
     this.animalCount = animal.animalCount
     this.animalAdoptionForm.get('existingCount').setValue(this.animalCount)
     this.animalAdoptionForm.get('existingCount').disable()
-    this.animalAdoptionForm.get('adoptionYears').reset();
+  
   }
 
   deleteOT(OTData: any, index: number) {
@@ -215,25 +215,27 @@ export class AnimalAdoptionComponent implements OnInit {
     let returnArray = this.animalAdoptionForm.get('animalNameList') as FormArray;
     this.animalAdoptionYear=this.animalAdoptionForm.get('adoptionYears').value;
     if(returnArray.length!=0 && returnArray.value[0].noOfYear != this.animalAdoptionYear){
-      this.toster.warning('Please Enter Same Year');
+      this.toster.warning('Please Enter Same No Of Adoption Year');
       this.animalAdoptionForm.get('animalName').setValue(null);
       this.animalAdoptionForm.get('totalAdoptionCost').setValue(null);
       this.animalAdoptionForm.get('noOfAdoptionCount').reset();
       this.animalAdoptionForm.get('adoptionYears').reset();
+      this.animalAdoptionForm.get('existingCount').reset();
+      
     }else{
     for (let control of returnArray.controls) {
       if (control instanceof FormGroup) {
         
          if(control.get('id').value == this.animalName.id){
-           this.toster.warning(this.animalName.animalBirdName +' already added Plase Select another Animal');
-           return;
+           this.toster.warning(this.animalName.animalBirdName +' already added Please Select another Animal');
+           return this.resetCalculations(" ");
          }
       }
    }
-
+   this.toster.success(this.animalBirdName +' Added Successfully');
     this.animalName['totalQty'] = this.animalAdoptionForm.get('noOfAdoptionCount').value;
     this.animalName['noOfYear'] = this.animalAdoptionForm.get('adoptionYears').value;
-    this.animalName.totalExpenses = this.animalAdoptionForm.get('totalAdoptionCost').value;
+   // this.animalName['total'] = this.animalName.totalExpenses;
     if (this.animalAdoptionForm.get('canEdit').value) {
       returnArray.push(this.createOTDetailArray(this.animalName));
       this.resetCalculations("");
@@ -271,9 +273,10 @@ export class AnimalAdoptionComponent implements OnInit {
       animalBirdName: data.animalBirdName ? data.animalBirdName : null,
       annualBoardingExpenses: data.annualBoardingExpenses ? data.annualBoardingExpenses : null,
       annualMaintainanceExpenses: data.annualMaintainanceExpenses ? data.annualMaintainanceExpenses : null,
-      totalExpenses: data.totalExpenses ? data.totalExpenses : null,
+      totalExpenses: this.animalAdoptionForm.get('totalAdoptionCost').value ? this.animalAdoptionForm.get('totalAdoptionCost').value : null,
       totalQty: data.totalQty ? data.totalQty : null,
       noOfYear : data.noOfYear ? data.noOfYear :null,
+      total:this.animalAdoptionForm.get('totalAdoptionCost').value?this.animalAdoptionForm.get('totalAdoptionCost').value:null
 
     })
 
@@ -285,7 +288,7 @@ export class AnimalAdoptionComponent implements OnInit {
     this.animalAdoptionForm.get('animalName').setValue(null);
     this.animalAdoptionForm.get('totalAdoptionCost').setValue(null);
     this.animalAdoptionForm.get('noOfAdoptionCount').reset();
-    this.animalAdoptionForm.get('adoptionYears').reset();
+    this.animalAdoptionForm.get('adoptionYears').setValue(this.animalAdoptionYear);
     this.animalAdoptionForm.get('existingCount').reset();
     //this.animalAdoptionForm.get('totalAdoptionCost').setValue(0);
     this.selectedAnimalAnnualMaintainanceExpenses=0;
@@ -348,7 +351,7 @@ export class AnimalAdoptionComponent implements OnInit {
       let adoptionYear=this.animalAdoptionForm.get('adoptionYears').value;
       if(adoptionYear == 0){
         this.commonService.openAlert('Warning','Adoption Year Must Be Greater Than 0' , 'warning', '',);
-        this.animalAdoptionForm.get('adoptionYears').reset();
+         this.animalAdoptionForm.get('adoptionYears').reset();
       }
     }
   /**

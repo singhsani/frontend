@@ -17,6 +17,7 @@ import { TicketingsService } from '../facilities/ticketings/shared-ticketing/ser
 import { TicketingConstants, TicketingUtils } from '../facilities/ticketings/config/ticketing-config';
 import { BookingService } from '../facilities/bookings/shared-booking/services/booking-service.service';
 import { BookingConstants } from '../facilities/bookings/config/booking-config';
+import { Constants } from 'src/app/vmcshared/Constants';
 
 
 @Component({
@@ -50,6 +51,8 @@ export class LoiPaymentComponentBooking implements OnInit {
 	ticketingConstants = TicketingConstants;
 
 	bookingConstant = BookingConstants;
+	constants = Constants;
+	rupeeSign: string;
 
 
 	constructor(
@@ -82,6 +85,7 @@ export class LoiPaymentComponentBooking implements OnInit {
 
 	ngOnInit() {
 		this.getLoiDetaiol();
+		this.rupeeSign = this.constants.rupeeSymbol;
 	}
 
 	getLoiDetaiol() {

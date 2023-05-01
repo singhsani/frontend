@@ -9,6 +9,7 @@ import { MatSort, MatTableDataSource, MatDatepickerInputEvent } from '@angular/m
 import { UnitDetailModel, MeasurementModel, RoomModel } from '../../Models/new-property-entry-add.model';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import * as moment from 'moment';
+import { cloneDeep } from 'lodash';
 @Component({
   selector: 'app-unit-detail',
   templateUrl: './unit-detail.component.html',
@@ -207,7 +208,8 @@ export class UnitDetailComponent implements OnInit {
   editUnit(item) {
     this.isEditMode = true;
     this.getSubUsageList(item.usageMstId);
-    this.unitDetailModel = item;
+    this.unitDetailModel = cloneDeep(item);
+    
     this.viewMeasurement();
     this.selectedRowIndex = item.propertyUnitId;
     this.step = 0;
@@ -312,6 +314,19 @@ export class UnitDetailComponent implements OnInit {
         (error) => {
           this.commonService.callErrorResponse(error);
         });
+    }else if(!form.form.valid){
+      if(!this.myForm.form.controls['buildingPermissionNo'].value){
+        this.myForm.form.controls['buildingPermissionNo'].setErrors(null);
+        this.myForm.form.controls['buildingPermissionDate'].setErrors(null);
+      }
+      if(!this.myForm.form.controls['occupancyCertificateNo'].value){
+        this.myForm.form.controls['occupancyCertificateNo'].setErrors(null);
+        this.myForm.form.controls['occupancyCertificateDate'].setErrors(null);
+      }
+      if(!this.myForm.form.controls['completionNo'].value){
+        this.myForm.form.controls['completionNo'].setErrors(null);
+        this.myForm.form.controls['completionDate'].setErrors(null);
+      }
     }
   }
 
@@ -323,12 +338,19 @@ export class UnitDetailComponent implements OnInit {
     this.step = 0;
   }
 
-  clearUnitData() {
-    const unitId = this.unitDetailModel.propertyUnitId;
-    const unitNo = this.unitDetailModel.unitNo;
+  clearUnitData(form : NgForm) {
+    let unitId;
+    let unitNo;
+    if(this.unitDetailModel.propertyUnitId){
+      unitId = this.unitDetailModel.propertyUnitId;
+      unitNo = this.unitDetailModel.unitNo;
+    }
+    form.resetForm();
+    setTimeout(() => {
     this.unitDetailModel = new UnitDetailModel();
     this.unitDetailModel.propertyUnitId = unitId;
     this.unitDetailModel.unitNo = unitNo;
+    },);
   }
   // saveMeasurementDetail(form: NgForm) {
   //   if (form.form.valid) {

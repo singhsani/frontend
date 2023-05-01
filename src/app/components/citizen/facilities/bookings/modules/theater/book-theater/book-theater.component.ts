@@ -11,6 +11,7 @@ import { MatPaginator, MatSort } from '@angular/material';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { BookingService } from '../../../shared-booking/services/booking-service.service';
 import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
+import { Constants } from 'src/app/vmcshared/Constants';
 
 @Component({
     selector: 'app-book-theater',
@@ -30,6 +31,7 @@ export class BookTheaterComponent implements OnInit {
        */
     bookingUtils: BookingUtils;
     bookingConstants = BookingConstants;
+    constants = Constants;
 
     /**
      * boolean flags to handle view.
@@ -96,6 +98,8 @@ export class BookTheaterComponent implements OnInit {
     dataSource = [];
     public formControlNameToTabIndex = new Map();
 
+    rupeeSign: string;
+
     /**
      * Constructor
      * @param fb - formbuilder.
@@ -142,6 +146,7 @@ export class BookTheaterComponent implements OnInit {
             this.endMinDate = data;
             return;
         })
+        this.rupeeSign = this.constants.rupeeSymbol;
     }
 
     /**
@@ -540,5 +545,21 @@ export class BookTheaterComponent implements OnInit {
         } else {
             this.btnProceed = true;
         }
+    }
+
+    covertGujaratinumber(headerName) {
+        if (headerName == 1) {
+            headerName = '૧'
+        }
+        else if (headerName == 2) {
+            headerName = '૨'
+        }
+        else if (headerName == 2500) {
+            headerName = '૨૫૦૦'
+        }
+        else if (headerName == 600) {
+            headerName = '૬૦૦'
+        }
+        return headerName
     }
 }
