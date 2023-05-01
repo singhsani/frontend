@@ -256,6 +256,20 @@ export class ShopLicNewComponent implements OnInit {
 					this.isDisabledOrgType = false; //new reg.
 				}
 
+				if(this.isDisabledOrgType && res.fileStatus != "DRAFT"){
+					this.establishmentdetails.disable();
+					this.employerdetails.disable();
+					this.employerfamily.disable();
+					this.personoccuping.disable();
+					this.partnerlist.disable();
+				}else{
+					this.establishmentdetails.enable();
+					this.employerdetails.enable();
+					this.employerfamily.enable();
+					this.personoccuping.enable();
+					this.partnerlist.enable();
+				}
+	
 				this.getSubCategoryDropdownData(this.shopLicNewForm.get('establishmentCategory').value.code);
 
 				this.serverUploadFilesArray = res.serviceDetail.serviceUploadDocuments;
@@ -631,7 +645,7 @@ export class ShopLicNewComponent implements OnInit {
 			this.establishmentdetails.patchValue({
 				waterDrainageWardId: null,
 				waterDrainageBlockId: null,
-				waterDrainageWardName: null,
+				// waterDrainageWardName: null,
 				waterDrainageBlockName: null
 			});
 		}
@@ -641,7 +655,7 @@ export class ShopLicNewComponent implements OnInit {
 			if (!value) {
 				this.establishmentdetails.patchValue({
 					waterDrainageWardId: null,
-					waterDrainageWardName: null
+					// waterDrainageWardName: null
 				});
 			}
 			this.establishmentdetails.patchValue({
@@ -2045,4 +2059,16 @@ export class ShopLicNewComponent implements OnInit {
 		}
 	}
 
+	markFormGroupTouched(formGroup: FormGroup) {
+		if (Reflect.getOwnPropertyDescriptor(formGroup, 'controls')) {
+		  (<any>Object).values(formGroup.controls).forEach(control => {
+			if (control instanceof FormGroup) {
+			  // FormGroup
+			  this.markFormGroupTouched(control);
+			}
+			// FormControl
+			control.markAsTouched();
+		  });
+		}
+	  }
 }

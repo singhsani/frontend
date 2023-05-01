@@ -258,8 +258,10 @@ export class ShopLicTransferComponent implements OnInit {
 	}
 
 	setFormDataFromLatestApplication(res){
+		debugger
         this.establishmentdetails.patchValue({
 			// 1
+			
 			establishmentName : res.establishmentName,
 			waterDrainageBlockId : res.waterDrainageBlockId,
 			waterDrainageBlockName : res.waterDrainageBlockName,
@@ -360,16 +362,31 @@ export class ShopLicTransferComponent implements OnInit {
 				this.isGuideLineActive = true; 
 			}	
 			
-			res.shopPersonList.forEach(app => {
-				(<FormArray>this.employerfamily.get('shopPersonList')).push(this.createArray(app));
-			});
-			res.workerCounts.forEach(app => {
-				(<FormArray>this.personoccuping.get('workerCounts')).push(this.createArrayWorkOut(app));
-			});
-			res.shopPartnerList.forEach(app => {
-				(<FormArray>this.partnerlist.get('shopPartnerList')).push(this.createArrayPatner(app));
-				this.isPatners = true;
-			});
+			if(this.isGuideLineActive || res.fileStatus == "DRAFT"){
+				this.establishmentdetails.enable();
+				this.employerdetails.enable();
+				this.employerfamily.enable();
+				this.personoccuping.enable();
+				this.partnerlist.enable();
+				
+			}else{
+				this.establishmentdetails.disable();
+				this.employerdetails.disable();
+				this.employerfamily.disable();
+				this.personoccuping.disable();
+				this.partnerlist.disable();
+			}
+			
+			// res.shopPersonList.forEach(app => {
+			// 	(<FormArray>this.employerfamily.get('shopPersonList')).push(this.createArray(app));
+			// });
+			// res.workerCounts.forEach(app => {
+			// 	(<FormArray>this.personoccuping.get('workerCounts')).push(this.createArrayWorkOut(app));
+			// });
+			// res.shopPartnerList.forEach(app => {
+			// 	(<FormArray>this.partnerlist.get('shopPartnerList')).push(this.createArrayPatner(app));
+			// 	this.isPatners = true;
+			// });
 		});
 	}
 
@@ -510,6 +527,7 @@ export class ShopLicTransferComponent implements OnInit {
 			waterDrainageWardId: [null,Validators.required],
 			waterDrainageWardName:[null,Validators.required],
 			waterDrainageBlockId: [null],
+			waterDrainageBlockName:[null],
 			ownershipType: [null, [Validators.required]],
 
 			pecNumber:[null, ValidationService.pecValidation],
