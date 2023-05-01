@@ -39,6 +39,7 @@ export class VendorRegistrationComponent implements OnInit {
   registrationDetail : FormGroup;
   factoryAndEmployeeDetail : FormGroup;
   productAndSupplierDetail : FormGroup;
+  attachmentDetails : FormGroup;
   refrenceDocument : FormGroup
   vendorMachinesCapacities: FormArray;
   vendorRegisteredGovtDetail: FormArray;
@@ -221,6 +222,7 @@ export class VendorRegistrationComponent implements OnInit {
       this.registrationDetail.patchValue(res);
       this.factoryAndEmployeeDetail.patchValue(res);
       this.productAndSupplierDetail.patchValue(res)
+      this.attachmentDetails.patchValue(res)
       if (res.formStatus != 'REJECTED') {
         let obj = {value : res.applyingFor }
         this.locationChange(obj);
@@ -234,6 +236,7 @@ export class VendorRegistrationComponent implements OnInit {
         this.registrationDetail.disable();
         this.factoryAndEmployeeDetail.disable()
         this.productAndSupplierDetail.disable();
+        this.attachmentDetails.disable()
         this.canAddressEdit = false
         this.vendorRegistrationForm.get('canEdit').setValue(false);
       }
@@ -550,6 +553,10 @@ export class VendorRegistrationComponent implements OnInit {
     })
     /* Step 4 controls end */
 
+    this.attachmentDetails = this.fb.group({
+      attachments: [],
+    })
+
     this.vendorRegistrationForm = this.fb.group({
       apiType: "vendor",
       serviceCode: null,
@@ -565,6 +572,7 @@ export class VendorRegistrationComponent implements OnInit {
 		this.commonService.createCloneAbstractControl(this.registrationDetail,this.vendorRegistrationForm);
 		this.commonService.createCloneAbstractControl(this.factoryAndEmployeeDetail,this.vendorRegistrationForm);	
 		this.commonService.createCloneAbstractControl(this.productAndSupplierDetail,this.vendorRegistrationForm);
+    this.commonService.createCloneAbstractControl(this.attachmentDetails,this.vendorRegistrationForm);
   }
 
 
@@ -1190,6 +1198,7 @@ export class VendorRegistrationComponent implements OnInit {
   }
 
   public onTabChange(index: number, controlName, mainControl) {
+    if(index > this.tabIndex){
     if (controlName.invalid) {
         this.commonService.markFormGroupTouched(controlName);
     } else {
@@ -1209,6 +1218,9 @@ export class VendorRegistrationComponent implements OnInit {
             }
         });
         this.tabIndex = index;
+    }
+    } else {
+      this.tabIndex = -1;
     }
   }
   
