@@ -132,6 +132,7 @@ export class TownHallBookComponent implements OnInit {
 	isLoadingResults: boolean = false;
 	show: boolean = false;
 	shortlistData: BookingDetails[];
+	btnProceed : boolean = true;
 
 	constructor(
 		private fb: FormBuilder,
@@ -430,7 +431,7 @@ export class TownHallBookComponent implements OnInit {
 		if(this.checkForm){
 			return;
 		  }
-
+        this.townHallApplicationForm.get('termsCondition').setValue(true)
 		if (this.townHallApplicationForm.invalid && this.checkForm == false) {
 		//	this.handleErrorsOnSubmit();
 			this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
@@ -638,5 +639,16 @@ export class TownHallBookComponent implements OnInit {
 				this.submitTownhallApplication(); 
 			}
 		}
+}
+clickProcess(event) {
+	if (event.checked == true) {
+		this.btnProceed = false;
+		this.townHallApplicationForm.get('termsCondition').setValue(event.checked)	
+
+	} else {
+		this.btnProceed = true;
+		this.townHallApplicationForm.get('termsCondition').setValue(event.checked)	
+		
+	}
 }
 }
