@@ -1708,7 +1708,7 @@
           </div> -->
 
           <app-action-bar [uploadFiles]="uploadFilesArray" [form]="vendorRegistrationForm"
-          (tabIndex)="onFormTabChange($event)"  [paymentGateway]="paymentGateway"
+          (tabIndex)="onTabChange(5, attachmentDetails, vendorRegistrationForm)"  [paymentGateway]="paymentGateway"
             (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next:6, back:3} ">
           </app-action-bar>
 
