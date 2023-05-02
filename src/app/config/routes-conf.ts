@@ -212,12 +212,12 @@ const ROUTEMAIN = {
     'AFFORD-HOUSE': {
         'main': 'afhForm',
         'type': 'afhForm'
-    }, 
+    },
     'AFFORD_HOUSE_FEES': {
         'main': 'afhForm',
         'type': 'afhForm'
-    }, 
-    
+    },
+
     'AFFORD-HOUSE-STATUS' : {
         'main': 'myafhStatus',
         'type':'myafhStatus'
@@ -312,6 +312,10 @@ const ROUTEMAIN = {
         'main': 'login',
         'type': 'authorize'
     },
+    'CITIZENAUTHLOGINRESENDOTP': {
+      'main': 'login-resend-otp',
+      'type': 'resendOTP'
+  },
     'CITIZENAUTHSIGNUP': {
         'main': 'signup',
         'type': 'register'
@@ -639,7 +643,7 @@ const ROUTEPREFIX = {
     'PROPERTY': 'property',
 
     'VENDORMODULE': 'vendor-registration',
-    
+
     'ENGINEERINGMODULE': 'engineering',
 
     'CONTRACTORMODULE': 'contractor-regsitration'
@@ -883,6 +887,9 @@ const ROUTESLIST = {
     'CITIZENAUTHLOGIN': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CITIZENAUTHMODULE + '/' + ROUTEMAIN.CITIZENAUTHLOGIN.main
     },
+    'CITIZENAUTHLOGINRESENDOTP': {
+      'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CITIZENAUTHMODULE + '/' + ROUTEMAIN.CITIZENAUTHLOGINRESENDOTP.main
+  },
     'CITIZENAUTHSIGNUP': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CITIZENAUTHMODULE + '/' + ROUTEMAIN.CITIZENAUTHSIGNUP.main
     },
