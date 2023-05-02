@@ -118,6 +118,15 @@ export class AnimalAdoptionComponent implements OnInit {
     });
   }
 
+  calculateTotalExpenses() {
+    this.totalExpenses = 0;
+    const animalNameList = this.animalAdoptionForm.get('animalNameList')['controls'];
+    for (let i = 0; i < animalNameList.length; i++) {
+      const totalExpenses = animalNameList[i].get('totalExpenses').value;
+      this.totalExpenses += totalExpenses;
+    }
+  }
+
   /**
    * Generat form controls
    */
@@ -186,17 +195,13 @@ export class AnimalAdoptionComponent implements OnInit {
 
       if (OTData.id == null) {
         returnArray.removeAt(index);
-
-        this.toster.success('Animal has been removed.')
+        this.toster.success(OTData.animalBirdName + ' has been removed.');
       } else {
-
         returnArray.removeAt(index);
-
-        this.toster.success('Animal has been removed.')
-
-
+        this.toster.success(OTData.animalBirdName + ' has been removed.');
       }
-
+      
+      this.calculateTotalExpenses();
 
     }
     );
@@ -232,13 +237,14 @@ export class AnimalAdoptionComponent implements OnInit {
          }
       }
    }
-   this.toster.success(this.animalBirdName +' Added Successfully');
+   this.toster.success(this.animalBirdName +'  has been added successfully');
     this.animalName['totalQty'] = this.animalAdoptionForm.get('noOfAdoptionCount').value;
     this.animalName['noOfYear'] = this.animalAdoptionForm.get('adoptionYears').value;
    // this.animalName['total'] = this.animalName.totalExpenses;
     if (this.animalAdoptionForm.get('canEdit').value) {
       returnArray.push(this.createOTDetailArray(this.animalName));
       this.resetCalculations("");
+      this.calculateTotalExpenses();
     }
   }
 }

@@ -307,6 +307,14 @@
                   </td>
                 </tr>
               </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="3"></td>
+                  <th >Total Amount / Adoption Cost</th>
+                  <th class="td">{{totalExpenses}}</th> 
+                  <td *ngIf="animalAdoptionForm.get('canEdit').value"></td>
+                </tr>
+              </tfoot>
             </table>
           </div>
         </div>
