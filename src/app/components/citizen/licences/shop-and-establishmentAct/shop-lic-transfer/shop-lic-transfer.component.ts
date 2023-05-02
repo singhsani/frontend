@@ -260,6 +260,7 @@ export class ShopLicTransferComponent implements OnInit {
 	setFormDataFromLatestApplication(res){
         this.establishmentdetails.patchValue({
 			// 1
+			
 			establishmentName : res.establishmentName,
 			waterDrainageBlockId : res.waterDrainageBlockId,
 			waterDrainageBlockName : res.waterDrainageBlockName,
@@ -361,6 +362,22 @@ export class ShopLicTransferComponent implements OnInit {
 				this.isGuideLineActive = true; 
 			}	
 			
+			if(this.isGuideLineActive || res.fileStatus == "DRAFT"){
+				this.establishmentdetails.enable();
+				this.employerdetails.enable();
+				this.employerfamily.enable();
+				this.personoccuping.enable();
+				this.partnerlist.enable();
+				
+			}else{
+				this.establishmentdetails.disable();
+				this.employerdetails.disable();
+				this.employerfamily.disable();
+				this.personoccuping.disable();
+				this.partnerlist.disable();
+			}
+			
+
 			// res.shopPersonList.forEach(app => {
 			// 	(<FormArray>this.employerfamily.get('shopPersonList')).push(this.createArray(app));
 			// });
@@ -511,6 +528,7 @@ export class ShopLicTransferComponent implements OnInit {
 			waterDrainageWardId: [null,Validators.required],
 			waterDrainageWardName:[null,Validators.required],
 			waterDrainageBlockId: [null],
+			waterDrainageBlockName:[null],
 			ownershipType: [null, [Validators.required]],
 
 			pecNumber:[null, ValidationService.pecValidation],
