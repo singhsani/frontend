@@ -1,0 +1,14 @@
+<mat-card class="borderRadius10">
+  <div class="headingBox">Unauthorized
+    <span>Please click below on resend OTP to get OTP on your registered email ID and mobile</span>
+  </div>
+  <form name="user-verify-form">
+    <div class="text-center">
+     <img class="col-md-12 logo"  *ngIf="loading" [class.disabled]="loading" src="assets/images/mainLoading.gif" />
+    </div>
+      <div class="text-center">
+     <button mat-raised-button color="primary" (click)="onForgotPassword()">Resend OTP</button>
+      <button mat-raised-button color="warn" (click)="onCancel(true)">Cancel</button>
+      </div>
+  </form>
+</mat-card>

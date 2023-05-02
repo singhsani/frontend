@@ -2,3 +2,6 @@ mat-error{
     margin: -22px 0 10px 15px;
     font-size: 11px;
 }
+::ng-deep.mat-focused  .mat-form-field-required-marker{
+    color: red;
+}

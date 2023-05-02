@@ -11,6 +11,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 
 import { LoginThroughAdminComponent } from './login-through-admin/login-through-admin.component';
 import { LoginLayoutComponent } from './../../../layouts/login-layout/login-layout.component';
+import { LoginResendOTPComponent } from './login-resend-otp/login-resend-otp.component';
 
 const routes: Routes = [
 	{
@@ -23,6 +24,7 @@ const routes: Routes = [
 			{ path: 'forgot-password', component: ForgotPasswordComponent },
 			{ path: 'reset-password', component: ResetPasswordComponent },
 			{ path: 'login-through-admin', component: LoginThroughAdminComponent },
+      { path :'login-resend-otp', component:LoginResendOTPComponent}
 		]
 	}
 ];
