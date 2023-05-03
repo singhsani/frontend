@@ -368,7 +368,14 @@ export class NewRegistrationComponent implements OnInit {
         this.isEditBtnVisible = true;
         this.isSubmitBtnVisible = false;
         this.vehicleRegistrationForm.patchValue(res);
+        this.vehicleDetails.patchValue(res);
+				this.ownerDetails.patchValue(res);
+				this.taxDetails.patchValue(res);
+
         this.vehicleRegistrationForm.disable();
+        this.vehicleDetails.disable();
+				this.ownerDetails.disable();
+				this.taxDetails.disable();
       });
     }
   }
@@ -377,7 +384,7 @@ export class NewRegistrationComponent implements OnInit {
    * This method is used to submit the Vehicle registration data
    */
   onSubmit() {
-    if (!this.vehicleRegistrationForm.invalid) {
+    if (this.vehicleRegistrationForm.invalid) {
       let count = this.config.getAllErrors(this.vehicleRegistrationForm);
       this.commonService.openAlert("Warning", this.config.ALL_FEILD_REQUIRED_MESSAGE, "warning", "", cb => {
 
@@ -625,6 +632,9 @@ export class NewRegistrationComponent implements OnInit {
    */
   resetForm() {
     this.vehicleRegistrationForm.reset();
+    this.vehicleDetails.reset();
+		this.ownerDetails.reset();
+		this.taxDetails.reset();
   }
 
   /**
@@ -681,7 +691,7 @@ export class NewRegistrationComponent implements OnInit {
     },
     "engineNo": new Date().getTime(),
     "chasisNo": new Date().getTime(),
-    "registrationNo": "GJ-06-1234",
+    "registrationNo": null,
     "vehicleBasicValue": "423543",
     "makeModel": "sdfsdf",
     "dealerName": "sdfsdfsdf",
