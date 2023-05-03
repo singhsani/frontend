@@ -21,7 +21,8 @@ export class ResetPasswordComponent implements OnInit {
 
 	loading: boolean = false;
 	isvisibleFrom : boolean = true;
-
+	manageRoutes: any = ManageRoutes;
+	
 	/**
 	 * Constructor to declare defualt propeties of class.
 	 * @param appService - Declare App Service property.
@@ -67,10 +68,10 @@ export class ResetPasswordComponent implements OnInit {
 			} else {
 				//this.resetPassForm.get('code').setValue("");
 				//this.resetPassForm.get('code').enable();
-			}
+			}		
            this.sendLinkOnEmail(params['uniqueId'], params['code'], this.emailobj )
 		});
-
+		
 	}
 
 	onForgotPassword() {
