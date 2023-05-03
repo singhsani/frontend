@@ -277,7 +277,7 @@ export class SwimmingPoolComponent implements OnInit {
     },
     err => {
       this.generalDetails.get('batchName').get('code').reset();
-      this.commonService.openAlert('warning',err.error[0].message,'warning');
+      this.commonService.openAlert('Warning!',err.error[0].message,'warning');
     });
 
     
