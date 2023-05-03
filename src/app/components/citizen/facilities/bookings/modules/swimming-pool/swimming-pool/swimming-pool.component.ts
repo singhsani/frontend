@@ -13,6 +13,7 @@ import { BookingConstants, BookingUtils } from '../../../config/booking-config';
 import { ComponentConfig } from 'src/app/components/component-config';
 import { AppSwimmingPoolService } from '../swimming-pool.service';
 import { count } from 'rxjs-compat/operator/count';
+import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 
 
 @Component({
@@ -115,6 +116,7 @@ export class SwimmingPoolComponent implements OnInit {
     private bookingService: BookingService,
     private formService: FormsActionsService,
     private commonService: CommonService,
+    private alertService : AlertService,
     private toastr: ToastrService,
     public translateService: TranslateService,
     private router: Router,
@@ -207,6 +209,7 @@ export class SwimmingPoolComponent implements OnInit {
   * Filter details as per category selection
   */
   filterAsperCategory(event: any) {
+    debugger
     let poolName = this.generalDetails.get('swimmingPoolName').get('code').value;
     if (event) {
       this.bookingService.filterBatchDuration(event, poolName).subscribe(rep => {
@@ -277,7 +280,7 @@ export class SwimmingPoolComponent implements OnInit {
     },
     err => {
       this.generalDetails.get('batchName').get('code').reset();
-      this.commonService.openAlert('warning',err.error[0].message,'warning');
+      this.commonService.openAlert('Warning!',err.error[0].message,'warning');
     });
 
     
