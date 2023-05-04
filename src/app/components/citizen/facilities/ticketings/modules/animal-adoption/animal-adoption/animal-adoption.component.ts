@@ -52,7 +52,6 @@ export class AnimalAdoptionComponent implements OnInit {
   dataSourceForPricing = new MatTableDataSource();
 
   mySelectModel: any;
-
   animalName: any = [];
   animalAdopationFromArray = [];
   totalExpenses: any = 0;
@@ -62,6 +61,7 @@ export class AnimalAdoptionComponent implements OnInit {
   animalBirdName : string;
   checkProceed : boolean = false;
   btnProceed: boolean = true; 
+  totalCostOfAnimal:Number=0;
   /**
    * language translate key.
   */
@@ -119,11 +119,11 @@ export class AnimalAdoptionComponent implements OnInit {
   }
 
   calculateTotalExpenses() {
-    this.totalExpenses = 0;
-    const animalNameList = this.animalAdoptionForm.get('animalNameList')['controls'];
-    for (let i = 0; i < animalNameList.length; i++) {
-      const totalExpenses = animalNameList[i].get('totalExpenses').value;
-      this.totalExpenses += totalExpenses;
+    this.totalCostOfAnimal=0;
+     const animalNameList = this.animalAdoptionForm.get('animalNameList')['controls'];
+     for (let i = 0; i < animalNameList.length; i++) {
+      this.totalCostOfAnimal += animalNameList[i].get('totalExpenses').value;
+      //this.totalCostOfAnimal = this.animalAdoptionForm.get('totalAdoptionCost').value
     }
   }
 
@@ -265,10 +265,15 @@ export class AnimalAdoptionComponent implements OnInit {
       } else {
           this.commonService.openAlert('Warning','Please Enter Valid Count' , 'warning', '',)
     
-
       }
     }
   }
+  
+  onChange(){
+    let adoptionYear=this.animalAdoptionForm.get('adoptionYears').value;
+    this.animalAdoptionForm.get('totalAdoptionCost').setValue(this.animalAdoptionForm.get('noOfAdoptionCount').value * this.animalName.totalExpenses * adoptionYear);
+  }
+
   createOTDetailArray(data?: any) {
     return this.fb.group({
       // serviceFormId: this.formId,
@@ -320,12 +325,14 @@ export class AnimalAdoptionComponent implements OnInit {
 
 
   submitAnimalAdoptionRequest() {
-
     let returnArray = this.animalAdoptionForm.get('animalNameList') as FormArray;
     if(returnArray.length == 0){
       this.toster.warning('Please add Animal');
       return false;
     }
+    if(this.animalAdoptionForm.get('animalName').value != null || this.animalAdoptionForm.get('totalAdoptionCost').value != null || this.animalAdoptionForm.get('noOfAdoptionCount').value != null){
+      this.toster.warning('Please add Animal');
+    }else{
     this.animalAdoptionForm.get('adoptionYears').setValue(this.animalAdoptionYear);
     this.ticketingService.animalAdoptionRequest(this.animalAdoptionForm.value).subscribe(resp => {
 
@@ -339,6 +346,7 @@ export class AnimalAdoptionComponent implements OnInit {
 
         }
       });
+    }
 
   }
 
