@@ -258,7 +258,7 @@ export class ShopLicTransferComponent implements OnInit {
 	}
 
 	setFormDataFromLatestApplication(res){
-        this.establishmentdetails.patchValue({
+		this.establishmentdetails.patchValue({
 			// 1
 			
 			establishmentName : res.establishmentName,
@@ -805,6 +805,7 @@ export class ShopLicTransferComponent implements OnInit {
 						this.wardZoneLevel4List = data.body;
 					}
 				}
+				this.establishmentdetails.get('waterDrainageWardId').setValue(parentId);
 			},
 			(error) => {
 				console.log('error', error);
