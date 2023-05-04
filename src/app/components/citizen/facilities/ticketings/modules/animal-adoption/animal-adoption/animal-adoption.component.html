@@ -204,7 +204,7 @@
         </mat-form-field>
 
         <mat-form-field class="col-md-4">
-          <input matInput type="text" OnlyNumber maxlength="2" formControlName="adoptionYears" (change)="validateAdoptionYear($event);" 
+          <input matInput type="text" OnlyNumber maxlength="2" formControlName="adoptionYears" (change)="validateAdoptionYear($event); onChange();" 
              placeholder="{{'No of Adoption Years' | translate: translateKey}}" required>
              <control-messages [control]="animalAdoptionForm.get('adoptionYears')">
             </control-messages>
@@ -311,7 +311,7 @@
                 <tr>
                   <td colspan="3"></td>
                   <th >Total Amount / Adoption Cost</th>
-                  <th class="td">{{totalExpenses}}</th> 
+                  <th class="td">{{totalCostOfAnimal}}</th> 
                   <td *ngIf="animalAdoptionForm.get('canEdit').value"></td>
                 </tr>
               </tfoot>
