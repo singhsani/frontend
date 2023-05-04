@@ -9,7 +9,7 @@ import { AppService } from '../../../../core/services/citizen/app-services/app.s
 import { ManageRoutes } from '../../../../config/routes-conf';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { environment } from 'src/environments/environment';
-
+import swal from 'sweetalert2';
 @Component({
 	selector: 'app-forgot-password',
 	templateUrl: './forgot-password.component.html',
@@ -47,6 +47,39 @@ export class ForgotPasswordComponent implements OnInit {
 			userType: 'CITIZEN'
 		});
 	}
+  imageUrls(type: string) {
+		if (type === 'warning') {
+			return "assets/icons/warning.svg";
+		} else if (type === 'success') {
+			return "assets/icons/done.svg";
+		} else if (type === 'info') {
+			return "assets/icons/info.svg";
+		} else if (type === 'error') {
+			return "assets/icons/error.svg";
+		} else if (type === 'question') {
+			return "assets/icons/question.svg";
+		}
+	}
+
+  successAlert(title: string, message: string, type: string) {
+
+		let options = {
+      title:title,
+			text: message,
+			type: type,
+			imageUrl: this.imageUrls(type),
+			imageClass: 'doneIcon',
+      width: 400,
+      height:8,
+      imageWidth: 60,
+      imageHeight: 50,
+      padding: '2em',
+		}
+
+		swal(options as any);
+	}
+
+
 
 	/**
 	  * This method is use to send otp for set a new password.
@@ -70,7 +103,7 @@ export class ForgotPasswordComponent implements OnInit {
                 /**
                  * Redirect to reset password
                  */
-                this.commonService.successAlert("Success", "For OTP and Password reset link, please check your registered email ID and mobile number. Thank you", "success");
+                this.successAlert("Success", "For OTP and Password reset link, please check your registered email ID and mobile number. Thank you", "success");
                 let url = this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHRESETPASS')],
                 // { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp,email : this.forgotPassForm.get('email').value } }
                 { queryParams: { uniqueId: res.data.uniqueId} });
