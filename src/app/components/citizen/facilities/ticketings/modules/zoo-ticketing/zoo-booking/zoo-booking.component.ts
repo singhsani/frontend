@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ValidationService } from 'src/app/shared/services/validation.service';
 import { TicketingsService } from '../../../shared-ticketing/services/ticketings.service';
 import { CommonService } from 'src/app/shared/services/common.service';
@@ -24,6 +24,8 @@ export class ZooBookingComponent implements OnInit {
   ticketingConstants = TicketingConstants;
   ticketingUtils: TicketingUtils;
   isVisibleIdNumber = false;
+  Charge:number;
+  isDisable = false;
   isPanCardVisibleIdNumber = false;
   /**
    * language translate key.
@@ -50,7 +52,9 @@ export class ZooBookingComponent implements OnInit {
   guideLineFlag = true;
   showTicketsBookingForm = false;
   bankDetailsFlag = false;
-
+  numberOfVisitor : string;
+  totalAmountZoo: number = 0;
+  totalVisitorZoo: number =0 ;
   /**
     * Pricing data for ticket bookings for visiting zoo
    */
@@ -77,7 +81,7 @@ export class ZooBookingComponent implements OnInit {
     }
   ];
 
-  zooVisitingRates: any;
+  zooVisitingRates: any = [];
 
   /**
     * Timing data for ticket bookings for visiting zoo
@@ -104,9 +108,12 @@ export class ZooBookingComponent implements OnInit {
   // Ticket Details
 
   ticketBookingForm: FormGroup;
+  ticketBookingDetails : FormArray;
   subTotal: number = 0;
+  amount: number = 0;
   totalAmount: number = 0;
   numberOfVisitors: number = 0;
+  withAndWithoutWalkListForDuplicate: any = [];
 
   // Ticket Booking Table Row Data:
 
@@ -162,6 +169,8 @@ export class ZooBookingComponent implements OnInit {
   // Contact Details
 
   idTypes: any[];
+  ticketTypes: any[];
+  visitorsTypes: any[];
 
 
   /**
@@ -205,6 +214,8 @@ export class ZooBookingComponent implements OnInit {
     this.ticketingService.getDataFromLookups().subscribe((respData) => {
       this.BANKS = respData.BANK;
       this.idTypes = respData.IDTYPE;
+      this.ticketTypes = respData.TICKETTYPE;
+      this.visitorsTypes = respData.VISITORTYPE;
     });
   }
 
@@ -245,8 +256,8 @@ export class ZooBookingComponent implements OnInit {
       resourceCode: 'SARDARBAUGHZOO',
       scheduleList: null,
       attachments: null,
+      canEdit: true,
       bookingDate: null,
-      amount: null,
       personSubTotal: null,
       totalAmount: null,
       paymentMode: null,
@@ -256,12 +267,32 @@ export class ZooBookingComponent implements OnInit {
       idType: this.fb.group({
         code: [null, Validators.required]
       }),
+      typeOfTicket: this.fb.group({
+        code: [null,Validators.required],
+        name: [null,Validators.required],
+      }),
+      typeOfVisitor:this.fb.group({
+        name: [null, Validators.required],
+      }),
+      charges: this.fb.group({
+        code: [null, Validators.required]
+      }),
+      numberOfVisitors: this.fb.group({
+        code: [null, Validators.required]
+      }),
+      amounts: this.fb.group({
+        code: [null, Validators.required]
+      }),
       idNumber: [null, [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
       visitingDate: [, Validators.required],
       totalChild: [0, Validators.max(30)],
       totalAdult: [0, Validators.max(30)],
       totalCamera: [0, Validators.max(100)],
       totalVideoCamera: [0, Validators.max(100)],
+      totalChilds: [0, Validators.max(30)],
+      totalAdults: [0, Validators.max(30)],
+      totalCameras: [0, Validators.max(100)],
+      totalVideoCameras: [0, Validators.max(100)],
       bankName: this.fb.group({
         code: [null],
       }),
@@ -270,6 +301,7 @@ export class ZooBookingComponent implements OnInit {
       ifscCode: [null],
       termsCondition: [true],
       agree: [true],
+      withAndWithoutWalkList: this.fb.array([])
     });
 
   }
@@ -288,18 +320,18 @@ export class ZooBookingComponent implements OnInit {
   }
 
   // Will Compute total amount based on the user input
-  computeTotalAndVisitors() {
-    const f = this.ticketBookingForm.value;
-    this.numberOfVisitors = Number(f.totalChild) + Number(f.totalAdult);
-    this.totalAmount = (Number(f.totalChild) * this.zooVisitingRates['CHILD']) + (Number(f.totalAdult) * this.zooVisitingRates['ADULT']) + (Number(f.totalCamera) * this.zooVisitingRates['CAMERA']) + (Number(f.totalVideoCamera) * this.zooVisitingRates['VIDEOCAMERA']);
+  // computeTotalAndVisitors() {
+  //   const f = this.ticketBookingForm.value;
+  //   this.numberOfVisitors = Number(f.totalChild) + Number(f.totalAdult);
+  //   this.totalAmount = (Number(f.totalChild) * this.zooVisitingRates['CHILD']) + (Number(f.totalAdult) * this.zooVisitingRates['ADULT']) + (Number(f.totalCamera) * this.zooVisitingRates['CAMERA']) + (Number(f.totalVideoCamera) * this.zooVisitingRates['VIDEOCAMERA']);
 
-    this.ticketBookingForm.get('amount').setValue(this.totalAmount);
-    this.ticketBookingForm.get('totalAmount').setValue(this.totalAmount);
-    this.ticketBookingForm.get('personSubTotal').setValue(this.numberOfVisitors);
-    if (this.numberOfVisitors > 30) {
-      this.toster.error("Please Enter Total Limited Person(30)");
-    }
-  }
+  //  // this.ticketBookingForm.get('amount').setValue(this.totalAmount);
+  //   this.ticketBookingForm.get('totalAmount').setValue(this.totalAmount);
+  //   this.ticketBookingForm.get('personSubTotal').setValue(this.numberOfVisitors);
+  //   if (this.numberOfVisitors > 30) {
+  //     this.toster.error("Please Enter Total Limited Person(30)");
+  //   }
+  // }
 
   redirecToPayment() {
     this.ticketingService.bookZooTickets(this.ticketBookingForm.value).subscribe(res => {
@@ -362,5 +394,185 @@ export class ZooBookingComponent implements OnInit {
     }
 
   }
+  
+  getChargesValue(event){    
+    const f = this.ticketBookingForm.value;
+  
+if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'Adults (Above age 12)'){
+    this.ticketBookingForm.get('charges').get('code').setValue(this.zooVisitingRates['ADULT']) 
+    }  
+    else if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'Children (Age 5 to 12 )')
+    {
+      this.ticketBookingForm.get('charges').get('code').setValue(this.zooVisitingRates['CHILD']) 
 
+    }
+    else if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'Camera Fee')
+    {
+      this.ticketBookingForm.get('charges').get('code').setValue(this.zooVisitingRates['CAMERA']) 
+
+    }
+    else if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'Video Camera Fee')
+    {
+      this.ticketBookingForm.get('charges').get('code').setValue(this.zooVisitingRates['VIDEOCAMERA']) 
+
+    }
+    else if(f.typeOfTicket.code == 'WITHOUT_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Children Below 5 Free"){
+      this.ticketBookingForm.get('charges').get('code').setValue(this.zooVisitingRates['CHILDBELOW'])
+    }
+    else if(f.typeOfTicket.code == "WITH_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'Children (Age 5 to 12 )')
+    {
+      this.ticketBookingForm.get('charges').get('code').setValue(this.zooVisitingRates['CHILDS'])
+
+    }
+    else if(f.typeOfTicket.code == "WITH_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'Adults (Above age 12)')
+    {
+      this.ticketBookingForm.get('charges').get('code').setValue(this.zooVisitingRates['ADULTS'])
+
+    }
+    else if(f.typeOfTicket.code == "WITH_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'Camera Fee')
+    {
+      this.ticketBookingForm.get('charges').get('code').setValue(this.zooVisitingRates['CAMERAS'])
+
+    }
+    else if(f.typeOfTicket.code == "WITH_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'Video Camera Fee')
+    {
+      this.ticketBookingForm.get('charges').get('code').setValue(this.zooVisitingRates['VIDEOCAMERAS'])
+
+    }
+    else if(f.typeOfTicket.code == 'WITH_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Children Below 5 Free"){
+      this.ticketBookingForm.get('charges').get('code').setValue(this.zooVisitingRates['CHILDBELOW'])
+    }
+    else  
+    {
+      this.ticketBookingForm.get('charges').get('code').setValue(0) 
+    }
+
+  } 
+
+  getTotalAmount(event)
+  { 
+     let numberOfVisitors = event.target.value;
+    this.numberOfVisitor = event.target.value
+      const f = this.ticketBookingForm.value;
+      if(f.typeOfTicket.code == 'WITHOUT_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Children (Age 5 to 12 )")
+      {
+      this.totalAmount = numberOfVisitors * (this.zooVisitingRates['CHILD']);
+      this.ticketBookingForm.get('totalChild').setValue((numberOfVisitors));
+      }
+      else if(f.typeOfTicket.code == 'WITHOUT_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Adults (Above age 12)"){
+        this.totalAmount = numberOfVisitors * (this.zooVisitingRates['ADULT']);
+        this.ticketBookingForm.get('totalAdult').setValue((numberOfVisitors));
+      }
+      else if(f.typeOfTicket.code == 'WITHOUT_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Camera Fee"){
+        this.totalAmount = numberOfVisitors * (this.zooVisitingRates['CAMERA']);
+        this.ticketBookingForm.get('totalCamera').setValue((numberOfVisitors));
+      }
+
+      else if(f.typeOfTicket.code == 'WITHOUT_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Video Camera Fee"){
+        this.totalAmount = numberOfVisitors * (this.zooVisitingRates['VIDEOCAMERA']);
+        this.ticketBookingForm.get('totalVideoCamera').setValue((numberOfVisitors));
+      }
+      else if(f.typeOfTicket.code == 'WITHOUT_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Children Below 5 Free"){
+        this.totalAmount = numberOfVisitors * (this.zooVisitingRates['CHILDBELOW']);
+      }
+
+      else if(f.typeOfTicket.code == 'WITH_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Children (Age 5 to 12 )"){
+        this.totalAmount = numberOfVisitors * (this.zooVisitingRates['CHILDS']);
+        this.ticketBookingForm.get('totalChild').setValue((numberOfVisitors));
+      }
+      else if(f.typeOfTicket.code == 'WITH_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Adults (Above age 12)"){
+        this.totalAmount = numberOfVisitors * (this.zooVisitingRates['ADULTS']);
+        this.ticketBookingForm.get('totalAdult').setValue((numberOfVisitors));
+      }
+      else if(f.typeOfTicket.code == 'WITH_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Camera Fee"){
+        this.totalAmount = numberOfVisitors * (this.zooVisitingRates['CAMERAS']);
+        this.ticketBookingForm.get('totalCamera').setValue((numberOfVisitors));
+      }
+      else if(f.typeOfTicket.code == 'WITH_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Video Camera Fee"){
+        this.totalAmount = numberOfVisitors * (this.zooVisitingRates['VIDEOCAMERAS']);
+        this.ticketBookingForm.get('totalVideoCamera').setValue((numberOfVisitors));
+      }
+      else if(f.typeOfTicket.code == 'WITH_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Children Below 5 Free"){
+        this.totalAmount = numberOfVisitors * (this.zooVisitingRates['CHILDBELOW']);
+      }
+      this.ticketBookingForm.get('amounts').get('code').setValue(this.totalAmount);
+     
+     
+  }
+
+  addTicketData(data: any){
+   
+    return this.fb.group({
+  
+      typeOfTicket: data.typeOfTicket ? data.typeOfTicket : null,
+      typeOfVisitor: data.typeOfVisitor ? data.typeOfVisitor : null,
+      charges: data.charges ? data.charges : 0,
+      numberOfVisitors : data.numberOfVisitors ? data.numberOfVisitors : 0,
+      amounts: data.amounts ? data.amounts :0,
+    
+    })
+  
+  }
+  getTicketData(){
+    
+    let data ={
+      typeOfTicket : this.ticketBookingForm.get('typeOfTicket').get('name').value,
+      typeOfVisitor : this.ticketBookingForm.get('typeOfVisitor').get('name').value,
+      charges : this.ticketBookingForm.get('charges').get('code').value,
+      amounts :  this.ticketBookingForm.get('amounts').get('code').value,
+      numberOfVisitors : parseInt(this.numberOfVisitor)
+    }
+    
+   
+    let returnArray: any;
+    returnArray = this.ticketBookingForm.get('withAndWithoutWalkList') as FormArray;
+    this.withAndWithoutWalkListForDuplicate= returnArray.value;
+        
+    for(let i=0; i<this.withAndWithoutWalkListForDuplicate.length; i++){
+      const currentItem = this.withAndWithoutWalkListForDuplicate[i];
+
+      if(data.typeOfVisitor==currentItem.typeOfVisitor && data.typeOfTicket==currentItem.typeOfTicket){
+        this.commonService.openAlert('Info', 'Duplicate Data Not Allowed', 'warning');
+        return false;
+      }
+    }
+
+    this.addItem('withAndWithoutWalkList').push(this.addTicketData(data));
+    this.totalAmountZoo = this.ticketBookingForm.get('amounts').get('code').value + this.totalAmountZoo
+
+    this.totalVisitorZoo = parseInt(this.ticketBookingForm.get('numberOfVisitors').get('code').value) + this.totalVisitorZoo
+}
+
+  /**
+	 * Method is used to add recode in array control
+	 */
+	addItem(controlName: string) {
+		let returnArray: any;
+		returnArray = this.ticketBookingForm.get(controlName) as FormArray;
+ 
+		return returnArray;
+
+	}
+
+  deleteRecord(index: number,item: any,gridType: string,) {
+
+    let returnArray = this.ticketBookingForm.get('withAndWithoutWalkList') as FormArray;
+
+    this.commonService.deleteAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
+
+      if (item.id == null) {
+        returnArray.removeAt(index);
+
+        this.commonService.successAlert('Deleted Successfully!', '', 'success');
+      } else {
+
+        returnArray.removeAt(index);
+			this.commonService.successAlert('Deleted Successfully!', '', 'success');
+      }
+    } 
+    );
+    this.totalAmountZoo =  this.totalAmountZoo- item.amounts;
+
+    this.totalVisitorZoo =  this.totalVisitorZoo- item.numberOfVisitors;
+  }
 }
