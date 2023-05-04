@@ -947,6 +947,7 @@ export class ShopLicTransferComponent implements OnInit {
 	 */
 	dateFormat(date, controlType: string) {
 		this.shopLicTransferForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+		this.employerdetails.get('commencementOfBusinessDate').setValue(moment(date).format("YYYY-MM-DD"));
 	}
 
 	/**
