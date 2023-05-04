@@ -90,7 +90,7 @@
 							<ng-select 
 								placeholder="Ward No.*"
 								formControlName="waterDrainageWardName" (change)="onChangedWardZone($event,3)">
-								<ng-option *ngFor="let ward of wardZoneLevel2List" [value]="ward.parentWardzoneId">
+								<ng-option *ngFor="let ward of wardZoneLevel2List" [value]="ward.wardzoneId">
 									{{ward.wardzoneName}}</ng-option>
 							</ng-select>
 							<control-messages [control]="establishmentdetails.get('waterDrainageWardId')">
