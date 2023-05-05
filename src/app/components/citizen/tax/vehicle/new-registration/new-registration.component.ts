@@ -15,6 +15,8 @@ import { FormsActionsService } from '../../../../../core/services/citizen/data-s
 import { ProfessionalTaxService } from '../../../../../core/services/citizen/data-services/professional-tax.service';
 import { PftConfig } from '../../professional-tax/pftConfig';
 
+declare var $: any;
+
 @Component({
   selector: 'app-new-registration',
   templateUrl: './new-registration.component.html',
@@ -274,7 +276,7 @@ export class NewRegistrationComponent implements OnInit {
           this.vehicleRegistrationForm.disable();
           this.vehicleDetails.disable();
           this.ownerDetails.disable();
-          this.taxDetails.disable()
+          this.taxDetails.disable();
         }
 
 
@@ -673,8 +675,14 @@ export class NewRegistrationComponent implements OnInit {
           this.onSubmit()
         }
     }
+  }
 
-}
+  onTabChangeToDisableAttachment(index: number) {
+    this.tabIndex = index;
+    setTimeout( function(){ 
+      $('.closeAttachFile').remove();
+    }, 300);
+  }
 
   patchValue() {
     this.vehicleRegistrationForm.patchValue(this.dummyJSON);

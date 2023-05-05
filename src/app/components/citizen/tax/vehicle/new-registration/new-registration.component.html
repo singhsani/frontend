@@ -323,7 +323,7 @@
 							(click)="onTabChange(3, taxDetails, vehicleRegistrationForm, false)">{{'save_and_next' | translate:
 							actionBarKey}}</button>
 						<button type="button" class="pull-right" mat-raised-button color="primary"
-							*ngIf="this.vehicleRegistrationForm.get('formStatus').value == 'SUBMITTED'" (click)="tabIndex = 3">{{'Next' |
+							*ngIf="this.vehicleRegistrationForm.get('formStatus').value == 'SUBMITTED'" (click)="onTabChangeToDisableAttachment(3)">{{'Next' |
 							translate:actionBarKey}}</button>
 						<!-- <button [disabled]="!isSubmitBtnVisible" mat-raised-button class="pull-right" color="success" (click)="onSubmit()">{{'submit'
 							| translate:
