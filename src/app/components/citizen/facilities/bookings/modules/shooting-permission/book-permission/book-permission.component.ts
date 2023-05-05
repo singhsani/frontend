@@ -500,7 +500,7 @@ export class BookPermissionComponent implements OnInit {
             this.showPaymentReciept = true;
             this.CD.detectChanges();
             this.confirmRef.hide();
-            this.receiptRef = this.modalService.show(this.receiptModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
+            this.receiptRef = this.modalService.show(this.receiptModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray .modal-md' }));
           })
         }
       }, (err) => {
@@ -544,7 +544,7 @@ export class BookPermissionComponent implements OnInit {
         return -1;
       }
     });
-    this.confirmRef = this.modalService.show(confirmationModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
+    this.confirmRef = this.modalService.show(confirmationModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray .modal-md' }));
   }
 
 	/**
