@@ -7,7 +7,7 @@ import { AppService } from '../../../../core/services/citizen/app-services/app.s
 import { ManageRoutes } from '../../../../config/routes-conf';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { ToastrService } from 'ngx-toastr';
-
+import swal from 'sweetalert2';
 @Component({
 	selector: 'app-reset-password',
 	templateUrl: './reset-password.component.html',
@@ -22,7 +22,7 @@ export class ResetPasswordComponent implements OnInit {
 	loading: boolean = false;
 	isvisibleFrom : boolean = true;
 	manageRoutes: any = ManageRoutes;
-	
+
 	/**
 	 * Constructor to declare defualt propeties of class.
 	 * @param appService - Declare App Service property.
@@ -68,11 +68,43 @@ export class ResetPasswordComponent implements OnInit {
 			} else {
 				//this.resetPassForm.get('code').setValue("");
 				//this.resetPassForm.get('code').enable();
-			}		
+			}
            this.sendLinkOnEmail(params['uniqueId'], params['code'], this.emailobj )
 		});
-		
+
 	}
+  imageUrls(type: string) {
+		if (type === 'warning') {
+			return "assets/icons/warning.svg";
+		} else if (type === 'success') {
+			return "assets/icons/done.svg";
+		} else if (type === 'info') {
+			return "assets/icons/info.svg";
+		} else if (type === 'error') {
+			return "assets/icons/error.svg";
+		} else if (type === 'question') {
+			return "assets/icons/question.svg";
+		}
+	}
+
+  successAlert(title: string, message: string, type: string) {
+
+		let options = {
+      title:title,
+			text: message,
+			type: type,
+			imageUrl: this.imageUrls(type),
+			imageClass: 'doneIcon',
+      width: 400,
+      height:8,
+      imageWidth: 70,
+      imageHeight: 70,
+      padding: '2em',
+		}
+
+		swal(options as any);
+	}
+
 
 	onForgotPassword() {
 		this.loading = true;
@@ -142,7 +174,7 @@ export class ResetPasswordComponent implements OnInit {
 					this.appService.resetPassword(formVals.getRawValue()).subscribe(
 						res => {
 							this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
-							this.commonService.successAlert("Success", "Password reset sucessfully, Please use the new password for login.", "success");
+							this.successAlert("Success", "Password reset sucessfully, Please use the new password for login.", "success");
 
 						},
 						err => {

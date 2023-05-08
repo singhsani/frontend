@@ -71,8 +71,8 @@ export class ForgotPasswordComponent implements OnInit {
 			imageClass: 'doneIcon',
       width: 400,
       height:8,
-      imageWidth: 60,
-      imageHeight: 50,
+      imageWidth: 70,
+      imageHeight: 65,
       padding: '2em',
 		}
 
