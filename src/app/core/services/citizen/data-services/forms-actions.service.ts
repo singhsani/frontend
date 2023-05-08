@@ -135,6 +135,10 @@ export class FormsActionsService {
 
 		return this.http.post(this.requestURL, {});
 	}
+	getQueryData(id: any) {
+		this.requestURL = `api/form/${this.apiType}/getAllQueries/${id}`;
+		return this.http.get(this.requestURL)
+	}
 
 
 	/**

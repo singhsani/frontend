@@ -756,15 +756,52 @@
     <div class="modal-body">
         <div class="row">
             <div class="col-12">
+                <ng-container *ngIf="formService.apiType  == 'MFLicense' || formService.serviceType == 'REJECTED' ||formService.apiType == 'MFRenewal' || formService.apiType == 'MFTransfer' || formService.apiType == 'MFDuplicate' || formService.apiType == 'MFCancellation' ">
+                    <div *ngFor="let i of remarkField ;">
+                       <b>Correction in field:</b> &nbsp; {{i}} 
+                    </div>
+                    <div *ngFor="let i of remarkMessage ; ">
+                        <b>Remark:</b> &nbsp;{{i}}
+                    </div>
+                </ng-container>
                 <div type="text" readonly class="text-left queryraiseremarks" [innerHtml]="getInnerHTMLForRemark()"
-                    #copytext>
+                #copytext>
                 </div>
             </div>
         </div>
     </div>
 </ng-template>
 
-
+<ng-template #queryRaiseForMFTemplate>
+    <div class="modal-header">
+        <div class="col-9">
+            <h5 class="modal-title pull-left">{{statusHeader}} Remarks</h5>
+        </div>
+        <div class="col-1">
+            <button class="pull-left mat-icon-button" (click)="copyInnerHTMLForRemark()">
+                <mat-icon title="{{'copy_clipboard' | translate:translateKey}}">content_copy</mat-icon>
+            </button>
+        </div>
+        <div class="col-1">
+            <button title="{{'close' | translate:translateKey}}" class=" mat-icon-button" aria-label="Close"
+                (click)="modalRef.hide()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <div *ngFor="let i of remarkMessage">
+                    {{i}}
+                </div>
+                <div type="text" readonly class="text-left queryraiseremarks" [innerHtml]="getInnerHTMLForRemark()"
+                #copytext>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
 
 <ng-template #LoiPaymentTemplate>
     <div class="modal-header">
