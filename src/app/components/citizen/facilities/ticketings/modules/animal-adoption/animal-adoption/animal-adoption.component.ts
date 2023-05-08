@@ -226,6 +226,7 @@ export class AnimalAdoptionComponent implements OnInit {
       this.animalAdoptionForm.get('noOfAdoptionCount').reset();
       this.animalAdoptionForm.get('adoptionYears').reset();
       this.animalAdoptionForm.get('existingCount').reset();
+      this.animalAdoptionForm.get('adoptionYears').setValue( returnArray.value[0].noOfYear);
       
     }else{
     for (let control of returnArray.controls) {
@@ -264,6 +265,7 @@ export class AnimalAdoptionComponent implements OnInit {
         this.animalAdoptionForm.get('totalAdoptionCost').setValue(this.animalAdoptionForm.get('noOfAdoptionCount').value * this.animalName.totalExpenses * adoptionYear);
       } else {
           this.commonService.openAlert('Warning','Please Enter Valid Count' , 'warning', '',)
+          this.animalAdoptionForm.get('noOfAdoptionCount').setValue(null)  
     
       }
     }

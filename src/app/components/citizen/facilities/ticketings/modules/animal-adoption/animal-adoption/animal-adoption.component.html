@@ -286,7 +286,7 @@
                   <th scope="col">{{'Animal BirdName'| translate: translateKey}}</th>
                   <th scope="col">{{'No of Count'| translate: translateKey}}</th>
                   <th scope="col">{{'No of Adoption Year'| translate: translateKey}}</th>
-                  <th scope="col">{{'Total Expenses'| translate: translateKey}}</th>
+                  <th scope="col">{{'Total Expenses ₹'| translate: translateKey}}</th>
 
                   <th scope="col" *ngIf="animalAdoptionForm.get('canEdit').value">{{'Action'| translate: translateKey}}
                   </th>
@@ -310,7 +310,7 @@
               <tfoot>
                 <tr>
                   <td colspan="3"></td>
-                  <th >Total Amount / Adoption Cost</th>
+                  <th >Total Amount / Adoption Cost </th>
                   <th class="td">{{totalCostOfAnimal}}</th> 
                   <td *ngIf="animalAdoptionForm.get('canEdit').value"></td>
                 </tr>
