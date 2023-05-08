@@ -65,6 +65,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		["PRO-TAX-REBATE", "property/taxrebate/application/printReceiptForPayment"],
 		["PRO-REFUND", "property/refundagainstvacancy/printReceiptForPayment"]
 	]);
+	remarkMessage: any =[];
+	remarkField: any =[];
+	serviceType: string='';
 
 	constructor(
 		private formService: FormsActionsService,
@@ -790,12 +793,27 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	/**
 	 * This method is use to show For Query Raise remarks.
 	 */
-	remarksDisplayForQueryRaise(data) {
-
-		this.queryrraiseRemarks = data.remarks;
-		this.statusHeader = data.fileStatusName;
+	remarksDisplayForQueryRaise(data: any) {
+	    this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(data.serviceDetail.code);
+		this.serviceType=data.serviceType;
+		if(data.serviceType == 'MEAT_FISH_LICENCE' && data.fileStatus == 'QUERY_RAISED'){
+			this.formService.getQueryData(data.id).subscribe(res=>{
+				console.log(res);
+				for(let i=0;i<res.data.length;i++){
+					res.data[i].queryList.forEach(element => {
+						console.log(element)
+						this.remarkMessage.push(element.queryRemark);
+						this.remarkField.push(element.raise)
+					});
+				}
+			})
+		}else{
+			this.queryrraiseRemarks = data.remarks;
+			this.statusHeader = data.fileStatusName;
+			this.queryrraisereason = data.reason;
+		}
 		//this.queryrraiseRemarks = 'Remark here';
-		this.queryrraisereason = data.reason;
+		
 		//this.queryrraisereason = 'Remark reason here';
 	}
 	getInnerHTMLForRemark() {
