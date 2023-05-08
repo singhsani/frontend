@@ -268,8 +268,7 @@ export class ZooBookingComponent implements OnInit {
         code: [null, Validators.required]
       }),
       typeOfTicket: this.fb.group({
-        code: [null,Validators.required],
-        name: [null,Validators.required],
+        code: [null,Validators.required]
       }),
       typeOfVisitor:this.fb.group({
         name: [null, Validators.required],
@@ -516,7 +515,7 @@ if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'A
   getTicketData(){
     
     let data ={
-      typeOfTicket : this.ticketBookingForm.get('typeOfTicket').get('name').value,
+      typeOfTicket : this.ticketBookingForm.get('typeOfTicket').get('code').value,
       typeOfVisitor : this.ticketBookingForm.get('typeOfVisitor').get('name').value,
       charges : this.ticketBookingForm.get('charges').get('code').value,
       amounts :  this.ticketBookingForm.get('amounts').get('code').value,
