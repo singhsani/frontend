@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import * as _ from 'lodash';
 import { MatInput } from '@angular/material/input';
 import { CommonService } from 'src/app/shared/services/common.service';
+import swal from 'sweetalert2';
 
 @Component({
 	selector: 'app-sign-up',
@@ -72,6 +73,37 @@ export class SignUpComponent implements OnInit {
 		this.nameInput.focus();
 	}
 
+	imageUrls(type: string) {
+		if (type === 'warning') {
+			return "assets/icons/warning.svg";
+		} else if (type === 'success') {
+			return "assets/icons/done.svg";
+		} else if (type === 'info') {
+			return "assets/icons/info.svg";
+		} else if (type === 'error') {
+			return "assets/icons/error.svg";
+		} else if (type === 'question') {
+			return "assets/icons/question.svg";
+		}
+	}
+	
+	successAlert(title: string, message: string, type: string) {
+
+		let options = {
+      title:title,
+			text: message,
+			type: type,
+			imageUrl: this.imageUrls(type),
+			imageClass: 'doneIcon',
+      width: 400,
+      height:8,
+      imageWidth: 70,
+      imageHeight: 65,
+      padding: '2em',
+		}
+
+		swal(options as any);
+	}
 	/**
 	 * This method used to compare passwords
 	 * @param passwordKey - Password
@@ -112,7 +144,7 @@ export class SignUpComponent implements OnInit {
 		this.appService.registerUser(formVals).subscribe(
 			res => {
 				this.loading = false;
-				this.commonService.successAlert("Success", "For OTP and Authentication Link, please check your registered Email ID and Mobile Number. Thank you for the Registration.", "success");
+				this.successAlert("Success", "For OTP and authentication link, please check your registered email ID and mobile number. Thank you for the registration.", "success");
 				//this.toster.success("We have sent a authentication link on your email");
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHVERIFY')],
 					// { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp , email : this.regForm.get('email').value } }
