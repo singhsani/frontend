@@ -177,7 +177,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 			this.applicantDetials.patchValue({
 				refNumber: this.serachLicenceObj.searchLicenceNumber,
 				licenseIssueDate: searchData.licenseIssueDate,
-			    licenseType: searchData.licenseType.code,
+			    licenseType: searchData.licenseType,
 				personType: searchData.personType,
 				holderFirstName: searchData.holderFirstName,
 				holderMiddleName: searchData.holderMiddleName,
@@ -204,7 +204,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 				zoneNo: searchData.zoneNo,
 				wardNo: searchData.wardNo,
 				businessAddress: searchData.businessAddress,
-				statusOfBusinessId:searchData.statusOfBusinessId.code,
+				statusOfBusinessId:searchData.statusOfBusinessId,
 				relationshipList: searchData.relationshipList,
 			})
 
