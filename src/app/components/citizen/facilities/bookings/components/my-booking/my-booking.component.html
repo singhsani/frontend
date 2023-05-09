@@ -318,7 +318,7 @@
               *ngIf="(element.resourceType == 'STADIUM' || element.resourceType == 'CHILDREN_THEATER') && element.status == 'REFUND_APPROVED'"
               mat-menu-item color="primary" (click)="refundAcknowledgemnt(element.refNumber,element.resourceType)">
               <mat-icon title="Print Receipt" color="primary">print</mat-icon>
-              {{'refund_acknowledgment' | translate:translateKey}}
+              {{ (element.resourceType == 'STADIUM' ? 'refund_receipt' : 'refund_acknowledgment') | translate:translateKey}}
             </button>
 
 
