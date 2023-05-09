@@ -797,16 +797,14 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	    this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(data.serviceDetail.code);
 		this.serviceType=data.serviceType;
 		if(data.serviceType == 'MEAT_FISH_LICENCE' && data.fileStatus == 'QUERY_RAISED'){
-			this.formService.getQueryData(data.id).subscribe(res=>{
-				console.log(res);
+			this.formService.getQueryData(data.id).subscribe(res=>{		
 				for(let i=0;i<res.data.length;i++){
 					res.data[i].queryList.forEach(element => {
-						console.log(element)
-						this.remarkMessage.push(element.queryRemark);
-						this.remarkField.push(element.raise)
+						this.remarkMessage.push(element);
 					});
 				}
 			})
+			this.remarkMessage=[];
 		}else{
 			this.queryrraiseRemarks = data.remarks;
 			this.statusHeader = data.fileStatusName;
