@@ -52,6 +52,9 @@ export class GatewayResponseComponent implements OnInit {
 		else if(this.dispData.resourceType == 'atithigruh' && (this.dispData.txtadditionalInfo1 == 'atithigruh' || this.dispData.txtadditionalInfo1 == 'ATITHIGRUH')){
 			this.serviceName = 'Atithigruh'
 		}
+		else if(this.dispData.resourceType == 'swimming' && this.dispData.txtadditionalInfo1 == 'SWIMMING_POOL'){
+			this.serviceName = 'Swimming Pool'
+		}
 		else{
 			this.serviceName = this.dispData.txtadditionalInfo1 ? this.dispData.txtadditionalInfo1 :this.dispData.resourceType ?
 								this.dispData.resourceType : this.serviceType ? this.serviceType : this.dispData.payableServiceType;
