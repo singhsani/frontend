@@ -446,6 +446,10 @@ export class MuttonFishTransferComponent implements OnInit {
 			attachments: []
 			/* Step 4 controls end */
 		});
+		/** Method is used to copy local contoller to Main contoller **/
+		this.commonService.createCloneAbstractControl(this.applicantDetials, this.muttonFishTransferForm);
+		this.commonService.createCloneAbstractControl(this.businessDetail, this.muttonFishTransferForm);
+		this.commonService.createCloneAbstractControl(this.attachmentDetails, this.muttonFishTransferForm);
 	}
 
 	/**
