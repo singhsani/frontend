@@ -7,6 +7,7 @@ import { ManageRoutes } from '../../../../config/routes-conf';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from 'src/app/shared/services/common.service';
 import swal from 'sweetalert2';
+import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 
 @Component({
 	selector: 'app-userverification',
@@ -32,7 +33,8 @@ export class UserVerificationComponent implements OnInit {
 		private router: Router,
 		private fb: FormBuilder,
 		private commonService: CommonService,
-		private toster: ToastrService
+		private toster: ToastrService,
+		private alert:AlertService
 	) {
 
 	}
@@ -66,39 +68,6 @@ export class UserVerificationComponent implements OnInit {
 		});
 	}
 
-	imageUrls(type: string) {
-		if (type === 'warning') {
-			return "assets/icons/warning.svg";
-		} else if (type === 'success') {
-			return "assets/icons/done.svg";
-		} else if (type === 'info') {
-			return "assets/icons/info.svg";
-		} else if (type === 'error') {
-			return "assets/icons/error.svg";
-		} else if (type === 'question') {
-			return "assets/icons/question.svg";
-		}
-	}
-	
-	successAlert(title: string, message: string, type: string) {
-
-		let options = {
-      title:title,
-			text: message,
-			type: type,
-			imageUrl: this.imageUrls(type),
-			imageClass: 'doneIcon',
-      width: 400,
-      height:8,
-      imageWidth: 70,
-      imageHeight: 65,
-      padding: '2em',
-		}
-
-		swal(options as any);
-	}
-
-
 	/**
 	 * Method is used to verify user data after registration.
 	 */
@@ -131,7 +100,7 @@ if(this.verifyForm.valid){
 				/**
 				 * Redirect to reset password
 				 */
-				this.successAlert("Success", " OTP and authentication link re-sent on your registered email ID and mobile number. Thank you.", "success");
+				this.alert.successsAlert("Success", " OTP and authentication link re-sent on your registered email ID and mobile number. Thank you.", "success",400,8,65,65,2);
 
 			}, err => {
 				this.loading = false;
