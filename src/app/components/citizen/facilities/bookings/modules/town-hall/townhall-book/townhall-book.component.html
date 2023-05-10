@@ -319,7 +319,7 @@
                                 <th scope="row">{{i+1}}</th>
                                 <td>{{bookingUtils.returnProperDate(shifts.start)}}</td>
                                 <!-- <td>{{bookingUtils.returnProperDate(shifts.end)}}</td> -->
-                                <td>{{shifts.shiftType}}</td>
+                                <td>{{convertshiftType(shifts.shiftType)}}</td>
                                 <div *ngIf="selectedShift.length >= 1">
                                     <td>
                                         <!-- <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" -->
