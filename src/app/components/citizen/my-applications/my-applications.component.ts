@@ -125,8 +125,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return `case2`;
 		} else if (row.departmentName == 'Vendor Registration' && row.fileStatusName == 'Deposit Received') {
 			return `case4`;
-		} else if (row.departmentName == 'Vendor Registration' && row.fileStatusName == 'Scrutiny') {
-			return `case4`;	
 		} else if(row.departmentName == 'Contractor Registration' && row.fileStatusName == 'Deposit Received'){
 			return `case5`
 		}else if((row.departmentName == 'Contractor Registration' && row.fileStatusName == 'Approved') || (row.departmentName == "Vendor Registration" && row.fileStatusName == 'Approved')){
@@ -799,14 +797,16 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	    this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(data.serviceDetail.code);
 		this.serviceType=data.serviceType;
 		if(data.serviceType == 'MEAT_FISH_LICENCE' && data.fileStatus == 'QUERY_RAISED'){
-			this.formService.getQueryData(data.id).subscribe(res=>{		
+			this.formService.getQueryData(data.id).subscribe(res=>{
+				console.log(res);
 				for(let i=0;i<res.data.length;i++){
 					res.data[i].queryList.forEach(element => {
-						this.remarkMessage.push(element);
+						console.log(element)
+						this.remarkMessage.push(element.queryRemark);
+						this.remarkField.push(element.raise)
 					});
 				}
 			})
-			this.remarkMessage=[];
 		}else{
 			this.queryrraiseRemarks = data.remarks;
 			this.statusHeader = data.fileStatusName;

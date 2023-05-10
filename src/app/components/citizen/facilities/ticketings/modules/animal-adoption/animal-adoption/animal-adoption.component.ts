@@ -202,7 +202,6 @@ export class AnimalAdoptionComponent implements OnInit {
       }
       
       this.calculateTotalExpenses();
-
     }
     );
   }
@@ -258,7 +257,8 @@ export class AnimalAdoptionComponent implements OnInit {
       let data ={
         animalName: this.animalBirdName,
         animalCount: this.animalCount,
-        adoptionAnimalCount:event.target.value
+         adoptionAnimalCount:event.target.focus()
+
       }
       let adoptionYear=this.animalAdoptionForm.get('adoptionYears').value;
       if(this.animalCount>=event.target.value){

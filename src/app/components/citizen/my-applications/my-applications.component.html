@@ -757,10 +757,11 @@
         <div class="row">
             <div class="col-12">
                 <ng-container *ngIf="formService.apiType  == 'MFLicense' || formService.serviceType == 'REJECTED' ||formService.apiType == 'MFRenewal' || formService.apiType == 'MFTransfer' || formService.apiType == 'MFDuplicate' || formService.apiType == 'MFCancellation' ">
-                    <b>Please resolve following queries in your application and re-submit the same.</b>
+                    <div *ngFor="let i of remarkField ;">
+                       <b>Correction in field:</b> &nbsp; {{i}} 
+                    </div>
                     <div *ngFor="let i of remarkMessage ; ">
-                        <b>Query:</b> &nbsp;{{i.raise}}<br>
-                        <b>Remark:</b>&nbsp;{{i.queryRemark}}
+                        <b>Remark:</b> &nbsp;{{i}}
                     </div>
                 </ng-container>
                 <div type="text" readonly class="text-left queryraiseremarks" [innerHtml]="getInnerHTMLForRemark()"

@@ -172,5 +172,22 @@ export class AlertService {
       }
 
 
+      successsAlert(title: string, message: string, type: string ,width?:number,height?:number,imageHeight?:number,imageWidth?:number,padding?:number){
+
+		let options = {
+            title:title,
+			text: message,
+			type: type,
+            imageUrl: this.imageUrls(type),
+			imageClass: 'doneIcon',
+            width:width,
+            height:height,
+            imageHeight:imageHeight,
+            imageWidth:imageWidth,
+            padding:padding
+        }
+        swal(options as any);
+      }
+
 
 }
