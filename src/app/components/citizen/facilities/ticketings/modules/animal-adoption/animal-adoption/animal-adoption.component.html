@@ -213,8 +213,8 @@
         <div class="col-md-4 ngSelect">
           <ng-select [items]="animalAdoptionPricing" formControlName="animalName" [multiple]="false"
             (clear)="resetCalculations($event);" (change)="getValues($event)"
-            placeholder="{{'animal_or_bird_preferred_for_adoption'| translate: translateKey}}"
-            bindLabel="animalBirdName">
+            placeholder="{{'animal_or_bird_preferred_for_adoption'| translate: translateKey}} *"
+            bindLabel="animalBirdName" >
           </ng-select>
           <control-messages [control]="animalAdoptionForm.get('animalName')">
           </control-messages>
