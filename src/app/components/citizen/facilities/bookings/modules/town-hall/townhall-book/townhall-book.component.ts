@@ -651,4 +651,16 @@ clickProcess(event) {
 		
 	}
 }
+	convertshiftType(shiftType) {
+		if (shiftType == "FIRST") {
+			return shiftType = 'First'
+		}
+		else if (shiftType == "SECOND") {
+			return shiftType = 'Second'
+		}
+		else {
+			return shiftType = 'Third'
+		}
+
+	}
 }

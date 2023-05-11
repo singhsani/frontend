@@ -353,7 +353,7 @@
         <thead class="customthead">
           <tr>
             <!-- <th scope="col" width="56">{{'s_no'| translate: translateKey}}</th> -->
-            <th scope="col" width="56">Sr.No.</th>
+            <th scope="col" width="56" class="pl-2">Sr.No.</th>
             <th scope="col">{{'date_of_programme'| translate: translateKey}}</th>
             <!-- <th scope="col">{{'end_date'| translate: translateKey}}</th> -->
             <th scope="col">{{'slot_status'| translate: translateKey}}</th>
@@ -365,14 +365,14 @@
         </thead>
         <tbody>
           <tr *ngFor="let shifts of selectedShift; let i = index;">
-            <th scope="row">{{i+1}}</th>
+            <td class="pl-2">{{i+1}}</td>
             <td>{{bookingUtils.returnProperDate(shifts.start)}}</td>
             <!-- <td>{{bookingUtils.returnProperDate(shifts.end)}}</td> -->
             <td>{{shifts.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : shifts.slotStatus
               }}</td>
             <!-- <td>{{shifts.occupancy}}</td> -->
             <div *ngIf="selectedShift.length >= 1">
-              <td>
+              <td class="removeButton">
                 <!-- <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" -->
                   <button mat-icon-button title="Remove Slot"
                   (click)="selectedShift = bookingUtils.removeSelectedShift(shifts,selectedShift,  i)">
