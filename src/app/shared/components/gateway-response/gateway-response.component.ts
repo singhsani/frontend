@@ -54,7 +54,9 @@ export class GatewayResponseComponent implements OnInit {
 		}
 		else if(this.dispData.resourceType == 'swimming' && this.dispData.txtadditionalInfo1 == 'SWIMMING_POOL'){
 			this.serviceName = 'Swimming Pool'
-		}
+		}else if(this.dispData.resourceType == 'stadium' && (this.dispData.txtadditionalInfo1 == 'stadium' || this.dispData.txtadditionalInfo1 == 'STADIUM')){
+      this.serviceName = 'Stadium'
+    }
 		else{
 			this.serviceName = this.dispData.txtadditionalInfo1 ? this.dispData.txtadditionalInfo1 :this.dispData.resourceType ?
 								this.dispData.resourceType : this.serviceType ? this.serviceType : this.dispData.payableServiceType;
@@ -273,9 +275,9 @@ export class GatewayResponseComponent implements OnInit {
 						   setTimeout(() => {
 							   const url = '/citizen/my-applications' + '?id=' + payRespData.serviceFormId + '&apiCode=' + payRespData.serviceDetail.code
 							   this.router.navigateByUrl(url);
-						   }, 11000);						  				
+						   }, 11000);
 						   }
-						   this.interVal();			  
+						   this.interVal();
 						 }
 					if (payRespData.fileStatus == "PAYMENT_RECEIVED") {
 						this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(payRespData.serviceDetail.code);
@@ -373,7 +375,7 @@ export class GatewayResponseComponent implements OnInit {
 
 			this.router.navigate([this.bookingConstant.MY_BOOKINGS_URL]);
 
-		} else if (this.dispData.payableServiceType == "SHOP-ESTAB-LIC-NEW" || this.paybleServiceType == "SHOP-ESTAB-TRANSFER" || this.dispData.payableServiceType == "HEL-BCR"  || this.dispData.payableServiceType =="HEL-DCR" 
+		} else if (this.dispData.payableServiceType == "SHOP-ESTAB-LIC-NEW" || this.paybleServiceType == "SHOP-ESTAB-TRANSFER" || this.dispData.payableServiceType == "HEL-BCR"  || this.dispData.payableServiceType =="HEL-DCR"
 			|| this.dispData.payableServiceType == "HEL-DUPDR" || this.dispData.payableServiceType =="HEL-DUPBR") {
 
 			this.redirectToMyApplication(this.dispData.myApplicationUrl, undefined, undefined, undefined);
