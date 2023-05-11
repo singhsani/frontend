@@ -54,7 +54,7 @@ export class GatewayResponseComponent implements OnInit {
 		}
 		else if(this.dispData.resourceType == 'swimming' && this.dispData.txtadditionalInfo1 == 'SWIMMING_POOL'){
 			this.serviceName = 'Swimming Pool'
-		}else if(this.dispData.resourceType == 'stadium' && (this.dispData.txtadditionalInfo1 == 'stadium' || this.dispData.txtadditionalInfo1 == 'STADIUM')){
+		}else if(this.dispData.resourceType == 'stadium'){
       this.serviceName = 'Stadium'
     }
 		else{
