@@ -52,16 +52,19 @@ export class GatewayResponseComponent implements OnInit {
 		else if(this.dispData.resourceType == 'atithigruh' && (this.dispData.txtadditionalInfo1 == 'atithigruh' || this.dispData.txtadditionalInfo1 == 'ATITHIGRUH')){
 			this.serviceName = 'Atithigruh'
 		}
-		else if(this.dispData.resourceType == 'swimming' && this.dispData.txtadditionalInfo1 == 'SWIMMING_POOL'){
+		else if (this.dispData.resourceType == 'swimming' && this.dispData.txtadditionalInfo1 == 'SWIMMING_POOL') {
 			this.serviceName = 'Swimming Pool'
-		}else if(this.dispData.resourceType == 'stadium'){
-      this.serviceName = 'Stadium'
-    }
+		} else if (this.dispData.resourceType == 'stadium') {
+			this.serviceName = 'Stadium'
+		}
+		else if (this.dispData.resourceType == 'townhall' && this.dispData.txtadditionalInfo1 == 'townhall') {
+			this.serviceName = 'Townhall'
+		}
 		else{
 			this.serviceName = this.dispData.txtadditionalInfo1 ? this.dispData.txtadditionalInfo1 :this.dispData.resourceType ?
 								this.dispData.resourceType : this.serviceType ? this.serviceType : this.dispData.payableServiceType;
 		}
-		console.log('this.dispData', this.dispData);
+		//console.log('this.dispData', this.dispData);
 	}
 	Tickting: String[] = [
 		'zoo',

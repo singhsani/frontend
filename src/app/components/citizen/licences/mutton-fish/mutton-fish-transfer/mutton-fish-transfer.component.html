@@ -1,12 +1,12 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
 <mat-card [hidden]="serachLicenceObj.isDisplayRenewLicenceForm" class="mt-4 formClass">
-	<mat-form-field class="col-md-10">
+	<mat-form-field>
 		<input matInput upperCase appAlphaNumeric required
 			placeholder="{{'search_by_application_no' | translate:translateKey}}"
 			[(ngModel)]="serachLicenceObj.searchLicenceNumber" maxlength="25">
 	</mat-form-field>
-	<button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary"
+	<button [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary"
 		(click)="searchLicence()">{{'search'
 		| translate:translateKey}}</button>
 </mat-card>

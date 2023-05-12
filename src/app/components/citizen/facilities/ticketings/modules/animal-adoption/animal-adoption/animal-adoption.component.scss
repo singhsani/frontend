@@ -167,9 +167,8 @@ table { width: 100%; }
 .fotButtonBar {
   margin-top: 102px !important;
 }
-.td{
-    text-align: left;
-    padding-left: 28px;
+.table th, .table td {
+    text-align: center;
 }
 .fotButtonBar1 {
     background: #f2f2f2;
