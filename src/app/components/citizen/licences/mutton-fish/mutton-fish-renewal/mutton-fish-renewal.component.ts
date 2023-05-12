@@ -134,7 +134,6 @@ export class MuttonFishRenewalComponent implements OnInit {
 	 * @param searchData: exciting licence number data
 	 */
 	createRecordPatchSerachData(searchData: any) {
-
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		this.formService.createFormData().subscribe(res => {
 			this.formId = res.serviceFormId;
@@ -260,6 +259,15 @@ export class MuttonFishRenewalComponent implements OnInit {
 				this.muttonFishRenewalForm.patchValue(res);
 				this.applicantDetials.patchValue(res);
 				this.businessDetail.patchValue(res);
+				//
+				if(res.canEdit == false){
+					this.applicantDetials.disable()
+					this.businessDetail.disable()
+				}
+				else{
+					this.applicantDetials.enable()
+					this.businessDetail.enable()
+				}
 				this.isdisableMode = res.canEdit;
 				if(res.relationshipList.length == 0 && res.canEdit==false){
 					this.istable = false;
@@ -267,7 +275,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 					this.istable = true;
 				}
 				this.licenseConfiguration.isAttachmentButtonsVisible = true;
-				this.onChangeZone(this.businessDetail.get('zoneNo').value);
+				this.onChangedZone(this.businessDetail.get('zoneNo').value);
 				//	this.onChangeWard(this.muttonFishRenewalForm.get('wardNo').value.code);
 				if (this.businessDetail.get('statusOfBusinessId').value.code) {
 					this.onChangeStatusOfBusiness(this.businessDetail.get('statusOfBusinessId').value.code)
@@ -315,7 +323,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 			this.MEATFISH_STATUS_OF_BUSINESS = res.MEATFISH_STATUS_OF_BUSINESS;
 			this.PERSON_TYPE = res.PERSON_TYPE;
 			this.FIRM_ZONE = res.FIRM_ZONE;
-			this.onChangeZone(this.muttonFishRenewalForm.get('zoneNo').value);
+			//	this.onChangeZone(this.muttonFishRenewalForm.get('zoneNo').value);
 			//this.onChangeWard(this.muttonFishRenewalForm.get('wardNo').value.code);
 		});
 	}
@@ -324,12 +332,12 @@ export class MuttonFishRenewalComponent implements OnInit {
 	 * Method is used for get WARD as per zone selection
 	 * @param event : selected zone code
 	 */
-	onChangeZone(event) {
-		this.WARD = [];
-		if (event && this.LOOKUP.hasOwnProperty(event)) {
-			this.WARD = this.LOOKUP[event];
-		}
-	}
+	// onChangeZone(event) {
+	// 	this.WARD = [];
+	// 	if (event && this.LOOKUP.hasOwnProperty(event)) {
+	// 		this.WARD = this.LOOKUP[event];
+	// 	}
+	// }
 
 	/**
 	* Method is used for get block as per zone selection
@@ -663,7 +671,6 @@ export class MuttonFishRenewalComponent implements OnInit {
 		}
 	}
 	onChangedZone(event) {
-		debugger
 		this.wardZoneLevel2List =[];
 		if (event == undefined) {
 		this.businessDetail.get('wardNo').get('code').setValue(null);

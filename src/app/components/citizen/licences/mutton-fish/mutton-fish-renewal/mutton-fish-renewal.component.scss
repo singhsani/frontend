@@ -1,1 +1,4 @@
 .mandatory {color: red;}
+::ng-deep.mat-focused  .mat-form-field-required-marker{
+    color: black;
+}

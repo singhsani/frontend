@@ -242,6 +242,14 @@ export class MuttonFishTransferComponent implements OnInit {
 				this.applicantDetials.patchValue(res);
 				this.businessDetail.patchValue(res);
 				this.attachmentDetails.patchValue(res)
+				if(res.canEdit == false){
+					this.applicantDetials.disable()
+					this.businessDetail.disable()
+				}
+				else{
+					this.applicantDetials.enable()
+					this.businessDetail.enable()
+				}
 				this.isdisableMode = res.canEdit;
 				if(res.relationshipList.length == 0 && res.canEdit==false){
 					this.istable = false;
@@ -294,7 +302,7 @@ export class MuttonFishTransferComponent implements OnInit {
 			this.PERSON_TYPE = res.PERSON_TYPE;
 			this.FIRM_ZONE = res.FIRM_ZONE;
 
-			this.onChangeZone(this.muttonFishTransferForm.get('zoneNo').value);
+			//this.onChangeZone(this.muttonFishTransferForm.get('zoneNo').value);
 			//this.onChangeWard(this.muttonFishTransferForm.get('wardNo').value.code);
 		});
 	}
@@ -303,12 +311,12 @@ export class MuttonFishTransferComponent implements OnInit {
 	 * Method is used for get WARD as per zone selection
 	 * @param event : selected zone code
 	 */
-	onChangeZone(event) {
-		this.WARD = [];
-		if (event && this.LOOKUP.hasOwnProperty(event)) {
-			this.WARD = this.LOOKUP[event];
-		}
-	}
+	// onChangeZone(event) {
+	// 	this.WARD = [];
+	// 	if (event && this.LOOKUP.hasOwnProperty(event)) {
+	// 		this.WARD = this.LOOKUP[event];
+	// 	}
+	// }
 
 	/**
 	 * Method is used for get block as per zone selection
