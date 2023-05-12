@@ -300,13 +300,16 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 			if (this.prcInitialDate != this.prcRegForm.get('rcDate').value && fieldName === 'rcDate') {
 
 				/* If PRC is exist then show alert and clear emp details */
-				if (this.prcRegForm.get('prcNo').value && this.empDetailsListArray.length > 0) {
+				if ((this.prcRegForm.get('prcNo').value || this.prcRegForm.get('formStatus').value == 'SUBMITTED') && this.empDetailsListArray.length > 0) {
 
 					this.commonService.commonAlert('Are you sure', 'If RC Date changed then all the entries will be delete', 'question', 'Yes, submit it!', true, '', cb => {
 
 						if (this.prcRegForm.get('rcDateEditAble').value && this.prcRegForm.get('employeeSalarySummary').value.length > 0) {
 							this.profeService.updatePrcForm(this.prcRegForm.getRawValue().prcNo, moment(this.prcRegForm.get('rcDate').value).format("YYYY-MM-DD")).subscribe(res => {
 								this.setValuesInForm(res, 'rcDateChanged');
+								if (this.prcRegForm.get('formStatus').value != 'APPROVED') {
+									this.addDefaultYearMonthWiseEmployeeSummaryData();
+								}								
 							});
 						} else {
 							this.empDetailsListArray = [];
@@ -318,13 +321,44 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 				} else {
 					/* If PRC not exist and change the date then clear emp detail array */
 					this.empDetailsListArray = [];
+					if (this.prcRegForm.get('formStatus').value != 'APPROVED') {
+						this.addDefaultYearMonthWiseEmployeeSummaryData();
+					}
 				}
 			}
 		} else {
 			/* If don't inital date then store into this variable */
 			this.prcInitialDate = this.prcRegForm.get('rcDate').value;
+			if (this.prcRegForm.get('formStatus').value != 'APPROVED') {
+				this.addDefaultYearMonthWiseEmployeeSummaryData();
+			}
 		}
 		this.prcRegForm.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
+	}
+
+	addDefaultYearMonthWiseEmployeeSummaryData() {
+		this.empDetailsListArray = [];
+		let rcDate = new Date(this.prcRegForm.get('rcDate').value);
+		let currentDate = new Date();
+
+		for (var year = rcDate.getFullYear(); year <= currentDate.getFullYear(); year++) {
+			for (var month = (year == rcDate.getFullYear()? rcDate.getMonth():0); 
+					month <= (year != currentDate.getFullYear()? 11:currentDate.getMonth()); month++) {
+						
+				for (let i = 0; i < this.employeeSlabArr.length; i++) {
+					this.employeeSlabArr[i].empCount = 0;
+					this.employeeSlabArr[i].slab = {
+						id: null, code: this.employeeSlabArr[i].code, incomeRange: null, taxRate: this.employeeSlabArr[i].taxRate,
+						isActive: true, validFrom: this.employeeSlabArr[i].validFrom, validTo: this.employeeSlabArr[i].validTo
+					};
+				}
+				let obj = {
+					id: null, tempId: this.empSlabId++, year: year, month: this.monthArray[month], totEmpCount: 0,
+					formId: null, taxFee: null, slabDetails: _.cloneDeep(this.employeeSlabArr)
+				};
+				this.empDetailsListArray.push(obj);
+			}
+		}
 	}
 
 	/**
