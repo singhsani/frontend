@@ -157,7 +157,7 @@ export class AnimalAdoptionComponent implements OnInit {
       animalName: [null],
       noOfAdoptionCount:[null],
       existingCount :[null, {disable:true }],
-      totalAdoptionCost: [null],
+      totalAdoptionCost: [null, {disable:true }],
       adoptionYears: [null],
       message: [null],
       agree: [],
@@ -184,6 +184,7 @@ export class AnimalAdoptionComponent implements OnInit {
     this.animalCount = animal.animalCount
     this.animalAdoptionForm.get('existingCount').setValue(this.animalCount)
     this.animalAdoptionForm.get('existingCount').disable()
+    this.animalAdoptionForm.get('totalAdoptionCost').disable();
   
   }
 
