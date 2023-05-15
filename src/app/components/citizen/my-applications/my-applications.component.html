@@ -757,22 +757,21 @@
         <div class="row">
             <div class="col-12">
                 <ng-container *ngIf="formService.apiType  == 'MFLicense' || formService.serviceType == 'REJECTED' ||formService.apiType == 'MFRenewal' || formService.apiType == 'MFTransfer' || formService.apiType == 'MFDuplicate' || formService.apiType == 'MFCancellation' ">
-                    <div *ngFor="let i of remarkField ;">
-                       <b>Correction in field:</b> &nbsp; {{i}} 
-                    </div>
+                    <p><b>Please resolve following queries in your application and re-submit the same.</b></p>
                     <div *ngFor="let i of remarkMessage ; ">
-                        <b>Remark:</b> &nbsp;{{i}}
+                        <b>Query:</b> &nbsp;{{i.raise}}<br>
+                        <b>Remark:</b>&nbsp;{{i.queryRemark}}
                     </div>
                 </ng-container>
-                <div type="text" readonly class="text-left queryraiseremarks" [innerHtml]="getInnerHTMLForRemark()"
+                <!-- <div type="text" readonly class="text-left queryraiseremarks" [innerHtml]="getInnerHTMLForRemark()"
                 #copytext>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
 </ng-template>
 
-<ng-template #queryRaiseForMFTemplate>
+<!-- <ng-template #queryRaiseForMFTemplate>
     <div class="modal-header">
         <div class="col-9">
             <h5 class="modal-title pull-left">{{statusHeader}} Remarks</h5>
@@ -801,7 +800,7 @@
             </div>
         </div>
     </div>
-</ng-template>
+</ng-template> -->
 
 <ng-template #LoiPaymentTemplate>
     <div class="modal-header">

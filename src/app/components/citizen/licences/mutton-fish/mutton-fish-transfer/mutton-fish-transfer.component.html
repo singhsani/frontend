@@ -73,14 +73,14 @@
 							validationFieldsType='onlyNameWithOutSpace'
 							placeholder="{{'holder_firstname' | translate:translateKey}}"
 							formControlName="holderFirstName" appGujInputSource targetElement="holderFirstNameGuj"
-							[form]="muttonFishTransferForm">
+							[form]="applicantDetials">
 						<control-messages [control]="applicantDetials.get('holderFirstName')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="30" appValidationFields
 							placeholder="{{'holder_middlename' | translate:translateKey}}"
 							formControlName="holderMiddleName" appGujInputSource targetElement="holderMiddleNameGuj"
-							[form]="muttonFishTransferForm">
+							[form]="applicantDetials">
 						<control-messages [control]="applicantDetials.get('holderMiddleName')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
@@ -88,7 +88,7 @@
 							validationFieldsType='onlyNameWithOutSpace'
 							placeholder="{{'holder_lastname' | translate:translateKey}}"
 							formControlName="holderLastName" appGujInputSource targetElement="holderLastNameGuj"
-							[form]="muttonFishTransferForm">
+							[form]="applicantDetials">
 						<control-messages [control]="applicantDetials.get('holderLastName')"></control-messages>
 					</mat-form-field>
 				</div>
@@ -97,7 +97,7 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj"
-							appGujInputTarget [form]="muttonFishTransferForm"
+							appGujInputTarget [form]="applicantDetials"
 							placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}" appValidationFields
 							validationFieldsType='onlyNameWithOutSpace'>
 						<control-messages [control]="applicantDetials.get('holderFirstNameGuj')">
@@ -106,7 +106,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="90"
 							placeholder="{{'holder_middlename' | translate:translateKey:'gu'}}" appValidationFields
-							formControlName="holderMiddleNameGuj" appGujInputTarget [form]="muttonFishTransferForm">
+							formControlName="holderMiddleNameGuj" appGujInputTarget [form]="applicantDetials">
 						<control-messages [control]="applicantDetials.get('holderMiddleNameGuj')">
 						</control-messages>
 					</mat-form-field>
@@ -114,7 +114,7 @@
 						<input matInput type="text" required maxlength="90"
 							placeholder="{{'holder_lastname' | translate:translateKey:'gu'}}" appValidationFields
 							validationFieldsType='onlyNameWithOutSpace' formControlName="holderLastNameGuj"
-							appGujInputTarget [form]="muttonFishTransferForm">
+							appGujInputTarget [form]="applicantDetials">
 						<control-messages [control]="applicantDetials.get('holderLastNameGuj')">
 						</control-messages>
 					</mat-form-field>
