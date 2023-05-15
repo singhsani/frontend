@@ -95,4 +95,10 @@ export class VacancyPremiseCertificateService {
       { observe: 'response' })
       .pipe(map((response: any) => response))
   } 
+
+  checkIsOwnerAsOccupier(occupierId: string){
+    return this.http.get(`${Constants.serverApiIp}/property/vacancypremisecertificate/isOwnerAsOccupier?propertyOccupierId=${occupierId}`,
+    { observe: 'response' })
+    .pipe(map((response: any) => response))   
+  }
 }
