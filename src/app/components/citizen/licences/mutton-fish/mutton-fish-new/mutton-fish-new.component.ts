@@ -91,8 +91,6 @@ export class MuttonFishNewComponent implements OnInit {
 			this.getMuttonFishLicNewData();
 			this.muttonFishNewFormControls();
 		}
-		console.log("uploadFileArray : " + this.uploadFileArray);
-		console.log("mandatoryUploadFileArray" + this.mandatoryUploadFileArray);
 		
 	}
 
