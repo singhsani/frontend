@@ -324,6 +324,13 @@ export class ZooBookingComponent implements OnInit {
       totalCameras: [0, Validators.max(100)],
       totalVideoCameras: [0, Validators.max(100)],
       educationalVisitors:[0,Validators.max[100]],
+      educationalVisitor:[0,Validators.max[100]],
+      cameraEducationalWithout:[0,Validators.max[100]],
+      cameraEducationalWith:[0,Validators.max[100]],
+      vcameraEducationalWithout:[0,Validators.max[100]],
+      vcameraEducationalWith:[0,Validators.max[100]],
+
+
       bankName: this.fb.group({
         code: [null],
       }),
@@ -505,7 +512,7 @@ if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'A
       if(f.typeOfTicket.code == 'WITHOUT_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Children (Age 5 to 12 )")
       {
       this.totalAmount = numberOfVisitors * (this.zooVisitingRates['CHILD']);
-      this.ticketBookingForm.get('totalChild').setValue((numberOfVisitors));
+      this.ticketBookingForm.get('totalChild').setValue(parseInt(this.ticketBookingForm.get('totalChild').value)+parseInt(numberOfVisitors));
       }
       else if(f.typeOfTicket.code == 'WITHOUT_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Adults (Above age 12)"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['ADULT']);
@@ -522,37 +529,40 @@ if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'A
       }
       else if(f.typeOfTicket.code == 'WITHOUT_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Children Below 5 Free"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['CHILDBELOW']);
+        this.ticketBookingForm.get('totalChild').setValue(parseInt(this.ticketBookingForm.get('totalChild').value)+parseInt(numberOfVisitors));
+
       }
 
       else if(f.typeOfTicket.code == 'WITH_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Children (Age 5 to 12 )"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['CHILDS']);
-        this.ticketBookingForm.get('totalChild').setValue((numberOfVisitors));
+        this.ticketBookingForm.get('totalChilds').setValue(parseInt(this.ticketBookingForm.get('totalChilds').value)+parseInt(numberOfVisitors));
       }
       else if(f.typeOfTicket.code == 'WITH_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Adults (Above age 12)"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['ADULTS']);
-        this.ticketBookingForm.get('totalAdult').setValue((numberOfVisitors));
+        this.ticketBookingForm.get('totalAdults').setValue((numberOfVisitors));
       }
       else if(f.typeOfTicket.code == 'WITH_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Camera Fee"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['CAMERAS']);
-        this.ticketBookingForm.get('totalCamera').setValue((numberOfVisitors));
+        this.ticketBookingForm.get('totalCameras').setValue((numberOfVisitors));
       }
       else if(f.typeOfTicket.code == 'WITH_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Video Camera Fee"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['VIDEOCAMERAS']);
-        this.ticketBookingForm.get('totalVideoCamera').setValue((numberOfVisitors));
+        this.ticketBookingForm.get('totalVideoCameras').setValue((numberOfVisitors));
       }
       else if(f.typeOfTicket.code == 'WITH_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Children Below 5 Free"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['CHILDBELOW']);
+        this.ticketBookingForm.get('totalChilds').setValue(parseInt(this.ticketBookingForm.get('totalChilds').value)+parseInt(numberOfVisitors));
       }else if(f.typeOfTicket.code == 'EDUCATIONAL_WITHOUT_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Educational Visitors"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['NUMBER_OF_VISITORS_EDUCATIONAL_WITHOUT'])
-        this.ticketBookingForm.get('educationalVisitors').setValue((numberOfVisitors));
+        this.ticketBookingForm.get('educationalVisitor').setValue((numberOfVisitors));
       }
       else if(f.typeOfTicket.code == 'EDUCATIONAL_WITHOUT_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Camera Fee"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['CAMERAS_EDUCATIONAL_WITHOUT'])
-        this.ticketBookingForm.get('totalCamera').setValue((numberOfVisitors));
+        this.ticketBookingForm.get('cameraEducationalWithout').setValue((numberOfVisitors));
       }
       else if(f.typeOfTicket.code == 'EDUCATIONAL_WITHOUT_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Video Camera Fee"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['VIDEOCAMERAS_EDUCATIONAL_WITHOUT'])
-        this.ticketBookingForm.get('totalVideoCamera').setValue((numberOfVisitors));
+        this.ticketBookingForm.get('vcameraEducationalWithout').setValue((numberOfVisitors));
 
       }
       else if(f.typeOfTicket.code == 'EDUCATIONAL_WITH_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Educational Visitors"){
@@ -561,11 +571,11 @@ if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'A
       }
       else if(f.typeOfTicket.code == 'EDUCATIONAL_WITH_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Camera Fee"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['CAMERAS_EDUCATIONAL_WITH'])
-        this.ticketBookingForm.get('totalCamera').setValue((numberOfVisitors));
+        this.ticketBookingForm.get('cameraEducationalWith').setValue((numberOfVisitors));
       }
       else if(f.typeOfTicket.code == 'EDUCATIONAL_WITH_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Video Camera Fee"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['VIDEOCAMERAS_EDUCATIONAL_WITH'])
-        this.ticketBookingForm.get('totalVideoCamera').setValue((numberOfVisitors));
+        this.ticketBookingForm.get('vcameraEducationalWith').setValue((numberOfVisitors));
       }
       this.ticketBookingForm.get('amounts').get('code').setValue(this.totalAmount);
      
@@ -669,6 +679,7 @@ if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'A
         || this.ticketBookingForm.get('applicantMobile').invalid
         ||this.ticketBookingForm.get('idType').invalid
         ||this.ticketBookingForm.get('idNumber').invalid
+        || this.ticketBookingForm.get('visitingDate').invalid
   }
 
 }
