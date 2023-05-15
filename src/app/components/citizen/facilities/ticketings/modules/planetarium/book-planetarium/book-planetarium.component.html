@@ -138,7 +138,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <label>{{'number_of_visitors' | translate: translateKey}}</label>
+                        <h2>{{'number_of_visitors' | translate: translateKey}}</h2>
                         <div class="row">
 
                             <div formGroupName="visitors" class="col-md-4 ngSelect"
@@ -190,7 +190,7 @@
                 <div class="row"
                     *ngIf="ticketBookingForm.get('showCategory').get('code').value != 'PLANETARIUM_SPECIAL_SHOW'">
                     <div class="col-md-12">
-                        <label>{{'applicant_details' | translate: translateKey}}</label>
+                        <h2>{{'applicant_details' | translate: translateKey}}</h2>
                     </div>
                     <mat-form-field class="col-md-4">
                         <input matInput maxlength="50" required formControlName="firstName"
@@ -258,7 +258,7 @@
                     *ngIf="ticketBookingForm.get('showCategory').get('code').value == 'PLANETARIUM_SPECIAL_SHOW'">
 
                     <div class="col-md-12">
-                        <label>{{'school_details_or_group_details' | translate: translateKey}}</label>
+                        <h2>{{'school_details_or_group_details' | translate: translateKey}}</h2>
                     </div>
 
                     <mat-form-field class="col-md-4">

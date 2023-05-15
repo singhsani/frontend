@@ -339,7 +339,7 @@
 					</div>
 				</div>
 
-				<div *ngIf="employerfamily.get('shopPersonList')['controls'].length">
+				<div *ngIf="employerfamily.get('shopPersonList')['controls'].length" class="col-md-12">
 					<div>
 						<table class="table table-striped responsiveTableRow tableLayout">
 							<thead>
@@ -504,7 +504,7 @@
 					</div>
 				</div>
 
-				<div *ngIf="personoccuping.get('workerCounts')['controls'].length">
+				<div *ngIf="personoccuping.get('workerCounts')['controls'].length" class="col-md-12">
 					<div>
 						<table class="table table-striped responsiveTableRow">
 							<thead>
@@ -666,7 +666,7 @@
 					</div>
 				</div>
 				<div *ngIf="isPatners">
-				<div *ngIf="partnerlist.get('shopPartnerList')['controls'].length">
+				<div *ngIf="partnerlist.get('shopPartnerList')['controls'].length" class="col-md-12">
 					<div>
 						<table class="table table-striped responsiveTableRow">
 							<thead>
@@ -676,7 +676,7 @@
 									<th>{{'Address' | translate:translateKey}}</th>
 									<th>{{'Designation / Status' | translate:translateKey}}</th>
 									<th >{{'Mobile Number' | translate:translateKey}}</th>
-									<th >{{'Email-Id' | translate:translateKey}}</th>
+									<th >{{'emailId' | translate:translateKey}}</th>
 									<th *ngIf="shopLicTransferForm.get('canEdit').value"></th>
 									<th *ngIf="!(shopLicTransferForm.get('canEdit').value)"></th>
 								</tr>

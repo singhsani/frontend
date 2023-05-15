@@ -186,7 +186,7 @@
           </div>
         </mat-card-content>
       </mat-card>
-    <div class="fotButtonBar">
+    <div class="fotButtonBar mt-0">
         <div class="col-sm-12 col-md-12 text-right">
             <button mat-raised-button (click)="guideLineFlag = false;showSearchForm = true" color="primary" [disabled]="btnProceed">
                 <mat-icon>thumb_up_alt</mat-icon>
@@ -343,7 +343,7 @@
                 </mat-expansion-panel>
             </mat-accordion>
 
-            <div class="fotButtonBar">
+            <div class="fotButtonBar  mt-0">
                 <div class="col-sm-12 col-md-12 text-right">
                     <button mat-raised-button data-toggle="modal" (click)="shortlistShifts(confirmationModel)"
                         data-target="#confirmShortlistModel" type="button" [disabled]="selectedShift.length == 0"
@@ -488,7 +488,7 @@
               </div>
             </div> -->
         </div>
-        <div class="fotButtonBar">
+        <div class="fotButtonBar  mt-0">
             <div class="col-sm-12 col-md-12 text-right">
                 <button type="button" mat-raised-button color="primary" data-dismiss="modal"
                     (click)="isBookingFormHidden = false; showPaymentReciept = false;setDefaultValue()">
@@ -599,7 +599,7 @@
                         <!--</div>-->
                     <!--</div>-->
 
-                  <div class="row mt-4 fotButtonBar">
+                  <div class="row mt-0 fotButtonBar">
                     <div class="col-sm-12 col-md-12 text-right">
                       <button mat-raised-button type="button" color="primary"
                               (click)="checkValidation(applicationDetails,false)">
@@ -638,7 +638,7 @@
                         </div>
                     </div>
 
-                    <div class="row mt-4 fotButtonBar">
+                    <div class="row mt-0 fotButtonBar">
                         <div class="col-sm-12 col-md-12 justify-content-between d-flex">
                             <button type="button" color="primary" mat-raised-button (click)="tabIndex= tabIndex -1; ">
                                 <mat-icon>navigate_before</mat-icon>
