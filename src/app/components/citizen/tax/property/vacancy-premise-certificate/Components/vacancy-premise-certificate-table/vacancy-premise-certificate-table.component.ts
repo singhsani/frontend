@@ -167,15 +167,27 @@ export class VacancyPremiseCertificateTableComponent implements OnInit {
         if (data.status === 200) {
           if(data.body != null && data.body != '') {
             this.alertService.warning("You have already apply for vacancy premise.Your application number is :" + data.body)
-            }else{
-              if(this.dataMoodel.outstandingAmount != 0) {
-                this.commonService.dueToOutstandingMessage(this.selectedItem.propertyNo);
-              } else {
-                this.dataMoodel = Object.assign(this.dataMoodel,this.selectedItem);
-                this.dataMoodel.occupierId = this.selectedItem.propertyOccupierId;
-                this.vacancyPremiseCertificateDataSharingService.updatedDataModel(this.dataMoodel);
-                this.vacancyPremiseCertificateDataSharingService.updatedIsShowForm(true);
-              }
+            }else{  
+                this.vacancyPremiseCertificateService.checkIsOwnerAsOccupier(propertyOccupierId).subscribe(
+                  (data) => {
+                    if(data.status === 200){
+                      if(data.body != null && !data.body) {
+                        this.alertService.warning("Not allowed to do application because owner is not occupier.")
+                      }else{
+                        if(this.dataMoodel.outstandingAmount != 0) {
+                          this.commonService.dueToOutstandingMessage(this.selectedItem.propertyNo);
+                        } else {
+                          this.dataMoodel = Object.assign(this.dataMoodel,this.selectedItem);
+                          this.dataMoodel.occupierId = this.selectedItem.propertyOccupierId;
+                          this.vacancyPremiseCertificateDataSharingService.updatedDataModel(this.dataMoodel);
+                          this.vacancyPremiseCertificateDataSharingService.updatedIsShowForm(true);
+                        }
+                      }
+                    }
+                  },(error) => {
+                    this.commonService.callErrorResponse(error);
+                  }
+                )
             }
         }
       },
