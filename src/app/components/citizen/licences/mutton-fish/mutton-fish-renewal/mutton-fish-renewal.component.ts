@@ -261,12 +261,12 @@ export class MuttonFishRenewalComponent implements OnInit {
 				this.businessDetail.patchValue(res);
 				//
 				if(res.canEdit == false){
-					this.applicantDetials.disable()
-					this.businessDetail.disable()
+					this.applicantDetials.disable();
+					this.businessDetail.disable();
 				}
 				else{
-					this.applicantDetials.enable()
-					this.businessDetail.enable()
+					this.applicantDetials.enable();
+					this.businessDetail.enable();
 				}
 				this.isdisableMode = res.canEdit;
 				if(res.relationshipList.length == 0 && res.canEdit==false){
@@ -279,11 +279,12 @@ export class MuttonFishRenewalComponent implements OnInit {
 				//	this.onChangeWard(this.muttonFishRenewalForm.get('wardNo').value.code);
 				if (this.businessDetail.get('statusOfBusinessId').value.code) {
 					this.onChangeStatusOfBusiness(this.businessDetail.get('statusOfBusinessId').value.code)
-				}
-
-				this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
+				}else{
+					this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
 					this.uploadFileArray.sort((a, b) => 
 					a.orderSequence - b.orderSequence);
+				}
+				
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
 					this.addItem().push(this.createArray());
@@ -297,12 +298,14 @@ export class MuttonFishRenewalComponent implements OnInit {
 				res.relationshipList.forEach(app => {
 					(<FormArray>this.businessDetail.get('relationshipList')).push(this.createArray(app));
 				});
-				// this.muttonFishRenewalForm.disable();
-				this.enableFielList();
-
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
-					(<FormArray>this.businessDetail.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
+					//(<FormArray>this.businessDetail.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
+					(<FormArray>this.muttonFishRenewalForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 				});
+				// this.muttonFishRenewalForm.disable();
+				//this.enableFielList();
+				this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
+				
 
 				//this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishRenewalForm);
 
