@@ -102,15 +102,15 @@ export class ZooBookingComponent implements OnInit {
     {
       srNo : '૧',
       categoryName: 'Children',
-      description: this.pipe.transform("બાળકો (૫ વર્ષ થી નીચેના)", this.translateKey),
-      WithoutpriceField: 'મફત',
-      WithpriceField : 'મફત'
+      description: this.pipe.transform("બાળકો (૫ વર્ષ સુધી)", this.translateKey),
+      WithoutpriceField: 'માફી',
+      WithpriceField : 'માફી'
 
     },
     {
       srNo:'૨',
       categoryName: 'Children',
-      description: this.pipe.transform("બાળકો (૧૨ વર્ષ થી નીચેના)", this.translateKey),
+      description: this.pipe.transform("બાળકો (૫ વર્ષ થી ૧૨ વર્ષ સુધી)", this.translateKey),
       WithoutpriceField: '૨૦',
       WithpriceField : '૫૦'
     },
