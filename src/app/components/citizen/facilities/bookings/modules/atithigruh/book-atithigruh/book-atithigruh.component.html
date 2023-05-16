@@ -181,17 +181,23 @@
         </mat-card-content>
         </div>
           <div>
-            <mat-checkbox (change)="clickProcess($event)" [checked]="checkProceed"> <b>Agree And Continue</b>
-            </mat-checkbox>
           </div>
         </mat-card-content>
       </mat-card>
     <div class="fotButtonBar mt-0">
-        <div class="col-sm-12 col-md-12 text-right">
-            <button mat-raised-button (click)="guideLineFlag = false;showSearchForm = true" color="primary" [disabled]="btnProceed">
-                <mat-icon>thumb_up_alt</mat-icon>
-                {{'proceed'| translate: stadiumTranslateKey}}
-            </button>
+        <div class="row px-3 checkbox">
+            <div class="col-sm-6 col-md-6">
+                <mat-checkbox (change)="clickProcess($event)" [checked]="checkProceed"> 
+                        {{'i_have_read_and_agree_with_terms_and_conditions' | translate:stadiumTranslateKey}}
+                </mat-checkbox>
+            </div>
+            <div class="col-sm-6 col-md-6 text-right">
+                <button mat-raised-button (click)="guideLineFlag = false;showSearchForm = true" color="primary"
+                    [disabled]="btnProceed">
+                    <mat-icon>thumb_up_alt</mat-icon>
+                    {{'proceed'| translate: stadiumTranslateKey}}
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -632,9 +638,9 @@
                             <mat-checkbox class="d-block" labelPosition="after" formControlName="agree">
                                 {{'i_agree_with_above_bank_details_are_correct' | translate:stadiumTranslateKey}}
                             </mat-checkbox>
-                            <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition">
-                                {{'i_have_read_and_agree_with_terms_and_conditions' | translate:stadiumTranslateKey}}
-                            </mat-checkbox>
+                            <!-- <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition">
+                               
+                            </mat-checkbox> -->
                         </div>
                     </div>
 
