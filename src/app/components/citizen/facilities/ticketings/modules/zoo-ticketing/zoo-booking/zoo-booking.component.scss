@@ -207,4 +207,9 @@ table { width: 100%; }
     //         padding: 8px;
     //     }
     // }
+
+
+  table td {
+    vertical-align: middle !important;
+  }
 }
