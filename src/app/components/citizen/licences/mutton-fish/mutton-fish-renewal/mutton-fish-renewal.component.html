@@ -215,7 +215,7 @@
 
 					<div class="col-md-4 ngSelect" formGroupName="statusOfBusinessId">
 						<ng-select placeholder="{{'business_address_type' | translate:translateKey}} *"
-							formControlName="code" (change)="onChangeStatusOfBusiness($event)">
+							formControlName="code" (change)="onChangeStatusOfBusiness($event,true)">
 							<ng-option *ngFor="let statusId of MEATFISH_STATUS_OF_BUSINESS" [value]="statusId.code">
 								{{statusId.name}}</ng-option>
 						</ng-select>
@@ -371,7 +371,7 @@
 							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn :
 								doc.documentLabelGuj }}
 								<span *ngIf="doc.mandatory" class="mandatory">*</span></label>
-							<file-upload [form]="attachmentDetails" [uploadModel]="doc"></file-upload>
+							<file-upload [form]="muttonFishRenewalForm" [uploadModel]="doc"></file-upload>
 						</div>
 					</ng-container>
 				</div>
