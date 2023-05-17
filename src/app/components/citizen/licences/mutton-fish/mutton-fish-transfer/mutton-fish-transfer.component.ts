@@ -694,10 +694,10 @@ export class MuttonFishTransferComponent implements OnInit {
 	}
 	onChangedZone(event) {
 		this.wardZoneLevel2List =[];
-		if (event == undefined) {
-		this.businessDetail.get('wardNo').get('code').setValue(null);
-		  return false
-		}
+		if (event == null && event == undefined) {
+			this.businessDetail.get('wardNo').setValue(null);
+			  return false
+			}
 		else {
 		  let postData = {};
 		  postData = { parentId: event };

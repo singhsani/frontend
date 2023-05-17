@@ -324,7 +324,7 @@
 										</control-messages>
 									</mat-form-field>
 								</td>
-								<td>
+								<td class="addAndEdit">
 									<span *ngIf="muttonFishRenewalForm.get('canEdit').value">
 										<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
 											(click)="editRecord(item)">
@@ -371,7 +371,7 @@
 							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn :
 								doc.documentLabelGuj }}
 								<span *ngIf="doc.mandatory" class="mandatory">*</span></label>
-							<file-upload [form]="muttonFishRenewalForm" [uploadModel]="doc"></file-upload>
+							<file-upload [form]="attachmentDetails" [uploadModel]="doc"></file-upload>
 						</div>
 					</ng-container>
 				</div>
