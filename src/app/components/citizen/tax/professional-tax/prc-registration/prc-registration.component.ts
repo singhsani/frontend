@@ -537,6 +537,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	 * @param res - API Response
 	 */
 	setValuesInForm(res, flag) {
+		$('.invalidFields').remove();
 		/*reset fields before assigning data */
 		this.prcRegForm.reset();
 		this.setDefaultFeilds();
@@ -546,15 +547,79 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 
 		/** if response exist data then do further process */
 		if (res.data && Object.keys(res.data).length) {
+			if (res.data.alertForValidation != null) {
+				var invalidFields = res.data.invalidFields;
+				invalidFields = invalidFields.split(',');
+				let messageForInvalidFileds = '';
+				for (let i = 0; i < invalidFields.length; i++) {
+					const element = invalidFields[i];
+					var isComma = false;
+					if (element == 'applicantFullName') {
+						messageForInvalidFileds += 'Applicant Full Name';
+						isComma = true;
+					} else if (element == 'applicantDob') {
+						messageForInvalidFileds += 'Applicant DOB'; 
+						isComma = true;
+					} else if (element == 'gender') {
+						messageForInvalidFileds += 'Gender'; 
+						isComma = true;
+					} else if (element == 'registrationDate') {
+						messageForInvalidFileds += 'Registration Date'; 
+						isComma = true;
+					} else if (element == 'establishmentName') {
+						messageForInvalidFileds += 'Establishment Name'; 
+						isComma = true;
+					} else if (element == 'contactNo') {
+						messageForInvalidFileds += 'Contact Number';
+						isComma = true; 
+					} else if (element == 'ward') {
+						messageForInvalidFileds += 'Ward No.'; 
+						isComma = true;
+					} else if (element == 'commencementDate') {
+						messageForInvalidFileds += 'Date of Commencement'; 
+						isComma = true;
+					} else if (element == 'pancardNo') {
+						messageForInvalidFileds += 'PAN Number'; 
+						isComma = true;
+					} else if (element == 'shopAndLicenseNo') {
+						messageForInvalidFileds += 'Shop and License Number';
+						isComma = true; 
+					} else if (element == 'entry') {
+						messageForInvalidFileds += 'Entry Number'; 
+					} else if (element == 'subEntry') {
+						messageForInvalidFileds += 'Sub Entry Number'; 
+						isComma = true;
+					} else if (element == 'professionConstitution') {
+						messageForInvalidFileds += 'Profession'; 
+						isComma = true;
+					} else if (element == 'constitution') {
+						messageForInvalidFileds += 'Constitution'; 
+						isComma = true;
+					} else if (element == 'officeAddress') {
+						messageForInvalidFileds += 'Office Address'; 
+						isComma = true;
+					} else if (element == 'residentialAddress') {
+						messageForInvalidFileds += 'Residential Address'; 
+						isComma = true;
+					}
+					if (isComma && i < (invalidFields.length-1)) {
+						messageForInvalidFileds += ', ';
+						isComma = false;
+					}
+				}
+				console.log('Please update your information ' + messageForInvalidFileds);
+				$('.searchBox').append('<div class="invalidFields alert alert-warning"> Please update your information '+ messageForInvalidFileds+' </div>'); 
+				this.commonService.openAlert("Warning", "", "warning", res.data.alertForValidation);
+				return;
+			} else {
+				$('.invalidFields').remove();
+			}
 
 			if (res.data.hasPrc) {
 				this.commonService.openAlert("PRC Is Already Exists", "", "warning", `Your PRC number is<br> <b>${res.data.prcNo}</b>`);
 				return;
 			}
-			if (res.data.messageForValidation != null) {
-				this.toastr.warning(res.data.messageForValidation);
-			}
-
+			
 			this.prcRegForm.patchValue(res.data);
 
 			if (res.data.formType === 'BUS_REG_PEC') {
