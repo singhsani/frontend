@@ -153,7 +153,7 @@
       <div class="col-md-2 ngSelect">
         <mat-form-field formGroupName="numberOfVisitors" >
           <input #catRef matInput formControlName="code" OnlyNumber
-            placeholder="Number Of Visitors"
+            placeholder="Count"
             (change)="getTotalAmount($event)" required>
             <!-- <control-messages [control]="ticketBookingForm.get('numberOfVisitors').get('code')">
             </control-messages> -->
@@ -163,7 +163,7 @@
       <div class="col-md-2 ngSelect">
         <mat-form-field  formGroupName="amounts">
           <input #catRef matInput  formControlName="code" OnlyNumber readonly
-            placeholder="Amount" required >
+            placeholder="Amount (₹)" required >
             <!-- <control-messages [control]="ticketBookingForm.get('amounts').get('code')">
             </control-messages> -->
         </mat-form-field>
@@ -189,9 +189,9 @@
                   <th scope="col" width="56">Sr. No</th>
                   <th scope="col">Type of Ticket</th>
                   <th scope="col">Type of Visitors</th>
-                  <th scope="col">Charges</th>
-                  <th scope="col">Number of Visitors</th>
-                  <th scope="col">Amount</th>
+                  <th scope="col"  class="text-right">Charges (₹)</th>
+                  <th scope="col"  class="text-right">Count</th>
+                  <th scope="col"  class="text-right">Amount (₹)</th>
 
                   <th scope="col" *ngIf="ticketBookingForm.get('canEdit').value">{{'Action'| translate: translateKey}}
                   </th>
@@ -203,9 +203,9 @@
                   <td scope="row">{{i + 1}}</td>
                   <td class="td">{{item.get('typeOfTicketName').value}}</td>
                   <td class="td">{{item.get('typeOfVisitor').value}}</td>
-                  <td class="td">{{item.get('charges').value}}</td>
-                  <td class="td">{{item.get('numberOfVisitors').value}}</td>
-                  <td class="td">{{item.get('amounts').value}}</td>
+                  <td class="td text-right">{{item.get('charges').value}}</td>
+                  <td class="td text-right">{{item.get('numberOfVisitors').value}}</td>
+                  <td class="td text-right">{{item.get('amounts').value}}</td>
                   <td *ngIf="ticketBookingForm.get('canEdit').value">
                     <button type="button" mat-icon-button  class="m-1" (click)="deleteRecord(i,item.value,'withAndWithoutWalkList')">
                       <mat-icon matTooltip="Delete" color="warn">delete</mat-icon>
@@ -229,22 +229,20 @@
                   </td>
                 </tr>
               </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="4"></td>
+                  <th class="text-right">Total Visitors : {{totalVisitorZoo}} </th>
+                  <th class="text-right">Total Amount (₹) : {{totalAmountZoo}}</th> 
+                  <td></td>
+                </tr>
+              </tfoot>
             </table>
           </div>
         </div>
 
 
       </div>
-    <div class="row">
-      <div class="col-md-6">
-  
-     <h5 class="ml20">Total Visitors :- <span class="detailsNamelist">{{totalVisitorZoo}} </span></h5>
-    </div>
-
-    <div class="col-md-6">
-      <h5>Total Amount :- <span class="detailsNamelist">{{totalAmountZoo}} </span></h5>
-     </div>
-    </div>
 
 
       <!-- Contact Details -->
@@ -300,7 +298,7 @@
 
     </mat-card-content>
 
-    <div class="fotButtonBar">
+    <div class="fotButtonBar mt-0">
       <div class="col-sm-12 col-md-12 text-right">
         <button mat-raised-button type="reset" (click)="resetForm()" color="primary">
           <mat-icon>clear_all</mat-icon>
