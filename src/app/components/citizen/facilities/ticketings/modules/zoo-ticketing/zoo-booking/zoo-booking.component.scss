@@ -22,9 +22,9 @@ table { width: 100%; }
 .myTicketPricingTabel {
     mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat-header-cell {border-color: #b9b9b9;}
 
-    .mat-cell {font-size:18px; color:#000; padding-left: 5px; padding-right: 5px;}
-    .mat-header-cell {font-size:17px; color:#000; padding-left: 5px; padding-right: 5px;}
-    .mat-column-id {max-width: 70px; padding: 0 0 0 20px;}
+    .mat-cell {font-size:17px; color:#000; padding-left: 5px; padding-right: 5px;}
+    .mat-header-cell {font-size:17px; color:#000; padding-left: 5px; padding-right: 5px; border: 1px solid #b9b9b9;}
+    .mat-column-id {max-width: 70px; text-align: center;}
     .mat-column-fileNumber {min-width: 220px;}
     // .mat-column-applicantName {width: 250px;}
     // .mat-column-applicantName {width: 250px;}
@@ -175,31 +175,37 @@ table { width: 100%; }
 .wt{
     width: 98%;
 }
-.mat-header{
-    margin-right: 64px;
-}
-.mat-cell{
-    margin-right: 60px;
-}
-.mat-cell1{
-    margin-right: 180px;
-}
+
 
 .mt40{
     margin-top: 40px;
 }
 
 .cardBox{
+    .pageTitle{
+        margin-bottom: 7px;
+    }    
     .guideline-intro {
-        font-size: 22px;
-        font-weight: bold;
+        font-size: 18px;
     }
     .note{
-        font-size: 17px;
+        font-size: 18px;
         line-height: 1.5;
     }
     .ticketDetails{
-        margin-bottom: 5px;
+        text-align: center;
+        padding-bottom: 8px;
+        font-size: 24px;
+        margin-bottom: 0px;
+    }
+    table, .myTicketPricingTabel{
+        .mat-header,.fullWidth {
+            border: 1px solid #b9b9b9;
+            padding: 8px;
+        }
+        mat-cell, mat-footer-cell, mat-header-cell{
+            display: block;
+        }
     }
     // table{
     //     td,th {

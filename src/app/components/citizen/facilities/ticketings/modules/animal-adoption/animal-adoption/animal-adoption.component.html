@@ -4,7 +4,7 @@
   <div class="noteClass"><b> Note: An applicant can mention only specific number of years for all adoption entries under the 'Friends of Zoo' program.</b> </div>
    <br> <br>
     <mat-card-content style="margin-top: 0px;" class="p-4 col-md-6">
-      <h1 class="h1"><b>{{'Expenses for adopting wildlife Animals / Birds'| translate: translateKey}}</b></h1>
+      <h1 class="h1"><b>{{'Expenses for adopting wildlife Animals/Birds'| translate: translateKey}}</b></h1>
       <div class="example-table-container mat-elevation-z8 borderOne">
 
         <table mat-table [dataSource]="dataSourceForPricing" class="myTicketPricingTabel">
@@ -153,22 +153,25 @@
             and Nature Conservation.</h5>
         </li>
       </ol></h5>
-      <div class="checkboxPosition text-right">
-        <mat-checkbox class="col-sm-12 col-md-12" (change)="clickProcess($event)" [checked]="checkProceed">
-          <b>{{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}}</b>
-        </mat-checkbox>
-      </div>
     </mat-card-content>
 
   </div>
   <div class="fotButtonBar" *ngIf="showAnimalAdoptionPricingTable">
-    <div class="col-sm-12 col-md-12 text-right" style="height: 34px;
-    margin-top: -16px;">
-      <button mat-raised-button (click)="showAnimalAdoptionPricingTable = false; showAnimalAdoptionForm= true;" [disabled]="btnProceed"
-        color="primary">
-        <!-- <mat-icon>thumb_up_alt</mat-icon> -->
-        {{'submit'| translate: translateKey}}
-      </button>
+    <div class="row">
+      <div class="col-sm-6 col-md-6">
+        <div class=" text-left">
+          <mat-checkbox class="checkProcess" (change)="clickProcess($event)" [checked]="checkProceed" >
+            {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}}
+          </mat-checkbox>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-6 text-right processedButton">
+        <button mat-raised-button (click)="showAnimalAdoptionPricingTable = false; showAnimalAdoptionForm= true;" [disabled]="btnProceed"
+          color="primary">
+          <!-- <mat-icon>thumb_up_alt</mat-icon> -->
+          {{'submit'| translate: translateKey}}
+        </button>
+      </div>
     </div>
   </div>
 

@@ -37,7 +37,8 @@ export class ZooBookingComponent implements OnInit {
   displayedColumnsForPricingTable: string[] = [
     'id',
     'description',
-    'price'
+    'Withoutprice',
+    'Withprice'
   ];
 
   displayedColumnsForTimingTable: string[] = [
@@ -61,23 +62,85 @@ export class ZooBookingComponent implements OnInit {
   pricing: any[] = [
     {
       categoryName: 'Children',
+      description: this.pipe.transform("children_below_5_years_of_age", this.translateKey),
+      WithoutpriceField: 'CHILDREN',
+      WithpriceField : 'CHILDRENS'
+    },
+    {
+      categoryName: 'Children',
       description: this.pipe.transform("children_below_12_years_of_age", this.translateKey),
-      priceField: 'CHILD'
+      WithoutpriceField: 'CHILD',
+      WithpriceField : 'CHILDS'
     },
     {
       categoryName: 'Adults',
       description: this.pipe.transform("adults", this.translateKey),
-      priceField: 'ADULT'
+      WithoutpriceField: 'ADULT',
+      WithpriceField :'ADULTS'
     },
     {
       categoryName: 'Camera',
       description: this.pipe.transform("camera_fees", this.translateKey),
-      priceField: 'CAMERA'
+      WithoutpriceField: 'CAMERA',
+      WithpriceField :'CAMERAS'
     },
     {
       categoryName: 'Video Camera',
       description: this.pipe.transform("video_camera_fees", this.translateKey),
-      priceField: 'VIDEOCAMERA'
+      WithoutpriceField: 'VIDEOCAMERA',
+      WithpriceField :'VIDEOCAMERAS'
+    },
+    {
+      categoryName: 'Educational Institute',
+      description: this.pipe.transform("for_educational_institute", this.translateKey),
+      WithoutpriceField: 'NUMBER_OF_VISITORS_EDUCATIONAL_WITHOUT',
+      WithpriceField :'NUMBER_OF_VISITORS_EDUCATIONAL_WITH'
+    }
+  ];
+
+  gujPricing: any[] = [
+    {
+      srNo : '૧',
+      categoryName: 'Children',
+      description: this.pipe.transform("બાળકો (૫ વર્ષ સુધી)", this.translateKey),
+      WithoutpriceField: 'માફી',
+      WithpriceField : 'માફી'
+
+    },
+    {
+      srNo:'૨',
+      categoryName: 'Children',
+      description: this.pipe.transform("બાળકો (૫ વર્ષ થી ૧૨ વર્ષ સુધી)", this.translateKey),
+      WithoutpriceField: '૨૦',
+      WithpriceField : '૫૦'
+    },
+    {
+      srNo:'૩',
+      categoryName: 'Adults',
+      description: this.pipe.transform("પુખ્ત વયના લોકો (૧૨ વર્ષ થી ઉપર)", this.translateKey),
+      WithoutpriceField: '૩૦',
+      WithpriceField :'૮૦'
+    },
+    {
+      srNo:'૪',
+      categoryName: 'Camera',
+      description: this.pipe.transform("કૅમેરા ફી", this.translateKey),
+      WithoutpriceField: '૧૦૦',
+      WithpriceField :'૧૦૦'
+    },
+    {
+      srNo:'૬',
+      categoryName: 'Video Camera',
+      description: this.pipe.transform("વિડિઓ કૅમેરા ફી", this.translateKey),
+      WithoutpriceField: '૧૫૦',
+      WithpriceField :'૧૫૦'
+    },
+    {
+      srNo:'૭',
+      categoryName: 'Educational Institute',
+      description: this.pipe.transform("શૈક્ષણિક સંસ્થા માટે", this.translateKey),
+      WithoutpriceField: '૧૦',
+      WithpriceField :'૩૦'
     }
   ];
 
@@ -97,12 +160,30 @@ export class ZooBookingComponent implements OnInit {
     }
   ];
 
+   /**
+    * Timing data for ticket bookings for visiting zoo in gujrati
+  */
+   Gujtiming: any[] = [
+    {
+      srNo : '૧',
+      'months': 'જુલાઈ થી માર્ચ',
+      'slot': 'સવારે ૯:૦૦ થી સાંજે ૬:૦૦ સુધી'
+    },
+    {
+      srNo:'૨',
+      'months': 'એપ્રિલ થી જૂન',
+      'slot': 'સવારે ૯:૦૦ થી સાંજે  ૬:૩૦ સુધી'
+    }
+  ];
+
 
   /**
    * Used for material table data population and pagination.
   */
   dataSourceForPricing = new MatTableDataSource();
   dataSourceForTiming = new MatTableDataSource();
+  dataSourceForGujPricing = new MatTableDataSource();
+  dataSourceForgujTiming = new MatTableDataSource();
 
 
   // Ticket Details
@@ -173,7 +254,7 @@ export class ZooBookingComponent implements OnInit {
   visitorsTypes: any[];
   visitorsTypesChange: any[] = [];
   ticketName: any;
-
+  showSelectLanguage : boolean = true
   
 
 
@@ -201,7 +282,9 @@ export class ZooBookingComponent implements OnInit {
 
     // Initialise ticket pricing and timing tables
     this.dataSourceForPricing.data = this.pricing;
+    this.dataSourceForGujPricing.data = this.gujPricing;
     this.dataSourceForTiming.data = this.timing;
+    this.dataSourceForgujTiming.data = this.Gujtiming
     this.isVisibleIdNumber = false;
     this.isPanCardVisibleIdNumber = false;
 
@@ -250,7 +333,7 @@ export class ZooBookingComponent implements OnInit {
   */
   getZooVisitingRates() {
     this.ticketingService.getZooVisitingRates().subscribe((respRates) => {
-      this.zooVisitingRates = respRates.data;
+      this.zooVisitingRates = respRates.data ; 
     });
   }
 
@@ -719,4 +802,13 @@ if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'A
         || this.ticketBookingForm.get('visitingDate').invalid
   }
 
+  selectLanguage(event) {
+		if (event == 'gu') {
+			this.showSelectLanguage = true
+		}
+		else {
+			this.showSelectLanguage = false
+		}
+
+	}
 }

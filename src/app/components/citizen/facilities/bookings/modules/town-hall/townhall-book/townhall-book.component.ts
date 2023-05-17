@@ -133,6 +133,7 @@ export class TownHallBookComponent implements OnInit {
 	show: boolean = false;
 	shortlistData: BookingDetails[];
 	btnProceed : boolean = true;
+	showSelectLanguage : boolean = true
 
 	constructor(
 		private fb: FormBuilder,
@@ -663,4 +664,16 @@ clickProcess(event) {
 		}
 
 	}
+	selectLanguage(event) {
+		this.btnProceed = true
+		if (event == 'gu') {
+			this.showSelectLanguage = true
+		}
+		else {
+			this.showSelectLanguage = false
+		}
+
+	}
+
+
 }

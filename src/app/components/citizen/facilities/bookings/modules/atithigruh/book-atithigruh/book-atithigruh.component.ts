@@ -161,7 +161,7 @@ export class BookAtithigruhComponent implements OnInit {
 				accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
 				ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
 				/*** Booking Details*/
-				termsCondition: null,
+				//termsCondition: null,
 				agree: null
 			}),
 
@@ -523,10 +523,7 @@ export class BookAtithigruhComponent implements OnInit {
 		else if (!this.atithigruhForm.get('agree').value) {
 			this.commonService.openAlert("Field Error", this.bookingConstants.AGREE_MESSAGE, 'warning')
 			return;
-		} else if (!this.atithigruhForm.get('termsCondition').value) {
-			this.commonService.openAlert("Field Error", this.bookingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning')
-			return;
-		} else {
+		}  else {
 			if (this.bookingForRegular) {
 				this.bookingService.commonBookSlot(this.atithigruhForm.getRawValue()).subscribe(resp => {
 				}, (err) => {

@@ -3,19 +3,29 @@
 <!-- Guildelines section starts here -->
 
 <mat-card class="cardBox" *ngIf="guideLineFlag">
-  <div class="pageTitle">{{'online_zoo_ticket_booking'| translate: translateKey}}</div>
 
-  <!-- Card Content showing Zoo Ticketing Rates and Visiting Time -->
-  <mat-card-content class="p-4 p-5">
-    <div class="guideline-intro">
-      <span>{{'ticket_details'| translate: translateKey}} </span>
-      <mat-icon class="middle-align">arrow_forward</mat-icon>
-      <span> {{'enter_tickets'| translate: translateKey}} </span>
-      <mat-icon class="middle-align">arrow_forward</mat-icon>
-      <span> {{'print_ticket'| translate: translateKey}}</span>
-    </div>
+  <div class="pageTitle d-flex justify-content-between">
+    <div *ngIf="!showSelectLanguage">{{'online_zoo_ticket_booking'| translate: translateKey}}</div>
+    <div *ngIf="showSelectLanguage">{{'ઑનલાઇન ઝૂ ટિકિટ બુકિંગ'| translate: translateKey}}</div>
+    <button mat-raised-button type="button" (click)="selectLanguage('en')" *ngIf="showSelectLanguage">English</button>
+    <button mat-raised-button type="button" (click)="selectLanguage('gu')" *ngIf="!showSelectLanguage">ગુજરાતી</button>
+  </div>
+  <!-- Card Content showing Zoo Ticketing Rates and Visiting Time in Gujrati-->
+  <mat-card-content class="px-4"  *ngIf="!showSelectLanguage">
+
+     <div class="d-flex justify-content-between pb-2">
+       <h4 class="mt16 note">{{'zoo_closed' | translate : translateKey}}</h4>
+       <div class="guideline-intro">
+         <span>{{'ticket_details'| translate: translateKey}} </span>
+         <mat-icon class="middle-align">arrow_forward</mat-icon>
+         <span> {{'enter_tickets'| translate: translateKey}} </span>
+         <mat-icon class="middle-align">arrow_forward</mat-icon>
+         <span> {{'print_ticket'| translate: translateKey}}</span>
+       </div>
+     </div>
+
     <!-- <p class="pb-2">{{head_lines| translate: translateKey}}</p> -->
-    <h4 class="mt16 note">{{'zoo_closed' | translate : translateKey}}</h4><br>
+ 
     <h2 class="ticketDetails"><strong>{{'ticket_rate_details'| translate: translateKey}}</strong></h2>
 
     <div class="example-container mat-elevation-z8 borderOne mt16">
@@ -40,12 +50,20 @@
           </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="price">
-          <mat-header-cell *matHeaderCellDef>{{'charges' | translate:translateKey}}</mat-header-cell>
+        <ng-container matColumnDef="Withoutprice">
+          <mat-header-cell *matHeaderCellDef class="mat-header">{{'Without Walk-in Aviary' | translate:translateKey}}</mat-header-cell>
           <mat-cell *matCellDef="let row" class="fullWidth">
-            <div class="mobile-label">{{'charges' | translate:translateKey}}</div>
+            <div class="mobile-label">{{'Without Walk-in Aviary' | translate:translateKey}}</div>
             <div class="mobile-label1">:</div>
-            <div class="row-inside"> {{ zooVisitingRates ? zooVisitingRates[row.priceField] : '' }}</div>
+            <div class="row-inside"> {{ zooVisitingRates[row.WithoutpriceField] ? zooVisitingRates[row.WithoutpriceField] : 'Free' }}</div>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Withprice">
+          <mat-header-cell *matHeaderCellDef class="mat-header">{{'With Walk-in Aviary' | translate:translateKey}}</mat-header-cell>
+          <mat-cell *matCellDef="let row" class="fullWidth">
+            <div class="mobile-label">{{'With Walk-in Aviary' | translate:translateKey}}</div>
+            <div class="mobile-label1">:</div>
+            <div class="row-inside"> {{ zooVisitingRates[row.WithpriceField] ? zooVisitingRates[row.WithpriceField] : 'Free' }}</div>
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumnsForPricingTable"></mat-header-row>
@@ -91,7 +109,109 @@
         <mat-row *matRowDef="let row; columns: displayedColumnsForTimingTable;"></mat-row>
       </table>
     </div>
+
   </mat-card-content>
+  <!-- Card Content showing Zoo Ticketing Rates and Visiting Time in English -->
+  <mat-card-content class="px-4"  *ngIf="showSelectLanguage">
+
+    <div class="d-flex justify-content-between pb-2">
+      <h4 class="mt16 note">{{'નોંધ: પ્રાણી સંગ્રહાલય દર ગુરુવારે બંધ રહેશે.' | translate : translateKey}}</h4>
+      <div class="guideline-intro">
+        <span>{{'ટિકિટ વિગતો'| translate: translateKey}} </span>
+        <mat-icon class="middle-align">arrow_forward</mat-icon>
+        <span> {{'ટિકિટ દાખલ કરો'| translate: translateKey}} </span>
+        <mat-icon class="middle-align">arrow_forward</mat-icon>
+        <span> {{'પ્રિન્ટ ટિકિટ'| translate: translateKey}}</span>
+      </div>
+    </div>
+
+   <!-- <p class="pb-2">{{head_lines| translate: translateKey}}</p> -->
+
+   <h2 class="ticketDetails"><strong>{{'ટિકિટ દર વિગતો'| translate: translateKey}}</strong></h2>
+
+   <div class="example-container mat-elevation-z8 borderOne mt16">
+
+     <table mat-table [dataSource]="dataSourceForGujPricing" class="myTicketPricingTabel">
+
+       <ng-container matColumnDef="id">
+         <mat-header-cell *matHeaderCellDef class="mat-header">ક્રમ.નં.</mat-header-cell>
+         <mat-cell *matCellDef="let row; let i = index;" class="fullWidth mat-cell" >
+           <div class="mobile-label">{{'ક્રમ નં.' | translate:translateKey}}</div>
+           <div class="mobile-label1">:</div>
+           <div class="row-inside"> {{row.srNo}} </div>
+         </mat-cell>
+       </ng-container>
+
+       <ng-container matColumnDef="description">
+         <mat-header-cell *matHeaderCellDef class="mat-header">{{'વિગતો' | translate:translateKey}}</mat-header-cell>
+         <mat-cell *matCellDef="let row" class="fullWidth mat-cell1">
+           <div class="mobile-label">{{'વિગતો' | translate:translateKey}}</div>
+           <div class="mobile-label1">:</div>
+           <div class="row-inside"> {{ row.description | translate:translateKey }}</div>
+         </mat-cell>
+       </ng-container>
+
+       <ng-container matColumnDef="Withoutprice">
+         <mat-header-cell *matHeaderCellDef class="mat-header">{{'વૉક-ઇન એવિઅરી વિના' | translate:translateKey}}</mat-header-cell>
+         <mat-cell *matCellDef="let row" class="fullWidth">
+           <div class="mobile-label">{{'વૉક-ઇન એવિઅરી વિના' | translate:translateKey}}</div>
+           <div class="mobile-label1">:</div>
+           <div class="row-inside"> {{ row.WithoutpriceField }}</div>
+         </mat-cell>
+       </ng-container>
+       <ng-container matColumnDef="Withprice">
+         <mat-header-cell *matHeaderCellDef class="mat-header">{{'વોક-ઇન એવરી સાથે' | translate:translateKey}}</mat-header-cell>
+         <mat-cell *matCellDef="let row" class="fullWidth">
+           <div class="mobile-label">{{'વોક-ઇન એવરી સાથે' | translate:translateKey}}</div>
+           <div class="mobile-label1">:</div>
+           <div class="row-inside"> {{ row.WithpriceField}}</div>
+         </mat-cell>
+       </ng-container>
+       <mat-header-row *matHeaderRowDef="displayedColumnsForPricingTable"></mat-header-row>
+       <mat-row *matRowDef="let row; columns: displayedColumnsForPricingTable;"></mat-row>
+     </table>
+   </div>
+
+   <br />
+
+   <h2 class="ticketDetails"><strong>{{'ઝૂ સમય'| translate: translateKey}}</strong></h2>
+
+   <div class="example-container mat-elevation-z8 borderOne mt16">
+
+     <table mat-table [dataSource]="dataSourceForgujTiming" class="myTicketPricingTabel">
+
+       <ng-container matColumnDef="id">
+         <mat-header-cell *matHeaderCellDef class="mat-header">ક્રમ.નં.</mat-header-cell>
+         <mat-cell *matCellDef="let row; let i = index;" class="fullWidth mat-cell">
+           <div class="mobile-label">{{'ક્રમ.નં.' | translate:translateKey}}</div>
+           <div class="mobile-label1">:</div>
+           <div class="row-inside"> {{row.srNo}} </div>
+         </mat-cell>
+       </ng-container>
+
+       <ng-container matColumnDef="months">
+         <mat-header-cell *matHeaderCellDef>{{'મહિનાઓ' | translate:translateKey}}</mat-header-cell>
+         <mat-cell *matCellDef="let row" class="fullWidth">
+           <div class="mobile-label">{{'મહિનાઓ' | translate:translateKey}}</div>
+           <div class="mobile-label1">:</div>
+           <div class="row-inside"> {{ row.months }}</div>
+         </mat-cell>
+       </ng-container>
+
+       <ng-container matColumnDef="slot">
+         <mat-header-cell *matHeaderCellDef>{{'સ્લોટ' | translate:translateKey}}</mat-header-cell>
+         <mat-cell *matCellDef="let row" class="fullWidth">
+           <div class="mobile-label">{{'સ્લોટ' | translate:translateKey}}</div>
+           <div class="mobile-label1">:</div>
+           <div class="row-inside"> {{ row.slot }}</div>
+         </mat-cell>
+       </ng-container>
+       <mat-header-row *matHeaderRowDef="displayedColumnsForTimingTable"></mat-header-row>
+       <mat-row *matRowDef="let row; columns: displayedColumnsForTimingTable;"></mat-row>
+     </table>
+   </div>
+
+ </mat-card-content>
   <!-- Card Content showing Zoo Ticketing Rates and Visiting Time Ends here -->
 
     <div class="col-sm-12 col-md-12 text-right wt mt40">
