@@ -113,6 +113,7 @@ export class MuttonFishNewComponent implements OnInit {
 				if(res.canEdit == false){
 					this.applicantDetials.disable()
 					this.businessDetail.disable()
+
 				}
 				else{
 					this.applicantDetials.enable()
@@ -137,6 +138,7 @@ export class MuttonFishNewComponent implements OnInit {
 
 				}
 				// deflate add one array in relationship grid
+			
 				if ((<FormArray>res.relationshipList).length == 0) {
 					this.addItem().push(this.createArray());
 					let newlyadded = this.addItem().controls;
@@ -146,6 +148,7 @@ export class MuttonFishNewComponent implements OnInit {
 					}
 				}
 				res.relationshipList.forEach(app => {
+					
 					(<FormArray>this.businessDetail.get('relationshipList')).push(this.createArray(app));
 				});
 
@@ -774,8 +777,8 @@ export class MuttonFishNewComponent implements OnInit {
 
 	onChangedZone(event) {
 		this.wardZoneLevel2List =[];
-		if (event == undefined) {
-		this.businessDetail.get('wardNo').get('code').setValue(null);
+		if (event == null && event == undefined) {
+		this.businessDetail.get('wardNo').setValue(null);
 		  return false
 		}
 		else {
