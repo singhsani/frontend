@@ -715,10 +715,10 @@ if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'A
   else if(data.typeOfTicket == 'EDUCATIONAL_WITH_WALK_IN_AVIARY' && data.typeOfVisitor == "Educational Visitors"){
     this.ticketBookingForm.get('educationalVisitors').setValue(data.numberOfVisitors);
   }
-  else if(data.typeOfTicket.code == 'EDUCATIONAL_WITH_WALK_IN_AVIARY' && data.typeOfVisitor == "Camera Fee"){
+  else if(data.typeOfTicket == 'EDUCATIONAL_WITH_WALK_IN_AVIARY' && data.typeOfVisitor == "Camera Fee"){
     this.ticketBookingForm.get('cameraEducationalWith').setValue(data.numberOfVisitors);
   }
-  else if(data.typeOfTicket.code == 'EDUCATIONAL_WITH_WALK_IN_AVIARY' && data.typeOfVisitor.name == "Video Camera Fee"){
+  else if(data.typeOfTicket == 'EDUCATIONAL_WITH_WALK_IN_AVIARY' && data.typeOfVisitor == "Video Camera Fee"){
     this.ticketBookingForm.get('vcameraEducationalWith').setValue(data.numberOfVisitors);
   }
    
