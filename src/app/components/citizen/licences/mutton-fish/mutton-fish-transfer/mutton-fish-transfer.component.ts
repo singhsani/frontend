@@ -55,6 +55,7 @@ export class MuttonFishTransferComponent implements OnInit {
 		searchLicenceNumber:""
 	}
 	checkboxValue:boolean = false;
+	staticResponse: any;
 
 	/**
 	 * This method for serach licence using licence number.
@@ -216,7 +217,7 @@ export class MuttonFishTransferComponent implements OnInit {
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
 				(<FormArray>this.muttonFishTransferForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 			});
-			this.onChangeStatusOfBusiness(searchData.statusOfBusinessId.code,false)
+			this.onChangeStatusOfBusiness(searchData.statusOfBusinessId.code,true)
 			//this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
 			//this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishTransferForm);
 
@@ -242,6 +243,7 @@ export class MuttonFishTransferComponent implements OnInit {
 				this.applicantDetials.patchValue(res);
 				this.businessDetail.patchValue(res);
 				this.attachmentDetails.patchValue(res)
+				this.staticResponse =res;
 				if(res.canEdit == false){
 					this.applicantDetials.disable()
 					this.businessDetail.disable()
@@ -331,8 +333,12 @@ export class MuttonFishTransferComponent implements OnInit {
 	
 	onChangeStatusOfBusiness(event,notFromInint?) {
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
-		const localUploadArray = this.commonService.clone((<FormArray>this.muttonFishTransferForm.get('serviceDetail').get('serviceUploadDocuments')).value);
-		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
+		let localUploadArray;
+		if(notFromInint){
+			localUploadArray = this.commonService.clone((<FormArray>this.muttonFishTransferForm.get('serviceDetail').get('serviceUploadDocuments')).value);
+		}else{
+			localUploadArray = this.commonService.clone(this.staticResponse.serviceDetail.serviceUploadDocuments);
+		}
 		this.uploadFileArray = [];
 		this.mandatoryUploadFileArray = [];
 

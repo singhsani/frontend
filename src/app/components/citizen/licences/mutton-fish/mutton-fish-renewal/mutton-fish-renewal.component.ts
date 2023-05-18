@@ -59,6 +59,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 		searchLicenceNumber: ""
 	}
 	checkboxValue : boolean = false;
+	staticResponse: any;
 
 	/**
 	 * This method for serach licence using licence number.
@@ -220,7 +221,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 				(<FormArray>this.muttonFishRenewalForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 			});
 
-			this.onChangeStatusOfBusiness(searchData.statusOfBusinessId.code)
+			this.onChangeStatusOfBusiness(searchData.statusOfBusinessId.code,true)
 			//this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishRenewalForm);
 			/* searchData.employeeList.forEach(app => {
 				(<FormArray>this.muttonFishRenewalForm.get('employeeList')).push(this.createArray(app));
@@ -259,6 +260,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 				this.muttonFishRenewalForm.patchValue(res);
 				this.applicantDetials.patchValue(res);
 				this.businessDetail.patchValue(res);
+				this.staticResponse =res;
 				//
 				if(res.canEdit == false){
 					this.applicantDetials.disable();
@@ -277,8 +279,8 @@ export class MuttonFishRenewalComponent implements OnInit {
 				this.licenseConfiguration.isAttachmentButtonsVisible = true;
 				this.onChangedZone(this.businessDetail.get('zoneNo').value);
 				//	this.onChangeWard(this.muttonFishRenewalForm.get('wardNo').value.code);
-				if (this.businessDetail.get('statusOfBusinessId').value.code) {
-					this.onChangeStatusOfBusiness(this.businessDetail.get('statusOfBusinessId').value.code)
+				if (res.statusOfBusinessId.code) {
+					this.onChangeStatusOfBusiness(res.statusOfBusinessId.code,false);
 				}else{
 					this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
 					this.uploadFileArray.sort((a, b) => 
@@ -353,10 +355,14 @@ export class MuttonFishRenewalComponent implements OnInit {
 	// 	}
 	// }
 
-	onChangeStatusOfBusiness(event) {
-		
+	onChangeStatusOfBusiness(event,flag) {	
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
-		const localUploadArray = this.commonService.clone((<FormArray>this.muttonFishRenewalForm.get('serviceDetail').get('serviceUploadDocuments')).value);
+		let localUploadArray;
+		if(flag){
+			localUploadArray = this.commonService.clone((<FormArray>this.muttonFishRenewalForm.get('serviceDetail').get('serviceUploadDocuments')).value);
+		}else{
+			localUploadArray = this.commonService.clone(this.staticResponse.serviceDetail.serviceUploadDocuments);
+		}
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
 		this.uploadFileArray = [];
 		this.mandatoryUploadFileArray = [];
