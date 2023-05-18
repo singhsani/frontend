@@ -617,70 +617,54 @@ if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'A
       if(f.typeOfTicket.code == 'WITHOUT_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Children (Age 5 to 12 )")
       {
       this.totalAmount = numberOfVisitors * (this.zooVisitingRates['CHILD']);
-      this.ticketBookingForm.get('totalChild').setValue(numberOfVisitors);
       }
       else if(f.typeOfTicket.code == 'WITHOUT_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Adults (Above age 12)"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['ADULT']);
-        this.ticketBookingForm.get('totalAdult').setValue((numberOfVisitors));
       }
       else if(f.typeOfTicket.code == 'WITHOUT_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Camera Fee"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['CAMERA']);
-        this.ticketBookingForm.get('totalCamera').setValue((numberOfVisitors));
       }
 
       else if(f.typeOfTicket.code == 'WITHOUT_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Video Camera Fee"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['VIDEOCAMERA']);
-        this.ticketBookingForm.get('totalVideoCamera').setValue((numberOfVisitors));
       }
       else if(f.typeOfTicket.code == 'WITHOUT_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Children Below 5 Free"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['CHILDBELOW']);
-        this.ticketBookingForm.get('totalChildBelow').setValue(numberOfVisitors);
 
       }
 
       else if(f.typeOfTicket.code == 'WITH_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Children (Age 5 to 12 )"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['CHILDS']);
-        this.ticketBookingForm.get('totalChilds').setValue(numberOfVisitors);
       }
       else if(f.typeOfTicket.code == 'WITH_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Adults (Above age 12)"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['ADULTS']);
-        this.ticketBookingForm.get('totalAdults').setValue((numberOfVisitors));
       }
       else if(f.typeOfTicket.code == 'WITH_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Camera Fee"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['CAMERAS']);
-        this.ticketBookingForm.get('totalCameras').setValue((numberOfVisitors));
       }
       else if(f.typeOfTicket.code == 'WITH_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Video Camera Fee"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['VIDEOCAMERAS']);
-        this.ticketBookingForm.get('totalVideoCameras').setValue((numberOfVisitors));
       }
       else if(f.typeOfTicket.code == 'WITH_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Children Below 5 Free"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['CHILDBELOW']);
-        this.ticketBookingForm.get('totalChildBelows').setValue(numberOfVisitors);
       }else if(f.typeOfTicket.code == 'EDUCATIONAL_WITHOUT_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Educational Visitors"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['NUMBER_OF_VISITORS_EDUCATIONAL_WITHOUT'])
-        this.ticketBookingForm.get('educationalVisitor').setValue((numberOfVisitors));
       }
       else if(f.typeOfTicket.code == 'EDUCATIONAL_WITHOUT_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Camera Fee"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['CAMERAS_EDUCATIONAL_WITHOUT'])
-        this.ticketBookingForm.get('cameraEducationalWithout').setValue((numberOfVisitors));
       }
       else if(f.typeOfTicket.code == 'EDUCATIONAL_WITHOUT_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Video Camera Fee"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['VIDEOCAMERAS_EDUCATIONAL_WITHOUT'])
-        this.ticketBookingForm.get('vcameraEducationalWithout').setValue((numberOfVisitors));
 
       }
       else if(f.typeOfTicket.code == 'EDUCATIONAL_WITH_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Educational Visitors"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['NUMBER_OF_VISITORS_EDUCATIONAL_WITH'])
-        this.ticketBookingForm.get('educationalVisitors').setValue((numberOfVisitors));
       }
       else if(f.typeOfTicket.code == 'EDUCATIONAL_WITH_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Camera Fee"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['CAMERAS_EDUCATIONAL_WITH'])
-        this.ticketBookingForm.get('cameraEducationalWith').setValue((numberOfVisitors));
       }
       else if(f.typeOfTicket.code == 'EDUCATIONAL_WITH_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Video Camera Fee"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['VIDEOCAMERAS_EDUCATIONAL_WITH'])
-        this.ticketBookingForm.get('vcameraEducationalWith').setValue((numberOfVisitors));
       }
       this.ticketBookingForm.get('amounts').get('code').setValue(this.totalAmount);
      
@@ -688,6 +672,55 @@ if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'A
   }
 
   addTicketData(data: any){
+    if(data.typeOfTicket == 'WITHOUT_WALK_IN_AVIARY' && data.typeOfVisitor == "Adults (Above age 12)"){
+      this.ticketBookingForm.get('totalChild').setValue(data.numberOfVisitors);
+      }
+      else if(data.typeOfTicket == 'WITHOUT_WALK_IN_AVIARY' && data.typeOfVisitor == "Adults (Above age 12)"){
+        this.ticketBookingForm.get('totalAdult').setValue(data.numberOfVisitors);
+      }
+      else if(data.typeOfTicket == 'WITHOUT_WALK_IN_AVIARY' && data.typeOfVisitor == "Camera Fee"){
+        this.ticketBookingForm.get('totalCamera').setValue(data.numberOfVisitors);
+      }
+      else if(data.typeOfTicket == 'WITHOUT_WALK_IN_AVIARY' && data.typeOfVisitor == "Video Camera Fee"){
+        this.ticketBookingForm.get('totalVideoCamera').setValue(data.numberOfVisitors);
+      }
+      else if(data.typeOfTicket == 'WITHOUT_WALK_IN_AVIARY' && data.typeOfVisitor == "Children Below 5 Free"){
+        this.ticketBookingForm.get('totalChildBelow').setValue(data.numberOfVisitors);
+      }
+
+  else if(data.typeOfTicket == 'WITH_WALK_IN_AVIARY' && data.typeOfVisitor == "Children (Age 5 to 12 )"){
+    this.ticketBookingForm.get('totalChilds').setValue(data.numberOfVisitors);
+  }
+  else if(data.typeOfTicket == 'WITH_WALK_IN_AVIARY' && data.typeOfVisitor == "Adults (Above age 12)"){
+    this.ticketBookingForm.get('totalAdults').setValue(data.numberOfVisitors);
+  }
+  else if(data.typeOfTicket == 'WITH_WALK_IN_AVIARY' && data.typeOfVisitor == "Camera Fee"){
+    this.ticketBookingForm.get('totalCameras').setValue(data.numberOfVisitors);
+  }
+  else if(data.typeOfTicket == 'WITH_WALK_IN_AVIARY' && data.typeOfVisitor == "Video Camera Fee"){
+    this.ticketBookingForm.get('totalVideoCameras').setValue(data.numberOfVisitors);
+  }
+  else if(data.typeOfTicket == 'WITH_WALK_IN_AVIARY' && data.typeOfVisitor == "Children Below 5 Free"){
+    this.ticketBookingForm.get('totalChildBelows').setValue(data.numberOfVisitors);
+  }
+  else if(data.typeOfTicket == 'EDUCATIONAL_WITHOUT_WALK_IN_AVIARY' && data.typeOfVisitor == "Educational Visitors"){
+    this.ticketBookingForm.get('educationalVisitor').setValue(data.numberOfVisitors);
+  }
+  else if(data.typeOfTicket == 'EDUCATIONAL_WITHOUT_WALK_IN_AVIARY' && data.typeOfVisitor == "Camera Fee"){
+    this.ticketBookingForm.get('cameraEducationalWithout').setValue(data.numberOfVisitors);
+  }
+  else if(data.typeOfTicket == 'EDUCATIONAL_WITHOUT_WALK_IN_AVIARY' && data.typeOfVisitor == "Video Camera Fee"){
+    this.ticketBookingForm.get('vcameraEducationalWithout').setValue(data.numberOfVisitors);
+  }
+  else if(data.typeOfTicket == 'EDUCATIONAL_WITH_WALK_IN_AVIARY' && data.typeOfVisitor == "Educational Visitors"){
+    this.ticketBookingForm.get('educationalVisitors').setValue(data.numberOfVisitors);
+  }
+  else if(data.typeOfTicket.code == 'EDUCATIONAL_WITH_WALK_IN_AVIARY' && data.typeOfVisitor == "Camera Fee"){
+    this.ticketBookingForm.get('cameraEducationalWith').setValue(data.numberOfVisitors);
+  }
+  else if(data.typeOfTicket.code == 'EDUCATIONAL_WITH_WALK_IN_AVIARY' && data.typeOfVisitor.name == "Video Camera Fee"){
+    this.ticketBookingForm.get('vcameraEducationalWith').setValue(data.numberOfVisitors);
+  }
    
     return this.fb.group({
   
@@ -729,7 +762,7 @@ if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'A
         this.commonService.openAlert('Warning', 'Duplicate Data Not Allowed', 'warning');
         return false;
       }
-      if (data.typeOfTicket == 'WITH_WALK_IN_AVIARY' || data.typeOfTicket == 'WITHOUT_WALK_IN_AVIARY') {
+      else if (data.typeOfTicket == 'WITH_WALK_IN_AVIARY' || data.typeOfTicket == 'WITHOUT_WALK_IN_AVIARY') {
         if( currentItem.typeOfTicket !='WITH_WALK_IN_AVIARY' && currentItem.typeOfTicket !='WITHOUT_WALK_IN_AVIARY'){
           this.commonService.openAlert('Warning', 'Please select either the "General" or "Educational"  ticket type at a time !', 'warning');
           return false;

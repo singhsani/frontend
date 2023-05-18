@@ -211,3 +211,9 @@ table { width: 100%; }
     vertical-align: middle !important;
   }
 }
+.add-button-left{
+    padding-left: 0;
+    .Add-button {
+     min-width: 100px;
+   }
+}
