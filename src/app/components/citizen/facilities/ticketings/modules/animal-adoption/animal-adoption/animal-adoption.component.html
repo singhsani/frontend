@@ -1,6 +1,13 @@
 <mat-card class="cardBox">
-  <div class="pageTitle">{{'animal_adoption' | translate: translateKey}}</div>
-  <div class="row" *ngIf="showAnimalAdoptionPricingTable" style="height: 448px;">
+  <div class="pageTitle d-flex justify-content-between">
+    <div *ngIf="!showSelectLanguage">{{'animal_adoption' | translate: translateKey}}</div>
+    <div *ngIf="showSelectLanguage">{{'animal_adoption' | translate: translateKey : 'gu'}}</div>
+    <button mat-raised-button type="button" color="primary" *ngIf="showSelectLanguage"
+      (click)="selectLanguage('en')">English</button>
+    <button mat-raised-button type="button" color="primary" *ngIf="!showSelectLanguage"
+      (click)="selectLanguage('gu')">ગુજરાતી</button>
+    </div>
+  <div class="row" *ngIf="showAnimalAdoptionPricingTable && !showSelectLanguage" style="height: 448px;">
   <div class="noteClass"><b> Note: An applicant can mention only specific number of years for all adoption entries under the 'Friends of Zoo' program.</b> </div>
    <br> <br>
     <mat-card-content style="margin-top: 0px;" class="p-4 col-md-6">
@@ -10,20 +17,20 @@
         <table mat-table [dataSource]="dataSourceForPricing" class="myTicketPricingTabel">
 
           <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef style="text-align:justify">Sr. No.</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef style="text-align:center; padding-top: 15px;font-size: 12px;">Sr. No.</mat-header-cell>
             <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
               <div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
               <div class="mobile-label1">:</div>
-              <div class="row-inside"> {{i+1}} </div>
+              <div class="row-inside text-right"> {{i+1}} </div>
             </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="animalBirdName">
-            <mat-header-cell *matHeaderCellDef style="text-align:justify;padding: 15px;">{{'animal_or_bird_name' | translate:translateKey}}</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef style="text-align:center;padding: 15px; padding-right: 0px;font-size: 12px;">{{'animal_or_bird_name' | translate:translateKey}}</mat-header-cell>
             <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
               <div class="mobile-label">{{'animal_or_bird_name' | translate:translateKey}}</div>
               <div class="mobile-label1">:</div>
-              <div class="row-inside"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{row?.animalBirdName}} </div>
+              <div class="row-inside text-center">{{row?.animalBirdName}} </div>
             </mat-cell>
           </ng-container>
 
@@ -47,11 +54,11 @@
           </ng-container> -->
 
           <ng-container matColumnDef="totalExpenses">
-            <mat-header-cell *matHeaderCellDef style="text-align:justify">{{'total_expenses' | translate:translateKey}}</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef style="text-align:center; font-size: 12px; padding-top: 15px;">{{'total_expenses' | translate:translateKey}}</mat-header-cell>
             <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
               <div class="mobile-label">{{'total_expenses' | translate:translateKey}}</div>
               <div class="mobile-label1">:</div>
-              <div class="row-inside"> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{{row?.totalExpenses}} </div>
+              <div class="row-inside text-right"> {{row?.totalExpenses}} </div>
             </mat-cell>
           </ng-container>
 
@@ -156,10 +163,175 @@
     </mat-card-content>
 
   </div>
+  <div class="row" *ngIf="showAnimalAdoptionPricingTable && showSelectLanguage" style="height: 448px;">
+    <div class="noteClass"><b> નોંધ: અરજદાર 'ફ્રેન્ડ્સ ઑફ ઝૂ' પ્રોગ્રામ હેઠળ તમામ દત્તક એન્ટ્રીઓ માટે માત્ર ચોક્કસ વર્ષોનો ઉલ્લેખ કરી શકે છે.</b> </div>
+     <br> <br>
+      <mat-card-content style="margin-top: 0px;" class="p-4 col-md-6">
+        <h1 class="h1"><b>{{'વન્યજીવ પ્રાણીઓ/પક્ષીઓને દત્તક લેવા માટેનો ખર્ચ'| translate: translateKey}}</b></h1>
+        <div class="example-table-container mat-elevation-z8 borderOne">
+  
+          <table mat-table [dataSource]="dataSourceForGujPricing" class="myTicketPricingTabel">
+  
+            <ng-container matColumnDef="id">
+              <mat-header-cell *matHeaderCellDef style="text-align:center; padding-top: 15px;font-size: 12px;">Sr. No.</mat-header-cell>
+              <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
+                <div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
+                <div class="mobile-label1">:</div>
+                <div class="row-inside text-right"> {{row.srNo}} </div>
+              </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="animalBirdName">
+              <mat-header-cell *matHeaderCellDef style="text-align:center;padding: 15px; padding-right: 0px;font-size: 12px;">{{'animal_or_bird_name' | translate:translateKey}}</mat-header-cell>
+              <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
+                <div class="mobile-label">{{'animal_or_bird_name' | translate:translateKey}}</div>
+                <div class="mobile-label1">:</div>
+                <div class="row-inside text-center">{{row?.animalBirdName}} </div>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="totalExpenses">
+              <mat-header-cell *matHeaderCellDef style="text-align:center; font-size: 12px; padding-top: 15px;">{{'total_expenses' | translate:translateKey}}</mat-header-cell>
+              <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
+                <div class="mobile-label">{{'total_expenses' | translate:translateKey}}</div>
+                <div class="mobile-label1">:</div>
+                <div class="row-inside text-right"> {{row?.totalExpenses}} </div>
+              </mat-cell>
+            </ng-container>
+  
+            <mat-header-row *matHeaderRowDef="displayColumnsForAnimalAdoptionPricingTable; sticky: true;">
+            </mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayColumnsForAnimalAdoptionPricingTable;"></mat-row>
+          </table>
+        </div>
+      </mat-card-content>
+  
+      <mat-card-content class="p-4 col-md-6">
+        <h5><b>{{'‘ફ્રેન્ડ્સ ઑફ ઝૂ’ પ્રોગ્રામ હેઠળ શ્રી સયાજીબાગ ઝૂ, વીએમસીમાં પ્રાણી સંગ્રહાલયના પ્રાણીઓ/પક્ષીઓને દત્તક લેવા માટેના નિયમો અને શરતો.f5'| translate: translateKey}}</b></h5>
+          
+        <h5 class="rules-scrollable">
+          <div class="d-flex ">
+            <p class="pr-2 listSize"> ૧. </p>
+            <p class="listSize">માનનીય મ્યુનિસિપલ કમિશનર, વડોદરા મ્યુનિસિપલ કોર્પોરેશન (VMC) ‘ફ્રેન્ડ્સ ઑફ ઝૂ’ પ્રોગ્રામ હેઠળ
+              પ્રાણી સંગ્રહાલયના
+              પ્રાણીઓ/પક્ષીઓને દત્તક લેવા અંગેના તમામ અધિકારો અનામત રાખે છે.
+            </p>
+          </div>
+          <div class="d-flex">
+            <p class="pr-2 listSize"></p>
+            <p class="listSize"> માનનીય મ્યુનિસિપલ કમિશનર, VMC આનો અધિકાર અનામત રાખે છે:.</p>
+          </div>
+          <div class="d-flex pl-4 ">
+            <p class="pr-2 listSize"> i</p>
+            <p class="listSize">નક્કી કરો કે કયા પ્રાણીસંગ્રહાલયના પ્રાણીઓ/પક્ષીઓને દત્તક લેવા માટે ઓફર કરી શકાય.</p>
+          </div>
+          <div class="d-flex pl-4 ">
+            <p class="pr-2 listSize"> ii</p>
+            <p class="listSize">જ્યારે જરૂરી હોય ત્યારે દત્તક લેવા માટેના નિયમો અને શરતોમાં સુધારો કરો.</p>
+          </div>
+          <div class="d-flex pl-4">
+            <p class="pr-2 listSize">iii</p>
+            <p class="listSize">દત્તક લેવા માટે ઓફર કરાયેલ પ્રાણી સંગ્રહાલયના પ્રાણીઓ/પક્ષીઓના જાળવણી ખર્ચમાં સુધારો કરો.</p>
+          </div>
+          <div class="d-flex ">
+            <p class="pr-2 listSize">૨.</p>
+            <p class="listSize">પ્રાણી સંગ્રહાલયના પ્રાણીઓ/પક્ષીઓને દત્તક લેવા માટે ઓફર કરવામાં આવે છે તે હંમેશા શ્રી સયાજીબાગ
+              ઝૂ, VMCની એકમાત્ર માલિકી
+              હેઠળ રહેશે. ઉદાર દાતાને પ્રાણી/પક્ષી માટે પ્રાણી સંગ્રહાલયના 'મિત્ર' તરીકે જ ગણવામાં આવશે જે તેણે/તેણીએ દત્તક લીધા
+              છે. દાતાનો
+              અહીં આગળથી 'મિત્ર' તરીકે ઉલ્લેખ કરવામાં આવશે.</p>
+          </div>
+          <div class="d-flex ">
+            <p class="pr-2 listSize">૩.</p>
+            <p class="listSize">પ્રાણી સંગ્રહાલયના પ્રાણીઓ/પક્ષીઓને દત્તક લેવા માટે ઓફર કરવામાં આવે છે તે ફક્ત પ્રાણી
+              સંગ્રહાલયની સુવિધામાં જ જાળવવામાં
+              આવશે અને સેન્ટ્રલ ઝૂ ઓથોરિટી (CZA), નવી દિલ્હી અનુસાર પ્રાણી સંગ્રહાલયના પ્રાણીઓના જાળવણીના લઘુત્તમ ધોરણોનું પાલન
+              કરવામાં આવશે.</p>
+          </div>
+          <div class="d-flex ">
+            <p class="pr-2 listSize">૪.</p>
+            <p class="listSize">મિત્રને ન તો તેણે/તેણીએ દત્તક લીધેલા પ્રાણી/પક્ષી સાથે કોઈ શારીરિક સંપર્ક કરવાની પરવાનગી આપવામાં
+              આવશે નહીં, ન તો મિત્રને
+              તેણે/તેણીએ દત્તક લીધેલા પ્રાણી/પક્ષી માટે કોઈ બહારનો ખોરાક લાવવાની મંજૂરી આપવામાં આવશે નહીં.</p>
+          </div>
+          <div class="d-flex ">
+            <p class="pr-2 listSize">૫.</p>
+            <p class="listSize">મિત્રને ન તો તેણે/તેણીએ દત્તક લીધેલા પ્રાણી/પક્ષી સાથે કોઈ શારીરિક સંપર્ક કરવાની પરવાનગી આપવામાં
+              આવશે નહીં, ન તો મિત્રને
+              તેણે/તેણીએ દત્તક લીધેલા પ્રાણી/પક્ષી માટે કોઈ બહારનો ખોરાક લાવવાની મંજૂરી આપવામાં આવશે નહીં.</p>
+          </div>
+          <div class="d-flex ">
+            <p class="pr-2 listSize">૬.</p>
+            <p class="listSize">પ્રાણીસંગ્રહાલય સત્તાધિકારી મિત્રને તેના દત્તક લેવાના સમયગાળા દરમિયાન પ્રાણીસંગ્રહાલયમાં 25 મફત
+              પ્રવેશની પરવાનગી આપીને સુવિધા આપશે.
+              મહેરબાની કરીને નોંધ કરો: દત્તક લેવાના સમયગાળા દરમિયાન મફત પ્રવેશ ફક્ત મિત્ર દ્વારા પ્રાણી સંગ્રહાલય કાર્યાલયને
+              અગાઉની સૂચના પર જ આપવામાં આવશે. મફત પ્રવેશ મેળવવા માટે, મિત્રને આથી પ્રાણી સંગ્રહાલય શિક્ષણ અધિકારી સાથે સંપર્ક
+              કરવા વિનંતી કરવામાં આવે છે; સંપર્ક નંબર: +91 9033340778.
+            </p>
+          </div>
+          <div class="d-flex ">
+            <p class="pr-2 listSize">૭.</p>
+            <p class="listSize">VMC ના ઉચ્ચ અધિકારીઓ દ્વારા યોગ્ય રીતે હસ્તાક્ષર કરેલ 'પ્રશંસા પ્રમાણપત્ર' એનાયત કરીને મિત્રને
+              સન્માનિત કરવામાં આવશે.</p>
+          </div>
+          <div class="d-flex ">
+            <p class="pr-2 listSize">૮.</p>
+            <p class="listSize">પ્રાણી સંગ્રહાલય દ્વારા આયોજિત કેટલાક જાગૃતિ/શૈક્ષણિક કાર્યક્રમો માટે મિત્રને અતિથિ તરીકે
+              આમંત્રિત કરવામાં આવી શકે છે.</p>
+          </div>
+          <div class="d-flex ">
+            <p class="pr-2 listSize">૯.</p>
+            <p class="listSize">મિત્રોને વિનંતી કરવામાં આવે છે કે તેઓ દત્તક લેવાની યોજના માટે ચૂકવવામાં આવેલી રકમ બિન-રિફંડપાત્ર
+              છે તેની નોંધ લે. તેથી, દત્તક
+              લેવાના સમયગાળા દરમિયાન દત્તક હેઠળના પશુ/પક્ષીના મૃત્યુના કિસ્સામાં, રકમ પાછી ચૂકવવામાં આવશે નહીં.</p>
+          </div>
+          <div class="d-flex ">
+            <p class="pr-2 listSize">૧૦.</p>
+            <p class="listSize">પોઈન્ટ નંબર 9 ઉપરાંત, દત્તક લેવાના સમયગાળા દરમિયાન દત્તક હેઠળના પ્રાણી/પક્ષીની અન્ય
+              પ્રાણીસંગ્રહાલય સાથે અદલાબદલી કરી
+              શકાય છે અને આ કિસ્સામાં પણ રકમ પાછી આપવામાં આવશે નહીં.</p>
+          </div>
+          <div class="d-flex pl-4">
+            <p class="pr-2 listSize">❖</p>
+            <p class="listSize">ઉદાર વિચારણાઓ:</p>
+          </div>
+          <div class="d-flex pl-4">
+            <p class="pr-2 listSize">I.</p>
+            <p class="listSize"> પ્રાણીસંગ્રહાલયની પ્રાણી દત્તક યોજના ઉપરાંત; પ્રાણી સંગ્રહાલય વ્યક્તિઓ/કોર્પોરેટો પાસેથી
+              કોમોડિટીના રૂપમાં યોગદાન પ્રાપ્ત કરવા માટે અત્યંત બંધાયેલા રહેશે, જે પ્રાણીઓ/પક્ષીઓ માટે તેમની સારી જાળવણી માટે
+              ખાસ મોસમી જરૂરિયાતો છે. ઉનાળા દરમિયાન કુલર, શિયાળા દરમિયાન હીટર, પાણીના કુંડા, ફીડ બાસ્કેટ વગેરે.</p>
+          </div>
+          <div class="d-flex pl-4">
+            <p class="pr-2 listSize">II.</p>
+            <p class="listSize"> મોટા તહેવારોના પ્રસંગોએ પણ દાન સ્વીકારવામાં આવે છે; જન્મદિવસ અને/અથવા પુણ્યતિથિના પ્રસંગો પર;
+              વિશ્વ પર્યાવરણ દિવસ, વિશ્વ પશુ દિવસ, જૈવવિવિધતા માટે આંતરરાષ્ટ્રીય દિવસ જેવા દિવસોની યાદમાં; વન્યજીવન સપ્તાહ,
+              વગેરે.</p>
+          </div>
+          <div class="d-flex pl-4">
+            <p class="pr-2 listSize">III.</p>
+            <p class="listSize"> પ્રાણી સંગ્રહાલયમાં જાહેર સુવિધાઓને મજબૂત કરવા માટે દાનનું પણ સ્વાગત કરવામાં આવે છે તે જ રીતે
+              વ્હીલચેર, પીવાના પાણીના પોઈન્ટ્સ પર RO વોટર સિસ્ટમ્સ, રેસ્ટિંગ પોઈન્ટ્સ પર બેન્ચ, ડસ્ટ બીન વગેરે.</p>
+          </div>
+          <div class="d-flex pl-4">
+            <p class="pr-2 listSize">*</p>
+            <p class="listSize"> કોર્પોરેટ સંસ્થાઓ પર્યાવરણ અને પ્રકૃતિ સંરક્ષણ પ્રત્યેની તેમની CSR પ્રવૃત્તિમાં ઉપરોક્ત બાબતોનો
+              સમાવેશ કરી શકે છે.</p>
+          </div>
+        
+        </h5>
+      </mat-card-content>
+  
+    </div>
+
   <div class="fotButtonBar" *ngIf="showAnimalAdoptionPricingTable">
     <div class="row">
       <div class="col-sm-6 col-md-6">
-        <div class=" text-left">
+        <div class=" text-left" *ngIf="showSelectLanguage">
+          <mat-checkbox class="checkProcess" (change)="clickProcess($event)" [checked]="checkProceed" >
+            {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey:'gu'}}
+          </mat-checkbox>
+        </div>
+        <div class=" text-left"  *ngIf="!showSelectLanguage">
           <mat-checkbox class="checkProcess" (change)="clickProcess($event)" [checked]="checkProceed" >
             {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}}
           </mat-checkbox>

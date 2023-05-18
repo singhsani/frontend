@@ -99,7 +99,7 @@ export class BookTheaterComponent implements OnInit {
     public formControlNameToTabIndex = new Map();
 
     rupeeSign: string;
-
+    showSelectLanguage : boolean = true
     /**
      * Constructor
      * @param fb - formbuilder.
@@ -562,4 +562,15 @@ export class BookTheaterComponent implements OnInit {
         }
         return headerName
     }
+
+    selectLanguage(event) {
+		this.btnProceed = true;
+		if (event == 'gu') {
+			this.showSelectLanguage = true
+		}
+		else {
+			this.showSelectLanguage = false
+		}
+
+	}
 }

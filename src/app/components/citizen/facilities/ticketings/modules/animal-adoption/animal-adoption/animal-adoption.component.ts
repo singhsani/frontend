@@ -50,6 +50,7 @@ export class AnimalAdoptionComponent implements OnInit {
    * Used for material table data population and pagination.
   */
   dataSourceForPricing = new MatTableDataSource();
+  dataSourceForGujPricing = new MatTableDataSource();
 
   mySelectModel: any;
   animalName: any = [];
@@ -62,6 +63,7 @@ export class AnimalAdoptionComponent implements OnInit {
   checkProceed : boolean = false;
   btnProceed: boolean = true; 
   totalCostOfAnimal:Number=0;
+  showSelectLanguage :boolean = true
   /**
    * language translate key.
   */
@@ -71,6 +73,168 @@ export class AnimalAdoptionComponent implements OnInit {
   // Loading Ticketing Configurations
 
   ticketingUtils: TicketingUtils;
+  gujratiPrcingtable = [
+    {
+      "srNo": "૧",
+      "animalBirdName": "વાઘણ",
+      "totalExpenses": "૯૬૫૦૦"
+    },
+    {
+      "srNo": "૨",
+      "animalBirdName": "સિંહ",
+      "totalExpenses": "૧૧૪૫૦૦"
+
+    },
+    {
+      "srNo": "૩",
+      "animalBirdName": "સિંહણ",
+      "totalExpenses": "૯૬૫૦૦"
+
+    },
+    {
+      "srNo" : "૪",
+      "animalBirdName": "વાઘ",
+      "totalExpenses": "૧૧૪૫૦૦"
+
+    },
+    {
+      "srNo" : "૫",
+      "animalBirdName": "ચિત્તો",
+      "totalExpenses": "૯૬૫૦૦"
+
+    },
+    {
+      "srNo" : "૬",
+      "animalBirdName": "રીંછ",
+      "totalExpenses": "૪૬૫૦૦"
+    },
+    {
+      "srNo" : "૭",
+      "animalBirdName": "વાનર",
+      "totalExpenses": "૮૦૦૦"
+
+    },
+    {
+      "srNo" : "૮",
+      "animalBirdName": "હરણ",
+      "totalExpenses": "૭૦૦૦૦"
+    },
+    {
+      "srNo" : "૯",
+      "animalBirdName": "સાંભર",
+      "totalExpenses": "૯૫૦૦"
+    },
+    {
+      "srNo" : "૧૦",
+      "animalBirdName": "કાચબો",
+      "totalExpenses": "૨૫૦૦"
+    },
+    {
+      "srNo" : "૧૧",
+      "animalBirdName": "પારકીટ",
+      "totalExpenses": "૩૦૦૦૦"
+    },
+    {
+      "srNo" : "૧૨",
+      "animalBirdName": "લોરિકીત",
+      "totalExpenses": "૩૦૦૦"
+    },
+    {
+      "srNo" : "૧૩",
+      "animalBirdName": "વાદળી તાજવાળું કબૂતર",
+      "totalExpenses": "૪૦૦૦૦"
+    },
+    {
+      "srNo" : "૧૪",
+      "animalBirdName": "ભારતીય પીડ હોર્નબિલ",
+      "totalExpenses": "૫૦૦૦૦"
+    },
+    {
+      "srNo" : "૧૫",
+      "animalBirdName": "કોકટુ",
+      "totalExpenses": "૪૦૦૦૦"
+    },
+    {
+      "srNo" : "૧૬",
+      "animalBirdName": "મકાઉ",
+      "totalExpenses": '૫૦૦૦૦'
+    },
+    {
+      "srNo" : "૧૭",
+      "animalBirdName": "બતક/તેતર",
+      "totalExpenses": "૬૦૦૦"
+    },
+    {
+      "srNo" : "૧૮",
+      "animalBirdName": "પેલિકન",
+      "totalExpenses": "૭૦૦૦"
+    },
+    {
+      "srNo" : "૧૯",
+      "animalBirdName": "ઇગ્રેટ",
+      "totalExpenses": "૬૦૦૦"
+    },
+    {
+      "srNo" : "૨૦",
+      "animalBirdName": "બડેરીગર",
+      "totalExpenses": "૨૦૦૨"
+    },
+    {
+      "srNo" : "૨૧",
+      "animalBirdName": "પ્રેમી પંખીડા",
+      "totalExpenses": "૨૦૦૦"
+    },
+    {
+      "srNo" : "૨૨",
+      "animalBirdName": "મોર",
+      "totalExpenses": "૫૦૦૦૦"
+    },
+    {
+      "srNo" : "૨૩",
+      "animalBirdName": "ઇમુ",
+      "totalExpenses": "૧૪૦૦૦"
+    },
+    {
+      "srNo" : "૨૪",
+      "animalBirdName": "કબૂતર",
+      "totalExpenses": "૨૦૦૦"
+    },
+    {
+      "srNo" : "૨૫",
+      "animalBirdName": "સસલું",
+      "totalExpenses": "૨૦૦૦"
+    },
+    {
+      "srNo" : "૨૬",
+      "animalBirdName": "હંસ",
+      "totalExpenses": "૬૦૦૦૦"
+    },
+    {
+      "srNo" : "૨૭",
+      "animalBirdName": "નીલગાય",
+      "totalExpenses": "૯૦૦૦"
+    },
+    {
+      "srNo" : "૨૮",
+      "animalBirdName": "જાવા",
+      "totalExpenses": "૨૦૦૦"
+    },
+    {
+      "srNo" : "૨૯",
+      "animalBirdName": "ફિન્ચ",
+      "totalExpenses": "૨૦૦૦"
+    },
+    {
+      "srNo" : "૩૦",
+      "animalBirdName": "મુનિયા",
+      "totalExpenses": "૨૦૦૦"
+    },
+    {
+      "srNo" : "૩૧",
+      "animalBirdName": "હોલા",
+      "totalExpenses": "૨૦૦૦"
+    }
+  ]
 
   constructor(
     private fb: FormBuilder,
@@ -115,6 +279,7 @@ export class AnimalAdoptionComponent implements OnInit {
     this.ticketingService.getAnimalAdoptionFeesList().subscribe(d => {
       this.animalAdoptionPricing = d.data;
       this.dataSourceForPricing.data = d.data;
+      this.dataSourceForGujPricing.data = this.gujratiPrcingtable
     });
   }
 
@@ -388,5 +553,15 @@ export class AnimalAdoptionComponent implements OnInit {
   //     // console.log(`Dialog result: ${result}`);
   //   });
   // }
+  selectLanguage(event) {
+		this.btnProceed = true
+		if (event == 'gu') {
+			this.showSelectLanguage = true
+		}
+		else {
+			this.showSelectLanguage = false
+		}
+
+	}
 }
 

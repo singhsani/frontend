@@ -36,9 +36,9 @@ table { width: 100%; }
     mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat-header-cell {border-color: #b9b9b9;}
 
     mat-header-row {position: sticky; top: 0; z-index: 100;}
-    .mat-cell {font-size:17px; color:#000; padding-left: 5px; padding-right: 5px;}
-    .mat-header-cell {font-size:17px; color:#000; padding-left: 5px; padding-right: 5px;}
-    .mat-column-id {max-width: 50px; padding: 0 0 0 20px;}
+    .mat-cell {font-size:17px; color:#000; padding-left: 5px; padding-right: 5px; border: 1px solid #b9b9b9;}
+    .mat-header-cell {font-size:17px; color:#000; padding-left: 5px; padding-right: 5px; border: 1px solid #b9b9b9;;}
+    .mat-column-id {max-width: 50px;}
     .mat-column-fileNumber {min-width: 220px;}
     // .mat-column-applicantName {width: 250px;}
     // .mat-column-applicantName {width: 250px;}
@@ -199,5 +199,14 @@ table { width: 100%; }
     margin-top:-7px;
 }
 .checkProcess{
+    font-size: 15px;
+}
+
+.myTicketPricingTabel{
+    mat-cell, mat-footer-cell, mat-header-cell{
+        display: block;
+    }
+}
+.listSize{
     font-size: 15px;
 }
