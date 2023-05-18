@@ -161,7 +161,7 @@
               <button mat-menu-item
                 *ngIf="(element.status === 'SCRUTINY' && element.payableServiceType !== 'STADIUM_DEPOSIT')"
                 color="primary" (click)="loiPayments(element)">
-                <mat-icon title="Make Payment" color="primary">print</mat-icon>
+                <mat-icon title="Make Payment" color="primary">payment</mat-icon>
                 {{'make_payment' | translate:translateKey}}
               </button>
 
