@@ -672,7 +672,7 @@ if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'A
   }
 
   addTicketData(data: any){
-    if(data.typeOfTicket == 'WITHOUT_WALK_IN_AVIARY' && data.typeOfVisitor == "Adults (Above age 12)"){
+    if(data.typeOfTicket == 'WITHOUT_WALK_IN_AVIARY' && data.typeOfVisitor == "Children (Age 5 to 12 )"){
       this.ticketBookingForm.get('totalChild').setValue(data.numberOfVisitors);
       }
       else if(data.typeOfTicket == 'WITHOUT_WALK_IN_AVIARY' && data.typeOfVisitor == "Adults (Above age 12)"){
