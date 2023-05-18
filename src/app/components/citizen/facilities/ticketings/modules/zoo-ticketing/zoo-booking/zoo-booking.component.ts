@@ -469,7 +469,7 @@ export class ZooBookingComponent implements OnInit {
   // }
 
   redirecToPayment() {
-    if(this.totalAmount==0){
+    if(this.totalAmountZoo==0){
       this.commonService.openAlert('Warning', 'Invalid Ticket! Amount is 0', 'warning');
         return;
     }
