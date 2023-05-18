@@ -199,21 +199,13 @@ table { width: 100%; }
         margin-bottom: 0px;
     }
     table, .myTicketPricingTabel{
-        .mat-header,.fullWidth {
+        .mat-header,.fullWidth, mat-cell, mat-footer-cell, mat-header-cell {
             border: 1px solid #b9b9b9;
-            padding: 8px;
-        }
-        mat-cell, mat-footer-cell, mat-header-cell{
             display: block;
+            padding: 8px;
+            padding-top: 13px;
         }
     }
-    // table{
-    //     td,th {
-    //         border: 1px solid #000000;
-    //         padding: 8px;
-    //     }
-    // }
-
 
   table td {
     vertical-align: middle !important;

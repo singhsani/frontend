@@ -41,6 +41,7 @@ export class BookAtithigruhComponent implements OnInit {
 	showPaymentReciept: boolean = false;
 	isLoadingResults: boolean = false;
 	head_lines: string;
+	guj_line : string;
 
 	startMinDate: Date = moment(new Date()).add(3, 'day').toDate();
 	endMinDate = moment(new Date()).add(119, 'day').toDate();
@@ -85,6 +86,7 @@ export class BookAtithigruhComponent implements OnInit {
 	endDate : string;
 	totalAmount : number =0;
 	totalPayble : number =0;
+	showSelectLanguage : boolean = true;
 
 	feeDetails: any [] = [
 		{sno: 1, atithigruh: 'Sayajibaug 1', rent: '5000', administrative_charge: '1000', gst:'1080' ,total_rent: '7080', deposit: '7500',total: '14580'},
@@ -106,6 +108,27 @@ export class BookAtithigruhComponent implements OnInit {
 		{sno: 17, atithigruh: 'Diwali Pura', rent: '17000', administrative_charge: '1000', gst:'3240' ,total_rent: '21240', deposit: '20000',total: '41240'},
 		{sno: 18, atithigruh: 'Manjalpur', rent: '20000', administrative_charge: '1000', gst:'3780' ,total_rent: '24780', deposit: '30000',total: '54780'},
 	  ];
+
+	  gujratifeeDetails: any [] = [
+		{sno: '૧', atithigruh: 'સયાજીબાગ ૧', rent: '૫૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૦૮૦' ,total_rent: '૭૦૮૦', deposit: '૭૫૦૦',total: '૧૪૫૮૦'},
+		{sno: '૨', atithigruh: 'સયાજીબાગ ૨', rent: '૫૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૦૮૦' ,total_rent: '૭૦૮૦', deposit: '૭૫૦૦',total: '૧૪૫૮૦'},
+		{sno: '૩', atithigruh: 'સયાજીબાગ ૩', rent: '૫૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૦૮૦' ,total_rent: '૭૦૮૦', deposit: '૭૫૦૦',total: '૧૪૫૮૦'},
+		{sno: '૪', atithigruh: 'સયાજી લોન', rent: '૭૫૦૦', administrative_charge: '૧૦૦૦', gst:'૧૫૩૦' ,total_rent: '૧૦૦૩૦', deposit: '૧૦૦૦૦',total: '૨૦૦૩૦'},
+		{sno: '૫', atithigruh: 'અકોટા', rent: '૧૨૦૦૦', administrative_charge: '૧૦૦૦', gst:'૨૩૪૦' ,total_rent: '૧૫૩૪૦', deposit: '૨૦૦૦૦',total: '૩૫૩૪૦'},
+		{sno: '૬', atithigruh: 'સયાજીબાગ', rent: '૧૨૦૦૦', administrative_charge: '૧૦૦૦', gst:'૨૩૪૦' ,total_rent: '૧૫૩૪૦', deposit: '૨૦૦૦૦',total: '૩૫૩૪૦'},
+		{sno: '૭', atithigruh: 'નિજમપુરા', rent: '૧૨૦૦૦', administrative_charge: '૧૦૦૦', gst:'૨૩૪૦' ,total_rent: '૧૫૩૪૦', deposit: '૨૦૦૦૦',total: '૩૫૩૪૦'},
+		{sno: '૮', atithigruh: 'સુભાનપુરા', rent: '૧૨૦૦૦', administrative_charge: '૧૦૦૦', gst:'૨૩૪૦' ,total_rent: '૧૫૩૪૦', deposit: '૨૦૦૦૦',total: '૩૫૩૪૦'},
+		{sno: '૯', atithigruh: 'ડો.બાબાસાહેબ આંબેડકર', rent: '૧૨૦૦૦', administrative_charge: '૧૦૦૦', gst:'૨૩૪૦' ,total_rent: '૧૫૩૪૦', deposit: '૨૦૦૦૦',total: '૩૫૩૪૦'},
+		{sno: '૧૦', atithigruh: 'લાલબાગ', rent: '૧૨૦૦૦', administrative_charge: '૧૦૦૦', gst:'૨૩૪૦' ,total_rent: '૧૫૩૪૦', deposit: '૨૦૦૦૦',total: '૩૫૩૪૦'},
+		{sno: '૧૧', atithigruh: 'પ્રેમાનંદ', rent: '૮૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૬૨૦' ,total_rent: '૧૦૬૨૦', deposit: '૧૦૦૦૦',total: '૨૦૬૨૦'},
+		{sno: '૧૨', atithigruh: 'ઇન્દ્રપુરી', rent: '૧૦૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૯૮૦' ,total_rent: '૧૨૯૮૦', deposit: '૨૦૦૦૦',total: '૩૨૯૮૦'},
+		{sno: '૧૩', atithigruh: 'શરદ નગર', rent: '૮૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૬૨૦' ,total_rent: '૧૦૬૨૦', deposit: '૭૫૦૦',total: '૧૮૧૨૦'},
+		{sno: '૧૪', atithigruh: 'વિજયનગરકો હોલ', rent: '૩૫૦૦', administrative_charge: '૧૦૦૦', gst:'૮૧૦ ' ,total_rent: '૫૩૧૦', deposit: '૫૦૦૦',total: '૧૦૩૧૦'},
+		{sno: '૧૫', atithigruh: 'તરસાલી હોલ', rent: '૩૦૦૦', administrative_charge: '૧૦૦૦', gst:'૭૨૦' ,total_rent: '૪૭૨૦', deposit: '૫૦૦૦',total: '૯૭૨૦'},
+		{sno: '૧૬', atithigruh: 'છત્રપતિ શિવાજ', rent: '૮૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૬૨૦' ,total_rent: '૧૦૬૨૦', deposit: '૭૫૦૦',total: '૧૮૧૨૦'},
+		{sno: '૧૭', atithigruh: 'દિવાળી પુરા', rent: '૧૭૦૦૦', administrative_charge: '૧૦૦૦', gst:'૩૨૪૦' ,total_rent: '૨૧૨૪૦', deposit: '૨૦૦૦૦',total: '૪૧૨૪૦'},
+		{sno: '૧૮', atithigruh: 'માંજલપુર', rent: '૨૦૦૦૦', administrative_charge: '૧૦૦૦', gst:'૩૭૮૦' ,total_rent: '૨૪૭૮૦', deposit: '30000',total: '૫૪૭૮૦'},
+	  ];
 	
 	constructor(
 		private fb: FormBuilder,
@@ -126,7 +149,9 @@ export class BookAtithigruhComponent implements OnInit {
 		easy way to book the Atithigruh of Vadodara Municpal Corporation. You can
 		view the availiblity details of the Atithigruh and select booking date. 
 		The booking is confirmed on the successfull online / offline payment of the rent amount for selected dates.`;
-
+        
+		this.guj_line = `ઓનલાઈન અતિથિગૃહ બુકિંગ સુવિધા એ વડોદરા મ્યુનિસિપલ કોર્પોરેશનના અતિથિગૃહને બુક કરવાની અનુકૂળ અને સરળ રીત છે. તમે અતિથિગૃહની ઉપલબ્ધતા વિગતો જોઈ શકો છો અને બુકિંગ તારીખ પસંદ કરી શકો છો. પસંદ કરેલી તારીખો માટે ભાડાની રકમની સફળ ઓનલાઈન/ઓફલાઈન ચુકવણી પર બુકિંગની પુષ્ટિ થાય છે.`
+		
 		this.createBookingSearchForm();
 		this.createAtithigruhForm();
 		this.bookingLookups();
@@ -713,5 +738,16 @@ export class BookAtithigruhComponent implements OnInit {
 				this.submit(); 
 			}
 		}
+	}
+
+	selectLanguage(event) {
+		this.btnProceed = true;
+		if (event == 'gu') {
+			this.showSelectLanguage = true
+		}
+		else {
+			this.showSelectLanguage = false
+		}
+
 	}
 }

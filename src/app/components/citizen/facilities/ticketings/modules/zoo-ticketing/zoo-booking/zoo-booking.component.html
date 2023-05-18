@@ -7,8 +7,8 @@
   <div class="pageTitle d-flex justify-content-between">
     <div *ngIf="!showSelectLanguage">{{'online_zoo_ticket_booking'| translate: translateKey}}</div>
     <div *ngIf="showSelectLanguage">{{'ઑનલાઇન ઝૂ ટિકિટ બુકિંગ'| translate: translateKey}}</div>
-    <button mat-raised-button type="button" (click)="selectLanguage('en')" *ngIf="showSelectLanguage">English</button>
-    <button mat-raised-button type="button" (click)="selectLanguage('gu')" *ngIf="!showSelectLanguage">ગુજરાતી</button>
+    <button mat-raised-button color="primary" type="button" (click)="selectLanguage('en')" *ngIf="showSelectLanguage">English</button>
+    <button mat-raised-button color="primary" type="button" (click)="selectLanguage('gu')" *ngIf="!showSelectLanguage">ગુજરાતી</button>
   </div>
   <!-- Card Content showing Zoo Ticketing Rates and Visiting Time in Gujrati-->
   <mat-card-content class="px-4"  *ngIf="!showSelectLanguage">
@@ -33,37 +33,37 @@
       <table mat-table [dataSource]="dataSourceForPricing" class="myTicketPricingTabel">
 
         <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef class="mat-header">Sr.No.</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef class="mat-header text-center">Sr.No.</mat-header-cell>
           <mat-cell *matCellDef="let row; let i = index;" class="fullWidth mat-cell" >
             <div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
             <div class="mobile-label1">:</div>
-            <div class="row-inside"> {{i+1}} </div>
+            <div class="row-inside text-right"> {{i+1}} </div>
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="description">
-          <mat-header-cell *matHeaderCellDef class="mat-header">{{'particulars' | translate:translateKey}}</mat-header-cell>
-          <mat-cell *matCellDef="let row" class="fullWidth mat-cell1">
+          <mat-header-cell *matHeaderCellDef class="mat-header text-center">{{'particulars' | translate:translateKey}}</mat-header-cell>
+          <mat-cell *matCellDef="let row" class="fullWidth mat-cell">
             <div class="mobile-label">{{'particulars' | translate:translateKey}}</div>
             <div class="mobile-label1">:</div>
-            <div class="row-inside"> {{ row.description | translate:translateKey }}</div>
+            <div class="row-inside text-left"> {{ row.description | translate:translateKey }}</div>
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="Withoutprice">
-          <mat-header-cell *matHeaderCellDef class="mat-header">{{'Without Walk-in Aviary' | translate:translateKey}}</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef class="mat-header text-center">{{'Without Walk-in Aviary' | translate:translateKey}}</mat-header-cell>
           <mat-cell *matCellDef="let row" class="fullWidth">
             <div class="mobile-label">{{'Without Walk-in Aviary' | translate:translateKey}}</div>
             <div class="mobile-label1">:</div>
-            <div class="row-inside"> {{ zooVisitingRates[row.WithoutpriceField] ? zooVisitingRates[row.WithoutpriceField] : 'Free' }}</div>
+            <div class="row-inside text-right"> {{ zooVisitingRates[row.WithoutpriceField] ? zooVisitingRates[row.WithoutpriceField] : 'Free' }}</div>
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="Withprice">
-          <mat-header-cell *matHeaderCellDef class="mat-header">{{'With Walk-in Aviary' | translate:translateKey}}</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef class="mat-header text-center">{{'With Walk-in Aviary' | translate:translateKey}}</mat-header-cell>
           <mat-cell *matCellDef="let row" class="fullWidth">
             <div class="mobile-label">{{'With Walk-in Aviary' | translate:translateKey}}</div>
             <div class="mobile-label1">:</div>
-            <div class="row-inside"> {{ zooVisitingRates[row.WithpriceField] ? zooVisitingRates[row.WithpriceField] : 'Free' }}</div>
+            <div class="row-inside text-right"> {{ zooVisitingRates[row.WithpriceField] ? zooVisitingRates[row.WithpriceField] : 'Free' }}</div>
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumnsForPricingTable"></mat-header-row>
@@ -80,29 +80,29 @@
       <table mat-table [dataSource]="dataSourceForTiming" class="myTicketPricingTabel">
 
         <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef class="mat-header">Sr.No.</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef class="mat-header text-center">Sr.No.</mat-header-cell>
           <mat-cell *matCellDef="let row; let i = index;" class="fullWidth mat-cell">
             <div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
             <div class="mobile-label1">:</div>
-            <div class="row-inside"> {{i+1}} </div>
+            <div class="row-inside text-right"> {{i+1}} </div>
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="months">
-          <mat-header-cell *matHeaderCellDef>{{'months' | translate:translateKey}}</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef class="mat-header text-center">{{'months' | translate:translateKey}}</mat-header-cell>
           <mat-cell *matCellDef="let row" class="fullWidth">
             <div class="mobile-label">{{'months' | translate:translateKey}}</div>
             <div class="mobile-label1">:</div>
-            <div class="row-inside"> {{ row.months }}</div>
+            <div class="row-inside text-right"> {{ row.months }}</div>
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="slot">
-          <mat-header-cell *matHeaderCellDef>{{'slot' | translate:translateKey}}</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef class="mat-header text-center">{{'slot' | translate:translateKey}}</mat-header-cell>
           <mat-cell *matCellDef="let row" class="fullWidth">
             <div class="mobile-label">{{'slot' | translate:translateKey}}</div>
             <div class="mobile-label1">:</div>
-            <div class="row-inside"> {{ row.slot }}</div>
+            <div class="row-inside text-right"> {{ row.slot }}</div>
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumnsForTimingTable"></mat-header-row>
@@ -134,37 +134,37 @@
      <table mat-table [dataSource]="dataSourceForGujPricing" class="myTicketPricingTabel">
 
        <ng-container matColumnDef="id">
-         <mat-header-cell *matHeaderCellDef class="mat-header">ક્રમ.નં.</mat-header-cell>
+         <mat-header-cell *matHeaderCellDef class="mat-header text-center">ક્રમ.નં.</mat-header-cell>
          <mat-cell *matCellDef="let row; let i = index;" class="fullWidth mat-cell" >
            <div class="mobile-label">{{'ક્રમ નં.' | translate:translateKey}}</div>
            <div class="mobile-label1">:</div>
-           <div class="row-inside"> {{row.srNo}} </div>
+           <div class="row-inside text-right"> {{row.srNo}} </div>
          </mat-cell>
        </ng-container>
 
        <ng-container matColumnDef="description">
-         <mat-header-cell *matHeaderCellDef class="mat-header">{{'વિગતો' | translate:translateKey}}</mat-header-cell>
+         <mat-header-cell *matHeaderCellDef class="mat-header text-center">{{'વિગતો' | translate:translateKey}}</mat-header-cell>
          <mat-cell *matCellDef="let row" class="fullWidth mat-cell1">
            <div class="mobile-label">{{'વિગતો' | translate:translateKey}}</div>
            <div class="mobile-label1">:</div>
-           <div class="row-inside"> {{ row.description | translate:translateKey }}</div>
+           <div class="row-inside text-left"> {{ row.description | translate:translateKey }}</div>
          </mat-cell>
        </ng-container>
 
        <ng-container matColumnDef="Withoutprice">
-         <mat-header-cell *matHeaderCellDef class="mat-header">{{'વૉક-ઇન એવિઅરી વિના' | translate:translateKey}}</mat-header-cell>
+         <mat-header-cell *matHeaderCellDef class="mat-header text-center">{{'વૉક-ઇન એવિઅરી વિના' | translate:translateKey}}</mat-header-cell>
          <mat-cell *matCellDef="let row" class="fullWidth">
            <div class="mobile-label">{{'વૉક-ઇન એવિઅરી વિના' | translate:translateKey}}</div>
            <div class="mobile-label1">:</div>
-           <div class="row-inside"> {{ row.WithoutpriceField }}</div>
+           <div class="row-inside text-right"> {{ row.WithoutpriceField }}</div>
          </mat-cell>
        </ng-container>
        <ng-container matColumnDef="Withprice">
-         <mat-header-cell *matHeaderCellDef class="mat-header">{{'વોક-ઇન એવરી સાથે' | translate:translateKey}}</mat-header-cell>
+         <mat-header-cell *matHeaderCellDef class="mat-header text-center">{{'વોક-ઇન એવરી સાથે' | translate:translateKey}}</mat-header-cell>
          <mat-cell *matCellDef="let row" class="fullWidth">
            <div class="mobile-label">{{'વોક-ઇન એવરી સાથે' | translate:translateKey}}</div>
            <div class="mobile-label1">:</div>
-           <div class="row-inside"> {{ row.WithpriceField}}</div>
+           <div class="row-inside text-right"> {{ row.WithpriceField}}</div>
          </mat-cell>
        </ng-container>
        <mat-header-row *matHeaderRowDef="displayedColumnsForPricingTable"></mat-header-row>
@@ -181,29 +181,29 @@
      <table mat-table [dataSource]="dataSourceForgujTiming" class="myTicketPricingTabel">
 
        <ng-container matColumnDef="id">
-         <mat-header-cell *matHeaderCellDef class="mat-header">ક્રમ.નં.</mat-header-cell>
+         <mat-header-cell *matHeaderCellDef class="mat-header text-center">ક્રમ.નં.</mat-header-cell>
          <mat-cell *matCellDef="let row; let i = index;" class="fullWidth mat-cell">
            <div class="mobile-label">{{'ક્રમ.નં.' | translate:translateKey}}</div>
            <div class="mobile-label1">:</div>
-           <div class="row-inside"> {{row.srNo}} </div>
+           <div class="row-inside text-right"> {{row.srNo}} </div>
          </mat-cell>
        </ng-container>
 
        <ng-container matColumnDef="months">
-         <mat-header-cell *matHeaderCellDef>{{'મહિનાઓ' | translate:translateKey}}</mat-header-cell>
+         <mat-header-cell *matHeaderCellDef class="text-center">{{'મહિનાઓ' | translate:translateKey}}</mat-header-cell>
          <mat-cell *matCellDef="let row" class="fullWidth">
            <div class="mobile-label">{{'મહિનાઓ' | translate:translateKey}}</div>
            <div class="mobile-label1">:</div>
-           <div class="row-inside"> {{ row.months }}</div>
+           <div class="row-inside text-right"> {{ row.months }}</div>
          </mat-cell>
        </ng-container>
 
        <ng-container matColumnDef="slot">
-         <mat-header-cell *matHeaderCellDef>{{'સ્લોટ' | translate:translateKey}}</mat-header-cell>
+         <mat-header-cell *matHeaderCellDef class="text-center">{{'સ્લોટ' | translate:translateKey}}</mat-header-cell>
          <mat-cell *matCellDef="let row" class="fullWidth">
            <div class="mobile-label">{{'સ્લોટ' | translate:translateKey}}</div>
            <div class="mobile-label1">:</div>
-           <div class="row-inside"> {{ row.slot }}</div>
+           <div class="row-inside text-right"> {{ row.slot }}</div>
          </mat-cell>
        </ng-container>
        <mat-header-row *matHeaderRowDef="displayedColumnsForTimingTable"></mat-header-row>

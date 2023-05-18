@@ -62,7 +62,7 @@ table { width: 100%; }
           margin-bottom: 0px;
       }
 
-      .header_lines {
+      .header-lines {
           padding-top: 7px !important;
           margin-bottom: 0px;
 
@@ -70,8 +70,14 @@ table { width: 100%; }
               margin-bottom: 7px;
           }
 
-          .headline {
-              font-size: 20px;
+          .head-line {
+              font-size: 18px;
+              margin-bottom: 6px;
+          }
+          .listSize{
+            font-size: 17px;
+            margin-bottom: 9px;
+            line-height: 1.4;
           }
           .headlines{
             font-size: 18px;
@@ -132,16 +138,11 @@ table { width: 100%; }
             line-height: 30px;
         }
       }
-
-
-      .fotButtonBar {
-          margin-top: 0 !important;
-      }
-
-  }
-
-  .fotButtonBar{
-          margin-top: 45px !important;
+    }
+    .fotButtonBar {
+        .listSize{
+            font-size: 17px;
+        }
     }
 
    .table
