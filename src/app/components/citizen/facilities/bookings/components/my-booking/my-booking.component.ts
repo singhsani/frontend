@@ -111,7 +111,7 @@ export class MyBookingComponent implements OnInit {
 			{ type: 'childrenTheater', name: 'Children Theater' },
 			{ type: 'shootingPermission', name: 'Shooting Permission' },
 			{ type: 'swimming', name: 'Swimming Pool' },
-			{ type: 'atithigruh', name: 'AtithiGruh' },
+			{ type: 'atithigruh', name: 'Atithigruh' },
 		]
 		this.resources = resourcesList;
 	}
@@ -372,9 +372,9 @@ export class MyBookingComponent implements OnInit {
 				).subscribe(data => {
 					if(data.length == 0){
 
-						this.showReport=true; 
+						this.showReport=true;
 					  }else{
-			
+
 						this.showReport=false;
 					  }
 					this.isLoadingResults = false;
@@ -653,8 +653,8 @@ export class MyBookingComponent implements OnInit {
 		return true;
 	}
 	showCancelBtnTownhall(element){
-		if ((element.status === this.bookingConstant.PAYMENT_REQUIRED || 
-			element.status === this.bookingConstant.EXPIRED ||  
+		if ((element.status === this.bookingConstant.PAYMENT_REQUIRED ||
+			element.status === this.bookingConstant.EXPIRED ||
 			element.status === this.bookingConstant.PARTIALLY_BOOKED ||
 			element.status === this.bookingConstant.CANCELLATION_APPROVED ||
 			element.status === this.bookingConstant.CANCELLATION_REQUEST ||
