@@ -18,6 +18,14 @@
     }
 }
 
+.availableDate {background-color: #eaf6ed; color: #155724;
+    & > strong {color: #155724; background-color: #c3e6cb;}
+    &.border {border-color: #c3e6cb !important;}
+}
+.bookDate, .blockDate {background-color: #fceff0; color: #721c24;
+    & > strong {color: #721c24; background-color: #f5c6cb;}
+    &.border {border-color: #f5c6cb !important;}
+}
 .fotButtonBar {
     margin-top: 0 !important;
 }
