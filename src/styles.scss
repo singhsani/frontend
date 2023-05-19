@@ -1342,3 +1342,15 @@ textarea.gujInputCls {margin-bottom: 0;}
     font-size: 80%;
     font-weight: 100;
 } 
+
+.mat-form-field-label, .mat-placeholder-required, .mat-form-field-required-marker{
+    color: rgb(255, 0, 0) !important;
+ }
+
+.asteriskmarkRequired{
+    .ng-placeholder::after{
+        content:' *';
+        color:red !important;
+      }
+} 
+    
