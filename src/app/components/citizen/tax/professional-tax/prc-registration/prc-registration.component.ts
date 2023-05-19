@@ -78,6 +78,8 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 
 	pecNumber: string = null;
 
+	holdFirstPage: Boolean = false;
+
 	constructor(
 		private fb: FormBuilder,
 		private router: Router,
@@ -112,6 +114,9 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	}
 
 	public onTabChange(index: number, controlName, mainControl) {
+		if(this.holdFirstPage) {
+			return false;
+		}
 		if (controlName.invalid || this.pecNumber == null) {
 			this.commonService.markFormGroupTouched(controlName);
 			$('.pecNumber mat-form-field .displayNone').remove();
@@ -306,10 +311,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 
 						if (this.prcRegForm.get('rcDateEditAble').value && this.prcRegForm.get('employeeSalarySummary').value.length > 0) {
 							this.profeService.updatePrcForm(this.prcRegForm.getRawValue().prcNo, moment(this.prcRegForm.get('rcDate').value).format("YYYY-MM-DD")).subscribe(res => {
-								this.setValuesInForm(res, 'rcDateChanged');
-								if (this.prcRegForm.get('formStatus').value != 'APPROVED') {
-									this.addDefaultYearMonthWiseEmployeeSummaryData();
-								}								
+								this.setValuesInForm(res, 'rcDateChanged');																
 							});
 						} else {
 							this.empDetailsListArray = [];
@@ -321,17 +323,13 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 				} else {
 					/* If PRC not exist and change the date then clear emp detail array */
 					this.empDetailsListArray = [];
-					if (this.prcRegForm.get('formStatus').value != 'APPROVED') {
-						this.addDefaultYearMonthWiseEmployeeSummaryData();
-					}
+					this.addDefaultYearMonthWiseEmployeeSummaryData();
 				}
 			}
 		} else {
 			/* If don't inital date then store into this variable */
 			this.prcInitialDate = this.prcRegForm.get('rcDate').value;
-			if (this.prcRegForm.get('formStatus').value != 'APPROVED') {
-				this.addDefaultYearMonthWiseEmployeeSummaryData();
-			}
+			this.addDefaultYearMonthWiseEmployeeSummaryData();
 		}
 		this.prcRegForm.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
 	}
@@ -607,10 +605,9 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 						isComma = false;
 					}
 				}
-				console.log('Please update your information ' + messageForInvalidFileds);
+				this.holdFirstPage= true;
 				$('.searchBox').append('<div class="invalidFields alert alert-warning"> Please update your information '+ messageForInvalidFileds+' </div>'); 
 				this.commonService.openAlert("Warning", "", "warning", res.data.alertForValidation);
-				return;
 			} else {
 				$('.invalidFields').remove();
 			}
