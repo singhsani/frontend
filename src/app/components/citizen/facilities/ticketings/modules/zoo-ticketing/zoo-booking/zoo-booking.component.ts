@@ -814,7 +814,7 @@ if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'A
         returnArray.removeAt(index);
 			this.commonService.successAlert('Deleted Successfully!', '', 'success');
       }
-    
+     
     this.totalAmountZoo =  this.totalAmountZoo- item.amounts;
 
     if(!(item.typeOfVisitor == 'Camera Fee' || item.typeOfVisitor == 'Video Camera Fee' )){
