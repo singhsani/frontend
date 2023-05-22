@@ -419,6 +419,8 @@ export class NewRegistrationComponent implements OnInit {
           // this.showVehicleTaxDetails(this.modalTemplate);
           // this.getVehicleTaxForPayment(res.id);
           // this.onVehicleTaxSubmit();
+        }, error => {
+          this.vehicleRegistrationForm.get('formStatus').setValue('DRAFT');
         });
       } else {
         this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
