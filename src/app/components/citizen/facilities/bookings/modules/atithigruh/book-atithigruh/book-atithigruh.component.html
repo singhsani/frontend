@@ -283,12 +283,12 @@
         <div class="row px-3 checkbox">
             <div class="col-sm-6 col-md-6" *ngIf="showSelectLanguage">
                 <mat-checkbox class="d-block listSize" labelPosition="after" (change)="clickProcess($event)" [checked]="checkProceed">
-                    {{'મેં નિયમો અને શરતો વાંચી છે અને તેનાથી સંમત છું.' | translate:translateKey}}
+                   <span class="font-weight-bold"> {{'મેં નિયમો અને શરતો વાંચી છે અને તેનાથી સંમત છું.' | translate:translateKey}}</span>
                 </mat-checkbox>
                 </div>
             <div class="col-sm-6 col-md-6"  *ngIf="!showSelectLanguage">
                 <mat-checkbox (change)="clickProcess($event)" [checked]="checkProceed"> 
-                        {{'i_have_read_and_agree_with_terms_and_conditions' | translate:stadiumTranslateKey}}
+                    <span class="font-weight-bold">{{'i_have_read_and_agree_with_terms_and_conditions' | translate:stadiumTranslateKey}}</span>
                 </mat-checkbox>
             </div>
             <div class="col-sm-6 col-md-6 text-right">
