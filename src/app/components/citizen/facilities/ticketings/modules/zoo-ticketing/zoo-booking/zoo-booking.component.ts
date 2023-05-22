@@ -805,8 +805,6 @@ if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'A
 
     let returnArray = this.ticketBookingForm.get('withAndWithoutWalkList') as FormArray;
 
-    this.commonService.deleteAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
-
       if (item.id == null) {
         returnArray.removeAt(index);
 
@@ -816,8 +814,7 @@ if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'A
         returnArray.removeAt(index);
 			this.commonService.successAlert('Deleted Successfully!', '', 'success');
       }
-    } 
-    );
+     
     this.totalAmountZoo =  this.totalAmountZoo- item.amounts;
 
     if(!(item.typeOfVisitor == 'Camera Fee' || item.typeOfVisitor == 'Video Camera Fee' )){
