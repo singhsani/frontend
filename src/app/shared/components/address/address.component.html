@@ -52,14 +52,14 @@
 
 	<div class="row">
 		<mat-form-field class="col-md-4">
-			<input matInput type="text" formControlName="area"
-				placeholder="{{'area' | translate: translateKey }} {{isBuildinAreaReq?'*':''}}" maxlength="60"
+			<input matInput type="text" formControlName="area" [required]="isBuildinAreaReq"
+				placeholder="{{'area' | translate: translateKey }}"  maxlength="60"
 				appGujInputSource targetElement="areaGuj" [form]="addressFormGroup">
 			<control-messages [control]="addressFormGroup.get('area')"></control-messages>
 		</mat-form-field>
 
 		<div class="col-md-4 ngSelect">
-			<ng-select placeholder="{{'country' | translate: translateKey }} {{requiredFeilds?'*':''}}"
+			<ng-select placeholder="{{'country' | translate: translateKey }} " [class.asteriskmarkRequired]="requiredFeilds"
 				formControlName="country" [required]="requiredFeilds"
 				(change)="onCountryChange($event);getGujNameFromLookup($event,'countryGuj',countryListArray)">
 				<ng-option *ngFor="let country of countryListArray" [value]="country.name">{{country.name}}</ng-option>
@@ -68,7 +68,7 @@
 		</div>
 
 		<div class="col-md-4 ngSelect">
-			<ng-select placeholder="{{'state' | translate: translateKey }} {{requiredFeilds?'*':''}}"
+			<ng-select placeholder="{{'state' | translate: translateKey }}" [class.asteriskmarkRequired]="requiredFeilds"
 				formControlName="state" [required]="requiredFeilds"
 				(change)="onStateChange($event);getGujNameFromLookup($event,'stateGuj',stateListArray)">
 				<ng-option *ngFor="let state of stateListArray" [value]="state.name">{{state.name}}</ng-option>
@@ -77,8 +77,8 @@
 		</div>
 
 		<div class="col-md-6 ngSelect">
-			<ng-select (change)="getGujNameFromLookup($event,'cityGuj',cityListArray)"
-				placeholder="{{'city' | translate: translateKey }}/{{'district' | translate: translateKey }} {{requiredFeilds?'*':''}}"
+			<ng-select (change)="getGujNameFromLookup($event,'cityGuj',cityListArray)" [class.asteriskmarkRequired]="requiredFeilds"
+				placeholder="{{'city' | translate: translateKey }}/{{'district' | translate: translateKey }}"
 				formControlName="city" [required]="requiredFeilds">
 				<ng-option *ngFor="let city of cityListArray" [value]="city.name">{{city.name}}</ng-option>
 			</ng-select>
@@ -105,15 +105,15 @@
 		</mat-form-field>
 
 		<mat-form-field class="col-md-4">
-			<input [readonly]="true" matInput type="text" formControlName="cityGuj"
-				placeholder="{{'city' | translate: translateKey:'gu' }} / {{'district' | translate: translateKey:'gu' }} {{requiredFeilds?'*':''}}"
+			<input [readonly]="true" matInput type="text" formControlName="cityGuj" [class.asteriskmarkRequired]="requiredFeilds"
+				placeholder="{{'city' | translate: translateKey:'gu' }} / {{'district' | translate: translateKey:'gu' }}"
 				maxlength="180">
 			<control-messages [control]="addressFormGroup.get('cityGuj')"></control-messages>
 		</mat-form-field>
 
 		<mat-form-field class="col-md-4">
-			<input [readonly]="true" matInput type="text" formControlName="stateGuj"
-				placeholder="{{'state' | translate: translateKey:'gu' }} {{requiredFeilds?'*':''}}" maxlength="180">
+			<input [readonly]="true" matInput type="text" formControlName="stateGuj" [class.asteriskmarkRequired]="requiredFeilds"
+				placeholder="{{'state' | translate: translateKey:'gu' }}"  maxlength="180">
 			<control-messages [control]="addressFormGroup.get('stateGuj')"></control-messages>
 		</mat-form-field>
 

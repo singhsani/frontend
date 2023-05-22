@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { BehaviorSubject, Subject } from "rxjs";
 import { HttpService } from "src/app/shared/services/http.service";
 
 
@@ -19,5 +20,13 @@ export class AppSwimmingPoolService {
     printAcknowledgeReceipt(refNumber) {
         const reqURL = `api/booking/swimming/print/acknowledgement/${refNumber}`;
         return this.http.get(reqURL, 'printReceipt');
+    }
+    
+    // show Select Language Rules in swimming pool bashborad
+    isShowRules: boolean = true;
+    SelectLanguageShowRules = new BehaviorSubject<boolean>(this.isShowRules);
+    observableIsShowRules = this.SelectLanguageShowRules.asObservable();
+    updatedIsShowRules(data: boolean) {
+      this.SelectLanguageShowRules.next(data);
     }
 }

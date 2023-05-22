@@ -108,7 +108,7 @@ export class SwimmingPoolComponent implements OnInit {
   isRenewalForm = false;
   isVisibleElectricityBill = false;
   showMsg = false;
-
+  showSelectLanguage : boolean = true
   constructor(
     private fb: FormBuilder,
     public validationError: ValidationService,
@@ -833,5 +833,18 @@ export class SwimmingPoolComponent implements OnInit {
 		this.formControlNameToTabIndex.set('accountNo', 2)
 		this.formControlNameToTabIndex.set('ifscCode', 2)
 		
+	}
+
+  selectLanguage(event) {
+    this.swimmimgPoolBookingForm.controls['termsCondition'].setValue(false);
+		if (event == 'gu') {
+			this.showSelectLanguage = true
+      this.swimmingPoolService.updatedIsShowRules(true)
+    }
+		else {
+			this.showSelectLanguage = false
+      this.swimmingPoolService.updatedIsShowRules(false);
+		}
+
 	}
 }
