@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { from } from 'rxjs';
+import { Subscription, from } from 'rxjs';
 import { ManageRoutes } from 'src/app/config/routes-conf';
 import { RouterModule, Routes } from '@angular/router';
 import {TranslateService} from 'src/app/shared/modules/translate/translate.service';
+import { AppSwimmingPoolService } from '../../../modules/swimming-pool/swimming-pool.service';
 
 @Component({
   selector: 'app-swimming-pool-dashboard',
@@ -14,6 +15,7 @@ export class SwimmingPoolDashboardComponent implements OnInit {
   manageRoutes: any = ManageRoutes;
   guideLineFlag: boolean = true;
   translateKey: string = 'swimmingPoolScreen';
+  subscription : Subscription
   // Modules List
   modules: Array<any> = [
     {
@@ -33,11 +35,17 @@ export class SwimmingPoolDashboardComponent implements OnInit {
       'active': true
     }
   ];
+  showSelectLanguage : boolean = true;
 
-
-  constructor(public translateService: TranslateService) { }
+  constructor(public translateService: TranslateService,
+    public swimmingPoolService : AppSwimmingPoolService) { }
 
   ngOnInit() {
+    this.subscription = this.swimmingPoolService.observableIsShowRules.subscribe(data => {
+      this.showSelectLanguage = data
+
+    })
+  //  console.log('this.show', this.showSelectLanguage)
   }
 
 }
