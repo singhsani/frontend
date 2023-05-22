@@ -23,7 +23,7 @@ export class AnimalPondNewComponent implements OnInit {
 	@ViewChild('permanantAddressEstablishment') permanantAddressEstablishment: any;
 
 	animalPondNewForm: FormGroup;
-	licenseHolderDetail:FormGroup;
+	licenseHolderDetail: FormGroup;
 	businessDetail: FormGroup;
 	insertAnimalDetail: FormGroup;
 	attachmentDetail: FormGroup;
@@ -44,10 +44,7 @@ export class AnimalPondNewComponent implements OnInit {
 	ANIMAL_POND_STATUS_OF_BUSINESS: Array<any> = [];
 	MF_STATUS_OF_BUSINESS: Array<any> = [];
 	PERSON_TYPE: Array<any> = [];
-	FIRM_ZONE: Array<any> = [];
 	ANIMAL_TYPE: Array<any> = [];
-	WARD: Array<any> = [];
-	BLOCK: Array<any> = [];
 	LOOKUP: any;
 	isEditMode = true
 	wardZoneLevel = [];
@@ -56,6 +53,7 @@ export class AnimalPondNewComponent implements OnInit {
 	wardZoneLevel3List = [];
 	wardNo: [null];
 	zoneNo: [null];
+	blockNo: [null];
 
 	// required attachment array
 	public uploadFilesArray: Array<any> = [];
@@ -166,7 +164,6 @@ export class AnimalPondNewComponent implements OnInit {
 	 */
 	getAnimalPondLicNewData() {
 		this.formService.getFormData(this.formId).subscribe(res => {
-
 			try {
 				this.animalPondNewForm.patchValue(res);
 				this.licenseHolderDetail.patchValue(res);
@@ -175,8 +172,9 @@ export class AnimalPondNewComponent implements OnInit {
 				this.attachmentDetail.patchValue(res);
 				this.showButtons = true;
 				this.isEditMode = res.canEdit;
-				this.onChangeZone(this.businessDetail.get('zoneNo').value.code);
-				this.onChangeWard(this.businessDetail.get('wardNo').value.code);
+				this.onChangedZone(this.businessDetail.get('zoneNo').value);
+				this.onChangedWard(this.businessDetail.get('wardNo').value);
+
 
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
@@ -236,52 +234,50 @@ export class AnimalPondNewComponent implements OnInit {
 			this.MF_RELATIONSHIP_OF_APPLICANT = res.MF_RELATIONSHIP_OF_APPLICANT;
 			this.MF_STATUS_OF_BUSINESS = res.MF_STATUS_OF_BUSINESS;
 			this.PERSON_TYPE = res.PERSON_TYPE;
-			this.FIRM_ZONE = res.FIRM_ZONE;
 			this.ANIMAL_TYPE = res.ANIMAL_TYPE;
 			// selected animal filter
 			this.getSelectedAnimal();
 
-			this.onChangeZone(this.businessDetail.get('zoneNo').value.code);
-			this.onChangeWard(this.businessDetail.get('wardNo').value.code);
+
 		});
 	}
 	getAllZoneNos() {
 		this.animalPondService.getWardZoneFirstLevel(1, "PROPERTYTAX").subscribe(
-		  (data) => {
-			this.wardZoneLevel1List = data;
-		  }
+			(data) => {
+				this.wardZoneLevel1List = data;
+			}
 		)
-	  }
+	}
 	onChangedZone(event) {
-		this.wardZoneLevel2List =[];
-		this.wardZoneLevel3List =[];
+		this.wardZoneLevel2List = [];
+		this.wardZoneLevel3List = [];
 		if (event == undefined) {
-			this.businessDetail.get('wardNo').get('code').setValue(null);
-			this.businessDetail.get('blockNo').get('code').setValue(null);
+			this.businessDetail.get('wardNo').setValue(null);
+			this.businessDetail.get('blockNo').setValue(null);
 			return false
-			}
-			else {
-				let postData = {};
-				postData = { parentId: event };
-				this.animalPondService.getWardZone(postData).subscribe(res => {	
-	      		this.wardZoneLevel2List = res.body;
-				})
-			}
-	  }
-	  onChangedWard(event){
-		this.wardZoneLevel3List =[];
-		if (event == undefined) {
-			this.animalPondNewForm.get('blockNo').get('code').setValue(null);
-			return false
-		  }
-		  else {
+		}
+		else {
 			let postData = {};
 			postData = { parentId: event };
-			this.animalPondService.getWardZone(postData).subscribe(res => {	
-			  this.wardZoneLevel3List = res.body;
+			this.animalPondService.getWardZone(postData).subscribe(res => {
+				this.wardZoneLevel2List = res.body;
 			})
-		  }
-	  }
+		}
+	}
+	onChangedWard(event) {
+		this.wardZoneLevel3List = [];
+		if (event == undefined) {
+			this.animalPondNewForm.get('blockNo').setValue(null);
+			return false
+		}
+		else {
+			let postData = {};
+			postData = { parentId: event };
+			this.animalPondService.getWardZone(postData).subscribe(res => {
+				this.wardZoneLevel3List = res.body;
+			})
+		}
+	}
 	updateServiceUploadDocument(event) {
 
 		let array = (<FormArray>this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments'));
@@ -319,23 +315,12 @@ export class AnimalPondNewComponent implements OnInit {
 	 * Method is used for get WARD as per zone selection
 	 * @param event : selected zone code
 	 */
-	onChangeZone(event) {
-		this.WARD = [];
-		if (event && this.LOOKUP && this.LOOKUP.hasOwnProperty(event)) {
-			this.WARD = this.LOOKUP[event];
-		}
-	}
 
 	/**
 	 * Method is used for get block as per zone selection
 	 * @param event : selected ward code
 	 */
-	onChangeWard(event) {
-		this.BLOCK = [];
-		if (event && this.LOOKUP && this.LOOKUP.hasOwnProperty(event)) {
-			this.BLOCK = this.LOOKUP[event];
-		}
-	}
+
 
 	/**
 	*  Method is used get selected data from lookup when change dropdown in grid.
@@ -374,8 +359,8 @@ export class AnimalPondNewComponent implements OnInit {
 		// this.animalPondNewForm = this.fb.group({
 		// 	apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 		// 	serviceCode: 'APL-LIC',
-			/* Step 1 controls start */
-			this.licenseHolderDetail = this.fb.group({
+		/* Step 1 controls start */
+		this.licenseHolderDetail = this.fb.group({
 			personType: this.fb.group({
 				code: [null, Validators.required]
 			}),
@@ -403,14 +388,14 @@ export class AnimalPondNewComponent implements OnInit {
 			})
 			/* Step 1 controls end */
 		})
-			/* Step 2 controls start */
-			// zoneNo: this.fb.group({ code: [null, Validators.required] }),
-			// wardNo: this.fb.group({ code: [null, Validators.required] }),
-			// blockNo: this.fb.group({ code: [null, Validators.required] }),
-			this.businessDetail = this.fb.group({
-			zoneNo: this.fb.group({ code: [null, Validators.required] }),
-			wardNo: this.fb.group({ code: [null, Validators.required] }),
-			blockNo: this.fb.group({ code: [null, Validators.required] }),
+		/* Step 2 controls start */
+		// zoneNo: this.fb.group({ code: [null, Validators.required] }),
+		// wardNo: this.fb.group({ code: [null, Validators.required] }),
+		// blockNo: this.fb.group({ code: [null, Validators.required] }),
+		this.businessDetail = this.fb.group({
+			zoneNo: [null, Validators.required],
+			wardNo: [null, Validators.required],
+			blockNo: [null],
 			businessAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			extraDetailsOfBusiness: [null, [Validators.maxLength(500)]],
 			relationshipId: this.fb.group({
@@ -436,32 +421,32 @@ export class AnimalPondNewComponent implements OnInit {
 				// }
 			]),
 		})
-			/* Step 2 controls end */
+		/* Step 2 controls end */
 
-			/* Step 3 controls start */
-			this.insertAnimalDetail = this.fb.group({
+		/* Step 3 controls start */
+		this.insertAnimalDetail = this.fb.group({
 			animalDetails: this.fb.array([]),
 			totalAnimal: [null, Validators.required],
-			/* Step 3 controls end */			
+			/* Step 3 controls end */
 		})
-			/* Step 4 controls start*/
-			this.attachmentDetail = this.fb.group({
-				attachments: [],		
-			})
-			/* Step 4 controls end */
-			this.animalPondNewForm = this.fb.group({
-					apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-					serviceCode: 'APL-LIC',
-					applicationDate: [],
-					licenseIssueDate: [null],
-					licenseRenewalDate: [null],
-					loinumber: [null],
-			})
-			this.commonService.createCloneAbstractControl(this.licenseHolderDetail,this.animalPondNewForm);
-			this.commonService.createCloneAbstractControl(this.businessDetail,this.animalPondNewForm);	
-			this.commonService.createCloneAbstractControl(this.insertAnimalDetail,this.animalPondNewForm);	
-			this.commonService.createCloneAbstractControl(this.attachmentDetail,this.animalPondNewForm);	
-		}
+		/* Step 4 controls start*/
+		this.attachmentDetail = this.fb.group({
+			attachments: [],
+		})
+		/* Step 4 controls end */
+		this.animalPondNewForm = this.fb.group({
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+			serviceCode: 'APL-LIC',
+			applicationDate: [],
+			licenseIssueDate: [null],
+			licenseRenewalDate: [null],
+			loinumber: [null],
+		})
+		this.commonService.createCloneAbstractControl(this.licenseHolderDetail, this.animalPondNewForm);
+		this.commonService.createCloneAbstractControl(this.businessDetail, this.animalPondNewForm);
+		this.commonService.createCloneAbstractControl(this.insertAnimalDetail, this.animalPondNewForm);
+		this.commonService.createCloneAbstractControl(this.attachmentDetail, this.animalPondNewForm);
+	}
 
 
 	/**
@@ -522,12 +507,12 @@ export class AnimalPondNewComponent implements OnInit {
 		let returnArray: any;
 		returnArray = this.businessDetail.get(controlName) as FormArray;
 		return returnArray;
-	}	
+	}
 
 	/**
 	 * Method is used to add recode in array control
 	 */
-	 addItemanimal(controlName: string) {
+	addItemanimal(controlName: string) {
 		let returnArray: any;
 		returnArray = this.insertAnimalDetail.get(controlName) as FormArray;
 		return returnArray;
@@ -699,7 +684,6 @@ export class AnimalPondNewComponent implements OnInit {
 	 * 	Method is used for filter animal lookup(remove selected animal type).
 	 */
 	getSelectedAnimal() {
-
 		let animalData = this.ANIMAL_TYPE.map((mapDataObj: any) => {
 			mapDataObj.selected = false;
 			return mapDataObj
@@ -707,7 +691,8 @@ export class AnimalPondNewComponent implements OnInit {
 
 		let animalGrid = <FormArray>this.insertAnimalDetail.get('animalDetails');
 
-		animalGrid.controls.forEach(element => {		
+		animalGrid.controls.forEach(element => {
+			
 			let findRecord = animalData.find((obj: any) => obj.code == element.get('animalType').get('code').value)
 			if (findRecord) {
 				findRecord.selected = true;
@@ -845,7 +830,7 @@ export class AnimalPondNewComponent implements OnInit {
 	}
 
 	onActivate() {
-		window.scroll(0,0);
+		window.scroll(0, 0);
 	}
 
 	onTabChange(index: number, controlName, mainControl) {

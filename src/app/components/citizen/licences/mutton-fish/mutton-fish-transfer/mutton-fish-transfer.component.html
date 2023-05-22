@@ -69,7 +69,7 @@
 						</control-messages>
 					</div>
 					<mat-form-field class="col-md-2">
-						<input matInput type="text" required maxlength="30" appValidationFields
+						<input matInput type="text" required maxlength="30" 
 							validationFieldsType='onlyNameWithOutSpace'
 							placeholder="{{'holder_firstname' | translate:translateKey}}"
 							formControlName="holderFirstName" appGujInputSource targetElement="holderFirstNameGuj"
@@ -77,14 +77,14 @@
 						<control-messages [control]="applicantDetials.get('holderFirstName')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="30" appValidationFields
+						<input matInput type="text" maxlength="30" 
 							placeholder="{{'holder_middlename' | translate:translateKey}}"
 							formControlName="holderMiddleName" appGujInputSource targetElement="holderMiddleNameGuj"
 							[form]="applicantDetials">
 						<control-messages [control]="applicantDetials.get('holderMiddleName')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="30" appValidationFields
+						<input matInput type="text" required maxlength="30" 
 							validationFieldsType='onlyNameWithOutSpace'
 							placeholder="{{'holder_lastname' | translate:translateKey}}"
 							formControlName="holderLastName" appGujInputSource targetElement="holderLastNameGuj"
@@ -98,21 +98,21 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj"
 							appGujInputTarget [form]="applicantDetials"
-							placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}" appValidationFields
+							placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}" 
 							validationFieldsType='onlyNameWithOutSpace'>
 						<control-messages [control]="applicantDetials.get('holderFirstNameGuj')">
 						</control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="90"
-							placeholder="{{'holder_middlename' | translate:translateKey:'gu'}}" appValidationFields
+							placeholder="{{'holder_middlename' | translate:translateKey:'gu'}}" 
 							formControlName="holderMiddleNameGuj" appGujInputTarget [form]="applicantDetials">
 						<control-messages [control]="applicantDetials.get('holderMiddleNameGuj')">
 						</control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="90"
-							placeholder="{{'holder_lastname' | translate:translateKey:'gu'}}" appValidationFields
+							placeholder="{{'holder_lastname' | translate:translateKey:'gu'}}" 
 							validationFieldsType='onlyNameWithOutSpace' formControlName="holderLastNameGuj"
 							appGujInputTarget [form]="applicantDetials">
 						<control-messages [control]="applicantDetials.get('holderLastNameGuj')">
