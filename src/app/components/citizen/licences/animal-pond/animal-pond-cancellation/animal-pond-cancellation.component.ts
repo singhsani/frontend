@@ -150,9 +150,9 @@ export class AnimalPondCancellationComponent implements OnInit {
 				periodFrom: res.periodFrom,
 				periodTo: res.periodTo,
 
-				wardNo: searchData.wardNo.code,
-				zoneNo: searchData.zoneNo.code,
-				blockNo: searchData.blockNo.code,
+				wardNo: searchData.wardNo,
+				zoneNo: searchData.zoneNo,
+				blockNo: searchData.blockNo,
 				totalAnimal: searchData.totalAnimal,
 
 				// newRegistration: res.newRegistration,
@@ -250,18 +250,9 @@ export class AnimalPondCancellationComponent implements OnInit {
 				code: [null, Validators.required]
 			}),
 
-			wardNo: this.fb.group({
-				code: null,
-				name: null
-			}),
-			zoneNo: this.fb.group({
-				code: null,
-				name: null
-			}),
-			blockNo: this.fb.group({
-				code: null,
-				name: null
-			}),
+			wardNo: [null],
+			zoneNo: [null],
+			blockNo: [null],
 			totalAnimal: null
 		});
 	}

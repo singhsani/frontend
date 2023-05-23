@@ -60,6 +60,9 @@ export class AnimalPondRenewComponent implements OnInit {
 	}
 
 	checkBox:boolean = false;
+	wardZoneLevel2List: any;
+	wardZoneLevel1List: any;
+	wardZoneLevel3List: any[];
 
 	/**
 	 * This method for serach licence using licence number.
@@ -113,8 +116,9 @@ export class AnimalPondRenewComponent implements OnInit {
 			this.formId = Number(param.get('id'));
 			this.apiCode = param.get('apiCode');
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+			this.getAllZoneNos();
 		});
-
+		this.getLookupData();
 		this.animalPondRenewFormControls();
 
 		if (!this.formId) {
@@ -122,11 +126,10 @@ export class AnimalPondRenewComponent implements OnInit {
 		}
 		else {
 			this.serachLicenceObj.isDisplayRenewLicenceForm = true;
-			this.getLookupData();
 			this.getAnimalPondLicNewData();
 
-			// this.animalPondRenewForm.disable();
-			this.enableFielList();
+			this.animalPondRenewForm.disable();
+			//this.enableFielList();
 		
 		}
 		this.disableField();
@@ -186,7 +189,6 @@ export class AnimalPondRenewComponent implements OnInit {
 	 * @param searchData: exciting licence number data
 	 */
 	createRecordPatchSerachData(searchData: any) {
-		this.getLookupData();
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		this.formService.createFormData().subscribe(res => {
 			this.formId = res.serviceFormId;
@@ -229,7 +231,7 @@ export class AnimalPondRenewComponent implements OnInit {
 			
 
 				refNumber: this.serachLicenceObj.searchLicenceNumber,	
-				fileNumber : searchData.fileNumber,	
+				
 				personType: searchData.personType,	
 				licenseIssueDate:searchData.licenseIssueDate,			
 				businessType: searchData.businessType,
@@ -249,6 +251,18 @@ export class AnimalPondRenewComponent implements OnInit {
 				
 
 			});
+
+			let postData = {};
+		    postData = { parentId:searchData.zoneNo };
+		    this.formService.getWardZone(postData).subscribe(res => {
+			   this.wardZoneLevel2List = res.body;
+		    })
+			
+		    postData = { parentId:searchData.wardNo };
+		    this.formService.getWardZone(postData).subscribe(res => {
+			   this.wardZoneLevel3List = res.body;
+		    })
+
 			this.businessDetail.patchValue({
 				zoneNo:searchData.zoneNo,
 				blockNo:searchData.blockNo,
@@ -261,6 +275,11 @@ export class AnimalPondRenewComponent implements OnInit {
 
 			
 			});
+			this.insertAnimalDetail.patchValue({
+				animalDetails : res.animalDetails,
+				totalAnimal : res.animalCount
+			})
+			
 
 			this.showButtons = true;
 			// this.animalPondRenewForm.get('refNumber').patchValue(this.serachLicenceObj.searchLicenceNumber);
@@ -272,6 +291,7 @@ export class AnimalPondRenewComponent implements OnInit {
 				app.serviceFormId = null;
 				(<FormArray>this.businessDetail.get('relationshipList')).push(this.createArray(app));
 			});
+
 			(<FormArray>this.insertAnimalDetail.get('animalDetails')).controls = [];
 			searchData.animalDetails.forEach(app => {
 				app.id = null;
@@ -280,7 +300,7 @@ export class AnimalPondRenewComponent implements OnInit {
 			});
 			// this.animalPondRenewForm.disable();
 			this.enableFielList();
-
+			this.getTotalAnimal()
 			let currentUrl = this.location.path().replace('false', this.formId.toString());
 			this.location.go(currentUrl);
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
@@ -299,16 +319,17 @@ export class AnimalPondRenewComponent implements OnInit {
 	 * Method is used to get form data
 	 */
 	getAnimalPondLicNewData() {
-		
 		this.formService.getFormData(this.formId).subscribe(res => {
+
 			try {
+	
 				this.animalPondRenewForm.patchValue(res); 
 				this.licenseHolderDetail.patchValue(res);
 				this.businessDetail.patchValue(res);
 				this.insertAnimalDetail.patchValue(res);
 				this.showButtons = true;
-				this.onChangeZone(this.businessDetail.get('zoneNo').value.code);
-				this.onChangeWard(this.businessDetail.get('wardNo').value.code);
+				this.onChangedZone(this.businessDetail.get('zoneNo').value);
+				this.onChangedWard(this.businessDetail.get('wardNo').value);
 
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
@@ -334,7 +355,8 @@ export class AnimalPondRenewComponent implements OnInit {
 				}
 
 				res.animalDetails.forEach(app => {
-					(<FormArray>this.animalPondRenewForm.get('animalDetails')).push(this.createAnimalArray(app));
+					
+					(<FormArray>this.insertAnimalDetail.get('animalDetails')).push(this.createAnimalArray(app));
 				});
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.animalPondRenewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
@@ -343,13 +365,20 @@ export class AnimalPondRenewComponent implements OnInit {
 				this.onChangeStatusOfBusiness();
 				// selected animal filter
 				this.getSelectedAnimal();
+				this.getTotalAnimal()
 
 			} catch (error) {
 				console.log(error.message)
 			}
 		});
 	}
-
+	getAllZoneNos() {
+		this.formService.getWardZoneFirstLevel(1, "PROPERTYTAX").subscribe(
+		  (data) => {
+			this.wardZoneLevel1List = data;
+		  }
+		)
+	  }
 	/**
 	* Method is used to get lookup data
 	*/
@@ -360,12 +389,9 @@ export class AnimalPondRenewComponent implements OnInit {
 			this.MF_RELATIONSHIP_OF_APPLICANT = res.MF_RELATIONSHIP_OF_APPLICANT;
 			this.MF_STATUS_OF_BUSINESS = res.MF_STATUS_OF_BUSINESS;
 			this.PERSON_TYPE = res.PERSON_TYPE;
-			this.FIRM_ZONE = res.FIRM_ZONE;
 			this.ANIMAL_TYPE = res.ANIMAL_TYPE;
 			// selected animal filter
 			this.getSelectedAnimal();
-			this.onChangeZone(this.businessDetail.get('zoneNo').value.code);
-			this.onChangeWard(this.businessDetail.get('wardNo').value.code);
 		});
 	}
 
@@ -373,23 +399,13 @@ export class AnimalPondRenewComponent implements OnInit {
 	 * Method is used for get WARD as per zone selection
 	 * @param event : selected zone code
 	 */
-	onChangeZone(event) {
-		this.WARD = [];
-		if (event && this.LOOKUP && this.LOOKUP.hasOwnProperty(event)) {
-			this.WARD = this.LOOKUP[event];
-		}
-	}
+	
 
 	/**
 	 * Method is used for get block as per zone selection
 	 * @param event : selected ward code
 	 */
-	onChangeWard(event) {
-		this.BLOCK = [];
-		if (event && this.LOOKUP && this.LOOKUP.hasOwnProperty(event)) {
-			this.BLOCK = this.LOOKUP[event];
-		}
-	}
+	
 
 	/**
 	*  Method is used get selected data from lookup when change dropdown in grid.
@@ -443,9 +459,9 @@ export class AnimalPondRenewComponent implements OnInit {
 		})
 			/* Step 2 controls start */
 			this.businessDetail = this.fb.group({
-			zoneNo: this.fb.group({ code: [null, Validators.required] }),
-			wardNo: this.fb.group({ code: [null, Validators.required] }),
-			blockNo: this.fb.group({ code: [null, Validators.required] }),
+			zoneNo:  [null, Validators.required],
+			wardNo: [null, Validators.required],
+			blockNo: [null],
 			businessAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			extraDetailsOfBusiness: [null, [Validators.maxLength(500)]],
 			relationshipId: this.fb.group({
@@ -517,6 +533,7 @@ export class AnimalPondRenewComponent implements OnInit {
 	 * This Method for count total animals (all type of animal)
 	 */
 	getTotalAnimal() {
+		
 		let totalAnimal = 0;
 		let animalGrid = <FormArray>this.insertAnimalDetail.get('animalDetails');
 
@@ -624,6 +641,7 @@ export class AnimalPondRenewComponent implements OnInit {
 		else {
 			this.commonService.openAlert("Warning", "You can add new record after saving existing record", "warning");
 		}
+		
 	}
 
 	/**
@@ -693,6 +711,7 @@ export class AnimalPondRenewComponent implements OnInit {
 			row.isEditMode = false;
 			row.newRecordAdded = false;
 		}
+		this.getTotalAnimal()
 	}
 
 	/**
@@ -868,4 +887,32 @@ export class AnimalPondRenewComponent implements OnInit {
 		this.licenseHolderDetail.get('refNumber').disable();
 		this.licenseHolderDetail.get('licenseIssueDate').disable();
 	}
+
+	onChangedZone(event) {
+		this.wardZoneLevel2List =[];
+		if (event == null && event == undefined) {
+			this.businessDetail.get('wardNo').setValue(null);
+			  return false
+			}
+		else {
+		  let postData = {};
+		  postData = { parentId: event };
+		  this.formService.getWardZone(postData).subscribe(res => {
+			this.wardZoneLevel2List = res.body;
+		  })
+
+		}
+	  }
+	  onChangedWard(event){
+		this.wardZoneLevel3List=[];
+		if(event == null && event == undefined){
+			this.businessDetail.get('blockNo').setValue(null);
+		}else{
+			let postData ={};
+			postData={parentId:event}
+			this.formService.getWardZone(postData).subscribe(res =>{
+				this.wardZoneLevel3List=res.body;
+			})
+		}
+	  }
 }

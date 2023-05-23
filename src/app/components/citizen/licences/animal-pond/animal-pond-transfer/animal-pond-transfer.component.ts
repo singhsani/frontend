@@ -42,10 +42,7 @@ export class AnimalPondTransferComponent implements OnInit {
 	MF_RELATIONSHIP_OF_APPLICANT: Array<any> = [];
 	MF_STATUS_OF_BUSINESS: Array<any> = [];
 	PERSON_TYPE: Array<any> = [];
-	FIRM_ZONE: Array<any> = [];
 	ANIMAL_TYPE: Array<any> = [];
-	WARD: Array<any> = [];
-	BLOCK: Array<any> = [];
 	LOOKUP: any;
 
 	// required attachment array
@@ -58,6 +55,9 @@ export class AnimalPondTransferComponent implements OnInit {
 	}
 
 	checkBox = false;
+	wardZoneLevel2List: any;
+	wardZoneLevel3List: any;
+	wardZoneLevel1List: any;
 
 
 	/**
@@ -114,6 +114,7 @@ export class AnimalPondTransferComponent implements OnInit {
 			this.formId = Number(param.get('id'));
 			this.apiCode = param.get('apiCode');
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+			this.getAllZoneNos()
 		});
 
 		this.animalPondTransferFormControls();
@@ -131,6 +132,17 @@ export class AnimalPondTransferComponent implements OnInit {
 		}
 		this.disableField();
 
+	}
+	/**
+	 * Method is used for get block as per zone selection
+	 * @param event : selected ward code
+	 */
+	getAllZoneNos() {
+		this.formService.getWardZoneFirstLevel(1, "PROPERTYTAX").subscribe(
+			(data) => {
+				this.wardZoneLevel1List = data;
+			}
+		)
 	}
 
 	/**
@@ -230,41 +242,55 @@ export class AnimalPondTransferComponent implements OnInit {
 
 			});
 			this.licenseHolderDetail.patchValue({
-			
 
-				refNumber: this.serachLicenceObj.searchLicenceNumber,	
-				fileNumber : searchData.fileNumber,	
-				personType: searchData.personType,	
-				licenseIssueDate:searchData.licenseIssueDate,			
+
+				refNumber: this.serachLicenceObj.searchLicenceNumber,
+				fileNumber: searchData.fileNumber,
+				personType: searchData.personType,
+				licenseIssueDate: searchData.licenseIssueDate,
 				businessType: searchData.businessType,
 				holderFirstName: searchData.holderFirstName,
-				holderFirstNameGuj:searchData.holderFirstNameGuj,
+				holderFirstNameGuj: searchData.holderFirstNameGuj,
 				holderMiddleName: searchData.holderMiddleName,
-				holderMiddleNameGuj:searchData.holderMiddleNameGuj,
+				holderMiddleNameGuj: searchData.holderMiddleNameGuj,
 				holderLastName: searchData.holderLastName,
-				holderLastNameGuj:searchData.holderLastNameGuj,
-				temporaryAddress:searchData.temporaryAddress,
-				holderAadharNo:searchData.holderAadharNo,
+				holderLastNameGuj: searchData.holderLastNameGuj,
+				temporaryAddress: searchData.temporaryAddress,
+				holderAadharNo: searchData.holderAadharNo,
 				holderPanNo: searchData.holderPanNo,
-				holderFaxNo : searchData.holderFaxNo,
-				holderMobileNo:searchData.holderMobileNo,
+				holderFaxNo: searchData.holderFaxNo,
+				holderMobileNo: searchData.holderMobileNo,
 				permanantAddress: searchData.permanantAddress,
-				holderTelephoneNo:searchData.holderTelephoneNo
-				
+				holderTelephoneNo: searchData.holderTelephoneNo
+
 
 			});
+			let postData = {};
+			postData = { parentId: searchData.zoneNo };
+			this.formService.getWardZone(postData).subscribe(res => {
+				this.wardZoneLevel2List = res.body;
+			})
+
+			postData = { parentId:searchData.wardNo };
+		    this.formService.getWardZone(postData).subscribe(res => {
+			   this.wardZoneLevel3List = res.body;
+		    })
 			this.businessDetail.patchValue({
-				zoneNo:searchData.zoneNo,
-				blockNo:searchData.blockNo,
-				wardNo:searchData.wardNo,
-				businessAddress:searchData.businessAddress,	
-				extraDetailsOfBusiness : searchData.extraDetailsOfBusiness,
-				relationshipId:searchData.relationshipId,
+				zoneNo: searchData.zoneNo,
+				blockNo: searchData.blockNo,
+				wardNo: searchData.wardNo,
+				businessAddress: searchData.businessAddress,
+				extraDetailsOfBusiness: searchData.extraDetailsOfBusiness,
+				relationshipId: searchData.relationshipId,
 				statusOfBusinessId: searchData.statusOfBusinessId,
-				relationshipList:searchData.relationshipList,
+				relationshipList: searchData.relationshipList,
 
-			
+
 			});
+			this.insertAnimalDetail.patchValue({
+				animalDetails : res.animalDetails,
+				totalAnimal : res.animalCount
+			})
 			this.showButtons = true;
 
 			(<FormArray>this.businessDetail.get('relationshipList')).controls = [];
@@ -282,8 +308,8 @@ export class AnimalPondTransferComponent implements OnInit {
 			// this.animalPondTransferForm.disable();
 			this.enableFielList();
 
-			let currentUrl = this.location.path().replace('false', this.formId.toString());
-			this.location.go(currentUrl);
+			
+			
 
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
 				(<FormArray>this.animalPondTransferForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
@@ -292,6 +318,10 @@ export class AnimalPondTransferComponent implements OnInit {
 				(a, b) => a.orderSequence - b.orderSequence);
 			// this.requiredDocumentList();
 			this.onChangeStatusOfBusiness();
+			let currentUrl = this.location.path().replace('false', this.formId.toString());
+			this.location.go(currentUrl);
+
+			
 		});
 
 	}
@@ -314,8 +344,8 @@ export class AnimalPondTransferComponent implements OnInit {
 				this.businessDetail.patchValue(res);
 				this.insertAnimalDetail.patchValue(res);
 				this.showButtons = true;
-				this.onChangeZone(this.businessDetail.get('zoneNo').value.code);
-				this.onChangeWard(this.businessDetail.get('wardNo').value.code);
+				this.onChangedZone(this.businessDetail.get('zoneNo').value);
+				this.onChangedWard(this.businessDetail.get('wardNo').value);
 
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
@@ -364,13 +394,10 @@ export class AnimalPondTransferComponent implements OnInit {
 			this.MF_RELATIONSHIP_OF_APPLICANT = res.MF_RELATIONSHIP_OF_APPLICANT;
 			this.MF_STATUS_OF_BUSINESS = res.MF_STATUS_OF_BUSINESS;
 			this.PERSON_TYPE = res.PERSON_TYPE;
-			this.FIRM_ZONE = res.FIRM_ZONE;
 			this.ANIMAL_TYPE = res.ANIMAL_TYPE;
 			this.ANIMAL_POND_STATUS_OF_BUSINESS = res.ANIMAL_POND_STATUS_OF_BUSINESS
 			// selected animal filter
 			this.getSelectedAnimal();
-			this.onChangeZone(this.businessDetail.get('zoneNo').value.code);
-			this.onChangeWard(this.businessDetail.get('wardNo').value.code);
 		});
 	}
 
@@ -378,23 +405,12 @@ export class AnimalPondTransferComponent implements OnInit {
 	 * Method is used for get WARD as per zone selection
 	 * @param event : selected zone code
 	 */
-	onChangeZone(event) {
-		this.WARD = [];
-		if (event && this.LOOKUP && this.LOOKUP.hasOwnProperty(event)) {
-			this.WARD = this.LOOKUP[event];
-		}
-	}
 
 	/**
 	 * Method is used for get block as per zone selection
 	 * @param event : selected ward code
 	 */
-	onChangeWard(event) {
-		this.BLOCK = [];
-		if (event && this.LOOKUP && this.LOOKUP.hasOwnProperty(event)) {
-			this.BLOCK = this.LOOKUP[event];
-		}
-	}
+
 
 	/**
 	*  Method is used get selected data from lookup when change dropdown in grid.
@@ -416,11 +432,11 @@ export class AnimalPondTransferComponent implements OnInit {
 		// 	serviceCode: 'APL-TRA',
 		// 	refNumber: [null],
 		this.licenseHolderDetail = this.fb.group({
-		 	refNumber: [null],
+			refNumber: [null],
 			personType: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			businessType:this.fb.group({
+			businessType: this.fb.group({
 				code: [null, Validators.required],
 			}),
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30)]],
@@ -445,11 +461,11 @@ export class AnimalPondTransferComponent implements OnInit {
 			/* Step 1 controls end */
 		})
 
-			/* Step 2 controls start */
-			this.businessDetail = this.fb.group({
-			zoneNo: this.fb.group({ code: [null, Validators.required] }),
-			wardNo: this.fb.group({ code: [null, Validators.required] }),
-			blockNo: this.fb.group({ code: [null, Validators.required] }),
+		/* Step 2 controls start */
+		this.businessDetail = this.fb.group({
+			zoneNo: [null, Validators.required],
+			wardNo: [null, Validators.required],
+			blockNo: [null],
 			businessAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			extraDetailsOfBusiness: [null, [Validators.maxLength(500)]],
 			relationshipId: this.fb.group({
@@ -460,10 +476,10 @@ export class AnimalPondTransferComponent implements OnInit {
 			}),
 			relationshipList: this.fb.array([]),
 		})
-			/* Step 2 controls end */
+		/* Step 2 controls end */
 
-			/* Step 3 controls start */
-			this.insertAnimalDetail = this.fb.group({
+		/* Step 3 controls start */
+		this.insertAnimalDetail = this.fb.group({
 
 			animalDetails: this.fb.array([]),
 			totalAnimal: [null, Validators.required],
@@ -472,18 +488,18 @@ export class AnimalPondTransferComponent implements OnInit {
 			this.animalPondTransferForm = this.fb.group({
 				apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 				serviceCode: 'APL-REN',
-			applicationDate: [],
-		
-			licenseRenewalDate: [null],
-			loinumber: [null],
+				applicationDate: [],
 
-			/* Step 4 controls start*/
-			attachments: [],
-			/* Step 4 controls end */
-		})
-			this.commonService.createCloneAbstractControl(this.licenseHolderDetail,this.animalPondTransferForm);
-			this.commonService.createCloneAbstractControl(this.businessDetail,this.animalPondTransferForm);	
-			this.commonService.createCloneAbstractControl(this.insertAnimalDetail,this.animalPondTransferForm);	
+				licenseRenewalDate: [null],
+				loinumber: [null],
+
+				/* Step 4 controls start*/
+				attachments: [],
+				/* Step 4 controls end */
+			})
+		this.commonService.createCloneAbstractControl(this.licenseHolderDetail, this.animalPondTransferForm);
+		this.commonService.createCloneAbstractControl(this.businessDetail, this.animalPondTransferForm);
+		this.commonService.createCloneAbstractControl(this.insertAnimalDetail, this.animalPondTransferForm);
 	}
 
 	/**
@@ -794,7 +810,7 @@ export class AnimalPondTransferComponent implements OnInit {
 	 * This method use to get output event of tab change
 	 * @param evt - Tab index
 	 */
-	 onFormTabChange(evt) {
+	onFormTabChange(evt) {
 		this.tabIndex = evt;
 	}
 	onTabChange(index: number, controlName, mainControl) {
@@ -824,7 +840,7 @@ export class AnimalPondTransferComponent implements OnInit {
 			this.tabIndex = index;
 		}
 
-    }
+	}
 	onChangeStatusOfBusiness() {
 
 		const subject = this.licenseHolderDetail.get('businessType').get('code').value
@@ -856,5 +872,41 @@ export class AnimalPondTransferComponent implements OnInit {
 	disableField() {
 		this.licenseHolderDetail.get('refNumber').disable();
 		this.animalPondTransferForm.get('licenseIssueDate').disable();
+	}
+
+	/**
+	 * Method is used for get WARD as per zone selection
+	 * @param event : selected zone code
+	 */
+	onChangedZone(event) {
+		this.wardZoneLevel2List = [];
+		if (event == null && event == undefined) {
+			this.businessDetail.get('wardNo').setValue(null);
+			return false
+		}
+		else {
+			let postData = {};
+			postData = { parentId: event };
+			this.formService.getWardZone(postData).subscribe(res => {
+				this.wardZoneLevel2List = res.body;
+			})
+
+		}
+	}
+	/**
+   * Method is used for get block as per Block selection
+   * @param event : selected ward code
+   */
+	onChangedWard(event) {
+		this.wardZoneLevel3List = [];
+		if (event == null && event == undefined) {
+			this.businessDetail.get('blockNo').setValue(null);
+		} else {
+			let postData = {};
+			postData = { parentId: event }
+			this.formService.getWardZone(postData).subscribe(res => {
+				this.wardZoneLevel3List = res.body;
+			})
+		}
 	}
 }

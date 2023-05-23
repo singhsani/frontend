@@ -11,6 +11,7 @@ import { FormsActionsService } from '../../../../../core/services/citizen/data-s
 import { Location } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { LicenseConfiguration } from '../../license-configuration';
+import { log } from 'console';
 
 @Component({
 	selector: 'app-animal-pond-duplicate',
@@ -127,8 +128,8 @@ export class AnimalPondDuplicateComponent implements OnInit {
 				version: res.version,
 				refNumber: this.serachLicenceObj.searchLicenceNumber,
 				serviceFormId: res.serviceFormId,
-				wardNo: searchData.wardNo.code,
-				zoneNo: searchData.zoneNo.code,
+				wardNo: searchData.wardNo,
+				zoneNo: searchData.zoneNo,
 				blockNo: searchData.blockNo.code,
 				totalAnimal: searchData.totalAnimal,
 
@@ -242,18 +243,9 @@ export class AnimalPondDuplicateComponent implements OnInit {
 			businessType: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			wardNo: this.fb.group({
-				code: null,
-				name: null
-			}),
-			zoneNo: this.fb.group({
-				code: null,
-				name: null
-			}),
-			blockNo: this.fb.group({
-				code: null,
-				name: null
-			}),
+			wardNo: [null],
+			zoneNo: [null],
+			blockNo:[null],
 			totalAnimal: null
 			/* Step 4 controls end */
 		});
