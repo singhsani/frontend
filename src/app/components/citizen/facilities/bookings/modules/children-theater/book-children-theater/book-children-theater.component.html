@@ -4,63 +4,144 @@
 <!-- HTML for Children Theater booking Guideline-->
 <div *ngIf="guideLineFlag">
     <mat-card class="cardBox">
-        <div class="pageTitle">{{'online_children_theater_booking'| translate: translateKey}}</div>
-        <mat-card-content class="p-4">
+        <div class="pageTitle d-flex justify-content-between">
+            <div *ngIf="!showSelectLanguage">{{'online_children_theater_booking'| translate: translateKey}}</div>
+            <div *ngIf="showSelectLanguage">{{'online_children_theater_booking'| translate: translateKey : 'gu'}}</div>
+            <button mat-raised-button color="primary" type="button" (click)="selectLanguage('en')"
+                *ngIf="showSelectLanguage">English</button>
+            <button mat-raised-button color="primary" type="button" (click)="selectLanguage('gu')"
+                *ngIf="!showSelectLanguage">ગુજરાતી</button>
+        </div>
+        <mat-card-content class="p-4 mat-card" *ngIf="!showSelectLanguage">
+            <img _ngcontent-c1="" width=130 height=130 alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg"
+                class="center">
             <h4 class="pb-2 headlines">{{head_lines| translate: translateKey}}</h4><br>
             <h2 class="headline"><b>{{'rules_and_regulations'| translate: translateKey}}</b></h2>
-            <h4><ol class="olList">
-                <li class="engInstructions">
-                    All parties/organizers have to observe the VMC Rules
-                </li>
-                <li class="engInstructions">
-                    Production of all necessary permission is mandatory for applicant before commencement of program.
-                </li>
-              <li class="engInstructions">
-                Seating capacity :200
-              </li>
-              <li class="engInstructions">
-                Theatre will be available between 9:00 AM to 8:00 PM
-              </li>
-            </ol></h4>
-
-              <h2 class="headline"><b>{{'fees_structure'| translate: translateKey}}</b></h2>
-              <div class="table">
-                  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
+            <h4>
+                <ol class="olList">
+                    <li class="engInstructions">
+                        All parties/organizers have to observe the VMC Rules <a (click)="openTermModel(termCondition);" class="link"> <u class="link">Terms and conditions</u> </a>
+                    </li>
+                    <li class="engInstructions">
+                        Production of all necessary permission is mandatory for applicant before commencement of program.
+                    </li>
+                    <li class="engInstructions">
+                        Seating capacity :200
+                    </li>
+                    <li class="engInstructions">
+                        Theatre will be available between 9:00 AM to 8:00 PM
+                    </li>
+                </ol>
+            </h4>
+    
+            <h2 class="headline"><b>{{'fees_structure'| translate: translateKey}}</b></h2>
+            <div class="table">
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    
                     <ng-container matColumnDef="sno">
-                      <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
-                      <td mat-cell *matCellDef="let element"> {{element.sno}} </td>
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Sr. No. </th>
+                        <td mat-cell *matCellDef="let element" class="text-right"> {{element.sno}} </td>
                     </ng-container>
-
+    
                     <ng-container matColumnDef="programmePurpose">
-                      <th mat-header-cell *matHeaderCellDef> Program Purpose </th>
-                      <td mat-cell *matCellDef="let element"> {{element.programmePurpose}} </td>
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Program Purpose </th>
+                        <td mat-cell *matCellDef="let element" class="text-center"> {{element.programmePurpose}} </td>
                     </ng-container>
-
+    
                     <ng-container matColumnDef="bookingRent">
-                      <th mat-header-cell *matHeaderCellDef class="text-right" style="width: 300px;"> Booking Rent (For One Day) ({{rupeeSign}})</th>
-                      <td mat-cell *matCellDef="let element" class="text-right"> {{element.bookingRent}} </td>
+                        <th mat-header-cell *matHeaderCellDef  class="text-center"> Booking Rent (For
+                            One Day) ({{rupeeSign}})</th>
+                        <td mat-cell *matCellDef="let element" class="text-right"> {{element.bookingRent}} </td>
                     </ng-container>
-
+    
                     <ng-container matColumnDef="gst">
-                      <th mat-header-cell *matHeaderCellDef class="text-right" style="width: 150px;"> GST (18%) ({{rupeeSign}})</th>
-                      <td mat-cell *matCellDef="let element" class="text-right"> {{element.gst}} </td>
+                        <th mat-header-cell *matHeaderCellDef class="text-center" > GST (18%)
+                            ({{rupeeSign}})</th>
+                        <td mat-cell *matCellDef="let element" class="text-right"> {{element.gst}} </td>
                     </ng-container>
-
+    
                     <tr mat-header-row *matHeaderRowDef="displayedColumnsFeeDetails"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumnsFeeDetails;"></tr>
-                  </table>
-              </div>
+                </table>
+            </div>
+        </mat-card-content>
+        <mat-card-content class="p-4 mat-card" *ngIf="showSelectLanguage">
+            <img _ngcontent-c1="" width=130 height=130 alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg"
+                class="center">
+            <h4 class="py-2 headlines">{{gujHeadLines| translate: translateKey}}</h4><br>
+            <h2 class="headline"><b>{{'rules_and_regulations'| translate: translateKey :'gu'}}</b></h2>
+            <h4 class="instructions pl-4">
+                <div class="d-flex">
+                    <p class="pr-2 listSize"> ૧. </p>
+                    <p class="listSize"> તમામ પક્ષો/આયોજકોએ VMC નિયમોનું પાલન કરવું પડશે. <a
+                            (click)="openTermModel(termCondition);"> <u class="link">નિયમો અને શરત</u> </a></p>
+                </div>
+                <div class="d-flex">
+                    <p class="pr-2 listSize"> ૨. </p>
+                    <p class="listSize">કાર્યક્રમ શરૂ કરતા પહેલા અરજદાર માટે તમામ જરૂરી પરવાનગીનું ઉત્પાદન ફરજિયાત છે.</p>
+                </div>
+                <div class="d-flex">
+                    <p class="pr-2 listSize"> ૩. </p>
+                    <p class="listSize"> બેઠક ક્ષમતા: ૨૦૦</p>
+                </div>
+                <div class="d-flex">
+                    <p class="pr-2 listSize"> ૪. </p>
+                    <p class="listSize"> થિયેટર ૯:૦૦ AM થી ૮:૦૦ PM વચ્ચે ઉપલબ્ધ રહેશે</p>
+                </div>
+            </h4>
+    
+            <h2 class="headline"><b>{{'fees_structure'| translate: translateKey :'gu'}}</b></h2>
+            <div class="table">
+                <table mat-table [dataSource]="gujFreeStructure" class="mat-elevation-z8">
+    
+                    <ng-container matColumnDef="sno">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> ક્રમ.નં. </th>
+                        <td mat-cell *matCellDef="let element" class="text-right"> {{element.sno}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="programmePurpose">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> કાર્યક્રમ હેતુ</th>
+                        <td mat-cell *matCellDef="let element" class="text-center"> {{element.programmePurpose}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="bookingRent">
+                        <th mat-header-cell *matHeaderCellDef class="text-center" > બુકિંગ ભાડું (એક
+                            દિવસ માટે)({{rupeeSign}})</th>
+                        <td mat-cell *matCellDef="let element" class="text-right"> {{element.bookingRent}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="gst">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> GST (18%)
+                            ({{rupeeSign}})</th>
+                        <td mat-cell *matCellDef="let element" class="text-right"> {{element.gst}} </td>
+                    </ng-container>
+    
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsFeeDetails"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnsFeeDetails;"></tr>
+                </table>
+            </div>
         </mat-card-content>
     </mat-card>
 
     <!-- Submit button of guide line starts -->
-    <div class="fotButtonBar">
-        <div class="col-sm-12 col-md-12 text-right">
-            <button mat-raised-button (click)="guideLineFlag = false;showChildrenTheaterSearchForm= true;" color="primary">
-                <mat-icon>thumb_up_alt</mat-icon>
-                {{'proceed'| translate: translateKey}}
-            </button>
+    <div class="fotButtonBar mt-0">
+        <div class="row px-3 checkbox">
+            <div class="col-sm-6 col-md-6" *ngIf="showSelectLanguage">
+                <mat-checkbox class="d-block listSize" labelPosition="after" (change)="clickProcess($event)" [checked]="checkProceed">
+                   <span class="font-weight-bold"> {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey :'gu'}}</span>
+                </mat-checkbox>
+                </div>
+            <div class="col-sm-6 col-md-6"  *ngIf="!showSelectLanguage">
+                <mat-checkbox (change)="clickProcess($event)" [checked]="checkProceed" class="d-block listSize"> 
+                    <span class="font-weight-bold">{{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}}</span>
+                </mat-checkbox>
+            </div>
+            <div class="col-sm-6 col-md-6 text-right">
+                <button mat-raised-button (click)="guideLineFlag = false;showChildrenTheaterSearchForm= true;" color="primary">
+                    <mat-icon>thumb_up_alt</mat-icon>
+                    {{'proceed'| translate: translateKey}}
+                </button>
+            </div>
         </div>
     </div>
     <!-- Submit button of guide line starts -->
@@ -498,6 +579,136 @@
         <!-- </form> -->
     </mat-card>
 </div>
+
+
+<ng-template #termCondition >
+
+    <ng-container *ngIf="!showSelectLanguage">
+        <div class="modal-body">
+          <h4><b>Rules and norms for the use of registration and children's theater in Vadodara Municipal Corporation's Planetarium.</b></h4>
+            <h6 class=" title">(Standing Committee Resolution No: 811/dated 21-12-89 and Whole Meeting Resolution A dated 8 Prem-0u to ig)</h6>
+                <li class="listSize">
+                   1. Sardar Vallabhbhai Patel's ground floor and icon theaters along with technology and astronomy.
+                </li>
+                <li class="listSize">
+                   2. For the promotion of related interests and for the exercise of such other activities as the Municipal Commission deems fit. can be allotted. The permission granted does not include chanting in the basement and surrounding areas except in the iconic theatre.
+                </li>
+                <li class="listSize">
+                   3. The use of said space shall be binding only for the purpose for which it is allotted. In addition to the prescribed fee, the requesting applicant is required to pay an additional prescribed clerical deposit
+                </li>
+                <li class="listSize"> 4.The applicant has to apply in the application form for booking prescribed by the municipality. The dates sought in the application will be allotted if possible. If that place is booked on that date, the applicant is booked on that date Not given. In case of more than one application for the same date, in person of the applicant The Municipal Commissioner or the officer appointed by him shall decide as to whom the premises shall be allotted.</li>
+                <li class="listSize">5. The charges per day for ground floor and children's theater will be as follows, Children Theater Ground floor space 6000/- per day above Chaise Electricity and Mic including </li>
+                <li class="listSize">6. If under any circumstances the space booked is not to be used on that date, the applicant shall 50% of the rental amount shall be deducted and the remaining amount shall be paid by giving written notice ten days in advance. will be done.</li>
+                <li class="listSize">7. In addition to the rental rates of the said premises, before taking possession of the premises Rs. 500/- has to be paid as a reserve. Time limit After completion the designated officer deducts the deductible amount and the remaining amount during working office hours Can be returned except on holidays. </li>
+                <li class="listSize">8. If at any time it comes to the notice of the Municipal Commissioner or the officer appointed by him that the applicant If there is a misrepresentation or misrepresentation on the part of or breaching the terms or is likely to do so, permission will be canceled immediately. </li>
+                <li class="listSize">9. The applicant shall not let any part of the said premises or its furniture or belongings to any person or Cannot transfer.</li>
+                <li class="listSize">10. All programs to be presented by the applicant must be presented in a methodical, disciplined and orderly manner as per the rules. And the Sadr will be fully responsible for maintaining law and order within and around the premises. If the Designated Officer finds that any illegal and illegal act has been or is about to be committed, the applicant He may call for and immediately order peaceable restitution of possession of the said premises and for this the Municipal Corporation
+                    Will not be responsible for any loss or damage caused by any kind of refund and repossession. </li>
+                <li class="listSize">11. Any person authorized by the Vadodara Municipal Corporation or any employee of the relevant staff for the time leased Can enter any part during.</li>
+                <li class="listSize">12. As per the existing law, the applicant has to obtain the entertainment license etc. himself. According to the existing law, if the applicant has not taken all the necessary approvals regarding the exhibition, then the municipality will not be responsible for any situation arising in this regard. The applicant / institution itself will be responsible for all such matters. </li>
+                <li class="listSize">13. If the applicant requires police assistance to carry out his programme, police arrangements at his own expense and risk will arrange. This should be reported to the concerned officer. </li>
+                <li class="listSize">14. Ardar Krillir, Pro, Hey or even my other tools Vidyut Niri dish na m Can't bring in the space, or can't arrange and the light system in the beautiful space. Only Cannot change arrangement position. Even a part of the said space was eaten by an outsider Repairing could not be done. If it is found necessary to change the light arrangement or to carry out any repairs, the designated officer shall be informed in writing, and the presiding officer shall take action if the law and the law permit. Driving nails into walls or anywhere else is strictly prohibited. </li>
+                <li class="listSize">15. The safety of the equipment brought by the applicant in the rented premises will not be the responsibility of the municipality, but the responsibility of the applicant.</li>
+                <li class="listSize">16. The daily rental time of ground floor and sign theater will be from 8-00 AM to 8-00 PM, on that day, if the rental space is used for more than the time limit lost, for each additional hour or part thereof Rs. 15/- more to be paid. And this amount will be allocated from deposits. In any case, this additional time should not exceed 10-00 pm. </li>
+                <li class="listSize">17. The applicant shall not affix items like sellotape, drawings, pins, nails etc. or any other type of glue on the wall, wooden railing or channel, steps and doors of the rented premises. And do not take anything other than building and furniture space. If there is any damage to the rental premises, the cost will be deducted from the security deposit. </li>
+                <li class="listSize">18. After the leased space is used, it will be cleaned by the municipal staff, the municipal staff will not provide any assistance for storage and moving of the specimens.</li>
+                <li class="listSize">19. If any extraordinary circumstances / natural calamities, and circumstances endangering public peace arise or the planetarium remains closed due to special circumstances, then the commissioner will decide whether to refund the rent or to allot another date in lieu of the day on which it was closed, the commissioner will decide and It shall be binding on the applicant. </li>
+                <li class="listSize">20. Where the said rental premises are hired for one day or part thereof, one day's charges shall also be payable, </li>
+                <li class="listSize">21. The Commissioner may grant permission to the Minister to hold free of charge exhibitions of high quality which a Government or Recognized Appease Body or any Government recognized organization wishes to present, but such permission may be granted only during spare times where bookings for the premises are not required. Granting or not granting such permission shall be subject to the discretion of the Commissioner.</li>
+                <li class="listSize">22. In general, the rental premises cannot be rented for more than six days at a time. And while others If the applications are pending, it cannot be rented for more than six days under any circumstances. </li>
+                <li class="listSize">23. If on any occasion the applicant is unable to organize the exhibition on the booked date, the Municipal Commissioner will have the right to change the date only once within three months after checking the total amount by 50% from the receipt of his application.</li>
+                <li class="listSize">24. No change shall be allowed in the use for which the above rental premises have been registered by the organization or the applicant. And if it is found that other organization or other exhibiting than declared, the name of the organization and the applicant will be blacklisted and the reservation along with the application will be confiscated and unauthorized use will be stopped immediately. </li>
+                <li class="listSize">25. The exhibition held in the rented premises may be infringing any copyright. So the municipality will not be responsible for that. and all responsibility thereof shall lie with the hirer of the Children's Theatre. </li>
+                <li class="listSize">26. Only one advertisement board or banner of a maximum size of 1" x 4" may be placed at the designated place net ten days before the performance for which the booking has been made. If the officer-in-charge orders the removal of the board or banner for any reason, the hirer shall / The institution has to remove. Failure to do so, the in-charge officer will take action for removal. In case of any damage or breakage while doing so, the Municipal Corporation will not be responsible for the same. The cost for this will be recovered from the deposit. </li>
+                <li class="listSize">27. The decision of the Municipal Commissioner regarding the interpretation of these rules and any dispute arising therefrom shall be final and binding on the applicant. </li>
+                <li class="listSize">28. The Municipal Primary Education Committee and Municipal Corporation, if they want to use the children's theater and the ground floor, can use the premises without any charge or cost. Bookings for such use must be made at least seven net days in advance. A timely decision will have to be taken by the Commissioner. Then the officer-in-charge can cancel the booking of the private party and the applicant cannot have any objection about it. In such circumstances, the rent will be refunded to the private party as per rules. But he could not cancel the booking of the outdoor party without giving him 10 days notice. </li>
+                <li class="listSize">29. The conditions, fees and rental rates and miscellaneous charges set out above are subject to change</li>
+        </div>
+      
+        <div class="modal-footer customthead">
+          <button color="white" mat-stroked-button (click)="hideModel()">
+            {{'Ok' | translate: translateKey}}
+          </button>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="showSelectLanguage">
+        <div class="modal-body">
+          <h4><b>વડોદરા મહાનગરપાલિકાના પ્લેનેટેરીયમમાં નોંમતળીચે તથા શિલ્ડ્રન થીયેટરના ઉપયોગ માટેના નિયમો તથા ધોરણો.</b></h4>
+            <h6 class="title">(સ્થાયી સમિતિ ઠરાવ અંક ઃ ૮૧૧/તારીખ ૨૧-૧૨-૮૯ અને સમગ્ર સભા ઠરાવ એ ૮ તરીખ પ્રેમ-૦uથી ig)</h6>
+                <li class="listSize">
+                    ૧. સરદાર વલ્લભભાઈ પટેલના ભોંયતળિયે અને ટેક્નોલોજી અને ખગોળશાસ્ત્ર સાથે આઇકોન થિયેટર.
+                </li>
+                <li class="listSize">
+                    ૨. સંબંધિત હિતોના પ્રચાર માટે અને મ્યુનિસિપલ કમિશનને યોગ્ય લાગે તેવી અન્ય પ્રવૃત્તિઓની કવાયત માટે. ફાળવી શકાય છે. આપવામાં આવેલી પરવાનગીમાં આઇકોનિક થિયેટર સિવાય ભોંયરામાં અને આસપાસના વિસ્તારોમાં મંત્રોચ્ચારનો સમાવેશ થતો નથી.
+                </li>
+                <li class="listSize">
+                    ૩. સદર જગ્યાનો ઉપયોગ જે હેતુ માટે ફાળવવામાં આવેલ હોય તે માટે જ તેને બંધનકર્તા રહેશે. આવેલ ફી ઉપરાંત માંગણી કરનાર અરજદારે વધારાની ઠરાવેલ સીકરીરીક દ્વીપોઝીટ ભરવાની રોશો.
+                </li>
+                <li class="listSize"> ૪. મહાનગરપાલિકાએ નિયત કરેલ બુર્કીંગ માટેના અરજી ફોર્મમાં અરજદારે અરજી કરવાની રહેશે. અરજીમાં માંગલી તારીખોજો શક્ય હશે તો ફાળવવામાં આવશે. તે જગ્યાનું બુકીંગ તે તારીખે થયેલું હશે, તો અરજદારને તે તારીખે બુકીંગ કરી
+                    આપવામાં આવી નહી. એકજ તારીખ માટે જો એકથી વધુ અરજી એકી સાથે આવી હશે તો અરજદારની રૂબરૂમાં મ્યુનિસિપલ કમિશની અથવા તેમણે નિયુક્ત કરેલ અધિકારીશ્રી ૢ કરી જગ્યા કોને ફાળવવી તે અંગે નિર્ણય લેશે.</li>
+                <li class="listSize">૫. ભોંયતળીયુ તથા ચિલ્ડ્રન થીયેટરના પ્રતિ દિનના ચાર્જીસ નીચે પ્રમાણે રહેશે, ચિલ્ડ્રન થીયેટર ભોંચતળીયાની જગ્યા ૬૦૦૦/- પ્રતિ દિવસના ઉપરોકત ચાઈસ વીજ બળતણ તથા માઇક સહીતના છે. </li>
+                <li class="listSize">૬. જો કોઇ સંજોગોમાં બુકીંગ કરેલી જગ્યાનો જે તે તારીખે ઉપયોગ ન કરવો હોય તે પ્રસંગે અરજદારે જે તારીખ માટે બુકીંગ રાવ્યું હોય, તેના ચોખ્ખા દસ દિવસ અગાઉ લેખિત જાણ કરેથી ભાડાની રકમના ૫૦ % કાપી લઇ બાકીની રકમ પસ્ત કરવામાં આવશે.</li>
+                <li class="listSize">ઇ. સદર જગ્યાના ભાડાના દરો ઉપરાંત જગ્યાનો કબજો લેતા અગાઉ રૂા. ૫૦૦/- અનામત ભરવાની રહેશે. સમય મર્યાદામાં પૂરી થયા બાદ નિયુક્ત કરેલ અધિકારી કાપવાપાત્ર રકમ કાપી લઇ બાકીની રકમ ઓફિસ સમયના કામકાજ દરમ્યાન રજાના દિવસો સિવાય પરત કરી શકશે. </li>
+                <li class="listSize">૮. જો કોઇ વખતે મ્યુનિસિપલ કમિશનશ્રીના અથવા તેઓએ નિયુક્ત કરેલ અધિકારીશ્રીના ધ્યાન પર આવશે કે અરજદાર તરફથી ખોટી માહિતી કે રજૂઆત થઈ છે અથવા શરતોનો ભંગ કરી રહ્યા છે અથવા કરવાની શક્યતા છે, તો પરવાનગી તુરત રદ કરવામાં આવશે. </li>
+                <li class="listSize">૯. અરજદાર સદર જગ્યાનો કોઈપણ ભાગ અથવા તેનું ફર્નિચર અથવા ડીત કરેલ વસ્તુઓ કોઇને આપી શકશે નહી અથવા
+                    તબદીલ કરી શકો નહીં.</li>
+                <li class="listSize">૯.અરજદાર તરફથી રજૂ થનાર તમામ કાર્યક્રમ પદ્ધતિસર અનુશાસન રીતે તથા વ્યવસ્થિત રીતે નિયમાનુસાર રજૂ કરવાના રહેશે. અને સદર જગ્યાની અંદર તેમજ આજુબાજુમાં કાયદો અને વ્યવસ્થા જળવાય તે માટે સંપૂર્ણ જવાબદાર રહેશે.
+                    જો નિયુક્ત અધિકારીને એમ જણાશે કે કોઇ નિયમ વિરૂદ્ધનું અને ગેરકાયદેસર કૃત્ય થયું છે કે થનાર છે, તો અરજદારને
+                    તે બોલાવી શકશે અને તુરત શાંતિથી સદર જગ્યાનો કબજો પરત આપવા ફરમાવી શકશે અને આ માટે મહાનગરપાલિકા
+                    કોઇ પ્રકારનું રીફંડ તથા કબજો પરત લેવાથી થનાર ખોટ અથવા નુકશાન અંગે જવાબદાર રહેશે નહિ. </li>
+                <li class="listSize"> ૧૧. વડોદરા મહાનગરપાલિકાએ અધિકૃત કરેલ કોઇપણ વ્યકિત અથવા તેને લગતો સ્ટાફનો કર્મચારી ભાડે આપેલ સમય
+                    દરમ્યાન કોઈપણ ભાગમાં પ્રવેશ કરી શકશે.</li>
+                <li class="listSize">૧૨. પ્રવર્તમાન કાયદામાં કરેલ બાબતો જેવી કે મનોરંજન અંગેનું લાયસન્સ વગેરે અરજદારે જાતે મેળવવાના રહેશે. પ્રવર્તમાન કાયદા અનુસાર અરજદારે પ્રદર્શન લગત લેવાપાત્ર તમામ મંજૂરીઓ જો લીધી ન હોય તો તે અંગે જે કંઇ પરિસ્થિતિ ઉભી થાય તે બાબતે મહાનગરપાલિકા જવાબદાર રહેશે નહી. આવી તમામ બાબતો અંગે અરજદર / સંસ્થા પોતે જ જવાબદાર રહેશે.</li>
+                <li class="listSize">૧૩.  અરજદારને એનો કાર્યક્રમ કરવા માટે પોલિસ મદદની જરૂર હશે તો તેઓના ખર્ચે અને જોખમે પોતે પોલિસ વ્યવસ્થા ગોઠવશે. આ અંગેની જાણ સંબંધિત અધિકારીને કરવાની રહેશે.</li>
+                <li class="listSize">૧૫. ભાડે આપેલ જગ્યામાં અરજદાર તરફથી જે ચીજ વસ્તુનો સાધનો લાવવામાં આવ્યા હશે તેની સલામતીની જવાબદારી મહાનગરપાલિકાની રહેશો નહી, પરંતુ તે જવાબદારી અરજદારની રહેશે. </li>
+                <li class="listSize">૧૪. અરદાર કૃલિયર, પ્રો, હે અથવા પણ મારા બીજા સાધન વિદ્યુત નિરી વાનગી ન મ
+                    આવેલ જગ્યામાં લાવી શકશે નહિ, કે ગોઠવી શકો નહી તથા સુંદર જગ્યામાં જે લાઇટ વ્યવસ્થા લાં છે. માત્ર
+                    વ્યવસ્થાની પોઝીશનમાં ફેરફાર કરી શકશે નહીં. સદર જગ્યાના પણ ભાગનું બહારની વ્યક્તિ જીવા ખાદી વા
+                    રીપેરીંગ કરી શકયો નહી. જો લાઇટ વ્યવસ્થામાં ફેરફાર કરવાની જરૂર જણાતી હતી અથવા કઇ રીપેરીંગ કરવાનું ભી તો નિયુક્ત અધિકારીને લેખિત જાણ કરવાની રહેશે, અને સદર અધિકારી કાયદો અને ઠંબા છે તો કર્યવાહી હાથ ધરી,
+                    દિવાલોમાં કે અન્ય ક્યાંરચે ખીલીઓ મારવાની સખ્ત મનાઈ છે.</li>
+                <li class="listSize">૧૬. પ્રતિદિન ભોંયતળીયું તથા ચિહ્ન થીયેટર ભાડે આપવાનો સમય સવારના ૮-૦૦ થી રાતના ૮-૦૦ સુધીનો રહેશે, જે તે દિવસે ભાડાની જગ્યાનો ઉપયોગ હરાવેલ સમયની મર્યાદાથી વધુ સમય માટે કરવામાં આવ્યો હશે તો પ્રત્યેક વધારાના કલાકે કે તેના ભાગના રૂ।. ૧૫/- વધુ આપવાના રહેશે. અને આ રકમ ડીપોઝીટાંથી ફાળવવામાં આવશે. કોઇપણ સંજોગોમાં આ વધારાનો સમય રાતના ૧૦-૦૦ વાગ્યાંથી વધુ ન હોવો જોઇએ.</li>
+                <li class="listSize">૧૭. અરજદારે સેલોટેપ, ડ્રોઇંગ, પીન્સ, ખીલીઓ વગેરે અથવા અન્ય કોઇ પ્રકારના ગુંદર જેવી ચીજ વસ્તુઓ ભાડે આપેલ જગ્યાની દિવાલ, લાકડાની રેલીંગ કે ચેનલ, પદ અને દરવાજા ઉપર લગાડવા નહી. તથા બિલ્ડિંગ અને ફર્નિચર જગ્યા સિવાય બીજે કંઇ લઇ જવું નહી. સદર ભાડાની જગ્યામાં કાંઇ નુકશાન થયું હોય તો તેનો ખર્ચ સિક્યોરીટી ડીપોઝીટમાંથી કાપી લેવામાં આવશે.</li>
+                <li class="listSize">૧૮. ભાડે આપેલ જગ્યાનો ઉપયોગ થઈ ગયા બાદ તેની સફાઈ મહાનગરપાલિકાના સ્ટાફ દ્વારા થશે, નમૂનાઓના પ્રદર્શન સ્ટોરેજ અને ખસેડવા માટે મહાનગરપાલિકાનો સ્ટાફ કોઈપણ જાતની મદદ આપો નથી.</li>
+                <li class="listSize">૧૯. જો કોઇ અસાધારણ સંજોગો / કુદરતી આફતો, તથા જાહેર સુલેહશાંતિ જોખમાય તેવા સંજોગો ઉભા થાય અથવા વિશિષ્ઠ પ્રકારના સંજોગોને લઇને પ્લેનેટેરીયમ બંધ રહે તો ભાડુ પરત કરવું કે કેમ અથવા જે દિવસે બંધ રહ્યું હોય, તે તારીખના બદલામાં અન્ય તારીખ ફાળવવા અરજદારની અરજી આવે કમિશનરશ્રી નિર્ણય લેશે અને તે અરજદારને બંધનકર્તા રહેશે. </li>
+                <li class="listSize">૨૦. સદર ભાડાની જગ્યા એક દિવસ કે તેના ભાગ માટે ભાડે રાખવામાં આવશે તે પણ એક દિવસનો ચાર્જીસ ભરવાનો રહેશે,</li>
+                <li class="listSize">૨૧. ઉચ્ચકક્ષાના ઉચ્ચ ગુણધર્મો ધરાવતા પ્રદર્શનો કે જે સરકારી અથવા રેકનાઇઝડ એપેસ બોડી અથવા કોઈપણ સરકાર માન્ય સંસ્થા રજૂ કરવા ઇચ્છતી હોય, તેવા પ્રદર્શનો મફત યોજવા કમિશનસ્ત્રી મંત્રી આપી શક્યો, પરંતુ સદર જગ્યા માટે બુકીંગની માંગ ન હોય તેવા ફાજલ સમયે જ આવી પરવાનગી આપી શકાશે. આવી પરવાનગી આપવી કે ન આપવી તે કમિશનરશ્રીના નિર્ણયને આધીન રહેશે.</li>
+                <li class="listSize">૨૨. સામાન્ય રીતે સદર ભાડાની જગ્યા એકી વખતે છ દિવસથી વધુ દિવસ માટે ભાડે આપી શકાશે નહીં. અને જયારે અન્ય અરજીઓ બાકી પડી હો તો છ દિવસથી વધુ દિવસ માટે કોઇપણ સંજોગોમાં ભાડે આપી શકાશે નહીં.</li>
+                <li class="listSize">૨૩. જો કોઇ પ્રસંગે અરજદારે બુકીંગ કરેલ તારીખે પ્રદર્શનનું આયોજન ન કરી શકે ત્યારે તેઓની અરજી આવ્યેથી મ્યુનિસિપલ કમિશનરશ્રી હકીક્તોને તપાસી કુલ રકમ ૫૦% વધુ લાગત લઇ તારીખ ત્રણ માસ સુધીમાં ફકત એકજ વખત બદલી આપવા અધિકાર ધરાવશે.</li>
+                <li class="listSize">૨૪. સદર ભાડાની જગ્યા જે સંસ્થા કે અરજદારે જે ઉપયોગ માટે નોંધાવ્યું હશે તેમાં કોઈ ફેરફાર કરવા દેવામાં આવશે નહિ. અને જાહેર કર્યા સિવાય અન્ય સંસ્થા કે અન્ય પ્રદર્શન કરેલું માલુમ પડશે તો સંસ્થા અને અરજદારનું નામ કાળી યાદીમાં મૂકવામાં આવશે અને અરજી સાથેની અનામત જપ્ત કરવામાં આવશે તેમજ અનઅધિકૃત ઉપયોગ તુત રોકવામાં આવશે.  </li>
+                <li class="listSize">૨૫. સદર ભાડાની જગ્યામાં યોજાયેલ પ્રદર્શનમાં કોઇ કોપી રાઇટનો ભંગ થતો હશે. તો તે માટે મહાનગરપાલિકાની જવાબદારી રહેશે નાહીં. અને તે અંગેની તમામ જવાબદારી ચિલ્ડ્રન થીયેટર ભાડે રાખનારની રહેશે. </li>
+                <li class="listSize">૨૬. જે પ્રદર્શન માટે બુકીંગ કરાવ્યું હોય તેના ચોખ્ખા દશ દિવસ અગાઉ જાહેરાત બોર્ડ કે બેનર્સ નિયત કરેલા સ્થળે ફક્ત એક જ વધુમાં વધુ ક" × ૪' ની સાઇઝનું મૂકી શકાશે. બોર્ડ કે બેનર કોઈ કારણસર હટાવી લેવામાં ઇન્ચાર્જ ઑફિસર આદેશ કરશે તો તે પ્રમાણે ભાડે રાખનાર વ્યક્તિ / સંસ્થાએ હટાવી લેવાનું રહેશે. તેમ કરવામાં ચૂક કરવાથી ઇન્ચાર્જ ઓફિસર હટાવવા કાર્યવાહી કરશે. જે કરતી વખતે કોઇ બગાડ કે ભાગતૂટ થાય તો તે માટે મહાનગરપાલિકા જવાબદાર રહેશે નહી. આ માટેનો ખર્ચ ડીપોઝીટમાંથી વસૂલ લેવામાં આવશે.</li>
+                <li class="listSize">૨૭. આ નિયમોનું અર્થઘટન અને તેમાંથી ઉપસ્થિત થતી કોઇપણ વિવાદ બાબતે મ્યુનિસિપલ કમિશનરશ્રીનો નિર્ણય આખરીગણાશે અને અરજઘરને બંધનકર્તા રહેશે.</li>
+                <li class="listSize">૨૮. નગર પ્રાથમિક શિક્ષણ સમિતિ અને મહાનગરપાલિકા જો ચિલ્ડ્રન થીયેટર અને ભોંયતળીયાનો ઉપયોગ કરવાનો હો,તો કોઇ ચાર્જ કે લાગત વિના સદર જગ્યાનો ઉપયોગ કરી શકશે. આવા ઉપયોગ માટેનું બુકીંગ ઓછામાં ઓછા ચોખ્ખા સાત દિવસ પહેલાં કરવાનું રહેશે. કમિશનરશ્રી દ્વારા સમયસર નિર્ણય લેવાનો રહેશે. તો ઇન્ચાર્જ અધિકારી પ્રાઇવેટ પાર્ટીનું બુકીંગ રદ કરી શકશે અને તે અંગે અરજદારનો વાંધો હોઇ શકશે નહીં. આવા સંજોગોમાં પ્રાઇવેટ પાર્ટીને નિયમાનુસાર ભાડુ પરત આપવામાં આવશે. પરંતુ બહારગામની પાર્ટીનું બુકીંગ તેને ૧૦ દિવસની નોટીસ આપ્યા વગર રદ કરી શક્યો નહીં. </li>
+                <li class="listSize">૨૯. ઉપરોક્ત ઠરાવેલ શરતો, ફી અને ભાડાના દર તથા વિવિધ ચાર્જીસ ફેરફારને પાત્ર.</li>
+        </div>
+      
+        <div class="modal-footer customthead">
+          <button color="white" mat-stroked-button (click)="hideModel()">
+            {{'Ok' | translate: translateKey}}
+          </button>
+        </div>
+    </ng-container>
+</ng-template>
+
+<!-- <ng-template #termCondition *ngIf="!showSelectLanguage">
+
+    <div class="modal-body">
+      <p><b>Terms and Condition</b><br>
+        <b>1.</b> I/We hereby certify that I/We are not blacklisted or not associated with a blacklisted firm in Vadodara Municipal Corporation or any other Municipal Corporation, Gujarat or other States, Central Public Works Department, Military Engineer Service (MES) or Railways.<br>
+        <b>2.</b> Presently I/we are partner in any of the following firm/s registered as recognized vendor/vendors of the State of Gujarat, State of Maharashtra, Central Public Works Department, Military Engineer Service (MES), Railways or other Municipal Corporations in any firm/s/are not partners. (Ignore if not applicable).<br>
+        <b>3.</b> Before filling the application form I/We have read the rules and instructions regarding vendor registration carefully and I/We are bound to follow them.<br>
+        <b>4.</b> I/We hereby certify that all particulars stated in the application are complete and correct, any fact being incomplete or it has not been hidden, which I/We guarantee.<br>
+        <b>5.</b> If registration is not recommended / rejected, then paid registration form fee’s or any other fee’s are not refundable.
+      </p>
+    </div>
+  
+    <div class="modal-footer customthead">
+      <button color="white" mat-stroked-button (click)="hideModel()">
+        {{'Ok' | translate: translateKey}}
+      </button>
+    </div>
+</ng-template> -->
 
 <!-- this div is used for printing the receipt -->
 <div id="sectionToPrint"></div>

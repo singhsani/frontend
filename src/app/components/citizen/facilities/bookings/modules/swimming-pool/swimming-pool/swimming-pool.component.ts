@@ -76,6 +76,7 @@ export class SwimmingPoolComponent implements OnInit {
 
   // required attachment array
   public uploadFilesArray: Array<any> = [];
+  showSelectLanguage : boolean = true
 
   //lookup
   SWIMMING_POOL_NAME: Array<any> = [];
@@ -834,7 +835,6 @@ export class SwimmingPoolComponent implements OnInit {
 		this.formControlNameToTabIndex.set('ifscCode', 2)
 		
 	}
-
   selectLanguage(event) {
     this.swimmimgPoolBookingForm.controls['termsCondition'].setValue(false);
 		if (event == 'gu') {

@@ -45,3 +45,32 @@
 .fotButtonBar{
     margin-top: 0px !important;
 }
+
+.cardBox {
+    .pageTitle {
+        margin-bottom: 0px;
+    }
+
+    .mat-card {
+        padding-top: 7px !important;
+    }
+
+    .center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .listSize{
+        font-size: 17px;
+        margin-bottom: 5px;
+    }
+    .rules-title{
+        margin-bottom: 5px;
+    }
+}
+
+.fotButtonBar{
+    .listSize{
+        font-size: 17px;
+    }
+}

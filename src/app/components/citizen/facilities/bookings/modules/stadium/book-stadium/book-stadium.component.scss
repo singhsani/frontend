@@ -105,8 +105,16 @@ i {
 //     max-width: 1000px;
 //     width:84%;
 // }
-.fotButtonBarr {background: #f2f2f2;
-    padding: 20px 0 7px; margin-top: 10px !important;}
+.fotButtonBarr {
+    background: #f2f2f2;
+    padding: 20px 0 7px;
+    margin-top: 10px !important;
+
+    .listSize {
+        font-size: 17px;
+        text-align: justify;
+    }
+}
     .containerWidth{
         width: 60px;
     } 
@@ -123,19 +131,16 @@ i {
         padding-right: 0px;
     }  
     td.mat-cell{
-        font-size: 1.25rem;
+        font-size: 16px;
     }  
     th.mat-header-cell{
-        font-size: 1.25rem;
+        font-size: 16px;
     }
 .fotproceedButton{
     margin-top: 0px !important;
     padding: 10px 0px 0px;
     
 } 
-.checkboxSize{
-    margin-left: 16px;
-}
 .buttonPosition{
     right: 18px;
 }
@@ -156,21 +161,34 @@ hr{
     list-style: none;
     margin-left: -35px;
 }
-.TitleFont{
-    font-size: 20px;
-    font-weight: bold;
-}
-.listSize{
-    font-size: 15px;
-    text-align: justify;
 
-}
-.headlineSize{
-    font-size: 1.25rem;
-    font-weight: bold;
-}
-.feeFont{
-    font-size: 1.25rem;
+
+
+
+.cardBox{
+    .pageTitle{
+        margin-bottom: 0;
+    }
+    .mat-card  {
+           padding-top: 7px !important;
+           .TitleFont{
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .head-line{
+            font-size: 17px;
+            font-weight: bold;
+        }
+        .feeFont{
+            font-size: 22px;
+        }
+        .listSize{
+            font-size: 17px;
+        }
+        .containerWidth{
+            width: 95px;
+        } 
+        }    
 }
 
 
