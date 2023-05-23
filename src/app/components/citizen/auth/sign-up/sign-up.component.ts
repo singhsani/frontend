@@ -10,6 +10,8 @@ import { ToastrService } from 'ngx-toastr';
 import * as _ from 'lodash';
 import { MatInput } from '@angular/material/input';
 import { CommonService } from 'src/app/shared/services/common.service';
+import swal from 'sweetalert2';
+import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 
 @Component({
 	selector: 'app-sign-up',
@@ -37,7 +39,8 @@ export class SignUpComponent implements OnInit {
 		private fb: FormBuilder,
 		private appService: AppService,
 		private commonService: CommonService,
-		private toster: ToastrService
+		private toster: ToastrService,
+		private alert:AlertService
 	) { }
 
 	ngOnInit() {
@@ -72,6 +75,7 @@ export class SignUpComponent implements OnInit {
 		this.nameInput.focus();
 	}
 
+	
 	/**
 	 * This method used to compare passwords
 	 * @param passwordKey - Password
@@ -112,7 +116,7 @@ export class SignUpComponent implements OnInit {
 		this.appService.registerUser(formVals).subscribe(
 			res => {
 				this.loading = false;
-				this.commonService.successAlert("Success", "For OTP and Authentication Link, please check your registered Email ID and Mobile Number. Thank you for the Registration.", "success");
+				this.alert.successsAlert("Success", "For OTP and authentication link, please check your registered email ID and mobile number. Thank you for the registration.", "success",400,8,65,65,2);
 				//this.toster.success("We have sent a authentication link on your email");
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHVERIFY')],
 					// { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp , email : this.regForm.get('email').value } }

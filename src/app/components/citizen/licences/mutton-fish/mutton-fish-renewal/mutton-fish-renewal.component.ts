@@ -59,6 +59,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 		searchLicenceNumber: ""
 	}
 	checkboxValue : boolean = false;
+	staticResponse: any;
 
 	/**
 	 * This method for serach licence using licence number.
@@ -134,7 +135,6 @@ export class MuttonFishRenewalComponent implements OnInit {
 	 * @param searchData: exciting licence number data
 	 */
 	createRecordPatchSerachData(searchData: any) {
-
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		this.formService.createFormData().subscribe(res => {
 			this.formId = res.serviceFormId;
@@ -221,7 +221,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 				(<FormArray>this.muttonFishRenewalForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 			});
 
-			this.onChangeStatusOfBusiness(searchData.statusOfBusinessId.code)
+			this.onChangeStatusOfBusiness(searchData.statusOfBusinessId.code,true)
 			//this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishRenewalForm);
 			/* searchData.employeeList.forEach(app => {
 				(<FormArray>this.muttonFishRenewalForm.get('employeeList')).push(this.createArray(app));
@@ -260,6 +260,16 @@ export class MuttonFishRenewalComponent implements OnInit {
 				this.muttonFishRenewalForm.patchValue(res);
 				this.applicantDetials.patchValue(res);
 				this.businessDetail.patchValue(res);
+				this.staticResponse =res;
+				//
+				if(res.canEdit == false){
+					this.applicantDetials.disable();
+					this.businessDetail.disable();
+				}
+				else{
+					this.applicantDetials.enable();
+					this.businessDetail.enable();
+				}
 				this.isdisableMode = res.canEdit;
 				if(res.relationshipList.length == 0 && res.canEdit==false){
 					this.istable = false;
@@ -267,15 +277,16 @@ export class MuttonFishRenewalComponent implements OnInit {
 					this.istable = true;
 				}
 				this.licenseConfiguration.isAttachmentButtonsVisible = true;
-				this.onChangeZone(this.businessDetail.get('zoneNo').value);
+				this.onChangedZone(this.businessDetail.get('zoneNo').value);
 				//	this.onChangeWard(this.muttonFishRenewalForm.get('wardNo').value.code);
-				if (this.businessDetail.get('statusOfBusinessId').value.code) {
-					this.onChangeStatusOfBusiness(this.businessDetail.get('statusOfBusinessId').value.code)
-				}
-
-				this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
+				if (res.statusOfBusinessId.code) {
+					this.onChangeStatusOfBusiness(res.statusOfBusinessId.code,false);
+				}else{
+					this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
 					this.uploadFileArray.sort((a, b) => 
 					a.orderSequence - b.orderSequence);
+				}
+				
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
 					this.addItem().push(this.createArray());
@@ -289,12 +300,14 @@ export class MuttonFishRenewalComponent implements OnInit {
 				res.relationshipList.forEach(app => {
 					(<FormArray>this.businessDetail.get('relationshipList')).push(this.createArray(app));
 				});
-				// this.muttonFishRenewalForm.disable();
-				this.enableFielList();
-
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
-					(<FormArray>this.businessDetail.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
+					//(<FormArray>this.businessDetail.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
+					(<FormArray>this.muttonFishRenewalForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 				});
+				// this.muttonFishRenewalForm.disable();
+				//this.enableFielList();
+				this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
+				
 
 				//this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishRenewalForm);
 
@@ -315,7 +328,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 			this.MEATFISH_STATUS_OF_BUSINESS = res.MEATFISH_STATUS_OF_BUSINESS;
 			this.PERSON_TYPE = res.PERSON_TYPE;
 			this.FIRM_ZONE = res.FIRM_ZONE;
-			this.onChangeZone(this.muttonFishRenewalForm.get('zoneNo').value);
+			//	this.onChangeZone(this.muttonFishRenewalForm.get('zoneNo').value);
 			//this.onChangeWard(this.muttonFishRenewalForm.get('wardNo').value.code);
 		});
 	}
@@ -324,12 +337,12 @@ export class MuttonFishRenewalComponent implements OnInit {
 	 * Method is used for get WARD as per zone selection
 	 * @param event : selected zone code
 	 */
-	onChangeZone(event) {
-		this.WARD = [];
-		if (event && this.LOOKUP.hasOwnProperty(event)) {
-			this.WARD = this.LOOKUP[event];
-		}
-	}
+	// onChangeZone(event) {
+	// 	this.WARD = [];
+	// 	if (event && this.LOOKUP.hasOwnProperty(event)) {
+	// 		this.WARD = this.LOOKUP[event];
+	// 	}
+	// }
 
 	/**
 	* Method is used for get block as per zone selection
@@ -342,10 +355,14 @@ export class MuttonFishRenewalComponent implements OnInit {
 	// 	}
 	// }
 
-	onChangeStatusOfBusiness(event) {
-		
+	onChangeStatusOfBusiness(event,flag) {	
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
-		const localUploadArray = this.commonService.clone((<FormArray>this.muttonFishRenewalForm.get('serviceDetail').get('serviceUploadDocuments')).value);
+		let localUploadArray;
+		if(flag){
+			localUploadArray = this.commonService.clone((<FormArray>this.muttonFishRenewalForm.get('serviceDetail').get('serviceUploadDocuments')).value);
+		}else{
+			localUploadArray = this.commonService.clone(this.staticResponse.serviceDetail.serviceUploadDocuments);
+		}
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
 		this.uploadFileArray = [];
 		this.mandatoryUploadFileArray = [];
@@ -663,12 +680,11 @@ export class MuttonFishRenewalComponent implements OnInit {
 		}
 	}
 	onChangedZone(event) {
-		debugger
 		this.wardZoneLevel2List =[];
-		if (event == undefined) {
-		this.businessDetail.get('wardNo').get('code').setValue(null);
-		  return false
-		}
+		if (event == null && event == undefined) {
+			this.businessDetail.get('wardNo').setValue(null);
+			  return false
+			}
 		else {
 		  let postData = {};
 		  postData = { parentId: event };

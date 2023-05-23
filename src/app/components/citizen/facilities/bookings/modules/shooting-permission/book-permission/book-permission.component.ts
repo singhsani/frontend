@@ -65,6 +65,10 @@ export class BookPermissionComponent implements OnInit {
    */
   SHOOTING_PERMISSION: Array<any> = [];
   wardZoneLevel1List=[];
+  parkList : Array<any> = [];
+  zoneList: Array<any> = [];
+  purposeList : Array<any> = [];
+
   /*
    * Datepicker with max validation
    */
@@ -165,6 +169,19 @@ export class BookPermissionComponent implements OnInit {
       // this.BANKS = resp.BANK;
       this.CANCELLATION_TYPE = resp.CANCELLATION_TYPE;
       this.PURPOSES = resp.PURPOSE;
+      this.PURPOSES.forEach(element => {        
+           this.purposeList.push(element) 
+           this.PURPOSES = this.purposeList.sort((a, b) => {
+            if(a.name > b.name) {
+              return 1;
+            } else if(a.name < b.name) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+        
+      });
     });
   }
 
@@ -444,7 +461,7 @@ export class BookPermissionComponent implements OnInit {
     else {
       this.bookingService.commonBookSlot(this.bookPermissionApplicationForm.value).subscribe(resp => {
         if (resp.data.status == this.bookingConstants.SUBMITTED) {
-          this.commonService.commonAlert("Shooting Permission Booking", "Permission Booked Successfully", "success", "Print Acknowledgement Receipt", false, '', pA => {
+          this.commonService.commonAlert("Shooting Permission Booking", "Your Application has been submitted.", "success", "Print Acknowledgement Receipt", false, '', pA => {
               this.bookingService.printAcknowledgementReceipt(resp.data.refNumber).subscribe(acknowledgementHTML => {
                 let sectionToPrint: any = document.getElementById('sectionToPrint');
                   sectionToPrint.innerHTML = acknowledgementHTML;
@@ -618,6 +635,18 @@ export class BookPermissionComponent implements OnInit {
 			(data) => {
         if (data) {
 					this.wardZoneLevel1List = data.data;
+          this.wardZoneLevel1List.forEach(element => {
+               this.zoneList.push(element) 
+               this.wardZoneLevel1List = this.zoneList.sort((a, b) => {
+                if(a.zoneName > b.zoneName) {
+                  return 1;
+                } else if(a.zoneName < b.zoneName) {
+                  return -1;
+                } else {
+                  return 0;
+                }
+              });
+          });          
         }
 			},
 			(error) => {
@@ -632,6 +661,19 @@ export class BookPermissionComponent implements OnInit {
       }
       this.bookingService.getGardenList(event).subscribe(resp => {
         this.SHOOTING_PERMISSION = resp.data;
+       this.SHOOTING_PERMISSION .forEach(element => {
+           this.parkList.push(element) 
+           this.SHOOTING_PERMISSION = this.parkList.sort((a, b) => {
+            if(a.name > b.name) {
+              return 1;
+            } else if(a.name < b.name) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+        
+      });
       })
     }
     else {

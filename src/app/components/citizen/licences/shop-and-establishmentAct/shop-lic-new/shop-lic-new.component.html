@@ -327,7 +327,7 @@
 					</div>
 				</div>
 
-				<div *ngIf="employerfamily.get('shopPersonList')['controls'].length">
+				<div *ngIf="employerfamily.get('shopPersonList')['controls'].length" class="col-md-12">
 					<div>
 						<table class="table table-striped responsiveTableRow tableLayout mobLableWidthFull">
 							<thead>
@@ -495,7 +495,7 @@
 					
 				</div>
 
-				<div *ngIf="personoccuping.get('workerCounts')['controls'].length">
+				<div *ngIf="personoccuping.get('workerCounts')['controls'].length" class="col-md-12">
 					<div>
 						<table class="table table-striped responsiveTableRow">
 							<thead>
@@ -659,7 +659,7 @@
 					</div>
 				</div>
 				<div *ngIf="isPatners">
-				<div *ngIf="partnerlist.get('shopPartnerList')['controls'].length">
+				<div *ngIf="partnerlist.get('shopPartnerList')['controls'].length" class="col-md-12">
 					<div>
 						<table class="table table-striped responsiveTableRow tableLayout">
 							<thead>
@@ -669,7 +669,7 @@
 									<th width="150">{{'Address' | translate:translateKey}}</th>
 									<th width="140">{{'Designation / Status' | translate:translateKey}}</th>
 									<th width="110">{{'Mobile Number' | translate:translateKey}}</th>
-									<th width="150">{{'Email-Id' | translate:translateKey}}</th>
+									<th width="150">{{'Email ID' | translate:translateKey}}</th>
 									<th width="60" *ngIf="shopLicNewForm.get('canEdit').value"></th>
 									<th width="60" *ngIf="!(shopLicNewForm.get('canEdit').value)"></th>
 								</tr>

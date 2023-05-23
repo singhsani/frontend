@@ -15,8 +15,7 @@ export class SwimmingPoolDashboardComponent implements OnInit {
   manageRoutes: any = ManageRoutes;
   guideLineFlag: boolean = true;
   translateKey: string = 'swimmingPoolScreen';
-  subscription : Subscription;
-  showSelectLanguage : boolean = true;
+  subscription : Subscription
   // Modules List
   modules: Array<any> = [
     {
@@ -36,7 +35,7 @@ export class SwimmingPoolDashboardComponent implements OnInit {
       'active': true
     }
   ];
-
+  showSelectLanguage : boolean = true;
 
   constructor(public translateService: TranslateService,
     public swimmingPoolService : AppSwimmingPoolService) { }
@@ -46,9 +45,7 @@ export class SwimmingPoolDashboardComponent implements OnInit {
       this.showSelectLanguage = data
 
     })
-  }
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+  //  console.log('this.show', this.showSelectLanguage)
   }
  
 

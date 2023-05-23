@@ -27,7 +27,7 @@
 		<!-- first step start-->
 			<mat-tab [label]="stepLable1 | translate: translateKey" disabled>
 
-				<h6 class="text-left pl-1"><span class=""> Note:-</span> Need to Ensure that the 'Basic Value' which you have to enter is without GST.</h6>
+				<h6 class="text-left pl-1"><span class=""> Note:-</span> Need to ensure that the 'Basic Value' which you have to enter is without GST.</h6>
 				<h6 class="text-left pl-5">તમારે એ સુનિશ્ચિત કરવાની જરૂર છે કે તમારે જે 'મૂળભૂત મૂલ્ય' દાખલ કરવાનું છે તે GST વગરનું છે.</h6>
 				<hr>
 				<form [formGroup]="vehicleDetails">
@@ -138,7 +138,7 @@
 					</div> -->
 				</div>
 
-				<div class="fotButtonBar clearfix">
+				<div class="fotButtonBar mt-0 clearfix">
 					<div class="col-sm-12 col-md-12" *ngIf="this.vehicleRegistrationForm.get('formStatus').value == 'DRAFT'">
 						<button type="button" class=" pull-right" mat-raised-button color="primary"
 							(click)="onTabChange(1, vehicleDetails, vehicleRegistrationForm,false)">{{'save_and_next' |
@@ -224,7 +224,7 @@
 
 				</div>
 
-				<div class="fotButtonBar clearfix">
+				<div class="fotButtonBar mt-0 clearfix">
 					<div class="col-sm-12 col-md-12">
 						<button type="button" class="pull-left" color="primary" mat-raised-button
 							(click)="tabIndex = 0">{{'back' |
@@ -313,7 +313,7 @@
 					</div>
 				</div>
 
-				<div class="fotButtonBar clearfix">
+				<div class="fotButtonBar mt-0 clearfix">
 					<div class="col-sm-12 col-md-12">
 						<button type="button" class="pull-left" mat-raised-button color="primary"
 							(click)="tabIndex = 1">{{'back' |
@@ -343,7 +343,7 @@
 
 				<div class="alert alert-warning">
 					{{'Note' | translate:translateKey}} :
-					{{'File size more than 2 MB not allowed, Upload only JPG, JPEG and PDF file.' |
+					{{'File size more than 2 MB not allowed; Upload only JPG, JPEG and PDF file.' |
 					translate:translateKey}}
 				</div>
                 <form [formGroup]="vehicleRegistrationForm">
@@ -360,7 +360,7 @@
 
 
 
-				<div class="fotButtonBar clearfix">
+				<div class="fotButtonBar mt-0 clearfix">
 					<div class="col-sm-12 col-md-12">
 						<button type="button" class="pull-left" color="primary" type="button" mat-raised-button
 							(click)="tabIndex = 2">{{'back' | translate:actionBarKey}}</button>

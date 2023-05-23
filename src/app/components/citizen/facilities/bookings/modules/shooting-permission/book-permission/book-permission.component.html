@@ -243,7 +243,7 @@
             <td>{{days.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : days.slotStatus }}</td>
             <!-- <td>{{days.occupancy}}</td> -->
             <td>
-              <button mat-icon-button [disabled]="selectedShift.length == 1" (click)="removeSelectedShift(days, i)">
+              <button mat-icon-button  (click)="removeSelectedShift(days, i)">
                 <mat-icon color="warn">delete</mat-icon>
               </button>
             </td>

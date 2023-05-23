@@ -6,6 +6,8 @@ import { AppService } from '../../../../core/services/citizen/app-services/app.s
 import { ManageRoutes } from '../../../../config/routes-conf';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from 'src/app/shared/services/common.service';
+import swal from 'sweetalert2';
+import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 
 @Component({
 	selector: 'app-userverification',
@@ -31,7 +33,8 @@ export class UserVerificationComponent implements OnInit {
 		private router: Router,
 		private fb: FormBuilder,
 		private commonService: CommonService,
-		private toster: ToastrService
+		private toster: ToastrService,
+		private alert:AlertService
 	) {
 
 	}
@@ -97,7 +100,7 @@ if(this.verifyForm.valid){
 				/**
 				 * Redirect to reset password
 				 */
-				this.commonService.successAlert("Success", " OTP and Authentication Link re-sent on your registered Email ID and Mobile Number. Thank you.", "success");
+				this.alert.successsAlert("Success", " OTP and authentication link re-sent on your registered email ID and mobile number. Thank you.", "success",400,8,65,65,2);
 
 			}, err => {
 				this.loading = false;

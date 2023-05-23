@@ -6,62 +6,62 @@
 
 <div *ngIf="guideLineFlag">
   <mat-card class="cardBox">
-
+  
     <!-- <mat-card-title class="alert alert-info text-center mb-0 font-weight-bold">
-{{'online_townhall_bookings'| translate: translateKey}}
-</mat-card-title> -->
-
-    <div class="pageTitle">{{'online_amphi_theater_bookings'| translate: translateKey}}</div>
-    <mat-card-content class="p-4 header_lines">
+  {{'online_townhall_bookings'| translate: translateKey}}
+  </mat-card-title> -->
+  
+    <div class="pageTitle d-flex justify-content-between">
+      <div *ngIf="!showSelectLanguage">{{'online_amphi_theater_bookings'| translate: translateKey}} </div>
+      <div *ngIf="showSelectLanguage">{{'online_amphi_theater_bookings'| translate: translateKey:'gu'}} </div>
+      <button mat-raised-button type="button" color="primary" *ngIf="showSelectLanguage"
+        (click)="selectLanguage('en')">English</button>
+      <button mat-raised-button type="button" color="primary" *ngIf="!showSelectLanguage"
+        (click)="selectLanguage('gu')">ગુજરાતી</button>
+    </div>
+    <mat-card-content class="p-4 header-lines" *ngIf="showSelectLanguage">
       <img _ngcontent-c1="" width=130 height=130 alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg"
         class="center">
-      <p class="headline mb-4"><strong>{{'અગત્યની સુચનાઓ'| translate: translateKey}}</strong></p>
-      <h4 >
-        <ol class="olList">
-          <li>
-            <div class="d-flex pl-2">
-              <p class="pr-2 listSize"> ૧. </p>
-              <p class="listSize">  એમ્ફિ થિયેટર જે આકારમાં ગોળાકાર છે, જેની
-                બેઠકની ક્ષમતા <b  class="bold">૫૦૦</b> ની છે.</p>
-            </div>
-            <div class="d-flex pl-2">
-              <p class="pr-2 listSize"> ૨. </p>
-              <p class="listSize">  ક્લાસિકલ ડાન્સ અથવા વોકલ કોન્સર્ટ, સ્ટ્રીટ
-                પ્લે લેક્ચર્સ, વગેરે જેવી નાની સાંસ્કૃતિક પ્રવૃત્તિઓનું આયોજન કરવા માટેનું આ એક આદર્શ સ્થળ છે.</p>
-            </div>
-            <div class="d-flex pl-2">
-              <p class="pr-2 listSize"> ૩. </p>
-              <p class="listSize">  એમ્ફી થિયેટરનો સમય: - સવારે <b>૯:૦૦</b> થી સાંજે <b>૧૧:૦૦</b></p>
-            </div>
-          </li>
-          <!--                    <h4>ઉપરોક્ત સૂચનાનો ચૂસ્તપણે અમલ કરવાનો રહેશે અન્યથા કાર્યક્રમ બંધ કરવાની ફરજ પડશે.</h4>-->
-        </ol>
+      <p class="head-line"><strong>{{'અગત્યની સુચનાઓ'| translate: translateKey}}</strong></p>
+      <h4 class="instructions pl-2">
+        <div class="d-flex pl-2">
+          <p class="pr-2 listSize"> ૧. </p>
+          <p class="listSize"> એમ્ફિ થિયેટર જે આકારમાં ગોળાકાર છે, જેની
+            બેઠકની ક્ષમતા <b class="bold">૫૦૦</b> ની છે.</p>
+        </div>
+        <div class="d-flex pl-2">
+          <p class="pr-2 listSize"> ૨. </p>
+          <p class="listSize"> ક્લાસિકલ ડાન્સ અથવા વોકલ કોન્સર્ટ, સ્ટ્રીટ
+            પ્લે લેક્ચર્સ, વગેરે જેવી નાની સાંસ્કૃતિક પ્રવૃત્તિઓનું આયોજન કરવા માટેનું આ એક આદર્શ સ્થળ છે.</p>
+        </div>
+        <div class="d-flex pl-2">
+          <p class="pr-2 listSize"> ૩. </p>
+          <p class="listSize"> એમ્ફી થિયેટરનો સમય: - સવારે <b>૯:૦૦</b> થી સાંજે <b>૧૧:૦૦</b></p>
+        </div>
       </h4>
       <!-- <h4><b>એમ્ફી થિયેટર બુકિંગ માટે દરો:</b></h4> -->
-      <p class="headlines text-center"><strong>એમ્ફી થિયેટર બુકિંગ માટે દરો:</strong></p>
-      <div class="table-center">
-        <div class="table">
-          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    
-            <ng-container matColumnDef="sno">
-              <th mat-header-cell class="tableHead" *matHeaderCellDef>અનુક્રમ નંબર</th>
-              <td mat-cell *matCellDef="let element"> {{covertGujaratinumber(element.sno)}} </td>
-            </ng-container>
-    
-            <ng-container matColumnDef="programmePurpose">
-              <th mat-header-cell *matHeaderCellDef>પ્રકાર</th>
-              <td mat-cell *matCellDef="let element"> {{covertGujaratiString(element.programmePurpose)}} </td>
-            </ng-container>
-    
-            <ng-container matColumnDef="bookingRent">
-              <th mat-header-cell *matHeaderCellDef class="text-right">ભાડુ (એક દિવસ માટે)({{rupeeSign}})</th>
-              <td mat-cell *matCellDef="let element" class="text-right"> {{covertGujaratinumber(element.bookingRent)}} </td>
-            </ng-container>
-    
-            <tr mat-header-row *matHeaderRowDef="displayedColumnsFeeDetails"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumnsFeeDetails;"></tr>
-          </table>
-        </div>
+      <p class="headlines"><strong>એમ્ફી થિયેટર બુકિંગ માટે દરો:</strong></p>
+      <div class="table">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  
+          <ng-container matColumnDef="sno">
+            <th mat-header-cell class="tableHead" *matHeaderCellDef>અનુક્રમ નંબર</th>
+            <td mat-cell *matCellDef="let element"> {{covertGujaratinumber(element.sno)}} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="programmePurpose">
+            <th mat-header-cell *matHeaderCellDef>પ્રકાર</th>
+            <td mat-cell *matCellDef="let element"> {{covertGujaratiString(element.programmePurpose)}} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="bookingRent">
+            <th mat-header-cell *matHeaderCellDef class="text-right">ભાડુ (એક દિવસ માટે)({{rupeeSign}})</th>
+            <td mat-cell *matCellDef="let element" class="text-right"> {{covertGujaratinumber(element.bookingRent)}} </td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsFeeDetails"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsFeeDetails;"></tr>
+        </table>
       </div>
       <div>
         <h3 class="head-line text-center">
@@ -143,17 +143,19 @@
         </h4>
       </div>
     </mat-card-content>
-
-    <mat-card-content class="p-4">
+  
+    <mat-card-content class="p-4 header-lines" *ngIf="!showSelectLanguage">
+      <img _ngcontent-c1="" width=130 height=130 alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg"
+        class="center">
       <h3 class="engTitle"><strong>{{'Important Instructions'| translate: translateKey}}</strong></h3>
       <h4>
         <ol>
           <li class="engInstructions">
-            <P >The Amphi Theatre which is round in shape with a stepped
+            <P>The Amphi Theatre which is round in shape with a stepped
               seating capacity of 500.</P>
           </li>
           <li class="engInstructions">
-            <P >This is an ideal place to organize small cultural activities
+            <P>This is an ideal place to organize small cultural activities
               like classical dance or vocal concert, Street play lectures, etc.</P>
           </li>
           <li class="engInstructions">
@@ -165,29 +167,28 @@
       <h4 class="text-center"><b>Rates for Booking Amphi Theatre:</b></h4>
       <div class="table-center">
       <div class="table">
-
+  
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
+  
           <ng-container matColumnDef="sno">
             <th mat-header-cell *matHeaderCellDef> Serial Number</th>
             <td mat-cell *matCellDef="let element"> {{element.sno}} </td>
           </ng-container>
-
+  
           <ng-container matColumnDef="programmePurpose">
             <th mat-header-cell *matHeaderCellDef>Type</th>
             <td mat-cell *matCellDef="let element"> {{covertReadableString(element.programmePurpose)}} </td>
           </ng-container>
-
+  
           <ng-container matColumnDef="bookingRent">
             <th mat-header-cell *matHeaderCellDef class="text-right"> Rent (For One Day) ({{rupeeSign}})</th>
             <td mat-cell *matCellDef="let element" class="text-right"> {{element.bookingRent}} </td>
           </ng-container>
-
+  
           <tr mat-header-row *matHeaderRowDef="displayedColumnsFeeDetails"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumnsFeeDetails;"></tr>
         </table>
       </div>
-    </div>
       <div>
         <h3 class="headlines text-center">
           <strong>{{'Amp Theater Rules '| translate: translateKey}}</strong>
@@ -278,14 +279,26 @@
         </h4>
       </div>
     </mat-card-content>
-
-    <div class="fotButtonBar">
-      <div class="col-sm-12 col-md-12 text-right">
-        <button mat-raised-button (click)="guideLineFlag = false; showTheaterSearchForm = true; " color="primary"
-          [disabled]="btnProceed">
-          <mat-icon>thumb_up_alt</mat-icon>
-          {{'proceed_for_application'| translate: translateKey}}
-        </button>
+    <div class="fotButtonBar mt-0">
+      <div class="row px-3 checkbox">
+        <div class="col-sm-6 col-md-6" *ngIf="showSelectLanguage">
+          <mat-checkbox class="d-block listSize" labelPosition="after" (change)="clickProcess($event)"
+            [checked]="checkProceed">
+            <span class="font-weight-bold">{{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey :'gu'}}</span>
+          </mat-checkbox>
+        </div>
+        <div class="col-sm-6 col-md-6" *ngIf="!showSelectLanguage">
+          <mat-checkbox (change)="clickProcess($event)" [checked]="checkProceed" class="d-block listSize">
+            <span class="font-weight-bold"> {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}}</span>
+          </mat-checkbox>
+        </div>
+        <div class="col-sm-6 col-md-6 text-right">
+          <button mat-raised-button (click)="guideLineFlag = false; showTheaterSearchForm = true; " color="primary"
+            [disabled]="btnProceed">
+            <mat-icon>thumb_up_alt</mat-icon>
+            {{'proceed_for_application'| translate: translateKey}}
+          </button>
+        </div>
       </div>
     </div>
   </mat-card>
@@ -438,7 +451,7 @@
         <thead class="customthead">
           <tr>
             <!-- <th scope="col" width="56">{{'s_no'| translate: translateKey}}</th> -->
-            <th scope="col" width="56">Sr.No.</th>
+            <th scope="col" width="56" class="pl-2">Sr.No.</th>
             <th scope="col">{{'date_of_programme'| translate: translateKey}}</th>
             <!-- <th scope="col">{{'end_date'| translate: translateKey}}</th> -->
             <th scope="col">{{'slot_status'| translate: translateKey}}</th>
@@ -450,14 +463,14 @@
         </thead>
         <tbody>
           <tr *ngFor="let shifts of selectedShift; let i = index;">
-            <th scope="row">{{i+1}}</th>
+            <td class="pl-2">{{i+1}}</td>
             <td>{{bookingUtils.returnProperDate(shifts.start)}}</td>
             <!-- <td>{{bookingUtils.returnProperDate(shifts.end)}}</td> -->
             <td>{{shifts.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : shifts.slotStatus
               }}</td>
             <!-- <td>{{shifts.occupancy}}</td> -->
             <div *ngIf="selectedShift.length >= 1">
-              <td>
+              <td class="removeButton">
                 <!-- <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" -->
                   <button mat-icon-button title="Remove Slot"
                   (click)="selectedShift = bookingUtils.removeSelectedShift(shifts,selectedShift,  i)">

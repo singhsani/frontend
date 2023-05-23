@@ -37,11 +37,6 @@ table { width: 100%; }
   }
 
 
-.fotButtonBar{
-    background: #f2f2f2;
-    padding: 25px 0 10px;
-    margin-top: 0px !important;
-}
 .modal-md {
     max-width: 400;
 }
@@ -91,44 +86,73 @@ table { width: 100%; }
 .cardBox {
     .pageTitle {
         margin-bottom: 0px;
+
+        .header-title {
+            font-size: 20px;
+        }
     }
+
     .header_lines {
         padding-top: 7px !important;
         margin-bottom: 0px;
     }
-    .headline{
-        font-size: 20px;
+
+    .head-line {
+        font-size: 18px;
     }
-     .olList {
-        list-style-type: none;
-        margin-left: -19px;
-            li{
-                padding-bottom: 0px;
-    
-                .listSize{
-                    font-size: 15px;
-                    margin-bottom: 0.8rem;
-                }
-            }
+
+    li {
+        padding-bottom: 0px;
+
+        .listSize {
+            font-size: 15px;
+            margin-bottom: 0.8rem;
+        }
     }
-    .engTitle {
-        font-size: 20px;
-    }
-    .listofol{
+
+    .listofol {
         margin-top: 15px;
+
         .engInstructions {
-            h4{
+            h4 {
                 font-size: 18px;
             }
         }
     }
-    .exterInst {
-        font-size: 18px;
+
+    .additionInfo {
+        margin-left: -35px;
+
+        .exterInst {
+            font-size: 18px;
+        }
     }
-    .headLines{
-        font-size: 18px;
+
+    .readline {
+        font-size: 15px;
+        line-height: 1.4;
     }
-    .additionInfo{
-        margin-left: -40px;
+
+    .engreadline {
+        font-size: 17px;
+    }
+
+    .listSize {
+        font-size: 15px;
+        line-height: 1.4;
+    }
+
+    th.mat-header-cell {
+        font-size: 15px;
+    }
+    .table-title {
+        width: 100px
+    }
+}
+
+.fotButtonBar,.checkbox{
+    font-size: 17px;
+    .listSize{
+        font-size: 15px;
     }
 }

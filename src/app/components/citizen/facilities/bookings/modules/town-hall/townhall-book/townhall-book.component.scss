@@ -104,21 +104,24 @@ table { width: 100%; }
         .titleHeader {
             font-size: 18px;
         }
-        .titleparagraph{
-            font-size: 17px;
-        }
+        // .titleparagraph{
+        //     font-size: 17px;
+        // }
     }
 
     .headline {
         font-size: 18px;
     }
-    .gujratiInstructions {
+    .instructions {
         .listSize {
             font-size: 15px;
         }
         .readline{
             font-size: 15px;
         }
+        .lineHight{
+            line-height: 1.9rem;
+        } 
     }
     .engTitle{
        font-size: 24px;

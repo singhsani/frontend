@@ -248,7 +248,7 @@
 					</div>
 				</div>
 
-				<div *ngIf="businessDetail.get('relationshipList')['controls'].length">
+				<div *ngIf="businessDetail.get('relationshipList')['controls'].length" class="mb-2">
 					<div>
 						<table class="table table-striped mb-0 responsiveTableRow"
 							[hidden]="businessDetail.get('relationshipId').value.code === 'DIRECTOR' || businessDetail.get('relationshipId').value.code === 'AUTHORIZEDSIGNATORY'">

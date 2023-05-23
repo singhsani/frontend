@@ -55,6 +55,7 @@ export class MuttonFishTransferComponent implements OnInit {
 		searchLicenceNumber:""
 	}
 	checkboxValue:boolean = false;
+	staticResponse: any;
 
 	/**
 	 * This method for serach licence using licence number.
@@ -216,7 +217,7 @@ export class MuttonFishTransferComponent implements OnInit {
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
 				(<FormArray>this.muttonFishTransferForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 			});
-			this.onChangeStatusOfBusiness(searchData.statusOfBusinessId.code,false)
+			this.onChangeStatusOfBusiness(searchData.statusOfBusinessId.code,true)
 			//this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
 			//this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishTransferForm);
 
@@ -242,6 +243,15 @@ export class MuttonFishTransferComponent implements OnInit {
 				this.applicantDetials.patchValue(res);
 				this.businessDetail.patchValue(res);
 				this.attachmentDetails.patchValue(res)
+				this.staticResponse =res;
+				if(res.canEdit == false){
+					this.applicantDetials.disable()
+					this.businessDetail.disable()
+				}
+				else{
+					this.applicantDetials.enable()
+					this.businessDetail.enable()
+				}
 				this.isdisableMode = res.canEdit;
 				if(res.relationshipList.length == 0 && res.canEdit==false){
 					this.istable = false;
@@ -294,7 +304,7 @@ export class MuttonFishTransferComponent implements OnInit {
 			this.PERSON_TYPE = res.PERSON_TYPE;
 			this.FIRM_ZONE = res.FIRM_ZONE;
 
-			this.onChangeZone(this.muttonFishTransferForm.get('zoneNo').value);
+			//this.onChangeZone(this.muttonFishTransferForm.get('zoneNo').value);
 			//this.onChangeWard(this.muttonFishTransferForm.get('wardNo').value.code);
 		});
 	}
@@ -303,12 +313,12 @@ export class MuttonFishTransferComponent implements OnInit {
 	 * Method is used for get WARD as per zone selection
 	 * @param event : selected zone code
 	 */
-	onChangeZone(event) {
-		this.WARD = [];
-		if (event && this.LOOKUP.hasOwnProperty(event)) {
-			this.WARD = this.LOOKUP[event];
-		}
-	}
+	// onChangeZone(event) {
+	// 	this.WARD = [];
+	// 	if (event && this.LOOKUP.hasOwnProperty(event)) {
+	// 		this.WARD = this.LOOKUP[event];
+	// 	}
+	// }
 
 	/**
 	 * Method is used for get block as per zone selection
@@ -323,8 +333,12 @@ export class MuttonFishTransferComponent implements OnInit {
 	
 	onChangeStatusOfBusiness(event,notFromInint?) {
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
-		const localUploadArray = this.commonService.clone((<FormArray>this.muttonFishTransferForm.get('serviceDetail').get('serviceUploadDocuments')).value);
-		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
+		let localUploadArray;
+		if(notFromInint){
+			localUploadArray = this.commonService.clone((<FormArray>this.muttonFishTransferForm.get('serviceDetail').get('serviceUploadDocuments')).value);
+		}else{
+			localUploadArray = this.commonService.clone(this.staticResponse.serviceDetail.serviceUploadDocuments);
+		}
 		this.uploadFileArray = [];
 		this.mandatoryUploadFileArray = [];
 
@@ -686,10 +700,10 @@ export class MuttonFishTransferComponent implements OnInit {
 	}
 	onChangedZone(event) {
 		this.wardZoneLevel2List =[];
-		if (event == undefined) {
-		this.businessDetail.get('wardNo').get('code').setValue(null);
-		  return false
-		}
+		if (event == null && event == undefined) {
+			this.businessDetail.get('wardNo').setValue(null);
+			  return false
+			}
 		else {
 		  let postData = {};
 		  postData = { parentId: event };

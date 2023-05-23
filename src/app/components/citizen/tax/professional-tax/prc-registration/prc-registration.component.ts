@@ -78,6 +78,8 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 
 	pecNumber: string = null;
 
+	holdFirstPage: Boolean = false;
+
 	constructor(
 		private fb: FormBuilder,
 		private router: Router,
@@ -112,6 +114,9 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	}
 
 	public onTabChange(index: number, controlName, mainControl) {
+		if(this.holdFirstPage) {
+			return false;
+		}
 		if (controlName.invalid || this.pecNumber == null) {
 			this.commonService.markFormGroupTouched(controlName);
 			$('.pecNumber mat-form-field .displayNone').remove();
@@ -300,13 +305,13 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 			if (this.prcInitialDate != this.prcRegForm.get('rcDate').value && fieldName === 'rcDate') {
 
 				/* If PRC is exist then show alert and clear emp details */
-				if (this.prcRegForm.get('prcNo').value && this.empDetailsListArray.length > 0) {
+				if ((this.prcRegForm.get('prcNo').value || this.prcRegForm.get('formStatus').value == 'SUBMITTED') && this.empDetailsListArray.length > 0) {
 
 					this.commonService.commonAlert('Are you sure', 'If RC Date changed then all the entries will be delete', 'question', 'Yes, submit it!', true, '', cb => {
 
 						if (this.prcRegForm.get('rcDateEditAble').value && this.prcRegForm.get('employeeSalarySummary').value.length > 0) {
 							this.profeService.updatePrcForm(this.prcRegForm.getRawValue().prcNo, moment(this.prcRegForm.get('rcDate').value).format("YYYY-MM-DD")).subscribe(res => {
-								this.setValuesInForm(res, 'rcDateChanged');
+								this.setValuesInForm(res, 'rcDateChanged');																
 							});
 						} else {
 							this.empDetailsListArray = [];
@@ -318,13 +323,40 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 				} else {
 					/* If PRC not exist and change the date then clear emp detail array */
 					this.empDetailsListArray = [];
+					this.addDefaultYearMonthWiseEmployeeSummaryData();
 				}
 			}
 		} else {
 			/* If don't inital date then store into this variable */
 			this.prcInitialDate = this.prcRegForm.get('rcDate').value;
+			this.addDefaultYearMonthWiseEmployeeSummaryData();
 		}
 		this.prcRegForm.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
+	}
+
+	addDefaultYearMonthWiseEmployeeSummaryData() {
+		this.empDetailsListArray = [];
+		let rcDate = new Date(this.prcRegForm.get('rcDate').value);
+		let currentDate = new Date();
+
+		for (var year = rcDate.getFullYear(); year <= currentDate.getFullYear(); year++) {
+			for (var month = (year == rcDate.getFullYear()? rcDate.getMonth():0); 
+					month <= (year != currentDate.getFullYear()? 11:currentDate.getMonth()); month++) {
+						
+				for (let i = 0; i < this.employeeSlabArr.length; i++) {
+					this.employeeSlabArr[i].empCount = 0;
+					this.employeeSlabArr[i].slab = {
+						id: null, code: this.employeeSlabArr[i].code, incomeRange: null, taxRate: this.employeeSlabArr[i].taxRate,
+						isActive: true, validFrom: this.employeeSlabArr[i].validFrom, validTo: this.employeeSlabArr[i].validTo
+					};
+				}
+				let obj = {
+					id: null, tempId: this.empSlabId++, year: year, month: this.monthArray[month], totEmpCount: 0,
+					formId: null, taxFee: null, slabDetails: _.cloneDeep(this.employeeSlabArr)
+				};
+				this.empDetailsListArray.push(obj);
+			}
+		}
 	}
 
 	/**
@@ -503,6 +535,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	 * @param res - API Response
 	 */
 	setValuesInForm(res, flag) {
+		$('.invalidFields').remove();
 		/*reset fields before assigning data */
 		this.prcRegForm.reset();
 		this.setDefaultFeilds();
@@ -512,15 +545,78 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 
 		/** if response exist data then do further process */
 		if (res.data && Object.keys(res.data).length) {
+			if (res.data.alertForValidation != null) {
+				var invalidFields = res.data.invalidFields;
+				invalidFields = invalidFields.split(',');
+				let messageForInvalidFileds = '';
+				for (let i = 0; i < invalidFields.length; i++) {
+					const element = invalidFields[i];
+					var isComma = false;
+					if (element == 'applicantFullName') {
+						messageForInvalidFileds += 'Applicant Full Name';
+						isComma = true;
+					} else if (element == 'applicantDob') {
+						messageForInvalidFileds += 'Applicant DOB'; 
+						isComma = true;
+					} else if (element == 'gender') {
+						messageForInvalidFileds += 'Gender'; 
+						isComma = true;
+					} else if (element == 'registrationDate') {
+						messageForInvalidFileds += 'Registration Date'; 
+						isComma = true;
+					} else if (element == 'establishmentName') {
+						messageForInvalidFileds += 'Establishment Name'; 
+						isComma = true;
+					} else if (element == 'contactNo') {
+						messageForInvalidFileds += 'Contact Number';
+						isComma = true; 
+					} else if (element == 'ward') {
+						messageForInvalidFileds += 'Ward No.'; 
+						isComma = true;
+					} else if (element == 'commencementDate') {
+						messageForInvalidFileds += 'Date of Commencement'; 
+						isComma = true;
+					} else if (element == 'pancardNo') {
+						messageForInvalidFileds += 'PAN Number'; 
+						isComma = true;
+					} else if (element == 'shopAndLicenseNo') {
+						messageForInvalidFileds += 'Shop and License Number';
+						isComma = true; 
+					} else if (element == 'entry') {
+						messageForInvalidFileds += 'Entry Number'; 
+					} else if (element == 'subEntry') {
+						messageForInvalidFileds += 'Sub Entry Number'; 
+						isComma = true;
+					} else if (element == 'professionConstitution') {
+						messageForInvalidFileds += 'Profession'; 
+						isComma = true;
+					} else if (element == 'constitution') {
+						messageForInvalidFileds += 'Constitution'; 
+						isComma = true;
+					} else if (element == 'officeAddress') {
+						messageForInvalidFileds += 'Office Address'; 
+						isComma = true;
+					} else if (element == 'residentialAddress') {
+						messageForInvalidFileds += 'Residential Address'; 
+						isComma = true;
+					}
+					if (isComma && i < (invalidFields.length-1)) {
+						messageForInvalidFileds += ', ';
+						isComma = false;
+					}
+				}
+				this.holdFirstPage= true;
+				$('.searchBox').append('<div class="invalidFields alert alert-warning"> Please update your information '+ messageForInvalidFileds+' </div>'); 
+				this.commonService.openAlert("Warning", "", "warning", res.data.alertForValidation);
+			} else {
+				$('.invalidFields').remove();
+			}
 
 			if (res.data.hasPrc) {
 				this.commonService.openAlert("PRC Is Already Exists", "", "warning", `Your PRC number is<br> <b>${res.data.prcNo}</b>`);
 				return;
 			}
-			if (res.data.messageForValidation != null) {
-				this.toastr.warning(res.data.messageForValidation);
-			}
-
+			
 			this.prcRegForm.patchValue(res.data);
 
 			if (res.data.formType === 'BUS_REG_PEC') {

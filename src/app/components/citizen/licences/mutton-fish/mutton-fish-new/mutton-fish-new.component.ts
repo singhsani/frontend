@@ -91,6 +91,7 @@ export class MuttonFishNewComponent implements OnInit {
 			this.getMuttonFishLicNewData();
 			this.muttonFishNewFormControls();
 		}
+		
 	}
 
 	/**
@@ -113,6 +114,7 @@ export class MuttonFishNewComponent implements OnInit {
 				if(res.canEdit == false){
 					this.applicantDetials.disable()
 					this.businessDetail.disable()
+
 				}
 				else{
 					this.applicantDetials.enable()
@@ -125,7 +127,7 @@ export class MuttonFishNewComponent implements OnInit {
 				}else{
 					this.istable = true;
 				}
-				this.onChangeZone(this.businessDetail.get('zoneNo').value);
+				this.onChangedZone(this.businessDetail.get('zoneNo').value);
 				//this.onChangeWard(this.muttonFishNewForm.get('wardNo').value.code);
 				//this.onChangeStatusOfBusiness(this.muttonFishNewForm.get('statusOfBusinessId').value.code);
 				if (this.businessDetail.get('statusOfBusinessId').value.code) {
@@ -137,6 +139,7 @@ export class MuttonFishNewComponent implements OnInit {
 
 				}
 				// deflate add one array in relationship grid
+			
 				if ((<FormArray>res.relationshipList).length == 0) {
 					this.addItem().push(this.createArray());
 					let newlyadded = this.addItem().controls;
@@ -146,6 +149,7 @@ export class MuttonFishNewComponent implements OnInit {
 					}
 				}
 				res.relationshipList.forEach(app => {
+					
 					(<FormArray>this.businessDetail.get('relationshipList')).push(this.createArray(app));
 				});
 
@@ -157,7 +161,8 @@ export class MuttonFishNewComponent implements OnInit {
 				this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
 				this.uploadFileArrayOnBusinessType(res);
 				//this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishNewForm);
-				this.muttonFishNewForm.get('personTypeGuj').setValue(res.personType.gujName);
+				//this.muttonFishNewForm.get('personTypeGuj').setValue(res.personType.gujName);
+				this.applicantDetials.get('personTypeGuj').setValue(res.personType.gujName);
 				this.muttonFishNewForm.controls.permanantAddress.valueChanges.subscribe(data => {
 					if (this.muttonFishNewForm.get('isSameAsPermanantAddress').get('code').value == "YES") {
 						this.onSameAddressChange({ checked: true });
@@ -181,7 +186,7 @@ export class MuttonFishNewComponent implements OnInit {
 			this.PERSON_TYPE = res.PERSON_TYPE;
 			this.FIRM_ZONE = res.FIRM_ZONE;
 
-			this.onChangeZone(this.muttonFishNewForm.get('zoneNo').value);
+			//this.onChangeZone(this.muttonFishNewForm.get('zoneNo').value);
 			//this.onChangeWard(this.muttonFishNewForm.get('wardNo').value.code);
 		});
 	}
@@ -560,7 +565,6 @@ export class MuttonFishNewComponent implements OnInit {
 	 * @param lookupName - passed lookup array
 	 */
 	getGujNameFromLookup(selectedValue: string, controlName: string, lookupName: Array<any>) {
-
 		if (lookupName && lookupName.length) {
 			let dataObj = lookupName.find((obj) => obj.code === selectedValue);
 			if (dataObj && dataObj.gujName) {
@@ -774,8 +778,8 @@ export class MuttonFishNewComponent implements OnInit {
 
 	onChangedZone(event) {
 		this.wardZoneLevel2List =[];
-		if (event == undefined) {
-		this.businessDetail.get('wardNo').get('code').setValue(null);
+		if (event == null && event == undefined) {
+		this.businessDetail.get('wardNo').setValue(null);
 		  return false
 		}
 		else {

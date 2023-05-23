@@ -715,7 +715,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 .stepperNav {
     .mat-tab-header {margin-bottom: 20px;}
 
-    .stepperMinHeight {min-height: 300px; align-content: start;}
+    .stepperMinHeight {min-height: 170px; align-content: start;}
     // .mat-tab-body {min-height: 400px; padding-bottom:70px !important;
     //     app-action-bar {width: 100%; position: absolute; bottom: 0; left: 0;}
     // }
@@ -1342,3 +1342,15 @@ textarea.gujInputCls {margin-bottom: 0;}
     font-size: 80%;
     font-weight: 100;
 } 
+
+.mat-form-field-label, .mat-placeholder-required, .mat-form-field-required-marker{
+    color: rgb(255, 0, 0) !important;
+ }
+
+.asteriskmarkRequired{
+    .ng-placeholder::after{
+        content:' *';
+        color:red !important;
+      }
+} 
+    

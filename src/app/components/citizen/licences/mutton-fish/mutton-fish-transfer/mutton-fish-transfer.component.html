@@ -1,12 +1,12 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
 <mat-card [hidden]="serachLicenceObj.isDisplayRenewLicenceForm" class="mt-4 formClass">
-	<mat-form-field class="col-md-10">
+	<mat-form-field>
 		<input matInput upperCase appAlphaNumeric required
 			placeholder="{{'search_by_application_no' | translate:translateKey}}"
 			[(ngModel)]="serachLicenceObj.searchLicenceNumber" maxlength="25">
 	</mat-form-field>
-	<button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary"
+	<button [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary"
 		(click)="searchLicence()">{{'search'
 		| translate:translateKey}}</button>
 </mat-card>
@@ -17,7 +17,7 @@
 			class="stepperNav">
 
 			<!-- step 1 Starts -->
-			<mat-tab>
+			<mat-tab disabled>
 				<ng-template mat-tab-label>
 					<div>{{'license_holder_detail' | translate:translateKey}}</div>
 				</ng-template>
@@ -73,14 +73,14 @@
 							validationFieldsType='onlyNameWithOutSpace'
 							placeholder="{{'holder_firstname' | translate:translateKey}}"
 							formControlName="holderFirstName" appGujInputSource targetElement="holderFirstNameGuj"
-							[form]="muttonFishTransferForm">
+							[form]="applicantDetials">
 						<control-messages [control]="applicantDetials.get('holderFirstName')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="30" appValidationFields
 							placeholder="{{'holder_middlename' | translate:translateKey}}"
 							formControlName="holderMiddleName" appGujInputSource targetElement="holderMiddleNameGuj"
-							[form]="muttonFishTransferForm">
+							[form]="applicantDetials">
 						<control-messages [control]="applicantDetials.get('holderMiddleName')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
@@ -88,7 +88,7 @@
 							validationFieldsType='onlyNameWithOutSpace'
 							placeholder="{{'holder_lastname' | translate:translateKey}}"
 							formControlName="holderLastName" appGujInputSource targetElement="holderLastNameGuj"
-							[form]="muttonFishTransferForm">
+							[form]="applicantDetials">
 						<control-messages [control]="applicantDetials.get('holderLastName')"></control-messages>
 					</mat-form-field>
 				</div>
@@ -97,7 +97,7 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj"
-							appGujInputTarget [form]="muttonFishTransferForm"
+							appGujInputTarget [form]="applicantDetials"
 							placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}" appValidationFields
 							validationFieldsType='onlyNameWithOutSpace'>
 						<control-messages [control]="applicantDetials.get('holderFirstNameGuj')">
@@ -106,7 +106,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="90"
 							placeholder="{{'holder_middlename' | translate:translateKey:'gu'}}" appValidationFields
-							formControlName="holderMiddleNameGuj" appGujInputTarget [form]="muttonFishTransferForm">
+							formControlName="holderMiddleNameGuj" appGujInputTarget [form]="applicantDetials">
 						<control-messages [control]="applicantDetials.get('holderMiddleNameGuj')">
 						</control-messages>
 					</mat-form-field>
@@ -114,7 +114,7 @@
 						<input matInput type="text" required maxlength="90"
 							placeholder="{{'holder_lastname' | translate:translateKey:'gu'}}" appValidationFields
 							validationFieldsType='onlyNameWithOutSpace' formControlName="holderLastNameGuj"
-							appGujInputTarget [form]="muttonFishTransferForm">
+							appGujInputTarget [form]="applicantDetials">
 						<control-messages [control]="applicantDetials.get('holderLastNameGuj')">
 						</control-messages>
 					</mat-form-field>
@@ -174,7 +174,7 @@
 			<!-- step 1 Ends -->
 
 			<!-- step 2 Starts -->
-			<mat-tab>
+			<mat-tab  disabled>
 				<ng-template mat-tab-label>
 					<div>{{'business_detail' | translate:translateKey}}</div>
 				</ng-template>
@@ -275,7 +275,7 @@
 					</div>
 				</div>
 
-				<div *ngIf="businessDetail.get('relationshipList')['controls'].length">
+				<div *ngIf="businessDetail.get('relationshipList')['controls'].length" class="mb-2">
 					<div *ngIf = "istable == true ">
 					<table class="table table-striped mb-0 responsiveTableRow">
 						<thead>
@@ -331,7 +331,7 @@
 										</control-messages>
 									</mat-form-field>
 								</td>
-								<td>
+								<td class="addAndEdit">
 									<span *ngIf="muttonFishTransferForm.get('canEdit').value">
 										<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
 											(click)="editRecord(item)">
@@ -366,7 +366,7 @@
 			</mat-tab>
 			<!-- step 2 Ends -->
 			<!-- step 4 Attachment Starts -->
-			<mat-tab>
+			<mat-tab disabled>
 				<ng-template mat-tab-label>
 					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
