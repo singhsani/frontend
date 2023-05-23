@@ -109,7 +109,6 @@ export class SwimmingPoolComponent implements OnInit {
   isRenewalForm = false;
   isVisibleElectricityBill = false;
   showMsg = false;
-  showSelectLanguage : boolean = true
   constructor(
     private fb: FormBuilder,
     public validationError: ValidationService,
