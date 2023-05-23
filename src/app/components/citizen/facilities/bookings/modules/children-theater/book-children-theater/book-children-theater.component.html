@@ -320,7 +320,30 @@
                     <ng-template mat-tab-label>
                         <div>{{'organization_details' | translate:translateKey}}</div>
                     </ng-template>
+                    
                     <form [formGroup]="organizationdetails">
+                        <div class="row">
+                            <mat-form-field class="col-md-4">
+                                <mat-label>{{'event_date_from' | translate:translateKey}}</mat-label>
+                                <input matInput formControlName="eventFromDate">
+                                <control-messages [control]="organizationdetails.get('eventFromDate')">
+                                </control-messages>
+                            </mat-form-field>
+
+                            <mat-form-field class="col-md-4">
+                                <mat-label>{{'event_date_to' | translate:translateKey}}</mat-label>
+                                <input matInput formControlName="eventToDate">
+                                <control-messages [control]="organizationdetails.get('eventToDate')">
+                                </control-messages>
+                            </mat-form-field>
+
+                            <mat-form-field class="col-md-4">
+                                <mat-label>{{'purpose_of_booking'| translate: translateKey}}</mat-label>
+                                <input matInput formControlName="programmePurpose">
+                                <control-messages [control]="organizationdetails.get('programmePurpose')">
+                                </control-messages>
+                            </mat-form-field>
+                        </div>
                     <!-- <h2>
                         {{'organization_details' | translate:translateKey}}
                     </h2> -->
