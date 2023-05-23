@@ -4,7 +4,7 @@
 <div *ngIf="isGuideLineActive">
 	
 	  <div class="col-md-4 ngSelect">
-		<ng-select placeholder="Number of Persons Working in the Organization*" required
+		<ng-select class="asteriskmarkRequired" placeholder="Number of Persons Working in the Organization" required
 			 (change)="onChangeNoOfHumanWorking($event)" [(ngModel)]="registrationType" [disabled]="isDisabledOrgType">
 			<ng-option *ngFor="let yes_no of regiTyep" [value]="yes_no.code">{{yes_no.name}}</ng-option>
 		</ng-select>
@@ -60,8 +60,8 @@
 				<div class="row">
 					<div class="col-md-4 ngSelect">
 						<div *ngIf="wardZoneLevel.length>=1">
-							<ng-select 
-								placeholder="Zone No.*"
+							<ng-select class="asteriskmarkRequired"
+								placeholder="Zone No."
 								formControlName="waterDrainageZoneId" (change)="onChangedWardZone($event,2)">
 								<ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.parentWardzoneId">
 									{{zone.wardzoneName}}</ng-option>
@@ -72,8 +72,8 @@
 					</div>
 					<div class="col-md-4 ngSelect">
 						<div *ngIf="wardZoneLevel.length>=2">
-							<ng-select 
-								placeholder="Ward No.*"
+							<ng-select class="asteriskmarkRequired"
+								placeholder="Ward No."
 								formControlName="waterDrainageWardId" (change)="onChangedWardZone($event,3)">
 								<ng-option *ngFor="let ward of wardZoneLevel2List" [value]="ward.wardzoneId">
 									{{ward.wardzoneName}}</ng-option>
@@ -84,7 +84,7 @@
 					</div>
 					<div class="col-md-4 ngSelect">
 						<div *ngIf="wardZoneLevel.length>=3">
-							<ng-select 
+							<ng-select
 								placeholder="Block No."
 								formControlName="waterDrainageBlockId" (change)="onChangedWardZone($event,4)">
 								<ng-option *ngFor="let block of wardZoneLevel3List" [value]="block.wardzoneId">
@@ -97,7 +97,7 @@
 					</div>
 					<div class="col-md-4 ngSelect">
 						<div>
-							<ng-select formControlName="ownershipType" placeholder="Select Ownership Type*" (change)="ownershipChange($event)">
+							<ng-select  class="asteriskmarkRequired" formControlName="ownershipType" placeholder="Select Ownership Type" (change)="ownershipChange($event)">
 								<ng-option *ngFor="let ownershipType of ownershipTypeList" [value]="ownershipType.code">{{ownershipType.name}}</ng-option>
 							</ng-select>
 							<!-- <control-messages [control]="shopL	icNewForm.get('ownershipType')"> -->
@@ -248,7 +248,7 @@
 					<h2>{{'category_label' | translate:translateKey}}</h2>
 
 					<div class="col-md-6 ngSelect" formGroupName="establishmentCategory">
-						<ng-select placeholder="{{'category_of_business' | translate:translateKey}} *"
+						<ng-select class="asteriskmarkRequired" placeholder="{{'category_of_business' | translate:translateKey}}"
 							formControlName="code" (change)="onChangeCategorySelect($event)">
 							<ng-option *ngFor="let category of businessCategory" [value]="category.code">
 								{{category.name}}</ng-option>
@@ -258,7 +258,7 @@
 					</div>
 
 					<div class="col-md-6 ngSelect selectTwoLine" formGroupName="businessSubCategory">
-						<ng-select placeholder="{{'sub_category_of_business' | translate:translateKey}} *"
+						<ng-select class="asteriskmarkRequired" placeholder="{{'sub_category_of_business' | translate:translateKey}}"
 							formControlName="code" (change)="onChangeSubCategory($event)">
 							<ng-option *ngFor="let sub_category of businessSubCategoryList" [value]="sub_category.code">
 								{{sub_category.name}}</ng-option>
@@ -270,8 +270,8 @@
 
 				<div class="row">
 					<div class="col-md-6 ngSelect" formGroupName="natureOfBusiness">
-						<ng-select 
-							placeholder="{{'nature_of_business' | translate:translateKey}} *"
+						<ng-select class="asteriskmarkRequired"
+							placeholder="{{'nature_of_business' | translate:translateKey}}"
 							formControlName="code" >
 							<ng-option *ngFor="let category of businessNature" [value]="category.code">
 								{{category.name}}</ng-option>
@@ -407,7 +407,7 @@
 												{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}
 											</p>
 											<div class="ngSelect" *ngIf="item.isEditMode"  style="min-width:100px">
-												<ng-select *ngIf="item.isEditMode" formControlName="code">
+												<ng-select class="asteriskmarkRequired" *ngIf="item.isEditMode" formControlName="code">
 													<ng-option *ngFor="let gender of gender" [value]="gender.code">
 														{{gender.name}}</ng-option>
 												</ng-select>
@@ -634,8 +634,8 @@
 						<h2>{{'type_of_organization_label' | translate: translateKey}}</h2>
 
 						<div class="col-md-4 ngSelect" formGroupName="organizationType">
-							<ng-select formControlName="code"
-								placeholder="{{ 'shop_lic_org_type' | translate:translateKey }} *"
+							<ng-select class="asteriskmarkRequired" formControlName="code"
+								placeholder="{{ 'shop_lic_org_type' | translate:translateKey }}"
 						    	(change)="onChangeTypeOfOrganization($event);">
 								<ng-option *ngFor="let org_type of SHOP_LIC_TYPE_OF_ORGANIZATION"
 									[value]="org_type.code">{{org_type.name}}</ng-option>
