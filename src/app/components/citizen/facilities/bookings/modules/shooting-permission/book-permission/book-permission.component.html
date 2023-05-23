@@ -4,37 +4,82 @@
 <div *ngIf="guideLineFlag">
   <mat-card class="cardBox">
 
-    <div class="pageTitle">{{'online_shootingPermission_booking_instruction'| translate: translateKey}}</div>
+    <div class="pageTitle d-flex justify-content-between">
+      <div *ngIf="!showSelectLanguage">{{'online_shootingPermission_booking_instruction'| translate: translateKey}} </div>
+      <div *ngIf="showSelectLanguage">{{'online_shootingPermission_booking_instruction'| translate: translateKey : 'gu'}}
+      </div>
+      <button mat-raised-button color="primary" type="button" (click)="selectLanguage('en')"
+        *ngIf="showSelectLanguage">English</button>
+      <button mat-raised-button color="primary" type="button" (click)="selectLanguage('gu')"
+        *ngIf="!showSelectLanguage">ગુજરાતી</button>
+    </div>
 
-    <mat-card-content class="p-4">
-
+    <mat-card-content class="p-4 mat-card" *ngIf="!showSelectLanguage">
+      <img _ngcontent-c1="" width=130 height=130 alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg"
+        class="center">
       <h4 class="pb-2 headlines">{{head_lines| translate: translateKey}}</h4>
       <br>
       <h2 class="headline"><b>{{'rules_and_regulations'| translate: translateKey}}</b></h2>
-
-      <h4><ol class="olList">
-
-        <li class="engInstructions">
-          All parties/organizers have to observe the VMC Rules
-        </li>
-
-        <li class="engInstructions">
-          Production of all necessary permission is mandatory for applicant before commencement of program.
-        </li>
-
-        <li class="engInstructions">
-          Deduction as per the rules will be made in the event of cancellation.
-        </li>
-
-      </ol></h4>
+    
+      <h4>
+        <ol class="olList">
+    
+          <li class="engInstructions">
+            All parties/organizers have to observe the VMC Rules
+          </li>
+    
+          <li class="engInstructions">
+            Production of all necessary permission is mandatory for applicant before commencement of program.
+          </li>
+    
+          <li class="engInstructions">
+            Deduction as per the rules will be made in the event of cancellation.
+          </li>
+    
+        </ol>
+      </h4>
+    </mat-card-content>
+    <mat-card-content class="p-4 mat-card" *ngIf="showSelectLanguage">
+      <img _ngcontent-c1="" width=130 height=130 alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg"
+        class="center">
+      <h4 class="pb-2 headlines">{{gujHeadLines| translate: translateKey }}</h4>
+      <br>
+      <h2 class="headline"><b>{{'rules_and_regulations'| translate: translateKey : 'gu'}}</b></h2>
+    
+      <h4 class="instructions pl-4">
+        <div class="d-flex">
+          <p class="pr-2 listSize"> ૧. </p>
+          <p class="listSize"> તમામ પક્ષો/આયોજકોએ VMC નિયમોનું પાલન કરવું પડશે </p>
+        </div>
+        <div class="d-flex">
+          <p class="pr-2 listSize"> ૨. </p>
+          <p class="listSize"> કાર્યક્રમ શરૂ કરતા પહેલા અરજદાર માટે તમામ જરૂરી પરવાનગીનું ઉત્પાદન ફરજિયાત છે. </p>
+        </div>
+        <div class="d-flex">
+          <p class="pr-2 listSize"> ૩. </p>
+          <p class="listSize"> રદ થવાની સ્થિતિમાં નિયમો મુજબ કપાત કરવામાં આવશે. </p>
+        </div>
+      </h4>
     </mat-card-content>
   </mat-card>
-  <div class="fotButtonBar1">
-    <div class="col-sm-12 col-md-12 text-right">
-      <button mat-raised-button (click)="guideLineFlag = false;showPermissionSearchForm= true;" color="primary">
-        {{'submit'| translate: translateKey}}
-      </button>
-    </div>
+  <div class="fotButtonBar mt-0">
+    <div class="row px-3 checkbox">
+      <div class="col-sm-6 col-md-6" *ngIf="showSelectLanguage">
+          <mat-checkbox class="d-block listSize" labelPosition="after" (change)="clickProcess($event)" [checked]="checkProceed">
+             <span class="font-weight-bold"> {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey :'gu'}}</span>
+          </mat-checkbox>
+          </div>
+      <div class="col-sm-6 col-md-6"  *ngIf="!showSelectLanguage">
+          <mat-checkbox (change)="clickProcess($event)" [checked]="checkProceed" class="d-block listSize"> 
+              <span class="font-weight-bold">{{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}}</span>
+          </mat-checkbox>
+      </div>
+      <div class="col-sm-6 col-md-6 text-right">
+        <button mat-raised-button (click)="guideLineFlag = false;showPermissionSearchForm= true;" color="primary">
+          {{'submit'| translate: translateKey}}
+        </button>
+      </div>
+  </div>
   </div>
 </div>
 

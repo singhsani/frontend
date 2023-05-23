@@ -93,6 +93,42 @@ export class BookStadiumComponent implements OnInit {
     maxEndDate:any;
     totalAmount: number=0;
     Total: number=0;
+    showSelectLanguage : boolean = true;
+    gujHeadLines : string;
+    gujFreeStructure = [
+           {
+                "sno": '૧',
+                "programmePurpose": "કોમર્શિયલ",
+                "bookingRent": '૬૦૦૦૦',
+                "administrativeCharge": '૬૦૦૦૦',
+                "gst": '૧૧૮૮૦',
+                "deposit": '૧૧૮૮૦'
+            },
+            {
+                "sno": '૨',
+                "programmePurpose": "નોન કોમર્શિયલ",
+                "bookingRent": '૧૫૦૦૦',
+                "administrativeCharge": '૨૫૦૦',
+                "gst": '૩૧૫૦',
+                "deposit": '૧૦૦૦૦'
+            },
+            {
+                "sno": '૩',
+                "programmePurpose": "ધર્મ આધાર/સેમિનાર/સાંસ્કૃતિક  ",
+                "bookingRent": '૭૫૦૦',
+                "administrativeCharge": '૨૫૦૦ ',
+                "gst": '૧૮૦૦ ',
+                "deposit": '૫૦૦૦'
+            },
+            {
+                "sno": '૪',
+                "programmePurpose": "શાળા",
+                "bookingRent": '૨૦૦૦',
+                "administrativeCharge": '૧૫૦૦',
+                "gst": '૬૩૦',
+                "deposit": '૨૦૦૦'
+            }
+        ]
 
     public formControlNameToTabIndex = new Map();
     constructor(private bookingService: BookingService,
@@ -110,11 +146,15 @@ export class BookStadiumComponent implements OnInit {
         /**
              * Static headlines
              */
-        this.head_lines = `Online Stadium Booking facility is the convenient and
-		easy way to book the Stadium of Vadodara Municipal Corporation. You can
+    this.head_lines = `Online Stadium Booking facility is the convenient and
+	easy way to book the Stadium of Vadodara Municipal Corporation. You can
     view the availability details of the stadium and select booking date.
     The booking is confirmed on the successfull online payment of the rent, administration charges, GST and deposit amount
     for selected date.`;
+    this.gujHeadLines = `ઓનલાઈન સ્ટેડિયમ બુકિંગ સુવિધા એ વડોદરા મ્યુનિસિપલ કોર્પોરેશનનું સ્ટેડિયમ બુક કરવાની
+     અનુકૂળ અને સરળ રીત છે. તમે સ્ટેડિયમની ઉપલબ્ધતા વિગતો જોઈ શકો છો અને બુકિંગ તારીખ પસંદ કરી શકો છો. પસંદગીની તારીખ માટે ભાડું, વહીવટી ચાર્જ, 
+     GST અને જમા રકમની સફળ ઑનલાઇન ચુકવણી પર બુકિંગની પુષ્ટિ થાય છે.`
+
 
         this.createStadiumAvailiblityForm();
         this.createStadiumApplicationForm();
@@ -506,4 +546,15 @@ export class BookStadiumComponent implements OnInit {
       termsConditionClick(event) {
         this.stadiumApplicationForm.controls['termsCondition'].setValue(event.checked);
       }
+
+      selectLanguage(event) {
+        this.stadiumApplicationForm.controls['termsCondition'].setValue(null);
+		if (event == 'gu') {
+			this.showSelectLanguage = true
+		}
+		else {
+			this.showSelectLanguage = false
+		}
+
+	}
 }

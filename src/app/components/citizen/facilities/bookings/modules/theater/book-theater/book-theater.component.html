@@ -38,31 +38,109 @@
         </ol>
       </h4>
       <!-- <h4><b>એમ્ફી થિયેટર બુકિંગ માટે દરો:</b></h4> -->
-      <p class="headlines"><strong>એમ્ફી થિયેટર બુકિંગ માટે દરો:</strong></p>
-      <div class="table">
-
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-          <ng-container matColumnDef="sno">
-            <th mat-header-cell class="tableHead" *matHeaderCellDef>અનુક્રમ નંબર</th>
-            <td mat-cell *matCellDef="let element"> {{covertGujaratinumber(element.sno)}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="programmePurpose">
-            <th mat-header-cell *matHeaderCellDef>પ્રકાર</th>
-            <td mat-cell *matCellDef="let element"> {{covertGujaratiString(element.programmePurpose)}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="bookingRent">
-            <th mat-header-cell *matHeaderCellDef class="text-right">ભાડુ (એક દિવસ માટે)({{rupeeSign}})</th>
-            <td mat-cell *matCellDef="let element" class="text-right"> {{covertGujaratinumber(element.bookingRent)}} </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumnsFeeDetails"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumnsFeeDetails;"></tr>
-        </table>
-
-
+      <p class="headlines text-center"><strong>એમ્ફી થિયેટર બુકિંગ માટે દરો:</strong></p>
+      <div class="table-center">
+        <div class="table">
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    
+            <ng-container matColumnDef="sno">
+              <th mat-header-cell class="tableHead" *matHeaderCellDef>અનુક્રમ નંબર</th>
+              <td mat-cell *matCellDef="let element"> {{covertGujaratinumber(element.sno)}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="programmePurpose">
+              <th mat-header-cell *matHeaderCellDef>પ્રકાર</th>
+              <td mat-cell *matCellDef="let element"> {{covertGujaratiString(element.programmePurpose)}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="bookingRent">
+              <th mat-header-cell *matHeaderCellDef class="text-right">ભાડુ (એક દિવસ માટે)({{rupeeSign}})</th>
+              <td mat-cell *matCellDef="let element" class="text-right"> {{covertGujaratinumber(element.bookingRent)}} </td>
+            </ng-container>
+    
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsFeeDetails"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsFeeDetails;"></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h3 class="head-line text-center">
+          <strong>એમ્પી થિયેટર નિયમો</strong>
+        </h3>
+        <h4 class="instructions pl-2">
+          <div class="d-flex pl-2">
+            <p class="pr-2 listSize"> ૧. </p>
+            <p class="listSize"> એમ્પી-થિયેટર સાંસ્ક્રુતિક / એજયુકેશનલ કાર્યક્રમો માટે જ ભાડેથી આપવામાં આવશે.</p>
+          </div>
+          <div class="d-flex pl-2">
+            <p class="pr-2 listSize"> ૨. </p>
+            <p class="listSize"> શેક્ષણિક સંસ્થાઓ માટે પ્રતિદિન રૂ.૬૦૦/- ભાડુ અને અન્ય સંસ્થાઓ / વ્યક્તઓ માટે ભાડુ રૂ.
+              ૨૫૦૦/- લાગત ભરવાની રહેશે. જે દર ચાર કલાકના રહેશે.</p>
+          </div>
+          <div class="d-flex pl-2">
+            <p class="pr-2 listSize"> ૩. </p>
+            <p class="listSize"> હાલમાં સયાજીબાગમાં વાહનોના પ્રવેશ માટે પ્રતિબંધ છે જરૂરી ત્રણ વાહન લઇ જવા માટેની જરૂર
+              જણાશે
+              પરવાનગી આપવામાં આવશે.</p>
+          </div>
+          <div class="d-flex pl-2">
+            <p class="pr-2 listSize"> ૫. </p>
+            <p class="listSize"> ૩ કિલોવોટ વીજળીના મીટરથી ઇલેકટ્રીક સપ્લાય આપવામાં આવશે વધુ વીજળીના વપરાશ માટે જનરેટર અથવા
+              ટેમ્પરરી ઇલે.મીટરની વ્યવસ્થા જે તે સંસ્થા/વ્યક્તિએ સ્વ-ખર્ચે કરવાની રહેશે.</p>
+          </div>
+          <div class="d-flex pl-2">
+            <p class="pr-2 listSize">૬. </p>
+            <p class="listSize"> બાગમાં કોઇપણ પ્રકારનું નુકસાન થશે તેની જવાબદારી જે તે સંસ્થા/વ્યક્તની રહેશે.</p>
+          </div>
+          <div class="d-flex pl-2">
+            <p class="pr-2 listSize">૭.</p>
+            <p class="listSize"> એમ્પી-થિયેટર હાલમાં જે સુવિધા ઉપલબ્ધ છે તે જ સ્થિતિમાં મળશે તે સિવાય વધારાની તમામ
+              પ્રકારના
+              પ્રોગ્રામમાં જરૂરીયાત પ્રમાણેની સુવિધાઓ જે તે સંસ્થા/વ્યક્તિએ કરવાની રહેશે.</p>
+          </div>
+          <div class="d-flex pl-2">
+            <p class="pr-2 listSize">૮.</p>
+            <p class="listSize"> વધારાની લાઇટ ડેકોરેશન માટે એન.ઓ.સી ફરજીયાત લાવવાની રહેશે.</p>
+          </div>
+          <div class="d-flex pl-2">
+            <p class="pr-2 listSize">૯.</p>
+            <p class="listSize"> સયાજીબાગના જે તે નિયમોનું ચુસ્ત્પણે પાલન કરવાનું રહેશે.</p>
+          </div>
+          <div class="d-flex pl-2">
+            <p class="pr-2 listSize">૧૦.</p>
+            <p class="listSize"> સએમ્પી-થિયેટરમાં નિયમ વિરૂધ્ધ દંગા ફસાદ, તકરાર કે ગંદકી કરવી નહી તેમજ સરસામાનનો દુરૂપયોગ
+              કરવો નહી. નિયમ વિરૂધ્ધ કોઇ પણ પ્રકારનું કાર્ય કરવામાં આવશે તો થીયેટર તાત્કાલિક ખાલી કરાવવામાં આવશે અને નિયમ
+              અનુસાર કાયદાકિય કાર્યવાહી કરવામાં આવશે.</p>
+          </div>
+          <div class="d-flex pl-2">
+            <p class="pr-2 listSize">૧૧.</p>
+            <p class="listSize"> અનિવાર્ય સંજોગોના કારણે એમ્પી-થીયેટરનો ઉપયોગ કરવાની તારીખોમાં ફેરફાર કરવાની સત્તા
+              ડાયરેકટરશ્રી (પાર્કસ એન્ડ ગાર્ડન) ની રહેશે.</p>
+          </div>
+          <div class="d-flex pl-2">
+            <p class="pr-2 listSize">૧૨.</p>
+            <p class="listSize"> એમ્પી-થિયેટરની પાસેના લોન પ્લોટમાં ખુરશી કે બીજુ ફરાસખાનાનો સામાન મુકવો નહી તેમજ
+              કાર્યક્રમ
+              દરમ્યાન કોઇપણ પ્રકારની કોમર્શીયલ એકટીવીટી કરી શકાશે નહી જેવી કે નાસ્તા, ખાણીપીણાના સ્ટોલ વિગેરે ઉભા કરી
+              શકાશે
+              નહી.</p>
+          </div>
+          <div class="d-flex pl-2">
+            <p class="pr-2 listSize">૧૩.</p>
+            <p class="listSize"> એમ્પી-થિયેટર કેન્સલ કરાવવા માટે ઉપયોગ કરવાની તારીખથી દસ દિવસ પહેલા કેન્સલ કરાવવાની અરજી
+              ડાયરેકટરશ્રી (પાર્કસ એન્ડ ગાર્ડન) ની કચેરીમાં કરવાની રહેશે. જેમાથી ભાડામાંથી ૩૦ ટકા રકમ કપાત કરી બાકીની રકમ
+              પરત કરવામાં આવશે.</p>
+          </div>
+          <div class="d-flex pl-2">
+            <p class="pr-2 listSize">૧૩.</p>
+            <p class="listSize"> એમ્પી-થિયેટર ખાતે સરકારી કે અર્ધ સરકારી કે વડોદરા મહાનગરપાલિકાનો કોઇ કાર્યક્રમ નક્કી
+              કરવામાં આવશે તો અન્ય બૂકીંગ આપોઆપ રદ ગણાશે જેની નોંધ લેવી.</p>
+          </div>
+          <div class="d-flex pl-2">
+            <p class="pr-2 listSize">૧૪.</p>
+            <p class="listSize">પ્રદૂષણ નિયત્રણના ધારાધોરણોનો ચુસ્ત અમલ કરવાનો રહેશે.</p>
+          </div>
+        </h4>
       </div>
     </mat-card-content>
 
@@ -84,7 +162,8 @@
           <!--                    <h5>The above instruction must be strictly enforced otherwise the program will be forced to close.</h5>-->
         </ol>
       </h4><br>
-      <h4><b>Rates for Booking Amphi Theatre:</b></h4>
+      <h4 class="text-center"><b>Rates for Booking Amphi Theatre:</b></h4>
+      <div class="table-center">
       <div class="table">
 
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -108,89 +187,95 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumnsFeeDetails;"></tr>
         </table>
       </div>
-
-    <br>
-      <h3 class="headlines mb-4 text-center">
-        <strong>: - એમ્પી થિયેટર નિયમો:-</strong>
-      </h3>
-      <h4>
-        <ol class="olList">
-          <li>
-            <div class="d-flex pl-2">
-              <p class="pr-2 listSize"> ૧. </p>
-              <p class="listSize"> એમ્પી-થિયેટર સાંસ્ક્રુતિક / એજયુકેશનલ કાર્યક્રમો માટે જ ભાડેથી આપવામાં આવશે.</p>
-            </div>
-            <div class="d-flex pl-2">
-              <p class="pr-2 listSize"> ૨. </p>
-              <p class="listSize"> શેક્ષણિક સંસ્થાઓ માટે પ્રતિદિન રૂ.૬૦૦/- ભાડુ અને અન્ય સંસ્થાઓ / વ્યક્તઓ માટે ભાડુ રૂ.
-                ૨૫૦૦/- લાગત ભરવાની રહેશે. જે દર ચાર કલાકના રહેશે.</p>
-            </div>
-            <div class="d-flex pl-2">
-              <p class="pr-2 listSize"> ૩. </p>
-              <p class="listSize"> હાલમાં સયાજીબાગમાં વાહનોના પ્રવેશ માટે પ્રતિબંધ છે જરૂરી ત્રણ વાહન લઇ જવા માટેની જરૂર જણાશે
-                પરવાનગી આપવામાં આવશે.</p>
-            </div>
-            <div class="d-flex pl-2">
-              <p class="pr-2 listSize"> ૫. </p>
-              <p class="listSize"> ૩ કિલોવોટ વીજળીના મીટરથી ઇલેકટ્રીક સપ્લાય આપવામાં આવશે વધુ વીજળીના વપરાશ માટે જનરેટર અથવા
-                ટેમ્પરરી ઇલે.મીટરની વ્યવસ્થા જે તે સંસ્થા/વ્યક્તિએ સ્વ-ખર્ચે કરવાની રહેશે.</p>
-            </div>
-            <div class="d-flex pl-2">
-              <p class="pr-2 listSize">૬. </p>
-              <p class="listSize"> બાગમાં કોઇપણ પ્રકારનું નુકસાન થશે તેની જવાબદારી જે તે સંસ્થા/વ્યક્તની રહેશે.</p>
-            </div>
-            <div class="d-flex pl-2">
-              <p class="pr-2 listSize">૭.</p>
-              <p class="listSize"> એમ્પી-થિયેટર હાલમાં જે સુવિધા ઉપલબ્ધ છે તે જ સ્થિતિમાં મળશે તે સિવાય વધારાની તમામ પ્રકારના
-                પ્રોગ્રામમાં જરૂરીયાત પ્રમાણેની સુવિધાઓ જે તે સંસ્થા/વ્યક્તિએ કરવાની રહેશે.</p>
-            </div>
-            <div class="d-flex pl-2">
-              <p class="pr-2 listSize">૮.</p>
-              <p class="listSize"> વધારાની લાઇટ ડેકોરેશન માટે એન.ઓ.સી ફરજીયાત લાવવાની રહેશે.</p>
-            </div>
-            <div class="d-flex pl-2">
-              <p class="pr-2 listSize">૯.</p>
-              <p class="listSize"> સયાજીબાગના જે તે નિયમોનું ચુસ્ત્પણે પાલન કરવાનું રહેશે.</p>
-            </div>
-            <div class="d-flex pl-2">
-              <p class="pr-2 listSize">૧૦.</p>
-              <p class="listSize"> સએમ્પી-થિયેટરમાં નિયમ વિરૂધ્ધ દંગા ફસાદ, તકરાર કે ગંદકી કરવી નહી તેમજ સરસામાનનો દુરૂપયોગ
-                કરવો નહી. નિયમ વિરૂધ્ધ કોઇ પણ પ્રકારનું કાર્ય કરવામાં આવશે તો થીયેટર તાત્કાલિક ખાલી કરાવવામાં આવશે અને નિયમ
-                અનુસાર કાયદાકિય કાર્યવાહી કરવામાં આવશે.</p>
-            </div>
-            <div class="d-flex pl-2">
-              <p class="pr-2 listSize">૧૧.</p>
-              <p class="listSize"> અનિવાર્ય સંજોગોના કારણે એમ્પી-થીયેટરનો ઉપયોગ કરવાની તારીખોમાં ફેરફાર કરવાની સત્તા
-                ડાયરેકટરશ્રી (પાર્કસ એન્ડ ગાર્ડન) ની રહેશે.</p>
-            </div>
-            <div class="d-flex pl-2">
-              <p class="pr-2 listSize">૧૨.</p>
-              <p class="listSize"> એમ્પી-થિયેટરની પાસેના લોન પ્લોટમાં ખુરશી કે બીજુ ફરાસખાનાનો સામાન મુકવો નહી તેમજ કાર્યક્રમ
-                દરમ્યાન કોઇપણ પ્રકારની કોમર્શીયલ એકટીવીટી કરી શકાશે નહી જેવી કે નાસ્તા, ખાણીપીણાના સ્ટોલ વિગેરે ઉભા કરી શકાશે
-                નહી.</p>
-            </div>
-            <div class="d-flex pl-2">
-              <p class="pr-2 listSize">૧૩.</p>
-              <p class="listSize"> એમ્પી-થિયેટર કેન્સલ કરાવવા માટે ઉપયોગ કરવાની તારીખથી દસ દિવસ પહેલા કેન્સલ કરાવવાની અરજી
-                ડાયરેકટરશ્રી (પાર્કસ એન્ડ ગાર્ડન) ની કચેરીમાં કરવાની રહેશે. જેમાથી ભાડામાંથી ૩૦ ટકા રકમ કપાત કરી બાકીની રકમ
-                પરત કરવામાં આવશે.</p>
-            </div>
-            <div class="d-flex pl-2">
-              <p class="pr-2 listSize">૧૩.</p>
-              <p class="listSize"> એમ્પી-થિયેટર ખાતે સરકારી કે અર્ધ સરકારી કે વડોદરા મહાનગરપાલિકાનો કોઇ કાર્યક્રમ નક્કી
-                કરવામાં આવશે તો અન્ય બૂકીંગ આપોઆપ રદ ગણાશે જેની નોંધ લેવી.</p>
-            </div>
-            <div class="d-flex pl-2">
-              <p class="pr-2 listSize">૧૪.</p>
-              <p class="listSize">પ્રદૂષણ નિયત્રણના ધારાધોરણોનો ચુસ્ત અમલ કરવાનો રહેશે.</p>
-            </div>
-          </li>
-        </ol>
-      </h4>
-
-      <div class="row pl-3">
-        <mat-checkbox (change)="clickProcess($event)" [checked]="checkProceed"> <b>Agree And Continue</b>
-        </mat-checkbox>
+    </div>
+      <div>
+        <h3 class="headlines text-center">
+          <strong>{{'Amp Theater Rules '| translate: translateKey}}</strong>
+        </h3>
+        <h4>
+          <ol class="listofol">
+  
+            <li class="engInstructions">
+              <h4>Ampi-theater will be hired for cultural / educational programs only.</h4>
+            </li>
+  
+            <li class="engInstructions">
+              <h4>Rent Rs.600/- per day for Educational Institutions and Rent for other Institutions / Individuals Rs.
+                2500/- has to be paid. Which will be every four hours.
+              </h4>
+            </li>
+  
+            <li class="engInstructions">
+              <h4>At present, there is a ban on entry of vehicles in Sayajibagh, permission will be given if required to
+                carry three vehicles.</h4>
+            </li>
+  
+            <li class="engInstructions">
+              <h4>Electric supply will be provided from 3 kilowatt electricity meter. Generator or temporary electricity
+                meter arrangement for more electricity consumption will have to be done by the
+                organization/individual at their own expense.</h4>
+            </li>
+  
+            <li class="engInstructions">
+              <h4>Any damage to the garden will be the responsibility of that organization/person.</h4>
+            </li>
+  
+            <li class="engInstructions">
+              <h4> The Ampi-theatre will be available in the same condition as the facility is currently available except
+                for
+                additional facilities as required in all types of programs as required by the organization/individual.
+              </h4>
+            </li>
+  
+            <li class="engInstructions">
+              <h4>NOC must be brought for additional light decoration.</h4>
+            </li>
+  
+            <li class="engInstructions">
+              <h4>
+                Those rules of Sayajibaug will have to be followed strictly.
+              </h4>
+            </li>
+            <li class="engInstructions">
+              <h4>
+                In Sampi-theater against the rules no rioting, fighting or littering and no misusing of furniture. If any
+                kind of work is done against the rules, the theater will be evacuated immediately and legal action will
+                be taken as per the rules.
+              </h4>
+            </li>
+  
+            <li class="engInstructions">
+              <h4>
+                The Director (Parks and Gardens) reserves the right to change the dates of use of the Amphitheatre,
+                due to unavoidable circumstances.
+              </h4>
+            </li>
+  
+            <li class="engInstructions">
+              <h4>
+                Chairs or other furniture items will not be placed in the loan plot near the amphitheatre, and no
+                commercial activities such as snacks, food stalls etc. will be allowed during the program
+              </h4>
+            </li>
+            <li class="engInstructions">
+              <h4>
+                Chairs or other furniture items will not be placed in the loan plot near the amphitheatre, and no
+                commercial activities such as snacks, food stalls etc. will be allowed during the program
+              </h4>
+            </li>
+            <li class="engInstructions">
+              <h4>
+                Please note that if any Government or Semi-Government or Vadodara Municipal Corporation
+                program is scheduled at Ampi-Theatre, other bookings will automatically be cancelled.
+              </h4>
+            </li>
+            <li class="engInstructions">
+              <h4>
+                Pollution control norms have to be strictly enforced.
+              </h4>
+            </li>
+          </ol>
+        </h4>
       </div>
     </mat-card-content>
 

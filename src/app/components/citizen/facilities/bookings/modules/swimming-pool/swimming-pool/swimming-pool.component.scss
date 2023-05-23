@@ -121,7 +121,32 @@ h1{
             text-align: left;
         }
     }
-}
+    .table-center{
+        margin-left: auto;  
+        margin-right: auto;  
+        border-collapse: collapse;    
+        width: 500px
+      }
+        .table{
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 98%;
+            td{
+                border: 1px solid hsl(0, 0%, 6%);
+                text-align: left;
+                padding: 8px;
+                font-weight: bold;
+                font-size: 15px;
+            }
+            th{
+                border: 1px solid hsl(0, 0%, 6%);
+                text-align: center;
+                font-size: 19px;
+            }
+       }
+       
+    }
+    
 
 .fotButtonBar{
     .listSize{

@@ -65,6 +65,9 @@ export class BookPlanetariumComponent implements OnInit {
 
   constants = Constants;
   rupeeSign: string;
+  showSelectLanguage : boolean = true;
+  btnProceed : boolean = true;
+  gujheadLine : string;
 
   /**
    * @param fb - Declare FormBuilder property.
@@ -88,7 +91,8 @@ export class BookPlanetariumComponent implements OnInit {
 
   ngOnInit() {
   this.head_lines = `Online Planetarium Booking facility is the convenient and easy way to book the Planetarium of Vadodara Municipal Corporation. You can view the availability details of the Planetarium and select booking date. The booking is confirmed on successful payment of the rent amount for selected date.`;
-    this.createTicketBookingForm();
+  this.gujheadLine = `ઓનલાઈન પ્લેનેટોરિયમ બુકિંગ સુવિધા એ વડોદરા મ્યુનિસિપલ કોર્પોરેશનના પ્લેનેટોરિયમ બુક કરવાની અનુકૂળ અને સરળ રીત છે. તમે પ્લેનેટેરિયમની ઉપલબ્ધતા વિગતો જોઈ શકો છો અને બુકિંગ તારીખ પસંદ કરી શકો છો. પસંદ કરેલી તારીખ માટે ભાડાની રકમની સફળ ચુકવણી પર બુકિંગની પુષ્ટિ થાય છે.` 
+  this.createTicketBookingForm();
     this.getLookUps();
     this.getListData();
     this.profileData();
@@ -779,4 +783,23 @@ export class BookPlanetariumComponent implements OnInit {
     }
   }
 
+  selectLanguage(event) {
+		this.btnProceed = true
+		if (event == 'gu') {
+			this.showSelectLanguage = true
+		}
+		else {
+			this.showSelectLanguage = false
+		}
+
+	}
+
+
+  clickProcess(event){
+		if(event.checked == true){
+        this.btnProceed = false;
+	    }else{
+	      this.btnProceed = true;
+	    }
+	  }
 }

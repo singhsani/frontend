@@ -93,6 +93,9 @@ export class BookPermissionComponent implements OnInit {
   // BANKS: Array<any> = [];
   PURPOSES: Array<any> = [];
   CANCELLATION_TYPE: Array<any> = [];
+  gujHeadLines : string;
+  showSelectLanguage : boolean = true;
+  btnProceed : boolean = true
 
   constructor(private bookingService: BookingService,
     private router: Router,
@@ -117,6 +120,7 @@ export class BookPermissionComponent implements OnInit {
     view the availiblity details of the bookPermission and select booking date.
     The booking is confirmed on the successfull online payment of the rent amount
     for selected date`;
+    this.gujHeadLines = `ઓનલાઈન પરમિશન બુકિંગ સુવિધા એ વડોદરા મ્યુનિસિપલ કોર્પોરેશનની પરવાનગી બુક કરવાની અનુકૂળ અને સરળ રીત છે. તમે બુક પરમિશનની ઉપલબ્ધતા વિગતો જોઈ શકો છો અને બુકિંગ તારીખ પસંદ કરી શકો છો. પસંદ કરેલ તારીખ માટે ભાડાની રકમની સફળ ઓનલાઈન ચુકવણી પર બુકિંગની પુષ્ટિ થાય છે`
 
     this.createPermissionAvailiblityForm();
     this.createPermissionApplicationForm();
@@ -690,5 +694,22 @@ export class BookPermissionComponent implements OnInit {
       this.organizationdetails.get('applicantAddress').get('city').setValue('Vadodara');
     }
 
+    clickProcess(event){
+      if(event.checked == true){
+              this.btnProceed = false;
+        }else{
+            this.btnProceed = true;
+        }
+      }
 
+      selectLanguage(event) {
+        this.btnProceed = true;
+        if (event == 'gu') {
+          this.showSelectLanguage = true
+        }
+        else {
+          this.showSelectLanguage = false
+        }
+    
+      }
 }

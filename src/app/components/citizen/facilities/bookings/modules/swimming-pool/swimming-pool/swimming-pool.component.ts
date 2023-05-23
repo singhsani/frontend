@@ -76,6 +76,7 @@ export class SwimmingPoolComponent implements OnInit {
 
   // required attachment array
   public uploadFilesArray: Array<any> = [];
+  showSelectLanguage : boolean = true
 
   //lookup
   SWIMMING_POOL_NAME: Array<any> = [];
@@ -833,5 +834,17 @@ export class SwimmingPoolComponent implements OnInit {
 		this.formControlNameToTabIndex.set('accountNo', 2)
 		this.formControlNameToTabIndex.set('ifscCode', 2)
 		
+	}
+  selectLanguage(event) {
+    this.swimmimgPoolBookingForm.controls['termsCondition'].setValue(false);
+		if (event == 'gu') {
+			this.showSelectLanguage = true
+      this.swimmingPoolService.updatedIsShowRules(true)
+    }
+		else {
+			this.showSelectLanguage = false
+      this.swimmingPoolService.updatedIsShowRules(false);
+		}
+
 	}
 }
