@@ -371,6 +371,8 @@ export class BookChildrenTheaterComponent implements OnInit {
                 appointments: this.selectedShift.map(shifts => shifts.uniqueId)
             }
             this.bookingService.shortListBookings(shortListData).subscribe(resp => {
+                this.organizationdetails.get('programmePurpose').setValue(resp.data.bookingPurposeMaster.name);
+                this.organizationdetails.get('programmePurpose').disable();
                 this.showChildrenTheaterSearchForm = false;
                 this.childrenTheaterApplicationForm.patchValue(resp.data);
                 this.addressComp.getCountryLists();
