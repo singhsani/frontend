@@ -203,6 +203,9 @@ export class BookChildrenTheaterComponent implements OnInit {
             organizationName: [null, [Validators.required, Validators.maxLength(100)]],
             orgTelephoneNo: [null, [Validators.required, ValidationService.telPhoneNumberValidator]],
             organizationAddress: this._fb.group(this.addressComp.addressControls()),
+            eventFromDate: null,
+            eventToDate: null,
+            programmePurpose: [null, [Validators.required, Validators.maxLength(200)]],
             programPurpose: [null, [Validators.required, Validators.maxLength(200)]]
           
         })
@@ -368,11 +371,19 @@ export class BookChildrenTheaterComponent implements OnInit {
                 appointments: this.selectedShift.map(shifts => shifts.uniqueId)
             }
             this.bookingService.shortListBookings(shortListData).subscribe(resp => {
+                this.organizationdetails.get('programmePurpose').setValue(resp.data.bookingPurposeMaster.name);
+                this.organizationdetails.get('programmePurpose').disable();
                 this.showChildrenTheaterSearchForm = false;
                 this.childrenTheaterApplicationForm.patchValue(resp.data);
                 this.addressComp.getCountryLists();
                 if (resp.data.status == this.bookingConstants.DRAFT) {
                     this.bookingService.searchPayment(resp.data.refNumber).subscribe(payResp => {
+                        this.organizationdetails.get('eventFromDate').setValue(payResp.data.EVENT_DATE_FROM);
+                        this.organizationdetails.get('eventFromDate').disable();
+
+                        this.organizationdetails.get('eventToDate').setValue(payResp.data.EVENT_DATE_TO);
+                        this.organizationdetails.get('eventToDate').disable();
+
                         this.paymentObject = payResp.data;
                         this.showPaymentReciept = true;
                         this.confirmRef.hide();
