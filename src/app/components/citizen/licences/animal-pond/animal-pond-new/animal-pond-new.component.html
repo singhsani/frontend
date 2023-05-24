@@ -343,7 +343,7 @@
 				<ng-template mat-tab-label>
 					<div>{{'insert_animal_detail' | translate:translateKey}}</div>
 				</ng-template>
-				<form [formGroup]="animalPondNewForm"> 
+				<form [formGroup]="insertAnimalDetail"> 
 				<!-- table -->
 				<!-- <div class="row justify-content-between">
 					<div class="col-md-10"> </div>
@@ -360,19 +360,19 @@
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
 						<button type="button" (click)="addMoreAnimal()"
-							[disabled]="animalPondNewForm.get('animalDetails')['controls'].length >= ANIMAL_TYPE.length || !isEditMode"
+							[disabled]="insertAnimalDetail.get('animalDetails').length >= ANIMAL_TYPE.length || !isEditMode"
 							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button
 							color="primary">{{'add'|
 							translate:translateKey}}</button>
 					</div>
 				</div>
 
-				<div *ngIf="animalPondNewForm.get('animalDetails')['controls'].length">
+				<div *ngIf="insertAnimalDetail.get('animalDetails')['controls'].length">
 					<div class="table-responsive maxHeightAuto">
 						<table class="table table-striped mb-0 responsiveTableRow">
 							<thead>
 								<tr class="mo-d-none">
-									<th>Sr. No.</th>
+									<th >Sr. No.</th>
 									<th>{{'animal_type' | translate:translateKey}}</th>
 									<th>{{'animal_count' | translate:translateKey}}</th>
 									<th colspan="2" *ngIf="animalPondNewForm.get('canEdit').value"></th>
@@ -380,7 +380,7 @@
 							</thead>
 
 							<tbody formArrayName="animalDetails">
-								<tr *ngFor="let item of animalPondNewForm.get('animalDetails')['controls']; let indx = index;"
+								<tr *ngFor="let item of insertAnimalDetail.get('animalDetails')['controls']; let indx = index;"
 									[formGroupName]="indx">
 
 									<td>

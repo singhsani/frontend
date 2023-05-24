@@ -186,7 +186,7 @@ export class AnimalPondNewComponent implements OnInit {
 					}
 				}
 				res.relationshipList.forEach(app => {
-					(<FormArray>this.animalPondNewForm.get('relationshipList')).push(this.createArray(app));
+					(<FormArray>this.businessDetail.get('relationshipList')).push(this.createArray(app));
 				});
 
 				// deflate add one array in animal grid
@@ -199,7 +199,7 @@ export class AnimalPondNewComponent implements OnInit {
 					}
 				}
 				res.animalDetails.forEach(app => {
-					(<FormArray>this.animalPondNewForm.get('animalDetails')).push(this.createAnimalArray(app));
+					(<FormArray>this.insertAnimalDetail.get('animalDetails')).push(this.createAnimalArray(app));
 				});
 				this.serverUploadFilesArray = res.serviceDetail.serviceUploadDocuments;
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
