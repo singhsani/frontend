@@ -1,4 +1,15 @@
 .cardBox {
+    .pageTitle{
+        margin-bottom: 0px;
+      }
+      .mat-card{
+         padding-top:  7px !important;
+      }
+    .center{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
     .headlines {
         font-size: 18px;
     }
@@ -15,6 +26,22 @@
         .engInstructions {
             font-size: 18px;
         }
+    }
+    .listSize{
+        font-size: 15px;
+        margin-bottom: 0.8rem;
+    }
+}
+
+.fotButtonBar{
+    .listSize{
+        font-size: 15px;
+    }
+}
+
+.fotButtonBar{
+    .listSize{
+        font-size: 15px;
     }
 }
 

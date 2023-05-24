@@ -93,6 +93,12 @@ table { width: 100%; }
                   }
               }
           }
+          .table-center{
+            margin-left: auto;  
+            margin-right: auto;  
+            border-collapse: collapse;    
+            width: 500px
+          }
 
           .table {
               tr.mat-header-row {

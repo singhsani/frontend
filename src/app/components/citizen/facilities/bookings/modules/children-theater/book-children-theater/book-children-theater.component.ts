@@ -87,6 +87,25 @@ export class BookChildrenTheaterComponent implements OnInit {
      * ngx-bootstrap models.
      */
     confirmRef: BsModalRef;
+    showSelectLanguage : boolean = true;
+    btnProceed : boolean = true
+    gujHeadLines :string;
+    gujFreeStructure = [
+            {
+                "sno": '૧',
+                "programmePurpose": "અન્ય",
+                "bookingRent": '૧૦૦૦',
+                "gst": '૧૮૦'
+            },
+            {
+                "sno": '૨',
+                "programmePurpose": "શાળા",
+                "bookingRent": '૧૦૦૦',
+                "gst": '૧૮૦'
+            }
+        
+    ]
+    modalJsonRef: BsModalRef;
 
     constructor(private bookingService: BookingService,
         private router: Router,
@@ -105,6 +124,9 @@ export class BookChildrenTheaterComponent implements OnInit {
                             availability details of the Children Theatre and select booking
                             date. The booking is confirmed on approval from department
                             and the successful payment of the rent amount for selected date.`;
+        this.gujHeadLines = `ઓનલાઈન ચિલ્ડ્રન થિયેટર બુકિંગની સુવિધા ચિલ્ડ્રન થિયેટર બુક કરવાની અનુકૂળ અને સરળ રીત છે
+        વડોદરા મ્યુનિસિપલ કોર્પોરેશન. તમે જોઈ શકો છો  ચિલ્ડ્રન થિયેટરની ઉપલબ્ધતા વિગતો અને બુકિંગ પસંદ કરો તારીખ વિભાગની મંજૂરી પર બુકિંગની પુષ્ટિ થાય છે
+        અને પસંદ કરેલી તારીખ માટે ભાડાની રકમની સફળ ચુકવણી.`
     }
 
     ngOnInit() {
@@ -491,4 +513,30 @@ export class BookChildrenTheaterComponent implements OnInit {
 			}
 		}
     }
+    selectLanguage(event) {
+		this.btnProceed = true;
+		if (event == 'gu') {
+			this.showSelectLanguage = true
+		}
+		else {
+			this.showSelectLanguage = false
+		}
+
+	}
+    //open terms and conditions model 
+    openTermModel(template: TemplateRef<any>) {
+        this.modalJsonRef = this.modalService.show(template);
+    }
+    // when click on ok button model will close .
+    hideModel() {
+        this.modalJsonRef.hide();
+    }
+
+    clickProcess(event){
+		if(event.checked == true){
+            this.btnProceed = false;
+	    }else{
+	        this.btnProceed = true;
+	    }
+	  }
 }

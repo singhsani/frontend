@@ -19,50 +19,113 @@
 
   <div *ngIf="guideLineFlag">
     <mat-card class="cardBox">
-      <div class="pageTitle">{{'instruction_of_planetarium_booking'| translate: translateKey}}</div>
-      <mat-card-content class="p-4">
+      <div class="pageTitle d-flex justify-content-between">
+    <div *ngIf="showSelectLanguage">{{'instruction_of_planetarium_booking'| translate: translateKey : 'gu'}}</div>
+    <div *ngIf="!showSelectLanguage">{{'instruction_of_planetarium_booking'| translate: translateKey}}</div>
+    <button mat-raised-button type="button" color="primary" *ngIf="showSelectLanguage"
+        (click)="selectLanguage('en')">English</button>
+    <button mat-raised-button type="button" color="primary" *ngIf="!showSelectLanguage"
+        (click)="selectLanguage('gu')">ગુજરાતી</button>
+    </div>
+      <mat-card-content class="p-4 mat-card" *ngIf="!showSelectLanguage">
+        <img _ngcontent-c1="" width=130 height=130 alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg"
+        class="center">
         <h1><b>Instruction Of Planetarium Booking</b></h1>
         <h4 class="pb-2">{{head_lines| translate: translateKey}}</h4><br>
-        <h2><b>{{'rules_and_regulations'| translate: translateKey}}</b></h2>
+        <h2 class="rules-title"><b>{{'rules_and_regulations'| translate: translateKey}}</b></h2>
     <h4>
         <ol class="olList">
-          <li>
+          <li class="listSize">
             Citizens follow the VMC Rules.
           </li>
-          <li>
+          <li class="listSize">
             Production of all necessary permission is mandatory for applicant before commencement of Program.
           </li>
-          <li>
+          <li class="listSize">
             Planetarium Show timings:
             <ul>
-              <li>Special Show: 1. 03:00 PM to 03:30 PM (Gujarati) 2. 03:00 PM to 03:30 PM (Hindi).</li>
-              <li>General Show 1. 04:00 PM to 04:30 PM (Gujarati) 2. 05:00 PM to 05:30 PM (Hindi) 3. 06:00 PM to 06:30 PM(Hindi).</li>
+              <li class="listSize">Special Show: 1. 03:00 PM to 03:30 PM (Gujarati) 2. 03:00 PM to 03:30 PM (Hindi).</li>
+              <li class="listSize">General Show 1. 04:00 PM to 04:30 PM (Gujarati) 2. 05:00 PM to 05:30 PM (Hindi) 3. 06:00 PM to 06:30 PM(Hindi).</li>
             </ul>
           </li>
           <li>
             Charge:
             <ul>
-                <h4><li> Special show charge per seat 10 ({{rupeeSign}})</li></h4>
-                <h4><li> General show charge per seat 20 ({{rupeeSign}})</li></h4>
+                <h4><li class="listSize"> Special show charge per seat 10 ({{rupeeSign}})</li></h4>
+                <h4><li class="listSize"> General show charge per seat 20 ({{rupeeSign}})</li></h4>
             </ul>
           </li>
-          <li>Seating Capacity: For Special Show citizen can book 98 seats and for General Show one user can book 4 seats.</li>
+          <li class="listSize">Seating Capacity: For Special Show citizen can book 98 seats and for General Show one user can book 4 seats.</li>
         </ol>
     </h4>
-    <mat-checkbox class="d-block checkBoxLabel" labelPosition="after" required [checked]="checkProceed" (change)="checkingSelectOrNot($event)" >
-        {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}}
-        <a  class="stretchedLink" >
-        </a>
-    </mat-checkbox>
+      </mat-card-content>
+      <mat-card-content class="p-4 mat-card" *ngIf="showSelectLanguage">
+        <img _ngcontent-c1="" width=130 height=130 alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg"
+        class="center">
+        <h1><b>પ્લેનેટોરિયમ બુકિંગની સૂચના</b></h1>
+        <h4 class="pb-2 ">{{gujheadLine| translate: translateKey}}</h4><br>
+        <h2 class="rules-title"><b>{{'rules_and_regulations'| translate: translateKey : 'gu'}}</b></h2>
+    <h4>
+        <div class="d-flex ">
+            <p class="pr-2 listSize"> ૧. </p>
+            <p class="listSize">નાગરિકો VMC નિયમોનું પાલન કરે છે.
+            </p>
+          </div>
+          <div class="d-flex ">
+            <p class="pr-2 listSize">૨.</p>
+            <p class="listSize">કાર્યક્રમ શરૂ કરતા પહેલા અરજદાર માટે તમામ જરૂરી પરવાનગીનું ઉત્પાદન ફરજિયાત છે.</p>
+          </div>
+          <div class="d-flex ">
+            <p class="pr-2 listSize">૩.</p>
+            <p class="listSize">પ્લેનેટોરિયમ શોના સમય:</p>
+          </div>
+          <div class="d-flex pl-4 ">
+            <p class="pr-4 listSize"> </p>
+            <p class="listSize"> વિશેષ શો: ૧. બપોરે 03:00 PM થી 03:30 PM (ગુજરાતી),  ૨. બપોરે 03:00 PM થી 03:30 PM (હિન્દી).</p>
+          </div>
+          <div class="d-flex pl-4 ">
+            <p class="pr-4 listSize"> </p>
+            <p class="listSize">સામાન્ય શો: ૧. ૦૪:૦૦PM થી ૦૪:૩૦PM (ગુજરાતી),  ૨. ૦૫:૦૦PM થી ૦૫:૩૦PM (હિન્દી),  ૩. ૦૬:૦૦ PM થી ૦૬:૩૦PM (હિન્દી).</p>
+          </div>
+          <div class="d-flex ">
+            <p class="pr-2 listSize"> ૪. </p>
+            <p class="listSize"> ચાર્જ: </p>
+          </div>
+          <div class="d-flex pl-4 ">
+            <p class="pr-4 listSize"> </p>
+            <p class="listSize"> સીટ દીઠ સ્પેશિયલ શો ચાર્જ ૧૦ (₹), </p>
+          </div>
+          <div class="d-flex pl-4 ">
+            <p class="pr-4 listSize"> </p>
+            <p class="listSize">સીટ દીઠ સામાન્ય શો ચાર્જ ૨૦ (₹) </p>
+          </div>
+          <div class="d-flex  ">
+            <p class="pr-2 listSize"> ૫.</p>
+            <p class="listSize"> બેઠક ક્ષમતા: વિશેષ શો માટે નાગરિક ૯૮ બેઠકો બુક કરી શકે છે અને જનરલ શો માટે એક વપરાશકર્તા 4 બેઠકો બુક કરી શકે છે. </p>
+          </div>
+    </h4>
+   
       </mat-card-content>
     </mat-card>
     <div class="fotButtonBar">
-      <div class="col-sm-12 col-md-12 text-right">
+        <div class="row px-2">
+        <div class="col-sm-6 col-md-6" *ngIf="!showSelectLanguage">
+            <mat-checkbox class="d-block listSize" labelPosition="after" (change)="clickProcess($event)" [checked]="checkProceed">
+                <span class="font-weight-bold"> {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}}</span>
+             </mat-checkbox>
+        </div>
+        <div class="col-sm-6 col-md-6" *ngIf="showSelectLanguage">
+            <mat-checkbox class="d-block listSize" labelPosition="after" (change)="clickProcess($event)" [checked]="checkProceed">
+                <span class="font-weight-bold"> {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey :'gu'}}</span>
+             </mat-checkbox>
+        </div>
+      <div class="col-sm-6 col-md-6 text-right">
         <button mat-raised-button [disabled]="showFotButtonBar" (click)="guideLineFlag = false;showPlanetariumSearchForm= true;" color="primary">
           <mat-icon>thumb_up_alt</mat-icon>
           {{'proceed'| translate: translateKey}}
         </button>
       </div>
+    </div>
     </div>
   </div>
 
