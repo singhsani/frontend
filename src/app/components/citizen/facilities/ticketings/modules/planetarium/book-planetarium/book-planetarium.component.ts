@@ -57,7 +57,7 @@ export class BookPlanetariumComponent implements OnInit {
   PURPOSE: Array<any> = [];
   resourceName: Array<any> = [];
   DateFormate: string = 'Hint: DD/MM/YYYY';
-  showFotButtonBar = true;
+
   guideLineFlag: boolean = true;
     showPlanetariumSearchForm: boolean = false;
     head_lines: string;
@@ -91,7 +91,7 @@ export class BookPlanetariumComponent implements OnInit {
 
   ngOnInit() {
   this.head_lines = `Online Planetarium Booking facility is the convenient and easy way to book the Planetarium of Vadodara Municipal Corporation. You can view the availability details of the Planetarium and select booking date. The booking is confirmed on successful payment of the rent amount for selected date.`;
-  this.gujheadLine = `ઓનલાઈન પ્લેનેટોરિયમ બુકિંગ સુવિધા એ વડોદરા મ્યુનિસિપલ કોર્પોરેશનના પ્લેનેટોરિયમ બુક કરવાની અનુકૂળ અને સરળ રીત છે. તમે પ્લેનેટેરિયમની ઉપલબ્ધતા વિગતો જોઈ શકો છો અને બુકિંગ તારીખ પસંદ કરી શકો છો. પસંદ કરેલી તારીખ માટે ભાડાની રકમની સફળ ચુકવણી પર બુકિંગની પુષ્ટિ થાય છે.` 
+  this.gujheadLine = `ઓનલાઈન પ્લેનેટોરિયમ બુકિંગ સુવિધા એ વડોદરા મ્યુનિસિપલ કોર્પોરેશનના પ્લેનેટોરિયમ બુક કરવાની અનુકૂળ અને સરળ રીત છે. તમે પ્લેનેટેરિયમની ઉપલબ્ધતા વિગતો જોઈ શકો છો અને બુકિંગ તારીખ પસંદ કરી શકો છો. પસંદ કરેલી તારીખ માટે ભાડાની રકમની સફળ ચુકવણી પર બુકિંગની પુષ્ટિ થાય છે.`
   this.createTicketBookingForm();
     this.getLookUps();
     this.getListData();
@@ -646,51 +646,44 @@ export class BookPlanetariumComponent implements OnInit {
 
       this.commonService.openAlert("Field Error", this.ticketingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
       this.markFormGroupTouched(this.ticketBookingForm);
-    }
-    else if (!this.showFotButtonBar) {
-      if (!this.isFileUploaded) {
-        this.commonService.openAlert(this.ticketingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
-        return;
-      }
-      else {
-        this.isLoadingResults = true;
-        this.ticketingService.specialShowTicketsBooking(this.ticketBookingForm.getRawValue(), this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe(
-          resData => {
-            if(resData.statusCode == '401'){
-              this.toster.error(resData.message);
+    }else{
+      this.isLoadingResults = true;
+      this.ticketingService.specialShowTicketsBooking(this.ticketBookingForm.getRawValue(), this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe(
+        resData => {
+          if(resData.statusCode == '401'){
+            this.toster.error(resData.message);
+            setTimeout(() => {
+                this.router.navigate(['/citizen/ticketings/planetarium/book']);
+            },6000);
+            return;
+          }
+          this.commonService.commonAlert("Booking", "Planetarium Booking Request", "success", "Print Acknowledgement Receipt", false, '', pA => {
+            this.ticketingService.printAcknowledgementReceipt(resData.data.refNumber).subscribe(acknowledgementHTML => {
+              let sectionToPrint: any = document.getElementById('sectionToPrint');
+              sectionToPrint.innerHTML = acknowledgementHTML;
               setTimeout(() => {
-                  this.router.navigate(['/citizen/ticketings/planetarium/book']);
-              },6000);
-              return;
-            }
-            this.commonService.commonAlert("Booking", "Planetarium Booking Request", "success", "Print Acknowledgement Receipt", false, '', pA => {
-              this.ticketingService.printAcknowledgementReceipt(resData.data.refNumber).subscribe(acknowledgementHTML => {
-                let sectionToPrint: any = document.getElementById('sectionToPrint');
-                sectionToPrint.innerHTML = acknowledgementHTML;
-                setTimeout(() => {
-                  window.print();
-                  this.router.navigate([this.ticketingConstants.MY_TICKETINGS_URL]);
-                });
-              }, err => {
-                this.commonService.openAlert("Error", err.error[0].message, "warning")
-              })
-            }, rA => {
-              this.router.navigate([this.ticketingConstants.MY_TICKETINGS_URL]);
+                window.print();
+                this.router.navigate([this.ticketingConstants.MY_TICKETINGS_URL]);
+              });
+            }, err => {
+              this.commonService.openAlert("Error", err.error[0].message, "warning")
             })
-            // }
-            this.isLoadingResults = false;
-          },
-          err => {
-            this.isLoadingResults = false;
-            this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
-          });
-      }
+          }, rA => {
+            this.router.navigate([this.ticketingConstants.MY_TICKETINGS_URL]);
+          })
+          // }
+          this.isLoadingResults = false;
+        },
+        err => {
+          this.isLoadingResults = false;
+          this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+        });
+    }
 
-    }
-    else {
-      this.commonService.openAlert('Field Error', this.ticketingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning');
-      this.markFormGroupTouched(this.ticketBookingForm);
-    }
+    // else {
+    //   this.commonService.openAlert('Field Error', this.ticketingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning');
+    //   this.markFormGroupTouched(this.ticketBookingForm);
+    // }
     this.printFormInvalidControl(this.ticketBookingForm," ");
 
   }
@@ -708,11 +701,6 @@ export class BookPlanetariumComponent implements OnInit {
       //|| !this.ticketBookingForm.get('visitingDate').value
       ) {
       this.commonService.openAlert("Field Error", this.ticketingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
-      this.markFormGroupTouched(this.ticketBookingForm);
-    }
-    else if (this.showFotButtonBar) {//for general show
-      this.isLoadingResults = false;
-      this.commonService.openAlert('Field Error', this.ticketingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning');
       this.markFormGroupTouched(this.ticketBookingForm);
     }
     else {
@@ -761,13 +749,6 @@ export class BookPlanetariumComponent implements OnInit {
 
   }
 
-  checkingSelectOrNot(event){
-    if(event.checked){
-        this.showFotButtonBar = false;
-    }else{
-      this.showFotButtonBar = true;
-    }
-  }
 
   printFormInvalidControl(form,indent) {
     for (const field in form.controls) { // 'field' is a string
