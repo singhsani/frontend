@@ -266,6 +266,7 @@ export class BookChildrenTheaterComponent implements OnInit {
      */
     submitStadiumApplication(): void {
         // let errCount = this.bookingUtils.getAllErrors(this.childrenTheaterApplicationForm);
+        this.childrenTheaterApplicationForm.get('termsCondition').setValue(true)
         if (this.bookingDetails.invalid) {
             this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
             return;
@@ -518,7 +519,7 @@ export class BookChildrenTheaterComponent implements OnInit {
     selectLanguage(event) {
 		this.btnProceed = true;
 		if (event == 'gu') {
-			this.showSelectLanguage = true
+			this.showSelectLanguage = true;
 		}
 		else {
 			this.showSelectLanguage = false
@@ -537,8 +538,10 @@ export class BookChildrenTheaterComponent implements OnInit {
     clickProcess(event){
 		if(event.checked == true){
             this.btnProceed = false;
+            this.childrenTheaterApplicationForm.get('termsCondition').setValue(true)
 	    }else{
 	        this.btnProceed = true;
+            this.childrenTheaterApplicationForm.get('termsCondition').setValue(false)
 	    }
 	  }
 }
