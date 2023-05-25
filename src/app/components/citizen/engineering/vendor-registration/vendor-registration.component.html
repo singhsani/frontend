@@ -1666,7 +1666,7 @@
 
         <mat-tab disabled>
           <ng-template mat-tab-label>
-            <div>{{'Refrence Document'}}</div>
+            <div>{{'Reference Document'}}</div>
           </ng-template>
 
           <form [formGroup]="vendorRegistrationForm">
@@ -1708,7 +1708,7 @@
           </div> -->
 
           <app-action-bar [uploadFiles]="uploadFilesArray" [form]="vendorRegistrationForm"
-          (tabIndex)="onTabChange(5, attachmentDetails, vendorRegistrationForm)"  [paymentGateway]="paymentGateway"
+          (tabIndex)="onTabChange(5, attachmentDetails, vendorRegistrationForm)"  (click)="tabIndex = 3" [paymentGateway]="paymentGateway"
             (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next:6, back:3} ">
           </app-action-bar>
 
