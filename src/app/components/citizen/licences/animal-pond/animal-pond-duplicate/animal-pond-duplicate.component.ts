@@ -130,7 +130,7 @@ export class AnimalPondDuplicateComponent implements OnInit {
 				serviceFormId: res.serviceFormId,
 				wardNo: searchData.wardNo,
 				zoneNo: searchData.zoneNo,
-				blockNo: searchData.blockNo.code,
+				blockNo: searchData.blockNo,
 				totalAnimal: searchData.totalAnimal,
 
 				createdDate: res.createdDate,
