@@ -26,7 +26,13 @@
 
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 <mat-card class="formClass cardBox" [hidden]="showDowlLoadFileTab" *ngIf="!searchObj.isDisplayRenewLicenceForm">
-	<div class="pageTitle">{{'online_swimming_pool_bookings'| translate: translateKey}}</div>
+	<div class="pageTitle d-flex justify-content-between">
+		<div *ngIf="!showSelectLanguage">{{'online_swimming_pool_bookings'| translate: translateKey}}</div>
+			<div *ngIf="showSelectLanguage">{{'online_swimming_pool_bookings'| translate: translateKey : 'gu'}}</div>
+			<button mat-raised-button type="button" color="primary" *ngIf="showSelectLanguage"
+				(click)="selectLanguage('en')">English</button>
+			<button mat-raised-button type="button" color="primary" *ngIf="!showSelectLanguage"
+				(click)="selectLanguage('gu')">ગુજરાતી</button></div>
 	<!-- <mat-card-header class="p-4">
 		<mat-card-title>
 			<div>{{'note_title' | translate:translateKey}}</div>
