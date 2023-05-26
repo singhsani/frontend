@@ -73,6 +73,8 @@ export class BookChildrenTheaterComponent implements OnInit {
     purpose :string;
     displayedColumnsFeeDetails: string[] = ['sno', 'programmePurpose', 'bookingRent', 'gst'];
     dataSource = [];
+    totalAmount : number =0;
+	totalPayble : number =0;
 
     /**
      * Date validations
@@ -388,6 +390,9 @@ export class BookChildrenTheaterComponent implements OnInit {
                         this.paymentObject = payResp.data;
                         this.showPaymentReciept = true;
                         this.confirmRef.hide();
+                        let rentFees = this.paymentObject.RENT_FEES
+                        let Gst = this.paymentObject.GST
+                        this.totalPayble =((parseFloat(rentFees.replaceAll(',', '')) +(parseFloat(Gst.replaceAll(',','')))))
                     })
                 }
             }, (err) => {
