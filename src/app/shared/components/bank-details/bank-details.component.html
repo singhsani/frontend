@@ -1,7 +1,7 @@
 <div [formGroup]="atithigruhForm" class="formClass">
   <div class="row">
     <div formGroupName="bankName" class="col-md-6 ngSelect">
-      <ng-select placeholder="{{'bank_name' | translate:stadiumTranslateKey}} *" formControlName="code">
+      <ng-select class="asteriskmarkRequired" placeholder="{{'bank_name' | translate:stadiumTranslateKey}}" formControlName="code">
         <ng-option *ngFor="let bank of BankOptions" [value]="bank.code">
           {{bank.name}}
         </ng-option>
