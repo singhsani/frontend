@@ -171,7 +171,7 @@
                       </mat-form-field>
 
                     <div formGroupName="purpose" class="col-md-6 ngSelect">
-                        <ng-select placeholder="{{'category'| translate: translateKey}}" formControlName="code" (change)="onPurposeChange($event)">
+                        <ng-select class="asteriskmarkRequired" placeholder="{{'category'| translate: translateKey}}" formControlName="code" (change)="onPurposeChange($event)">
                             <ng-option *ngFor="let purpose of CATEGORIES" [value]="purpose.code">
                                 {{ purpose.name }}
                             </ng-option>
@@ -185,7 +185,7 @@
                             {{'choose_start_date'| translate: translateKey}}
                         </mat-label>
                         <!-- matDatepickerFilter]="myFilter" -->
-                        <input appDate matInput [min]="startMinDate" [max]="endDate" (dateChange)="onDateChange($event.value)" [matDatepicker]="stadiumBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
+                        <input appDate required matInput [min]="startMinDate" [max]="endDate" (dateChange)="onDateChange($event.value)" [matDatepicker]="stadiumBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
                         <mat-datepicker-toggle matSuffix [for]="stadiumBookingfromPicker"></mat-datepicker-toggle>
                         <mat-datepicker #stadiumBookingfromPicker touchUi="true"></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
@@ -197,7 +197,7 @@
                         <mat-label>
                             {{'choose_end_date'| translate: translateKey}}
                         </mat-label>
-                        <input appDate matInput [min]="endMinDate" [max]="endDate" [matDatepicker]="stadiumBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
+                        <input required appDate matInput [min]="endMinDate" [max]="endDate" [matDatepicker]="stadiumBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
                         <mat-datepicker-toggle matSuffix [for]="stadiumBookingtoPicker"></mat-datepicker-toggle>
                         <mat-datepicker #stadiumBookingtoPicker touchUi="true"></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
