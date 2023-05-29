@@ -210,10 +210,38 @@ table { width: 100%; }
   table td {
     vertical-align: middle !important;
   }
+  .rate-details {
+      display: flex;
+
+      .width-size-lg {
+          width: 257px;
+          padding-right: 12px;
+      }
+
+      .width-size-ml {
+          width: 120px;
+      }
+
+      .add-button-left {
+          .Add-button {
+              width: 110px;
+          }
+      }
+  }
 }
-.add-button-left{
-    padding-left: 0;
-    .Add-button {
-     min-width: 100px;
-   }
+
+@media(max-width: 767px) {
+    .cardBox{
+        .rate-details{
+            display: grid;
+            .width-size-lg {
+                width: 100%;
+            }
+      
+            .width-size-ml {
+                width: 100%;
+                text-align: right;
+            }
+        }
+    }
 }
