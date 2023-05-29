@@ -79,6 +79,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	pecNumber: string = null;
 
 	holdFirstPage: Boolean = false;
+	rupeeSign='(₹)'
 
 	constructor(
 		private fb: FormBuilder,

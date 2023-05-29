@@ -268,7 +268,7 @@
                 <tbody>
                     <tr *ngFor="let emp of employeeSlabArr; let i=index;">
                         <td>{{i+1}}</td>
-                        <td>{{emp.name}}</td>
+                        <td>{{emp.name}} {{rupeeSign}}</td>
                         <td>
                             <input OnlyNumber type="text" maxlength="8" [(ngModel)]="emp.empCount"
                                 (keyup)="employeeCount()">

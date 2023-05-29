@@ -197,6 +197,11 @@ export class SwimmingPoolComponent implements OnInit {
   filterAsperPool(event: any) {
     this.bookingService.filterPoolCode(event).subscribe(rep => {
       this.BATCH_FOR = rep;
+      if(event == "SARDARBAUG_SWIMMING_POOL"){
+        this.commonService.openAlert("Info", 'Sardar Baug Swimming Pool Is Under Construction Kindly select another "Swimming Pool!"', "info" , "", cb => {
+          this.generalDetails.reset();
+        })
+      }
     },
       err => {
         this.toastr.error("Server Error");
