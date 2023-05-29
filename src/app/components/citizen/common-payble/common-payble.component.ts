@@ -71,6 +71,7 @@ export class CommonPaybleComponent implements OnInit {
 
   isShowPropertySearchForm: boolean = false;
   propertyModelSub: Subscription;
+  rupeeSign='(₹)'
 
   constructor(
     private formService: FormsActionsService,
