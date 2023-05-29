@@ -512,6 +512,12 @@ export class ZooBookingComponent implements OnInit {
     this.numberOfVisitors = 0;
     this.subTotal = 0;
     this.totalAmount = 0;
+    this.totalVisitorZoo = 0;
+    this.totalAmountZoo = 0;
+    this.withAndWithoutWalkListForDuplicate = [];
+    for (let i = 0; i < this.ticketBookingForm.get('withAndWithoutWalkList')['controls'].length; i++) {
+      this.addItem('withAndWithoutWalkList').removeAt(i)
+    }
   }
 
   CheckType(idCode) {
