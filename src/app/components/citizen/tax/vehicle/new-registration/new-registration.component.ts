@@ -67,7 +67,7 @@ export class NewRegistrationComponent implements OnInit {
   attachmentList: any = [];
   showButton: boolean = false;
   placeHolderMessage = 'Please enter valid Registration no. e.g. GJ-06-AB-1234';
-  
+
 
   public config: PftConfig;
 
@@ -80,7 +80,7 @@ export class NewRegistrationComponent implements OnInit {
     private toastr: ToastrService,
     private commonService: CommonService,
     private modalService: BsModalService,
-    private profeService: ProfessionalTaxService    
+    private profeService: ProfessionalTaxService
   ) {
     this.formService.apiType = 'vehicle';
     this.vehicleServise.apiType = 'vehicle';
@@ -134,7 +134,7 @@ export class NewRegistrationComponent implements OnInit {
       purchaseDate: [null, Validators.required],
     })
     /* Step 1 controls end */
-    
+
       /* Step 2 controls start */
     this.ownerDetails = this.fb.group({
       firstName: [null, Validators.required],
@@ -165,7 +165,7 @@ export class NewRegistrationComponent implements OnInit {
      })
     /* Step 3 controls end */
 
-  
+
 
     this.vehicleRegistrationForm = this.fb.group({
       id: null,
@@ -307,7 +307,7 @@ export class NewRegistrationComponent implements OnInit {
     return fiscalyear
   }
   /**
-   * 
+   *
    * @param date get the selected vehicle purchasing date
    */
   onDateChange(date) {
@@ -572,7 +572,7 @@ export class NewRegistrationComponent implements OnInit {
 
 
   /**
-   * This method is used for printing the receipt 
+   * This method is used for printing the receipt
    * @param id - vehicle id
    */
   printReceipt(id: number) {
@@ -606,10 +606,10 @@ export class NewRegistrationComponent implements OnInit {
           dishonorCharges: res.amountFields.dishonorCharges ? res.amountFields.dishonorCharges : 0,
         });
         this.taxDetails.patchValue({
-          vehicleApplicableRate: res.amountFields.vehicleBasicValue,
+          vehicleApplicableRate: res.vehicleApplicableRate,
           tokenFess : res.amountFields.vehicleTokenFee,
           // totalPayable: res.amountFields.vehicleBasicValue,
-          vehicleTax: res.vehicleApplicableRate
+          vehicleTax: res.amountFields.vehicleBasicValue,
         })
 
         let totalPayable = res.amountFields.adminFee + res.amountFields.interest +
@@ -681,7 +681,7 @@ export class NewRegistrationComponent implements OnInit {
 
   onTabChangeToDisableAttachment(index: number) {
     this.tabIndex = index;
-    setTimeout( function(){ 
+    setTimeout( function(){
       $('.closeAttachFile').remove();
     }, 300);
   }
