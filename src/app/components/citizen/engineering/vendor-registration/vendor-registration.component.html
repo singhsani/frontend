@@ -1683,7 +1683,7 @@
           </div>
 
 
-          <div class="checkboxHref">
+          <div class="checkboxHref" >
             <mat-checkbox class="col accept-terms" formControlName="acceptAndCondition">
 
             </mat-checkbox>
@@ -1708,7 +1708,7 @@
           </div> -->
 
           <app-action-bar [uploadFiles]="uploadFilesArray" [form]="vendorRegistrationForm"
-          (tabIndex)="onTabChange(5, attachmentDetails, vendorRegistrationForm)"  (click)="tabIndex = 3" [paymentGateway]="paymentGateway"
+          (tabIndex)="onFormTabChange($event)"  [paymentGateway]="paymentGateway"
             (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next:6, back:3} ">
           </app-action-bar>
 
