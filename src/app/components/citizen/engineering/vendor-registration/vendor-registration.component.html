@@ -1684,7 +1684,7 @@
 
 
           <div class="checkboxHref" >
-            <mat-checkbox class="col accept-terms" formControlName="acceptAndCondition">
+            <mat-checkbox class="col accept-terms" formControlName="acceptAndCondition" (click)="handleCheckboxClick($event)">
 
             </mat-checkbox>
             <control-messages [control]="vendorRegistrationForm.get('acceptAndCondition')">
