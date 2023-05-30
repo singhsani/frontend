@@ -75,7 +75,7 @@
           </mat-checkbox>
       </div>
       <div class="col-sm-6 col-md-6 text-right">
-        <button mat-raised-button (click)="guideLineFlag = false;showPermissionSearchForm= true;" color="primary">
+        <button  [disabled]="btnProceed" mat-raised-button (click)="guideLineFlag = false;showPermissionSearchForm= true;" color="primary">
           {{'submit'| translate: translateKey}}
         </button>
       </div>
@@ -241,11 +241,13 @@
             <!-- <td>{{bookingUtils.returnProperDate(days.end)}}</td> -->
             <td>{{days.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : days.slotStatus }}</td>
             <!-- <td>{{days.occupancy}}</td> -->
+            <div *ngIf="selectedShift.length > 1">
             <td>
-              <button mat-icon-button  (click)="removeSelectedShift(days, i)">
+              <button mat-icon-button  (click)="removeSelectedShift(days, i ,selectedShift)">
                 <mat-icon color="warn">delete</mat-icon>
               </button>
             </td>
+            </div>
           </tr>
         </tbody>
       </table>
