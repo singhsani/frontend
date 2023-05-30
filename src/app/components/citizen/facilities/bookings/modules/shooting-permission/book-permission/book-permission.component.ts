@@ -328,8 +328,8 @@ export class BookPermissionComponent implements OnInit {
 	 * @param shift - shift with details
 	 * @param index - index
 	 */
-  removeSelectedShift(shift, index) {
-    this.selectShift(shift, false);
+  removeSelectedShift(shift, selectedShift, index) {
+    this.selectShift(shift, false , selectedShift);
   }
 
   createPermissionApplicationForm() {
@@ -537,12 +537,12 @@ export class BookPermissionComponent implements OnInit {
 	 * @param shift - shift object.
 	 * @param checked - checked event
 	 */
-  selectShift(shift, checked) {
+  selectShift(shift, checked ,selectedShift) {
 
     if (checked) {
       let data = this.selectedShift.find(uniqueId => uniqueId == shift.uniqueId)
       if (!data) {
-        shift.slotStatus = 'CHECKED';
+        shift.slotStatus = this.bookingConstants.CHECKED;
         this.selectedShift.push(shift);
       }
     } else {
@@ -552,6 +552,7 @@ export class BookPermissionComponent implements OnInit {
         this.selectedShift.splice(data, 1);
       }
     }
+    return selectedShift;
   }
 
   /**
@@ -739,15 +740,17 @@ export class BookPermissionComponent implements OnInit {
     clickProcess(event){
       if(event.checked == true){
               this.btnProceed = false;
+              this.organizationdetails.get('termsCondition').setValue(true)
         }else{
             this.btnProceed = true;
+              this.organizationdetails.get('termsCondition').setValue(false)
         }
       }
 
       selectLanguage(event) {
         this.btnProceed = true;
         if (event == 'gu') {
-          this.showSelectLanguage = true
+          this.showSelectLanguage = true;
         }
         else {
           this.showSelectLanguage = false
