@@ -125,6 +125,8 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return `case2`;
 		} else if (row.departmentName == 'Vendor Registration' && row.fileStatusName == 'Deposit Received') {
 			return `case4`;
+		} else if (row.departmentName == 'Vendor Registration' && row.fileStatusName == 'Scrutiny') {
+            return `case4`;	
 		} else if(row.departmentName == 'Contractor Registration' && row.fileStatusName == 'Deposit Received'){
 			return `case5`
 		}else if((row.departmentName == 'Contractor Registration' && row.fileStatusName == 'Approved') || (row.departmentName == "Vendor Registration" && row.fileStatusName == 'Approved')){
