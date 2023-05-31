@@ -102,6 +102,7 @@ export class VendorRegistrationComponent implements OnInit {
   country = '';
   canAddressEdit = true;
   checkbox: boolean = true;
+  acceptAndCondition:boolean=true;
   
   constructor(
     private fb: FormBuilder,
@@ -294,6 +295,11 @@ export class VendorRegistrationComponent implements OnInit {
       //	this.sortedList.push(res);
     });
   }
+  handleCheckboxClick(event: MouseEvent) {
+    if (!this.vendorRegistrationForm.valid) {
+      event.preventDefault();
+    }
+  }
 
   createFormGroupVendor(key: string, data: any): FormGroup {
 
@@ -475,6 +481,8 @@ export class VendorRegistrationComponent implements OnInit {
       city: [null, [Validators.maxLength(60)]],
       country: [null, [Validators.maxLength(60)]],
       pincode: [null, [Validators.maxLength(6)]],
+    })
+    this.refrenceDocument = this.fb.group({
     })
 	/* Step 1 controls end */
 
