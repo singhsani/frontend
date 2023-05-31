@@ -196,6 +196,8 @@ export class ZooBookingComponent implements OnInit {
   numberOfVisitors: number = 0;
   withAndWithoutWalkListForDuplicate: any = [];
 
+  defaultDateForReset : Date;
+
   // Ticket Booking Table Row Data:
 
   ticketBookingRows: any[] = [
@@ -326,6 +328,7 @@ export class ZooBookingComponent implements OnInit {
        defaultDate.setDate(defaultDate.getDate()+1);
        this.ticketBookingForm.get('visitingDate').setValue(moment(defaultDate).format('YYYY-MM-DD')); 
      }
+     this.defaultDateForReset= defaultDate
    }
 
   /**
@@ -508,7 +511,10 @@ export class ZooBookingComponent implements OnInit {
   }
 
   resetForm() {
-    this.ticketBookingForm.reset();
+    this.ticketBookingForm.reset({
+      visitingDate :  moment(this.defaultDateForReset).format('YYYY-MM-DD')
+
+    });
     this.numberOfVisitors = 0;
     this.subTotal = 0;
     this.totalAmount = 0;
