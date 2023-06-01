@@ -78,7 +78,7 @@
               </control-messages>
             </mat-form-field> -->
 
-            <mat-form-field class="col-md-4">
+            <mat-form-field class="col-md-5">
               <input matInput autocomplete="off" appDate formControlName="commencementDate" [max]="maxDate"
                 [min]="minDateNew" [matDatepicker]="commencementDatePicker"
                 (dateChange)="onDateChange('commencementDate', $event.value)"
@@ -89,7 +89,7 @@
               <control-messages [control]="firmDetails.get('commencementDate')">
               </control-messages>
             </mat-form-field>
-            <mat-form-field class="col-md-4">
+            <mat-form-field class="col-md-3">
               <input matInput type="text" appValidationFields validationFieldsType='alphanumericWithSpace' required
                 class="capitalCase" maxlength="10" required placeholder="{{'PAN/TAN NO. (Attach certified copy)'}}"
                 formControlName="panNo">
