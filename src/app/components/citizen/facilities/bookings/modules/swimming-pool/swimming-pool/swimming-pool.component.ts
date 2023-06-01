@@ -756,6 +756,8 @@ export class SwimmingPoolComponent implements OnInit {
           this.swimmimgPoolBookingForm.patchValue({ 'serviceFormId': res.bookingFormId });
         this.attachments = res.attachments;
         this.swimmimgPoolBookingForm.patchValue(res);
+        this.generalDetails.patchValue(res)
+        this.applicantDetail.patchValue(res)
         // this.attachments = res.data;
         // this.swimmimgPoolBookingForm.disable();
         this.searchObj.isDisplayRenewLicenceForm = false;
@@ -764,7 +766,7 @@ export class SwimmingPoolComponent implements OnInit {
         this.isRenewalForm = true;
         this.swimmimgPoolBookingForm.get('isRenewalForm').setValue(true);
         // this.swimmimgPoolBookingForm.get('remarks').enable();
-        this.filterAsperBatchName(this.generalDetails.get('category').get('code').value);
+      //  this.filterAsperBatchName(this.generalDetails.get('category').get('code').value);
       }, (error: any) => {
         this.commonService.openAlert("Error", error.error[0].message, "warning")
       })
