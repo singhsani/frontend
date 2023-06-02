@@ -82,7 +82,7 @@
               <input matInput autocomplete="off" appDate formControlName="commencementDate" [max]="maxDate"
                 [min]="minDateNew" [matDatepicker]="commencementDatePicker"
                 (dateChange)="onDateChange('commencementDate', $event.value)"
-                placeholder="{{'The date of Commencement of commercial production *'}}" required>
+                placeholder="{{'The date of Commencement of commercial production '}}" required>
               <mat-datepicker-toggle matSuffix [for]="commencementDatePicker"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #commencementDatePicker></mat-datepicker>
               <div align="end" class="default-show-hint mat-hint mat-right"></div>
