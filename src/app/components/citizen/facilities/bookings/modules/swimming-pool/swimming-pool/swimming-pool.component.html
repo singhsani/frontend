@@ -38,74 +38,83 @@
 	<mat-card-content class="footer_container" *ngIf="!showSelectLanguage">
 		<div class="head_container">
 		<img _ngcontent-c1=""  alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg" class="center img">
-		<div class="tableTop">
-			<h1 class="tableTitle py-2"><b>Contact Details</b></h1>
-		</div>
-		 <table class="table">
-			 <tbody>
-				 <tr>
-					<td class="td"><b>&nbsp;&nbsp;1.&nbsp;&nbsp;&nbsp;<span class="vl"></span>&nbsp;&nbsp;Karelibaug Swimming Pool:&nbsp;&nbsp;(0265)&nbsp;&nbsp;2483500</b></td>
-					<td class="td1"><b>&nbsp;&nbsp;2.&nbsp;&nbsp;&nbsp;<span class="vl"></span> &nbsp;&nbsp;Sardarbaug Swimming Pool:&nbsp;&nbsp;(0265)&nbsp;&nbsp;2335383</b></td>
-				 </tr>
-				 <tr>
-					<td class="td"><b>&nbsp;&nbsp;3.&nbsp;&nbsp;&nbsp;<span class="vl"></span>&nbsp;&nbsp;Lalbaug Swimming Pool:&nbsp;&nbsp;(0265)&nbsp;&nbsp;2651575</b></td>
-					 <td class="td1"><b>&nbsp;&nbsp;4.&nbsp;&nbsp;&nbsp;<span class="vl"></span>&nbsp;&nbsp;RajivGandhi Swimming Pool:&nbsp;&nbsp;(0265)&nbsp;&nbsp;2516760</b></td>
-				 </tr>
-			 </tbody>
-		 </table>
 
+		<div class="table-center">
+			<table class="table mt-2">
+				<thead>
+					<th colspan="4"><b>Contact Details</b></th>
+				</thead>
+				<tbody>
+					<tr colspan="4">
+						<td>1.</td>
+						<td>Karelibaug Swimming Pool:(0265) 2483500 </td>
+						<td>2.</td>
+						<td>Sardarbaug Swimming Pool: (0265) 2335383</td>
+					</tr>
+					<tr>
+						<td>3.</td>
+						<td>Lalbaug Swimming Pool: (0265) 2651575</td>
+						<td>4.</td>
+						<td>RajivGandhi Swimming Pool: (0265) 2516760</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 			<h4 class="titleHeader"> <b>Read all the rules swimming pool-wise before click on proceed, once you click on
 					proceed we consider your acceptance of the rules and regulations.</b></h4>
 			<br>
-			<div class="div1">
-				<h1 class="mt-2"><b>Swimming Pool Entry Rules and Applicable Fees</b></h1>
-			 </div>
-			 <table class="table">
-				 <tbody>
-					<tr>
-					 <td class="td swimmingPoolFees">
-						<h5 class="mx-2"><b> {{'Swimming Pool Entry Rules' | translate: translateKey}}:<br>
-						<button mat-button (click)="downloadGuidLineDocumemnt('Swimming_Pool_Entry_Rules')"
-						 color="primary" >Download</button></b>
-						</h5>
-					 </td>
-			 
-					 <td class="td swimmingPoolFees">
-						 <h5 class="mx-2"> <b>{{'Swimming Pool Applicable Fees' | translate: translateKey}}:<br>
-						 <button mat-button (click)="downloadGuidLineDocumemnt('Swimming_Pool_Applicable_Fees')"
-						 color="primary" >Download</button></b>
-						  </h5>
-					 </td>
-		 
-				</tr>		
-				 </tbody>
-			 </table>
+
+			 <div class="table-center">
+				<table class="table">
+					<thead>
+						<th colspan="4"><b>Swimming Pool Entry Rules and Applicable Fees</b></th>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="td swimmingPoolFees">
+								<h5 class="mx-2"><b> {{'swimming_pool_entry_rules' | translate: translateKey}}:<br>
+										<button mat-button (click)="downloadGuidLineDocumemnt('Swimming_Pool_Entry_Rules')"
+											color="primary">Download</button></b>
+								</h5>
+							</td>
+		
+							<td class="td swimmingPoolFees">
+								<h5 class="mx-2"> <b>{{'swimming_pool_applicable_fees' | translate: translateKey}}:<br>
+										<button mat-button (click)="downloadGuidLineDocumemnt('Swimming_Pool_Applicable_Fees')"
+											color="primary">Download</button></b>
+								</h5>
+							</td>
+		
+						</tr>
+					</tbody>
+				</table>
+			</div>
 			<br>
-			<div class="div1">
-			   <h1 style="margin-top: 10px;"><b>Need to Download for Application</b></h1>
-		    </div>
-			<table class="table">
+			<table class="table mt-2">
+				<thead>
+					<th colspan="4">
+						<b>Need to Download for Application</b>
+					</th>
+				</thead>
 				<tbody>
 					<tr>
 						<td class="td">
 							<h5><b> {{'doctor_fitness_certificate' | translate: translateKey}}:
-									<button mat-button (click)="downloadGuidLineDocumemnt('Fitness_Certi_Final_')"
-										color="primary" style="margin-right: 106px;">Download</button></b>
+									<button mat-button (click)="downloadGuidLineDocumemnt('Fitness_Certi_Final_')" color="primary"
+										style="margin-right: 106px;">Download</button></b>
 							</h5>
 						</td>
-
+			
 						<td class="td">
-							<h5> <b>{{'sammati_patra-10-18_yrs_main_pool' | translate: translateKey}}:<br>
-									<button mat-button
-										(click)="downloadGuidLineDocumemnt('Sammati_Patra_0-18_Yrs_Main_Pool')"
+							<h5 class="smallFont"> <b>{{'sammati_patra-10-18_yrs_main_pool' | translate: translateKey}}:<br>
+									<button mat-button (click)="downloadGuidLineDocumemnt('Sammati_Patra_0-18_Yrs_Main_Pool')"
 										color="primary">Download</button></b>
 							</h5>
 						</td>
-
+			
 						<td class="td">
 							<h5><b> {{'sammati_patra-05-12-yrs_baby_pool' | translate: translateKey}}:
-									<button mat-button
-										(click)="downloadGuidLineDocumemnt('Sammati_Patra_05-12_Yrs_BABY_POOL')"
+									<button mat-button (click)="downloadGuidLineDocumemnt('Sammati_Patra_05-12_Yrs_BABY_POOL')"
 										color="primary">Download</button></b>
 							</h5>
 						</td>
@@ -113,27 +122,28 @@
 					<tr>
 						<td class="td">
 							<h5><b> {{'student_concession' | translate: translateKey}}:
-									<button mat-button (click)="downloadGuidLineDocumemnt('Student_Concession')"
-										color="primary" class="but">Download</button></b>
+									<button mat-button (click)="downloadGuidLineDocumemnt('Student_Concession')" color="primary"
+										class="but">Download</button></b>
 							</h5>
 						</td>
-
+			
 						<td class="td">
 							<h5> <b>{{'vmc_employee_concession' | translate: translateKey}}:
 									<button mat-button (click)="downloadGuidLineDocumemnt('VMC_Employee_Concession')"
 										color="primary" class="but">Download</button></b>
 							</h5>
 						</td>
-
+			
 						<td class="td">
 							<h5><b> {{'test_receipt' | translate: translateKey}}:
-									<button mat-button (click)="downloadGuidLineDocumemnt('Test_Receipt__Final_')"
-										color="primary" class="but">Download</button></b>
+									<button mat-button (click)="downloadGuidLineDocumemnt('Test_Receipt__Final_')" color="primary"
+										class="but">Download</button></b>
 							</h5>
 						</td>
 					</tr>
 				</tbody>
 			</table>
+	
 		</div>
 		<!-- <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar> -->
 		<app-swimming-pool-dashboard></app-swimming-pool-dashboard>
@@ -142,55 +152,59 @@
 		<div class="head_container">
 			<img _ngcontent-c1="" alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg"
 				class="center img">
-			<table class="table mt-2">
-				<thead>
-					<th colspan="4">સંપર્ક વિગતો</th>
-				</thead>
-				<tbody>
-					<tr colspan="4">
-						<td>૧.</td>
-						<td>કારેલીબાગ સ્વિમિંગ પૂલ : (૦૨૬૫) ૨૪૮૩૫૦૦ </td>
-						<td>૨.</td>
-						<td>સરદારબાગ સ્વિમિંગ પૂલ: (૦૨૬૫) ૨૩૩૫૩૮૩</td>
-					</tr>
-					<tr>
-						<td>૩.</td>
-						<td>લાલબાગ સ્વિમિંગ પૂલ: (૦૨૬૫) ૨૬૫૧૫૭૫ </td>
-						<td>૪.</td>
-						<td>Rરાજીવ ગાંધી સ્વિમિંગ પૂલ: (૦૨૬૫) ૨૫૧૬૭૬૦</td>
-					</tr>
-				</tbody>
-			</table>
+				<div class="table-center">
+					<table class="table mt-2">
+						<thead>
+							<th colspan="4">સંપર્ક વિગતો</th>
+						</thead>
+						<tbody>
+							<tr colspan="4">
+								<td>૧.</td>
+								<td>કારેલીબાગ સ્વિમિંગ પૂલ : (૦૨૬૫) ૨૪૮૩૫૦૦ </td>
+								<td>૨.</td>
+								<td>સરદારબાગ સ્વિમિંગ પૂલ: (૦૨૬૫) ૨૩૩૫૩૮૩</td>
+							</tr>
+							<tr>
+								<td>૩.</td>
+								<td>લાલબાગ સ્વિમિંગ પૂલ: (૦૨૬૫) ૨૬૫૧૫૭૫ </td>
+								<td>૪.</td>
+								<td>Rરાજીવ ગાંધી સ્વિમિંગ પૂલ: (૦૨૬૫) ૨૫૧૬૭૬૦</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			<h4 class="titleparagraph"> <b>"પ્રોસેસ" પર ક્લિક કરતા પહેલા સ્વિમિંગ પૂલ મુજબના તમામ નિયમો વાંચો, એકવાર તમે
 					"પ્રોસેસ" પર ક્લિક કરો પછી અમે નિયમો અને નિયમોની તમારી સ્વીકૃતિને ધ્યાનમાં લઈશું.</b></h4>
 			<br>
-			<table class="table">
-				<thead>
-					<th colspan="4">
-						<b>સ્વિમિંગ પૂલ પ્રવેશ નિયમો અને લાગુ ફી</b>
-					</th>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="td swimmingPoolFees">
-							<h5 class="mx-2"><b> {{'swimming_pool_entry_rules' | translate: translateKey :'gu'}}:<br>
-									<button mat-button (click)="downloadGuidLineDocumemnt('Swimming_Pool_Entry_Rules')"
-										color="primary">Download</button></b>
-							</h5>
-						</td>
-
-						<td class="td swimmingPoolFees">
-							<h5 class="mx-2"> <b>{{'swimming_pool_applicable_fees' | translate: translateKey
-									:'gu'}}:<br>
-									<button mat-button
-										(click)="downloadGuidLineDocumemnt('Swimming_Pool_Applicable_Fees')"
-										color="primary">Download</button></b>
-							</h5>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+			<div class="table-center">
+				<table class="table">
+					<thead>
+						<th colspan="4">
+							<b>સ્વિમિંગ પૂલ પ્રવેશ નિયમો અને લાગુ ફી</b>
+						</th>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="td swimmingPoolFees">
+								<h5 class="mx-2"><b> {{'swimming_pool_entry_rules' | translate: translateKey :'gu'}}:<br>
+										<button mat-button (click)="downloadGuidLineDocumemnt('Swimming_Pool_Entry_Rules')"
+											color="primary">Download</button></b>
+								</h5>
+							</td>
+			
+							<td class="td swimmingPoolFees">
+								<h5 class="mx-2"> <b>{{'swimming_pool_applicable_fees' | translate: translateKey
+										:'gu'}}:<br>
+										<button mat-button (click)="downloadGuidLineDocumemnt('Swimming_Pool_Applicable_Fees')"
+											color="primary">Download</button></b>
+								</h5>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 			<br>
+			
 			<table class="table mt-5">
 				<thead>
 					<th colspan="4">
@@ -246,6 +260,7 @@
 					</tr>
 				</tbody>
 			</table>
+
 		</div>
 		<!-- <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar> -->
 		<app-swimming-pool-dashboard></app-swimming-pool-dashboard>
