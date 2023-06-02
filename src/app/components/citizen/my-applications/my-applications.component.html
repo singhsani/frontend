@@ -576,23 +576,17 @@
                                 </mat-icon>
                                 {{'print_receipt' | translate:translateKey}}
                             </button>
-
-                            <button mat-menu-item *ngIf="isPrintViewDisplay(row)" color="primary"
-                            (click)="printView(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
-                            <mat-icon class="m-1" title="{{'print_view' | translate:translateKey}}">pageview
-                            </mat-icon>
-                            {{'print_view' | translate:translateKey}}
-                        </button>
-
-                        <button mat-menu-item color="primary"
-                            (click)="depositReceived(row.serviceFormId)">
-                            <mat-icon class="m-1" title="{{'print_view' | translate:translateKey}}">print
-                            </mat-icon>
-                            {{'print_deposit_Received' | translate:translateKey}}
-                        </button>
-
+                    
+                            <button mat-menu-item *ngIf="isPrintViewDisplay(row)" color="primary" (click)="printView(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                                <mat-icon class="m-1" title="{{'print_view' | translate:translateKey}}">pageview</mat-icon>
+                                {{'print_view' | translate:translateKey}}
+                            </button>
+                    
+                            <button mat-menu-item color="primary" *ngIf="row.fileStatusName == 'Deposit Received'" (click)="depositReceived(row.serviceFormId)">
+                                <mat-icon class="m-1" title="{{'print_view' | translate:translateKey}}">print</mat-icon>
+                                {{'print_deposit_Received' | translate:translateKey}}
+                            </button>
                         </mat-menu>
-
                     </ng-container>
                     <!-- /case4 -->
 
