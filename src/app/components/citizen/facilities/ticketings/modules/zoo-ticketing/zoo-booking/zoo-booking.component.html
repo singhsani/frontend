@@ -244,7 +244,7 @@
       </mat-form-field>
       <div class="rate-details px-3">
       <div class=" ngSelect width-size-lg" formGroupName="typeOfTicket">
-      <ng-select placeholder="Type Of Ticket *" [items]="ticketTypes" bindLabel="name" bindValue="code" formControlName="code" (change)="setVisitorsType()" required>
+      <ng-select placeholder="Type Of Ticket" [items]="ticketTypes" class="asteriskmarkRequired" bindLabel="name" bindValue="code" formControlName="code" (change)="setVisitorsType()" required>
         <ng-template ng-option-tmp let-item="item">
         <div title="{{item.name}}">{{item.name}}</div>
         </ng-template>
@@ -253,7 +253,7 @@
         </control-messages> -->
       </div>
       <div class="width-size-lg ngSelect" formGroupName="typeOfVisitor">
-        <ng-select placeholder="Type of Visitors *" [items]="visitorsTypesChange" bindLabel="name" bindValue="name" formControlName="name" (change)="getChargesValue($event);ticketBookingForm.get('amounts').reset();ticketBookingForm.get('numberOfVisitors').reset()" required >
+        <ng-select placeholder="Type of Visitors" [items]="visitorsTypesChange" class="asteriskmarkRequired" bindLabel="name" bindValue="name" formControlName="name" (change)="getChargesValue($event);ticketBookingForm.get('amounts').reset();ticketBookingForm.get('numberOfVisitors').reset()" required >
           <ng-template ng-option-tmp let-item="item">
           <div title="{{item.name}}">{{item.name}}</div>
           </ng-template>
