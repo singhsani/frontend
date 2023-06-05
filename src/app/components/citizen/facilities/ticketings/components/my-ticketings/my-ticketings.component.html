@@ -6,8 +6,8 @@
 	<form [formGroup]="searchTicketingsForm" (ngSubmit)="getAllBooking()" autocomplete="off" ngNativeValidate>
 		<div class="row">
 			<div class="col-md-4 ngSelect">
-				<ng-select placeholder="{{'select_booking_resources' | translate:translateKey}} *"
-					formControlName="resourceType">
+				<ng-select placeholder="{{'select_booking_resources' | translate:translateKey}}"
+					formControlName="resourceType" class="asteriskmarkRequired">
 					<ng-option *ngFor="let resource of resources" [value]="resource.type">
 						{{ resource.name }}
 					</ng-option>

@@ -533,7 +533,7 @@
       </div>
       <div class="row">
         <div class="col-md-12 ngSelect" formGroupName="bank">
-          <ng-select placeholder="{{'bank_name' | translate: translateKey}} *" required formControlName="code">
+          <ng-select placeholder="{{'bank_name' | translate: translateKey}}" class="asteriskmarkRequired" formControlName="code">
             <ng-option *ngFor="let bank of bankLists" [value]="bank.code">{{ bank.name }}</ng-option>
             <control-messages [control]="refundBankDetailsForm.get('bank')"></control-messages>
           </ng-select>

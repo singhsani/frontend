@@ -79,6 +79,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	pecNumber: string = null;
 
 	holdFirstPage: Boolean = false;
+	rupeeSign='(₹)'
 
 	constructor(
 		private fb: FormBuilder,
@@ -114,15 +115,15 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	}
 
 	public onTabChange(index: number, controlName, mainControl) {
-		if(this.holdFirstPage) {
+		/*if(this.holdFirstPage) {
 			return false;
-		}
-		if (controlName.invalid || this.pecNumber == null) {
+		}*/
+		if (controlName.invalid) { /*  || this.pecNumber == null*/
 			this.commonService.markFormGroupTouched(controlName);
-			$('.pecNumber mat-form-field .displayNone').remove();
-			$('.pecNumber mat-form-field').append("<span class='displayNone' style='color:#f44336;top: -15px !important;position: inherit;'>PEC Number is required</span>");
+			// $('.pecNumber mat-form-field .displayNone').remove();
+			// $('.pecNumber mat-form-field').append("<span class='displayNone' style='color:#f44336;top: -15px !important;position: inherit;'>PEC Number is required</span>");
 		} else {
-			$('.pecNumber mat-form-field .displayNone').remove();
+			// $('.pecNumber mat-form-field .displayNone').remove();
 			const organizationalAry = Object.keys(controlName.getRawValue());
 			organizationalAry.forEach((element:any) => {
 				   // push form Array data into main Controller
@@ -508,7 +509,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	 * @param pecNo - employer registartion pec no.
 	 */
 	searchEmpRegByECRCNo(event, ecrcNo) {
-		$('.pecNumber mat-form-field .displayNone').remove();
+		// $('.pecNumber mat-form-field .displayNone').remove();
 		event.stopPropagation();
 
 		if (ecrcNo == '') {
@@ -527,7 +528,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 		this.profeService.getSearchDetails(ecrcNo).subscribe(res => {
 			this.setValuesInForm(res, null);
 		});
-		this.pecNumber = ecrcNo;
+		// this.pecNumber = ecrcNo;
 	}
 
 	/**
@@ -545,7 +546,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 
 		/** if response exist data then do further process */
 		if (res.data && Object.keys(res.data).length) {
-			if (res.data.alertForValidation != null) {
+			/*if (res.data.alertForValidation != null) {
 				var invalidFields = res.data.invalidFields;
 				invalidFields = invalidFields.split(',');
 				let messageForInvalidFileds = '';
@@ -610,7 +611,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 				this.commonService.openAlert("Warning", "", "warning", res.data.alertForValidation);
 			} else {
 				$('.invalidFields').remove();
-			}
+			}*/
 
 			if (res.data.hasPrc) {
 				this.commonService.openAlert("PRC Is Already Exists", "", "warning", `Your PRC number is<br> <b>${res.data.prcNo}</b>`);

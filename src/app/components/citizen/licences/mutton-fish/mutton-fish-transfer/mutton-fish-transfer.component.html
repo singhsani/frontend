@@ -129,7 +129,7 @@
 				</div>
 
 				<div class="col-md-4">
-					<mat-checkbox class="col-md-12 mt-2" (change)="onSameAddressChange($event)">{{'Temporary Address is
+					<mat-checkbox class="col-md-12 mt-2"  [disabled]="!isdisableMode"  (change)="onSameAddressChange($event)">{{'Temporary Address is
 						same as Permanent Address?' | translate: translateKey}}</mat-checkbox>
 				</div>
 

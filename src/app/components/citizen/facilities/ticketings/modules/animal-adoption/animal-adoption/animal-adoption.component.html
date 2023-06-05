@@ -1,4 +1,5 @@
 <mat-card class="cardBox">
+<ng-container *ngIf="showAnimalAdoptionPricingTable">
   <div class="pageTitle d-flex justify-content-between">
     <div *ngIf="!showSelectLanguage">{{'animal_adoption' | translate: translateKey}}</div>
     <div *ngIf="showSelectLanguage">{{'animal_adoption' | translate: translateKey : 'gu'}}</div>
@@ -7,7 +8,7 @@
     <button mat-raised-button type="button" color="primary" *ngIf="!showSelectLanguage"
       (click)="selectLanguage('gu')">ગુજરાતી</button>
     </div>
-  <div class="row" *ngIf="showAnimalAdoptionPricingTable && !showSelectLanguage" style="height: 448px;">
+  <div class="row" *ngIf="!showSelectLanguage" style="height: 448px;">
   <div class="noteClass"><b> Note: An applicant can mention only specific number of years for all adoption entries under the 'Friends of Zoo' program.</b> </div>
    <br> <br>
     <mat-card-content style="margin-top: 0px;" class="p-4 col-md-6">
@@ -163,7 +164,7 @@
     </mat-card-content>
 
   </div>
-  <div class="row" *ngIf="showAnimalAdoptionPricingTable && showSelectLanguage" style="height: 448px;">
+  <div class="row" *ngIf="showSelectLanguage" style="height: 448px;">
     <div class="noteClass"><b> નોંધ: અરજદાર 'ફ્રેન્ડ્સ ઑફ ઝૂ' પ્રોગ્રામ હેઠળ તમામ દત્તક એન્ટ્રીઓ માટે માત્ર ચોક્કસ વર્ષોનો ઉલ્લેખ કરી શકે છે.</b> </div>
      <br> <br>
       <mat-card-content style="margin-top: 0px;" class="p-4 col-md-6">
@@ -322,6 +323,7 @@
       </mat-card-content>
   
     </div>
+  </ng-container>
 
   <div class="fotButtonBar" *ngIf="showAnimalAdoptionPricingTable">
     <div class="row">
@@ -347,6 +349,7 @@
     </div>
   </div>
 
+  <div class="pageTitle" *ngIf="showAnimalAdoptionForm">{{'animal_adoption' | translate: translateKey}}</div>
   <mat-card-content class="p-4" *ngIf="showAnimalAdoptionForm">
     <p class="pb-2">{{head_lines| translate: translateKey}}</p>
     <h2>{{'animal_adoption_aplication_form'| translate: translateKey}}</h2>
@@ -388,7 +391,7 @@
         <div class="col-md-4 ngSelect">
           <ng-select [items]="animalAdoptionPricing" formControlName="animalName" [multiple]="false"
             (clear)="resetCalculations($event);" (change)="getValues($event)"
-            placeholder="{{'animal_or_bird_preferred_for_adoption'| translate: translateKey}} *"
+            placeholder="{{'animal_or_bird_preferred_for_adoption'| translate: translateKey}}" class="asteriskmarkRequired"
             bindLabel="animalBirdName" >
           </ng-select>
           <control-messages [control]="animalAdoptionForm.get('animalName')">

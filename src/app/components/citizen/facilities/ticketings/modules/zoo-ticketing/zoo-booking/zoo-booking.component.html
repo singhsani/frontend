@@ -232,7 +232,7 @@
       <h2><strong>Note: Zoo will be closed on every Thursday</strong></h2>
       <h2>{{'ticket_rate_details'| translate: translateKey}}</h2>
 
-      <mat-form-field class="col-md-6 col-sm-6 col-xs-4">
+      <mat-form-field class="col-md-6 col-sm-12 col-xs-4">
         <mat-label>{{'visiting_date'| translate: translateKey}}</mat-label>
         <input matInput [min]="startMinDate" [matDatepickerFilter]="disableThursday"
           [matDatepicker]="zooTicketDatePicker" (dateChange)="changeDateFormat($event)" formControlName="visitingDate"
@@ -242,9 +242,9 @@
         <control-messages [control]="ticketBookingForm.get('visitingDate')">
         </control-messages>
       </mat-form-field>
-      <div class="row  col-md-12">
-      <div class="col-md-3 ngSelect" formGroupName="typeOfTicket">
-      <ng-select placeholder="Type Of Ticket *" [items]="ticketTypes" bindLabel="name" bindValue="code" formControlName="code" (change)="setVisitorsType()" required>
+      <div class="rate-details px-3">
+      <div class=" ngSelect width-size-lg" formGroupName="typeOfTicket">
+      <ng-select placeholder="Type Of Ticket" [items]="ticketTypes" class="asteriskmarkRequired" bindLabel="name" bindValue="code" formControlName="code" (change)="setVisitorsType()" required>
         <ng-template ng-option-tmp let-item="item">
         <div title="{{item.name}}">{{item.name}}</div>
         </ng-template>
@@ -252,8 +252,8 @@
         <!-- <control-messages [control]="ticketBookingForm.get('typeOfTicket').get('code')">
         </control-messages> -->
       </div>
-      <div class="col-md-2 ngSelect" formGroupName="typeOfVisitor">
-        <ng-select placeholder="Type of Visitors *" [items]="visitorsTypesChange" bindLabel="name" bindValue="name" formControlName="name" (change)="getChargesValue($event);ticketBookingForm.get('amounts').reset();ticketBookingForm.get('numberOfVisitors').reset()" required >
+      <div class="width-size-lg ngSelect" formGroupName="typeOfVisitor">
+        <ng-select placeholder="Type of Visitors" [items]="visitorsTypesChange" class="asteriskmarkRequired" bindLabel="name" bindValue="name" formControlName="name" (change)="getChargesValue($event);ticketBookingForm.get('amounts').reset();ticketBookingForm.get('numberOfVisitors').reset()" required >
           <ng-template ng-option-tmp let-item="item">
           <div title="{{item.name}}">{{item.name}}</div>
           </ng-template>
@@ -261,7 +261,7 @@
         <!-- <control-messages [control]="ticketBookingForm.get('typeOfVisitor').get('name')">
         </control-messages> -->
       </div>
-      <div  class="col-md-2" >
+      <div  class="width-size-ml pr-3" >
         <mat-form-field formGroupName="charges">
           <input #catRef matInput  OnlyNumber readonly
             placeholder="Charges"  formControlName="code" required>
@@ -270,9 +270,9 @@
         </mat-form-field>
      
       </div>
-      <div class="col-md-2">
+      <div class="width-size-ml pr-3">
         <mat-form-field formGroupName="numberOfVisitors" >
-          <input #catRef matInput formControlName="code" OnlyNumber
+          <input #catRef matInput  maxlength="3" formControlName="code" OnlyNumber
             placeholder="Count"
             (change)="getTotalAmount($event)" required>
             <!-- <control-messages [control]="ticketBookingForm.get('numberOfVisitors').get('code')">
@@ -280,7 +280,7 @@
         </mat-form-field>
       </div>
 
-      <div class="col-md-2">
+      <div class="width-size-ml pr-3">
         <mat-form-field  formGroupName="amounts">
           <input #catRef matInput  formControlName="code" OnlyNumber readonly
             placeholder="Amount (₹)" required >
@@ -290,9 +290,9 @@
      
       </div>
 
-      <div class="col-md-1 add-button-left">
+      <div class="add-button-left width-size-ml pl-2">
         <button type="button" [disabled]="!ticketBookingForm.get('numberOfVisitors').get('code').value"
-          matTooltip="{{'add_more' | translate:translateKey}}" class="Add-button" mat-raised-button (click)="getTicketData()"
+           class="Add-button" mat-raised-button (click)="getTicketData()"
           color="primary">{{'Add'|
           translate:translateKey}}</button>
    
@@ -420,7 +420,7 @@
 
     <div class="col-md-12 fotButtonBar mt-0">
       <div class="col-sm-12 col-md-12 text-right">
-        <button mat-raised-button type="reset" (click)="resetForm()" color="primary">
+        <button mat-raised-button type="button" (click)="resetForm()" color="primary">
           <mat-icon>clear_all</mat-icon>
           {{'reset'| translate: translateKey}}
         </button>

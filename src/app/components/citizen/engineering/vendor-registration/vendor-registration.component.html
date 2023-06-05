@@ -78,18 +78,18 @@
               </control-messages>
             </mat-form-field> -->
 
-            <mat-form-field class="col-md-4">
+            <mat-form-field class="col-md-5">
               <input matInput autocomplete="off" appDate formControlName="commencementDate" [max]="maxDate"
                 [min]="minDateNew" [matDatepicker]="commencementDatePicker"
                 (dateChange)="onDateChange('commencementDate', $event.value)"
-                placeholder="{{'The date of Commencement of commercial production *'}}" required>
+                placeholder="{{'The date of Commencement of commercial production '}}" required>
               <mat-datepicker-toggle matSuffix [for]="commencementDatePicker"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #commencementDatePicker></mat-datepicker>
               <div align="end" class="default-show-hint mat-hint mat-right"></div>
               <control-messages [control]="firmDetails.get('commencementDate')">
               </control-messages>
             </mat-form-field>
-            <mat-form-field class="col-md-4">
+            <mat-form-field class="col-md-3">
               <input matInput type="text" appValidationFields validationFieldsType='alphanumericWithSpace' required
                 class="capitalCase" maxlength="10" required placeholder="{{'PAN/TAN NO. (Attach certified copy)'}}"
                 formControlName="panNo">
@@ -863,7 +863,7 @@
 
             <div class="col-md-12">
               <div>
-                <mat-label> If registered under the companies ACT or any other ACT, give registration no. and date of
+                <mat-label> If registered under the companies ACT or any other ACT, give registered no. and date of
                   registration etc. along with copy of regsitration office.</mat-label>
               </div>
               <mat-radio-group formControlName="registrationOfficeACT" class="radioGroup">
@@ -1666,7 +1666,7 @@
 
         <mat-tab disabled>
           <ng-template mat-tab-label>
-            <div>{{'Refrence Document'}}</div>
+            <div>{{'Reference Document'}}</div>
           </ng-template>
 
           <form [formGroup]="vendorRegistrationForm">
@@ -1683,8 +1683,8 @@
           </div>
 
 
-          <div class="checkboxHref">
-            <mat-checkbox class="col accept-terms" formControlName="acceptAndCondition">
+          <div class="checkboxHref" >
+            <mat-checkbox class="col accept-terms" formControlName="acceptAndCondition" (click)="handleCheckboxClick($event)">
 
             </mat-checkbox>
             <control-messages [control]="vendorRegistrationForm.get('acceptAndCondition')">
@@ -1708,7 +1708,7 @@
           </div> -->
 
           <app-action-bar [uploadFiles]="uploadFilesArray" [form]="vendorRegistrationForm"
-          (tabIndex)="onTabChange(5, attachmentDetails, vendorRegistrationForm)"  [paymentGateway]="paymentGateway"
+          (tabIndex)="onFormTabChange($event)"  [paymentGateway]="paymentGateway"
             (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next:6, back:3} ">
           </app-action-bar>
 

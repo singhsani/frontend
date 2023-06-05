@@ -73,6 +73,8 @@ export class BookChildrenTheaterComponent implements OnInit {
     purpose :string;
     displayedColumnsFeeDetails: string[] = ['sno', 'programmePurpose', 'bookingRent', 'gst'];
     dataSource = [];
+    totalAmount : number =0;
+	totalPayble : number =0;
 
     /**
      * Date validations
@@ -203,6 +205,9 @@ export class BookChildrenTheaterComponent implements OnInit {
             organizationName: [null, [Validators.required, Validators.maxLength(100)]],
             orgTelephoneNo: [null, [Validators.required, ValidationService.telPhoneNumberValidator]],
             organizationAddress: this._fb.group(this.addressComp.addressControls()),
+            eventFromDate: null,
+            eventToDate: null,
+            programmePurpose: [null, [Validators.required, Validators.maxLength(200)]],
             programPurpose: [null, [Validators.required, Validators.maxLength(200)]]
           
         })
@@ -263,6 +268,7 @@ export class BookChildrenTheaterComponent implements OnInit {
      */
     submitStadiumApplication(): void {
         // let errCount = this.bookingUtils.getAllErrors(this.childrenTheaterApplicationForm);
+        this.childrenTheaterApplicationForm.get('termsCondition').setValue(true)
         if (this.bookingDetails.invalid) {
             this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
             return;
@@ -368,14 +374,25 @@ export class BookChildrenTheaterComponent implements OnInit {
                 appointments: this.selectedShift.map(shifts => shifts.uniqueId)
             }
             this.bookingService.shortListBookings(shortListData).subscribe(resp => {
+                this.organizationdetails.get('programmePurpose').setValue(resp.data.bookingPurposeMaster.name);
+                this.organizationdetails.get('programmePurpose').disable();
                 this.showChildrenTheaterSearchForm = false;
                 this.childrenTheaterApplicationForm.patchValue(resp.data);
                 this.addressComp.getCountryLists();
                 if (resp.data.status == this.bookingConstants.DRAFT) {
                     this.bookingService.searchPayment(resp.data.refNumber).subscribe(payResp => {
+                        this.organizationdetails.get('eventFromDate').setValue(payResp.data.EVENT_DATE_FROM);
+                        this.organizationdetails.get('eventFromDate').disable();
+
+                        this.organizationdetails.get('eventToDate').setValue(payResp.data.EVENT_DATE_TO);
+                        this.organizationdetails.get('eventToDate').disable();
+
                         this.paymentObject = payResp.data;
                         this.showPaymentReciept = true;
                         this.confirmRef.hide();
+                        let rentFees = this.paymentObject.RENT_FEES
+                        let Gst = this.paymentObject.GST
+                        this.totalPayble =((parseFloat(rentFees.replaceAll(',', '')) +(parseFloat(Gst.replaceAll(',','')))))
                     })
                 }
             }, (err) => {
@@ -507,7 +524,7 @@ export class BookChildrenTheaterComponent implements OnInit {
     selectLanguage(event) {
 		this.btnProceed = true;
 		if (event == 'gu') {
-			this.showSelectLanguage = true
+			this.showSelectLanguage = true;
 		}
 		else {
 			this.showSelectLanguage = false
@@ -526,8 +543,10 @@ export class BookChildrenTheaterComponent implements OnInit {
     clickProcess(event){
 		if(event.checked == true){
             this.btnProceed = false;
+            this.childrenTheaterApplicationForm.get('termsCondition').setValue(true)
 	    }else{
 	        this.btnProceed = true;
+            this.childrenTheaterApplicationForm.get('termsCondition').setValue(false)
 	    }
 	  }
 }

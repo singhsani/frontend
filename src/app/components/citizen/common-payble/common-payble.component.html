@@ -4,7 +4,7 @@
     <div class="row">
 
       <div formGroupName="module" class="col-md-4 ngSelect">
-        <ng-select placeholder="Select Service Module *" formControlName="code" (change)="setPayableServices($event)">
+        <ng-select placeholder="Select Service Module" formControlName="code" (change)="setPayableServices($event)" class="asteriskmarkRequired">
           <ng-option *ngFor="let module of userServicesList" [value]="module.code">
             {{module.name}}
           </ng-option>
@@ -14,7 +14,7 @@
 
 
       <div formGroupName="payableServices" class="col-md-4 ngSelect">
-        <ng-select placeholder="Select Payable Service *" formControlName="code" (change)="showHideSearchable($event)">
+        <ng-select placeholder="Select Payable Service" formControlName="code" (change)="showHideSearchable($event)" class="asteriskmarkRequired">
           <ng-option *ngFor="let payservice of PayableServices" [value]="payservice.code">
             {{payservice.name}}
           </ng-option>
@@ -89,12 +89,12 @@
                   <th>Reg. No.</th>
                   <th>Month</th>
                   <th>Year</th>
-                  <th>Prof. Tax</th>
-                  <th>Interest</th>
-                  <th>Penalty</th>
-                  <th>Comp. Fee</th>
-                  <th>Total Tax</th>
-                  <th>Credit Amt</th>
+                  <th>Prof. Tax {{rupeeSign}}</th>
+                  <th>Interest {{rupeeSign}}</th>
+                  <th>Penalty {{rupeeSign}}</th>
+                  <th>Comp. Fee {{rupeeSign}}</th>
+                  <th>Total Tax {{rupeeSign}}</th>
+                  <th>Credit Amt {{rupeeSign}}</th>
                   <th>Fin. Year</th>
                   <th>Due Date</th>
                 </tr>

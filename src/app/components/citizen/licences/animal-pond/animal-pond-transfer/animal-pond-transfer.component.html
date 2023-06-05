@@ -177,14 +177,14 @@
 				<form [formGroup]="businessDetail"> 
 				<div class="row">
 					<div class="col-md-4 ngSelect">
-						<ng-select  placeholder="{{'business_under_zone' | translate:translateKey}} *" formControlName="zoneNo" required (change)="onChangedZone($event);">
+						<ng-select  placeholder="{{'business_under_zone' | translate:translateKey}} "  class="asteriskmarkRequired" formControlName="zoneNo"  (change)="onChangedZone($event);">
 						  <ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.parentWardzoneId">
 							{{zone.wardzoneName}}</ng-option>
 						</ng-select>
 						<control-messages [control]="businessDetail.get('zoneNo')"></control-messages>
 					  </div>
 					  <div class="col-md-4 ngSelect" >
-						<ng-select required placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="wardNo" (change)="onChangedWard($event)">
+						<ng-select  placeholder="{{'ward_no' | translate:translateKey}}"  class="asteriskmarkRequired" formControlName="wardNo" (change)="onChangedWard($event)">
 						  <ng-option *ngFor="let ward of wardZoneLevel2List" [value]="ward.wardzoneId">
 							{{ward.wardzoneName}}</ng-option>
 						</ng-select>

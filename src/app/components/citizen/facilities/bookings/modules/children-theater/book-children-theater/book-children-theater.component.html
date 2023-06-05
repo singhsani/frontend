@@ -137,7 +137,7 @@
                 </mat-checkbox>
             </div>
             <div class="col-sm-6 col-md-6 text-right">
-                <button mat-raised-button (click)="guideLineFlag = false;showChildrenTheaterSearchForm= true;" color="primary">
+                <button mat-raised-button [disabled]="btnProceed" (click)="guideLineFlag = false;showChildrenTheaterSearchForm= true;" color="primary">
                     <mat-icon>thumb_up_alt</mat-icon>
                     {{'proceed'| translate: translateKey}}
                 </button>
@@ -171,7 +171,7 @@
                       </mat-form-field>
 
                     <div formGroupName="purpose" class="col-md-6 ngSelect">
-                        <ng-select placeholder="{{'category'| translate: translateKey}}" formControlName="code" (change)="onPurposeChange($event)">
+                        <ng-select class="asteriskmarkRequired" placeholder="{{'category'| translate: translateKey}}" formControlName="code" (change)="onPurposeChange($event)">
                             <ng-option *ngFor="let purpose of CATEGORIES" [value]="purpose.code">
                                 {{ purpose.name }}
                             </ng-option>
@@ -185,7 +185,7 @@
                             {{'choose_start_date'| translate: translateKey}}
                         </mat-label>
                         <!-- matDatepickerFilter]="myFilter" -->
-                        <input appDate matInput [min]="startMinDate" [max]="endDate" (dateChange)="onDateChange($event.value)" [matDatepicker]="stadiumBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
+                        <input appDate required matInput [min]="startMinDate" [max]="endDate" (dateChange)="onDateChange($event.value)" [matDatepicker]="stadiumBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
                         <mat-datepicker-toggle matSuffix [for]="stadiumBookingfromPicker"></mat-datepicker-toggle>
                         <mat-datepicker #stadiumBookingfromPicker touchUi="true"></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
@@ -197,7 +197,7 @@
                         <mat-label>
                             {{'choose_end_date'| translate: translateKey}}
                         </mat-label>
-                        <input appDate matInput [min]="endMinDate" [max]="endDate" [matDatepicker]="stadiumBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
+                        <input required appDate matInput [min]="endMinDate" [max]="endDate" [matDatepicker]="stadiumBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
                         <mat-datepicker-toggle matSuffix [for]="stadiumBookingtoPicker"></mat-datepicker-toggle>
                         <mat-datepicker #stadiumBookingtoPicker touchUi="true"></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
@@ -350,11 +350,11 @@
 
                       <th scope="col">{{'event_date_from'| translate: translateKey}}</th>
                       <th scope="col">{{'event_date_to'| translate: translateKey}}</th>
-                      <th scope="col">{{'rent_amount'| translate: translateKey}}(A)</th>
+                      <th scope="col">{{'rent_amount'| translate: translateKey}}</th>
 <!--                        <th scope="col">{{'deposit_amount'| translate: translateKey}}</th>-->
                         <!-- <th scope="col">{{'GST'| translate: translateKey}}</th> -->
-                        <th scope="col">GST B=(A*GST)</th>
-                        <th scope="col">Total payable Amount (A+B)</th>
+                        <th scope="col">GST B=(A*GST) (₹)</th>
+                        <th scope="col">Total payable Amount (A+B) (₹)</th>
                         </tr>
                 </thead>
                 <tbody>
@@ -366,7 +366,7 @@
                       <td scope="col">{{paymentObject.RENT_FEES}}</td>
 <!--                        <td scope="col">{{paymentObject.DEPOSIT_FEES?paymentObject.DEPOSIT_FEES : 0.00}}</td>-->
                         <td scope="col">{{paymentObject.GST}}</td>
-                        <td scope="col">{{paymentObject.TOTAL_AMOUNT}}</td>
+                        <td scope="col">{{totalPayble}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -401,7 +401,30 @@
                     <ng-template mat-tab-label>
                         <div>{{'organization_details' | translate:translateKey}}</div>
                     </ng-template>
+                    
                     <form [formGroup]="organizationdetails">
+                        <div class="row">
+                            <mat-form-field class="col-md-4">
+                                <mat-label>{{'event_date_from' | translate:translateKey}}</mat-label>
+                                <input matInput formControlName="eventFromDate">
+                                <control-messages [control]="organizationdetails.get('eventFromDate')">
+                                </control-messages>
+                            </mat-form-field>
+
+                            <mat-form-field class="col-md-4">
+                                <mat-label>{{'event_date_to' | translate:translateKey}}</mat-label>
+                                <input matInput formControlName="eventToDate">
+                                <control-messages [control]="organizationdetails.get('eventToDate')">
+                                </control-messages>
+                            </mat-form-field>
+
+                            <mat-form-field class="col-md-4">
+                                <mat-label>{{'purpose_of_booking'| translate: translateKey}}</mat-label>
+                                <input matInput formControlName="programmePurpose">
+                                <control-messages [control]="organizationdetails.get('programmePurpose')">
+                                </control-messages>
+                            </mat-form-field>
+                        </div>
                     <!-- <h2>
                         {{'organization_details' | translate:translateKey}}
                     </h2> -->
@@ -556,8 +579,6 @@
                         <div class="pl-2">
                             <mat-checkbox class="d-block" labelPosition="after" formControlName="agree" >
                                 {{'i_agree_with_above_bank_details_are_correct' | translate:translateKey}} </mat-checkbox>
-                            <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition" >
-                                {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}} </mat-checkbox>
                         </div>
                     </div>
 
@@ -684,7 +705,7 @@
         </div>
       
         <div class="modal-footer customthead">
-          <button color="white" mat-stroked-button (click)="hideModel()">
+          <button mat-raised-button color="primary" type="button" (click)="hideModel()">
             {{'Ok' | translate: translateKey}}
           </button>
         </div>

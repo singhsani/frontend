@@ -20,10 +20,10 @@
 <mat-card class="formClass cardBorder">
 	<!--Start  form  -->
 	<!-- <form [formGroup]="vehicleRegistrationForm"> -->
-		
+
 		<mat-tab-group mat-stretch-tabs class="stepperNav" (selectedTabChange)="calculateTax($event)"
 		[(selectedIndex)]="tabIndex" dynamicHeight="true">
-		
+
 		<!-- first step start-->
 			<mat-tab [label]="stepLable1 | translate: translateKey" disabled>
 
@@ -50,7 +50,7 @@
 						</mat-form-field> -->
 
 					<div class="col-md-4 ngSelect" formGroupName="vehicleType">
-						<ng-select placeholder="{{'vehicle_type' | translate: translateKey}} *" formControlName="code">
+						<ng-select placeholder="{{'vehicle_type' | translate: translateKey}} " formControlName="code" class="asteriskmarkRequired">
 							<ng-option *ngFor="let vehicleType of vehicleTypeArray" [value]="vehicleType.code">
 								{{vehicleType.name}}</ng-option>
 						</ng-select>
@@ -203,7 +203,7 @@
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="wardZoneMst">
-						<ng-select placeholder="{{'ward_no' | translate: translateKey}} *" required
+						<ng-select placeholder="{{'ward_no' | translate: translateKey}} " required class="asteriskmarkRequired"
 							formControlName="wardzoneId">
 							<ng-option *ngFor="let wardNo of wardNoArray" [value]="wardNo.wardzoneId">
 								{{wardNo.wardzoneName}}
@@ -250,7 +250,7 @@
 				<div class="row stepperMinHeight">
 
 					<div class="col-md-4 ngSelect" formGroupName="billingPeriod">
-						<ng-select placeholder="{{'billing_period' | translate: translateKey}} *"
+						<ng-select placeholder="{{'billing_period' | translate: translateKey}} " class="asteriskmarkRequired"
 							formControlName="code">
 							<ng-option *ngFor="let billingPeriod of billingPeriodArray" [value]="billingPeriod.code">
 								{{billingPeriod.name}}</ng-option>
@@ -261,17 +261,17 @@
 
 					<mat-form-field class="col-md-4">
 						<input type="text" matInput autocomplete="off" maxlength="50" OnlyNumber
-							formControlName="vehicleApplicableRate"
+							formControlName="vehicleTax"
 							placeholder="{{'applicable_tax' | translate: translateKey }}" required>
-						<control-messages [control]="taxDetails.get('vehicleApplicableRate')">
+						<control-messages [control]="taxDetails.get('vehicleTax')">
 						</control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input type="text" matInput autocomplete="off" maxlength="50" OnlyNumber
-							formControlName="vehicleTax"
+							formControlName="vehicleApplicableRate"
 							placeholder="{{'applicable_rate_(%)' | translate: translateKey }}" required>
-						<control-messages [control]="taxDetails.get('vehicleTax')"></control-messages>
+						<control-messages [control]="taxDetails.get('vehicleApplicableRate')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -366,7 +366,7 @@
 							(click)="tabIndex = 2">{{'back' | translate:actionBarKey}}</button>
 						<!-- <button *ngIf="isDeleteBtnShow" class="pull-right" mat-raised-button color="success" (click)="onSubmit()">{{'submit' | translate:actionBarKey}}</button> -->
 						<ng-container *ngIf="this.vehicleRegistrationForm.get('formStatus').value == 'DRAFT'">
-							<button [disabled]="this.vehicleRegistrationForm.get('canEdit').value == false" mat-raised-button 
+							<button [disabled]="this.vehicleRegistrationForm.get('canEdit').value == false" mat-raised-button
 								class="pull-right" color="success" (click)="onSubmit()">{{'submit' | translate:
 								actionBarKey}}</button>
 						</ng-container>

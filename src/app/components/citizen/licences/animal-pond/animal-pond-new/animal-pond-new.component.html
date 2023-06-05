@@ -171,14 +171,14 @@
 						<control-messages [control]="animalPondNewForm.get('blockNo').get('code')"></control-messages>
 					  </div> -->
 					  <div class="col-md-4 ngSelect">
-						<ng-select  placeholder="{{'business_under_zone' | translate:translateKey}} *" formControlName="zoneNo" required (change)="onChangedZone($event);">
+						<ng-select  placeholder="{{'business_under_zone' | translate:translateKey}} " class="asteriskmarkRequired" formControlName="zoneNo"  class="asteriskmarkRequired" (change)="onChangedZone($event);">
 						  <ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.parentWardzoneId">
 							{{zone.wardzoneName}}</ng-option>
 						</ng-select>
 						<control-messages [control]="businessDetail.get('zoneNo')"></control-messages>
 					  </div>
 					  <div class="col-md-4 ngSelect" >
-						<ng-select required placeholder="{{'ward_no' | translate:translateKey}}" formControlName="wardNo" (change)="onChangedWard($event)">
+						<ng-select  placeholder="{{'ward_no' | translate:translateKey}}"  class="asteriskmarkRequired" formControlName="wardNo" (change)="onChangedWard($event)" required>
 						  <ng-option *ngFor="let ward of wardZoneLevel2List" [value]="ward.wardzoneId">
 							{{ward.wardzoneName}}</ng-option>
 						</ng-select>
@@ -343,7 +343,7 @@
 				<ng-template mat-tab-label>
 					<div>{{'insert_animal_detail' | translate:translateKey}}</div>
 				</ng-template>
-				<form [formGroup]="animalPondNewForm"> 
+				<form [formGroup]="insertAnimalDetail"> 
 				<!-- table -->
 				<!-- <div class="row justify-content-between">
 					<div class="col-md-10"> </div>
@@ -360,19 +360,19 @@
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
 						<button type="button" (click)="addMoreAnimal()"
-							[disabled]="animalPondNewForm.get('animalDetails')['controls'].length >= ANIMAL_TYPE.length || !isEditMode"
+							[disabled]="insertAnimalDetail.get('animalDetails').length >= ANIMAL_TYPE.length || !isEditMode"
 							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button
 							color="primary">{{'add'|
 							translate:translateKey}}</button>
 					</div>
 				</div>
 
-				<div *ngIf="animalPondNewForm.get('animalDetails')['controls'].length">
+				<div *ngIf="insertAnimalDetail.get('animalDetails')['controls'].length">
 					<div class="table-responsive maxHeightAuto">
 						<table class="table table-striped mb-0 responsiveTableRow">
 							<thead>
 								<tr class="mo-d-none">
-									<th>Sr. No.</th>
+									<th >Sr. No.</th>
 									<th>{{'animal_type' | translate:translateKey}}</th>
 									<th>{{'animal_count' | translate:translateKey}}</th>
 									<th colspan="2" *ngIf="animalPondNewForm.get('canEdit').value"></th>
@@ -380,7 +380,7 @@
 							</thead>
 
 							<tbody formArrayName="animalDetails">
-								<tr *ngFor="let item of animalPondNewForm.get('animalDetails')['controls']; let indx = index;"
+								<tr *ngFor="let item of insertAnimalDetail.get('animalDetails')['controls']; let indx = index;"
 									[formGroupName]="indx">
 
 									<td>
