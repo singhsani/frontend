@@ -31,7 +31,7 @@
         <img _ngcontent-c1="" width=130 height=130 alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg"
         class="center">
         <h1><b>Instruction Of Planetarium Booking</b></h1>
-        <h4 class="pb-2">{{head_lines| translate: translateKey}}</h4><br>
+        <h5 class="pb-2">{{head_lines| translate: translateKey}}</h5><br>
         <h2 class="rules-title"><b>{{'rules_and_regulations'| translate: translateKey}}</b></h2>
     <h4>
         <ol class="olList">
@@ -48,7 +48,7 @@
               <li class="listSize">General Show 1. 04:00 PM to 04:30 PM (Gujarati) 2. 05:00 PM to 05:30 PM (Hindi) 3. 06:00 PM to 06:30 PM(Hindi).</li>
             </ul>
           </li>
-          <li>
+          <li class="listSize">
             Charge:
             <ul>
                 <h4><li class="listSize"> Special show charge per seat 10 ({{rupeeSign}})</li></h4>
@@ -62,10 +62,10 @@
       <mat-card-content class="p-4 mat-card" *ngIf="showSelectLanguage">
         <img _ngcontent-c1="" width=130 height=130 alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg"
         class="center">
-        <h1><b>પ્લેનેટોરિયમ બુકિંગની સૂચના</b></h1>
-        <h4 class="pb-2 ">{{gujheadLine| translate: translateKey}}</h4><br>
+        <h2><b>પ્લેનેટોરિયમ બુકિંગની સૂચના</b></h2>
+        <h5 class="pb-2 ">{{gujheadLine| translate: translateKey}}</h5><br>
         <h2 class="rules-title"><b>{{'rules_and_regulations'| translate: translateKey : 'gu'}}</b></h2>
-    <h4>
+    <h5>
         <div class="d-flex ">
             <p class="pr-2 listSize"> ૧. </p>
             <p class="listSize">નાગરિકો VMC નિયમોનું પાલન કરે છે.
@@ -103,7 +103,7 @@
             <p class="pr-2 listSize"> ૫.</p>
             <p class="listSize"> બેઠક ક્ષમતા: વિશેષ શો માટે નાગરિક ૯૮ બેઠકો બુક કરી શકે છે અને જનરલ શો માટે એક વપરાશકર્તા 4 બેઠકો બુક કરી શકે છે. </p>
           </div>
-    </h4>
+    </h5>
 
       </mat-card-content>
     </mat-card>
