@@ -56,6 +56,8 @@ export class ZooBookingComponent implements OnInit {
   numberOfVisitor : string;
   totalAmountZoo: number = 0;
   totalVisitorZoo: number =0 ;
+  changedValue : any;
+  editMode : boolean= false;
   /**
     * Pricing data for ticket bookings for visiting zoo
    */
@@ -623,7 +625,15 @@ if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'A
 
   getTotalAmount(event)
   { 
-     let numberOfVisitors = event.target.value;
+    
+    this.calculateAmount(event);
+      this.ticketBookingForm.get('amounts').get('code').setValue(this.totalAmount);
+     
+     
+  }
+
+  calculateAmount(event){
+    let numberOfVisitors = event.target.value;
     this.numberOfVisitor = event.target.value
       const f = this.ticketBookingForm.value;
       if(f.typeOfTicket.code == 'WITHOUT_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Children (Age 5 to 12 )")
@@ -678,9 +688,6 @@ if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'A
       else if(f.typeOfTicket.code == 'EDUCATIONAL_WITH_WALK_IN_AVIARY' && f.typeOfVisitor.name == "Video Camera Fee"){
         this.totalAmount = numberOfVisitors * (this.zooVisitingRates['VIDEOCAMERAS_EDUCATIONAL_WITH'])
       }
-      this.ticketBookingForm.get('amounts').get('code').setValue(this.totalAmount);
-     
-     
   }
 
   addTicketData(data: any){
@@ -842,6 +849,8 @@ if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'A
         ||this.ticketBookingForm.get('idType').invalid
         ||this.ticketBookingForm.get('idNumber').invalid
         || this.ticketBookingForm.get('visitingDate').invalid
+        || this.editMode
+
   }
 
   selectLanguage(event) {
@@ -853,4 +862,48 @@ if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'A
 		}
 
 	}
+
+  editRecord(item: any){
+    item.isEditMode=true;
+    this.editMode=true;
+  }
+
+  saveRecord(index: number,item: any){
+    let returnArray = this.ticketBookingForm.get('withAndWithoutWalkList') as FormArray;
+    let data ={
+      isEditMode: false,
+      typeOfTicket : returnArray.controls[index].get('typeOfTicket').value,
+      typeOfVisitor : returnArray.controls[index].get('typeOfVisitor').value,
+      charges : returnArray.controls[index].get('charges').value,
+      amounts :  returnArray.controls[index].get('amounts').value,
+      numberOfVisitors : returnArray.controls[index].get('numberOfVisitors').value,
+      typeOfTicketName : returnArray.controls[index].get('typeOfTicketName').value
+    }
+
+    this.addTicketData(data);
+    this.totalAmountZoo=0;
+    this.totalVisitorZoo=0;
+    
+    returnArray.value.forEach(element => {
+      this.totalAmountZoo = this.totalAmountZoo + parseInt(element.amounts)
+      if (!(element.typeOfVisitor=='Camera Fee' || element.typeOfVisitor =='Video Camera Fee')){
+        this.totalVisitorZoo = parseInt(element.numberOfVisitors) + this.totalVisitorZoo
+      }
+    });
+    item.isEditMode=false;
+    this.editMode=false;
+  }
+
+  changeData(event,index:number,item:any){
+    this.changedValue=event.target.value;
+    let returnArray = this.ticketBookingForm.get('withAndWithoutWalkList') as FormArray;
+    returnArray.controls[index].get('numberOfVisitors').setValue(event.target.value);
+
+    console.log("Return Array:",returnArray);
+    console.log("With and without list:",this.ticketBookingForm.get('withAndWithoutWalkList'));
+
+    this.totalAmount= returnArray.controls[index].get('charges').value * returnArray.controls[index].get('numberOfVisitors').value;
+    returnArray.controls[index].get('amounts').setValue(this.totalAmount);
+  }
+
 }

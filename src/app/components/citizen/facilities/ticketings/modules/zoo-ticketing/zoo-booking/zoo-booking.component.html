@@ -310,10 +310,10 @@
                   <th scope="col">Type of Ticket</th>
                   <th scope="col">Type of Visitors</th>
                   <th scope="col"  class="text-right">Charges (₹)</th>
-                  <th scope="col"  class="text-right">Count</th>
+                  <th scope="col"  class="text-right count">Count</th>
                   <th scope="col"  class="text-right">Amount (₹)</th>
 
-                  <th scope="col" *ngIf="ticketBookingForm.get('canEdit').value">{{'Action'| translate: translateKey}}
+                  <th scope="col" *ngIf="ticketBookingForm.get('canEdit').value"  class="text-center">{{'Action'| translate: translateKey}}
                   </th>
                 </tr>
               </thead>
@@ -324,28 +324,28 @@
                   <td class="td">{{item.get('typeOfTicketName').value}}</td>
                   <td class="td">{{item.get('typeOfVisitor').value}}</td>
                   <td class="td text-right">{{item.get('charges').value}}</td>
-                  <td class="td text-right">{{item.get('numberOfVisitors').value}}</td>
+                  <td *ngIf="item.isEditMode" class="text-right count">
+                    <!-- <div> -->
+                      <mat-form-field>
+                        <input #catRef matInput maxlength="3" OnlyNumber
+                        (change)="changeData($event,i,item)" value = "{{item.get('numberOfVisitors').value}}" required>
+                      </mat-form-field>
+                    <!-- </div> -->
+                  </td>
+                  <td  *ngIf="!item.isEditMode" class="td text-right count">{{item.get('numberOfVisitors').value}}</td>
                   <td class="td text-right">{{item.get('amounts').value}}</td>
-                  <td *ngIf="ticketBookingForm.get('canEdit').value">
+                  <td>
                     <button type="button" mat-icon-button  class="m-1" (click)="deleteRecord(i,item.value,'withAndWithoutWalkList')">
                       <mat-icon color="warn">delete</mat-icon>
                     </button>
-                    <span *ngIf="ticketBookingForm.get('canEdit').value" class="float-left">
-											<!-- <button mat-icon-button color="primary" *ngIf="!item.isEditMode"
-												(click)="editRecord(item)">
-												<mat-icon title="Edit">edit</mat-icon>
-											</button> -->
-											<!-- <button type="submit" [disabled]="item.invalid" *ngIf="item.isEditMode"
-												(click)="saveRecord(item)" mat-icon-button color="primary">
-												<mat-icon title="save">save</mat-icon>
-											</button> -->
-										</span>
-										<span *ngIf="ticketBookingForm.get('canEdit').value">
-											<!-- <button mat-icon-button color="warn" *ngIf="item.isEditMode"
-												(click)="cancelRecord(item,i,'withAndWithoutWalkList')">
-												<mat-icon title="Delete">cancel</mat-icon>
-											</button> -->
-										</span>
+                    <button mat-icon-button type="button" color="primary" *ngIf="!item.isEditMode"
+                      (click)="editRecord(item)">
+                      <mat-icon title="Edit">edit</mat-icon>
+                    </button> 
+                    <button type="button" [disabled]="item.invalid" *ngIf="item.isEditMode"
+                      (click)="saveRecord(i,item)" mat-icon-button color="primary">
+                      <mat-icon title="save">save</mat-icon>
+                    </button>
                   </td>
                 </tr>
               </tbody>
