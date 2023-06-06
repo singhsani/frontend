@@ -381,7 +381,7 @@
         </mat-form-field>
 
         <div class="col-md-6 ngSelect" formGroupName="idType">
-          <ng-select placeholder="{{'id_type'| translate: translateKey}} *" formControlName="code"
+          <ng-select placeholder="{{'id_type'| translate: translateKey}}" formControlName="code" class="asteriskmarkRequired"
             (change)="CheckType($event)">
             <ng-option *ngFor="let id of idTypes" [value]="id.code">
               {{ id?.name }}
