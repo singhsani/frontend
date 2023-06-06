@@ -134,9 +134,19 @@ export class TaxRebateApplicationTableComponent implements OnInit {
   }
 
   onEnterClick() {
-
-
-    this.taxRebateApplicationService.getOutsatndingDetails(this.selectedItem.propertyBasicId).subscribe(
+    if(this.selectedItem.isTented || !this.selectedItem.isResidential || this.selectedItem.billDueDate == ''){
+      let msg = '';
+      if(this.selectedItem.isTented){
+        msg = 'You are not eligible for applying this service as you are Tenant.';
+      }else if(!this.selectedItem.isResidential){
+        msg = 'You are not eligible for applying this service as your property is not Residential.';
+      }else{
+        msg = 'You are not eligible for applying this service as your current year bill is not generated.';
+      }
+      this.alertService.info(msg);
+      return;
+    }
+    this.taxRebateApplicationService.getOutsatndingDetails(this.selectedItem.propertyBasicId,this.selectedItem.propertyOccupierId).subscribe(
       (data) => {
         if (data.status === 200) {
           this.dataMoodel.propertyOccupierId = this.selectedItem.propertyOccupierId;

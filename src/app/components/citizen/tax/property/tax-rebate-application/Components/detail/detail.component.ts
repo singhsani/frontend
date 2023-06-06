@@ -76,6 +76,7 @@ export class DetailComponent implements OnInit {
       }
     )
   }
+  
   getFinancialYear() {
     this.taxRebateApplicationService.getFinancialYear().subscribe(
       (data) => {
@@ -141,33 +142,7 @@ export class DetailComponent implements OnInit {
   onSubmitApproved() {
     this.mandatoryFileCheck().then(data => {
       if (data.status) {
-        // this.commonService.openDetailDialogBox().subscribe(details => {
-        //   if (details) {
-        //     var applicationNumber = this.taxRebateApplicationDataSharingService.applicationNumber
-        //     this.fromActionsService.setUserData(details, applicationNumber).subscribe(
-        //       (data) => {
-        //         if (data) {
-        //           this.submit();
-        //         }
-        //       },
-        //       (error) => {
-        //         if (error.status === 400) {
-        //           var errorMessage = '';
-        //           error.error[0].propertyList.forEach(element => {
-        //             errorMessage = errorMessage + element + "</br>";
-        //           });
-        //           this.alertService.error(errorMessage);
-        //         }
-        //         else {
-        //           this.alertService.error(error.error.message);
-        //         }
-        //       });
-        //   }
-
-        // })
-
         this.submit();
-
       } else {
         this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
       }
@@ -311,6 +286,10 @@ export class DetailComponent implements OnInit {
     this.stepper.selectedIndex = event;
   }
 
+  onAttchmentBack(){
+    this.stepper.selectedIndex = this.stepper.selectedIndex -1;
+  }
+
   saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
     applicantDetailsDTO.uniqueId = this.taxRebateApplicationDataSharingService.applicationNumber;
     this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
@@ -322,6 +301,14 @@ export class DetailComponent implements OnInit {
          (error) => {
            this.commonService2.callErrorResponse(error);
          });
+   }
+
+   rebateTypeChange(model,event){
+    if(event){
+      this.model.taxRebateTypeId = model.filter(p=>p.taxRebateId == event)[0].taxRebateTypeLookupId;
+    }else{
+      this.model.taxRebateTypeId = null;
+    }
    }
 
 }

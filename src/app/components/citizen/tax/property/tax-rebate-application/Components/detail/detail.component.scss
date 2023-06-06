@@ -7,3 +7,7 @@
     filter: alpha(opacity=40);
     pointer-events: none;
 }
+
+::ng-deep .mat-horizontal-stepper-header{
+    pointer-events: none !important;
+}

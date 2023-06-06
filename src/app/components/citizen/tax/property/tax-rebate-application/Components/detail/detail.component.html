@@ -14,10 +14,10 @@
   </div>
 
 
-  <mat-horizontal-stepper #stepper class="stepperToTab">
-    <mat-step>
+<mat-horizontal-stepper #stepper class="stepperToTab">
+<mat-step>
       <ng-template matStepLabel>Property Information</ng-template>
-  <div class="row" [ngClass]="{'overlay': isShaved }">
+  <div class="row">
     <div class="col-md-12 mt-3">
       <form #formDetail="ngForm" (ngSubmit)="onSubmit(formDetail)">
         <!-- <div class="row">
@@ -42,8 +42,8 @@
         <div class="row">
           <div class="col-md-4">
             <div class="ngSelect">
-              <ng-select required placeholder="Rebate Type *" [items]="rebateTypeList" bindValue="taxRebateId"
-                bindLabel="taxRebateTypeName" name="taxRebateMstId" [(ngModel)]="model.taxRebateMstId"
+              <ng-select required placeholder="Rebate Type *" [items]="rebateTypeList" bindValue="taxRebateId" (ngModelChange)="rebateTypeChange(rebateTypeList,$event)"
+                bindLabel="taxRebateTypeName" name="taxRebateMstId" [(ngModel)]="model.taxRebateMstId" 
                 #RebateTypeLookupId="ngModel"
                 [ngClass]="{'ng-invalid ng-touched':  formDetail.submitted && RebateTypeLookupId.invalid}">
               </ng-select>
@@ -65,8 +65,14 @@
                       <mat-error *ngIf="ApplicationNo.invalid">*Application No. is required.</mat-error>
               </mat-form-field>
       </div>
+      <div class="col-md-4">
+        <mat-form-field class="full-width-input" hidden>
+                <input matInput trim="blur" placeholder="Application Number" maxlength="20" #ApplicationNo="ngModel" name="applicationNo" [(ngModel)]="model.taxRebateType">
+                <mat-error *ngIf="ApplicationNo.invalid">*Application No. is required.</mat-error>
+        </mat-form-field>
+    </div>
         </div>
-        <div class="row" *ngIf="!isShaved">
+        <div class="row">
           <div class="col-md-12 text-right">
             <button class="ml-3" mat-raised-button color="primary" type="submit">
               <mat-icon>save</mat-icon> Save & Next
@@ -97,12 +103,18 @@
       </ng-container>
     </div>
 
-
-      <div class="button-row text-right mt-3">
+    <div class="row">
+      <div class="button-row text-left mt-3 col-md-6">
+        <button mat-raised-button class="ml-3" color="primary" (click)="onAttchmentBack()" type="button">
+            <mat-icon>skip_previous</mat-icon>Back
+        </button>
+      </div>
+      <div class="button-row text-right mt-3 col-md-6">
           <button mat-raised-button class="ml-3" color="primary" (click)="onSubmitApproved()" type="button">
               <mat-icon>save</mat-icon>Submit
           </button>
       </div>
+    </div>
 
   </mat-card>
 </mat-step>
