@@ -420,7 +420,7 @@
 					  <div class="row">
 
 						 <mat-form-field class="col-md-4">
-							<input matInput type="text" formControlName="applicantName" appValidationFields
+							<input matInput type="text" formControlName="applicantName" appValidationFields required
 								[validationFieldsType]="'onlyNameWithSpace'"
 								placeholder="{{'applicant_name' | translate: translateKey }}" maxlength="50">
 							<control-messages [control]="applicantDetail.get('applicantName')">
@@ -471,7 +471,7 @@
 						 </mat-form-field>
 
 						 <div class="col-md-4 ngSelect" formGroupName="applicantIDProof">
-							<ng-select placeholder="{{'id_proof' | translate:translateKey}} *" formControlName="code"
+							<ng-select class="asteriskmarkRequired" placeholder="{{'id_proof' | translate:translateKey}} " formControlName="code"
 								(change)="CheckType($event)" required>
 								<ng-option *ngFor="let proof of APPLICANT_PROOF" [value]="proof.code">
 									{{proof.name}}
@@ -540,7 +540,7 @@
 						 </mat-form-field>
 
 						 <div class="col-md-4 ngSelect" formGroupName="applicantBloodGroup">
-							<ng-select placeholder="{{'blood_group' | translate:translateKey}}" formControlName="code">
+							<ng-select class="asteriskmarkRequired" placeholder="{{'blood_group' | translate:translateKey}}" formControlName="code">
 								<ng-option *ngFor="let yes_no of BLOOD_GROUP" [value]="yes_no.code">
 									{{yes_no.name}}
 								</ng-option>
