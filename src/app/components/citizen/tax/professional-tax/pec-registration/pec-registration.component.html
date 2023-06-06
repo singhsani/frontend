@@ -50,8 +50,11 @@
 						<control-messages [control]="employerDetail.get('applicantFullName')"></control-messages>
 					</mat-form-field>
 
-					<div class="col-md-4 radioBtnError" formGroupName="gender">
-						<mat-label>{{'gender' | translate: translateKey}} *</mat-label>
+					<div class="col-md-4 radioBtnError asteriskmarkRequired" formGroupName="gender">
+						<mat-label>
+							{{ 'gender' | translate: translateKey }}
+							<span style="color: red">*</span>
+						</mat-label>
 						<mat-radio-group class="example-radio-group" formControlName="code">
 							<mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name}}
 							</mat-radio-button>
@@ -89,8 +92,8 @@
 						<control-messages [control]="employerDetail.get('rcDate')"></control-messages>
 					</mat-form-field>
 
-					<div class="col-md-4 ngSelect" formGroupName="ward">
-						<ng-select placeholder="{{'ward_no' | translate: translateKey}} *" required
+					<div class="col-md-4 ngSelect asteriskmarkRequired" formGroupName="ward">
+						<ng-select placeholder="{{'ward_no' | translate: translateKey}} " required
 							formControlName="wardzoneId" (change)="getAllBlockNos($event)">
 							<ng-option *ngFor="let ward of wardNoArray" [value]="ward.wardzoneId">{{ward.wardzoneName}}
 							</ng-option>
@@ -167,7 +170,7 @@
 						[addressFormGroup]="employerDetail.get('residentialAddress')"></app-address>
 				</div>
 
-				<div class="fotButtonBar clearfix">
+				<div class="fotButtonBar1 clearfix">
 					<div class="col-sm-12 col-md-12">
 						<button class="pull-right" type="button" mat-raised-button color="primary"
 							(click)="onTabChange(1,employerDetail, pecRegForm)">{{'next' | translate:actionBarKey}}</button>
@@ -205,7 +208,7 @@
 
 				</div>
 
-				<div class="fotButtonBar clearfix">
+				<div class="fotButtonBar1 clearfix">
 					<div class="col-sm-12 col-md-12">
 						<button class="liteBorder pull-left" type="button" mat-raised-button
 							(click)="tabIndex = 0">{{'back' | translate:actionBarKey}}</button>
@@ -346,7 +349,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="fotButtonBar clearfix">
+				<div class="fotButtonBar1 clearfix">
 					<div class="col-sm-12 col-md-12">
 						<button class="liteBorder pull-left" type="button" mat-raised-button
 							(click)="tabIndex = 1">{{'back' | translate:actionBarKey}}</button>
@@ -361,9 +364,9 @@
 			<!-- fourth step start-->
 			<mat-tab [label]="stepLable4 | translate: translateKey" disabled>
 <form [formGroup]="actDetail">
-				<div class="row stepperMinHeight">
+				<div class="row stepperMinHeight asteriskmarkRequired">
 					<div class="col-md-4 ngSelect" formGroupName="entry">
-						<ng-select placeholder="{{'entry_no' | translate: translateKey}} *" formControlName="code"
+						<ng-select placeholder="{{'entry_no' | translate: translateKey}} " formControlName="code"
 							(change)="onEntryChange($event)">
 							<ng-option *ngFor="let entry of entryNoArray" [value]="entry.code">{{entry.name}}
 							</ng-option>
@@ -371,8 +374,8 @@
 						<control-messages [control]="actDetail.get('entry').get('code')"></control-messages>
 					</div>
 
-					<div class="col-md-4 ngSelect selectCategoryDropdown subEntry" formGroupName="subEntry">
-						<ng-select placeholder="{{'sub_entry_no' | translate: translateKey}} *" [disabled]="true"
+					<div class="col-md-4 ngSelect selectCategoryDropdown subEntry asteriskmarkRequired" formGroupName="subEntry">
+						<ng-select placeholder="{{'sub_entry_no' | translate: translateKey}} " [disabled]="true"
 							[items]="subEntryNoArray" bindLabel="name" bindValue="code" formControlName="code"
 							title="{{findSubEntryName()}}" (change)="onSubEntryChange($event)">
 							<ng-template ng-option-tmp let-item="item">
@@ -382,8 +385,8 @@
 						<control-messages [control]="actDetail.get('subEntry').get('code')"></control-messages>
 					</div>
 
-					<div class="col-md-4 ngSelect selectCategoryDropdown profession" formGroupName="professionConstitution">
-						<ng-select placeholder="{{'profession' | translate: translateKey}} *" [items]="professionArray"
+					<div class="col-md-4 ngSelect selectCategoryDropdown profession asteriskmarkRequired" formGroupName="professionConstitution">
+						<ng-select placeholder="{{'profession' | translate: translateKey}} " [items]="professionArray"
 							bindLabel="name" bindValue="code" formControlName="code" title="{{findProfConstitution()}}">
 							<ng-template ng-option-tmp let-item="item">
 								<div title="{{item.name}}">{{item.name}}</div>
@@ -393,8 +396,8 @@
 						</control-messages>
 					</div>
 
-					<div class="col-md-4 ngSelect" formGroupName="constitution">
-						<ng-select placeholder="{{'constitution' | translate: translateKey}} *" formControlName="code"
+					<div class="col-md-4 ngSelect asteriskmarkRequired" formGroupName="constitution">
+						<ng-select placeholder="{{'constitution' | translate: translateKey}} " formControlName="code"
 							(change)="onConstitutionChange($event)">
 							<ng-option *ngFor="let constitution of constitutionArray" [value]="constitution.code">
 								{{constitution.name}}</ng-option>
@@ -416,7 +419,7 @@
 					</mat-form-field>
 				</div>
 
-				<div class="fotButtonBar clearfix">
+				<div class="fotButtonBar1 clearfix">
 					<div class="col-sm-12 col-md-12">
 						<button class="liteBorder pull-left" type="button" mat-raised-button
 							(click)="tabIndex = 2">{{'back' | translate:actionBarKey}}</button>
@@ -443,7 +446,7 @@
 					</div>
 				</div>
 
-				<div class="fotButtonBar clearfix">
+				<div class="fotButtonBar1 clearfix">
 					<div class="col-sm-12 col-md-12">
 						<button class="liteBorder pull-left" type="button" mat-raised-button
 							(click)="tabIndex = 3">{{'back' | translate:actionBarKey}}</button>
