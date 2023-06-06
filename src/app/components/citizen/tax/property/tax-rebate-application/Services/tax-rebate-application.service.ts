@@ -59,8 +59,8 @@ export class TaxRebateApplicationService {
       .pipe(map((response: any) => response))
   }
 
-  getOutsatndingDetails(propertyBasicId: any) {
-    return this.http.get(`${Constants.assessmentModuleApiUrl}active/outsatndingDetails?propertyBasicId=${propertyBasicId}`,
+  getOutsatndingDetails(propertyBasicId: any,propertyOccupierId: any) {
+    return this.http.get(`${Constants.assessmentModuleApiUrl}active/occupier/outstandingDetailsTaxRebate?propertyBasicId=${propertyBasicId}&&propertyOccupierId=${propertyOccupierId}`,
     { observe: 'response' })
       .pipe(map((response: any) => response))
   }
