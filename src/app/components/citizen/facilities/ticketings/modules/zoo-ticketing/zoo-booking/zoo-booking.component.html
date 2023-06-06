@@ -244,7 +244,7 @@
       </mat-form-field>
       <div class="rate-details px-3">
       <div class=" ngSelect width-size-lg" formGroupName="typeOfTicket">
-      <ng-select placeholder="Type Of Ticket" [items]="ticketTypes" class="asteriskmarkRequired" bindLabel="name" bindValue="code" formControlName="code" (change)="setVisitorsType()" required>
+      <ng-select placeholder="Type of Ticket" [items]="ticketTypes" class="asteriskmarkRequired" bindLabel="name" bindValue="code" formControlName="code" (change)="setVisitorsType()" required>
         <ng-template ng-option-tmp let-item="item">
         <div title="{{item.name}}">{{item.name}}</div>
         </ng-template>
@@ -306,7 +306,7 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col" width="56">Sr. No</th>
+                  <th scope="col" width="56">Sr.No.</th>
                   <th scope="col">Type of Ticket</th>
                   <th scope="col">Type of Visitors</th>
                   <th scope="col"  class="text-right">Charges (₹)</th>
@@ -328,7 +328,7 @@
                   <td class="td text-right">{{item.get('amounts').value}}</td>
                   <td *ngIf="ticketBookingForm.get('canEdit').value">
                     <button type="button" mat-icon-button  class="m-1" (click)="deleteRecord(i,item.value,'withAndWithoutWalkList')">
-                      <mat-icon matTooltip="Delete" color="warn">delete</mat-icon>
+                      <mat-icon color="warn">delete</mat-icon>
                     </button>
                     <span *ngIf="ticketBookingForm.get('canEdit').value" class="float-left">
 											<!-- <button mat-icon-button color="primary" *ngIf="!item.isEditMode"
@@ -381,7 +381,7 @@
         </mat-form-field>
 
         <div class="col-md-6 ngSelect" formGroupName="idType">
-          <ng-select placeholder="{{'id_type'| translate: translateKey}} *" formControlName="code"
+          <ng-select placeholder="{{'id_type'| translate: translateKey}}" formControlName="code" class="asteriskmarkRequired"
             (change)="CheckType($event)">
             <ng-option *ngFor="let id of idTypes" [value]="id.code">
               {{ id?.name }}
