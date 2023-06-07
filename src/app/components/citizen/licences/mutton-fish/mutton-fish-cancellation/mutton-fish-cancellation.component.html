@@ -49,7 +49,7 @@
 				<div class="row">
 
 					<div class="col-md-4 ngSelect" formGroupName="licenseType">
-						<ng-select placeholder="{{'license_type' | translate:translateKey}} *" formControlName="code">
+						<ng-select placeholder="{{'license_type' | translate:translateKey}}" class="asteriskmarkRequired" formControlName="code">
 							<ng-option *ngFor="let type of MF_LICENSE_TYPE" [value]="type.code">{{type.name}}
 							</ng-option>
 						</ng-select>
@@ -59,7 +59,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-2 ngSelect" formGroupName="personType">
-						<ng-select placeholder="{{'person_type' | translate:translateKey}} *" formControlName="code">
+						<ng-select placeholder="{{'person_type' | translate:translateKey}}" class="asteriskmarkRequired" formControlName="code">
 							<ng-option *ngFor="let type of PERSON_TYPE" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="muttonFishCancellationForm.get('personType').get('code')">
