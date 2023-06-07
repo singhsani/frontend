@@ -17,7 +17,7 @@
 				<form [formGroup]="applicantDetials">
 				<div class="row">
 					<div class="col-md-4 ngSelect" formGroupName="licenseType">
-						<ng-select placeholder="{{'license_type' | translate:translateKey}} *" formControlName="code">
+						<ng-select placeholder="{{'license_type' | translate:translateKey}}" class="asteriskmarkRequired" formControlName="code">
 							<ng-option *ngFor="let type of MF_LICENSE_TYPE" [value]="type.code">{{type.name}}
 							</ng-option>
 						</ng-select>
@@ -28,7 +28,7 @@
 
 				<div class="row">
 					<div class="col-md-2 ngSelect" formGroupName="personType">
-						<ng-select placeholder="{{'person_type' | translate:translateKey}} *" formControlName="code"
+						<ng-select placeholder="{{'person_type' | translate:translateKey}}" class="asteriskmarkRequired" formControlName="code"
 							(change)="getGujNameFromLookup($event,'personTypeGuj',PERSON_TYPE)">
 							<ng-option *ngFor="let type of PERSON_TYPE" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
@@ -172,14 +172,14 @@
 						<control-messages [control]="muttonFishNewForm.get('wardNo').get('code')"></control-messages>
 					</div> -->
 					<div class="col-md-4 ngSelect">
-						<ng-select  placeholder="{{'business_under_zone' | translate:translateKey}} *" formControlName="zoneNo" required (change)="onChangedZone($event);">
+						<ng-select  placeholder="{{'business_under_zone' | translate:translateKey}}" class="asteriskmarkRequired" formControlName="zoneNo" required (change)="onChangedZone($event);">
 						  <ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.parentWardzoneId">
 							{{zone.wardzoneName}}</ng-option>
 						</ng-select>
 						<control-messages [control]="businessDetail.get('zoneNo')"></control-messages>
 					  </div>
 					  <div class="col-md-4 ngSelect" >
-						<ng-select required placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="wardNo">
+						<ng-select required placeholder="{{'ward_no' | translate:translateKey}}" class="asteriskmarkRequired" formControlName="wardNo">
 						  <ng-option *ngFor="let ward of wardZoneLevel2List" [value]="ward.wardzoneId">
 							{{ward.wardzoneName}}</ng-option>
 						</ng-select>
@@ -190,7 +190,7 @@
 					<h2>{{'business_shop_address' | translate:translateKey}}</h2>
 
 					<div class="col-md-4 ngSelect" formGroupName="statusOfBusinessId">
-						<ng-select placeholder="{{'business_address_type' | translate:translateKey}} *"
+						<ng-select placeholder="{{'business_address_type' | translate:translateKey}}" class="asteriskmarkRequired"
 							formControlName="code" (change)="onChangeStatusOfBusiness($event)">
 							<ng-option *ngFor="let statusId of MEATFISH_STATUS_OF_BUSINESS" [value]="statusId.code">
 								{{statusId.name}}</ng-option>
