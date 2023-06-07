@@ -13,6 +13,7 @@ import { BookingConstants, BookingUtils } from '../../../config/booking-config';
 import { ComponentConfig } from 'src/app/components/component-config';
 import { AppSwimmingPoolService } from '../swimming-pool.service';
 import { count } from 'rxjs-compat/operator/count';
+import swal from 'sweetalert2';
 
 
 @Component({
@@ -256,7 +257,8 @@ export class SwimmingPoolComponent implements OnInit {
       this.BATCH_NAME = rep;
     },
       err => {
-        this.commonService.openAlert("Warning", err.error[0].message, "warning" , "", cb => {
+        this.openAlert("Warning", err.error[0].message, "warning" , true, "", cb => {
+          
         this.generalDetails.get('swimmingPoolName').get('code').reset();
         this.generalDetails.get('membershipType').get('code').reset();
         this.generalDetails.get('category').get('code').reset();
@@ -266,7 +268,18 @@ export class SwimmingPoolComponent implements OnInit {
         this.generalDetails.get('batchName').get('code').reset();
         this.applicantDetail.get('applicantBirthDate').reset();
         this.applicantDetail.get('applicantAge').reset()
-        }) ;
+        },
+        cd => {
+          this.generalDetails.get('swimmingPoolName').get('code').reset();
+          this.generalDetails.get('membershipType').get('code').reset();
+          this.generalDetails.get('category').get('code').reset();
+          this.generalDetails.get('batchDuration').get('code').reset();
+          this.generalDetails.get('birthDate').reset();
+          this.generalDetails.get('batchFor').get('code').reset();
+          this.generalDetails.get('batchName').get('code').reset();
+          this.applicantDetail.get('applicantBirthDate').reset();
+          this.applicantDetail.get('applicantAge').reset()
+         } ) ;
       })
   }
 
@@ -853,4 +866,29 @@ export class SwimmingPoolComponent implements OnInit {
 		}
 
 	}
-}
+
+  openAlert(title: string, message: string, type: string, allowOutsideClick?: boolean, html?: any, performAction?: any, rejectAction?: any) {
+
+		let options = {
+			title: title,
+			text: message,
+			type: type,
+			html: html,
+			showCancelButton: false,
+			confirmButtonColor: '#3085d6',
+			allowOutsideClick: allowOutsideClick,
+			imageUrl: this.commonService.imageUrls(type),
+			imageClass: 'doneIcon',
+		}
+
+		swal(options as any).then((result) => {
+			if (result.value && performAction) {
+				performAction();
+			} else if (result.dismiss) {
+				rejectAction();
+			}
+		})
+	}
+
+
+  }
