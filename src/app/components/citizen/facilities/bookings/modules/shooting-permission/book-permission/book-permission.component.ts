@@ -152,11 +152,13 @@ export class BookPermissionComponent implements OnInit {
 		let id = this.organizationdetails.get('applicantAddress.id').value;
 		if (event.checked) {
 			this.organizationdetails.get('applicantAddress').patchValue(this.organizationdetails.get('organizationAddress').value);
+      this.organizationdetails.get('applicantAddress').disable()
 			if (this.organizationdetails.get('organizationAddress').get('country').value) {
 				this.applicantAddress.getStateLists(this.organizationdetails.get('organizationAddress').get('country').value);
 			}
 		} else {
 			this.organizationdetails.get('applicantAddress').reset();
+      this.organizationdetails.get('applicantAddress').enable()
 		}
 		this.organizationdetails.get('applicantAddress.id').setValue(id);
 	}
@@ -169,8 +171,8 @@ export class BookPermissionComponent implements OnInit {
       // this.BANKS = resp.BANK;
       this.CANCELLATION_TYPE = resp.CANCELLATION_TYPE;
       this.PURPOSES = resp.PURPOSE;
-      this.PURPOSES.forEach(element => {        
-           this.purposeList.push(element) 
+      this.PURPOSES.forEach(element => {
+           this.purposeList.push(element)
            this.PURPOSES = this.purposeList.sort((a, b) => {
             if(a.name > b.name) {
               return 1;
@@ -180,7 +182,7 @@ export class BookPermissionComponent implements OnInit {
               return 0;
             }
           });
-        
+
       });
     });
   }
@@ -637,7 +639,7 @@ export class BookPermissionComponent implements OnInit {
         if (data) {
 					this.wardZoneLevel1List = data.data;
           this.wardZoneLevel1List.forEach(element => {
-               this.zoneList.push(element) 
+               this.zoneList.push(element)
                this.wardZoneLevel1List = this.zoneList.sort((a, b) => {
                 if(a.zoneName > b.zoneName) {
                   return 1;
@@ -647,7 +649,7 @@ export class BookPermissionComponent implements OnInit {
                   return 0;
                 }
               });
-          });          
+          });
         }
 			},
 			(error) => {
@@ -663,7 +665,7 @@ export class BookPermissionComponent implements OnInit {
       this.bookingService.getGardenList(event).subscribe(resp => {
         this.SHOOTING_PERMISSION = resp.data;
        this.SHOOTING_PERMISSION .forEach(element => {
-           this.parkList.push(element) 
+           this.parkList.push(element)
            this.SHOOTING_PERMISSION = this.parkList.sort((a, b) => {
             if(a.name > b.name) {
               return 1;
@@ -673,7 +675,7 @@ export class BookPermissionComponent implements OnInit {
               return 0;
             }
           });
-        
+
       });
       })
     }
@@ -755,6 +757,6 @@ export class BookPermissionComponent implements OnInit {
         else {
           this.showSelectLanguage = false
         }
-    
+
       }
 }
