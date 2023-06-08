@@ -937,19 +937,26 @@ export class PecRegistrationComponent implements OnInit {
 		}
 	}
 
-	onSameAddressChange(event) {
+		onSameAddressChange(event) {
 		let id = this.employerDetail.get('residentialAddress.id').value;
 		if (event.checked) {
-			this.employerDetail.get('residentialAddress').patchValue(this.employerDetail.get('officeAddress').value);
-			if (this.employerDetail.get('officeAddress').get('country').value) {
-				this.resAddrComponent.getStateLists(this.employerDetail.get('officeAddress').get('country').value);
-			}
+		 this.employerDetail.get('residentialAddress').disable();
+		  this.employerDetail.get('residentialAddress').patchValue(this.employerDetail.get('officeAddress').value);
+		  if (this.employerDetail.get('officeAddress').get('country').value) {
+			this.resAddrComponent.getStateLists(this.employerDetail.get('officeAddress').get('country').value);
+		  }
 		} else {
-			this.employerDetail.get('residentialAddress').reset();
+		  this.employerDetail.get('residentialAddress').reset();
+		  this.employerDetail.get('residentialAddress').enable();
+		  const officeAddress = this.employerDetail.get('officeAddress').value;
+		  this.employerDetail.get('residentialAddress.city').setValue(officeAddress.city);
+		  this.employerDetail.get('residentialAddress.state').setValue(officeAddress.state);
+		  this.employerDetail.get('residentialAddress.country').setValue(officeAddress.country);
 		}
+	  
 		this.employerDetail.get('residentialAddress.addressType').setValue('PF_PEC_RESIDENTIAL_ADDRESS');
 		this.employerDetail.get('residentialAddress.id').setValue(id);
-	}
+	  }
 
 	patchValue() {
 		this.pecRegForm.patchValue(this.dummyJSON);
