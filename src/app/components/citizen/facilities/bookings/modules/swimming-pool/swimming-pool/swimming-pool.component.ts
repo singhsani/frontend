@@ -259,26 +259,14 @@ export class SwimmingPoolComponent implements OnInit {
       err => {
         this.openAlert("Warning", err.error[0].message, "warning" , true, "", cb => {
           
-        this.generalDetails.get('swimmingPoolName').get('code').reset();
-        this.generalDetails.get('membershipType').get('code').reset();
-        this.generalDetails.get('category').get('code').reset();
-        this.generalDetails.get('batchDuration').get('code').reset();
-        this.generalDetails.get('birthDate').reset();
-        this.generalDetails.get('batchFor').get('code').reset();
-        this.generalDetails.get('batchName').get('code').reset();
-        this.applicantDetail.get('applicantBirthDate').reset();
-        this.applicantDetail.get('applicantAge').reset()
-        },
-        cd => {
-          this.generalDetails.get('swimmingPoolName').get('code').reset();
-          this.generalDetails.get('membershipType').get('code').reset();
-          this.generalDetails.get('category').get('code').reset();
-          this.generalDetails.get('batchDuration').get('code').reset();
           this.generalDetails.get('birthDate').reset();
           this.generalDetails.get('batchFor').get('code').reset();
-          this.generalDetails.get('batchName').get('code').reset();
           this.applicantDetail.get('applicantBirthDate').reset();
-          this.applicantDetail.get('applicantAge').reset()
+        },
+        cd => {
+          this.generalDetails.get('birthDate').reset();
+          this.generalDetails.get('batchFor').get('code').reset();
+          this.applicantDetail.get('applicantBirthDate').reset();
          } ) ;
       })
   }
