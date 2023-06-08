@@ -19,7 +19,7 @@
 
 <mat-card class="formClass cardBorder">
     <!--Start  form  -->
-    <mat-tab-group mat-stretch-tabs class="stepperNav" [(selectedIndex)]="tabIndex" dynamicHeight="true">
+    <mat-tab-group mat-stretch-tabs class="stepperNav asteriskmarkRequired" [(selectedIndex)]="tabIndex" dynamicHeight="true">
 
         <!-- first step start-->
         <mat-tab [label]="stepLable1 | translate: translateKey" disabled>
@@ -46,12 +46,16 @@
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
+                        <mat-label>
+                            {{'applicant_full_name' | translate: pecTranslateKey}}
+                            <span class="required-field"></span>
+                        </mat-label>
                         <input matInput autocomplete="off" maxlength="100" formControlName="applicantFullName"
-                            type="text" placeholder="{{'applicant_full_name' | translate: pecTranslateKey}}" required>
+                            type="text" required>
                     </mat-form-field>
 
                     <div class="col-md-4 radioBtnError" formGroupName="gender">
-                        <mat-label>{{'gender' | translate: pecTranslateKey}} *</mat-label>
+                        <mat-label>{{'gender' | translate: pecTranslateKey}} <span style="color: red">*</span></mat-label>
                         <mat-radio-group class="example-radio-group" formControlName="code">
                             <mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name}}
                             </mat-radio-button>
@@ -59,15 +63,21 @@
                     </div>
 
                     <mat-form-field class="col-md-4">
+                        <mat-label>
+                            {{'establishment_name' | translate: pecTranslateKey}}
+                            <span class="required-field"></span>
+                        </mat-label>
                         <input matInput autocomplete="off" maxlength="100" type="text"
-                            formControlName="establishmentName"
-                            placeholder="{{'establishment_name' | translate: pecTranslateKey}}" required>
+                            formControlName="establishmentName" required>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
                         <span matPrefix>+91 &nbsp;</span>
-                        <input matInput OnlyNumber placeholder="{{'contact_no' | translate:pecTranslateKey}}" type="tel"
-                            maxlength="10" minlength="10" formControlName="contactNo" required>
+                        <mat-label>
+                            {{'contact_no' | translate:pecTranslateKey}}
+                            <span class="required-field"></span>
+                        </mat-label>
+                        <input matInput OnlyNumber type="tel" maxlength="10" minlength="10" formControlName="contactNo" required>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
@@ -103,18 +113,25 @@
                     </div>
 
                     <mat-form-field class="col-md-4">
+                        <mat-label>
+                            {{'applicant_dob' | translate: pecTranslateKey}}
+                            <span class="required-field"></span>
+                        </mat-label>
                         <input matInput autocomplete="off" appDate formControlName="applicantDob" [max]="maxDate"
-                            [matDatepicker]="dobpicker" (dateChange)="onDateChange('applicantDob', $event.value)"
-                            placeholder="{{'applicant_dob' | translate: pecTranslateKey}}">
+                            [matDatepicker]="dobpicker" (dateChange)="onDateChange('applicantDob', $event.value)">
                         <mat-datepicker-toggle matSuffix [for]="dobpicker"></mat-datepicker-toggle>
                         <mat-datepicker touchUi="true" #dobpicker></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
-                        <input matInput autocomplete="off" appDate formControlName="commencementDate" [max]="maxDate"
-                            [matDatepicker]="docpicker" (dateChange)="onDateChange('commencementDate', $event.value)"
-                            placeholder="{{'date_of_commencement' | translate: pecTranslateKey}}">
+                        <mat-label>
+                            {{'date_of_commencement' | translate: pecTranslateKey}}
+                            <span class="required-field"></span>
+                        </mat-label>
+                        <input matInput autocomplete="off" appDate formControlName="commencementDate"
+                            [max]="maxDate" [matDatepicker]="docpicker"
+                            (dateChange)="onDateChange('commencementDate', $event.value)">
                         <mat-datepicker-toggle matSuffix [for]="docpicker"></mat-datepicker-toggle>
                         <mat-datepicker touchUi="true" #docpicker></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
@@ -155,7 +172,7 @@
 
                 </div>
 
-                <div class="fotButtonBar margin140px clearfix">
+                <div class="fotButtonBar1 margin140px clearfix">
                     <div class="col-sm-12 col-md-12">
                         <button mat-raised-button type="button" class="pull-right" color="primary"
                         (click)="onTabChange(1,prcRegForm, prcRegForm)">{{'next' | translate:actionBarKey}}</button>
@@ -212,7 +229,7 @@
                     </div>
                 </div>
             </div>
-            <div class="fotButtonBar clearfix">
+            <div class="fotButtonBar1 clearfix">
                 <div class="col-sm-12 col-md-12">
                     <button mat-raised-button class="liteBorder pull-left" type="button" (click)="tabIndex = 0">{{'back'
                         | translate:actionBarKey}}</button>
@@ -239,15 +256,15 @@
 
         <mat-card class="height80px">
             <div class="row">
-                <div class="col-md-6">
-                    <ng-select [disabled]="isEmpEditable" placeholder="{{'year' | translate: translateKey}} *"
+                <div class="col-md-6 asteriskmarkRequired">
+                    <ng-select [disabled]="isEmpEditable" placeholder="{{'year' | translate: translateKey}} "
                         [(ngModel)]="empDetailYear" (change)="empYearChange($event)">
                         <ng-option *ngFor="let year of yearArray" [value]="year">{{year}}</ng-option>
                     </ng-select>
                 </div>
 
-                <div class="col-md-6">
-                    <ng-select [disabled]="isEmpEditable" placeholder="{{'month' | translate: translateKey}} *"
+                <div class="col-md-6 asteriskmarkRequired">
+                    <ng-select [disabled]="isEmpEditable" placeholder="{{'month' | translate: translateKey}} "
                         [(ngModel)]="empDetailMonth">
                         <ng-option *ngFor="let month of monthArray | slice:monthIdx:currentMonthIdx " [value]="month">
                             {{month | titlecase}}</ng-option>
