@@ -523,7 +523,7 @@ export class ZooBookingComponent implements OnInit {
     this.totalVisitorZoo = 0;
     this.totalAmountZoo = 0;
     this.withAndWithoutWalkListForDuplicate = [];
-    for (let i = 0; i < this.ticketBookingForm.get('withAndWithoutWalkList')['controls'].length; i++) {
+    for (let i = this.ticketBookingForm.get('withAndWithoutWalkList')['controls'].length-1; i >=0; i--) {
       this.addItem('withAndWithoutWalkList').removeAt(i)
     }
   }
