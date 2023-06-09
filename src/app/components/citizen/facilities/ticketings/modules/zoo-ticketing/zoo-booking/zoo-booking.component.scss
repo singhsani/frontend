@@ -251,8 +251,11 @@ table { width: 100%; }
     text-align: right;
 }
 
-.count {
+.countVisitors {
     max-width: 100px !important;
+}
+.alignment{
+    width: auto;
 }
 
 .center {
