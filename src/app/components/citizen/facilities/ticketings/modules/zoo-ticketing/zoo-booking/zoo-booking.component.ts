@@ -825,6 +825,16 @@ if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'A
 
     let returnArray = this.ticketBookingForm.get('withAndWithoutWalkList') as FormArray;
 
+    let data ={
+      isEditMode: false,
+      typeOfTicket : returnArray.controls[index].get('typeOfTicket').value,
+      typeOfVisitor : returnArray.controls[index].get('typeOfVisitor').value,
+      charges : returnArray.controls[index].get('charges').value,
+      amounts :  returnArray.controls[index].get('amounts').value,
+      numberOfVisitors : 0,
+      typeOfTicketName : returnArray.controls[index].get('typeOfTicketName').value
+    }
+
       if (item.id == null) {
         returnArray.removeAt(index);
 
@@ -835,11 +845,23 @@ if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'A
 			this.commonService.successAlert('Deleted Successfully!', '', 'success');
       }
      
-    this.totalAmountZoo =  this.totalAmountZoo- item.amounts;
-
-    if(!(item.typeOfVisitor == 'Camera Fee' || item.typeOfVisitor == 'Video Camera Fee' )){
-      this.totalVisitorZoo =  this.totalVisitorZoo- item.numberOfVisitors;
-    }
+     
+      this.addTicketData(data);
+      this.totalAmountZoo=0;
+      this.totalVisitorZoo=0;
+      let setEditMode=false;
+      returnArray.value.forEach(element => {
+        this.totalAmountZoo = this.totalAmountZoo + parseInt(element.amounts)
+        if (!(element.typeOfVisitor=='Camera Fee' || element.typeOfVisitor =='Video Camera Fee')){
+          this.totalVisitorZoo = parseInt(element.numberOfVisitors) + this.totalVisitorZoo
+        }
+        if(item.editMode){
+          setEditMode=true
+        }
+      });
+      if(!setEditMode){
+        this.editMode=false;
+        }
   }
 
   checkFormInvalid(){
