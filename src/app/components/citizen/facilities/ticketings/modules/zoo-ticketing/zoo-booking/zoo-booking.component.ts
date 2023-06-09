@@ -517,6 +517,7 @@ export class ZooBookingComponent implements OnInit {
       visitingDate :  moment(this.defaultDateForReset).format('YYYY-MM-DD')
 
     });
+    this.visitorsTypesChange=[];
     this.numberOfVisitors = 0;
     this.subTotal = 0;
     this.totalAmount = 0;
