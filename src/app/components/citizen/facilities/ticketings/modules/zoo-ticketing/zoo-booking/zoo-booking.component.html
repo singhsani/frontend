@@ -302,7 +302,7 @@
     </div>
     
     <div>
-        <div class="col-md-12" *ngIf="ticketBookingForm.get('withAndWithoutWalkList')['controls'].length >= 1 || ticketBookingForm.get('withAndWithoutWalkList')['controls'].length > visitorsTypes.length">
+        <div class="col-md-12" *ngIf="ticketBookingForm.get('withAndWithoutWalkList')['controls'].length >0">
 
           <div style="margin-top: 15px;" formArrayName = "withAndWithoutWalkList" >
             <table class="table">
@@ -315,7 +315,7 @@
                   <th scope="col"  class="text-right">Count</th>
                   <th scope="col"  class="text-right">Amount (₹)</th>
 
-                  <th scope="col" *ngIf="ticketBookingForm.get('canEdit').value"  class="text-center">{{'Action'| translate: translateKey}}
+                  <th scope="col"  class="text-center">{{'Action'| translate: translateKey}}
                   </th>
                 </tr>
               </thead>
