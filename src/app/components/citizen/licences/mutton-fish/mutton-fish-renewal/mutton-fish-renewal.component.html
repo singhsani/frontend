@@ -294,9 +294,9 @@
 									<!-- <div class="d-md-none">{{'name' | translate:translateKey}}</div> -->
 									<div *ngIf="!item.isEditMode">{{item.get('name').value}}</div>
 									<mat-form-field *ngIf="item.isEditMode">
-										<input matInput maxlength="50" appValidationFields
+										<input  matInput maxlength="50" appValidationFields
 											[validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
-											placeholder="{{'name' | translate:translateKey}}*">
+											placeholder="{{'name' | translate:translateKey}}" required>
 										<control-messages [control]="item.get('name')"></control-messages>
 									</mat-form-field>
 								</td>
@@ -306,8 +306,8 @@
 									<div *ngIf="!item.isEditMode">{{item.get('address').value}}</div>
 									<mat-form-field *ngIf="item.isEditMode">
 										<input matInput maxlength="100"
-											placeholder="{{'address' | translate:translateKey}}*"
-											formControlName="address">
+											placeholder="{{'address' | translate:translateKey}}"
+											formControlName="address" required>
 										<control-messages [control]="item.get('address')">
 										</control-messages>
 									</mat-form-field>
