@@ -757,9 +757,11 @@
                         <b>Remark:</b>&nbsp;{{i.queryRemark}}
                     </div>
                 </ng-container>
-                <!-- <div type="text" readonly class="text-left queryraiseremarks" [innerHtml]="getInnerHTMLForRemark()"
-                #copytext>
-                </div> -->
+                <ng-container *ngIf="formService.apiType  == 'vendor'">
+                   <div type="text" readonly class="text-left queryraiseremarks" [innerHtml]="getInnerHTMLForRemark()"
+                   #copytext>
+                   </div>
+                </ng-container>
             </div>
         </div>
     </div>
