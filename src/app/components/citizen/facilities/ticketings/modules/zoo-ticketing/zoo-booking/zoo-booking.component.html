@@ -39,7 +39,7 @@
           <mat-cell *matCellDef="let row; let i = index;" class="fullWidth mat-cell" >
             <div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
             <div class="mobile-label1">:</div>
-            <div class="row-inside text-right"> {{i+1}} </div>
+            <div class="row-inside text-center"> {{i+1}} </div>
           </mat-cell>
         </ng-container>
 
@@ -57,7 +57,7 @@
           <mat-cell *matCellDef="let row" class="fullWidth">
             <div class="mobile-label">{{'Without Walk-in Aviary' | translate:translateKey}}</div>
             <div class="mobile-label1">:</div>
-            <div class="row-inside text-right"> {{ zooVisitingRates[row.WithoutpriceField] ? zooVisitingRates[row.WithoutpriceField] : 'Free' }}</div>
+            <div class="row-inside text-center"> {{ zooVisitingRates[row.WithoutpriceField] ? zooVisitingRates[row.WithoutpriceField] : 'Free' }}</div>
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="Withprice">
@@ -65,7 +65,7 @@
           <mat-cell *matCellDef="let row" class="fullWidth">
             <div class="mobile-label">{{'With Walk-in Aviary' | translate:translateKey}}</div>
             <div class="mobile-label1">:</div>
-            <div class="row-inside text-right"> {{ zooVisitingRates[row.WithpriceField] ? zooVisitingRates[row.WithpriceField] : 'Free' }}</div>
+            <div class="row-inside text-center"> {{ zooVisitingRates[row.WithpriceField] ? zooVisitingRates[row.WithpriceField] : 'Free' }}</div>
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumnsForPricingTable"></mat-header-row>
@@ -86,7 +86,7 @@
           <mat-cell *matCellDef="let row; let i = index;" class="fullWidth mat-cell">
             <div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
             <div class="mobile-label1">:</div>
-            <div class="row-inside text-right"> {{i+1}} </div>
+            <div class="row-inside text-center"> {{i+1}} </div>
           </mat-cell>
         </ng-container>
 
@@ -95,7 +95,7 @@
           <mat-cell *matCellDef="let row" class="fullWidth">
             <div class="mobile-label">{{'months' | translate:translateKey}}</div>
             <div class="mobile-label1">:</div>
-            <div class="row-inside text-right"> {{ row.months }}</div>
+            <div class="row-inside text-center"> {{ row.months }}</div>
           </mat-cell>
         </ng-container>
 
@@ -104,7 +104,7 @@
           <mat-cell *matCellDef="let row" class="fullWidth">
             <div class="mobile-label">{{'slot' | translate:translateKey}}</div>
             <div class="mobile-label1">:</div>
-            <div class="row-inside text-right"> {{ row.slot }}</div>
+            <div class="row-inside text-center"> {{ row.slot }}</div>
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumnsForTimingTable"></mat-header-row>
@@ -140,7 +140,7 @@
          <mat-cell *matCellDef="let row; let i = index;" class="fullWidth mat-cell" >
            <div class="mobile-label">{{'ક્રમ નં.' | translate:translateKey}}</div>
            <div class="mobile-label1">:</div>
-           <div class="row-inside text-right"> {{row.srNo}} </div>
+           <div class="row-inside text-center"> {{row.srNo}} </div>
          </mat-cell>
        </ng-container>
 
@@ -158,7 +158,7 @@
          <mat-cell *matCellDef="let row" class="fullWidth">
            <div class="mobile-label">{{'વૉક-ઇન એવિઅરી વિના' | translate:translateKey}}</div>
            <div class="mobile-label1">:</div>
-           <div class="row-inside text-right"> {{ row.WithoutpriceField }}</div>
+           <div class="row-inside text-center"> {{ row.WithoutpriceField }}</div>
          </mat-cell>
        </ng-container>
        <ng-container matColumnDef="Withprice">
@@ -166,7 +166,7 @@
          <mat-cell *matCellDef="let row" class="fullWidth">
            <div class="mobile-label">{{'વોક-ઇન એવરી સાથે' | translate:translateKey}}</div>
            <div class="mobile-label1">:</div>
-           <div class="row-inside text-right"> {{ row.WithpriceField}}</div>
+           <div class="row-inside text-center"> {{ row.WithpriceField}}</div>
          </mat-cell>
        </ng-container>
        <mat-header-row *matHeaderRowDef="displayedColumnsForPricingTable"></mat-header-row>
@@ -187,7 +187,7 @@
          <mat-cell *matCellDef="let row; let i = index;" class="fullWidth mat-cell">
            <div class="mobile-label">{{'ક્રમ.નં.' | translate:translateKey}}</div>
            <div class="mobile-label1">:</div>
-           <div class="row-inside text-right"> {{row.srNo}} </div>
+           <div class="row-inside text-center"> {{row.srNo}} </div>
          </mat-cell>
        </ng-container>
 
@@ -196,7 +196,7 @@
          <mat-cell *matCellDef="let row" class="fullWidth">
            <div class="mobile-label">{{'મહિનાઓ' | translate:translateKey}}</div>
            <div class="mobile-label1">:</div>
-           <div class="row-inside text-right"> {{ row.months }}</div>
+           <div class="row-inside text-center"> {{ row.months }}</div>
          </mat-cell>
        </ng-container>
 
@@ -205,7 +205,7 @@
          <mat-cell *matCellDef="let row" class="fullWidth">
            <div class="mobile-label">{{'સ્લોટ' | translate:translateKey}}</div>
            <div class="mobile-label1">:</div>
-           <div class="row-inside text-right"> {{ row.slot }}</div>
+           <div class="row-inside text-center"> {{ row.slot }}</div>
          </mat-cell>
        </ng-container>
        <mat-header-row *matHeaderRowDef="displayedColumnsForTimingTable"></mat-header-row>
