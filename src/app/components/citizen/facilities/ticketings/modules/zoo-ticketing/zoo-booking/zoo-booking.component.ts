@@ -406,13 +406,13 @@ export class ZooBookingComponent implements OnInit {
         name: [null, Validators.required],
       }),
       charges: this.fb.group({
-        code: [null, Validators.required]
+        code: [{ value: null, disabled: true }, Validators.required]
       }),
       numberOfVisitors: this.fb.group({
         code: [null, Validators.required]
       }),
       amounts: this.fb.group({
-        code: [null, Validators.required]
+        code: [{ value: null, disabled: true }, Validators.required]
       }),
       idNumber: [null, [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
       visitingDate: [null, Validators.required],
