@@ -929,4 +929,13 @@ if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'A
     returnArray.controls[index].get('amounts').setValue(this.totalAmount);
   }
 
+  checkValidRateDetails(){
+
+    return !(this.ticketBookingForm.get('typeOfTicket').get('code').value &&
+      this.ticketBookingForm.get('typeOfVisitor').get('name').value &&
+      this.ticketBookingForm.get('numberOfVisitors').get('code').value && 
+      this.ticketBookingForm.get('numberOfVisitors').get('code').value > 0 )
+  
+  }
+
 }

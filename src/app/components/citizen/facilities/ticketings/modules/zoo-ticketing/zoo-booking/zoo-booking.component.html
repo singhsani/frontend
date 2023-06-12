@@ -293,7 +293,7 @@
       </div>
 
       <div class="add-button-left width-size-ml pl-2">
-        <button type="button" [disabled]="!ticketBookingForm.get('numberOfVisitors').get('code').value"
+        <button type="button" [disabled]="checkValidRateDetails()"
            class="Add-button" mat-raised-button (click)="getTicketData()"
           color="primary">{{'Add'|
           translate:translateKey}}</button>
