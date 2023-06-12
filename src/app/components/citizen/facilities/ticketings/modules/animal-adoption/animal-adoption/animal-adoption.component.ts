@@ -423,7 +423,7 @@ export class AnimalAdoptionComponent implements OnInit {
       let data ={
         animalName: this.animalBirdName,
         animalCount: this.animalCount,
-         adoptionAnimalCount:event.target.focus()
+     //    adoptionAnimalCount:event.target.focus()
 
       }
       let adoptionYear=this.animalAdoptionForm.get('adoptionYears').value;
