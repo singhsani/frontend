@@ -173,8 +173,8 @@
                 </div>
 
                 <div class="fotButtonBar1 margin140px clearfix">
-                    <div class="col-sm-12 col-md-12">
-                        <button mat-raised-button type="button" class="pull-right" color="primary"
+                    <div class="col-sm-12 col-md-12" >
+                        <button [disabled]="prcRegForm.invalid "  mat-raised-button type="button" class="pull-right" color="primary"
                         (click)="onTabChange(1,prcRegForm, prcRegForm)">{{'next' | translate:actionBarKey}}</button>
                     </div>
                 </div>
