@@ -59,16 +59,21 @@ export class BankDetailComponent implements OnInit, OnDestroy {
     this.modelForCliear = {};
     this.model.vacancyFrom = new Date();
     this.vacancyToMinDate = new Date(moment(new Date()).add("days", 1).toString());
+    this.model.occupierId = 0;
     this.modelSubscription = this.vacancyPremiseCertificateDataSharingService.observableDataModel.subscribe(data => {
       if (data) {
+        delete data.applicantDetail
         this.model = Object.assign({}, data);
+        this.model.propertyAddress = data.propertyAddress.propertyAddress ? data.propertyAddress.propertyAddress : data.propertyAddress
         this.modelForCliear = Object.assign({}, data);
-        this.model.vacancyFrom = new Date();
-        //this.model.vacancyTo = new Date();
+        this.model.actionOnVacancyAmountLookupId = data.actionOnVacancyAmountLookupId
+        this.model.vacancyFrom = data.vacancyFrom ? moment(data.vacancyFrom).format("YYYY-MM-DD") : new Date();
+        this.model.vacancyTo = data.vacancyTo ? moment(data.vacancyTo).format("YYYY-MM-DD") : null
+        this.model.occupierId = data.propertyOccupierId
       }
+        this.getLookups();
+        this.getBankList();
     });
-    this.getLookups();
-    this.getBankList();
   }
 
   ngOnDestroy() {
@@ -135,6 +140,7 @@ export class BankDetailComponent implements OnInit, OnDestroy {
 
   cancelForm() {
     this.vacancyPremiseCertificateDataSharingService.updatedIsShowForm(false);
+    this.router.navigateByUrl('citizen/tax/property/vacantPremisesCertificate')
   }
 
   onSubmit(formDetail: NgForm) {

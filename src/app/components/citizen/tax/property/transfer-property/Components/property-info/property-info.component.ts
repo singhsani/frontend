@@ -25,6 +25,7 @@ export class PropertyInfoComponent implements OnInit {
   carpetArea: number;
   actualTransferDateMaxDate: Date = new Date();
   isValidTransferArea: boolean = true;
+  transferPropertyInfoEditMode : Subscription
   constructor(private commonService: CommonService,
     private transferPropertyDataSharingService: TransferPropertyDataSharingService,
     private transferPropertyService: TransferPropertyService,
@@ -44,9 +45,20 @@ export class PropertyInfoComponent implements OnInit {
         this.getFloorItems();
       }
     })
+
+    this.transferPropertyInfoEditMode = this.transferPropertyDataSharingService.getPropertyEditModel().subscribe(data =>{ 
+      if(data){
+        this.applicationModel = data.detail;
+        this.selectedDataModel = data.detail;
+        this.getFloorItems()
+        this.getTransferSubTypeLookup(data.detail.transferSubTypeLookupName)
+       }
+    }      
+    )
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.transferPropertyInfoEditMode.unsubscribe()
   }
 
   getLookups() {

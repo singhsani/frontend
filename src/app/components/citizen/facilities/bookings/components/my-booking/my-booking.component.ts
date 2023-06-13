@@ -106,9 +106,9 @@ export class MyBookingComponent implements OnInit {
 		let resourcesList = [
 			{ type: 'townhall', name: 'Townhall' },
 			{ type: 'stadium', name: 'Stadium' },
-			{ type: 'amphiTheater', name: 'Amphi Theater' },
+			{ type: 'amphiTheater', name: 'Amphi Theatre' },
 			{ type: 'guesthouse', name: 'Guest House' },
-			{ type: 'childrenTheater', name: 'Children Theater' },
+			{ type: 'childrenTheater', name: 'Children Theatre' },
 			{ type: 'shootingPermission', name: 'Shooting Permission' },
 			{ type: 'swimming', name: 'Swimming Pool' },
 			{ type: 'atithigruh', name: 'Atithigruh' },

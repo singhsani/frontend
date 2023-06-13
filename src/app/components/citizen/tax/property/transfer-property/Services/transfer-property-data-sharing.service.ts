@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TransferPropertyModule } from '../transfer-property.module';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 
 @Injectable()
@@ -88,5 +88,13 @@ export class TransferPropertyDataSharingService {
   observablePropertyDetailModel = this.dataSourcePropertyDetailModel.asObservable();
   updatedPropertyDetailModel(data: any) {
     this.dataSourcePropertyDetailModel.next(data);
+  }
+
+  private propertyEditModel = new BehaviorSubject(null);
+  setPropertyEditModel(model: any) {
+    this.propertyEditModel.next(model);
+  }
+  getPropertyEditModel(): Observable<any> {
+    return this.propertyEditModel.asObservable();
   }
 }
