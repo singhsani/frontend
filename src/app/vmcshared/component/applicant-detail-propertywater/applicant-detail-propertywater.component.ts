@@ -1,10 +1,12 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { ApplicantDetailDTO, CitizenAddressDTO } from 'src/app/components/citizen/tax/Models/applicant-details.model';
 import { CountryService } from 'src/app/shared/services/country.service';
 import * as _ from 'lodash';
 import { NgForm } from '@angular/forms';
 import { CommonService } from '../../Services/common-service';
 import { CommonService as CommonServiceTwo} from 'src/app/shared/services/common.service';
+import { DataSharingService } from '../../Services/data-sharing.service';
+import { Subscription } from 'rxjs';
 
 
 
@@ -13,7 +15,7 @@ import { CommonService as CommonServiceTwo} from 'src/app/shared/services/common
   templateUrl: './applicant-detail-propertywater.component.html',
   styleUrls: ['./applicant-detail-propertywater.component.scss']
 })
-export class ApplicantDetailPropertywaterComponent implements OnInit {
+export class ApplicantDetailPropertywaterComponent implements OnInit, OnDestroy {
 
 
   model = new ApplicantDetailDTO();
@@ -27,21 +29,42 @@ export class ApplicantDetailPropertywaterComponent implements OnInit {
   @Output() applicantDetails = new EventEmitter();
   @Input() showSkipButton = false;
 
+  subscription : Subscription;
 
 
   constructor(
 	  private countryService: CountryService,
 	  private commonService:CommonService,
-	  private commonServcie2 : CommonServiceTwo
+	  private commonServcie2 : CommonServiceTwo,
+	  private  propertyEntryAddDataSharingService : DataSharingService,
 ) { }
 
   ngOnInit() {
     this.model.citizenAddressDTO = new CitizenAddressDTO();
     this.editMode = true;
 	this.getCountryLists();
-	this.getUserProfile();
+	// this.getUserProfile();
+
+	this.subscription = this.propertyEntryAddDataSharingService.getApplicantDetailsEditModel().subscribe(data => {
+		if (data) {
+			delete data.detail
+			delete data.ownerDetail
+			this.model = data;
+			this.model.email = data.emailAddress ? data.emailAddress : data.email
+			this.model.mobileNo = data.contactNo ? data.contactNo : data.mobileNo
+			this.model.citizenAddressDTO = data.citizenAddressDTO
+		}
+		else {
+			this.getUserProfile();
+		}
+
+	});
   }
 
+  ngOnDestroy() {	
+	this.propertyEntryAddDataSharingService.setApplicantDetailsEditModel(null);
+	this.subscription.unsubscribe();
+   }
   /**
 	 * This method is use for change the country
 	 * @param country - name of country

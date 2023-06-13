@@ -221,4 +221,10 @@ export class NewPropertyEntryAddService {
       .pipe(map((response: any) => response))
   }
 
+  getVersionById(applicationId : number){
+    return this.http.get(`${Constants.assessmentModuleApiUrl}basic/getVersionById/${applicationId}`,
+    { observe: 'response' })
+    .pipe(map((response: any) => response))
+  }
+
 }

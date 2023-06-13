@@ -145,5 +145,11 @@ export class TransferPropertyService {
       { observe: 'response' })
       .pipe(map((response: any) => response))
   }
+
+  getVersionById(applicationId : number){
+    return this.http.get(`${Constants.serverApiIp}/api/form/transferOfProperty/draftApplicationDetails?applicationNo=${applicationId}`,
+    { observe: 'response' })
+    .pipe(map((response: any) => response))
+  }
  
 }

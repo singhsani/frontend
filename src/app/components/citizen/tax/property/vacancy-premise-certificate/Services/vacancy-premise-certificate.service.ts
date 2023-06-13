@@ -101,4 +101,10 @@ export class VacancyPremiseCertificateService {
     { observe: 'response' })
     .pipe(map((response: any) => response))   
   }
+
+  getVersionById(applicationId : number){
+    return this.http.get(`${Constants.serverApiIp}//property/vacancypremisecertificate/DraftDetailForVacency?applicationNo=${applicationId}`,
+    { observe: 'response' })
+    .pipe(map((response: any) => response))
+  }
 }

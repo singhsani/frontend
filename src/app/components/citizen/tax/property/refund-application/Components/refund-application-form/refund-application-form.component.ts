@@ -8,10 +8,11 @@ import { RefundApplicationDataSharingService } from '../../Services/refund-appli
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
 import { MatStepper } from '@angular/material';
 import { ManageRoutes } from 'src/app/config/routes-conf';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService as Commonservice2} from 'src/app/shared/services/common.service';
 import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
 import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
+import { DataSharingService } from 'src/app/vmcshared/Services/data-sharing.service';
 
 @Component({
     selector: 'app-refund-application-form',
@@ -38,6 +39,7 @@ export class RefundApplicationFormComponent implements OnInit {
     submitBtn: boolean = true;
     isAppNoSearchDisable = true;
     vacancyApplicationNo: string;
+    formId : number;
 
 
     constructor(private refundApplicationService: RefundApplicationService,
@@ -46,7 +48,10 @@ export class RefundApplicationFormComponent implements OnInit {
         private router: Router,
         private refundApplicationDataSharingService: RefundApplicationDataSharingService,
         private commoservice2 : Commonservice2,
-        private addressService: ApplicantAddressService) { }
+        private addressService: ApplicantAddressService,
+        private route: ActivatedRoute,
+        private propertyEntryAddDataSharingService : DataSharingService) { }
+        
 
     ngOnInit() {
         this.vacancyPremiseCertficateModel = new VacancyPremiseCertficateModel();
@@ -59,10 +64,25 @@ export class RefundApplicationFormComponent implements OnInit {
                 this.onClear();
             }
         });
+
+        this.route.paramMap.subscribe(param => {
+          this.formId = Number(param.get('id'));
+          if (this.formId != 0) {
+            this.refundApplicationService.getVersionById(this.formId).subscribe(res => {
+              res.body.serviceApplicationId = this.formId;
+              this.propertyNo = res.body.propertyNo
+              this.vacancyApplicationNo = res.body.applicationNo;
+              this.refundAgainstVacancyId = res.body.refundAgainstVacancyId
+              this.onSearchByPropertyNo()
+              this.getCertificateNoByApplicationNo()
+              this.propertyEntryAddDataSharingService.setApplicantDetailsEditModel(res.body.detail)
+            })
+          }
+        });
     }
 
-    onSearchByPropertyNo(form: NgForm) {
-        if (form.form.valid) {
+    onSearchByPropertyNo() {
+       // if (form.form.valid) {
             this.refundApplicationService.searchOccupierByPropertyNumber({ propertyNo: this.propertyNo }).subscribe(
                 (data) => {
                     if (data.status === 200) {
@@ -73,7 +93,7 @@ export class RefundApplicationFormComponent implements OnInit {
                 (error) => {
                     this.commonService.callErrorResponse(error);
                 });
-        }
+     //   }
     }
 
     onChangeVacancyCertificateNo() {
@@ -104,9 +124,10 @@ export class RefundApplicationFormComponent implements OnInit {
                 certificateNumber: this.vacancyCertificateNo,
                 occupierId: this.occupierModel.propertyOccupierId,
                 propertyServiceApplicationId: this.applicationModel.applicationNumber,
-                refundAgainstVacancyId: 0,
+                refundAgainstVacancyId: this.refundAgainstVacancyId ? this.refundAgainstVacancyId :0,
                 applicationNo: this.applicationNo,
-                responseDTOList : []
+                responseDTOList : [],
+                serviceApplicationId : this.formId == 0 ? null : this.formId
             };
             this.refundApplicationService.save(dataToPost).subscribe(
                 (data) => {

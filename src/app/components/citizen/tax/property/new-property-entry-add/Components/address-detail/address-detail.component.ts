@@ -34,6 +34,7 @@ export class AddressDetailComponent implements OnInit, OnDestroy {
   propertyModel: any = {};
   propertyModelSub: Subscription;
   modelProperty: any = {};
+  subscription : Subscription;
 
   mask = [/\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, /\d/,  '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]; // ##-##-###-###-###
   maskedInputController;
@@ -76,10 +77,37 @@ export class AddressDetailComponent implements OnInit, OnDestroy {
                   filter(f => f.lookupCode.includes(Constants.LookupCodes.Property_sub_Reason_For_Creation))[0].items;
     });
 
+    this.subscription = this.newNewPropertyEntryAddDataSharingService.getPropertyEditModel().subscribe(data => {
+      if (data) {
+        this.addressModel = data.propertyBasic;
+        if (this.addressModel.level2Id) {
+          this.getWardZone(this.addressModel.level1Id, 2)
+        }
+        if (this.addressModel.level3Id) {
+          this.getWardZone(this.addressModel.level2Id, 3)
+        }
+        if (this.addressModel.level4Id) {
+          this.getWardZone(this.addressModel.level3Id, 4)
+        }
+        this.addressModel.propertyAddressDTO.state = "Gujarat";
+        this.addressModel.propertyAddressDTO.district = "Vadodara";
+        this.addressModel.propertyAddressDTO.city = 'Vadodara'
+        this.addressModel.propertyAddressDTO = data.propertyBasic.propertyAddressDTO
+      }else{
+        this.addressModel = new AddressModel();
+        this.addressModel.propertyAddressDTO = new PropertyAddressDTO();
+        this.addressModel.propertyAddressDTO.state = "Gujarat";
+       this.addressModel.propertyAddressDTO.district = "Vadodara";
+       this.addressModel.propertyAddressDTO.city = 'Vadodara'
+      }
+     
+    });
+
   }
 
   ngOnDestroy() {
     this.propertyModelSub.unsubscribe();
+    this.subscription.unsubscribe()
   }
 
   getWardZoneLevel() {

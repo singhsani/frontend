@@ -35,6 +35,7 @@ export class OwnerDetailComponent implements OnInit {
   panelOpenState: boolean = false;
 
   @ViewChild(MatSort) sort: MatSort;
+  subsPropertyEditMode : Subscription
   constructor(
     private newNewPropertyEntryAddDataSharingService: NewPropertyEntryAddDataSharingService,
     private commonService: CommonService,
@@ -56,10 +57,24 @@ export class OwnerDetailComponent implements OnInit {
         this.modelProperty = data;
       }
     })
+
+    this.subsPropertyEditMode = this.newNewPropertyEntryAddDataSharingService.getPropertyEditModel().subscribe(data => {
+      if (data) {
+        this.dataSource = new MatTableDataSource(data.propertyOwners);
+        this.dataSource.sort = this.sort;
+        this.checkOwnerExist();
+        if (data.propertyTypeVersion)
+          this.propertyModel = data.propertyTypeVersion;
+        if (this.propertyModel.propertyTypeMstId) {
+          this.getPropertySubTypeList(this.propertyModel.propertyTypeMstId)
+        }
+      }
+    });
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.subsPropertyEditMode.unsubscribe()
   }
 
   getLookups() {

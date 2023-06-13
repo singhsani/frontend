@@ -406,13 +406,13 @@ export class ZooBookingComponent implements OnInit {
         name: [null, Validators.required],
       }),
       charges: this.fb.group({
-        code: [null, Validators.required]
+        code: [{ value: null, disabled: true }, Validators.required]
       }),
       numberOfVisitors: this.fb.group({
         code: [null, Validators.required]
       }),
       amounts: this.fb.group({
-        code: [null, Validators.required]
+        code: [{ value: null, disabled: true }, Validators.required]
       }),
       idNumber: [null, [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
       visitingDate: [null, Validators.required],
@@ -927,6 +927,15 @@ if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'A
 
     this.totalAmount= returnArray.controls[index].get('charges').value * returnArray.controls[index].get('numberOfVisitors').value;
     returnArray.controls[index].get('amounts').setValue(this.totalAmount);
+  }
+
+  checkValidRateDetails(){
+
+    return !(this.ticketBookingForm.get('typeOfTicket').get('code').value &&
+      this.ticketBookingForm.get('typeOfVisitor').get('name').value &&
+      this.ticketBookingForm.get('numberOfVisitors').get('code').value && 
+      this.ticketBookingForm.get('numberOfVisitors').get('code').value > 0 )
+  
   }
 
 }

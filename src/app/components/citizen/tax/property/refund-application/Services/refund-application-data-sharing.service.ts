@@ -39,4 +39,13 @@ export class RefundApplicationDataSharingService {
   getIsBack(): Observable<any> {
     return this.isBack.asObservable();
   }
+
+  
+  private propertyEditModel = new BehaviorSubject(null);
+  setPropertyEditModel(model: any) {
+    this.propertyEditModel.next(model);
+  }
+  getPropertyEditModel(): Observable<any> {
+    return this.propertyEditModel.asObservable();
+  }
 }

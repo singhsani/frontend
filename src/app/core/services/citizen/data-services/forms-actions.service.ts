@@ -586,4 +586,13 @@ export class FormsActionsService {
 		  .pipe(map((response: any) => response))
 	  }
 
+	  /**
+	 * This method is use to delete citizen record respective to id
+	 * @param appId - citizen app id
+	 */
+	deleteForm(appId) {
+		this.requestURL = `property/refundagainstvacancy/draftDeleteByServiceType/${appId}`;
+		return this.http.delete(this.requestURL);
+	}
+
 }
