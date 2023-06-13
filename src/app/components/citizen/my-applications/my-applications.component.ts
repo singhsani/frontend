@@ -1121,4 +1121,18 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			});
 	}
 
+
+	deleteFormForRefundagainstvacancy(apiCode, id) {
+		this.commonService.deleteAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+			this.formService.deleteForm(id).subscribe(res => {
+				this.commonService.successAlert('Deleted!', '', 'success');
+				this.getAllData();
+				err => {
+					this.commonService.successAlert('Error!', err.error[0].message, 'error');
+				}
+
+			})
+		})
+	}
 }

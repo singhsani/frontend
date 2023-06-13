@@ -315,7 +315,7 @@
 
                         <div class="mobile-label1">:</div>
                         <button class="actionBtn"
-                            *ngIf="((row.serviceType === 'WATER_PIPELINE_WORK_ORDER_COMPLETION'||row.serviceType === 'DRAINAGE_PIPELINE_WORK_ORDER_COMPLETION'||row.serviceType === 'WATER_DRAINAGE_DISCONNECTION'||row.serviceType === 'WATER_DRAINAGE_RECONNECTION'||row.serviceType === 'WATER_DRAINAGE_TRANSFER_CONNECTION'||row.serviceType === 'WATER_NEW_DRAINAGE_CONNECTION'||row.serviceType === 'WTR_NEW_WATER_CONNECTION' || row.serviceType === 'WTR_CHANGE_OF_USAGE' || row.serviceType === 'WATER_PIPELINE_CONNECTION_REGISTRATION' ||  row.serviceType === 'DRAINAGE_PIPELINE_CONNECTION_REGISTRATION' || row.serviceType === 'WTR_TRANSFER_OF_OWNERSHIP' || row.serviceType === 'WTR_RENEWAL_PLUMBER_LICENSE' || row.serviceType === 'WTR_RECONNECTION_APPLICATION' || row.serviceType === 'WTR_NEW_PLUMBER_LICENSE' || row.serviceType === 'WTR_DISCONNECTION_APPLICATION' || row.serviceType === 'NO_DUE_CERTIFICATE' || row.serviceType === 'EXTRACT_OF_PROPERTY' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.serviceType === 'DUPLICATE_BILL' || row.serviceType === 'VACANT_PREMISES_CERTIFICATE' || row.serviceType === 'PRO_REFUND_AGAINST_VACANCY' || row.serviceType === 'PRO_TAX_REBATE') && row.fileStatus === 'SUBMITTED') ||
+                            *ngIf="((row.serviceType === 'WATER_PIPELINE_WORK_ORDER_COMPLETION'||row.serviceType === 'DRAINAGE_PIPELINE_WORK_ORDER_COMPLETION'||row.serviceType === 'WATER_DRAINAGE_DISCONNECTION'||row.serviceType === 'WATER_DRAINAGE_RECONNECTION'||row.serviceType === 'WATER_DRAINAGE_TRANSFER_CONNECTION'||row.serviceType === 'WATER_NEW_DRAINAGE_CONNECTION'||row.serviceType === 'WTR_NEW_WATER_CONNECTION' || row.serviceType === 'WTR_CHANGE_OF_USAGE' || row.serviceType === 'WATER_PIPELINE_CONNECTION_REGISTRATION' ||  row.serviceType === 'DRAINAGE_PIPELINE_CONNECTION_REGISTRATION' || row.serviceType === 'WTR_TRANSFER_OF_OWNERSHIP' || row.serviceType === 'WTR_RENEWAL_PLUMBER_LICENSE' || row.serviceType === 'WTR_RECONNECTION_APPLICATION' || row.serviceType === 'WTR_NEW_PLUMBER_LICENSE' || row.serviceType === 'WTR_DISCONNECTION_APPLICATION' || row.serviceType === 'NO_DUE_CERTIFICATE' || row.serviceType === 'EXTRACT_OF_PROPERTY' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.serviceType === 'DUPLICATE_BILL' || row.serviceType === 'VACANT_PREMISES_CERTIFICATE' || row.serviceType === 'PRO_REFUND_AGAINST_VACANCY' || row.serviceType === 'PRO_TAX_REBATE') && row.fileStatus === 'SUBMITTED' || row.serviceType === 'PROPERTY_ASSESSMENT' || row.serviceType == 'TRANSFER_OF_PROPERTY' || row.serviceType === 'VACANT_PREMISES_CERTIFICATE' || row.serviceType === 'PRO_REFUND_AGAINST_VACANCY') ||
                             row.fileStatus === 'PAYMENT_RECEIVED' || ((row.fileStatus === 'APPROVED'||row.fileStatus === 'SUBMITTED') && (row.serviceType == 'PROPERTY_ASSESSMENT')) || (row.fileStatus === 'SUBMITTED' && row.serviceType == 'TRANSFER_OF_PROPERTY') ||(row.fileStatus === 'REJECTED')||
                             row.fileStatus === 'PAYMENT' || row.fileStatus === 'SCRUTINY' || (row.serviceType === 'WTR_NEW_WATER_CONNECTION' && row.fileStatus === 'SUBMITTED' && row.newgenStatus === 'SUBMIT_AFTER_SCRUTINY')"
                             mat-button [matMenuTriggerFor]="menuTax">
@@ -385,6 +385,31 @@
                                 </mat-icon>
                                 {{'print_acknolowdgement_receipt' | translate:translateKey}}
                             </button>
+
+                            <button mat-menu-item *ngIf="isEditOptDisplay(row)" color="primary"
+                                (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
+                                <mat-icon class="m-1" title="{{'edit_application' | translate:translateKey}}">edit
+                                </mat-icon>
+                                {{'edit_application' | translate:translateKey}}
+                            </button>
+
+                            <ng-container *ngIf="row.serviceType === 'TRANSFER_OF_PROPERTY'">
+                            <button mat-menu-item *ngIf="isDeleteOptDisplay(row)" color="primary"
+                                (click)="deleteRecord(row.serviceDetail.code, row.serviceFormId)">
+                                <mat-icon class="m-1" title="{{'delete_application' | translate:translateKey}}">delete
+                                </mat-icon>
+                                {{'delete_application' | translate:translateKey}}
+                            </button>
+                            </ng-container>
+
+                            <ng-container *ngIf="row.serviceType === 'PRO_REFUND_AGAINST_VACANCY' || row.serviceType === 'VACANT_PREMISES_CERTIFICATE' || row.serviceType === 'PROPERTY_ASSESSMENT'" >
+                                <button mat-menu-item *ngIf="isDeleteOptDisplay(row)" color="primary"
+                                (click)="deleteFormForRefundagainstvacancy(row.serviceDetail.code, row.serviceFormId)">
+                                <mat-icon class="m-1" title="{{'delete_application' | translate:translateKey}}">delete
+                                </mat-icon>
+                                {{'delete_application' | translate:translateKey}}
+                            </button>
+                            </ng-container>
 
                         </mat-menu>    
                     </ng-container>

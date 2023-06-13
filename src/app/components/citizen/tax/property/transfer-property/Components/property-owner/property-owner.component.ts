@@ -30,6 +30,8 @@ export class PropertyOwnerComponent implements OnInit {
   //@ViewChild(MatSort) sort: MatSort;
   @ViewChild('sorter1') sorter1: MatSort;
   @ViewChild('sorter2') sorter2: MatSort;
+  ownerDetails : any = [];
+  transferOwnerPropertyEditMode : Subscription
   constructor(private commonService: CommonService,
     private transferPropertyDataSharingService: TransferPropertyDataSharingService,
     private transferPropertyService: TransferPropertyService,
@@ -52,10 +54,17 @@ export class PropertyOwnerComponent implements OnInit {
 
   }
     })
+
+    this.transferOwnerPropertyEditMode = this.transferPropertyDataSharingService.getPropertyEditModel().subscribe((data) => {
+      if(data){
+       this.selectedDataModel.propertyNo = data.detail.propertyNo
+     }
+   })
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.transferOwnerPropertyEditMode.unsubscribe()
   }
 
   getLookups() {
@@ -67,6 +76,7 @@ export class PropertyOwnerComponent implements OnInit {
   }
 
   searchOwnerByPropertyNo() {
+    if(this.selectedDataModel.propertyNo){
     this.transferPropertyService.searchOwnerByPropertyNo(this.selectedDataModel.propertyNo).subscribe(
       (data) => {
         if (data.status === 200) {
@@ -86,6 +96,7 @@ export class PropertyOwnerComponent implements OnInit {
           this.alertService.error(error.error.message);
         }
       });
+    }
   }
 
   searchOwnerByPropertyVersionId() {

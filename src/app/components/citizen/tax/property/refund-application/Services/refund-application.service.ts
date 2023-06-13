@@ -74,4 +74,9 @@ export class RefundApplicationService {
     return this.http.get<Array<Object>>(`${Constants.serverApiIp}/property/refundagainstvacancy/attachments?serviceFormId=${serviceFormId}`);
   }
   
+  getVersionById(applicationId : number){
+    return this.http.get(`${Constants.serverApiIp}/property/refundagainstvacancy/DraftVacancyDetail?applicationNo=${applicationId}`,
+    { observe: 'response' })
+    .pipe(map((response: any) => response))
+  }
 }

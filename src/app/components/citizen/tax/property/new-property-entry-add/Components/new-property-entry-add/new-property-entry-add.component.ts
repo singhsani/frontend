@@ -6,6 +6,10 @@ import { PropertySearchSharingService } from 'src/app/vmcshared/component/proper
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
 import { ApplicantAddressService } from 'src/app/vmcshared/Services/applicant-address.service';
 import { ApplicantDetailDTO } from '../../../../Models/applicant-details.model';
+import { ActivatedRoute } from '@angular/router';
+import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
+import { NewPropertyEntryAddService } from '../../Services/new-property-entry-add.service';
+import { DataSharingService } from 'src/app/vmcshared/Services/data-sharing.service';
 
 @Component({
   selector: 'app-new-property-entry-add',
@@ -17,11 +21,16 @@ export class NewPropertyEntryAddComponent implements AfterViewInit {
   subscription: Subscription;
   currentIndex: number = 0;
   isShowForm: boolean = false;
+  formId : number;
+  apiCode : string;
   constructor(
     private newNewPropertyEntryAddDataSharingService: NewPropertyEntryAddDataSharingService,
     private propertySearchSharingService: PropertySearchSharingService,
     private commonService: CommonService,
-    private addressService: ApplicantAddressService ) {
+    private addressService: ApplicantAddressService,
+    private route: ActivatedRoute,
+    private newPropertyEntryAddService : NewPropertyEntryAddService,
+    private propertyEntryAddDataSharingService : DataSharingService  ) {
   }
   ngOnInit() {
 
@@ -34,6 +43,16 @@ export class NewPropertyEntryAddComponent implements AfterViewInit {
     this.propertySearchSharingService.getIsOpenSearchForm().subscribe(data => {
       this.isShowForm = data;
     });
+
+    this.route.paramMap.subscribe(param => {
+      this.formId = Number(param.get('id'));
+      if(this.formId != 0){
+        this.newPropertyEntryAddService.getVersionById(this.formId).subscribe(res =>{
+          this.propertyEntryAddDataSharingService.setApplicantDetailsEditModel(res.body);
+          this.viewBasic(res.body.extraIds)
+        })
+      }
+		});
   }
 
   ngOnDestroy() {
@@ -67,5 +86,15 @@ export class NewPropertyEntryAddComponent implements AfterViewInit {
          (error) => {
            this.commonService.callErrorResponse(error);
          });
+   }
+
+   viewBasic(propertyBasicId : number){
+    if(propertyBasicId){
+      this.newPropertyEntryAddService.viewBasic(propertyBasicId).subscribe(res=>{
+          console.log(res)
+          this.newNewPropertyEntryAddDataSharingService.setPropertyEditModel(res.body);
+        }
+      )
+    }
    }
 }

@@ -24,7 +24,7 @@
           <mat-card>Total Outstanding: <b>{{model.totalOutstanding}}</b></mat-card>
         </div>
       </div>
-      <div class="row" [ngClass]="{'overlay': isShaved }">
+      <div class="row">
         <div class="col-md-12 mt-3">
           <form #formDetail="ngForm" (ngSubmit)="onSubmit(formDetail)">
             <div class="row">
@@ -56,7 +56,7 @@
               <div class="col">
                 <mat-form-field class="full-width-input">
                   <textarea matInput name="propertyAddress" placeholder="Property Address"
-                    [(ngModel)]="model.propertyAddress.propertyAddress" readonly rows="2"></textarea>
+                    [(ngModel)]="model.propertyAddress" readonly rows="2"></textarea>
                 </mat-form-field>
               </div>
             </div>
@@ -180,7 +180,7 @@
                 </div>
               </div>
             </div>
-            <div class="row" *ngIf="!isShaved">
+            <div class="row">
                <div class="col-md-12">
                 <button mat-raised-button class="ml-3"  class="pull-left" color="primary" type="button" (click)="cancelForm()">
                   <mat-icon>skip_previous</mat-icon> Back

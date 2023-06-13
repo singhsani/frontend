@@ -59,7 +59,9 @@ export class TransferPropertyDetailComponent implements OnInit {
   }
 
   saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
-   applicantDetailsDTO.uniqueId = this.transferPropertyDataSharingService.applicationNo;
+    if(!applicantDetailsDTO.uniqueId){
+      applicantDetailsDTO.uniqueId = this.transferPropertyDataSharingService.applicationNo;
+    }
    this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
 				(data) => {
 					this.commonService.applicationNo = data.body.applicationNo;

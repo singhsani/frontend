@@ -34,6 +34,7 @@ export class OccupierDetailComponent implements OnInit {
   isUnitDetailEntered: boolean = true;
   unitDetailErrorMessage: string;
   panelOpenState: boolean;
+  subsPropertyEditMode : Subscription
   constructor(private newNewPropertyEntryAddDataSharingService: NewPropertyEntryAddDataSharingService,
     private commonService: CommonService,
     private newNewPropertyEntryAddService: NewPropertyEntryAddService,
@@ -62,10 +63,29 @@ export class OccupierDetailComponent implements OnInit {
       }
     })
 
+    this.subsPropertyEditMode = this.newNewPropertyEntryAddDataSharingService.getPropertyEditModel().subscribe(data => {
+      if (data) {
+      this.dataSource = new MatTableDataSource(data.propertyOccupiers);
+        this.dataSource.sort = this.sort;
+        if (this.dataSource.data.length > 0) {
+          this.isOccupierExist = true;
+          this.isShowTable = true;
+        }
+        else {
+          this.isOccupierExist = false;
+          this.isShowTable = false;
+          this.model = new OccupierModel();
+        }
+       this.modelProperty.propertyBasicId = data.propertyBasic.propertyBasicId;
+        this.checkUnitDetailIsExist();
+      }
+    });
+
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.subsPropertyEditMode.unsubscribe()
   }
 
   getLookups() {

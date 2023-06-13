@@ -34,4 +34,11 @@ export class DataSharingService {
     return this.revaluatioModelFromHearingRemarks.asObservable();
   }
 
+  private ApplicantDetailsEditModel = new BehaviorSubject(null);
+  setApplicantDetailsEditModel(model: any) {
+    this.ApplicantDetailsEditModel.next(model);
+  }
+  getApplicantDetailsEditModel(): Observable<any> {
+    return this.ApplicantDetailsEditModel.asObservable();
+  }
 }

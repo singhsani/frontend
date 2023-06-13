@@ -1,5 +1,8 @@
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { TransferPropertyDataSharingService } from '../../Services/transfer-property-data-sharing.service';
+import { ActivatedRoute } from '@angular/router';
+import { DataSharingService } from 'src/app/vmcshared/Services/data-sharing.service';
+import { TransferPropertyService } from '../../Services/transfer-property.service';
 
 @Component({
     selector: 'app-transfer-property',
@@ -11,7 +14,11 @@ export class TransferPropertyComponent implements OnInit {
     isShowForm: boolean = false;
     isShowTable: boolean = false;
     isRefreshTable: boolean = false;
-    constructor(private transferPropertyDataSharingService: TransferPropertyDataSharingService) { }
+    formId : number = 0;
+    constructor(private transferPropertyDataSharingService: TransferPropertyDataSharingService,
+        private route : ActivatedRoute,
+        private propertyEntryAddDataSharingService : DataSharingService,
+        private transferPropertyService : TransferPropertyService) { }
 
     ngOnInit() {
         this.transferPropertyDataSharingService.observableIsRefreshTable.subscribe(data => {
@@ -26,6 +33,19 @@ export class TransferPropertyComponent implements OnInit {
         });
         this.transferPropertyDataSharingService.observableIsShowTable.subscribe(data => {
             this.isShowTable = data;
+        });
+
+        this.route.paramMap.subscribe(param => {
+            this.formId = Number(param.get('id'));
+            if (this.formId != 0) {
+                this.transferPropertyService.getVersionById(this.formId).subscribe(res => {
+                    this.isShowForm = true;
+                    this.isShowTable = false;
+                    res.body.serviceApplicationId = this.formId;
+                    this.transferPropertyDataSharingService.setPropertyEditModel(res.body);
+                    this.propertyEntryAddDataSharingService.setApplicantDetailsEditModel(res.body);
+                })
+            }
         });
     }
     
