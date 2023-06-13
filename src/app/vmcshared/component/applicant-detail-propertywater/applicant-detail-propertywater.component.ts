@@ -146,7 +146,7 @@ getStateLists(country) {
 	}
 
 	onBack(){
-		if (this.serviceType === 'PRO-VAC' || this.serviceType === 'PRO-TAX-REBATE') {
+		if (this.serviceType === 'PRO-VAC' || this.serviceType === 'PRO-TAX-REBATE' || this.serviceType === 'PRO-REFUND') {
 			this.stepChange.emit(0);
 		}else{
 			this.stepChange.emit(1);
