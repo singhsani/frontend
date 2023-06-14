@@ -95,7 +95,7 @@
 
 		<mat-form-field class="col-md-6">
 			<mat-label *ngIf="requiredFeilds && this.addressFormGroup.get('pincode').status=='DISABLED'">
-				{{'area' | translate: translateKey }}
+				{{'pincode' | translate: translateKey }}
 				<span class="required-field"></span>
 			</mat-label>
 			<input matInput type="tel" OnlyNumber formControlName="pincode"

@@ -164,7 +164,7 @@
 
         <ng-container matColumnDef="sno">
           <th mat-header-cell *matHeaderCellDef class="containerWidth text-center">ક્રમ.નં.</th>
-          <td mat-cell *matCellDef="let element text-right"> {{element.sno}}. </td>
+          <td mat-cell *matCellDef="let element text-center" class="text-center"> {{element.sno}}. </td>
         </ng-container>
 
         <ng-container matColumnDef="programmePurpose">
@@ -174,22 +174,22 @@
 
         <ng-container matColumnDef="bookingRent">
           <th mat-header-cell *matHeaderCellDef class="text-center"> બુકિંગ ભાડું (એક દિવસ માટે) (₹)</th>
-          <td mat-cell *matCellDef="let element" class="text-right"> {{element.bookingRent}} </td>
+          <td mat-cell *matCellDef="let element" class="text-center"> {{element.bookingRent}} </td>
         </ng-container>
 
         <ng-container matColumnDef="administrativeCharge">
           <th mat-header-cell *matHeaderCellDef class="text-center" style="width: 235px;"> વહીવટી ચાર્જ (₹)</th>
-          <td mat-cell *matCellDef="let element" class="text-right"> {{element.administrativeCharge}} </td>
+          <td mat-cell *matCellDef="let element" class="text-center"> {{element.administrativeCharge}} </td>
         </ng-container>
 
         <ng-container matColumnDef="gst">
           <th mat-header-cell *matHeaderCellDef class="text-center" style="width: 138px;"> જીએસટી(૧૮%) (₹)</th>
-          <td mat-cell *matCellDef="let element" class="text-right"> {{element.gst}} </td>
+          <td mat-cell *matCellDef="let element" class="text-center"> {{element.gst}} </td>
         </ng-container>
 
         <ng-container matColumnDef="deposit">
           <th mat-header-cell *matHeaderCellDef class="text-center" style="width: 132px;">જમા (₹)</th>
-          <td mat-cell *matCellDef="let element" class="text-right"> {{element.deposit}} </td>
+          <td mat-cell *matCellDef="let element" class="text-center"> {{element.deposit}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumnsFeeDetails"></tr>
@@ -242,7 +242,7 @@
    
            <ng-container matColumnDef="sno">
              <th mat-header-cell *matHeaderCellDef class="containerWidth text-center"> Sr.No. </th>
-             <td mat-cell *matCellDef="let element text-right"> {{element.sno}} </td>
+             <td mat-cell *matCellDef="let element text-center" class="text-center"> {{element.sno}} </td>
            </ng-container>
    
            <ng-container matColumnDef="programmePurpose">
@@ -252,22 +252,22 @@
    
            <ng-container matColumnDef="bookingRent">
              <th mat-header-cell *matHeaderCellDef class="text-center"> Booking Rent (For One Day) (₹)</th>
-             <td mat-cell *matCellDef="let element" class="text-right"> {{element.bookingRent}} </td>
+             <td mat-cell *matCellDef="let element" class="text-center"> {{element.bookingRent}} </td>
            </ng-container>
    
            <ng-container matColumnDef="administrativeCharge">
              <th mat-header-cell *matHeaderCellDef class="text-center" style="width: 235px;"> Administrative Charge (₹)</th>
-             <td mat-cell *matCellDef="let element" class="text-right"> {{element.administrativeCharge}} </td>
+             <td mat-cell *matCellDef="let element" class="text-center"> {{element.administrativeCharge}} </td>
            </ng-container>
    
            <ng-container matColumnDef="gst">
              <th mat-header-cell *matHeaderCellDef class="text-center" style="width: 138px;"> GST (18%) (₹)</th>
-             <td mat-cell *matCellDef="let element" class="text-right"> {{element.gst}} </td>
+             <td mat-cell *matCellDef="let element" class="text-center"> {{element.gst}} </td>
            </ng-container>
    
            <ng-container matColumnDef="deposit">
              <th mat-header-cell *matHeaderCellDef class="text-center" style="width: 132px;"> Deposit (₹)</th>
-             <td mat-cell *matCellDef="let element" class="text-right"> {{element.deposit}} </td>
+             <td mat-cell *matCellDef="let element" class="text-center"> {{element.deposit}} </td>
            </ng-container>
    
            <tr mat-header-row *matHeaderRowDef="displayedColumnsFeeDetails"></tr>
@@ -325,8 +325,8 @@
                   </mat-form-field>
 
                     <div formGroupName="purpose" class="col-md-6 ngSelect">
-                        <ng-select placeholder="{{'purpose_of_booking'| translate: translateKey}} *" formControlName="code">
-                            <ng-option *ngFor="let purpose of PURPOSES" [value]="purpose.code">
+                        <ng-select placeholder="{{'purpose_of_booking'| translate: translateKey}} " formControlName="code">
+                            <ng-option *ngFor="let purpose of PURPOSES" [value]="purpose.code" required>
                                 {{ purpose.name }}
                             </ng-option>
                         </ng-select>
@@ -336,10 +336,10 @@
 
                     <mat-form-field class="col-md-6">
                         <mat-label>
-                            {{'choose_start_date'| translate: translateKey}} *
+                            {{'choose_start_date'| translate: translateKey}} 
                         </mat-label>
                         <!-- matDatepickerFilter]="myFilter" -->
-                        <input appDate matInput [min]="startMinDate" (dateChange)="onDateChange($event.value)" [matDatepicker]="stadiumBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
+                        <input appDate matInput [min]="startMinDate" (dateChange)="onDateChange($event.value)" [matDatepicker]="stadiumBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY" required>
                         <mat-datepicker-toggle matSuffix [for]="stadiumBookingfromPicker"></mat-datepicker-toggle>
                         <mat-datepicker #stadiumBookingfromPicker touchUi="true"></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
@@ -349,9 +349,9 @@
 
                     <mat-form-field class="col-md-6">
                         <mat-label>
-                            {{'choose_end_date'| translate: translateKey}} *
+                            {{'choose_end_date'| translate: translateKey}}
                         </mat-label>
-                        <input appDate matInput [min]="endMinDate" [max]="maxEndDate" [matDatepicker]="stadiumBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
+                        <input appDate matInput [min]="endMinDate" [max]="maxEndDate" [matDatepicker]="stadiumBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY" required>
                         <mat-datepicker-toggle matSuffix [for]="stadiumBookingtoPicker"></mat-datepicker-toggle>
                         <mat-datepicker #stadiumBookingtoPicker touchUi="true"></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
