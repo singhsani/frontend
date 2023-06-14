@@ -143,15 +143,15 @@ export class VendorRegistrationComponent implements OnInit {
     this.vendorRegistrationForm.addControl('vendorMachinesCapacities', this.vendorMachinesCapacities);
     this.vendorRegistrationForm.addControl('vendorRegisteredGovtDetail', this.vendorRegisteredGovtDetail);
 
-    this.activatedRoute.paramMap.subscribe(param => {
-      this.formId = Number(param.get('id'));
-      this.getVendorData(this.formId);
-    })
-
     this.getBankNames();
     this.getAllDocumentLists();
     this.getAllLocationDetail();
     this.getLookUp();
+
+    this.activatedRoute.paramMap.subscribe(param => {
+      this.formId = Number(param.get('id'));
+      this.getVendorData(this.formId);
+    })
 
     if (!this.formId) {
       this.createFormData();
@@ -224,6 +224,10 @@ export class VendorRegistrationComponent implements OnInit {
       this.factoryAndEmployeeDetail.patchValue(res);
       this.productAndSupplierDetail.patchValue(res)
       this.attachmentDetails.patchValue(res)
+      let objj ={
+        value :this.firmDetails.value.typeOfFirm
+      }
+      this.typeOfFirmChange(objj)
       if (res.formStatus != 'REJECTED') {
         let obj = {value : res.applyingFor }
         this.locationChange(obj);

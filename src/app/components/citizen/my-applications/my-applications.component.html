@@ -677,6 +677,44 @@
                         </mat-menu>
 
                     </ng-container>
+                         <!-------/Contractor and Vendor Registration -->
+                     <ng-container *ngSwitchCase="'case7'">
+                        <div class="mobile-label1">:</div>
+                        <button class="actionBtn" mat-button [matMenuTriggerFor]="menuTax">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+
+                        <mat-menu #menuTax="matMenu">
+                          <button mat-menu-item *ngIf="row.fileStatus == 'PAYMENT_RECEIVED'" color="primary"
+                            (click)="printPaymentReceipt(row.serviceDetail.code,row.serviceFormId)">
+                            <mat-icon class="m-1"
+                                title="{{'print_acknolowdgement_receipt' | translate:translateKey}}">print
+                            </mat-icon>
+                             {{'print_acknolowdgement_receipt' | translate:translateKey}}
+                          </button>
+
+                          <button mat-menu-item color="primary" *ngIf="row.fileStatus == 'PAYMENT_RECEIVED'"
+                             (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                                <mat-icon class="m-1" title="{{'print_receipt' | translate:translateKey}}">print
+                                </mat-icon>
+                                {{'print_receipt' | translate:translateKey}}
+                            </button>
+                    
+                            <button mat-menu-item  color="primary" (click)="printView(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                                <mat-icon class="m-1" title="{{'print_view' | translate:translateKey}}">pageview</mat-icon>
+                                {{'print_view' | translate:translateKey}}
+                            </button>
+
+                            <button mat-menu-item *ngIf="(row.fileStatus === 'PAYMENT')" color="primary"
+                            (click)="redirectToPayment(row.serviceDetail.code, row.serviceFormId)">
+                            <i class="fa fa-inr m-1" title="{{'attach_money' | translate:translateKey}}"
+                                aria-hidden="true"></i>
+                            {{'payment' | translate:translateKey}}
+                        </button>
+
+                      </mat-menu>
+
+                     </ng-container>
 
                 </div>
             </mat-cell>
