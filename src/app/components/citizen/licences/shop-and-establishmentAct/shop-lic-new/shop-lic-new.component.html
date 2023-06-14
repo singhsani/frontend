@@ -407,7 +407,7 @@
 												{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}
 											</p>
 											<div class="ngSelect" *ngIf="item.isEditMode"  style="min-width:100px">
-												<ng-select class="asteriskmarkRequired" *ngIf="item.isEditMode" formControlName="code">
+												<ng-select *ngIf="item.isEditMode" formControlName="code">
 													<ng-option *ngFor="let gender of gender" [value]="gender.code">
 														{{gender.name}}</ng-option>
 												</ng-select>
