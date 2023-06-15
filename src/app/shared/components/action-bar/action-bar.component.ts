@@ -122,7 +122,9 @@ export class ActionBarComponent implements OnInit, OnChanges {
 						this.form.patchValue(res);
 						this.isSaveBtnDisabled = false;
 						this.handleOnSaveAndNext.emit(res);
-						//this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully saved`);
+						if(res.serviceType == "VENDOR_REG"){
+							this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully saved`);
+						}
 					},
 					err => {
 						this.onSaveError(err);

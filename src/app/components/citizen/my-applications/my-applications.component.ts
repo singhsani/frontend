@@ -131,6 +131,8 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return `case5`
 		}else if((row.departmentName == 'Contractor Registration' && row.fileStatusName == 'Approved') || (row.departmentName == "Vendor Registration" && row.fileStatusName == 'Approved')){
 			return `case6`
+		} else if (row.departmentName == 'Vendor Registration' && row.fileStatusName == 'Payment Received' || row.fileStatusName == 'Payment Pending') {
+			return `case7`;	
 		}else{
 			return `case3`
 		}
@@ -924,7 +926,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}
 	}
 	printPaymentReceipt(apiCode: string, id: number) {
-
 		if (this.urlMap.has(apiCode)) {
 			this.printPropertyACKReceiptAdmin(apiCode, id);
 		} else {
