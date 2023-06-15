@@ -19,7 +19,7 @@
 
 <mat-card class="formClass cardBorder">
     <!--Start  form  -->
-    <mat-tab-group mat-stretch-tabs class="stepperNav asteriskmarkRequired" [(selectedIndex)]="tabIndex" dynamicHeight="true">
+    <mat-tab-group mat-stretch-tabs class="stepperNav " [(selectedIndex)]="tabIndex" dynamicHeight="true">
 
         <!-- first step start-->
         <mat-tab [label]="stepLable1 | translate: translateKey" disabled>
@@ -96,7 +96,7 @@
                         <control-messages [control]="prcRegForm.get('rcDate')"></control-messages>
                     </mat-form-field>
 
-                    <div class="col-md-4 ngSelect" formGroupName="ward">
+                    <div class="col-md-4 ngSelect asteriskmarkRequired" formGroupName="ward">
                         <ng-select placeholder="{{'ward_no' | translate: pecTranslateKey}}" formControlName="wardzoneId"
                             (change)="getAllBlockNos($event)">
                             <ng-option *ngFor="let ward of wardNoArray" [value]="ward.wardzoneId">{{ward.wardzoneName}}
@@ -148,14 +148,14 @@
                         <control-messages [control]="prcRegForm.get('aadharNo')"></control-messages>
                     </mat-form-field>
 
-                    <div class="ngSelect col-md-4" formGroupName="professionConstitution">
+                    <div class="ngSelect col-md-4 asteriskmarkRequired" formGroupName="professionConstitution">
                         <ng-select placeholder="{{'profession' | translate: pecTranslateKey}}" formControlName="code">
                             <ng-option *ngFor="let profession of professionArray" [value]="profession.code">
                                 {{profession.name}}</ng-option>
                         </ng-select>
                     </div>
 
-                    <div class="ngSelect col-md-4" formGroupName="constitution">
+                    <div class="ngSelect col-md-4 asteriskmarkRequired" formGroupName="constitution">
                         <ng-select placeholder="{{'constitution' | translate: pecTranslateKey}}" formControlName="code">
                             <ng-option *ngFor="let constitution of constitutionArray" [value]="constitution.code">
                                 {{constitution.name}}</ng-option>
