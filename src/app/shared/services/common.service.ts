@@ -78,7 +78,7 @@ export class CommonService {
 
 		_.forEach(message, (value, key) => {
 			html1 += '<div class="col-md-12 alert alert-danger" role="alert" *ngFor="let errorType of message">';
-			html1 += value.property + " - " + value.message + " / " + value.gujMessage;
+			html1 += value.property + " - " + value.message;
 			html1 += '</div>';
 		});
 
@@ -242,7 +242,7 @@ export class CommonService {
 	}
 
 	storePaymentInfo(paymentData: any, myApplicationUrl: any, retAfterPayment: any): any {
-	
+
 		let payData = {
 			id: null,
 			uniqueId: null,
@@ -312,17 +312,17 @@ export class CommonService {
 
 	clone(obj) {
 		var copy;
-	
+
 		// Handle the 3 simple types, and null or undefined
 		if (null == obj || "object" != typeof obj) return obj;
-	
+
 		// Handle Date
 		if (obj instanceof Date) {
 			copy = new Date();
 			copy.setTime(obj.getTime());
 			return copy;
 		}
-	
+
 		// Handle Array
 		if (obj instanceof Array) {
 			copy = [];
@@ -331,7 +331,7 @@ export class CommonService {
 			}
 			return copy;
 		}
-	
+
 		// Handle Object
 		if (obj instanceof Object) {
 			copy = {};
@@ -340,7 +340,7 @@ export class CommonService {
 			}
 			return copy;
 		}
-	
+
 		throw new Error("Unable to copy obj! Its type isn't supported.");
 	}
 
@@ -363,14 +363,14 @@ export class CommonService {
 
 	openDialogBox() {
 		const dialogConfig = new MatDialogConfig();
-	
+
 		dialogConfig.disableClose = true;
 		dialogConfig.autoFocus = true;
 		dialogConfig.data = {};
-	
+
 		const dialogRef = this.dialog.open(ApplicantDetailsComponent, dialogConfig);
 	    return dialogRef.afterClosed()
-	
+
 	  }
 
 	  createCloneAbstractControl(copyFrom: FormGroup, copyTo : FormGroup){

@@ -38,7 +38,7 @@ export class TokenInterceptor implements HttpInterceptor {
 	}
 
     /**
-     * 
+     *
      * @param req - parameter to handle http request
      * @param next - parameter for http handler
      */
@@ -140,7 +140,7 @@ export class TokenInterceptor implements HttpInterceptor {
 										this.commonService.openAlert('Error', "Internal Server Error", 'error');
 									break;
 								case 601:// form save as draft error handling
-									this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+									this.commonService.openAlertFormSaveValidation('Error', err.error, 'error');
 									break;
 								case 602:// for payment status
 									this.toaster.error(err.error[0].message);
