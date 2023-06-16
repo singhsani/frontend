@@ -373,6 +373,9 @@ export class GatewayResponseComponent implements OnInit {
          if (this.dispData.payableServiceType == "PROFESSIONAL_TAX" ) {
      	this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS')]);
 
+ 		}else if(this.dispData.payableServiceType == "Vendor Registration"){		
+		this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
+
 		} else if ((this.dispData.payableServiceType == "STADIUM_FEES") || (this.dispData.payableServiceType == "STADIUM_DEPOSIT") || (this.dispData.payableServiceType == "SWIMMING_POOL_FEES")|| (this.dispData.payableServiceType == "SWIMMING_POOL_ADMISSION_FEES")) {
 
 			this.router.navigate([this.bookingConstant.MY_BOOKINGS_URL]);
