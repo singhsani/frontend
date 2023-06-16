@@ -59,6 +59,7 @@ export class PecRegistrationComponent implements OnInit {
 	serviceFormId: number;
 	apiCode: string = '';
 	showButtons: boolean = false;
+	isFormDisable:boolean=false;
 
 	dobMaxDate = moment(new Date()).subtract("18", "years").format("YYYY-MM-DD");
 	maxDate: Date = new Date();
@@ -680,6 +681,7 @@ export class PecRegistrationComponent implements OnInit {
 					res.canEditForm = false;
 					this.CanEdit = res.canEditForm;
 					this.isBlockNo = true;
+					this.isFormDisable=true;
 					this.pecRegForm.disable();
 					this.employerDetail.disable();
 					this.bankDetail.disable();
@@ -704,6 +706,9 @@ export class PecRegistrationComponent implements OnInit {
 		}
 
 	}
+	isFieldDisabled(): boolean {
+		return this.employerDetail.get('applicantDob').disabled;
+	  }
 
 	setValuesInForm(res, fromPRC) {
 		if (res && Object.keys(res).length) {

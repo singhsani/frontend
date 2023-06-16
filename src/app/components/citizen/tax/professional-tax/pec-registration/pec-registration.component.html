@@ -43,10 +43,11 @@
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-4" [class.disabled]="isFieldDisabled()" >
+						<mat-label>{{'applicant_full_name' | translate: translateKey}} <span class="required-field" *ngIf="isFieldDisabled()"></span></mat-label>
 						<input matInput appBlockCopyPaste autocomplete="off" appValidationFields
 							validationFieldsType="onlyNameWithSpace" maxlength="100" formControlName="applicantFullName"
-							type="text" placeholder="{{'applicant_full_name' | translate: translateKey}}" required>
+							type="text"  required [disabled]="isFieldDisabled()">
 						<control-messages [control]="employerDetail.get('applicantFullName')"></control-messages>
 					</mat-form-field>
 
@@ -62,17 +63,18 @@
 						<control-messages [control]="employerDetail.get('gender').get('code')"></control-messages>
 					</div>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-4" [class.disabled]="isFieldDisabled()">
+						<mat-label>{{'establishment_name' | translate: translateKey}} <span class="required-field" *ngIf="isFieldDisabled()"></span></mat-label>
 						<input matInput appValidationFields validationFieldsType="onlyNameWithSpace" autocomplete="off"
-							maxlength="100" type="text" formControlName="establishmentName"
-							placeholder="{{'establishment_name' | translate: translateKey}}" required>
+							maxlength="100" type="text" formControlName="establishmentName" required [disabled]="isFieldDisabled()">
 						<control-messages [control]="employerDetail.get('establishmentName')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-4" [class.disabled]="isFieldDisabled()">
+						<mat-label>{{'contact_no' | translate:translateKey}} <span class="required-field" *ngIf="isFieldDisabled()"></span></mat-label>
 						<span matPrefix>+91 &nbsp;</span>
-						<input matInput OnlyNumber placeholder="{{'contact_no' | translate:translateKey}}" type="tel"
-							maxlength="10" minlength="10" formControlName="contactNo" required>
+						<input matInput OnlyNumber  type="tel"
+							maxlength="10" minlength="10" formControlName="contactNo" required [disabled]="isFieldDisabled()">
 						<control-messages [control]="employerDetail.get('contactNo')"></control-messages>
 					</mat-form-field>
 
@@ -124,20 +126,23 @@
 						</ng-select>
 					</div>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-4" [class.disabled]="isFieldDisabled()">
+					<mat-label>{{'applicant_dob' | translate: translateKey}} <span class="required-field" *ngIf="isFieldDisabled()"></span> </mat-label>
 						<input matInput autocomplete="off" appDate formControlName="applicantDob" [max]="dobMaxDate"
-							[matDatepicker]="dobpicker" (dateChange)="onDateChange('applicantDob', $event.value)"
-							placeholder="{{'applicant_dob' | translate: translateKey}}" required>
+						  [matDatepicker]="dobpicker" (dateChange)="onDateChange('applicantDob', $event.value)" required [disabled]="isFieldDisabled()">
 						<mat-datepicker-toggle matSuffix [for]="dobpicker"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #dobpicker></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
 						<control-messages [control]="employerDetail.get('applicantDob')"></control-messages>
-					</mat-form-field>
+					  </mat-form-field>
+					  
+					  
 
-					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" appDate formControlName="commencementDate" [max]="maxDate"
+					<mat-form-field class="col-md-4" [class.disabled]="isFieldDisabled()">
+						<mat-label>{{'date_of_commencement' | translate: translateKey}} <span class="required-field" *ngIf="isFieldDisabled()"></span> </mat-label>
+			     	<input matInput autocomplete="off" appDate formControlName="commencementDate" [max]="maxDate"
 							[matDatepicker]="docpicker" (dateChange)="onDateChange('commencementDate', $event.value)"
-							placeholder="{{'date_of_commencement' | translate: translateKey}}" required>
+							 required [disabled]="isFieldDisabled()">
 						<mat-datepicker-toggle matSuffix [for]="docpicker"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #docpicker></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
@@ -223,10 +228,11 @@
 			<!-- third step start-->
 			<mat-tab [label]="stepLable3 | translate: translateKey" disabled>
 <form [formGroup]="registrationDetail">
-				<div class="row stepperMinHeight">
-					<mat-form-field class="col-md-6">
+				<div class="row stepperMinHeight" >
+					<mat-form-field class="col-md-6" [class.disabled]="isFieldDisabled()">
+						<mat-label>{{'pan_card_no' | translate: translateKey}} <span class="required-field" *ngIf="isFieldDisabled()"></span> </mat-label>
 						<input matInput autocomplete="off" maxlength="10" appAlphaNumeric formControlName="pancardNo"
-							type="text" placeholder="{{'pan_card_no' | translate: translateKey}}" required
+							type="text"  required [disabled]="isFieldDisabled()"
 							class="capitalCase">
 						<control-messages [control]="registrationDetail.get('pancardNo')"></control-messages>
 					</mat-form-field>
@@ -243,10 +249,10 @@
 						</div>
 					</div>
 
-					<mat-form-field class="col-md-6">
+					<mat-form-field class="col-md-6" [class.disabled]="isFieldDisabled()">
+						<mat-label>{{'shop_and_license_no' | translate: translateKey}} <span class="required-field" *ngIf="isFieldDisabled()"></span> </mat-label>
 						<input matInput autocomplete="off" maxlength="20" appAlphaNumeric
-							formControlName="shopAndLicenseNo" type="text"
-							placeholder="{{'shop_and_license_no' | translate: translateKey}}" required>
+							formControlName="shopAndLicenseNo" type="text" required [disabled]="isFieldDisabled()">
 						<control-messages [control]="registrationDetail.get('shopAndLicenseNo')"></control-messages>
 					</mat-form-field>
 
