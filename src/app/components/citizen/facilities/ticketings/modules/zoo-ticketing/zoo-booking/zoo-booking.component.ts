@@ -807,6 +807,7 @@ if(f.typeOfTicket.code == "WITHOUT_WALK_IN_AVIARY" && f.typeOfVisitor.name == 'A
     this.ticketBookingForm.get('amounts').reset();
     this.ticketBookingForm.get('numberOfVisitors').reset();
     this.ticketBookingForm.get('charges').reset();
+    this.visitorsTypesChange=[];
 
 }
 
