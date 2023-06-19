@@ -884,7 +884,7 @@ export class MyBookingComponent implements OnInit {
 	}
 	showTownhallDepositReceiptBtn(element) {
 		if ((element.resourceType == 'TOWNHALL' && element.userType != 'Citizen')
-			&& (element.status == this.bookingConstant.BOOKED || element.status == this.bookingConstant.COMPLETED || element.status == this.bookingConstant.CANCELLATION_REQUEST || element.status == this.bookingConstant.REFUND_REQUEST || element.status == this.bookingConstant.CANCELLATION_APPROVED)) {
+			&& (element.status == this.bookingConstant.BOOKED || element.status == this.bookingConstant.COMPLETED || element.status == this.bookingConstant.CANCELLATION_REQUEST || element.status == this.bookingConstant.REFUND_REQUEST || element.status == this.bookingConstant.CANCELLATION_APPROVED) && (element.depositReceiptNo!=null)) {
 			return true;
 		} else {
 			return false;
