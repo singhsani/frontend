@@ -59,6 +59,7 @@ export class AnimalPondNewComponent implements OnInit {
 	public uploadFilesArray: Array<any> = [];
 
 	public serverUploadFilesArray: Array<any> = [];
+	documentsList : Array<any> = [];
 
 	/**
 	 * @param fb - Declare FormBuilder property.
@@ -813,8 +814,14 @@ export class AnimalPondNewComponent implements OnInit {
 	onChangeStatusOfBusiness() {
 		const subject = this.animalPondNewForm.get('businessType').get('code').value
 		const documents = this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments').value;
+		this.documentsList = []
+		for(let i=0; i<documents.length; i++){
+			if(documents[i].requiredOnCitizenPortal == true && documents[i].isActive == true){
+			  this.documentsList.push(documents[i])
+			}
+		}
 		const formName = this.animalPondNewForm;
-		this.animalPondService.changeStatusOfBusinessAccordingAtatchment(subject, documents, formName);
+		this.animalPondService.changeStatusOfBusinessAccordingAtatchment(subject, this.documentsList, formName);
 		this.requiredDocumentList();
 	}
 

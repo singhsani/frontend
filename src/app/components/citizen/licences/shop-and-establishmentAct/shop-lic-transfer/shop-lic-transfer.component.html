@@ -390,7 +390,7 @@
 												 {{getSelectedDataFromLookUps(relationshipTypeList,item.get('relationshipType').value.code)?.name}} 
 											</p>
 											<div class="ngSelect" *ngIf="item.isEditMode">
-												<ng-select class="asteriskmarkRequired" *ngIf="item.isEditMode" placeholder="{{'Relationship Type' | translate:translateKey}}"
+												<ng-select *ngIf="item.isEditMode" placeholder="{{'Relationship Type' | translate:translateKey}}"
 													formControlName="code">
 													<ng-option *ngFor="let relation of relationshipTypeList" [value]="relation.code">
 														{{relation.name}}</ng-option>
