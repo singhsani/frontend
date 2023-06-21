@@ -141,13 +141,15 @@ export class BookingUtils extends BTConfig {
         if (checked) {
             let data = selectedShift.find(uniqueId => uniqueId == shift.uniqueId)
             if (!data) {
-                shift.slotStatus = this.bookingConstants.CHECKED;
+                shift.slotStatus == 'HOLIDAY' ?   shift.slotStatus :shift.slotStatus == 'FESTIVAL' ?   shift.slotStatus :  shift.slotStatus = this.bookingConstants.CHECKED;
+                //shift.slotStatus = this.bookingConstants.CHECKED;
                 selectedShift.push(shift);
             }
         } else {
             let data = selectedShift.findIndex(uniqueId => uniqueId.uniqueId == shift.uniqueId);
             if (data > -1) {
-                shift.slotStatus = this.bookingConstants.AVAILABLE;
+                shift.slotStatus == 'HOLIDAY' ?   shift.slotStatus :shift.slotStatus == 'FESTIVAL' ? shift.slotStatus  :  shift.slotStatus = this.bookingConstants.AVAILABLE;
+               //shift.slotStatus = this.bookingConstants.AVAILABLE;
                 selectedShift.splice(data, 1);
             }
         }
