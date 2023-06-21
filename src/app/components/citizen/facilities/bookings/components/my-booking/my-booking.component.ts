@@ -640,7 +640,7 @@ export class MyBookingComponent implements OnInit {
 			if ((element.resourceType === "STADIUM" && element.payableServiceType !== 'STADIUM_DEPOSIT')) {
 				return true;
 			} else if (element.resourceType === "CHILDREN_THEATER") {
-				return false;
+				return true;
 			} else {
 				return false;
 			}
