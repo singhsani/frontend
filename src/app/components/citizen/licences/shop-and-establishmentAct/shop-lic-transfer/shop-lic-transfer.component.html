@@ -586,7 +586,7 @@
 										<div class="d-md-none">{{'total' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('total').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input onlyNumber matInput formControlName="total">
+											<input onlyNumber matInput formControlName="total" readonly>
 											<control-messages *ngIf="item.isEditMode" [control]="item.get('total')">
 											</control-messages>
 										</mat-form-field>

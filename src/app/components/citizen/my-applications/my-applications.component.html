@@ -820,7 +820,7 @@
                         <b>Remark:</b>&nbsp;{{i.queryRemark}}
                     </div>
                 </ng-container>
-                <ng-container *ngIf="formService.apiType  == 'vendor'">
+                <ng-container *ngIf="formService.apiType  == 'vendor' || formService.apiType == 'shop-transfer'" >
                    <div type="text" readonly class="text-left queryraiseremarks" [innerHtml]="getInnerHTMLForRemark()"
                    #copytext>
                    </div>
@@ -845,7 +845,7 @@
                 (click)="modalRef.hide()">
                 <mat-icon>close</mat-icon>
             </button>
-        </div>
+        </div>getInnerHTMLForRemark
     </div>
     <div class="modal-body">
         <div class="row">
@@ -915,8 +915,8 @@
                     <div type="text" readonly class="text-left " [innerHtml]="getInnerHTMLForReason()" #copytext>
                     </div>
                     <div type="text" readonly class="text-left " [innerHtml]="getInnerHTMLForRemark()" #copytext>
-                    </div>
-                </div>
+                   </div>
+                </div>   
             </div>
         </div>
     </div>
