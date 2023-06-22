@@ -249,11 +249,11 @@
 						</div>
 					</div>
 
-					<mat-form-field class="col-md-6" [class.disabled]="isFieldDisabled()">
-						<mat-label>{{'shop_and_license_no' | translate: translateKey}} <span class="required-field" *ngIf="isFieldDisabled()"></span> </mat-label>
-						<input matInput autocomplete="off" maxlength="20" appAlphaNumeric
-							formControlName="shopAndLicenseNo" type="text" required [disabled]="isFieldDisabled()">
-						<control-messages [control]="registrationDetail.get('shopAndLicenseNo')"></control-messages>
+					<mat-form-field class="col-md-6" >
+						<mat-label>{{'shop_and_license_no' | translate: translateKey}} </mat-label>
+						<input matInput autocomplete="off" maxlength="50" appAlphaNumeric
+							formControlName="shopAndLicenseNo" type="text" >
+						<!-- <control-messages [control]="registrationDetail.get('shopAndLicenseNo')"></control-messages>-->
 					</mat-form-field>
 
 					<!-- <mat-form-field class="col-md-6">
