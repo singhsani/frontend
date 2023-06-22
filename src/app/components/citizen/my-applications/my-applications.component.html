@@ -822,7 +822,7 @@
                         <b>Remark:</b>&nbsp;{{i.queryRemark}}
                     </div>
                 </ng-container>
-                <ng-container *ngIf="formService.apiType  == 'vendor' || formService.apiType == 'shop-transfer'" >
+                <ng-container *ngIf="formService.apiType  == 'vendor' || formService.apiType == 'shop-transfer' || formService.apiType == 'shop'" >
                    <div type="text" readonly class="text-left queryraiseremarks" [innerHtml]="getInnerHTMLForRemark()"
                    #copytext>
                    </div>
