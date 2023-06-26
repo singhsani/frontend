@@ -321,6 +321,7 @@ export class BookAtithigruhComponent implements OnInit {
 	 * @param event - Selected event
 	 */
 	onBookingTypeChange(event) {
+		this.Dates = [];
 		this.BookingTypeForm.get('atithiGruhName.code').reset();
 		this.BookingTypeForm.get('bookingPurposeMaster.code').reset();
 		this.BookingTypeForm.get('bookingFrom').reset();
@@ -709,6 +710,7 @@ export class BookAtithigruhComponent implements OnInit {
 	  }
 	
 	onAtithiGruhNameChange(event) {
+		this.Dates = [];
 		this.ATITHIGRUH.forEach(element => {
 			if (element.code == event) {
 				this.atithigruhName = element.name
