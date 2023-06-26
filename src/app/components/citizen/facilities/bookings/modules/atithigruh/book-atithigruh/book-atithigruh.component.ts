@@ -377,11 +377,6 @@ export class BookAtithigruhComponent implements OnInit {
 	 */
 	searchBooking() {
 		this.selectedShift = []
-		if(this.BookingTypeForm.get('bookingFrom').value == null){
-			this.toaster.warning(this.bookingUtils.ALL_FEILD_REQUIRED_MESSAGE);
-			return;
-		}
-
 		if (this.BookingTypeForm.valid) {
 			/**
 			 * Filter Object to get list of available dates.
