@@ -63,7 +63,7 @@
       </mat-form-field>
 
       <div class="col-md-4 ngSelect">
-        <ng-select required placeholder="Country*" name="country" #country="ngModel"
+        <ng-select required placeholder="Country" name="country" #country="ngModel" class="asteriskmarkRequired"
           [(ngModel)]="model.citizenAddressDTO.country" [items]="countryListArray" bindValue="name" bindLabel="name"
           (change)="onCountryChange($event)">
         </ng-select>
@@ -73,7 +73,7 @@
       </div>
 
       <div class="col-md-4 ngSelect">
-        <ng-select required placeholder="State*" name="state" #state="ngModel" [(ngModel)]="model.citizenAddressDTO.state"
+        <ng-select required placeholder="State" name="state" #state="ngModel" [(ngModel)]="model.citizenAddressDTO.state" class="asteriskmarkRequired"
           [items]="stateListArray" bindValue="name" bindLabel="name" (change)="onStateChange($event)">
         </ng-select>
         <div *ngIf="(form.submitted && state.invalid)  || (state.invalid && state.touched)">
@@ -82,7 +82,7 @@
       </div>
 
       <div class="col-md-6 ngSelect">
-        <ng-select required placeholder="City/District*" name="city" #city="ngModel" [(ngModel)]="model.citizenAddressDTO.city"
+        <ng-select required placeholder="City/District" name="city" #city="ngModel" [(ngModel)]="model.citizenAddressDTO.city" class="asteriskmarkRequired"
           [items]="cityListArray" bindValue="name" bindLabel="name">
         </ng-select>
         <div *ngIf="(form.submitted && city.invalid)  || (city.invalid && city.touched)">

@@ -12,9 +12,9 @@
     
       <div class="col-md-6">
         <div class="ngSelect" *ngIf="wardZoneLevel.length>=1">
-          <ng-select required #level1Id="ngModel" [placeholder]="!wardZoneLevel[0]?'': wardZoneLevel[0].levelName + ' *'" [items]="wardZoneLevel1List"
+          <ng-select required #level1Id="ngModel" [placeholder]="!wardZoneLevel[0]?'': wardZoneLevel[0].levelName" [items]="wardZoneLevel1List"
             bindValue="parentWardzoneId" bindLabel="wardzoneName" name="level1Id" [(ngModel)]="searchModel.level1Id"
-            (ngModelChange)="onChangedWardZone($event,2)">
+            (ngModelChange)="onChangedWardZone($event,2)" class="asteriskmarkRequired">
           </ng-select>
           <mat-error *ngIf="formDetail.form.get('level1Id') && formDetail.form.get('level1Id').invalid && formDetail.form.get('level1Id').touched">
             *Zone is required.</mat-error>
@@ -23,9 +23,9 @@
 
       <div class="col-md-6">
         <div class="ngSelect" *ngIf="wardZoneLevel.length>=2">
-          <ng-select required  [placeholder]="!wardZoneLevel[1]?'': wardZoneLevel[1].levelName + ' *'" [items]="wardZoneLevel2List"
+          <ng-select required  [placeholder]="!wardZoneLevel[1]?'': wardZoneLevel[1].levelName " [items]="wardZoneLevel2List"
             bindValue="wardzoneId" bindLabel="wardzoneName" name="Level2Id" [(ngModel)]="searchModel.level2Id"
-            (ngModelChange)="onChangedWardZone($event,3)">
+            (ngModelChange)="onChangedWardZone($event,3)" class="asteriskmarkRequired">
           </ng-select>
           <mat-error *ngIf="formDetail.form.get('Level2Id') && formDetail.form.get('Level2Id').invalid && formDetail.form.get('Level2Id').touched">
             *Ward is required.</mat-error>

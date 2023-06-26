@@ -21,10 +21,10 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="ngSelect">
-                    <ng-select required placeholder="{{ 'reason_for_property_creation' | translate:translateKey }} *" [items]="subReasonPropertyCreationList"
+                    <ng-select required placeholder="{{ 'reason_for_property_creation' | translate:translateKey }} " [items]="subReasonPropertyCreationList"
                         bindValue="itemId" bindLabel="itemName" name="subReasonForCreationItemId"
                         [(ngModel)]="addressModel.subReasonForCreationItemId" #SubReasonForCreationItem="ngModel"
-                        [ngClass]="{'ng-invalid ng-touched':  form.submitted && SubReasonForCreationItem.invalid}">
+                        [ngClass]="{'ng-invalid ng-touched':  form.submitted && SubReasonForCreationItem.invalid}" class="asteriskmarkRequired">
                     </ng-select>
                     <div *ngIf="(form.submitted && SubReasonForCreationItem.invalid)  || (SubReasonForCreationItem.invalid && SubReasonForCreationItem.touched)">
                         <mat-error *ngIf="SubReasonForCreationItem.errors.required">*Reason for Property Creation is required.</mat-error>
@@ -72,11 +72,11 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="ngSelect" *ngIf="wardZoneLevel.length>=1">
-                    <ng-select required [placeholder]="!wardZoneLevel[0]?'': wardZoneLevel[0].levelName + ' *'"
+                    <ng-select required [placeholder]="!wardZoneLevel[0]?'': wardZoneLevel[0].levelName "
                         [items]="wardZoneLevel1List" bindValue="parentWardzoneId" bindLabel="wardzoneName"
                         name="level1Id" [(ngModel)]="addressModel.level1Id" #Level1Id="ngModel"
                         (ngModelChange)="onChangedWardZone($event,2)"
-                        [ngClass]="{'ng-invalid ng-touched':  form.submitted && Level1Id.invalid}">
+                        [ngClass]="{'ng-invalid ng-touched':  form.submitted && Level1Id.invalid}" class="asteriskmarkRequired">
                     </ng-select>
                     <div *ngIf="(form.submitted && Level1Id.invalid)  || (Level1Id.invalid && Level1Id.touched)">
                         <mat-error *ngIf="Level1Id.errors.required">
@@ -88,11 +88,11 @@
             </div>
             <div class="col-md-6">
                 <div class="ngSelect" *ngIf="wardZoneLevel.length>=2">
-                    <ng-select required [placeholder]="!wardZoneLevel[1]?'': wardZoneLevel[1].levelName + ' *'"
+                    <ng-select required [placeholder]="!wardZoneLevel[1]?'': wardZoneLevel[1].levelName "
                         [items]="wardZoneLevel2List" bindValue="wardzoneId" bindLabel="wardzoneName" name="Level2Id"
                         [(ngModel)]="addressModel.level2Id" #Level2Id="ngModel"
                         (ngModelChange)="onChangedWardZone($event,3)"
-                        [ngClass]="{'ng-invalid ng-touched':  form.submitted && Level2Id.invalid}">
+                        [ngClass]="{'ng-invalid ng-touched':  form.submitted && Level2Id.invalid}" class="asteriskmarkRequired">
                     </ng-select>
                     <div *ngIf="(form.submitted && Level2Id.invalid)  || (Level2Id.invalid && Level2Id.touched)">
                         <mat-error *ngIf="Level2Id.errors.required">
@@ -105,9 +105,9 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="ngSelect" *ngIf="wardZoneLevel.length>=3">
-                    <ng-select required [placeholder]="!wardZoneLevel[2]?'': wardZoneLevel[2].levelName + ' *'"
+                    <ng-select required [placeholder]="!wardZoneLevel[2]?'': wardZoneLevel[2].levelName "
                         [items]="wardZoneLevel3List" bindValue="wardzoneId" bindLabel="wardzoneName" name="level3Id"
-                        [(ngModel)]="addressModel.level3Id" #level3Id="ngModel" (ngModelChange)="onChangedWardZone($event,4)">
+                        [(ngModel)]="addressModel.level3Id" #level3Id="ngModel" (ngModelChange)="onChangedWardZone($event,4)" class="asteriskmarkRequired">
                     </ng-select>
                     <div *ngIf="(form.submitted && level3Id.invalid)  || (level3Id.invalid && level3Id.touched)">
                         <mat-error *ngIf="level3Id.errors.required">
