@@ -178,7 +178,7 @@ export class PecRegistrationComponent implements OnInit {
 		this.registrationDetail = this.fb.group({
 			pancardNo: [null, ValidationService.panValidator],
 			centralSalesTax: null,
-			shopAndLicenseNo: [null, Validators.required],
+			shopAndLicenseNo: null,
 			gujaratSalesTax: null,
 			professionalTax: null,
 			companyRegNo: null,
@@ -318,9 +318,9 @@ export class PecRegistrationComponent implements OnInit {
 			branchName: null,
 
 			// third step controls
-			pancardNo: [null, ValidationService.panValidator],
+			pancardNo: [null],
 			centralSalesTax: null,
-			shopAndLicenseNo: [null, Validators.required],
+			shopAndLicenseNo: null,
 			gujaratSalesTax: null,
 			professionalTax: null,
 			companyRegNo: null,

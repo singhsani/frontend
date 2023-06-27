@@ -390,7 +390,7 @@
 												 {{getSelectedDataFromLookUps(relationshipTypeList,item.get('relationshipType').value.code)?.name}} 
 											</p>
 											<div class="ngSelect" *ngIf="item.isEditMode">
-												<ng-select class="asteriskmarkRequired" *ngIf="item.isEditMode" placeholder="{{'Relationship Type' | translate:translateKey}}"
+												<ng-select *ngIf="item.isEditMode" placeholder="{{'Relationship Type' | translate:translateKey}}"
 													formControlName="code">
 													<ng-option *ngFor="let relation of relationshipTypeList" [value]="relation.code">
 														{{relation.name}}</ng-option>
@@ -568,7 +568,7 @@
 											{{getSelectedDataFromLookUps(workerTypeList,item.get('workersType').value)?.name}} 
 									   	</p> 
 											<div col-md-6 class="ngSelect" *ngIf="item.isEditMode" >
-												<ng-select class="asteriskmarkRequired" *ngIf="item.isEditMode" formControlName="workersType" required (ngModelChange)="getCommonWorkerType()">
+												<ng-select *ngIf="item.isEditMode" formControlName="workersType" required (ngModelChange)="getCommonWorkerType()">
 													<ng-container *ngFor="let gender of workerTypeList">
 														<ng-option *ngIf="!gender.selected" [value]="gender.code">
 															{{gender.name}}
@@ -586,7 +586,7 @@
 										<div class="d-md-none">{{'total' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('total').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input onlyNumber matInput formControlName="total">
+											<input onlyNumber matInput formControlName="total" readonly>
 											<control-messages *ngIf="item.isEditMode" [control]="item.get('total')">
 											</control-messages>
 										</mat-form-field>
