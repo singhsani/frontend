@@ -315,7 +315,7 @@
 
                 <div class="row mt-3 mb-3">
                     <div class="col-md-4 ngSelect">
-                        <ng-select placeholder="{{'booking_type'| translate: translateKey}}"
+                        <ng-select placeholder="{{'booking_type'| translate: translateKey}} "  class="asteriskmarkRequired"
                             formControlName="bookingType" (change)="onBookingTypeChange($event)">
                             <ng-option *ngFor="let bt of BOOKING_TYPE" [value]="bt.code">
                                 {{ bt.name }}
@@ -325,16 +325,16 @@
                     </div>
 
                     <div class="col-md-4 ngSelect" formGroupName="atithiGruhName">
-                        <ng-select placeholder="{{'atithiguh'| translate: translateKey}}" formControlName="code"  (change)="onAtithiGruhNameChange($event)">
+                        <ng-select placeholder="{{'atithiguh'| translate: translateKey}}" formControlName="code"  (change)="onAtithiGruhNameChange($event)" class="asteriskmarkRequired">
                             <ng-option *ngFor="let at of ATITHIGRUH" [value]="at.code">
                                 {{ at.name }}
                             </ng-option>
                         </ng-select>
-                        <control-messages [control]="BookingTypeForm.get('atithiGruhName.code')"></control-messages>
+                        <control-messages [control]="BookingTypeForm.get('atithiGruhName').get('code')"></control-messages>
                     </div>
 
                     <div formGroupName="bookingPurposeMaster" class="col-md-4 ngSelect">
-                        <ng-select placeholder="{{'purpose'| translate: translateKey}}" formControlName="code" (change)="onPurposeChange($event)">
+                        <ng-select placeholder="{{'purpose'| translate: translateKey}}" formControlName="code" (change)="onPurposeChange($event)" class="asteriskmarkRequired">
                             <ng-option *ngFor="let purpose of PURPOSE" [value]="purpose.code">
                                 {{ purpose.name }}
                             </ng-option>
@@ -345,7 +345,7 @@
 
                     <ng-container *ngIf="bookingForRegular">
                         <mat-form-field class="col-md-4">
-                            <mat-label>{{'booking_date'| translate: stadiumTranslateKey }} *</mat-label>
+                            <mat-label>{{'booking_date'| translate: stadiumTranslateKey }}<span class="asteriskmarkRequired-label"></span></mat-label>
                             <input  appDate matInput [min]="startMinDate" [max]="endMinDate"
                                 [matDatepicker]="townHallBookingfromPicker" formControlName="bookingFrom"
                                 (dateChange)="onDateChange('bookingFrom', $event.value)">
@@ -358,10 +358,10 @@
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
-                            <mat-label>{{'choose_end_date'| translate: translateKey}}</mat-label>
+                            <mat-label>{{'choose_end_date'| translate: translateKey}}<span class="asteriskmarkRequired-label"></span></mat-label>
                             <input appDate matInput [min]="toStartDate" [max]="endMinDate"
                                 [matDatepicker]="townHallBookingtoPicker" formControlName="bookingTo"
-                                (dateChange)="onDateChange('bookingTo', $event.value)">
+                                (dateChange)="onDateChange('bookingTo', $event.value)" >
                             <mat-datepicker-toggle matSuffix [for]="townHallBookingtoPicker"></mat-datepicker-toggle>
                             <mat-datepicker #townHallBookingtoPicker touchUi="true"></mat-datepicker>
                             <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}
@@ -373,7 +373,7 @@
 
                     <ng-container *ngIf="!bookingForRegular">
                         <mat-form-field class="col-md-4">
-                            <mat-label>{{'program_date'| translate: translateKey}}</mat-label>
+                            <mat-label>{{'program_date'| translate: translateKey}}<span class="asteriskmarkRequired-label"></span></mat-label>
                             <input  appDate matInput [min]="toStartBookDate" [max]="toEndBookDate"
                                 [matDatepicker]="townHallBookingtoPicker" formControlName="bookingFrom"
                                 (dateChange)="onDateChange('bookingFrom', $event.value)">
