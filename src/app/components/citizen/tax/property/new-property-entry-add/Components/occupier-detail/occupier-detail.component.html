@@ -17,9 +17,9 @@
         <div class="row">
             <div class="col-md-2">
                 <div class="ngSelect" style="min-width: 100%;">
-                    <ng-select required placeholder="{{'title' | translate:translateKey }} *" [items]="titleList" bindValue="itemId"
+                    <ng-select required placeholder="{{'title' | translate:translateKey }} " [items]="titleList" bindValue="itemId"
                         bindLabel="itemName" name="titleId" [(ngModel)]="model.titleId" #TitleId="ngModel"
-                        [ngClass]="{'ng-invalid ng-touched':  form.submitted && TitleId.invalid}">
+                        [ngClass]="{'ng-invalid ng-touched':  form.submitted && TitleId.invalid}" class="asteriskmarkRequired">
                     </ng-select>
                     <div *ngIf="(form.submitted && TitleId.invalid)  || (TitleId.invalid && TitleId.touched)">
                         <mat-error *ngIf="TitleId.errors.required">*Title is required.</mat-error>
@@ -53,7 +53,7 @@
             <div class="col-md-2">
                 <div class="ngSelect" style="min-width: 100%;">
                     <!-- <ng-select required [disabled]="model.propertyOccupierId>0" placeholder="{{'occupier_code' | translate:translateKey }} *" [items]="occupierList" bindValue="itemCode" -->
-                        <ng-select required placeholder="{{'occupier_code' | translate:translateKey }} *" [items]="occupierList" bindValue="itemCode"
+                        <ng-select required placeholder="{{'occupier_code' | translate:translateKey }}" [items]="occupierList" bindValue="itemCode" class="asteriskmarkRequired"
                         bindLabel="itemName" name="occupierCode" [(ngModel)]="model.occupierCode" #occupierCode="ngModel"
                         [ngClass]="{'ng-invalid ng-touched':  form.submitted && occupierCode.invalid}"
                         (mouseenter)="show=1" (mouseleave)="show=0">

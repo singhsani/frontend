@@ -2,7 +2,7 @@
   <div class="row">
     <ng-container *ngFor="let doc of PropertyDocumentUploadDocs">
       <div class="col-md-4">
-        <label>{{doc.documentLabelEn}}<span *ngIf="doc.mandatory">*</span></label>
+        <label>{{doc.documentLabelEn}}<span *ngIf="doc.mandatory" class="mandatory" >*</span></label>
         <file-upload-water-tax [form]="PropertyDocumentUploadDocs" [uploadModel]="doc"></file-upload-water-tax>
       </div>
     </ng-container>
