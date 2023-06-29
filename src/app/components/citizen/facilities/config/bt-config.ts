@@ -172,7 +172,7 @@ export class BTConfig extends CitizenConfig {
         }, rj => {
 
 
-            if(payData.resourceType == "townhall"){
+            if(payData.resourceType == "townhall" || payData.resourceType == "atithigruh"){
                 router.navigate([redirectURLAfterPayment]);
             }
             if((payData.resourceType == "zooanimaladoption") || (payData.resourceType == "planetarium")){
