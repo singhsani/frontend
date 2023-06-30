@@ -159,6 +159,10 @@ export class SwimmingPoolComponent implements OnInit {
     }
 
     this.setFormControlToTabIndexMap();
+    this.swimmimgPoolBookingForm.get('bankName').get('code').setValue('2222');
+    this.swimmimgPoolBookingForm.get('accountHolderName').setValue('2222');
+    this.swimmimgPoolBookingForm.get('accountNo').setValue('2222222222');
+    this.swimmimgPoolBookingForm.get('ifscCode').setValue('ABCD0000000');
   }
   /**
   * Method is used to get lookup data
@@ -402,7 +406,13 @@ export class SwimmingPoolComponent implements OnInit {
       staffMember: false,
       isRenewalForm: false,
       memberNumber: null,
-      termsCondition : null
+      termsCondition : null,
+      bankName : this.fb.group({
+        code : null
+      }),
+      accountHolderName : null,
+      accountNo : null,
+      ifscCode : null
     });
     /*General Details*/
     this.generalDetails = this.fb.group({
