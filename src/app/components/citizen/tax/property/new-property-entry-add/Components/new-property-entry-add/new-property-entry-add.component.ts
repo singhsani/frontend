@@ -48,6 +48,7 @@ export class NewPropertyEntryAddComponent implements AfterViewInit {
       this.formId = Number(param.get('id'));
       if(this.formId != 0){
         this.newPropertyEntryAddService.getVersionById(this.formId).subscribe(res =>{
+          res.body.serviceApplicationId = this.formId;
           this.propertyEntryAddDataSharingService.setApplicantDetailsEditModel(res.body);
           this.viewBasic(res.body.extraIds)
         })
@@ -78,6 +79,8 @@ export class NewPropertyEntryAddComponent implements AfterViewInit {
   }
 
   saveApplicantDetails(applicantDetailsDTO: ApplicantDetailDTO){
+    debugger
+    applicantDetailsDTO.uniqueId = this.newNewPropertyEntryAddDataSharingService.applicationNo;
     this.addressService.saveApplicantDetail(applicantDetailsDTO).subscribe(
          (data) => {
            this.commonService.applicationNo = data.body.applicationNo;
