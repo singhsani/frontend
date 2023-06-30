@@ -25,6 +25,9 @@ export class OccupierDetailComponent implements OnInit {
   titleList = [];
   occupierList = [];
   model: OccupierModel;
+  occupierTypeList = [];
+  occupierSubTypeList = [];
+  copyOfOccupierSubTypeList = [];
   subscription: Subscription;
   isOccupierExist: boolean = true;
   isShowTable: boolean = false;
@@ -89,11 +92,13 @@ export class OccupierDetailComponent implements OnInit {
   }
 
   getLookups() {
-    let lookupcode = `lookup_codes=${Constants.LookupCodes.Title}&lookup_codes=${Constants.LookupCodes.OCCUPIER_CODE}`;
+    let lookupcode = `lookup_codes=${Constants.LookupCodes.Title}&lookup_codes=${Constants.LookupCodes.OCCUPIER_CODE}&lookup_codes=${Constants.LookupCodes.OCCUPIER_TYPE}&lookup_codes=${Constants.LookupCodes.OCCUPIER_SUB_TYPE}`;
     this.commonService.getLookupValuesAccordingToScreen(lookupcode).subscribe(data => {
       this.titleList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.Title))[0].items;
       this.occupierList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.OCCUPIER_CODE))[0].items;
-
+      this.occupierTypeList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.OCCUPIER_TYPE))[0].items;
+      this.occupierSubTypeList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.OCCUPIER_SUB_TYPE))[0].items;
+      this.copyOfOccupierSubTypeList = this.occupierSubTypeList
     });
   }
 
@@ -166,7 +171,11 @@ export class OccupierDetailComponent implements OnInit {
   }
 
   eidt(item) {
-    this.model = Object.assign({}, item);
+    const occupierType = this.occupierTypeList.find(f=>Number(item.occupierType) == f.itemId)
+    if(occupierType.itemName){
+      this.occupierTypeChange(occupierType.itemName);
+      this.model = Object.assign({}, item);
+    }
   }
 
   moveStepper(item) {
@@ -343,6 +352,40 @@ togglePanel() {
 clearPropertyOwner(form: NgForm){
   console.log("Successfully Cleared.");
   form.resetForm();
+}
+
+occupierTypeChange(event){    
+  this.occupierSubTypeList = this.copyOfOccupierSubTypeList
+  if(event == 'General'){
+   this.occupierSubTypeList = []
+   const subTypeList = this.copyOfOccupierSubTypeList.find(x => x.itemCode === 'OCCUPIER_SUB_TYPE_2');
+    subTypeList.itemName = 'General'
+    this.occupierSubTypeList.push(subTypeList) 
+  }
+  else if(event == 'Factory'){
+    this.occupierSubTypeList = []
+    const subTypeList = this.copyOfOccupierSubTypeList.find(x => x.itemCode === 'OCCUPIER_SUB_TYPE_2');
+     subTypeList.itemName = 'Factory'
+     this.occupierSubTypeList.push(subTypeList) 
+  }
+  else if(event == 'State Govt.'){
+    this.occupierSubTypeList = []
+    this.copyOfOccupierSubTypeList.forEach(res =>{
+      if(res.itemCode == 'OCCUPIER_SUB_TYPE_1' || res.itemCode == 'OCCUPIER_SUB_TYPE_2' ) {
+        res.itemName =  res.itemCode == 'OCCUPIER_SUB_TYPE_1' ? 'State Govt. 8/10'  :'State Govt. on Rent'
+        this.occupierSubTypeList.push(res) 
+      }
+    })
+  }
+  else{
+    this.occupierSubTypeList = []
+    this.copyOfOccupierSubTypeList.forEach(res =>{
+      if(res.itemCode == 'OCCUPIER_SUB_TYPE_2' ||res.itemCode == 'OCCUPIER_SUB_TYPE_3' || res.itemCode == 'OCCUPIER_SUB_TYPE_4' || res.itemCode == 'OCCUPIER_SUB_TYPE_5') {
+        res.itemName = res.itemCode == 'OCCUPIER_SUB_TYPE_2' ? 'Central Govt. on Rent' : (res.itemCode == 'OCCUPIER_SUB_TYPE_3' ? 'Central Govt. 75.00' : (res.itemCode == 'OCCUPIER_SUB_TYPE_4' ? 'Central Govt. 50.00%' :'Central Govt. 33.33%'))
+        this.occupierSubTypeList.push(res) 
+      }
+    })
+  }
 }
 
 }
