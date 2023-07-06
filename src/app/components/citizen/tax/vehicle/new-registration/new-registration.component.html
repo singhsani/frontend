@@ -60,7 +60,7 @@
 
 					<mat-form-field class="col-md-4 ">
 						<input matInput autocomplete="off" #chasisNo [value]="chasisNo.value.toUpperCase()"
-							maxlength="20" type="text" formControlName="chasisNo"
+							maxlength="25" type="text" formControlName="chasisNo"
 							placeholder="{{'chasis_no' | translate: translateKey}}" required>
 						<control-messages [control]="vehicleDetails.get('chasisNo')"></control-messages>
 					</mat-form-field>
