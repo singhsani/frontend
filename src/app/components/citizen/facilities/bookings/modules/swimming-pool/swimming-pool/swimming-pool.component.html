@@ -367,6 +367,8 @@
 							<mat-datepicker #birthDatedatepicker touchUi="true"></mat-datepicker>
 							<div align="end" class="default-show-hint mat-hint mat-right">
 								{{config.DATE_HINT_MSG}}</div>
+								<control-messages [control]="generalDetails.get('birthDate')">
+								</control-messages>
 						</mat-form-field>
 
 
