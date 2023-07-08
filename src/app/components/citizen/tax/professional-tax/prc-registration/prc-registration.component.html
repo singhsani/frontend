@@ -265,7 +265,7 @@
 
                 <div class="col-md-6 asteriskmarkRequired">
                     <ng-select [disabled]="isEmpEditable" placeholder="{{'month' | translate: translateKey}} "
-                        [(ngModel)]="empDetailMonth">
+                        [(ngModel)]="empDetailMonth" (change)="empMonthChange($event)">
                         <ng-option *ngFor="let month of monthArray | slice:monthIdx:currentMonthIdx " [value]="month">
                             {{month | titlecase}}</ng-option>
                     </ng-select>
@@ -278,22 +278,28 @@
                 <thead>
                     <tr>
                         <th>Sr.No.</th>
-                        <th>Sub Entry Description</th>
-                        <th>No. Of Employee</th>
+						<th>Sub Entry Description</th>
+						<th>tax Rate</th>
+						<th>No. Of Employee</th>
+						<th>Amount</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let emp of employeeSlabArr; let i=index;">
                         <td>{{i+1}}</td>
                         <td>{{emp.name}} {{rupeeSign}}</td>
+                        <td>{{emp.slab.taxRate}}</td>
                         <td>
                             <input OnlyNumber type="text" maxlength="8" [(ngModel)]="emp.empCount"
                                 (keyup)="employeeCount()">
                         </td>
+                        <td>{{emp.totalAmount}}</td>
                     </tr>
 
                     <tr>
                         <td></td>
+                        <td></td>
+						<td></td>
                         <td class="text-right">
                             <b>Total Employee</b>
                         </td>

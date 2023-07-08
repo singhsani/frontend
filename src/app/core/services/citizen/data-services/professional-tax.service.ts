@@ -144,4 +144,8 @@ export class ProfessionalTaxService {
 	saveReceiptDetails(formData) {
 		return this.http.post(`api/professional/receipt/save`, formData);
 	}
+
+	getAllSlabMaster() {
+        return this.http.get('api/form/pecForm/slabList');
+    }
 }
