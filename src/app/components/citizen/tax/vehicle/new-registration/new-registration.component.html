@@ -120,7 +120,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" appDate [matDatepicker]="picker" [max]="maxDate"
-							[min]="minDate" formControlName="purchaseDate" (dateChange)="onDateChange($event.value)"
+							 formControlName="purchaseDate" (dateChange)="onDateChange($event.value)"
 							placeholder="{{'purchase_date' | translate: translateKey}} (DD/MM/YYYY)" required>
 						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #picker></mat-datepicker>
