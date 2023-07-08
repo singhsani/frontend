@@ -240,7 +240,24 @@ export class GatewayResponseComponent implements OnInit {
 				}
 				//this.redirectToHome();
 			});
-		} else if (data.payableServiceType == 'PAY-PRO-TAX') {
+		}else if(data.payableServiceType == 'VEHICLE'){
+
+			payData.amount = Number(data.amount);
+			this.formService.saveVehicleTaxPaymentDetails(payData).subscribe(res => {
+				if (res && res.data) {
+					setTimeout(() => {
+						this.redirectToMyApplication('/citizen/my-applications', res.data.data, 'VEHICLE', data.payableServiceType);
+						//this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS') + '?refNumber=' + res.data);
+						//this.redirectToMyApplication(ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS'),res.data.responseData.refNumber );
+					}, 10000);
+
+					this.interVal();
+
+
+				}
+				//this.redirectToHome();
+			});
+		}else if (data.payableServiceType == 'PAY-PRO-TAX') {
 			payData.amount = Number(data.amount);
 			this.formService.savePropertyTaxPaymentDetails(payData).subscribe(res => {
 				if (res) {
