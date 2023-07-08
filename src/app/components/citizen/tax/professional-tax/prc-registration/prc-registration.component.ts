@@ -80,6 +80,16 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 
 	holdFirstPage: Boolean = false;
 	rupeeSign='(₹)'
+	slabListArray = [];
+	totalAmount : number = 0;
+	UP_TO_3000 = 'UP_TO_3000'
+	FROM_3000_TO_5999 = 'FROM_3000_TO_5999'
+	FROM_6000_TO_8999 = 'FROM_6000_TO_8999'
+	FROM_9000_TO_12000 = 'FROM_9000_TO_12000'
+	ABOVE_12000 = 'ABOVE_12000'
+	employeeSelectedYear = '';
+	employeeSelectedMonth : any;
+	selectedYear : any;
 
 	constructor(
 		private fb: FormBuilder,
@@ -110,7 +120,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 		this.getAllConstitution();
 		this.getAllProfessionConst();
 		this.getAllWardNos();
-
+		this.getAllSlabMaster()
 		this.searchInput.focus();
 	}
 
@@ -346,6 +356,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 						
 				for (let i = 0; i < this.employeeSlabArr.length; i++) {
 					this.employeeSlabArr[i].empCount = 0;
+					this.employeeSlabArr[i].totalAmount = 0;
 					this.employeeSlabArr[i].slab = {
 						id: null, code: this.employeeSlabArr[i].code, incomeRange: null, taxRate: this.employeeSlabArr[i].taxRate,
 						isActive: true, validFrom: this.employeeSlabArr[i].validFrom, validTo: this.employeeSlabArr[i].validTo
@@ -683,7 +694,9 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	employeeCount() {
 		this.totalEmployees = 0;
 		for (let i = 0; i < this.employeeSlabArr.length; i++) {
-			this.totalEmployees += Number(this.employeeSlabArr[i].empCount);
+			const employeeCount  = Number(this.employeeSlabArr[i].slab.taxRate) * Number(this.employeeSlabArr[i].empCount)
+			this.employeeSlabArr[i].totalAmount = employeeCount
+			this.totalEmployees += employeeCount;
 		}
 	}
 
@@ -772,9 +785,11 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 			this.monthIdx = dateStr.getMonth();
 			this.currentMonthIdx = dateStr.getFullYear() == new Date().getFullYear() ? (new Date().getMonth() + 1) : 12;
 		}
-
+		this.empMonthChange( dateStr.getMonth())
+		this.selectedYear = dateStr.getFullYear()
 		for (let i = 0; i < this.employeeSlabArr.length; i++) {
-			this.employeeSlabArr[i].empCount = '';
+			this.employeeSlabArr[i].empCount = 0;
+			this.employeeSlabArr[i].totalAmount = 0;
 		}
 	}
 
@@ -800,7 +815,9 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 		this.totalEmployees = obj.totEmpCount;
 		this.empDetailMonth = obj.month;
 		this.empDetailYear = obj.year;
-		this.employeeSlabArr = _.cloneDeep(obj.slabDetails);
+		this.selectedYear = this.empDetailYear
+        this.empMonthChange(this.empDetailMonth)
+//		this.employeeSlabArr = _.cloneDeep(obj.slabDetails);
 
 		this.modalRef = this.modalService.show(
 			template, Object.assign({}, { class: 'gray modal-lg' })
@@ -935,6 +952,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	 * @param event - Selected year
 	 */
 	empYearChange(event) {
+		this.selectedYear = event
 		this.empDetailMonth = null;
 		if (event === (new Date).getFullYear()) {
 			/** If the selected year will be same with current year*/
@@ -973,4 +991,107 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 		}
 	}
 
+	getAllSlabMaster() {
+        this.profeService.getAllSlabMaster().subscribe(res => {
+            this.slabListArray = res;
+        });
+    }
+
+
+	empMonthChange(event){
+		
+		this.employeeSelectedMonth = new Date(`${event} 1, 2022`).getMonth() + 1;
+		this.employeeSelectedYear = this.selectedYear;
+
+		if(this.employeeSelectedYear && this.employeeSelectedMonth){
+			const selectedDate = this.employeeSelectedYear + '-' + this.employeeSelectedMonth + '-' + '01';
+			let date = new Date(selectedDate)
+			for (let i = 0; i < this.slabListArray.length; i++) {
+				const ele = this.slabListArray[i];
+				let validFromDate = new Date(ele.validFrom)
+				let validToDate = ele.validTo != null ? new Date(ele.validTo) : null
+				if(ele.code == this.UP_TO_3000){					
+					if(date > validFromDate && (validToDate != null ? date < validToDate : true)){
+					//	console.log(this.UP_TO_3000 + '--' + ele.taxRate);
+						for (let j = 0; j < this.employeeSlabArr.length; j++) {
+							const element = this.employeeSlabArr[j]
+							if(element.code == this.UP_TO_3000){
+							element.slab.taxRate = ele.taxRate;
+							element.totalAmount = 0;
+							}
+						}
+					}	
+				}
+			}
+			for (let i = 0; i < this.slabListArray.length; i++) {
+				const ele = this.slabListArray[i];
+				let validFromDate = new Date(ele.validFrom)
+				let validToDate = ele.validTo != null ? new Date(ele.validTo) : null
+				if(ele.code == this.FROM_3000_TO_5999){
+					if(date > validFromDate && (validToDate != null ? date < validToDate : true)){
+					//	console.log(this.FROM_3000_TO_5999 + '--' + ele.taxRate);
+						for (let j = 0; j < this.employeeSlabArr.length; j++) {
+							const element = this.employeeSlabArr[j]
+							if(element.code == this.FROM_3000_TO_5999){
+								element.slab.taxRate  = ele.taxRate;
+								element.totalAmount = 0;
+							}
+						}
+					}	
+				}
+			}
+			for (let i = 0; i < this.slabListArray.length; i++) {
+				const ele = this.slabListArray[i];
+				let validFromDate = new Date(ele.validFrom)
+				let validToDate = ele.validTo != null ? new Date(ele.validTo) : null
+				if(ele.code == this.FROM_6000_TO_8999){
+					if(date > validFromDate && (validToDate != null ? date < validToDate : true)){
+					//	console.log(this.FROM_6000_TO_8999 + '--' + ele.taxRate);
+						for (let j = 0; j < this.employeeSlabArr.length; j++) {
+							const element = this.employeeSlabArr[j]
+							if(element.code == this.FROM_6000_TO_8999){
+								element.slab.taxRate  = ele.taxRate;
+								element.totalAmount = 0;
+							}
+						}
+					}	
+				}
+			}
+			for (let i = 0; i < this.slabListArray.length; i++) {
+				const ele = this.slabListArray[i];
+				let validFromDate = new Date(ele.validFrom)
+				let validToDate = ele.validTo != null ? new Date(ele.validTo) : null
+				if(ele.code == this.FROM_9000_TO_12000){
+					if(date > validFromDate && (validToDate != null ? date < validToDate : true)){
+					//	console.log(this.FROM_9000_TO_12000 + '--' + ele.taxRate);
+						for (let j = 0; j < this.employeeSlabArr.length; j++) {
+							const element = this.employeeSlabArr[j]
+							if(element.code == this.FROM_9000_TO_12000){
+								element.slab.taxRate  = ele.taxRate;
+								element.totalAmount = 0;
+							}
+						}
+					}	
+				}
+			}
+			for (let i = 0; i < this.slabListArray.length; i++) {
+				const ele = this.slabListArray[i];
+				let validFromDate = new Date(ele.validFrom)
+				let validToDate = ele.validTo != null ? new Date(ele.validTo) : null
+				if(ele.code == this.ABOVE_12000){
+					if(date > validFromDate && (validToDate != null ? date < validToDate : true)){
+					//	console.log(this.ABOVE_12000 + '--' + ele.taxRate);
+						for (let j = 0; j < this.employeeSlabArr.length; j++) {
+							const element = this.employeeSlabArr[j]
+							if(element.code == this.ABOVE_12000){
+								element.slab.taxRate  = ele.taxRate;
+								element.totalAmount = 0;
+							}
+						}
+					}	
+				}
+			}
+
+		}
+	}
 }
