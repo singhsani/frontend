@@ -163,21 +163,18 @@
 				<div class="row stepperMinHeight">
 
 					<mat-form-field class="col-md-4">
-						<input appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" matInput
-							autocomplete="off" maxlength="100" type="text" formControlName="firstName"
+						<input  matInput #firstName [value]="firstName" autocomplete="off" maxlength="100" type="text" formControlName="firstName"
 							placeholder="{{'first_name' | translate: translateKey}}" required>
 						<control-messages [control]="ownerDetails.get('firstName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" matInput
-							autocomplete="off" maxlength="100" type="text" formControlName="middleName"
+						<input #middleName [value]="middleName" matInput autocomplete="off" maxlength="100" type="text" formControlName="middleName"
 							placeholder="{{'middle_name' | translate: translateKey}}">
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" matInput
-							autocomplete="off" maxlength="100" type="text" formControlName="lastName"
+						<input #lastName [value]="lastName" matInput autocomplete="off" maxlength="100" type="text" formControlName="lastName"
 							placeholder="{{'last_name' | translate: translateKey}}" required>
 						<control-messages [control]="ownerDetails.get('lastName')"></control-messages>
 					</mat-form-field>
