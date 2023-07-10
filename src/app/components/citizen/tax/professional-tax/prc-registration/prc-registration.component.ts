@@ -694,6 +694,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	 */
 	employeeCount() {
 		this.totalEmployees = 0;
+		this.totalCount = 0;
 		for (let i = 0; i < this.employeeSlabArr.length; i++) {
 			this.totalEmployees += Number(this.employeeSlabArr[i].empCount);
 			const employeeCount  = Number(this.employeeSlabArr[i].slab.taxRate) * Number(this.employeeSlabArr[i].empCount)
