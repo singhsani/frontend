@@ -90,6 +90,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	employeeSelectedYear = '';
 	employeeSelectedMonth : any;
 	selectedYear : any;
+	totalCount : number = 0;
 
 	constructor(
 		private fb: FormBuilder,
@@ -694,9 +695,10 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	employeeCount() {
 		this.totalEmployees = 0;
 		for (let i = 0; i < this.employeeSlabArr.length; i++) {
+			this.totalEmployees += Number(this.employeeSlabArr[i].empCount);
 			const employeeCount  = Number(this.employeeSlabArr[i].slab.taxRate) * Number(this.employeeSlabArr[i].empCount)
 			this.employeeSlabArr[i].totalAmount = employeeCount
-			this.totalEmployees += employeeCount;
+			this.totalCount += employeeCount;
 		}
 	}
 
