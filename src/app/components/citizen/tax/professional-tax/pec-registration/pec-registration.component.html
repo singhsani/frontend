@@ -65,7 +65,7 @@
 
 					<mat-form-field class="col-md-4" [class.disabled]="isFieldDisabled()">
 						<mat-label>{{'establishment_name' | translate: translateKey}} <span class="required-field" *ngIf="isFieldDisabled()"></span></mat-label>
-						<input matInput #establishmentName [value]="establishmentName.value.toUpperCase()" autocomplete="off"
+						<input matInput #establishmentName [value]="establishmentName.value" autocomplete="off"
 							maxlength="100" type="text" formControlName="establishmentName" required [disabled]="isFieldDisabled()">
 						<control-messages [control]="employerDetail.get('establishmentName')"></control-messages>
 					</mat-form-field>
