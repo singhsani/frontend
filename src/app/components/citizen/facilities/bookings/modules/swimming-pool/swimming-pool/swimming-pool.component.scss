@@ -92,11 +92,21 @@ h1{
             width: 130px;
             height: 130px;
         }
+        .department-name{
+            margin-bottom: 0rem;
+            padding: 5px;
+            h4{
+              font-size: 18px;
+            }
+          }
         .titleHeader{
             font-size: 17px;
+            color: #900C3F;
         }
         .titleparagraph{
             font-size: 17px;
+            text-align: center;
+            color: #900C3F;
         }
         .tableTop{
             border: 1px solid hsl(0, 0%, 6%);
@@ -105,7 +115,7 @@ h1{
             width: 98%;
         }
         .swimmingPoolFees {
-             text-align: left;
+             text-align: center;
              width: 50%;
         }
     }
@@ -124,6 +134,13 @@ h1{
                 border: 1px solid hsl(0, 0%, 6%);
                 text-align: center;
                 font-size: 19px;
+            }
+            .smallFont{
+                font-size: 16px;
+                text-align: center;
+            }
+            .certificate{
+              text-align: center;
             }
        }
        
