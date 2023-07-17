@@ -563,7 +563,7 @@ export class SwimmingPoolComponent implements OnInit {
       this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
       return;
     }
-    else if (!this.isRenewalForm && (!this.isFileUploaded1 || !this.isFileUploaded2 || !this.isFileUploaded4 || !this.isFileUploaded5)) {
+    else if (!this.isRenewalForm && (!this.isFileUploaded1  || !this.isFileUploaded4 || !this.isFileUploaded5)) {
       this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
       return;
     }
