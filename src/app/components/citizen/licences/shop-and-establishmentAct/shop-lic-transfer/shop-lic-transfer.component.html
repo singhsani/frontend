@@ -89,7 +89,7 @@
 						<div *ngIf="wardZoneLevel.length>=2" class="selectSort">
 							<ng-select class="asteriskmarkRequired"
 								placeholder="Ward No."
-								formControlName="waterDrainageWardName" (change)="onChangedWardZone($event,3)">
+								formControlName="waterDrainageWardId" (change)="onChangedWardZone($event,3)">
 								<ng-option *ngFor="let ward of wardZoneLevel2List" [value]="ward.wardzoneId">
 									{{ward.wardzoneName}}</ng-option>
 							</ng-select>
@@ -101,7 +101,7 @@
 						<div *ngIf="wardZoneLevel.length>=3">
 							<ng-select 
 								placeholder="Block No."
-								formControlName="waterDrainageBlockName" (change)="onChangedWardZone($event,4)">
+								formControlName="waterDrainageBlockId" (change)="onChangedWardZone($event,4)">
 								<ng-option *ngFor="let block of wardZoneLevel3List" [value]="block.wardzoneId">
 									{{block.wardzoneName}}</ng-option>
 							</ng-select>
@@ -164,7 +164,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput [max]="disablefutureDate" autocomplete="off" appDate
 								[matDatepicker]="oldRegistrationDate" formControlName="oldRegistrationDate"
-								(dateChange)="dateFormat($event.value,'oldRegistrationDate')"
+								(dateChange)="oldRegistrationDatedateFormat($event.value,'oldRegistrationDate')"
 								placeholder="Old Registration Date">
 							<mat-datepicker-toggle matSuffix [for]="oldRegistrationDate"></mat-datepicker-toggle>
 							<mat-datepicker touchUi="true" #oldRegistrationDate></mat-datepicker>
