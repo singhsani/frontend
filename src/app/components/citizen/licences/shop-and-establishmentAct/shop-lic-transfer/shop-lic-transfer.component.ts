@@ -258,9 +258,9 @@ export class ShopLicTransferComponent implements OnInit {
 	}
 
 	setFormDataFromLatestApplication(res){
+
 		this.establishmentdetails.patchValue({
 			// 1
-			
 			establishmentName : res.establishmentName,
 			waterDrainageBlockId : res.waterDrainageBlockId,
 			waterDrainageBlockName : res.waterDrainageBlockName,
@@ -321,7 +321,17 @@ export class ShopLicTransferComponent implements OnInit {
 		formObj['organizationType'] = res.organizationType
 		// Intimation or certificate number.
 		formObj['transferCertificateNumber'] =  this.certificateNumber
-		
+		if(res.waterDrainageZoneId) {
+			this.getWardZone(res.waterDrainageZoneId,2);
+		}
+
+		if (res.waterDrainageWardId) {
+			this.getWardZone(res.waterDrainageZoneId, 2);
+			this.getWardZone(res.waterDrainageWardId,3);
+		}
+		if (res.waterDrainageBlockId) {
+			this.getWardZone(res.waterDrainageWardId, 3);
+		}
 		this.formService.saveFormData(formObj).subscribe(saveResp => {
 			this.shopLicTransferForm.patchValue(saveResp);
 			this.setDropdownAndListDataFromRes(saveResp);
@@ -419,15 +429,15 @@ export class ShopLicTransferComponent implements OnInit {
 			
 				// if(res.serviceDetail)
 				// //this.isGuideLineActive = false;
-				if(this.establishmentdetails.get('waterDrainageZoneId')){
+				if(this.establishmentdetails.get('waterDrainageZoneId').value){
 					this.establishmentdetails.get('zone').setValue(res.waterDrainageZoneName);
 				}
 
-				if(this.establishmentdetails.get('waterDrainageWardId')){
+				if(this.establishmentdetails.get('waterDrainageWardId').value){
 					this.establishmentdetails.get('ward').setValue(res.waterDrainageWardName);
 				}
 
-				if(this.establishmentdetails.get('waterDrainageBlockId')){
+				if(this.establishmentdetails.get('waterDrainageBlockId').value){
 					this.establishmentdetails.get('block').setValue(res.waterDrainageBlockName);
 				}
 
@@ -446,6 +456,7 @@ export class ShopLicTransferComponent implements OnInit {
 				if (this.establishmentdetails.get('ownershipType').value,this.partnerlist.get('organizationType').get('code').value) {
 					this.updateServiceUploadDocument(this.establishmentdetails.get('ownershipType').value,this.partnerlist.get('organizationType').get('code').value);
 				}
+				
 				if(res.waterDrainageZoneId) {
 					this.getWardZone(res.waterDrainageZoneId,2);
 				}
@@ -526,9 +537,9 @@ export class ShopLicTransferComponent implements OnInit {
 			 
 			waterDrainageZoneId: [null,Validators.required],
 			waterDrainageWardId: [null,Validators.required],
-			waterDrainageWardName:[null,Validators.required],
+		//	waterDrainageWardName:[null],
 			waterDrainageBlockId: [null],
-			waterDrainageBlockName:[null],
+		//	waterDrainageBlockName:[null],
 			ownershipType: [null, [Validators.required]],
 
 			pecNumber:[null, ValidationService.pecValidation],
@@ -718,7 +729,7 @@ export class ShopLicTransferComponent implements OnInit {
 
 	}
 
-
+// frist time
 	getWardZoneLevel() {
 		this.taxRebateApplicationService.getWardZoneLevel().subscribe(
 			(data) => {
@@ -735,6 +746,7 @@ export class ShopLicTransferComponent implements OnInit {
 		)
 	}
 
+	// zone  List
 	getWardZoneFirstLevel() {
 		this.taxRebateApplicationService.getWardZoneFirstLevel(1, Constants.ModuleKey.Property_Tax).subscribe(
 			(data) => {
@@ -789,6 +801,7 @@ export class ShopLicTransferComponent implements OnInit {
 			this.getWardZone(value, level)
 	}
 
+	// ward  block list 
 	getWardZone(parentId, level) {
 		var postData = {};
 		postData = { parentId: parentId };
@@ -797,15 +810,21 @@ export class ShopLicTransferComponent implements OnInit {
 				if (data.status === 200 && data.body.length) {
 					if (level == 2) {
 						this.wardZoneLevel2List = data.body;
+						console.log('this.wardZoneLevel2List', this.wardZoneLevel2List);
 					}
 					else if (level == 3) {
 						this.wardZoneLevel3List = data.body;
+						console.log('this.wardZoneLevel3List', this.wardZoneLevel3List);
+						
 					}
 					else if (level == 4) {
-						this.wardZoneLevel4List = data.body;
+						this.wardZoneLevel3List = data.body;
+						console.log('this.wardZoneLevel3List', this.wardZoneLevel4List);
 					}
 				}
-				this.establishmentdetails.get('waterDrainageWardId').setValue(parentId);
+				// this.establishmentdetails.get('waterDrainageWardId').setValue(parentId);
+				console.log('establishmentdetails.get', this.establishmentdetails);
+				
 			},
 			(error) => {
 				console.log('error', error);
@@ -947,7 +966,13 @@ export class ShopLicTransferComponent implements OnInit {
 	 */
 	dateFormat(date, controlType: string) {
 		this.shopLicTransferForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
-		this.employerdetails.get('commencementOfBusinessDate').setValue(moment(date).format("YYYY-MM-DD"));
+		this.employerdetails.get('commencementOfBusinessDate').setValue(moment(date).format("YYYY-MM-DD"));		
+	}
+
+	oldRegistrationDatedateFormat(date, controlType: string) {
+		this.establishmentdetails.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));	
+		console.log(this.establishmentdetails);
+		
 	}
 
 	/**
