@@ -819,9 +819,9 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 		this.empDetailMonth = obj.month;
 		this.empDetailYear = obj.year;
 		this.selectedYear = this.empDetailYear
-        this.empMonthChange(this.empDetailMonth)
-//		this.employeeSlabArr = _.cloneDeep(obj.slabDetails);
-
+        //this.empMonthChange(this.empDetailMonth)
+		this.employeeSlabArr = _.cloneDeep(obj.slabDetails);
+        this.employeeCount()
 		this.modalRef = this.modalService.show(
 			template, Object.assign({}, { class: 'gray modal-lg' })
 		);
