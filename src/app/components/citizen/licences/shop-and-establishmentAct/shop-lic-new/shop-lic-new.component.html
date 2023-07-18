@@ -149,7 +149,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput [max]="disablefutureDate" autocomplete="off" appDate
 								[matDatepicker]="oldRegistrationDate" formControlName="oldRegistrationDate"
-								(dateChange)="dateFormat($event.value,'oldRegistrationDate')"
+								(dateChange)="oldRegistrationDatedateFormat($event.value,'oldRegistrationDate')"
 								placeholder="Old Registration Date">
 							<mat-datepicker-toggle matSuffix [for]="oldRegistrationDate"></mat-datepicker-toggle>
 							<mat-datepicker touchUi="true" #oldRegistrationDate></mat-datepicker>
