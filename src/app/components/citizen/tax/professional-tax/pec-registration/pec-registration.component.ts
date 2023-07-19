@@ -200,7 +200,7 @@ export class PecRegistrationComponent implements OnInit {
 				code: [null, Validators.required], name: null,
 			}),
 			applicableRate: [{ value: 0, disabled: true }],
-			otherProfession: [null, Validators.required]
+			otherProfession: [null]
 		});
 		
 		this.commonService.createCloneAbstractControl(this.employerDetail,this.pecRegForm);
@@ -341,7 +341,7 @@ export class PecRegistrationComponent implements OnInit {
 				code: [null, Validators.required], name: null,
 			}),
 			applicableRate: [{ value: 0, disabled: true }],
-			otherProfession: [null, Validators.required],
+			otherProfession: [null],
 			attachments: [],
 			formStatus: null,
 			officeResidentialAddressSame: null
@@ -517,6 +517,13 @@ export class PecRegistrationComponent implements OnInit {
 		this.actDetail.get('constitution').get('code').setValue(null);
 
 		this.getAllSubEntries(event);
+		if(event == "ENTRY_009" &&event == "ENTRY_010" ){
+			this.actDetail.get('otherProfession').setValidators([Validators.required]);
+			this.actDetail.get('otherProfession').updateValueAndValidity();
+		}else{
+			this.actDetail.get('otherProfession').clearValidators();
+			this.actDetail.get('otherProfession').updateValueAndValidity();
+		}
 	}
 
 	onGstNumber(event) {
