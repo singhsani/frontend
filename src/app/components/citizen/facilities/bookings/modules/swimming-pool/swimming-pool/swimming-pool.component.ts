@@ -567,10 +567,10 @@ export class SwimmingPoolComponent implements OnInit {
       this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
       return;
     }
-    else if (this.isSwimmingTestReportShow == true && !this.isFileUploaded6) {
-      this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
-      return;
-    }
+    // else if (this.isSwimmingTestReportShow == true && !this.isFileUploaded6) {
+    //   this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
+    //   return;
+    // }
     else {
       // save call
       this.swimmingPoolService.submitData(this.swimmimgPoolBookingForm.getRawValue(), this.generalDetails.get('swimmingPoolName').get('code').value).subscribe(
