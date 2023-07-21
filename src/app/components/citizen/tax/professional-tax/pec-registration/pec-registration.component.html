@@ -439,6 +439,11 @@
 				<ng-template mat-tab-label>
 					<div>{{'attachment' | translate: proTranslateKey}}</div>
 				</ng-template>
+				<div class="alert alert-warning">
+					{{'Note' | translate:translateKey}} :
+					{{'File size more than 2 MB not allowed; Upload only JPG,PNG JPEG and PDF file.' |
+					translate:translateKey}}
+				</div>
 <form [formGroup]="pecRegForm">
 				<div class="row">
 					<div class="col-md-4" *ngFor="let doc of attachmentList">
