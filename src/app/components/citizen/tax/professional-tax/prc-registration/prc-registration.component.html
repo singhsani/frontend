@@ -3,7 +3,7 @@
 </app-title-bar>
 
 <form class="searchBox">
-    <div class="pecNumber">
+    <div class="pecNumber" [hidden]="isPreviewShow">
     <mat-form-field>
         <input matInput autocomplete="off" class="capitalCase" trim="blur" appAlphaNumeric maxlength="12" #ecrcNoTextBox
             #searchInput="matInput" type="text" placeholder="{{'pec_no' | translate: pecTranslateKey}}">
@@ -199,7 +199,7 @@
                                     <th>Year</th>
                                     <th>Month</th>
                                     <th>Total Employees</th>
-                                    <th>Action</th>
+                                    <th *ngIf="prcRegForm.get('formStatus').value != 'SUBMITTED'">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -214,7 +214,7 @@
                                     <td>{{emp.month | titlecase}}</td>
                                     <td>{{emp.totEmpCount}}</td>
                                     <td class="p-0">
-                                        <button mat-icon-button color="primary" (click)="editEmpModal(template, emp, i)">
+                                        <button mat-icon-button color="primary" (click)="editEmpModal(template, emp, i)" *ngIf="prcRegForm.get('formStatus').value != 'SUBMITTED'">
                                             <mat-icon title="Edit">edit</mat-icon>
                                         </button>
                                         <button *ngIf="!isPRCExist" mat-icon-button color="warn"

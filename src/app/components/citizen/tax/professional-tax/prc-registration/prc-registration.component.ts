@@ -78,6 +78,8 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 
 	pecNumber: string = null;
 
+	isPreviewShow : Boolean = false;
+
 	holdFirstPage: Boolean = false;
 	rupeeSign='(₹)'
 	slabListArray = [];
@@ -158,6 +160,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	}
 
 	forPreview() {
+		this.isPreviewShow = true;
 		this.formService.getFormData(this.serviceFormId).subscribe(res => {
 			this.prcRegForm.patchValue(res);
 			this.prcRegForm.get('rcDate').disable();
@@ -723,67 +726,76 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	 * This method use to open modal and reseting properties
 	 * @param template - Property for accessing template
 	 */
-	openEmpModal(template: TemplateRef<any>) {
+	 openEmpModal(template: TemplateRef<any>) {
 
-		if (!this.prcRegForm.get('pecNo').value) {
-			this.commonService.openAlert("Warning", "PEC is required for PRC registration", "warning");
-			return;
-		}
+        if (!this.prcRegForm.get('pecNo').value) {
+            this.commonService.openAlert("Warning", "PEC is required for PRC registration", "warning");
+            return;
+        }
 
-		if (!this.prcRegForm.get('rcDate').value) {
-			let count = this.config.getAllErrors(this.prcRegForm);
-			this.commonService.openAlert("Warning", "RC date is required", "warning", "", cb => {
-				if (count >= 1 && count <= 25) this.tabIndex = 0;
-			});
-			return;
-		}
+        if (!this.prcRegForm.get('rcDate').value) {
+            let count = this.config.getAllErrors(this.prcRegForm);
+            this.commonService.openAlert("Warning", "RC date is required", "warning", "", cb => {
+                if (count >= 1 && count <= 25) this.tabIndex = 0;
+            });
+            return;
+        }
 
-		if (this.prcRegForm.get('rcDate').invalid) {
-			let count = this.config.getAllErrors(this.prcRegForm);
-			this.commonService.openAlert("Warning", "RC date should not be greater than Commencement date", "warning", "", cb => {
-				if (count >= 1 && count <= 25) this.tabIndex = 0;
-			});
-			return;
-		}
+        if (this.prcRegForm.get('rcDate').invalid) {
+            let count = this.config.getAllErrors(this.prcRegForm);
+            this.commonService.openAlert("Warning", "RC date should not be greater than Commencement date", "warning", "", cb => {
+                if (count >= 1 && count <= 25) this.tabIndex = 0;
+            });
+            return;
+        }
 
-		let rcDate = new Date(this.prcRegForm.get('rcDate').value).getFullYear();
-		this.yearArray = [];
+        let rcDate = new Date(this.prcRegForm.get('rcDate').value).getFullYear();
+        this.yearArray = [];
 
-		if (rcDate < 2008) {
-			rcDate = 2008;
-		}
+        if (rcDate < 2008) {
+            rcDate = 2008;
+        }
 
-		while (rcDate <= new Date().getFullYear()) {
-			this.yearArray.push(rcDate);
-			rcDate++;
-		}
+        while (rcDate <= new Date().getFullYear()) {
+            this.yearArray.push(rcDate);
+            rcDate++;
+        }
 
-		this.empDetailYear = null;
-		this.empDetailMonth = null;
+        this.empDetailYear = null;
+        this.empDetailMonth = null;
 
-		if(this.mode = 'add'){
-			let dateStr = new Date(this.prcRegForm.get('rcDate').value);
-			let obj = {
-				id: null, tempId: this.empSlabId++, year: this.empDetailYear, month: this.empDetailMonth, totEmpCount: 0,totalAmount : 0,
-				formId: null, taxFee: null, slabDetails: _.cloneDeep(this.employeeSlabArr)
-			};
-			const nextIndex = this.empDetailsListArray.length;
-			this.empDetailsListArray.push(obj);
-			this.currentEmployeeIndex = nextIndex;
-			this.empMonthChange( dateStr.getMonth(),this.employeeSlabArr)
-			this.selectedYear = dateStr.getFullYear()
-			for (let i = 0; i < this.employeeSlabArr.length; i++) {
-				this.employeeSlabArr[i].empCount = 0;
-				this.employeeSlabArr[i].totalAmount = 0;
-			}
-		}
+        if(this.mode = 'add'){
+            let dateStr = new Date(this.prcRegForm.get('rcDate').value);
+            const nextIndex = this.empDetailsListArray.length;
+            this.currentEmployeeIndex = nextIndex;
+            this.selectedYear = dateStr.getFullYear()
+            for (let i = 0; i < this.employeeSlabArr.length; i++) {
+                this.employeeSlabArr[i].empCount = 0;
+                this.employeeSlabArr[i].totalAmount = 0;
+                this.employeeSlabArr[i].slab = {
+                    id: null, code: this.employeeSlabArr[i].code, incomeRange: null, taxRate: this.employeeSlabArr[i].taxRate,
+                    isActive: true, validFrom: this.employeeSlabArr[i].validFrom, validTo: this.employeeSlabArr[i].validTo
+                };
+            }
+            let obj = {
+                id: null, tempId: this.empSlabId++, year: this.empDetailYear, month: this.empDetailMonth, totEmpCount: 0,totalAmount : 0,
+                formId: null, taxFee: null, slabDetails: _.cloneDeep(this.employeeSlabArr)
+            };
+            this.empDetailsListArray.push(obj);
+            this.empMonthChange( dateStr.getMonth(),this.employeeSlabArr)
+            this.selectedYear = dateStr.getFullYear()
+            for (let i = 0; i < this.employeeSlabArr.length; i++) {
+                this.employeeSlabArr[i].empCount = 0;
+                this.employeeSlabArr[i].totalAmount = 0;
+            }
+        }
 
-		this.clearModalFields();
+        this.clearModalFields();
 
-		this.modalRef = this.modalService.show(
-			template, Object.assign({}, { class: 'gray modal-lg' }, {ignoreBackdropClick: true})
-		);
-	}
+        this.modalRef = this.modalService.show(
+            template, Object.assign({}, { class: 'gray modal-lg' }, {ignoreBackdropClick: true})
+        );
+    }
 
 	/**
 	 * This method use for reset modal fields
