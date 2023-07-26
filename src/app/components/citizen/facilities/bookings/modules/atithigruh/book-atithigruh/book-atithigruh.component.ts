@@ -107,6 +107,7 @@ export class BookAtithigruhComponent implements OnInit {
 		{sno: 16, atithigruh: 'Chatrapati Shivaji', rent: '8000', administrative_charge: '1000', gst:'1620' ,total_rent: '10620', deposit: '7500',total: '18120'},
 		{sno: 17, atithigruh: 'Diwali Pura', rent: '17000', administrative_charge: '1000', gst:'3240' ,total_rent: '21240', deposit: '20000',total: '41240'},
 		{sno: 18, atithigruh: 'Manjalpur', rent: '20000', administrative_charge: '1000', gst:'3780' ,total_rent: '24780', deposit: '30000',total: '54780'},
+		{sno: 19, atithigruh: 'Makarpura Community Hall', rent: '25000', administrative_charge: '1000', gst:'4680' ,total_rent: '30680', deposit: '30000',total: '60680'}
 	  ];
 
 	  gujratifeeDetails: any [] = [
@@ -128,6 +129,7 @@ export class BookAtithigruhComponent implements OnInit {
 		{sno: '૧૬', atithigruh: 'છત્રપતિ શિવાજી', rent: '૮૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૬૨૦' ,total_rent: '૧૦૬૨૦', deposit: '૭૫૦૦',total: '૧૮૧૨૦'},
 		{sno: '૧૭', atithigruh: 'દિવાળી પુરા', rent: '૧૭૦૦૦', administrative_charge: '૧૦૦૦', gst:'૩૨૪૦' ,total_rent: '૨૧૨૪૦', deposit: '૨૦૦૦૦',total: '૪૧૨૪૦'},
 		{sno: '૧૮', atithigruh: 'માંજલપુર', rent: '૨૦૦૦૦', administrative_charge: '૧૦૦૦', gst:'૩૭૮૦' ,total_rent: '૨૪૭૮૦', deposit: '૩૦૦૦૦',total: '૫૪૭૮૦'},
+		{sno: '૧૯', atithigruh: 'મકરપુરા કોમ્યુનિટી હોલ', rent: '૨૫૦૦૦', administrative_charge: '૧૦૦૦', gst:'૪૬૮૦' ,total_rent: '૩૦૬૮૦', deposit: '૩૦૦૦૦',total: '૬૦૬૮૦'},
 	  ];
 	
 	constructor(

@@ -200,7 +200,7 @@ export class PecRegistrationComponent implements OnInit {
 				code: [null, Validators.required], name: null,
 			}),
 			applicableRate: [{ value: 0, disabled: true }],
-			otherProfession: [null, ValidationService.alphaNumericValidation]
+			otherProfession: [null]
 		});
 		
 		this.commonService.createCloneAbstractControl(this.employerDetail,this.pecRegForm);
@@ -341,7 +341,7 @@ export class PecRegistrationComponent implements OnInit {
 				code: [null, Validators.required], name: null,
 			}),
 			applicableRate: [{ value: 0, disabled: true }],
-			otherProfession: [null, ValidationService.alphaNumericValidation],
+			otherProfession: [null],
 			attachments: [],
 			formStatus: null,
 			officeResidentialAddressSame: null
@@ -517,6 +517,13 @@ export class PecRegistrationComponent implements OnInit {
 		this.actDetail.get('constitution').get('code').setValue(null);
 
 		this.getAllSubEntries(event);
+		if(event == "ENTRY_009" &&event == "ENTRY_010" ){
+			this.actDetail.get('otherProfession').setValidators([Validators.required]);
+			this.actDetail.get('otherProfession').updateValueAndValidity();
+		}else{
+			this.actDetail.get('otherProfession').clearValidators();
+			this.actDetail.get('otherProfession').updateValueAndValidity();
+		}
 	}
 
 	onGstNumber(event) {
@@ -556,7 +563,6 @@ export class PecRegistrationComponent implements OnInit {
 	 * This method is used to submit the PEC registration data
 	 */
 	onSubmit() {
-
 		if (this.pecRegForm.invalid) {
 			let count = this.config.getAllErrors(this.pecRegForm);
 			this.commonService.openAlert("Warning", this.config.ALL_FEILD_REQUIRED_MESSAGE, "warning", "", cb => {

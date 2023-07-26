@@ -159,7 +159,7 @@ getStateLists(country) {
 		if(!this.commonServcie2.fromAdmin()) {
 			this.commonService.getUserProfile().subscribe(res => {
 				const userData = res['data'];
-				if(userData){
+				if(userData && this.model.citizenAddressDTO.addressType != 'PROPERTY_ASSESSMENT'){
 					this.model.firstName = userData.firstName;
 					this.model.lastName = userData.lastName;
 					this.model.middleName = userData.middleName;
