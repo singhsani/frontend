@@ -386,6 +386,7 @@ export class NewRegistrationComponent implements OnInit {
    * This method is used to submit the Vehicle registration data
    */
   onSubmit() {
+    this.vehicleRegistrationForm.get('purchasingType').setValue("NEW_RATE");
     if (this.vehicleRegistrationForm.invalid) {
       let count = this.config.getAllErrors(this.vehicleRegistrationForm);
       this.commonService.openAlert("Warning", this.config.ALL_FEILD_REQUIRED_MESSAGE, "warning", "", cb => {
@@ -616,7 +617,10 @@ export class NewRegistrationComponent implements OnInit {
           res.amountFields.penalty + res.amountFields.vehicleBasicValue + res.amountFields.vehicleTokenFee;
 
         this.taxDetails.get('totalPayable').setValue(totalPayable);
-      });
+      },err=>{
+        this.tabIndex=0;
+      }
+      );
     }
   }
 
