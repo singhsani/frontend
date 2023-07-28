@@ -151,8 +151,7 @@ export class SwimmingPoolComponent implements OnInit {
       this.searchObj.isDisplayRenewLicenceForm = true;
       // this.swimmingPoolRenewal = true;
     }
-
-    if(this.istodaydate.getDay() <= 20 ){
+    if(this.istodaydate.getDate() <= 20 ){
       this.chosenMonthHandler(this.startMinMonth.setMonth(this.startMinMonth.getMonth()));
     }else{
     this.chosenMonthHandler(this.startMinMonth.setMonth(this.startMinMonth.getMonth() + 1));
@@ -776,8 +775,10 @@ export class SwimmingPoolComponent implements OnInit {
         this.showSwimmingPoolForm = true;
         this.isRenewalForm = true;
         this.swimmimgPoolBookingForm.get('isRenewalForm').setValue(true);
+        this.generalDetails.get('birthDate').setValue(res.applicantBirthDate);
+        this.defaultAsperPool();
         // this.swimmimgPoolBookingForm.get('remarks').enable();
-      //  this.filterAsperBatchName(this.generalDetails.get('category').get('code').value);
+        this.filterAsperBatchName(this.generalDetails.get('category').get('code').value);
       }, (error: any) => {
         this.commonService.openAlert("Error", error.error[0].message, "warning")
       })
