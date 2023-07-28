@@ -55,7 +55,7 @@ h1{
         margin-left: auto;  
         margin-right: auto;  
         border-collapse: collapse;    
-        width: 500px
+        width: 570px
      }
 
     .table{
@@ -75,11 +75,6 @@ h1{
        padding: 8px;
    }
   
-.but{
-    margin-right: 200px;
-}
-
-
 .cardBox {
     .pageTitle {
         margin-bottom: 6px;
@@ -102,6 +97,7 @@ h1{
         .titleHeader{
             font-size: 17px;
             color: #900C3F;
+            text-align: center;
         }
         .titleparagraph{
             font-size: 17px;
@@ -143,7 +139,47 @@ h1{
               text-align: center;
             }
        }
-       
+           .swimmingPool-table-guj {
+               margin-left: auto;
+               margin-right: auto;
+               border-collapse: collapse;
+               width: 560px;
+    
+               .table {
+                   th {
+                       border: none;
+                   }
+    
+                   td {
+                       border: none
+                   }
+    
+                   .td1 {
+                       border: none;
+                   }
+               }
+           }
+
+           .swimmingPool-table-eng {
+            margin-left: auto;
+            margin-right: auto;
+            border-collapse: collapse;
+            width: 735px;
+ 
+            .table {
+                th {
+                    border: none;
+                }
+ 
+                td {
+                    border: none
+                }
+ 
+                .td1 {
+                    border: none;
+                }
+            }
+        }
     }
     
 }
