@@ -781,8 +781,18 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
                 id: null, tempId: this.empSlabId++, year: this.empDetailYear, month: this.empDetailMonth, totEmpCount: 0,totalAmount : 0,
                 formId: null, taxFee: null, slabDetails: _.cloneDeep(this.employeeSlabArr)
             };
-            this.empDetailsListArray.push(obj);
-            this.empMonthChange( dateStr.getMonth(),this.employeeSlabArr)
+			const selectedDate = new Date(dateStr)
+			const selectedTaxRateYear = new Date('04-01-2022');
+			const selectMonth = dateStr.getMonth();
+			if(selectedDate >= selectedTaxRateYear ){
+				this.empDetailsListArray.push(obj);
+				this.empDetailsListArray[this.currentEmployeeIndex].slabDetails[2].slab.taxRate = 0;
+				this.empDetailsListArray[this.currentEmployeeIndex].slabDetails[3].slab.taxRate = 0;
+				this.empMonthChange(selectMonth,  this.empDetailsListArray[this.currentEmployeeIndex].slabDetails)
+			}else{
+				this.empDetailsListArray.push(obj);
+				this.empMonthChange(selectMonth, this.employeeSlabArr)
+			 }
             this.selectedYear = dateStr.getFullYear()
             for (let i = 0; i < this.employeeSlabArr.length; i++) {
                 this.employeeSlabArr[i].empCount = 0;
@@ -932,13 +942,19 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 
 					// element.totEmpCount = this.totalEmployees;
 					// element.slabDetails = _.cloneDeep(this.employeeSlabArr);
+					this.empDetailsListArray[this.currentEmployeeIndex].month = this.empDetailMonth;
+					this.empDetailsListArray[this.currentEmployeeIndex].year = this.empDetailYear;
 
 					this.modalRef.hide();
 
 				} else if ((element.id && this.empDetailObj.id) && (element.id == this.empDetailObj.id)) {
 					/** With PRC number search update the list */
-					element.totEmpCount = this.totalEmployees;
-					element.slabDetails = _.cloneDeep(this.employeeSlabArr);
+					this.empDetailsListArray[this.currentEmployeeIndex].totEmpCount = 0;
+					this.empDetailsListArray[this.currentEmployeeIndex].totalAmount = 0;
+						for (let i = 0; i < this.empDetailObj.slabDetails.length; i++) {
+							this.empDetailsListArray[this.currentEmployeeIndex].totEmpCount += Number(this.empDetailObj.slabDetails[i].empCount);
+							this.empDetailsListArray[this.currentEmployeeIndex].totalAmount += Number(this.empDetailObj.slabDetails[i].slab.taxRate) * Number(this.empDetailObj.slabDetails[i].empCount)
+						}
 
 					/*If prc exist then update the summary with single entry*/
 					if (this.isPRCExist) {
@@ -948,6 +964,15 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 								this.modalRef.hide();
 							}
 						});
+					}else{
+						this.empDetailsListArray[this.currentEmployeeIndex].totEmpCount = 0;
+						this.empDetailsListArray[this.currentEmployeeIndex].totalAmount = 0;
+						for (let i = 0; i < this.empDetailObj.slabDetails.length; i++) {
+							this.empDetailsListArray[this.currentEmployeeIndex].totEmpCount += Number(this.empDetailObj.slabDetails[i].empCount);
+							this.empDetailsListArray[this.currentEmployeeIndex].totalAmount += Number(this.empDetailObj.slabDetails[i].slab.taxRate) * Number(this.empDetailObj.slabDetails[i].empCount)
+						}
+						this.toastr.success('Employee detail updated successful');
+						this.modalRef.hide();
 					}
 				}
 			});
