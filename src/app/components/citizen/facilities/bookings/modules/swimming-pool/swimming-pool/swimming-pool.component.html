@@ -342,15 +342,27 @@
 							</control-messages>
 						</div>
 
-						<div class="col-md-4 ngSelect" formGroupName="category">
-							<ng-select placeholder="{{'category' | translate:translateKey}} *" formControlName="code"
-								required (change)="filterAsperCategory($event);generalDetails.get('batchFor').reset();
+						<div class="col-md-4 ngSelect" formGroupName="category" *ngIf="!isCategoryName">
+							<ng-select placeholder="{{'category' | translate:translateKey}} *"
+								formControlName="code" required (change)="filterAsperCategory($event);generalDetails.get('batchFor').reset();
 								generalDetails.get('batchDuration').reset()">
-								<ng-option *ngFor="let cat of CATEGORY" [value]="cat.code">{{cat.name}}</ng-option>
+								<ng-option *ngFor="let cat of CATEGORY" [value]="cat.code">
+									{{cat.name}}</ng-option>
 							</ng-select>
 							<control-messages [control]="generalDetails.get('category').get('code')">
 							</control-messages>
 						</div>
+						<div class="col-md-4 ngSelect" formGroupName="category" *ngIf="isCategoryName ">
+							<ng-select placeholder="{{'category' | translate:translateKey}} *"
+								formControlName="name" required (change)="filterAsperCategory($event);generalDetails.get('batchFor').reset();
+								generalDetails.get('batchDuration').reset()">
+								<ng-option *ngFor="let cat of CATEGORY" [value]="cat.name">
+									{{cat.name}}</ng-option>
+							</ng-select>
+							<control-messages [control]="generalDetails.get('category').get('name')">
+							</control-messages>
+						</div>
+				
 
 						<div class="col-md-4 ngSelect" formGroupName="batchDuration">
 							<ng-select placeholder="{{'batch_duration' | translate:translateKey}} *"
@@ -388,9 +400,9 @@
 							</control-messages>
 						</div>
 
-						<div class="col-md-4 ngSelect" formGroupName="batchName">
-							<ng-select placeholder="{{'batch_name' | translate:translateKey}} *" formControlName="code"
-								 (change)="filterBatch($event)" required>
+						<div class="col-md-4 ngSelect" formGroupName="batchName" *ngIf="!isBatchname">
+							<ng-select placeholder="{{'batch_name' | translate:translateKey}} *"
+								formControlName="code" (change)="filterBatch($event)" required>
 								<ng-option *ngFor="let batchName of BATCH_NAME" [value]="batchName.code">
 									{{batchName.name}}
 								</ng-option>
@@ -398,7 +410,17 @@
 							<control-messages [control]="generalDetails.get('batchName').get('code')">
 							</control-messages>
 						</div>
-					</div>
+						<div class="col-md-4 ngSelect" formGroupName="batchName" *ngIf="isBatchname">
+							<ng-select placeholder="{{'batch_name' | translate:translateKey}} *"
+								formControlName="name" (change)="filterBatch($event)" required>
+								<ng-option *ngFor="let batchName of BATCH_NAME" [value]="batchName.name">
+									{{batchName.name}}
+								</ng-option>
+							</ng-select>
+							<control-messages [control]="generalDetails.get('batchName').get('name')">
+							</control-messages>
+						</div>
+					 </div>
 
 					 <div class="row mt-4 fotButtonBar">
 						<div class="col-sm-12 col-md-12 justify-content-between d-flex">
