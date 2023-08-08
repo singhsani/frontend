@@ -44,6 +44,9 @@ export class SwimmingPoolComponent implements OnInit {
   isLicenseVisibleIdNumber = false;
   isElectionCardIdNumber = false;
   isPassportIdNumber = false;
+  isCategoryName : boolean = false;
+  isBatchname : boolean = false;
+
 
   formId: number;
   apiCode: string;
@@ -774,14 +777,100 @@ export class SwimmingPoolComponent implements OnInit {
         this.showDowlLoadFileTab = false;
         this.showSwimmingPoolForm = true;
         this.isRenewalForm = true;
+        this.isBatchname= true;
+        this.isCategoryName= true;
         this.swimmimgPoolBookingForm.get('isRenewalForm').setValue(true);
         this.generalDetails.get('birthDate').setValue(res.applicantBirthDate);
+        this.CheckTypeRenewal(res.applicantIDProof.code)
+        if(this.istodaydate.getDate() <= 20 ){
+          this.chosenMonthHandler(this.startMinMonth.setMonth(this.startMinMonth.getMonth()));
+        }else{
+        this.chosenMonthHandler(this.startMinMonth.setMonth(this.startMinMonth.getMonth() + 1));
+        }
         this.defaultAsperPool();
         // this.swimmimgPoolBookingForm.get('remarks').enable();
         this.filterAsperBatchName(this.generalDetails.get('category').get('code').value);
+        
       }, (error: any) => {
         this.commonService.openAlert("Error", error.error[0].message, "warning")
       })
+  }
+
+  CheckTypeRenewal(idCode) {
+
+    this.isVisibleIdNumber = false;
+    this.isPanCardVisibleIdNumber = false;
+    if (idCode === 'AADHAAR_CARD') {
+      this.isVisibleIdNumber = true;
+      this.isPanCardVisibleIdNumber = false;
+      this.isLicenseVisibleIdNumber = false;
+      this.isElectionCardIdNumber = false;
+      this.isPassportIdNumber = false;
+      this.isVisibleElectricityBill = false;
+   
+      this.applicantDetail.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.aadharValidation]);
+      this.applicantDetail.controls['applicantIDProofNumber'].updateValueAndValidity();
+    } else if (idCode === 'PAN_CARD') {
+      this.isPanCardVisibleIdNumber = true;
+      this.isVisibleIdNumber = false;
+      this.isLicenseVisibleIdNumber = false;
+      this.isPassportIdNumber = false;
+      this.isElectionCardIdNumber = false;
+      this.isVisibleElectricityBill = false;
+      this.applicantDetail.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.panValidator]);
+      this.applicantDetail.controls['applicantIDProofNumber'].updateValueAndValidity();
+    } else if (idCode === 'DRIVING_LICENSE') {
+      this.isVisibleIdNumber = false;
+      this.isPanCardVisibleIdNumber = false;
+      this.isElectionCardIdNumber = false;
+      this.isPassportIdNumber = false;
+      this.isLicenseVisibleIdNumber = true;
+      this.isVisibleElectricityBill = false;
+      this.applicantDetail.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.drivingLicenseValidator])
+      this.applicantDetail.controls['applicantIDProofNumber'].updateValueAndValidity();
+    }
+    else if (idCode === 'ELECTION_CARD') {
+      this.isVisibleIdNumber = false;
+      this.isPanCardVisibleIdNumber = false;
+      this.isLicenseVisibleIdNumber = false;
+      this.isPassportIdNumber = false;
+      this.isElectionCardIdNumber = true;
+      this.isVisibleElectricityBill = false;
+      this.applicantDetail.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.electionCardValidator])
+      this.applicantDetail.controls['applicantIDProofNumber'].updateValueAndValidity();
+    }
+    else if (idCode === 'PASSPORT') {
+      this.isVisibleIdNumber = false;
+      this.isPanCardVisibleIdNumber = false;
+      this.isLicenseVisibleIdNumber = false;
+      this.isElectionCardIdNumber = false;
+      this.isPassportIdNumber = true;
+      this.isVisibleElectricityBill = false;
+      this.applicantDetail.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.passportValidator])
+      this.applicantDetail.controls['applicantIDProofNumber'].updateValueAndValidity();
+    }
+    else if (idCode === 'ELECTRICITY_BILL') {
+      this.isVisibleIdNumber = false;
+      this.isPanCardVisibleIdNumber = false;
+      this.isLicenseVisibleIdNumber = false;
+      this.isElectionCardIdNumber = false;
+      this.isPassportIdNumber = false;
+      this.isVisibleElectricityBill = true;
+      this.applicantDetail.controls['applicantIDProofNumber'].setValue('');
+      this.applicantDetail.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.electricityBillValidation]);
+      this.applicantDetail.controls['applicantIDProofNumber'].updateValueAndValidity();
+    }
+    else {
+      this.isVisibleIdNumber = false;
+      this.isPanCardVisibleIdNumber = false;
+      this.isLicenseVisibleIdNumber = false;
+      this.isElectionCardIdNumber = false;
+      this.isPassportIdNumber = false;
+      this.applicantDetail.controls['applicantIDProofNumber'].setValue('');
+      this.applicantDetail.controls['applicantIDProofNumber'].setValidators([Validators.required]);
+      this.applicantDetail.controls['applicantIDProofNumber'].updateValueAndValidity();
+    }
+
   }
 
   getNumber(event){
