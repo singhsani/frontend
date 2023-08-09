@@ -295,7 +295,7 @@
 									<mat-form-field class="col-md-6">
 										<input style="margin-top: 15px !important;" matInput autocomplete="off"
 											appMaskCensusNumber maxlength="21" formControlName="census" type="text"
-											required>
+											(focusout)="isExistPropertyNo($event.target.value,i)" required>
 									</mat-form-field>
 								</div>
 							</div>

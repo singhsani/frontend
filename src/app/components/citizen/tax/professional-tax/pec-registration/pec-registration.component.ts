@@ -248,6 +248,20 @@ export class PecRegistrationComponent implements OnInit {
 					mainControl.get(element).setValue(controlName.get(element).value);
 				}
 			});
+			if(mainControl.get('censusNo').value){
+				/*If census is duplicate */
+			var hasDuplicate = false;
+			this.pecRegForm.get('censusNo').value.map(v => v.census).sort().sort((a, b) => {
+				if (a === b) hasDuplicate = true;
+			});
+
+			if (hasDuplicate) {
+				this.commonService.openAlert("Census/Property number should not be repeated", "", "warning");
+				return;
+			}
+			/*If census is duplicate */
+
+		}
 			this.tabIndex = index;
 			if (!this.CanEdit) {
 				setTimeout( function(){ 
@@ -441,22 +455,33 @@ export class PecRegistrationComponent implements OnInit {
 				}
 			}
 		});
-		if (propertyNo)
-			this.profeService.isExistPropertyNoCheck(propertyNo).subscribe(res => {
-				if (res.list) {
-					this.alertService.confirm(res.data[0]);
-					var subConfirm = this.alertService.getConfirm().subscribe(isConfirm => {
-						if (!isConfirm) {
-							this.removeCensus(index);
-						}
-						subConfirm.unsubscribe();
-					});
-				}
-			}, (err) => {
-				if (err.error[0])
-					this.commonService.openAlert("Error", err.error[0].message, "warning");
+		 if (propertyNo){
+			if(propertyNo.length < 16 ){
 				this.removeCensus(index);
-			});
+			}else{
+				this.registrationDetail.get('censusNo').value.forEach(ele =>{
+					if(propertyNo == ele.census ){
+						this.commonService.openAlert("Census/Property number should not be repeated", "", "warning");
+						this.removeCensus(index);
+					}
+				})
+			}
+		 }
+		// 	this.profeService.isExistPropertyNoCheck(propertyNo).subscribe(res => {
+		// 		if (res.list) {
+		// 			this.alertService.confirm(res.data[0]);
+		// 			var subConfirm = this.alertService.getConfirm().subscribe(isConfirm => {
+		// 				if (!isConfirm) {
+		// 					this.removeCensus(index);
+		// 				}
+		// 				subConfirm.unsubscribe();
+		// 			});
+		// 		}
+		// 	}, (err) => {
+		// 		if (err.error[0])
+		// 			this.commonService.openAlert("Error", err.error[0].message, "warning");
+		// 		this.removeCensus(index);
+		// 	});
 	}
 
 	/**
