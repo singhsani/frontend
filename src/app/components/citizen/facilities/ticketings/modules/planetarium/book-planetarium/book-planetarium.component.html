@@ -29,9 +29,10 @@
     </div>
       <mat-card-content class="p-4 mat-card" *ngIf="!showSelectLanguage">
         <img _ngcontent-c1="" width=130 height=130 alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg"
-        class="center">
+        class="center mb-2">
         <h1><b>Instruction Of Planetarium Booking</b></h1>
         <h5 class="pb-2">{{head_lines| translate: translateKey}}</h5><br>
+        <h4 class="text-center"><span class="font-weight-bold">Note : </span>Planetarium tickets will be non-refundable</h4>
         <h2 class="rules-title"><b>{{'rules_and_regulations'| translate: translateKey}}</b></h2>
     <h4>
         <ol class="olList">
@@ -44,14 +45,14 @@
           <li class="listSize">
             Planetarium Show timings:
             <ul>
-              <li class="listSize">Special Show: 1. 03:00 PM to 03:30 PM (Gujarati) 2. 03:00 PM to 03:30 PM (Hindi).</li>
+              <li class="listSize">Special Show: 1. 03:00 PM to 03:30 PM (Gujarati) 2. 03:00 PM to 03:30 PM (Hindi) only for school..</li>
               <li class="listSize">General Show 1. 04:00 PM to 04:30 PM (Gujarati) 2. 05:00 PM to 05:30 PM (Hindi) 3. 06:00 PM to 06:30 PM(Hindi).</li>
             </ul>
           </li>
           <li class="listSize">
             Charge:
             <ul>
-                <h4><li class="listSize"> Special show charge per seat 10 ({{rupeeSign}})</li></h4>
+                <h4><li class="listSize"> Special show charge per seat 10 ({{rupeeSign}}) Only with school approval.</li></h4>
                 <h4><li class="listSize"> General show charge per seat 20 ({{rupeeSign}})</li></h4>
             </ul>
           </li>
@@ -61,9 +62,10 @@
       </mat-card-content>
       <mat-card-content class="p-4 mat-card" *ngIf="showSelectLanguage">
         <img _ngcontent-c1="" width=130 height=130 alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg"
-        class="center">
+        class="center mb-2">
         <h2><b>પ્લેનેટોરિયમ બુકિંગની સૂચના</b></h2>
         <h5 class="pb-2 ">{{gujheadLine| translate: translateKey}}</h5><br>
+        <h4 class="text-center"><span class="font-weight-bold">નૉૅધ : </span>પ્લેનેટોરિયમ ટિકિટ નોન-રિફંડેબલ રહેશે </h4>
         <h2 class="rules-title"><b>{{'rules_and_regulations'| translate: translateKey : 'gu'}}</b></h2>
     <h5>
         <div class="d-flex ">
@@ -81,7 +83,7 @@
           </div>
           <div class="d-flex pl-4 ">
             <p class="pr-4 listSize"> </p>
-            <p class="listSize"> વિશેષ શો: ૧. બપોરે ૩:૦૦ થી ૩:૩૦ (ગુજરાતી),  ૨. બપોરે ૩:૦૦ થી ૩:૩૦ (હિન્દી).</p>
+            <p class="listSize"> વિશેષ શો: ૧. બપોરે ૩:૦૦ થી ૩:૩૦ (ગુજરાતી),  ૨. બપોરે ૩:૦૦ થી ૩:૩૦ (હિન્દી)  માત્ર શાળા માટે.</p>
           </div>
           <div class="d-flex pl-4 ">
             <p class="pr-4 listSize"> </p>
@@ -97,7 +99,7 @@
           </div>
           <div class="d-flex pl-4 ">
             <p class="pr-4 listSize"> </p>
-            <p class="listSize">સીટ દીઠ સામાન્ય શો ચાર્જ ૨૦ (₹) </p>
+            <p class="listSize">સીટ દીઠ સામાન્ય શો ચાર્જ ૨૦ (₹)  માત્ર શાળાના મંજૂરીપત્ર સાથે </p>
           </div>
           <div class="d-flex  ">
             <p class="pr-2 listSize"> ૫.</p>
@@ -120,7 +122,7 @@
              </mat-checkbox>
         </div>
       <div class="col-sm-6 col-md-6 text-right">
-        <button mat-raised-button [disabled]="btnProceed" (click)="guideLineFlag = false;showPlanetariumSearchForm= true;" color="primary">
+        <button mat-raised-button [disabled]="btnProceed"  type="button" (click)="guideLineFlag = false;showPlanetariumSearchForm= true;" color="primary">
           <mat-icon>thumb_up_alt</mat-icon>
           {{'proceed'| translate: translateKey}}
         </button>
