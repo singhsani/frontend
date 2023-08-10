@@ -59,8 +59,8 @@
 					</div>
 
 					<mat-form-field class="col-md-4 ">
-						<input matInput autocomplete="off" #chasisNo [value]="chasisNo.value.toUpperCase()"
-							maxlength="20" type="text" formControlName="chasisNo"
+						<input matInput autocomplete="off" #chasisNo [value]="chasisNo.value"
+							maxlength="25" type="text" formControlName="chasisNo"
 							placeholder="{{'chasis_no' | translate: translateKey}}" required>
 						<control-messages [control]="vehicleDetails.get('chasisNo')"></control-messages>
 					</mat-form-field>
@@ -120,7 +120,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" appDate [matDatepicker]="picker" [max]="maxDate"
-							[min]="minDate" formControlName="purchaseDate" (dateChange)="onDateChange($event.value)"
+							 formControlName="purchaseDate" (dateChange)="onDateChange($event.value)"
 							placeholder="{{'purchase_date' | translate: translateKey}} (DD/MM/YYYY)" required>
 						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #picker></mat-datepicker>
@@ -163,21 +163,18 @@
 				<div class="row stepperMinHeight">
 
 					<mat-form-field class="col-md-4">
-						<input appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" matInput
-							autocomplete="off" maxlength="100" type="text" formControlName="firstName"
+						<input  matInput #firstName [value]="firstName" autocomplete="off" maxlength="100" type="text" formControlName="firstName"
 							placeholder="{{'first_name' | translate: translateKey}}" required>
 						<control-messages [control]="ownerDetails.get('firstName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" matInput
-							autocomplete="off" maxlength="100" type="text" formControlName="middleName"
+						<input #middleName [value]="middleName" matInput autocomplete="off" maxlength="100" type="text" formControlName="middleName"
 							placeholder="{{'middle_name' | translate: translateKey}}">
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" matInput
-							autocomplete="off" maxlength="100" type="text" formControlName="lastName"
+						<input #lastName [value]="lastName" matInput autocomplete="off" maxlength="100" type="text" formControlName="lastName"
 							placeholder="{{'last_name' | translate: translateKey}}" required>
 						<control-messages [control]="ownerDetails.get('lastName')"></control-messages>
 					</mat-form-field>

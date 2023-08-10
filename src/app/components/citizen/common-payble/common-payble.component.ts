@@ -72,6 +72,8 @@ export class CommonPaybleComponent implements OnInit {
   isShowPropertySearchForm: boolean = false;
   propertyModelSub: Subscription;
   rupeeSign='(₹)'
+  isVehileTax : boolean = false;
+  uniqueId: any;
 
   constructor(
     private formService: FormsActionsService,
@@ -187,7 +189,7 @@ export class CommonPaybleComponent implements OnInit {
 
     let obj = {
       payableServiceType: updatePayableServiceType,
-      refNumber: payData.refNumber,
+      refNumber: updatePayableServiceType == 'VEHICLE' ?  this.uniqueId : payData.refNumber,
       amount: updateAmount,
       paymentMode: "NETBANKING",
       returnUrl: retUrl,
@@ -527,7 +529,15 @@ export class CommonPaybleComponent implements OnInit {
     }
 
     this.formService.getCitizenForm(resData).subscribe(data => {
-      this.inputData = data.data;
+      if( serviceType == 'VEHICLE'){
+        this.isVehileTax = true;
+        this.inputData = data.data;
+        this.paymentsForm.get('amount').setValue(this.inputData[0].amount);
+        this.paymentsForm.get('refNumber').setValue(this.inputData[0].fileNumber);
+        this.uniqueId = this.inputData[0].uniqueId;
+      }else{
+        this.inputData = data.data;
+      }
       console.log('input data', this.inputData);
     }, error => {
       console.log(error)
@@ -586,7 +596,7 @@ export class CommonPaybleComponent implements OnInit {
     );
   }
 
-  setPayableServices(code) {
+  setPayableServices(code) { 
     const filteredModules = this.userServicesList.filter(module => module.code === code);
     if (filteredModules.length > 0) {
       if (filteredModules[0].code == 'PROFESSIONAL') {

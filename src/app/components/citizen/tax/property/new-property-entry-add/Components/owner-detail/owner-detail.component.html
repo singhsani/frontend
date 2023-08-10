@@ -22,10 +22,10 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="ngSelect" style="min-width: 100%;">
-                        <ng-select required placeholder="{{'title' | translate:translateKey }} *" [items]="titleList"
+                        <ng-select required placeholder="{{'title' | translate:translateKey }}" [items]="titleList"
                             bindValue="itemId" bindLabel="itemName" name="titleId" [(ngModel)]="ownerModel.titleId"
                             #TitleId="ngModel"
-                            [ngClass]="{'ng-invalid ng-touched':  formOwner.submitted && TitleId.invalid}">
+                            [ngClass]="{'ng-invalid ng-touched':  formOwner.submitted && TitleId.invalid}" class="asteriskmarkRequired">
                         </ng-select>
                         <div *ngIf="(formOwner.submitted && TitleId.invalid)  || (TitleId.invalid && TitleId.touched)">
                             <mat-error *ngIf="TitleId.errors.required">*Title is required.</mat-error>
@@ -84,7 +84,7 @@
                 <div class="col-md-2">
                     <div class="ngSelect">
                         <ng-select [(ngModel)]="ownerModel.isPrimaryOwner" name="isPrimaryOwner" required
-                            placeholder="{{'is_primary_owner' | translate:translateKey }}*" #PrimaryOwner="ngModel">
+                            placeholder="{{'is_primary_owner' | translate:translateKey }}" #PrimaryOwner="ngModel" class="asteriskmarkRequired">
                             <ng-option [value]="true">Yes</ng-option>
                             <ng-option [value]="false">No</ng-option>
                         </ng-select>
@@ -184,11 +184,11 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="ngSelect">
-                    <ng-select required placeholder="{{'property_type' | translate:translateKey }} *" [items]="propertyTypeList"
+                    <ng-select required placeholder="{{'property_type' | translate:translateKey }}" [items]="propertyTypeList"
                         bindValue="propertyTypeId" bindLabel="propertyType" name="propertyTypeMstId"
                         [(ngModel)]="propertyModel.propertyTypeMstId" #PropertyTypeMstId="ngModel"
                         (ngModelChange)="onChangedPropertyType($event)"
-                        [ngClass]="{'ng-invalid ng-touched':  form.submitted && PropertyTypeMstId.invalid}">
+                        [ngClass]="{'ng-invalid ng-touched':  form.submitted && PropertyTypeMstId.invalid}" class="asteriskmarkRequired">
                     </ng-select>
                     <div
                         *ngIf="(form.submitted && PropertyTypeMstId.invalid)  || (PropertyTypeMstId.invalid && PropertyTypeMstId.touched)">
@@ -199,10 +199,10 @@
             </div>
             <div class="col-md-6">
                 <div class="ngSelect">
-                    <ng-select required placeholder="{{'property_sub_type' | translate:translateKey }}*" [items]="propertySubTypeList"
+                    <ng-select required placeholder="{{'property_sub_type' | translate:translateKey }}" [items]="propertySubTypeList"
                         bindValue="subPropertyTypeId" bindLabel="subPropertyType" name="subPropertyTypeMstId"
                         [(ngModel)]="propertyModel.subPropertyTypeMstId" #PropertySubType="ngModel"
-                        [ngClass]="{'ng-invalid ng-touched':  form.submitted && PropertySubType.invalid}">
+                        [ngClass]="{'ng-invalid ng-touched':  form.submitted && PropertySubType.invalid}" class="asteriskmarkRequired">
                     </ng-select>
                     <div
                         *ngIf="(form.submitted && PropertySubType.invalid)  || (PropertySubType.invalid && PropertySubType.touched)">
@@ -215,10 +215,10 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="ngSelect">
-                    <ng-select required placeholder="{{'with_in_water_zone' | translate:translateKey }}*" [items]="waterZoneList" bindValue="itemId"
+                    <ng-select required placeholder="{{'with_in_water_zone' | translate:translateKey }}" [items]="waterZoneList" bindValue="itemId"
                         bindLabel="itemName" name="waterZoneLookupId" [(ngModel)]="propertyModel.waterZoneLookupId"
                         #WaterZone="ngModel"
-                        [ngClass]="{'ng-invalid ng-touched':  form.submitted && WaterZone.invalid}">
+                        [ngClass]="{'ng-invalid ng-touched':  form.submitted && WaterZone.invalid}" class="asteriskmarkRequired">
                     </ng-select>
                     <div *ngIf="(form.submitted && WaterZone.invalid)  || (WaterZone.invalid && WaterZone.touched)">
                         <mat-error *ngIf="WaterZone.errors.required">*Within Water Zone is required.</mat-error>
@@ -228,10 +228,10 @@
             </div>
             <div class="col-md-3">
                 <div class="ngSelect">
-                    <ng-select required placeholder="{{'is_building_high_rise' | translate:translateKey }}?*" [items]="highLowRiseList"
+                    <ng-select required placeholder="{{'is_building_high_rise' | translate:translateKey }}?" [items]="highLowRiseList"
                         bindValue="itemId" bindLabel="itemName" name="highRiseLowRiseLookupId"
                         [(ngModel)]="propertyModel.highRiseLowRiseLookupId" #BuildingHighRises="ngModel"
-                        [ngClass]="{'ng-invalid ng-touched':  form.submitted && BuildingHighRises.invalid}">
+                        [ngClass]="{'ng-invalid ng-touched':  form.submitted && BuildingHighRises.invalid}" class="asteriskmarkRequired">
                     </ng-select>
                     <div
                         *ngIf="(form.submitted && BuildingHighRises.invalid)  || (BuildingHighRises.invalid && BuildingHighRises.touched)">
@@ -244,10 +244,10 @@
                 <div class="row">
                     <div class="col-md-10">
                         <div class="ngSelect mat-horizontal-content-container">
-                            <ng-select required placeholder="{{'class_of_location' | translate:translateKey }}*" [items]="landClassList"
+                            <ng-select required placeholder="{{'class_of_location' | translate:translateKey }}" [items]="landClassList"
                                 bindValue="locationFactorId" bindLabel="locationName" name="locationFactorMstId"
                                 [(ngModel)]="propertyModel.locationFactorMstId" #LandClass="ngModel"
-                                [ngClass]="{'ng-invalid ng-touched':  form.submitted && LandClass.invalid}">
+                                [ngClass]="{'ng-invalid ng-touched':  form.submitted && LandClass.invalid}" class="asteriskmarkRequired">
                             </ng-select>
                             <div
                                 *ngIf="(form.submitted && LandClass.invalid)  || (LandClass.invalid && LandClass.touched)">

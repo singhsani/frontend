@@ -78,8 +78,24 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 
 	pecNumber: string = null;
 
+	isPreviewShow : Boolean = false;
+
 	holdFirstPage: Boolean = false;
 	rupeeSign='(₹)'
+	slabListArray = [];
+	totalAmount : number = 0;
+	UP_TO_3000 = 'UP_TO_3000'
+	FROM_3000_TO_5999 = 'FROM_3000_TO_5999'
+	FROM_6000_TO_8999 = 'FROM_6000_TO_8999'
+	FROM_9000_TO_12000 = 'FROM_9000_TO_12000'
+	ABOVE_12000 = 'ABOVE_12000'
+	employeeSelectedYear = '';
+	employeeSelectedMonth : any;
+	selectedYear : any;
+	totalCount : number = 0;
+	currentEmployeeIndex = 0;
+	prcNumber : string;
+	oldEmpObject : any;
 
 	constructor(
 		private fb: FormBuilder,
@@ -110,7 +126,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 		this.getAllConstitution();
 		this.getAllProfessionConst();
 		this.getAllWardNos();
-
+		this.getAllSlabMaster()
 		this.searchInput.focus();
 	}
 
@@ -144,6 +160,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	}
 
 	forPreview() {
+		this.isPreviewShow = true;
 		this.formService.getFormData(this.serviceFormId).subscribe(res => {
 			this.prcRegForm.patchValue(res);
 			this.prcRegForm.get('rcDate').disable();
@@ -346,6 +363,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 						
 				for (let i = 0; i < this.employeeSlabArr.length; i++) {
 					this.employeeSlabArr[i].empCount = 0;
+					this.employeeSlabArr[i].totalAmount = 0;
 					this.employeeSlabArr[i].slab = {
 						id: null, code: this.employeeSlabArr[i].code, incomeRange: null, taxRate: this.employeeSlabArr[i].taxRate,
 						isActive: true, validFrom: this.employeeSlabArr[i].validFrom, validTo: this.employeeSlabArr[i].validTo
@@ -680,61 +698,114 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	/**
 	 * This method id used to calculate total number of employees from the table
 	 */
-	employeeCount() {
-		this.totalEmployees = 0;
-		for (let i = 0; i < this.employeeSlabArr.length; i++) {
-			this.totalEmployees += Number(this.employeeSlabArr[i].empCount);
-		}
+	employeeCount(employee,from,index) {
+			if(from === 'fromTs'){
+				employee.slabDetails.forEach(ele => {
+					ele.empCount = ele.empCount
+					ele.totalAmount = Number(ele.slab.taxRate) * Number(ele.empCount)
+				})
+				this.empDetailsListArray[this.currentEmployeeIndex].totEmpCount = 0;
+				this.empDetailsListArray[this.currentEmployeeIndex].totalAmount = 0;
+				for (let i = 0; i < employee.slabDetails.length; i++) {
+					this.empDetailsListArray[this.currentEmployeeIndex].totEmpCount += Number(employee.slabDetails[i].empCount);
+					this.empDetailsListArray[this.currentEmployeeIndex].totalAmount += Number(employee.slabDetails[i].slab.taxRate) * Number(employee.slabDetails[i].empCount)
+				}
+			}else{
+				employee.totalAmount = Number(employee.slab.taxRate) * Number(employee.empCount)
+				this.empDetailsListArray[this.currentEmployeeIndex].totEmpCount = 0;
+				this.empDetailsListArray[this.currentEmployeeIndex].totalAmount = 0;
+				this.empDetailsListArray[this.currentEmployeeIndex].slabDetails.forEach(element =>{
+					this.empDetailsListArray[this.currentEmployeeIndex].totEmpCount += Number(element.empCount);
+					this.empDetailsListArray[this.currentEmployeeIndex].totalAmount += Number(element.totalAmount);
+				})
+				//this.employeeSlabArr = this.empDetailsListArray[this.currentEmployeeIndex]
+			}
 	}
 
 	/**
 	 * This method use to open modal and reseting properties
 	 * @param template - Property for accessing template
 	 */
-	openEmpModal(template: TemplateRef<any>) {
+	 openEmpModal(template: TemplateRef<any>) {
 
-		if (!this.prcRegForm.get('pecNo').value) {
-			this.commonService.openAlert("Warning", "PEC is required for PRC registration", "warning");
-			return;
-		}
+        if (!this.prcRegForm.get('pecNo').value) {
+            this.commonService.openAlert("Warning", "PEC is required for PRC registration", "warning");
+            return;
+        }
 
-		if (!this.prcRegForm.get('rcDate').value) {
-			let count = this.config.getAllErrors(this.prcRegForm);
-			this.commonService.openAlert("Warning", "RC date is required", "warning", "", cb => {
-				if (count >= 1 && count <= 25) this.tabIndex = 0;
-			});
-			return;
-		}
+        if (!this.prcRegForm.get('rcDate').value) {
+            let count = this.config.getAllErrors(this.prcRegForm);
+            this.commonService.openAlert("Warning", "RC date is required", "warning", "", cb => {
+                if (count >= 1 && count <= 25) this.tabIndex = 0;
+            });
+            return;
+        }
 
-		if (this.prcRegForm.get('rcDate').invalid) {
-			let count = this.config.getAllErrors(this.prcRegForm);
-			this.commonService.openAlert("Warning", "RC date should not be greater than Commencement date", "warning", "", cb => {
-				if (count >= 1 && count <= 25) this.tabIndex = 0;
-			});
-			return;
-		}
+        if (this.prcRegForm.get('rcDate').invalid) {
+            let count = this.config.getAllErrors(this.prcRegForm);
+            this.commonService.openAlert("Warning", "RC date should not be greater than Commencement date", "warning", "", cb => {
+                if (count >= 1 && count <= 25) this.tabIndex = 0;
+            });
+            return;
+        }
 
-		let rcDate = new Date(this.prcRegForm.get('rcDate').value).getFullYear();
-		this.yearArray = [];
+        let rcDate = new Date(this.prcRegForm.get('rcDate').value).getFullYear();
+        this.yearArray = [];
 
-		if (rcDate < 2008) {
-			rcDate = 2008;
-		}
+        if (rcDate < 2008) {
+            rcDate = 2008;
+        }
 
-		while (rcDate <= new Date().getFullYear()) {
-			this.yearArray.push(rcDate);
-			rcDate++;
-		}
+        while (rcDate <= new Date().getFullYear()) {
+            this.yearArray.push(rcDate);
+            rcDate++;
+        }
 
-		this.empDetailYear = null;
-		this.empDetailMonth = null;
+        this.empDetailYear = null;
+        this.empDetailMonth = null;
 
-		this.clearModalFields();
+        if(this.mode = 'add'){
+            let dateStr = new Date(this.prcRegForm.get('rcDate').value);
+            const nextIndex = this.empDetailsListArray.length;
+            this.currentEmployeeIndex = nextIndex;
+            this.selectedYear = dateStr.getFullYear()
+            for (let i = 0; i < this.employeeSlabArr.length; i++) {
+                this.employeeSlabArr[i].empCount = 0;
+                this.employeeSlabArr[i].totalAmount = 0;
+                this.employeeSlabArr[i].slab = {
+                    id: null, code: this.employeeSlabArr[i].code, incomeRange: null, taxRate: this.employeeSlabArr[i].taxRate,
+                    isActive: true, validFrom: this.employeeSlabArr[i].validFrom, validTo: this.employeeSlabArr[i].validTo
+                };
+            }
+            let obj = {
+                id: null, tempId: this.empSlabId++, year: this.empDetailYear, month: this.empDetailMonth, totEmpCount: 0,totalAmount : 0,
+                formId: null, taxFee: null, slabDetails: _.cloneDeep(this.employeeSlabArr)
+            };
+			const selectedDate = new Date(dateStr)
+			const selectedTaxRateYear = new Date('04-01-2022');
+			const selectMonth = dateStr.getMonth();
+			if(selectedDate >= selectedTaxRateYear ){
+				this.empDetailsListArray.push(obj);
+				this.empDetailsListArray[this.currentEmployeeIndex].slabDetails[2].slab.taxRate = 0;
+				this.empDetailsListArray[this.currentEmployeeIndex].slabDetails[3].slab.taxRate = 0;
+				this.empMonthChange(selectMonth,  this.empDetailsListArray[this.currentEmployeeIndex].slabDetails)
+			}else{
+				this.empDetailsListArray.push(obj);
+				this.empMonthChange(selectMonth, this.employeeSlabArr)
+			 }
+            this.selectedYear = dateStr.getFullYear()
+            for (let i = 0; i < this.employeeSlabArr.length; i++) {
+                this.employeeSlabArr[i].empCount = 0;
+                this.employeeSlabArr[i].totalAmount = 0;
+            }
+        }
 
-		this.modalRef = this.modalService.show(
-			template, Object.assign({}, { class: 'gray modal-lg' })
-		);
-	}
+        this.clearModalFields();
+
+        this.modalRef = this.modalService.show(
+            template, Object.assign({}, { class: 'gray modal-lg' }, {ignoreBackdropClick: true})
+        );
+    }
 
 	/**
 	 * This method use for reset modal fields
@@ -772,10 +843,12 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 			this.monthIdx = dateStr.getMonth();
 			this.currentMonthIdx = dateStr.getFullYear() == new Date().getFullYear() ? (new Date().getMonth() + 1) : 12;
 		}
-
-		for (let i = 0; i < this.employeeSlabArr.length; i++) {
-			this.employeeSlabArr[i].empCount = '';
-		}
+		// this.empMonthChange( dateStr.getMonth())
+		// this.selectedYear = dateStr.getFullYear()
+		// for (let i = 0; i < this.employeeSlabArr.length; i++) {
+		// 	this.employeeSlabArr[i].empCount = 0;
+		// 	this.employeeSlabArr[i].totalAmount = 0;
+		// }
 	}
 
 	/**
@@ -783,7 +856,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	 * @param template - Property for accessing template
 	 * @param obj - Get exsting object 
 	 */
-	editEmpModal(template: TemplateRef<any>, obj) {
+	editEmpModal(template: TemplateRef<any>, obj,index) {
 
 		if (!this.prcRegForm.get('rcDate').value) {
 			let count = this.config.getAllErrors(this.prcRegForm);
@@ -800,10 +873,14 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 		this.totalEmployees = obj.totEmpCount;
 		this.empDetailMonth = obj.month;
 		this.empDetailYear = obj.year;
-		this.employeeSlabArr = _.cloneDeep(obj.slabDetails);
-
+		this.selectedYear = this.empDetailYear;
+		this.currentEmployeeIndex = index;
+        this.oldEmpObject = _.cloneDeep(obj);
+		this.empMonthChange(obj.month,obj.slabDetails)
+	    //this.employeeSlabArr = _.cloneDeep(obj.slabDetails);
+	    this.employeeCount(obj,"fromTs",0)
 		this.modalRef = this.modalService.show(
-			template, Object.assign({}, { class: 'gray modal-lg' })
+			template, Object.assign({}, { class: 'gray modal-lg' }, {ignoreBackdropClick: true})
 		);
 	}
 
@@ -829,28 +906,30 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 		if (this.mode === 'add') {
 
 			/*set slabDetails object*/
-			for (let i = 0; i < this.employeeSlabArr.length; i++) {
-				this.employeeSlabArr[i].empCount = this.employeeSlabArr[i].empCount == '' ? 0 : Number(this.employeeSlabArr[i].empCount)
-				this.employeeSlabArr[i].slab = {
-					id: null, code: this.employeeSlabArr[i].code, incomeRange: null, taxRate: this.employeeSlabArr[i].taxRate,
-					isActive: true, validFrom: this.employeeSlabArr[i].validFrom, validTo: this.employeeSlabArr[i].validTo
-				};
-			}
+			// for (let i = 0; i < this.employeeSlabArr.length; i++) {
+			// 	this.employeeSlabArr[i].empCount = this.employeeSlabArr[i].empCount == '' ? 0 : Number(this.employeeSlabArr[i].empCount)
+			// 	this.employeeSlabArr[i].slab = {
+			// 		id: null, code: this.employeeSlabArr[i].code, incomeRange: null, taxRate: this.employeeSlabArr[i].taxRate,
+			// 		isActive: true, validFrom: this.employeeSlabArr[i].validFrom, validTo: this.employeeSlabArr[i].validTo
+			// 	};
+			// }
 
 			/*set outer object*/
-			let obj = {
-				id: null, tempId: this.empSlabId++, year: this.empDetailYear, month: this.empDetailMonth, totEmpCount: this.totalEmployees,
-				formId: null, taxFee: null, slabDetails: _.cloneDeep(this.employeeSlabArr)
-			};
+			// let obj = {
+			// 	id: null, tempId: this.empSlabId++, year: this.empDetailYear, month: this.empDetailMonth, totEmpCount: this.totalEmployees,
+			// 	formId: null, taxFee: null, slabDetails: _.cloneDeep(this.employeeSlabArr)
+			// };
 
 			/* Check if selected month and year is already present in array or not */
 			let isMonthAndYearExist = 0;
-			isMonthAndYearExist = _.findIndex(this.empDetailsListArray, (arr) => { return arr.month == obj.month && arr.year == obj.year; });
+			isMonthAndYearExist = _.findIndex(this.empDetailsListArray, (arr) => { return arr.month == this.empDetailMonth && arr.year == this.empDetailYear; });
 
 			if (isMonthAndYearExist >= 0) {
-				this.toastr.warning(`Record for ${_.capitalize(obj.month)} ${obj.year} is already exist`);
+				this.toastr.warning(`Record for ${_.capitalize(this.empDetailMonth)} ${this.empDetailYear} is already exist`);
 			} else {
-				this.empDetailsListArray.push(obj);
+				this.empDetailsListArray[this.currentEmployeeIndex].month = this.empDetailMonth;
+				this.empDetailsListArray[this.currentEmployeeIndex].year = this.empDetailYear;
+				this.modalRef.hide();
 			}
 
 			this.empDetailsListArray = _.orderBy(this.empDetailsListArray, ['year', (el) => (this.monthArray.indexOf(el.month))], ["asc", "asc"]);
@@ -861,15 +940,21 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 				/** Without PRC number search update the list */
 				if ((element.tempId && this.empDetailObj.tempId) && (element.tempId == this.empDetailObj.tempId)) {
 
-					element.totEmpCount = this.totalEmployees;
-					element.slabDetails = _.cloneDeep(this.employeeSlabArr);
+					// element.totEmpCount = this.totalEmployees;
+					// element.slabDetails = _.cloneDeep(this.employeeSlabArr);
+					this.empDetailsListArray[this.currentEmployeeIndex].month = this.empDetailMonth;
+					this.empDetailsListArray[this.currentEmployeeIndex].year = this.empDetailYear;
 
 					this.modalRef.hide();
 
 				} else if ((element.id && this.empDetailObj.id) && (element.id == this.empDetailObj.id)) {
 					/** With PRC number search update the list */
-					element.totEmpCount = this.totalEmployees;
-					element.slabDetails = _.cloneDeep(this.employeeSlabArr);
+					this.empDetailsListArray[this.currentEmployeeIndex].totEmpCount = 0;
+					this.empDetailsListArray[this.currentEmployeeIndex].totalAmount = 0;
+						for (let i = 0; i < this.empDetailObj.slabDetails.length; i++) {
+							this.empDetailsListArray[this.currentEmployeeIndex].totEmpCount += Number(this.empDetailObj.slabDetails[i].empCount);
+							this.empDetailsListArray[this.currentEmployeeIndex].totalAmount += Number(this.empDetailObj.slabDetails[i].slab.taxRate) * Number(this.empDetailObj.slabDetails[i].empCount)
+						}
 
 					/*If prc exist then update the summary with single entry*/
 					if (this.isPRCExist) {
@@ -879,6 +964,15 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 								this.modalRef.hide();
 							}
 						});
+					}else{
+						this.empDetailsListArray[this.currentEmployeeIndex].totEmpCount = 0;
+						this.empDetailsListArray[this.currentEmployeeIndex].totalAmount = 0;
+						for (let i = 0; i < this.empDetailObj.slabDetails.length; i++) {
+							this.empDetailsListArray[this.currentEmployeeIndex].totEmpCount += Number(this.empDetailObj.slabDetails[i].empCount);
+							this.empDetailsListArray[this.currentEmployeeIndex].totalAmount += Number(this.empDetailObj.slabDetails[i].slab.taxRate) * Number(this.empDetailObj.slabDetails[i].empCount)
+						}
+						this.toastr.success('Employee detail updated successful');
+						this.modalRef.hide();
 					}
 				}
 			});
@@ -935,6 +1029,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	 * @param event - Selected year
 	 */
 	empYearChange(event) {
+		this.selectedYear = event
 		this.empDetailMonth = null;
 		if (event === (new Date).getFullYear()) {
 			/** If the selected year will be same with current year*/
@@ -973,4 +1068,131 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 		}
 	}
 
-}
+	getAllSlabMaster() {
+        this.profeService.getAllSlabMaster().subscribe(res => {
+            this.slabListArray = res;
+        });
+    }
+
+
+	empMonthChange(event,slabArray){
+		this.employeeSelectedMonth = new Date(`${event} 1, 2022`).getMonth() + 1;
+		this.employeeSelectedYear = this.selectedYear;
+
+		if(this.employeeSelectedYear && this.employeeSelectedMonth){
+			const selectedDate = this.employeeSelectedYear + '-' + this.employeeSelectedMonth + '-' + '01';
+			let date = new Date(selectedDate)
+			for (let i = 0; i < this.slabListArray.length; i++) {
+				const ele = this.slabListArray[i];
+				let validFromDate = new Date(ele.validFrom)
+				let validToDate = ele.validTo != null ? new Date(ele.validTo) : null
+				if(ele.code == this.UP_TO_3000){					
+					if(date > validFromDate && (validToDate != null ? date < validToDate : true)){
+						// console.log(this.UP_TO_3000 + '--' + ele.taxRate);
+						for (let j = 0; j < slabArray.length; j++) {
+							const element = slabArray[j]
+							if(element.code == this.UP_TO_3000){
+							element.slab.taxRate = ele.taxRate;
+							if(this.mode === 'add'){
+								element.empCount = 0;
+							}
+							element.totalAmount = 0;
+							}
+						}
+					}	
+				}
+			}
+			for (let i = 0; i < this.slabListArray.length; i++) {
+				const ele = this.slabListArray[i];
+				let validFromDate = new Date(ele.validFrom)
+				let validToDate = ele.validTo != null ? new Date(ele.validTo) : null
+				if(ele.code == this.FROM_3000_TO_5999){
+					if(date > validFromDate && (validToDate != null ? date < validToDate : true)){
+						//console.log(this.FROM_3000_TO_5999 + '--' + ele.taxRate);
+						for (let j = 0; j < slabArray.length; j++) {
+							const element = slabArray[j]
+							if(element.code == this.FROM_3000_TO_5999){
+								element.slab.taxRate  = ele.taxRate;
+								if(this.mode === 'add'){
+									element.empCount = 0;
+								}
+								element.totalAmount = 0;
+							}
+						}
+					}	
+				}
+			}
+			for (let i = 0; i < this.slabListArray.length; i++) {
+				const ele = this.slabListArray[i];
+				let validFromDate = new Date(ele.validFrom)
+				let validToDate = ele.validTo != null ? new Date(ele.validTo) : null
+				if(ele.code == this.FROM_6000_TO_8999){
+					if(date > validFromDate && (validToDate != null ? date < validToDate : true)){
+						//console.log(this.FROM_6000_TO_8999 + '--' + ele.taxRate);
+						for (let j = 0; j < slabArray.length; j++) {
+							const element = slabArray[j]
+							if(element.code == this.FROM_6000_TO_8999){
+								element.slab.taxRate  = ele.taxRate;
+								if(this.mode === 'add'){
+									element.empCount = 0;
+								}
+								element.totalAmount = 0;
+							}
+						}
+					}	
+				}
+			}
+			for (let i = 0; i < this.slabListArray.length; i++) {
+				const ele = this.slabListArray[i];
+				let validFromDate = new Date(ele.validFrom)
+				let validToDate = ele.validTo != null ? new Date(ele.validTo) : null
+				if(ele.code == this.FROM_9000_TO_12000){
+					if(date > validFromDate && (validToDate != null ? date < validToDate : true)){
+						//console.log(this.FROM_9000_TO_12000 + '--' + ele.taxRate);
+						for (let j = 0; j < slabArray.length; j++) {
+							const element = slabArray[j]
+							if(element.code == this.FROM_9000_TO_12000){
+								element.slab.taxRate  = ele.taxRate;
+								if(this.mode === 'add'){
+									element.empCount = 0;
+								}
+								element.totalAmount = 0;
+							}
+						}
+					}	
+				}
+			}
+			for (let i = 0; i < this.slabListArray.length; i++) {
+				const ele = this.slabListArray[i];
+				let validFromDate = new Date(ele.validFrom)
+				let validToDate = ele.validTo != null ? new Date(ele.validTo) : null
+				if(ele.code == this.ABOVE_12000){
+					if(date > validFromDate && (validToDate != null ? date < validToDate : true)){
+						//console.log(this.ABOVE_12000 + '--' + ele.taxRate);
+						for (let j = 0; j < slabArray.length; j++) {
+							const element = slabArray[j]
+							if(element.code == this.ABOVE_12000){
+								element.slab.taxRate  = ele.taxRate;
+								if(this.mode === 'add'){
+									element.empCount = 0;
+								}
+								element.totalAmount = 0;
+							}
+						}
+					}	
+				}
+			}
+
+		}
+	}
+	
+	onClosePopup(){
+		if(this.mode == 'add'){
+			this.empDetailsListArray.splice(this.currentEmployeeIndex, 1);
+		}else if(this.mode == 'edit'){
+			this.empDetailsListArray[this.currentEmployeeIndex] = _.cloneDeep(this.oldEmpObject);
+		}
+		this.modalRef.hide();
+	}
+	}
+

@@ -464,11 +464,11 @@
 			<!-- step 3 end -->
 
 			<!-- step 4 Attachment Starts -->
-			<mat-tab disabled>
+			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
-				<form [formGroup]="animalPondNewForm"> 
+				<form [formGroup]="attachmentDetail"> 
 				<div class="row">
 					<div class="col-md-4"
 					
@@ -485,7 +485,7 @@
 
 				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray"
  [form]="animalPondNewForm"
-					(handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onFormTabChange($event) "
+					(handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onFormTabChange($event,attachmentDetail,animalPondNewForm ) "
 					[stepInfo]="{step: 'final', next:4, back:2} "></app-action-bar>
 				</form>
 			</mat-tab>

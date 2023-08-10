@@ -3,7 +3,7 @@
 </app-title-bar>
 
 <form class="searchBox">
-    <div class="pecNumber">
+    <div class="pecNumber" [hidden]="isPreviewShow">
     <mat-form-field>
         <input matInput autocomplete="off" class="capitalCase" trim="blur" appAlphaNumeric maxlength="12" #ecrcNoTextBox
             #searchInput="matInput" type="text" placeholder="{{'pec_no' | translate: pecTranslateKey}}">
@@ -199,7 +199,7 @@
                                     <th>Year</th>
                                     <th>Month</th>
                                     <th>Total Employees</th>
-                                    <th>Action</th>
+                                    <th *ngIf="prcRegForm.get('formStatus').value != 'SUBMITTED'">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -214,7 +214,7 @@
                                     <td>{{emp.month | titlecase}}</td>
                                     <td>{{emp.totEmpCount}}</td>
                                     <td class="p-0">
-                                        <button mat-icon-button color="primary" (click)="editEmpModal(template, emp)">
+                                        <button mat-icon-button color="primary" (click)="editEmpModal(template, emp, i)" *ngIf="prcRegForm.get('formStatus').value != 'SUBMITTED'">
                                             <mat-icon title="Edit">edit</mat-icon>
                                         </button>
                                         <button *ngIf="!isPRCExist" mat-icon-button color="warn"
@@ -247,7 +247,7 @@
 
     <div class="modal-header">
         <h4 class="modal-title pull-left">Employees Detail</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="onClosePopup()">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -265,7 +265,7 @@
 
                 <div class="col-md-6 asteriskmarkRequired">
                     <ng-select [disabled]="isEmpEditable" placeholder="{{'month' | translate: translateKey}} "
-                        [(ngModel)]="empDetailMonth">
+                        [(ngModel)]="empDetailMonth" (change)="empMonthChange($event, empDetailsListArray[currentEmployeeIndex].slabDetails)">
                         <ng-option *ngFor="let month of monthArray | slice:monthIdx:currentMonthIdx " [value]="month">
                             {{month | titlecase}}</ng-option>
                     </ng-select>
@@ -278,33 +278,40 @@
                 <thead>
                     <tr>
                         <th>Sr.No.</th>
-                        <th>Sub Entry Description</th>
-                        <th>No. Of Employee</th>
+						<th>Sub Entry Description</th>
+						<th>Tax Rate</th>
+						<th>No. Of Employee</th>
+						<th>Amount</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let emp of employeeSlabArr; let i=index;">
+                    <tr *ngFor="let emp of empDetailsListArray[currentEmployeeIndex].slabDetails; let i=index;">
                         <td>{{i+1}}</td>
                         <td>{{emp.name}} {{rupeeSign}}</td>
+                        <td>{{emp.slab.taxRate}}</td>
                         <td>
                             <input OnlyNumber type="text" maxlength="8" [(ngModel)]="emp.empCount"
-                                (keyup)="employeeCount()">
+                                (keyup)="employeeCount(emp,'fromHtml',i)">
                         </td>
+                        <td>{{emp.totalAmount}}</td>
                     </tr>
 
                     <tr>
-                        <td></td>
-                        <td class="text-right">
-                            <b>Total Employee</b>
-                        </td>
-                        <td>{{totalEmployees}}</td>
-                    </tr>
+						<td></td>
+						<td></td>
+						<td><b>Total Employee </b></td>
+						<td>
+							<p >{{empDetailsListArray[currentEmployeeIndex].totEmpCount}}
+							<span class="count"><b>Total Amount :</b></span></p>
+						</td>
+						<td>{{empDetailsListArray[currentEmployeeIndex].totalAmount}}</td>
+					</tr>
                 </tbody>
             </table>
         </mat-card>
     </div>
     <div class="modal-footer">
-        <button type="button" mat-raised-button color="warn" (click)="modalRef.hide()">{{'close' |
+        <button type="button" mat-raised-button color="warn" (click)="onClosePopup()">{{'close' |
             translate:actionBarKey}}</button>
         <button mat-raised-button color="success" [disabled]="!(empDetailMonth && empDetailYear)"
             (click)="onSubmitEmpDetails()">{{'save' | translate:actionBarKey}}</button>

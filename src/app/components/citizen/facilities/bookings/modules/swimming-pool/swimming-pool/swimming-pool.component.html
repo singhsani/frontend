@@ -44,8 +44,10 @@
 	<mat-card-content class="footer_container" *ngIf="!showSelectLanguage">
 		<div class="head_container">
 		<img _ngcontent-c1=""  alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg" class="center img">
-
-		<div class="table-center">
+        <div class="department-name">
+			<h4 class="text-center"><b>{{'department_name'| translate: translateKey}}</b></h4>
+		</div>
+		<div class="swimmingPool-table-eng">
 			<table class="table mt-2">
 				<thead>
 					<th colspan="4"><b>Contact Details</b></th>
@@ -61,31 +63,31 @@
 						<td>3.</td>
 						<td>Lalbaug Swimming Pool: (0265) 2651575</td>
 						<td>4.</td>
-						<td>RajivGandhi Swimming Pool: (0265) 2516760</td>
+						<td>Rajiv Gandhi Swimming Pool: (0265) 2516760</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-			<h4 class="titleHeader"> <b>Read all the rules swimming pool-wise before click on proceed, once you click on
-					proceed we consider your acceptance of the rules and regulations.</b></h4>
+		<h4 class="titleHeader"> <b>Read all the rules swimming pool-wise before click on proceed, </b></h4>
+		<h4 class="titleHeader"> <b>once you click on proceed we consider your acceptance of the rules and regulations.</b></h4>
 			<br>
 
 			 <div class="table-center">
 				<table class="table">
 					<thead>
-						<th colspan="4"><b>Swimming Pool Entry Rules and Applicable Fees</b></th>
+						<th colspan="4"><b>Details of Swimming Pool Entry Rules-Conditions and Fees</b></th>
 					</thead>
 					<tbody>
 						<tr>
 							<td class="td swimmingPoolFees">
-								<h5 class="mx-2"><b> {{'swimming_pool_entry_rules' | translate: translateKey}}:<br>
+								<h5 class="mx-2"><b> {{'swimming_pool_entry_rules' | translate: translateKey}}<br>
 										<button mat-button (click)="downloadGuidLineDocumemnt('Swimming_Pool_Entry_Rules')"
 											color="primary">Download</button></b>
 								</h5>
 							</td>
 		
 							<td class="td swimmingPoolFees">
-								<h5 class="mx-2"> <b>{{'swimming_pool_applicable_fees' | translate: translateKey}}:<br>
+								<h5 class="mx-2"> <b>{{'swimming_pool_applicable_fees' | translate: translateKey}}<br>
 										<button mat-button (click)="downloadGuidLineDocumemnt('Swimming_Pool_Applicable_Fees')"
 											color="primary">Download</button></b>
 								</h5>
@@ -105,21 +107,21 @@
 				<tbody>
 					<tr>
 						<td class="td">
-							<h5><b> {{'doctor_fitness_certificate' | translate: translateKey}}:
+							<h5 class="smallFont"><b> {{'doctor_fitness_certificate' | translate: translateKey}}<br>
 									<button mat-button (click)="downloadGuidLineDocumemnt('Fitness_Certi_Final_')" color="primary"
-										style="margin-right: 106px;">Download</button></b>
+					     >Download</button></b>
 							</h5>
 						</td>
 			
 						<td class="td">
-							<h5 class="smallFont"> <b>{{'sammati_patra-10-18_yrs_main_pool' | translate: translateKey}}:<br>
+							<h5 class="smallFont"> <b>{{'sammati_patra-10-18_yrs_main_pool' | translate: translateKey}}<br>
 									<button mat-button (click)="downloadGuidLineDocumemnt('Sammati_Patra_0-18_Yrs_Main_Pool')"
 										color="primary">Download</button></b>
 							</h5>
 						</td>
 			
 						<td class="td">
-							<h5><b> {{'sammati_patra-05-12-yrs_baby_pool' | translate: translateKey}}:
+							<h5 class="smallFont"><b> {{'sammati_patra-05-12-yrs_baby_pool' | translate: translateKey}} <br>
 									<button mat-button (click)="downloadGuidLineDocumemnt('Sammati_Patra_05-12_Yrs_BABY_POOL')"
 										color="primary">Download</button></b>
 							</h5>
@@ -127,21 +129,21 @@
 					</tr>
 					<tr>
 						<td class="td">
-							<h5><b> {{'student_concession' | translate: translateKey}}:
+							<h5 class="smallFont"><b> {{'student_concession' | translate: translateKey}} <br>
 									<button mat-button (click)="downloadGuidLineDocumemnt('Student_Concession')" color="primary"
 										class="but">Download</button></b>
 							</h5>
 						</td>
 			
 						<td class="td">
-							<h5> <b>{{'vmc_employee_concession' | translate: translateKey}}:
+							<h5 class="smallFont"> <b>{{'vmc_employee_concession' | translate: translateKey}} <br>
 									<button mat-button (click)="downloadGuidLineDocumemnt('VMC_Employee_Concession')"
 										color="primary" class="but">Download</button></b>
 							</h5>
 						</td>
 			
 						<td class="td">
-							<h5><b> {{'test_receipt' | translate: translateKey}}:
+							<h5 class="smallFont"><b> {{'test_receipt' | translate: translateKey}}<br>
 									<button mat-button (click)="downloadGuidLineDocumemnt('Test_Receipt__Final_')" color="primary"
 										class="but">Download</button></b>
 							</h5>
@@ -158,10 +160,13 @@
 		<div class="head_container">
 			<img _ngcontent-c1="" alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg"
 				class="center img">
-				<div class="table-center">
+				<div class="department-name">
+					<h4 class="text-center"><b>{{'department_name'| translate: translateKey : 'gu'}}</b></h4>
+				</div>
+				<div class="swimmingPool-table-guj">
 					<table class="table mt-2">
 						<thead>
-							<th colspan="4">સંપર્ક વિગતો</th>
+							<th colspan="4">સ્વીમીંગ વિગતો</th>
 						</thead>
 						<tbody>
 							<tr colspan="4">
@@ -174,25 +179,25 @@
 								<td>૩.</td>
 								<td>લાલબાગ સ્વિમિંગ પૂલ: (૦૨૬૫) ૨૬૫૧૫૭૫ </td>
 								<td>૪.</td>
-								<td>Rરાજીવ ગાંધી સ્વિમિંગ પૂલ: (૦૨૬૫) ૨૫૧૬૭૬૦</td>
+								<td>રાજીવ ગાંધી સ્વિમિંગ પૂલ: (૦૨૬૫) ૨૫૧૬૭૬૦</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-			<h4 class="titleparagraph"> <b>"પ્રોસેસ" પર ક્લિક કરતા પહેલા સ્વિમિંગ પૂલ મુજબના તમામ નિયમો વાંચો, એકવાર તમે
-					"પ્રોસેસ" પર ક્લિક કરો પછી અમે નિયમો અને નિયમોની તમારી સ્વીકૃતિને ધ્યાનમાં લઈશું.</b></h4>
+				<h4 class="titleparagraph"> <b>"પ્રોસેસ" પર ક્લિક કરતા પહેલા સ્વિમિંગ પૂલ મુજબના તમામ નિયમો વાંચો, </b></h4>
+				<h4 class="titleparagraph"> <b>એકવાર તમે "પ્રોસેસ" પર ક્લિક કરો પછી અમે નિયમો અને નિયમોની તમારી સ્વીકૃતિને ધ્યાનમાં લઈશું.</b></h4>
 			<br>
 			<div class="table-center">
 				<table class="table">
 					<thead>
 						<th colspan="4">
-							<b>સ્વિમિંગ પૂલ પ્રવેશ નિયમો અને લાગુ ફી</b>
+							<b>સ્વીમીંગપુલ પ્રવેશ નિયમો-શરતો અને ફી ની વિગત</b>
 						</th>
 					</thead>
 					<tbody>
 						<tr>
 							<td class="td swimmingPoolFees">
-								<h5 class="mx-2"><b> {{'swimming_pool_entry_rules' | translate: translateKey :'gu'}}:<br>
+								<h5 class="mx-2"><b> {{'swimming_pool_entry_rules' | translate: translateKey :'gu'}}<br>
 										<button mat-button (click)="downloadGuidLineDocumemnt('Swimming_Pool_Entry_Rules')"
 											color="primary">Download</button></b>
 								</h5>
@@ -200,7 +205,7 @@
 			
 							<td class="td swimmingPoolFees">
 								<h5 class="mx-2"> <b>{{'swimming_pool_applicable_fees' | translate: translateKey
-										:'gu'}}:<br>
+										:'gu'}}<br>
 										<button mat-button (click)="downloadGuidLineDocumemnt('Swimming_Pool_Applicable_Fees')"
 											color="primary">Download</button></b>
 								</h5>
@@ -211,7 +216,7 @@
 			</div>
 			<br>
 			
-			<table class="table mt-5">
+			<table class="table">
 				<thead>
 					<th colspan="4">
 						<b>એપ્લિકેશન માટે ડાઉનલોડ કરવાની જરૂર છે</b>
@@ -220,14 +225,14 @@
 				<tbody>
 					<tr>
 						<td class="td">
-							<h5><b> {{'doctor_fitness_certificate' | translate: translateKey : 'gu'}}: <br>
+							<h5  class="smallFont"><b> {{'doctor_fitness_certificate' | translate: translateKey : 'gu'}}<br>
 									<button mat-button (click)="downloadGuidLineDocumemnt('Fitness_Certi_Final_')"
 										color="primary">Download</button></b>
 							</h5>
 						</td>
 
 						<td class="td">
-							<h5> <b>{{'sammati_patra-10-18_yrs_main_pool' | translate: translateKey : 'gu'}}: <br>
+							<h5  class="smallFont"> <b>{{'sammati_patra-10-18_yrs_main_pool' | translate: translateKey : 'gu'}}<br>
 									<button mat-button
 										(click)="downloadGuidLineDocumemnt('Sammati_Patra_0-18_Yrs_Main_Pool')"
 										color="primary">Download</button></b>
@@ -235,7 +240,7 @@
 						</td>
 
 						<td class="td">
-							<h5><b> {{'sammati_patra-05-12-yrs_baby_pool' | translate: translateKey : 'gu'}}: <br>
+							<h5  class="smallFont"><b> {{'sammati_patra-05-12-yrs_baby_pool' | translate: translateKey : 'gu'}} <br>
 									<button mat-button
 										(click)="downloadGuidLineDocumemnt('Sammati_Patra_05-12_Yrs_BABY_POOL')"
 										color="primary">Download</button></b>
@@ -244,21 +249,21 @@
 					</tr>
 					<tr>
 						<td class="td">
-							<h5><b> {{'student_concession' | translate: translateKey :'gu'}}: <br>
+							<h5 class="smallFont"><b> {{'student_concession' | translate: translateKey :'gu'}} <br>
 									<button mat-button (click)="downloadGuidLineDocumemnt('Student_Concession')"
 										color="primary" class="but">Download</button></b>
 							</h5>
 						</td>
 
 						<td class="td">
-							<h5> <b>{{'vmc_employee_concession' | translate: translateKey : 'gu'}}: <br>
+							<h5 class="smallFont"> <b>{{'vmc_employee_concession' | translate: translateKey : 'gu'}}<br>
 									<button mat-button (click)="downloadGuidLineDocumemnt('VMC_Employee_Concession')"
 										color="primary" class="but">Download</button></b>
 							</h5>
 						</td>
 
 						<td class="td">
-							<h5><b> {{'test_receipt' | translate: translateKey : 'gu'}}: <br>
+							<h5 class="smallFont"><b> {{'test_receipt' | translate: translateKey : 'gu'}}<br>
 									<button mat-button (click)="downloadGuidLineDocumemnt('Test_Receipt__Final_')"
 										color="primary" class="but">Download</button></b>
 							</h5>
@@ -274,12 +279,12 @@
 	<div class="fotButtonBar mt-0">
 		<div class="row px-4 checkbox">
 			<div class="col-sm-6 col-md-6 " *ngIf="showSelectLanguage">
-				<mat-checkbox labelPosition="after" (change)="termsConditionClick($event)">
+				<mat-checkbox labelPosition="after" (change)="termsConditionClick($event)" class="swimming-style">
 					<span class="listSize font-weight-bold">{{'મેં માર્ગદર્શિકા/નિયમો અને શરતો વાંચી છે અને સંમત છું.'}}</span>
 				</mat-checkbox>
 			</div>
 			<div class="col-sm-6 col-md-6 " *ngIf="!showSelectLanguage">
-				<mat-checkbox labelPosition="after" (change)="termsConditionClick($event)">
+				<mat-checkbox labelPosition="after" (change)="termsConditionClick($event)" class="swimming-style">
 					<span class="listSize font-weight-bold">{{'I have read and agree with terms and conditions.'}}</span>
 				</mat-checkbox>
 			</div>
@@ -337,15 +342,27 @@
 							</control-messages>
 						</div>
 
-						<div class="col-md-4 ngSelect" formGroupName="category">
-							<ng-select placeholder="{{'category' | translate:translateKey}} *" formControlName="code"
-								required (change)="filterAsperCategory($event);generalDetails.get('batchFor').reset();
+						<div class="col-md-4 ngSelect" formGroupName="category" *ngIf="!isCategoryName">
+							<ng-select placeholder="{{'category' | translate:translateKey}} *"
+								formControlName="code" required (change)="filterAsperCategory($event);generalDetails.get('batchFor').reset();
 								generalDetails.get('batchDuration').reset()">
-								<ng-option *ngFor="let cat of CATEGORY" [value]="cat.code">{{cat.name}}</ng-option>
+								<ng-option *ngFor="let cat of CATEGORY" [value]="cat.code">
+									{{cat.name}}</ng-option>
 							</ng-select>
 							<control-messages [control]="generalDetails.get('category').get('code')">
 							</control-messages>
 						</div>
+						<div class="col-md-4 ngSelect" formGroupName="category" *ngIf="isCategoryName ">
+							<ng-select placeholder="{{'category' | translate:translateKey}} *"
+								formControlName="name" required (change)="filterAsperCategory($event);generalDetails.get('batchFor').reset();
+								generalDetails.get('batchDuration').reset()">
+								<ng-option *ngFor="let cat of CATEGORY" [value]="cat.name">
+									{{cat.name}}</ng-option>
+							</ng-select>
+							<control-messages [control]="generalDetails.get('category').get('name')">
+							</control-messages>
+						</div>
+				
 
 						<div class="col-md-4 ngSelect" formGroupName="batchDuration">
 							<ng-select placeholder="{{'batch_duration' | translate:translateKey}} *"
@@ -367,6 +384,8 @@
 							<mat-datepicker #birthDatedatepicker touchUi="true"></mat-datepicker>
 							<div align="end" class="default-show-hint mat-hint mat-right">
 								{{config.DATE_HINT_MSG}}</div>
+								<control-messages [control]="generalDetails.get('birthDate')">
+								</control-messages>
 						</mat-form-field>
 
 
@@ -381,9 +400,9 @@
 							</control-messages>
 						</div>
 
-						<div class="col-md-4 ngSelect" formGroupName="batchName">
-							<ng-select placeholder="{{'batch_name' | translate:translateKey}} *" formControlName="code"
-								 (change)="filterBatch($event)" required>
+						<div class="col-md-4 ngSelect" formGroupName="batchName" *ngIf="!isBatchname">
+							<ng-select placeholder="{{'batch_name' | translate:translateKey}} *"
+								formControlName="code" (change)="filterBatch($event)" required>
 								<ng-option *ngFor="let batchName of BATCH_NAME" [value]="batchName.code">
 									{{batchName.name}}
 								</ng-option>
@@ -391,7 +410,17 @@
 							<control-messages [control]="generalDetails.get('batchName').get('code')">
 							</control-messages>
 						</div>
-					</div>
+						<div class="col-md-4 ngSelect" formGroupName="batchName" *ngIf="isBatchname">
+							<ng-select placeholder="{{'batch_name' | translate:translateKey}} *"
+								formControlName="name" (change)="filterBatch($event)" required>
+								<ng-option *ngFor="let batchName of BATCH_NAME" [value]="batchName.name">
+									{{batchName.name}}
+								</ng-option>
+							</ng-select>
+							<control-messages [control]="generalDetails.get('batchName').get('name')">
+							</control-messages>
+						</div>
+					 </div>
 
 					 <div class="row mt-4 fotButtonBar">
 						<div class="col-sm-12 col-md-12 justify-content-between d-flex">
@@ -595,10 +624,10 @@
 					</ng-template>
 					<!-- <div class="row"> -->
 
-					<h2>
+					<!-- <h2>
 						{{'bank_details' | translate:translateKey}}
 					</h2>
-					<bank-details [form]="swimmimgPoolBookingForm"></bank-details>
+					<bank-details [form]="swimmimgPoolBookingForm"></bank-details> -->
 					<!-- <h2>
                             {{'terms_and_conditions' | translate:translateKey }}
                         </h2>
@@ -627,7 +656,7 @@
 								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'photo',resourceType:'SWIMMING_POOL'}">
 								</booking-file-upload>
 							</div>
-							<div class="col-md-4">
+							<!-- <div class="col-md-4">
 								<label labelPosition="after">{{'gazettate_officer_letter' | translate:translateKey}} *
 								</label>
 								<booking-file-upload (uploaded)="isFileUploaded2 = $event" [attachments]="attachments"
@@ -636,7 +665,7 @@
 								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'gazettate_officer_letter',resourceType:'SWIMMING_POOL'}">
 								</booking-file-upload>
 
-							</div>
+							</div> -->
 							<div *ngIf="isApplicateAgeGreaterThanEighteen" class="col-md-4">
 								<label labelPosition="after">{{'parents_or_gauardians_permission_letter' |
 									translate:translateKey}} *
@@ -669,7 +698,7 @@
 								</booking-file-upload>
 							</div>
 
-							<div *ngIf="isSwimmingTestReportShow" class="col-md-4">
+							<!-- <div *ngIf="isSwimmingTestReportShow" class="col-md-4">
 								<label labelPosition="after">{{'swimming_test_report' |
 									translate:translateKey}} *
 								</label>
@@ -679,7 +708,7 @@
 							swimmimgPoolBookingForm.get('refNumber').value, variableName: 'swimming_test_report'}"
 									[attachments]="attachments">
 								</booking-file-upload>
-							</div>
+							</div> -->
 
 							<div class="col-md-4">
 								<label labelPosition="after">{{'other_documents' |

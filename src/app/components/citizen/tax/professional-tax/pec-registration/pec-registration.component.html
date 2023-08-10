@@ -65,7 +65,7 @@
 
 					<mat-form-field class="col-md-4" [class.disabled]="isFieldDisabled()">
 						<mat-label>{{'establishment_name' | translate: translateKey}} <span class="required-field" *ngIf="isFieldDisabled()"></span></mat-label>
-						<input matInput appValidationFields validationFieldsType="onlyNameWithSpace" autocomplete="off"
+						<input matInput #establishmentName [value]="establishmentName.value" autocomplete="off"
 							maxlength="100" type="text" formControlName="establishmentName" required [disabled]="isFieldDisabled()">
 						<control-messages [control]="employerDetail.get('establishmentName')"></control-messages>
 					</mat-form-field>
@@ -249,11 +249,11 @@
 						</div>
 					</div>
 
-					<mat-form-field class="col-md-6" [class.disabled]="isFieldDisabled()">
-						<mat-label>{{'shop_and_license_no' | translate: translateKey}} <span class="required-field" *ngIf="isFieldDisabled()"></span> </mat-label>
-						<input matInput autocomplete="off" maxlength="20" appAlphaNumeric
-							formControlName="shopAndLicenseNo" type="text" required [disabled]="isFieldDisabled()">
-						<control-messages [control]="registrationDetail.get('shopAndLicenseNo')"></control-messages>
+					<mat-form-field class="col-md-6" >
+						<mat-label>{{'shop_and_license_no' | translate: translateKey}} </mat-label>
+						<input matInput autocomplete="off" maxlength="50" appAlphaNumeric
+							formControlName="shopAndLicenseNo" type="text" >
+						<!-- <control-messages [control]="registrationDetail.get('shopAndLicenseNo')"></control-messages>-->
 					</mat-form-field>
 
 					<!-- <mat-form-field class="col-md-6">
@@ -295,7 +295,7 @@
 									<mat-form-field class="col-md-6">
 										<input style="margin-top: 15px !important;" matInput autocomplete="off"
 											appMaskCensusNumber maxlength="21" formControlName="census" type="text"
-											required>
+											(focusout)="isExistPropertyNo($event.target.value,i)" required>
 									</mat-form-field>
 								</div>
 							</div>
@@ -419,7 +419,6 @@
 					<mat-form-field class="col-md-4"
 						*ngIf="actDetail.get('professionConstitution.code').value == 'OTHER'">
 						<input matInput autocomplete="off" maxlength="100" formControlName="otherProfession" type="text"
-							appValidationFields validationFieldsType="appAlphanumericNumberWithSpace"
 							placeholder="{{'other_profession' | translate: translateKey}}" required>
 						<control-messages [control]="actDetail.get('otherProfession')"></control-messages>
 					</mat-form-field>
@@ -440,6 +439,11 @@
 				<ng-template mat-tab-label>
 					<div>{{'attachment' | translate: proTranslateKey}}</div>
 				</ng-template>
+				<div class="alert alert-warning">
+					{{'Note' | translate:translateKey}} :
+					{{'File size more than 2 MB not allowed; Upload only JPG,PNG JPEG and PDF file.' |
+					translate:translateKey}}
+				</div>
 <form [formGroup]="pecRegForm">
 				<div class="row">
 					<div class="col-md-4" *ngFor="let doc of attachmentList">

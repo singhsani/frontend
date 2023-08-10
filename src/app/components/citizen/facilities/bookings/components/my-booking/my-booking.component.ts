@@ -107,7 +107,6 @@ export class MyBookingComponent implements OnInit {
 			{ type: 'townhall', name: 'Townhall' },
 			{ type: 'stadium', name: 'Stadium' },
 			{ type: 'amphiTheater', name: 'Amphi Theatre' },
-			{ type: 'guesthouse', name: 'Guest House' },
 			{ type: 'childrenTheater', name: 'Children Theatre' },
 			{ type: 'shootingPermission', name: 'Shooting Permission' },
 			{ type: 'swimming', name: 'Swimming Pool' },
@@ -640,7 +639,7 @@ export class MyBookingComponent implements OnInit {
 			if ((element.resourceType === "STADIUM" && element.payableServiceType !== 'STADIUM_DEPOSIT')) {
 				return true;
 			} else if (element.resourceType === "CHILDREN_THEATER") {
-				return false;
+				return true;
 			} else {
 				return false;
 			}
@@ -884,7 +883,7 @@ export class MyBookingComponent implements OnInit {
 	}
 	showTownhallDepositReceiptBtn(element) {
 		if ((element.resourceType == 'TOWNHALL' && element.userType != 'Citizen')
-			&& (element.status == this.bookingConstant.BOOKED || element.status == this.bookingConstant.COMPLETED || element.status == this.bookingConstant.CANCELLATION_REQUEST || element.status == this.bookingConstant.REFUND_REQUEST || element.status == this.bookingConstant.CANCELLATION_APPROVED)) {
+			&& (element.status == this.bookingConstant.BOOKED || element.status == this.bookingConstant.COMPLETED || element.status == this.bookingConstant.CANCELLATION_REQUEST || element.status == this.bookingConstant.REFUND_REQUEST || element.status == this.bookingConstant.CANCELLATION_APPROVED) && (element.depositReceiptNo!=null)) {
 			return true;
 		} else {
 			return false;

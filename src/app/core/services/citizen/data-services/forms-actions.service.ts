@@ -387,6 +387,9 @@ export class FormsActionsService {
 	saveTaxPaymentDetails(data) {
 				return this.http.post(`api/professional/taxPayment`, data);
 	}
+	saveVehicleTaxPaymentDetails(data) {
+		return this.http.post(`api/vehicle/taxPayment`, data);
+}
 
 
 

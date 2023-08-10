@@ -119,7 +119,9 @@ export class Constants {
         Property_On_VMC_Address: 'HEARING_ON_VMC_ADDRESS',
         Property_Defaulter_Type:'PROPERTY_DEFAULTER_TYPE',
         Property_sub_Reason_For_Creation: 'SUB_REASON_FOR_CREATION',
-        OCCUPIER_CODE: "OCCUPIER_CODE"
+        OCCUPIER_CODE: "OCCUPIER_CODE",
+        OCCUPIER_TYPE: "OCCUPIER_TYPE",
+        OCCUPIER_SUB_TYPE: "OCCUPIER_SUB_TYPE"
     };
 
     static ItemCodes = {

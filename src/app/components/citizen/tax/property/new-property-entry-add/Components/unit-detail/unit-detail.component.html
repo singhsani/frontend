@@ -96,11 +96,11 @@
                         </div>
                         <div class="col-md-6">
                             <div class="ngSelect">
-                                <ng-select required placeholder="{{'floor_no' | translate:translateKey }} *" [items]="floorList" bindValue="itemId"
+                                <ng-select required placeholder="{{'floor_no' | translate:translateKey }} " [items]="floorList" bindValue="itemId"
                                     bindLabel="itemName" name="floorNoLookupId"
                                     [(ngModel)]="unitDetailModel.floorNoLookupId" #FloorNoLookupId="ngModel"
                                     (ngModelChange)="checkDuplicateUnitNo($event);"
-                                    [ngClass]="{'ng-invalid ng-touched':  form.submitted && FloorNoLookupId.invalid}">
+                                    [ngClass]="{'ng-invalid ng-touched':  form.submitted && FloorNoLookupId.invalid}" class="asteriskmarkRequired">
                                 </ng-select>
                                 <div
                                     *ngIf="(form.submitted && FloorNoLookupId.invalid)  || (FloorNoLookupId.invalid && FloorNoLookupId.touched)">
@@ -113,23 +113,23 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="ngSelect">
-                                <ng-select required placeholder="{{'usage' | translate:translateKey }} *" [items]="usageList" bindValue="usageId"
+                                <ng-select required placeholder="{{'usage' | translate:translateKey }}" [items]="usageList" bindValue="usageId"
                                     bindLabel="usageName" name="usageMstId" [(ngModel)]="unitDetailModel.usageMstId"
                                     #UsageMstId="ngModel" (ngModelChange)="onChangedUsage($event);"
-                                    [ngClass]="{'ng-invalid ng-touched':  form.submitted && UsageMstId.invalid}">
+                                    [ngClass]="{'ng-invalid ng-touched':  form.submitted && UsageMstId.invalid}" class="asteriskmarkRequired">
                                 </ng-select>
                                 <div
-                                    *ngIf="(form.submitted && UsageMstId.invalid)  || (UsageMstId.invalid && UsageMstId.touched)">
+                                    *ngIf="(form.submitted && UsageMstId.invalid)  || (UsageMstId.invalid && UsageMstId.touched)" >
                                     <mat-error *ngIf="UsageMstId.errors.required">*Usage is required.</mat-error>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="ngSelect">
-                                <ng-select required placeholder="{{'sub_usage' | translate:translateKey }} *" [items]="subUsageList"
+                                <ng-select required placeholder="{{'sub_usage' | translate:translateKey }}" [items]="subUsageList"
                                     bindValue="subUsageId" bindLabel="subUsage" name="subUsageMstId"
                                     [(ngModel)]="unitDetailModel.subUsageMstId" #SubUsageMstId="ngModel"
-                                    [ngClass]="{'ng-invalid ng-touched':  form.submitted && SubUsageMstId.invalid}">
+                                    [ngClass]="{'ng-invalid ng-touched':  form.submitted && SubUsageMstId.invalid}" class="asteriskmarkRequired">
                                 </ng-select>
                                 <div
                                     *ngIf="(form.submitted && SubUsageMstId.invalid)  || (SubUsageMstId.invalid && SubUsageMstId.touched)">
@@ -173,10 +173,10 @@
                         </div>
                         <div class="col-md-6">
                             <div class="ngSelect">
-                                <ng-select required placeholder="{{'occupancy_status' | translate:translateKey }} *" [items]="occupancyTypeList"
+                                <ng-select required placeholder="{{'occupancy_status' | translate:translateKey }} " [items]="occupancyTypeList"
                                     bindValue="occypancyTypeId" bindLabel="occypancyType" name="occupancyFactorMstId"
                                     [(ngModel)]="unitDetailModel.occupancyFactorMstId" #OccupancyFactorMstId="ngModel"
-                                    [ngClass]="{'ng-invalid ng-touched':  form.submitted && OccupancyFactorMstId.invalid}">
+                                    [ngClass]="{'ng-invalid ng-touched':  form.submitted && OccupancyFactorMstId.invalid}" class="asteriskmarkRequired">
                                 </ng-select>
                                 <div
                                     *ngIf="(form.submitted && OccupancyFactorMstId.invalid)  || (OccupancyFactorMstId.invalid && OccupancyFactorMstId.touched)">
@@ -189,11 +189,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="ngSelect">
-                                <ng-select required placeholder="{{'has_khalkuva_connection' | translate:translateKey }}?*"
+                                <ng-select required placeholder="{{'has_khalkuva_connection' | translate:translateKey }}?"
                                     [items]="khalkuvaConnectionList" bindValue="itemId" bindLabel="itemName"
                                     name="hasKhalkuvaConnection" [(ngModel)]="unitDetailModel.hasKhalkuvaConnection"
                                     #HasKhalkuvaConnection="ngModel"
-                                    [ngClass]="{'ng-invalid ng-touched':  form.submitted && HasKhalkuvaConnection.invalid}">
+                                    [ngClass]="{'ng-invalid ng-touched':  form.submitted && HasKhalkuvaConnection.invalid}" class="asteriskmarkRequired">
                                 </ng-select>
                                 <div
                                     *ngIf="(form.submitted && HasKhalkuvaConnection.invalid)  || (HasKhalkuvaConnection.invalid && HasKhalkuvaConnection.touched)">

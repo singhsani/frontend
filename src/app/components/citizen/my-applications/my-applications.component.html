@@ -325,7 +325,7 @@
 
                         <mat-menu #menuTax="matMenu">
                             <button mat-menu-item
-                                *ngIf="row.fileStatus === 'PAYMENT_RECEIVED' || (row.fileStatus === 'APPROVED' && row.serviceType !='PROPERTY_ASSESSMENT' && row.serviceType !='TRANSFER_OF_PROPERTY' )
+                                *ngIf="row.fileStatus === 'PAYMENT_RECEIVED' || (row.fileStatus === 'APPROVED' && row.serviceType !='PROPERTY_ASSESSMENT' && row.serviceType !='TRANSFER_OF_PROPERTY' && row.serviceType != 'VACANT_PREMISES_CERTIFICATE')
                                 || (row.serviceType === 'WTR_NEW_WATER_CONNECTION' && row.fileStatus === 'SUBMITTED' && row.newgenStatus === 'SUBMIT_AFTER_SCRUTINY' ) || (row.fileStatus === 'SUBMITTED' && row.isReceiptGenerated) "
                                 color="primary"
                                 (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
@@ -700,10 +700,12 @@
                                 {{'print_receipt' | translate:translateKey}}
                             </button>
                     
-                            <button mat-menu-item  color="primary" (click)="printView(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
-                                <mat-icon class="m-1" title="{{'print_view' | translate:translateKey}}">pageview</mat-icon>
-                                {{'print_view' | translate:translateKey}}
-                            </button>
+                            <ng-container *ngIf="row.fileStatus != 'PAYMENT' && row.serviceType != 'SHOP_ESTAB_APPLICATION'">
+                                <button mat-menu-item  color="primary" (click)="printView(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                                    <mat-icon class="m-1" title="{{'print_view' | translate:translateKey}}">pageview</mat-icon>
+                                    {{'print_view' | translate:translateKey}}
+                                </button>
+                            </ng-container>
 
                             <button mat-menu-item *ngIf="(row.fileStatus === 'PAYMENT')" color="primary"
                             (click)="redirectToPayment(row.serviceDetail.code, row.serviceFormId)">

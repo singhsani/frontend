@@ -107,6 +107,7 @@ export class BookAtithigruhComponent implements OnInit {
 		{sno: 16, atithigruh: 'Chatrapati Shivaji', rent: '8000', administrative_charge: '1000', gst:'1620' ,total_rent: '10620', deposit: '7500',total: '18120'},
 		{sno: 17, atithigruh: 'Diwali Pura', rent: '17000', administrative_charge: '1000', gst:'3240' ,total_rent: '21240', deposit: '20000',total: '41240'},
 		{sno: 18, atithigruh: 'Manjalpur', rent: '20000', administrative_charge: '1000', gst:'3780' ,total_rent: '24780', deposit: '30000',total: '54780'},
+		{sno: 19, atithigruh: 'Makarpura Community Hall', rent: '25000', administrative_charge: '1000', gst:'4680' ,total_rent: '30680', deposit: '30000',total: '60680'}
 	  ];
 
 	  gujratifeeDetails: any [] = [
@@ -116,18 +117,19 @@ export class BookAtithigruhComponent implements OnInit {
 		{sno: '૪', atithigruh: 'સયાજી લોન', rent: '૭૫૦૦', administrative_charge: '૧૦૦૦', gst:'૧૫૩૦' ,total_rent: '૧૦૦૩૦', deposit: '૧૦૦૦૦',total: '૨૦૦૩૦'},
 		{sno: '૫', atithigruh: 'અકોટા', rent: '૧૨૦૦૦', administrative_charge: '૧૦૦૦', gst:'૨૩૪૦' ,total_rent: '૧૫૩૪૦', deposit: '૨૦૦૦૦',total: '૩૫૩૪૦'},
 		{sno: '૬', atithigruh: 'સયાજીબાગ', rent: '૧૨૦૦૦', administrative_charge: '૧૦૦૦', gst:'૨૩૪૦' ,total_rent: '૧૫૩૪૦', deposit: '૨૦૦૦૦',total: '૩૫૩૪૦'},
-		{sno: '૭', atithigruh: 'નિજમપુરા', rent: '૧૨૦૦૦', administrative_charge: '૧૦૦૦', gst:'૨૩૪૦' ,total_rent: '૧૫૩૪૦', deposit: '૨૦૦૦૦',total: '૩૫૩૪૦'},
+		{sno: '૭', atithigruh: 'નિઝામપુરા', rent: '૧૨૦૦૦', administrative_charge: '૧૦૦૦', gst:'૨૩૪૦' ,total_rent: '૧૫૩૪૦', deposit: '૨૦૦૦૦',total: '૩૫૩૪૦'},
 		{sno: '૮', atithigruh: 'સુભાનપુરા', rent: '૧૨૦૦૦', administrative_charge: '૧૦૦૦', gst:'૨૩૪૦' ,total_rent: '૧૫૩૪૦', deposit: '૨૦૦૦૦',total: '૩૫૩૪૦'},
 		{sno: '૯', atithigruh: 'ડો.બાબાસાહેબ આંબેડકર', rent: '૧૨૦૦૦', administrative_charge: '૧૦૦૦', gst:'૨૩૪૦' ,total_rent: '૧૫૩૪૦', deposit: '૨૦૦૦૦',total: '૩૫૩૪૦'},
 		{sno: '૧૦', atithigruh: 'લાલબાગ', rent: '૧૨૦૦૦', administrative_charge: '૧૦૦૦', gst:'૨૩૪૦' ,total_rent: '૧૫૩૪૦', deposit: '૨૦૦૦૦',total: '૩૫૩૪૦'},
 		{sno: '૧૧', atithigruh: 'પ્રેમાનંદ', rent: '૮૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૬૨૦' ,total_rent: '૧૦૬૨૦', deposit: '૧૦૦૦૦',total: '૨૦૬૨૦'},
 		{sno: '૧૨', atithigruh: 'ઇન્દ્રપુરી', rent: '૧૦૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૯૮૦' ,total_rent: '૧૨૯૮૦', deposit: '૨૦૦૦૦',total: '૩૨૯૮૦'},
 		{sno: '૧૩', atithigruh: 'શરદ નગર', rent: '૮૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૬૨૦' ,total_rent: '૧૦૬૨૦', deposit: '૭૫૦૦',total: '૧૮૧૨૦'},
-		{sno: '૧૪', atithigruh: 'વિજયનગરકો હોલ', rent: '૩૫૦૦', administrative_charge: '૧૦૦૦', gst:'૮૧૦ ' ,total_rent: '૫૩૧૦', deposit: '૫૦૦૦',total: '૧૦૩૧૦'},
+		{sno: '૧૪', atithigruh: 'વિજય નગર', rent: '૩૫૦૦', administrative_charge: '૧૦૦૦', gst:'૮૧૦ ' ,total_rent: '૫૩૧૦', deposit: '૫૦૦૦',total: '૧૦૩૧૦'},
 		{sno: '૧૫', atithigruh: 'તરસાલી હોલ', rent: '૩૦૦૦', administrative_charge: '૧૦૦૦', gst:'૭૨૦' ,total_rent: '૪૭૨૦', deposit: '૫૦૦૦',total: '૯૭૨૦'},
-		{sno: '૧૬', atithigruh: 'છત્રપતિ શિવાજ', rent: '૮૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૬૨૦' ,total_rent: '૧૦૬૨૦', deposit: '૭૫૦૦',total: '૧૮૧૨૦'},
+		{sno: '૧૬', atithigruh: 'છત્રપતિ શિવાજી', rent: '૮૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૬૨૦' ,total_rent: '૧૦૬૨૦', deposit: '૭૫૦૦',total: '૧૮૧૨૦'},
 		{sno: '૧૭', atithigruh: 'દિવાળી પુરા', rent: '૧૭૦૦૦', administrative_charge: '૧૦૦૦', gst:'૩૨૪૦' ,total_rent: '૨૧૨૪૦', deposit: '૨૦૦૦૦',total: '૪૧૨૪૦'},
-		{sno: '૧૮', atithigruh: 'માંજલપુર', rent: '૨૦૦૦૦', administrative_charge: '૧૦૦૦', gst:'૩૭૮૦' ,total_rent: '૨૪૭૮૦', deposit: '30000',total: '૫૪૭૮૦'},
+		{sno: '૧૮', atithigruh: 'માંજલપુર', rent: '૨૦૦૦૦', administrative_charge: '૧૦૦૦', gst:'૩૭૮૦' ,total_rent: '૨૪૭૮૦', deposit: '૩૦૦૦૦',total: '૫૪૭૮૦'},
+		{sno: '૧૯', atithigruh: 'મકરપુરા કોમ્યુનિટી હોલ', rent: '૨૫૦૦૦', administrative_charge: '૧૦૦૦', gst:'૪૬૮૦' ,total_rent: '૩૦૬૮૦', deposit: '૩૦૦૦૦',total: '૬૦૬૮૦'},
 	  ];
 	
 	constructor(
@@ -288,7 +290,7 @@ export class BookAtithigruhComponent implements OnInit {
 	 */
 	bookingLookups() {
 		this.bookingService.getDataFromLookups().subscribe(resp => {
-			this.BOOKING_TYPE = resp.DRAW_TYPE;
+			this.BOOKING_TYPE = resp.DRAW_TYPE.filter(_=>_.code =='Regular booking');
 			this.PURPOSE = resp.PURPOSE.filter(_ => _.code !== 'Funeral');
 			// this.BankOptions = resp.BANK;
 		});
@@ -321,6 +323,7 @@ export class BookAtithigruhComponent implements OnInit {
 	 * @param event - Selected event
 	 */
 	onBookingTypeChange(event) {
+		this.Dates = [];
 		this.BookingTypeForm.get('atithiGruhName.code').reset();
 		this.BookingTypeForm.get('bookingPurposeMaster.code').reset();
 		this.BookingTypeForm.get('bookingFrom').reset();
@@ -377,11 +380,6 @@ export class BookAtithigruhComponent implements OnInit {
 	 */
 	searchBooking() {
 		this.selectedShift = []
-		if(this.BookingTypeForm.get('bookingFrom').value == null){
-			this.toaster.warning(this.bookingUtils.ALL_FEILD_REQUIRED_MESSAGE);
-			return;
-		}
-
 		if (this.BookingTypeForm.valid) {
 			/**
 			 * Filter Object to get list of available dates.
@@ -709,6 +707,7 @@ export class BookAtithigruhComponent implements OnInit {
 	  }
 	
 	onAtithiGruhNameChange(event) {
+		this.Dates = [];
 		this.ATITHIGRUH.forEach(element => {
 			if (element.code == event) {
 				this.atithigruhName = element.name

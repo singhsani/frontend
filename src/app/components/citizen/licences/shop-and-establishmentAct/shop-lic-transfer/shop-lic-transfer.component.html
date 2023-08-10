@@ -1,5 +1,5 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey">
-	
+
 </app-title-bar>
 
 <div *ngIf="isGuideLineActive">
@@ -10,7 +10,7 @@
 				<ng-option *ngFor="let yes_no of regiTyep" [value]="yes_no.code">{{yes_no.name}}</ng-option>
 			</ng-select>
 		</div>
-	
+
 		<mat-form-field class="col-md-4">
 		<!-- <div class="col-md-4"> -->
 			<input matInput type="text" maxlength="15" AlphaNumeric required
@@ -18,7 +18,7 @@
 		<!-- </div> -->
 		<!-- <control-messages [control]="shopLicTransferForm.get('certificateNumber')"></control-messages> -->
 		</mat-form-field>
-	
+
 	</div>
 
 	  <div class="fotButtonBar">
@@ -29,7 +29,7 @@
 			</button>
 		</div>
 	</div>
-	
+
 </div>
 
 <mat-card class="formClass cardBorder" [hidden]="isGuideLineActive">
@@ -99,7 +99,7 @@
 					</div>
 					<div class="col-md-4 ngSelect">
 						<div *ngIf="wardZoneLevel.length>=3">
-							<ng-select 
+							<ng-select
 								placeholder="Block No."
 								formControlName="waterDrainageBlockId" (change)="onChangedWardZone($event,4)">
 								<ng-option *ngFor="let block of wardZoneLevel3List" [value]="block.wardzoneId">
@@ -153,14 +153,14 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput 
-							appAlphaNumeric
+						<input matInput
+							AlphaNumeric
 							maxlength="50"
 							placeholder="Old Registration Number"
 							formControlName="oldRegistrationNumber" />
 						<control-messages [control]="establishmentdetails.get('oldRegistrationNumber')"></control-messages>
 					</mat-form-field>
-	
+
 					<mat-form-field class="col-md-4">
 						<input matInput [max]="disablefutureDate" autocomplete="off" appDate
 								[matDatepicker]="oldRegistrationDate" formControlName="oldRegistrationDate"
@@ -175,7 +175,7 @@
 					</mat-form-field>
 				</div>
 
-				
+
 				<div class="row">
 
 					<h2>{{'situation_label'| translate:translateKey}}</h2>
@@ -188,7 +188,7 @@
 				</div>
 				<app-action-bar [form]="shopLicTransferForm" (tabIndex)="licenseConfiguration.onTabChange($event,establishmentdetails,shopLicTransferForm)"
 					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
-				</form>	
+				</form>
 			</mat-tab>
 			<!-- step 1 Ends -->
 
@@ -209,9 +209,9 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" required maxlength="250" 
+						<input matInput type="text" required maxlength="250"
 							placeholder="{{'residential_address_of_employer' | translate:translateKey}}"
-							formControlName="residentialAddressOfEmployer" 
+							formControlName="residentialAddressOfEmployer"
 							>
 						<control-messages [control]="employerdetails.get('residentialAddressOfEmployer')">
 						</control-messages>
@@ -224,7 +224,7 @@
 						<control-messages [control]="employerdetails.get('employerDesignation')"></control-messages>
 					</mat-form-field>
 
-					
+
 
 					<mat-form-field class="col-md-6">
 						<input matInput OnlyNumber type="text"  maxlength="10" minlength="10"
@@ -235,19 +235,19 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" 
+						<input matInput type="text"
 							placeholder="Employer Email ID" maxlength="50"
 							formControlName="employerEmailId"  appValidationFields >
 						<control-messages [control]="employerdetails.get('employerEmailId')"></control-messages>
 					</mat-form-field>
-					
+
 					<mat-form-field class="col-md-6">
 						 <input matInput OnlyNumber type="text" maxlength="10" minlength="10"
 							placeholder="Alternate Mobile Number"
 							formControlName="alternateMobileNumber" />
 						<control-messages [control]="employerdetails.get('alternateMobileNumber')">
-						</control-messages>	 
-					</mat-form-field> 
+						</control-messages>
+					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
 						<input matInput OnlyNumber type="text" maxlength="11" minlength="11"
@@ -257,7 +257,7 @@
 						</control-messages>
 					</mat-form-field>
 
-					
+
 
 					<h2>{{'category_label' | translate:translateKey}}</h2>
 
@@ -307,17 +307,17 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6" *ngIf="isSubCategory">
-						<input matInput type="text" 
+						<input matInput type="text"
 							placeholder="Other Description"
 							formControlName="otherDescription" >
 						<control-messages [control]="employerdetails.get('otherDescription')"></control-messages>
-					</mat-form-field>	
+					</mat-form-field>
 				</div>
-				
+
 
 				<app-action-bar [form]="shopLicTransferForm" (tabIndex)="licenseConfiguration.onTabChange($event,employerdetails,shopLicTransferForm)"
 					[stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
-				</form>	
+				</form>
 			</mat-tab>
 			<!-- step 2 Ends -->
 
@@ -339,12 +339,12 @@
 					</div>
 				</div>
 
-				<div *ngIf="employerfamily.get('shopPersonList')['controls'].length" class="col-md-12">
+				<div *ngIf="employerfamily.get('shopPersonList')['controls'].length" class="col-md-12 mb-5">
 					<div>
 						<table class="table table-striped responsiveTableRow tableLayout">
 							<thead>
 								<tr class="mo-d-none">
-									
+
 									<th width="150" >{{'Name' | translate:translateKey}}</th>
 									<th>{{'Address' | translate:translateKey}}</th>
 									<th width="140">{{'relationship' | translate:translateKey}}</th>
@@ -360,7 +360,7 @@
 								<tr *ngFor="let item of employerfamily.get('shopPersonList')['controls']; let indx = index;"
 									[formGroupName]="indx">
 
-									
+
 
 									<td>
 										<div class="d-md-none">{{'name' | translate:translateKey}}</div>
@@ -382,15 +382,15 @@
 										</mat-form-field>
 									</td>
 
-									
+
 									<td>
 										<div class="d-md-none">{{'relationship' | translate:translateKey}}</div>
 										<div class="ngSelect" required style="min-width:100px" formGroupName="relationshipType">
 											<p *ngIf="!item.isEditMode">
-												 {{getSelectedDataFromLookUps(relationshipTypeList,item.get('relationshipType').value.code)?.name}} 
+												 {{getSelectedDataFromLookUps(relationshipTypeList,item.get('relationshipType').value.code)?.name}}
 											</p>
 											<div class="ngSelect" *ngIf="item.isEditMode">
-												<ng-select class="asteriskmarkRequired" *ngIf="item.isEditMode" placeholder="{{'Relationship Type' | translate:translateKey}}"
+												<ng-select *ngIf="item.isEditMode" placeholder="{{'Relationship Type' | translate:translateKey}}"
 													formControlName="code">
 													<ng-option *ngFor="let relation of relationshipTypeList" [value]="relation.code">
 														{{relation.name}}</ng-option>
@@ -478,12 +478,12 @@
 						</table>
 					</div>
 
-				
-					
+
+
 				</div>
 				<app-action-bar [form]="shopLicTransferForm" (tabIndex)="licenseConfiguration.onTabChange($event,employerfamily,shopLicTransferForm)"
 					[stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
-				</form>	
+				</form>
 			</mat-tab>
 			<!-- step 3 employer family Ends -->
 
@@ -504,7 +504,7 @@
 					</div>
 				</div>
 
-				<div *ngIf="personoccuping.get('workerCounts')['controls'].length" class="col-md-12">
+				<div *ngIf="personoccuping.get('workerCounts')['controls'].length" class="col-md-12 mb-5">
 					<div>
 						<table class="table table-striped responsiveTableRow">
 							<thead>
@@ -528,10 +528,10 @@
 									<td>
 										<div class="d-md-none">{{'noOfMen' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('noOfMen').value}}</p>
-										<mat-form-field *ngIf="item.isEditMode"> 
-											<input  matInput  (change)="calculateWorkers(indx);" onKeyPress="if(this.value.length==6) return false;" 
+										<mat-form-field *ngIf="item.isEditMode">
+											<input  matInput  (change)="calculateWorkers(indx);" onKeyPress="if(this.value.length==6) return false;"
 												 formControlName="noOfMen" type="number" required>
-											<control-messages [control]="item.get('noOfMen')"></control-messages> 
+											<control-messages [control]="item.get('noOfMen')"></control-messages>
 										</mat-form-field>
 									</td>
 
@@ -557,7 +557,7 @@
 											<control-messages [control]="item.get('workerType')">
 											</control-messages>
 										</div>
-									</td>  
+									</td>
 									   -->
 
 								<td>
@@ -565,10 +565,10 @@
 										<div  class="ngSelect"  style="min-width:100px" >
 										 <!-- <p *ngIf="!item.isEditMode">{{item.get('workersType').value}}</p>  -->
 										  <p class="width80" *ngIf="!item.isEditMode">
-											{{getSelectedDataFromLookUps(workerTypeList,item.get('workersType').value)?.name}} 
-									   	</p> 
+											{{getSelectedDataFromLookUps(workerTypeList,item.get('workersType').value)?.name}}
+									   	</p>
 											<div col-md-6 class="ngSelect" *ngIf="item.isEditMode" >
-												<ng-select  *ngIf="item.isEditMode" formControlName="workersType" required (ngModelChange)="getCommonWorkerType()">
+												<ng-select *ngIf="item.isEditMode" formControlName="workersType"  (ngModelChange)="getCommonWorkerType()">
 													<ng-container *ngFor="let gender of workerTypeList">
 														<ng-option *ngIf="!gender.selected" [value]="gender.code">
 															{{gender.name}}
@@ -579,9 +579,9 @@
 												</control-messages>
 											</div>
 										</div>
-									</td>  
+									</td>
 
-									
+
 									<td>
 										<div class="d-md-none">{{'total' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('total').value}}</p>
@@ -621,13 +621,13 @@
 					</div>
 
 
-					
+
 				</div>
 
 				<app-action-bar [form]="shopLicTransferForm" (tabIndex)="licenseConfiguration.onTabChange($event,personoccuping,shopLicTransferForm)"
 					[stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
 				</form>
-			</mat-tab> 
+			</mat-tab>
 			<!-- step 4 occupancy person Ends -->
 
 			<!-- step 5 partner list Starts -->
@@ -651,7 +651,7 @@
 							</control-messages>
 						</div>
 					</div>
-					
+
 				</div>
 
 				<div *ngIf="isPatners" class="row  pb-3">
@@ -671,7 +671,7 @@
 						<table class="table table-striped responsiveTableRow">
 							<thead>
 								<tr class="mo-d-none">
-									
+
 									<th>{{'Name' | translate:translateKey}}</th>
 									<th>{{'Address' | translate:translateKey}}</th>
 									<th>{{'Designation / Status' | translate:translateKey}}</th>
@@ -765,26 +765,33 @@
 						</table>
 					</div>
 
-				
-					
+
+
 				</div>
 			</div>
 
 				<app-action-bar [form]="shopLicTransferForm" (tabIndex)="licenseConfiguration.onTabChange($event,partnerlist,shopLicTransferForm)"
 					[stepInfo]="{step: 'step5', next: 5, back: 3}"></app-action-bar>
-				</form>	
+				</form>
 			</mat-tab>
 			<!-- step 5 partner list Ends -->
 
-		
+
 			<!-- step Attachment Starts -->
 			<mat-tab disabled>
 				<ng-template mat-tab-label>
 					<div>{{'Attachment' | translate: translateKey}}</div>
 				</ng-template>
-				<form [formGroup]="attachmentdetail">
+
+        <div class="alert alert-warning">
+          {{'Note' | translate:translateKey}} :
+          {{'File size more than 2 MB not allowed; Upload only JPG, JPEG and PDF file.' |
+          translate:translateKey}}
+        </div>
+
+        <form [formGroup]="attachmentdetail">
 				<div class="row">
-				
+
 					<h2 *ngIf="!establishmentdetails.get('ownershipType').value">
 						Please Select Ownership Type
 					</h2>
@@ -810,7 +817,7 @@
 					[form]="shopLicTransferForm" (handleErrors)="handleErrorsOnSubmit($event) "
 					(tabIndex)="licenseConfiguration.onTabChange($event,attachmentdetail,shopLicTransferForm)"
 					[stepInfo]="{step: 'final', next:7, back: 4} "></app-action-bar>
-				</form>	
+				</form>
 
 			</mat-tab>
 			<!-- step Attachment Ends -->

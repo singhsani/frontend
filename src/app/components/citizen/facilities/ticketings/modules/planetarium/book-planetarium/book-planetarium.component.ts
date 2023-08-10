@@ -68,6 +68,7 @@ export class BookPlanetariumComponent implements OnInit {
   showSelectLanguage : boolean = true;
   btnProceed : boolean = true;
   gujheadLine : string;
+  isShowPermissionOrders : boolean = false;
 
   /**
    * @param fb - Declare FormBuilder property.
@@ -512,6 +513,7 @@ export class BookPlanetariumComponent implements OnInit {
     this.ticketBookingForm.get('bookingDate').setValue(moment(new Date()).format('YYYY-MM-DD'));
     this.ticketBookingForm.get('showCategory').get('code').setValue(event);
     if (event == 'PLANETARIUM_SPECIAL_SHOW') {
+      this.isShowPermissionOrders = true;
       this.minDate = moment(new Date()).add(2, 'day').toISOString();
       this.maxDate = moment(new Date()).add(16, 'day').toISOString();
       this.changeDateAndSetDate();
@@ -534,6 +536,7 @@ export class BookPlanetariumComponent implements OnInit {
 
     }
     else if (event == 'PLANETARIUM_GENERAL_SHOW') {
+      this.isShowPermissionOrders = false
       this.ticketBookingForm.get('visitingDate').setValue(moment().format('YYYY-MM-DD'));
       this.minDate = moment(new Date()).add(0, 'day').toISOString();
       this.maxDate = moment(new Date()).add(6, 'day').toISOString();
@@ -560,6 +563,7 @@ export class BookPlanetariumComponent implements OnInit {
       this.visitorRateChartCall();
     }
     else {
+      this.isShowPermissionOrders = false
       this.ticketBookingForm.reset();
     }
     //this.ticketBookingForm.get('visitingDate').setValue('');
@@ -646,7 +650,11 @@ export class BookPlanetariumComponent implements OnInit {
 
       this.commonService.openAlert("Field Error", this.ticketingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
       this.markFormGroupTouched(this.ticketBookingForm);
-    }else{
+    } else if (this.isShowPermissionOrders == true && !this.isFileUploaded) {
+      this.commonService.openAlert(this.ticketingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
+      return;
+    }
+    else{
       this.isLoadingResults = true;
       this.ticketingService.specialShowTicketsBooking(this.ticketBookingForm.getRawValue(), this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe(
         resData => {

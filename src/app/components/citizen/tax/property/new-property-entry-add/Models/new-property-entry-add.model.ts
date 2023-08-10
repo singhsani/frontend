@@ -80,6 +80,8 @@ export class PropertyModel {
 
 export class OccupierModel {
   occupierCode: number;
+  occupierType: number;
+  occupierSubType: number;
   titleId: number;
   firstName: string;
   middleName: string;

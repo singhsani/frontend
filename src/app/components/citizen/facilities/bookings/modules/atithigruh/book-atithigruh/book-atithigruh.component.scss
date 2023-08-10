@@ -156,3 +156,8 @@ table { width: 100%; }
         font-size: 15px;
     }
 }
+
+.asteriskmarkRequired-label::after {
+        content:' *';
+        color:red !important;
+} 

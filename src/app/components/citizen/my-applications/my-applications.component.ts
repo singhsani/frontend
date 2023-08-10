@@ -111,6 +111,12 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 					this.location.go(this.router.url.split('?')[0]);
 				}, 3000);
 			}
+			else if(d.serviceType == 'VEHICLE'){
+				this.printReceipt(d.resourceType, '', d.refNumber);
+				setTimeout(() => {
+					this.location.go(this.router.url.split('?')[0]);
+				}, 3000);
+			}
 		})
 	}
 	ngOnChanges() {

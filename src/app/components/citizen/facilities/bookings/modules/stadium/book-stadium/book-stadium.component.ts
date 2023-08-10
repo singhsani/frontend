@@ -100,7 +100,7 @@ export class BookStadiumComponent implements OnInit {
                 "sno": '૧',
                 "programmePurpose": "કોમર્શિયલ",
                 "bookingRent": '૬૦૦૦૦',
-                "administrativeCharge": '૬૦૦૦૦',
+                "administrativeCharge": '૬૦૦૦',
                 "gst": '૧૧૮૮૦',
                 "deposit": '૧૧૮૮૦'
             },
