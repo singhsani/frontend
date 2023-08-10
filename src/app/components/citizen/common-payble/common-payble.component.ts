@@ -73,6 +73,7 @@ export class CommonPaybleComponent implements OnInit {
   propertyModelSub: Subscription;
   rupeeSign='(₹)'
   isVehileTax : boolean = false;
+  uniqueId: any;
 
   constructor(
     private formService: FormsActionsService,
@@ -188,7 +189,7 @@ export class CommonPaybleComponent implements OnInit {
 
     let obj = {
       payableServiceType: updatePayableServiceType,
-      refNumber: payData.refNumber,
+      refNumber: updatePayableServiceType == 'VEHICLE' ?  this.uniqueId : payData.refNumber,
       amount: updateAmount,
       paymentMode: "NETBANKING",
       returnUrl: retUrl,
@@ -532,7 +533,8 @@ export class CommonPaybleComponent implements OnInit {
         this.isVehileTax = true;
         this.inputData = data.data;
         this.paymentsForm.get('amount').setValue(this.inputData[0].amount);
-        this.paymentsForm.get('refNumber').setValue(this.inputData[0].uniqueId);
+        this.paymentsForm.get('refNumber').setValue(this.inputData[0].fileNumber);
+        this.uniqueId = this.inputData[0].uniqueId;
       }else{
         this.inputData = data.data;
       }
