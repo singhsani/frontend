@@ -562,13 +562,13 @@
 
 								<td>
 										<div class="d-md-none">{{'workerType' | translate:translateKey}}</div>
-										<div  class="ngSelect" required style="min-width:100px" >
+										<div  class="ngSelect"  style="min-width:100px" >
 										 <!-- <p *ngIf="!item.isEditMode">{{item.get('workersType').value}}</p>  -->
 										  <p class="width80" *ngIf="!item.isEditMode">
 											{{getSelectedDataFromLookUps(workerTypeList,item.get('workersType').value)?.name}} 
 									   	</p> 
 											<div col-md-6 class="ngSelect" *ngIf="item.isEditMode" >
-												<ng-select class="asteriskmarkRequired" *ngIf="item.isEditMode" formControlName="workersType" required (ngModelChange)="getCommonWorkerType()">
+												<ng-select  *ngIf="item.isEditMode" formControlName="workersType" required (ngModelChange)="getCommonWorkerType()">
 													<ng-container *ngFor="let gender of workerTypeList">
 														<ng-option *ngIf="!gender.selected" [value]="gender.code">
 															{{gender.name}}
