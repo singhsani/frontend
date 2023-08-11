@@ -2071,4 +2071,10 @@ export class ShopLicNewComponent implements OnInit {
 		  });
 		}
 	  }
+	 
+	  oldRegistrationDatedateFormat(date, controlType: string) {
+		this.establishmentdetails.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));	
+		console.log(this.establishmentdetails);
+		
+	}
 }
