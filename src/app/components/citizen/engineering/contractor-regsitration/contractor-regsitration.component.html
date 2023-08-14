@@ -170,7 +170,7 @@
 
             <h2><b>{{'name_of_the_partners' | translate: translateKey}}</b></h2>
             <div class="table-responsive">
-              <table class="table table-bordered table-responsive-md table-striped text-center">
+              <table class="table table-bordered table-responsive-md table-striped">
                 <tbody>
                   <tr>
                     <th class="text-center">{{'s_no' | translate: translateKey}}</th>
@@ -180,11 +180,11 @@
                     <th class="text-center">{{'action' | translate: translateKey}}</th>
                   </tr>
                   <tr *ngFor="let row of contractorRegistrationForm.get('partnerDetails')?.controls;let index = index;">
-                    <td>
+                    <td class="text-center">
                       {{index+1}}
                     </td>
                     <td>
-                      <div [formGroup]="row.get('ownerType')">
+                      <div [formGroup]="row.get('ownerType')" class="ngSelect">
                         <ng-select formControlName="code">
                           <ng-option *ngFor="let impl of contractorOwnerType" [value]="impl.code">{{impl.name}}
                           </ng-option>
