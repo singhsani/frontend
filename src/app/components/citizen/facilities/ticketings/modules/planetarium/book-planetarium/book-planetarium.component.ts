@@ -717,11 +717,18 @@ export class BookPlanetariumComponent implements OnInit {
         respData => {
         /* Applicant can not booking after 2 P.M. */
           if(respData.statusCode == '401'){
-            this.toster.error(respData.message);
-            setTimeout(() => {
-                this.router.navigate(['/citizen/dashboard']);
-            },6000);
-            return;
+            // this.toster.error(respData.message);
+            // setTimeout(() => {
+            //     this.router.navigate(['/citizen/dashboard']);
+            // },6000);
+            this.commonService.openAlert("", "", "error", respData.message, cd => {
+              this.ticketBookingForm.get('planetariumShowTiming').get('code').reset();
+              this.ticketBookingForm.get('visitors').get('code').reset();
+              this.ticketBookingForm.get('amount').reset();
+              this.ticketBookingForm.get('idType').get('code').reset();
+              this.ticketBookingForm.get('idNumber').reset();
+            })
+           return;
           }
           this.commonService.commonAlert("Booking", "Planetarium Booked Successfully", "success", "Print Acknowledgement Receipt", false, '', pA => {
             this.ticketingService.printAcknowledgementReceipt(respData.data.refNumber).subscribe(
