@@ -410,6 +410,11 @@ export class FormsActionsService {
 		return this.http.get(this.requestURL, 'printReceipt');
 	}
 
+	ReprintProfReceipt(refNumber) {
+		this.requestURL = `api/professional/receipt/ReprintReceipt/${refNumber}`;
+		return this.http.get(this.requestURL, 'printReceipt');
+	}
+
 	redirectToDuplicateBirth(data: string) {
 		setTimeout(() => {
 			this.NBCtoDuplicateBirth.next(data);

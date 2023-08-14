@@ -8,6 +8,7 @@ import { PaginationService } from '../../../core/services/citizen/data-services/
 import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { ManageRoutes } from 'src/app/config/routes-conf';
 
 @Component({
 	selector: 'app-transactions',
@@ -60,7 +61,7 @@ export class TransactionsComponent implements OnInit {
 	}
 
 	print(apicode: any) {
-		this.formService.printProfReceipt(apicode).subscribe(data => {
+		this.formService.ReprintProfReceipt(apicode).subscribe(data => {
 			let sectionToPrint: any = document.getElementById('sectionToPrint');
 			sectionToPrint.innerHTML = data;
 			setTimeout(() => {
@@ -169,6 +170,8 @@ export class TransactionsComponent implements OnInit {
 
 export class TransactionDataDialog {
 	public tData: any;
+	// formService: any;
+	commonService: any;
 	constructor(
 		public dialogRef: MatDialogRef<TransactionDataDialog>,
 		@Inject(MAT_DIALOG_DATA) public data: any) {
