@@ -21,7 +21,11 @@ export class LicenseConfiguration extends ComponentConfig {
                     // push form Array data into main Controller
                     if (controlName.get(element) instanceof FormArray) {
                         const formGroupAry = this.createArray(controlName.get(element));
-                        mainControl.get(element).removeAt()
+                        if(mainControl.get(element).value){
+                            mainControl.get(element).value = []
+                            mainControl.get(element).controls = []
+                          }
+                       // mainControl.get(element).removeAt()
                         for(let i = 0; i < controlName.get(element).controls.length; i++) {
                             mainControl.get(element).value.push(formGroupAry.value[i]);
                             mainControl.get(element).controls.push(formGroupAry.controls[i]);

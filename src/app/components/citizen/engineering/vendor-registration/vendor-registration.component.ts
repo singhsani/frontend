@@ -14,6 +14,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { ManageRoutes } from 'src/app/config/routes-conf';
 import { CitizenConfig } from '../../citizen-config';
 import { ValidatorService } from 'src/app/vmcshared/data-table/validator.service';
+import { LicenseConfiguration } from '../../licences/license-configuration';
 
 @Component({
   selector: 'app-vendor-registration',
@@ -65,6 +66,10 @@ export class VendorRegistrationComponent implements OnInit {
   vendorTypeFirmUpdate: any = [];
   academicQualificationDes: any = [];
   public serverUploadFilesArray: Array<any> = [];
+  licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
+  status :any;
+  attachmentListInitiator: any = [];
+  attachmentListTotal: any = [];
 
   uploadFilesArray: Array<any> = [];
 
@@ -144,13 +149,17 @@ export class VendorRegistrationComponent implements OnInit {
     this.vendorRegistrationForm.addControl('vendorRegisteredGovtDetail', this.vendorRegisteredGovtDetail);
 
     this.getBankNames();
-    this.getAllDocumentLists();
     this.getAllLocationDetail();
     this.getLookUp();
 
     this.activatedRoute.paramMap.subscribe(param => {
       this.formId = Number(param.get('id'));
-      this.getVendorData(this.formId);
+      this.status = param.get('code')
+      if(this.status != 'DRAFT'){
+        this.getAllDocumentLists();
+      }
+
+      this.getVendorData(this.formId,this.status);
     })
 
     if (!this.formId) {
@@ -215,7 +224,7 @@ export class VendorRegistrationComponent implements OnInit {
     this.formControlNameToTabIndex.set('city', 0)
     this.formControlNameToTabIndex.set('country', 0)
   }
-  getVendorData(id: number) {
+  getVendorData(id: number ,status :any) {
     this.formService.getFormData(id).subscribe(res => {
       console.log("tresr", res)
       this.vendorRegistrationForm.patchValue(res);
@@ -228,11 +237,11 @@ export class VendorRegistrationComponent implements OnInit {
         value :this.firmDetails.value.typeOfFirm
       }
       this.typeOfFirmChange(objj)
-      if (res.formStatus != 'REJECTED') {
+      if (res.formStatus == 'PAYMENT_RECEIVED' || res.formStatus == 'SUBMITTED') {
         let obj = {value : res.applyingFor }
         this.locationChange(obj);
       }
-
+      
       //this.showButtons = false;
 
       if (res.formStatus == 'PAYMENT_RECEIVED' || res.formStatus == 'SUBMITTED') {
@@ -295,7 +304,7 @@ export class VendorRegistrationComponent implements OnInit {
       this.isRegisteredGovtDetail = true;
 
 
-      this.setServiceDetailsOnInit(res);
+      this.setServiceDetailsOnInit(res,this.status);
       //	this.sortedList.push(res);
     });
   }
@@ -398,7 +407,10 @@ export class VendorRegistrationComponent implements OnInit {
     return formGroupData;
   }
 
-  setServiceDetailsOnInit(res) {
+  setServiceDetailsOnInit(res,status:any) {
+    if(this.status == 'DRAFT'){
+      this.getAllDocumentLists();
+    }
     this.serverUploadFilesArray = res.attachments;
     const localUploadArray = [...this.serverUploadFilesArray];
 
@@ -606,13 +618,26 @@ export class VendorRegistrationComponent implements OnInit {
     });
   }
 
+  // getAllDocumentLists() {
+  //   this.engineer.getAllDocuments().subscribe(res => {
+  //     this.attachmentListTotal = _.cloneDeep(res);
+  //     this.attachmentListTotal.forEach(item => {
+  //       if (item.documentIdentifier != 'TECHNICAL_COMMITTEE_RESOLUTION_SANCTION_LETTER') {
+  //         this.attachmentList.push(_.cloneDeep(item))
+  //       }
+  //     })
+  //   });
+  // }
+
   handleErrorsOnSubmit(key) {
     const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 0;
     this.tabIndex = index;
     if(this.tabIndex == 0){
+      this.licenseConfiguration.currentTabIndex = 1
       this.onTabChange(1,this.firmDetails, this.vendorRegistrationForm)
     }
     else if(this.tabIndex == 1){
+      this.licenseConfiguration.currentTabIndex = 2
       this.onTabChange(2,this.registrationDetail, this.vendorRegistrationForm)
     }
     return false;
@@ -657,9 +682,9 @@ export class VendorRegistrationComponent implements OnInit {
       this.firmDetails.get('state').setValue('GUJARAT')
       this.firmDetails.get('city').setValue('Vadodara')
       this.firmDetails.get('country').setValue('INDIA')
-      this.firmDetails.get('state').disable()
+      this.firmDetails.get('state').enable()
       this.firmDetails.get('city').enable()
-      this.firmDetails.get('country').disable()
+      this.firmDetails.get('country').enable()
       this.state = 'Gujarat'
       this.city = '';
       this.country = 'India'
@@ -670,7 +695,7 @@ export class VendorRegistrationComponent implements OnInit {
       this.firmDetails.get('country').setValue('INDIA')
       this.firmDetails.get('state').enable()
       this.firmDetails.get('city').enable()
-      this.firmDetails.get('country').disable()
+      this.firmDetails.get('country').enable()
       this.state = ''
       this.city = ''
       this.country = 'India'
@@ -1219,7 +1244,10 @@ export class VendorRegistrationComponent implements OnInit {
                // push form Array data into main Controller
             if (controlName.get(element) instanceof FormArray) {
                 const formGroupAry = this.engineer.createArray(controlName.get(element));
-                mainControl.get(element).value.push()
+                if(mainControl.get(element).value){
+                  mainControl.get(element).value = []
+                  mainControl.get(element).controls = []
+                }
                 for(let i = 0; i < controlName.get(element).controls.length; i++) {
                     mainControl.get(element).value.push(formGroupAry.value[i]);
                     mainControl.get(element).controls.push(formGroupAry.controls[i]);
