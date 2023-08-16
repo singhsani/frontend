@@ -10,7 +10,8 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   { path: '', redirectTo: 'vendor', pathMatch: 'full' },
   { path: 'vendor-registration/:id/:apiCode', component: VendorRegistrationComponent },
-  { path: 'contractor-regsitration/:id/:apiCode', component: ContractorRegsitrationComponent }
+  { path: 'contractor-regsitration/:id/:apiCode', component: ContractorRegsitrationComponent },
+  { path: 'vendor-registration/:id/:apiCode/:code', component: VendorRegistrationComponent },
 ];
 
 @NgModule({

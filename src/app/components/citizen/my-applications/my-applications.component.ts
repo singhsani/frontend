@@ -194,7 +194,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	redirectToEdit(apiCode: string, id: number) {
 		if (apiCode == 'HEL-DR') {
 			this.router.navigate(['citizen/certificates/birth-death/deathReg', id, apiCode]);
-		} else {
+		}else if(apiCode == 'VENDOR_REG') {
+			this.router.navigate(['citizen/engineering/vendor-registration', id, apiCode, 'DRAFT']);
+		}
+		else {
 			let redirectUrl = ManageRoutes.getFullRoute(apiCode);
 			this.router.navigate([redirectUrl, id, apiCode]);
 		}

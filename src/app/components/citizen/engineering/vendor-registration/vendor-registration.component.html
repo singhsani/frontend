@@ -9,7 +9,7 @@
   <mat-card class="formClass cardBorder">
 
 
-      <mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+      <mat-tab-group [(selectedIndex)]="licenseConfiguration.currentTabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
         <!-- Tab 1 Starts -->
         <mat-tab disabled>
@@ -339,13 +339,15 @@
               [addressFormGroup]="firmDetails.get('contactAddress')">
             </app-address>
           </div>
-
+<!-- 
           <div class="fotButtonBar1 clearfix">
             <div class="col-sm-12 col-md-12">
               <button type="button" class="pull-right" mat-raised-button color="primary"
-                (click)="onTabChange(1,firmDetails, vendorRegistrationForm)">{{'Save And Next'}}</button>
+                (click)="onTabChange(1,firmDetails, vendorRegistrationForm)"  (click)="saveAsDraft()">{{'Save And Next'}}</button>
             </div>
-          </div>
+          </div> -->
+          <app-action-bar [form]="vendorRegistrationForm" (tabIndex)="licenseConfiguration.onTabChange($event, firmDetails, vendorRegistrationForm)"
+					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
           </form> 
         </mat-tab>
         <!-- Tab 1 Finish -->
@@ -666,17 +668,19 @@
               </control-messages>
             </mat-form-field>
           </div>
-
+<!-- 
           <div class="fotButtonBar1 clearfix">
             <div class="col-sm-12 col-md-12">
               <span class="pull-left">
                 <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 0">{{'Back'}}</button>
 
               </span>
-              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="onTabChange(2,registrationDetail, vendorRegistrationForm)">{{'Save And Next'
+              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="onTabChange(2,registrationDetail, vendorRegistrationForm)" (click)="saveAsDraft()">{{'Save And Next'
                 }}</button>
             </div>
-          </div>
+          </div> -->
+          <app-action-bar [form]="vendorRegistrationForm" (tabIndex)="licenseConfiguration.onTabChange($event, registrationDetail, vendorRegistrationForm)"
+					[stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 
           </form>
         </mat-tab>
@@ -1199,15 +1203,8 @@
 
           </div>
 
-          <div class="fotButtonBar1 clearfix">
-            <div class="col-sm-12 col-md-12">
-              <span class="pull-left">
-                <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 1">{{'Back'}}</button>
-              </span>
-              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="onTabChange(3,factoryAndEmployeeDetail, vendorRegistrationForm)">{{'Save And Next'
-                }}</button>
-            </div>
-            </div>
+          <app-action-bar [form]="vendorRegistrationForm" (tabIndex)="licenseConfiguration.onTabChange($event, factoryAndEmployeeDetail, vendorRegistrationForm)"
+					[stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
           </form>
         </mat-tab>
 
@@ -1647,16 +1644,8 @@
 
 
           </div>
-          <div class="fotButtonBar1 clearfix">
-            <div class="col-sm-12 col-md-12">
-              <span class="pull-left">
-                <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 2">{{'Back'}}</button>
-
-              </span>
-              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="onTabChange(4, productAndSupplierDetail, vendorRegistrationForm)">{{'Save And Next'
-                }}</button>
-            </div>
-          </div>
+          <app-action-bar [form]="vendorRegistrationForm" (tabIndex)="licenseConfiguration.onTabChange($event, productAndSupplierDetail, vendorRegistrationForm)"
+					[stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
         </form>
         </mat-tab>
 
@@ -1664,7 +1653,7 @@
 
         <!--tab 5 start-->
 
-        <mat-tab disabled>
+        <mat-tab >
           <ng-template mat-tab-label>
             <div>{{'Reference Document'}}</div>
           </ng-template>
@@ -1672,7 +1661,7 @@
           <form [formGroup]="vendorRegistrationForm">
           <div class="row">
             <div class="col-md-4" *ngFor="let doc of attachmentList">
-              <div *ngIf="doc.requiredOnAdminPortal && doc.isActive">
+              <div *ngIf="doc.requiredOnCitizenPortal && doc.isActive">
                 <label>{{doc.documentLabelEn}}
                   <span class="text-danger" *ngIf="doc.mandatory">*</span>
                 </label>
@@ -1708,7 +1697,7 @@
           </div> -->
 
           <app-action-bar [uploadFiles]="uploadFilesArray" [form]="vendorRegistrationForm"
-          (tabIndex)="onFormTabChange($event)"  [paymentGateway]="paymentGateway"
+          (tabIndex)="onFormTabChange($event,attachmentdetails , vendorRegistrationForm )"  [paymentGateway]="paymentGateway"
             (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next:6, back:3} ">
           </app-action-bar>
 
