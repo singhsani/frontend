@@ -19,7 +19,7 @@
 					<div>{{'license_holder_detail' | translate:translateKey}}</div>
 				</ng-template>
 
-				<form [formGroup]="licenseHolderDetail"> 
+				<form [formGroup]="licenseHolderDetail">
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput readonly required placeholder="{{'license_no' | translate:translateKey}}"
@@ -174,7 +174,7 @@
 					<div>{{'business_detail' | translate:translateKey}}</div>
 				</ng-template>
 
-				<form [formGroup]="businessDetail"> 
+				<form [formGroup]="businessDetail">
 				  <div class="row">
 					<div class="col-md-4 ngSelect">
 						<ng-select  placeholder="{{'business_under_zone' | translate:translateKey}} " class="asteriskmarkRequired" formControlName="zoneNo" required (change)="onChangedZone($event);">
@@ -350,7 +350,7 @@
 					<div>{{'insert_animal_detail' | translate:translateKey}}</div>
 				</ng-template>
 
-				<form [formGroup]="insertAnimalDetail"> 
+				<form [formGroup]="insertAnimalDetail">
 				<!-- table -->
 				<div class="row  pb-3">
 					<div class="col-md-10">
@@ -467,7 +467,12 @@
 				<ng-template mat-tab-label>
 					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
-				<form [formGroup]="animalPondRenewForm"> 
+        <div class="alert alert-warning">
+          {{'Note' | translate:translateKey}} :
+          {{'File size more than 2 MB not allowed; Upload only JPG, JPEG and PDF file.' |
+          translate:translateKey}}
+        </div>
+				<form [formGroup]="animalPondRenewForm">
 				<div class="row">
 					<div class="col-md-4"
 						*ngFor="let doc of animalPondRenewForm.get('serviceDetail').get('serviceUploadDocuments').value">
