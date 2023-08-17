@@ -13,7 +13,7 @@
 				<ng-template mat-tab-label>
 					<div>{{'license_holder_detail' | translate:translateKey}}</div>
 				</ng-template>
-				<form [formGroup]="licenseHolderDetail"> 
+				<form [formGroup]="licenseHolderDetail">
 				<div class="row">
 					<div class="col-md-4 ngSelect" formGroupName="personType">
 						<ng-select placeholder="{{'person_type' | translate:translateKey}} " formControlName="code"
@@ -144,7 +144,7 @@
 				<ng-template mat-tab-label>
 					<div>{{'business_detail' | translate:translateKey}}</div>
 				</ng-template>
-				<form [formGroup]="businessDetail"> 
+				<form [formGroup]="businessDetail">
 				<div class="row">
 					<!-- <div class="col-md-4 ngSelect" formGroupName="zoneNo">
 						<ng-select  required placeholder="{{'business_under_zone' | translate:translateKey}} " formControlName="code"
@@ -154,7 +154,7 @@
 						</ng-select>
 						<control-messages [control]="animalPondNewForm.get('zoneNo').get('code')"></control-messages>
 					  </div> -->
-<!-- 			
+<!--
 					  <div class="col-md-4 ngSelect" formGroupName="wardNo" >
 						<ng-select required placeholder="{{'ward_no' | translate:translateKey}} " formControlName="code"
 						 (change)="onChangedWard($event)">
@@ -343,7 +343,7 @@
 				<ng-template mat-tab-label>
 					<div>{{'insert_animal_detail' | translate:translateKey}}</div>
 				</ng-template>
-				<form [formGroup]="insertAnimalDetail"> 
+				<form [formGroup]="insertAnimalDetail">
 				<!-- table -->
 				<!-- <div class="row justify-content-between">
 					<div class="col-md-10"> </div>
@@ -468,10 +468,15 @@
 				<ng-template mat-tab-label>
 					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
-				<form [formGroup]="attachmentDetail"> 
+        <div class="alert alert-warning">
+          {{'Note' | translate:translateKey}} :
+          {{'File size more than 2 MB not allowed; Upload only JPG, JPEG and PDF file.' |
+          translate:translateKey}}
+        </div>
+				<form [formGroup]="attachmentDetail">
 				<div class="row">
 					<div class="col-md-4"
-					
+
 						*ngFor="let doc of animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments').value">
 						<div *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
 							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn :
