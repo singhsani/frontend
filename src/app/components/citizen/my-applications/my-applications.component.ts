@@ -1145,4 +1145,19 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			})
 		})
 	}
+
+	copyRemarksContent() : void {
+		let selBox = document.createElement('textarea');
+		selBox.style.position = 'fixed';
+		selBox.style.left = '0';
+		selBox.style.top = '0';
+		selBox.style.opacity = '0';
+		selBox.value = this.rejectRemarks;
+		document.body.appendChild(selBox);
+		selBox.focus();
+		selBox.select();
+		document.execCommand('copy');
+		document.body.removeChild(selBox);
+		this.toastr.success("Content copied to clipboard")
+	}
 }
