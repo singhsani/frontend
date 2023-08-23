@@ -458,7 +458,7 @@ export class SwimmingPoolComponent implements OnInit {
       applicantEmergencyNumber: null,
       applicantBirthDate: [null, {disabled: true }],
       applicantAge: null,
-      applicantJoiningMonth: [null, Validators.required],
+      applicantJoiningMonth: [null, {disabled: true }],
       applicantIDProof: this.fb.group({
         code: null,
         name: null,
@@ -490,6 +490,7 @@ export class SwimmingPoolComponent implements OnInit {
     this.applicantDetail.get("applicantAge").setValue(this.applicantageyear);
     this.applicantDetail.get('applicantBirthDate').disable()
     this.applicantDetail.get("applicantAge").disable()
+    this.applicantDetail.get('applicantJoiningMonth').disable();
     if (this.applicantageyear <= 18) {
       this.isApplicateAgeGreaterThanEighteen = true;
     }
