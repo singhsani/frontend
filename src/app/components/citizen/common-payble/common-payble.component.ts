@@ -530,11 +530,15 @@ export class CommonPaybleComponent implements OnInit {
 
     this.formService.getCitizenForm(resData).subscribe(data => {
       if( serviceType == 'VEHICLE'){
-        this.isVehileTax = true;
-        this.inputData = data.data;
-        this.paymentsForm.get('amount').setValue(this.inputData[0].amount);
-        this.paymentsForm.get('refNumber').setValue(this.inputData[0].fileNumber);
-        this.uniqueId = this.inputData[0].uniqueId;
+        if(resData.refNumber){
+          this.isVehileTax = true;
+          this.inputData = data.data;
+          this.paymentsForm.get('amount').setValue(this.inputData[0].amount);
+          this.paymentsForm.get('refNumber').setValue(this.inputData[0].fileNumber);
+          this.uniqueId = this.inputData[0].uniqueId;
+        }else{
+          this.alertService.info('No Application Found!')
+        }
       }else{
         this.inputData = data.data;
       }

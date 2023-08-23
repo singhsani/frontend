@@ -579,7 +579,6 @@
                             </mat-icon>
                             {{'print_acknolowdgement_receipt' | translate:translateKey}}
                         </button>
-                        
                         </mat-menu>
 
                     </ng-container>
@@ -706,6 +705,22 @@
                                     {{'print_view' | translate:translateKey}}
                                 </button>
                             </ng-container>
+
+                            <button mat-menu-item *ngIf="row.fileStatus == 'PAYMENT' && row.serviceType === 'SHOP_ESTAB_APPLICATION'" color="primary"
+                            (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
+                            <mat-icon class="m-1" title="{{'preview_application' | translate:translateKey}}">
+                                remove_red_eye
+                            </mat-icon>
+                            {{'preview_application' | translate:translateKey}}
+                            </button> 
+
+                            <button mat-menu-item
+                            *ngIf="(row.fileStatus === 'PAYMENT' && row.serviceType === 'SHOP_ESTAB_APPLICATION')"
+                            color="primary" (click)="printPaymentReceipt(row.serviceDetail.code,row.serviceFormId)">
+                            <mat-icon class="m-1" title="{{'print_acknolowdgement_receipt' | translate:translateKey}}">print
+                            </mat-icon>
+                            {{'print_acknolowdgement_receipt' | translate:translateKey}}
+                        </button>
 
                             <button mat-menu-item *ngIf="(row.fileStatus === 'PAYMENT')" color="primary"
                             (click)="redirectToPayment(row.serviceDetail.code, row.serviceFormId)">
