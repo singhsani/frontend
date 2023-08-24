@@ -429,7 +429,7 @@ export class CommonPaybleComponent implements OnInit {
     this.paymentsForm.get('amount').setValue(null);
 
     if (serviceType === 'PAY_PROF_TAX') {
-
+      this.duesDetailsArr = [];
       this.formService.getDueDetails(refNumber).subscribe(
         res => {
           if (res && res.data && Object.keys(res.data).length) {
