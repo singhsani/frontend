@@ -306,6 +306,22 @@
                                 Why Rejected
                             </button>
 
+                            <ng-container *ngIf="row.serviceType === 'VEHICLE' || row.serviceType === 'PEC_REG'">
+                                <button mat-menu-item *ngIf="isEditOptDisplay(row)" color="primary"
+                                    (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
+                                    <mat-icon class="m-1" title="{{'edit_application' | translate:translateKey}}">edit
+                                    </mat-icon>
+                                    {{'edit_application' | translate:translateKey}}
+                                </button>
+                            
+                                <button mat-menu-item *ngIf="isDeleteOptDisplay(row)" color="primary"
+                                    (click)="deleteRecord(row.serviceDetail.code, row.serviceFormId)">
+                                    <mat-icon class="m-1" title="{{'delete_application' | translate:translateKey}}">delete
+                                    </mat-icon>
+                                    {{'delete_application' | translate:translateKey}}
+                                </button>
+                            </ng-container>
+
                         </mat-menu>
                     </ng-container>
                     <!-- /case1 -->
@@ -721,6 +737,23 @@
                             </mat-icon>
                             {{'print_acknolowdgement_receipt' | translate:translateKey}}
                         </button>
+
+                        <ng-container  *ngIf="(row.fileStatus === 'PAYMENT' && row.serviceType === 'SHOP_ESTAB_TRANSFER')">
+                            <button mat-menu-item color="primary"
+                            (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
+                            <mat-icon class="m-1" title="{{'preview_application' | translate:translateKey}}">
+                                remove_red_eye
+                            </mat-icon>
+                            {{'preview_application' | translate:translateKey}}
+                            </button> 
+    
+                            <button mat-menu-item
+                            color="primary" (click)="printPaymentReceipt(row.serviceDetail.code,row.serviceFormId)">
+                            <mat-icon class="m-1" title="{{'print_acknolowdgement_receipt' | translate:translateKey}}">print
+                            </mat-icon>
+                            {{'print_acknolowdgement_receipt' | translate:translateKey}}
+                        </button>
+                        </ng-container>
 
                             <button mat-menu-item *ngIf="(row.fileStatus === 'PAYMENT')" color="primary"
                             (click)="redirectToPayment(row.serviceDetail.code, row.serviceFormId)">

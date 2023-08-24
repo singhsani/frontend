@@ -16,6 +16,7 @@ import { MatDialog } from '@angular/material';
 import { ApplicantDetailsComponent } from 'src/app/shared/components/applicant-details/applicant-details.component';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { EngineeringService } from '../../../engineering/engineering.service';
+import { LicenseConfiguration } from '../../../licences/license-configuration';
 
 declare var $: any;
 
@@ -45,6 +46,7 @@ export class PecRegistrationComponent implements OnInit {
 	bankDetail: FormGroup;
 	registrationDetail: FormGroup;
 	actDetail: FormGroup;
+	attachmentdetail : FormGroup;
 
 	genderArray: any = [];
 	professionArray: any = [];
@@ -75,6 +77,7 @@ export class PecRegistrationComponent implements OnInit {
 	CanEdit: boolean = true;
 	censusNo: boolean = true;
 	isBlockNo: boolean = false;
+	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
 
 
 	constructor(
@@ -202,11 +205,16 @@ export class PecRegistrationComponent implements OnInit {
 			applicableRate: [{ value: 0, disabled: true }],
 			otherProfession: [null]
 		});
+
+		this.attachmentdetail = this.fb.group({
+			attachments : [null]
+		});
 		
 		this.commonService.createCloneAbstractControl(this.employerDetail,this.pecRegForm);
 		this.commonService.createCloneAbstractControl(this.bankDetail,this.pecRegForm);
 		this.commonService.createCloneAbstractControl(this.registrationDetail,this.pecRegForm);
 		this.commonService.createCloneAbstractControl(this.actDetail,this.pecRegForm);
+		this.commonService.createCloneAbstractControl(this.attachmentdetail,this.pecRegForm);
 		
 		this.setDefaultFeildsStepWise();		
 	}
@@ -270,7 +278,9 @@ export class PecRegistrationComponent implements OnInit {
 					$('.profession ng-select').addClass('ng-select-disabled');
 				}, 300);
 			}
-			
+			if(index = 5){
+				this.saveFrom()
+			}
 		}
 	}
 
@@ -358,7 +368,10 @@ export class PecRegistrationComponent implements OnInit {
 			otherProfession: [null],
 			attachments: [],
 			formStatus: null,
-			officeResidentialAddressSame: null
+			officeResidentialAddressSame: null,
+			apiType : "pecForm",
+			canEdit: true,
+
 		});
 
 		/** set default addressType */
@@ -581,6 +594,9 @@ export class PecRegistrationComponent implements OnInit {
 	 * This method use for set applicant details on submit
 	 */
 	getUserDetailsAndSubmit() {
+		if (this.pecRegForm.get('entry').get('code').value == 'ENTRY_008'  || this.pecRegForm.get('entry').get('code').value == 'ENTRY_009' || this.pecRegForm.get('entry').get('code').value == 'ENTRY_010') {
+			this.pecRegForm.get('professionConstitution').get('code').setValue('OTHER');
+		}
 		this.onSubmit();
 	}
 
@@ -593,19 +609,19 @@ export class PecRegistrationComponent implements OnInit {
 			this.commonService.openAlert("Warning", this.config.ALL_FEILD_REQUIRED_MESSAGE, "warning", "", cb => {
 				switch (true) {
 					case (count <= 30):
-						this.tabIndex = 0;
+						this.licenseConfiguration.currentTabIndex = 0;
 						break;
 					case (count <= 33):
-						this.tabIndex = 1;
+						this.licenseConfiguration.currentTabIndex = 1;
 						break;
 					case (count <= 41):
-						this.tabIndex = 2;
+						this.licenseConfiguration.currentTabIndex = 2;
 						break;
 					case (count <= 46):
-						this.tabIndex = 3;
+						this.licenseConfiguration.currentTabIndex = 3;
 						break;
 					default:
-						this.tabIndex = 0;
+						this.licenseConfiguration.currentTabIndex = 0;
 				}
 			});
 			return;
@@ -717,7 +733,7 @@ export class PecRegistrationComponent implements OnInit {
 					this.employerDetail.disable();
 					this.bankDetail.disable();
 					this.registrationDetail.disable();
-					this.actDetail.disable();					
+					this.actDetail.disable();			
 					this.isDeleteBtnShow = false;
 				}
 				if (!(res.censusNo.length == 0)) {
@@ -730,7 +746,11 @@ export class PecRegistrationComponent implements OnInit {
 				}
 				if (res.formStatus == "SUBMITTED") {
 					this.pecRegForm.disable();
+					this.pecRegForm.get('canEdit').setValue(false)
 
+				}
+				if(res.formStatus == "DRAFT"){
+					this.getAllBlockNos(res.wardId)
 				}
 			});
 
@@ -1121,5 +1141,19 @@ export class PecRegistrationComponent implements OnInit {
 		"formStatus": "SUBMITTED",
 		"officeResidentialAddressSame": true
 	};
+
+
+	saveFrom(){
+		if(this.pecRegForm.valid){
+		  this.formService.saveFormData(this.pecRegForm.getRawValue()).subscribe(
+			res => {
+			  this.pecRegForm.patchValue(res);
+			},
+			err => {
+			 this.commonService.openAlert('error', err, 'error')
+			}
+		  )
+		}
+	  }
 
 }
