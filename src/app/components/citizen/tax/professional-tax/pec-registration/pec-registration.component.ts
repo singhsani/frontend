@@ -636,7 +636,7 @@ export class PecRegistrationComponent implements OnInit {
 						// 		this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
 						// 	});
 						// } else {
-						this.commonService.openAlert("PEC Registration Successful", "", "success", `Your Application Number is<br> <b>${res.uniqueId}</b> <br> Your Application is valid for 3 working days only. Kindly visit respective ward office with all the valid documents for approval.`, cb => {
+						this.commonService.openAlert("PEC Application Submitted Successfully", "", "success", `Your Application Number is<br> <b>${res.uniqueId}</b> <br> Your Application is valid for 3 working days only. Kindly visit respective ward office with all the valid documents for approval.`, cb => {
 							this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
 						});
 						// }
@@ -893,11 +893,18 @@ export class PecRegistrationComponent implements OnInit {
 				this.actDetail.get('otherProfession').setValue(null);
 				this.actDetail.get('otherProfession').clearValidators();
 				this.actDetail.get('otherProfession').updateValueAndValidity();
-
 				if (!this.employerDetail.get('pecNo').value) {
 					this.actDetail.get('subEntry').enable();
 					this.actDetail.get('professionConstitution').enable();
 				}
+			}
+			if(this.actDetail.get('subEntry').get('code').value && this.actDetail.get('professionConstitution').get('code').value){
+				this.actDetail.get('subEntry').disable();
+				this.actDetail.get('professionConstitution').disable();
+				
+			}else{
+				this.actDetail.get('subEntry').enable();
+				this.actDetail.get('professionConstitution').enable();
 			}
 		});
 	}
