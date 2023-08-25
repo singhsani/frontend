@@ -22,7 +22,7 @@
 	<!-- <form [formGroup]="vehicleRegistrationForm"> -->
 
 		<mat-tab-group mat-stretch-tabs class="stepperNav" (selectedTabChange)="calculateTax($event)"
-		[(selectedIndex)]="tabIndex" dynamicHeight="true">
+		[(selectedIndex)]="licenseConfiguration.currentTabIndex" dynamicHeight="true">
 
 		<!-- first step start-->
 			<mat-tab [label]="stepLable1 | translate: translateKey" disabled>
@@ -138,20 +138,22 @@
 					</div> -->
 				</div>
 
-				<div class="fotButtonBar mt-0 clearfix">
+				<!-- <div class="fotButtonBar mt-0 clearfix">
 					<div class="col-sm-12 col-md-12" *ngIf="this.vehicleRegistrationForm.get('formStatus').value == 'DRAFT'">
 						<button type="button" class=" pull-right" mat-raised-button color="primary"
 							(click)="onTabChange(1, vehicleDetails, vehicleRegistrationForm,false)">{{'save_and_next' |
 							translate:
-							actionBarKey}}</button>
+							actionBarKey}}</button> -->
 						<!-- <button type="button" mat-raised-button color="warn" (click)="resetForm()">{{'clear' | translate: actionBarKey}}</button> -->
-					</div>
+					 <!-- </div>
 					<div class="col-sm-12 col-md-12" *ngIf="this.vehicleRegistrationForm.get('formStatus').value == 'SUBMITTED'">
 						<button type="button" class=" pull-right" mat-raised-button color="primary"
 							(click)="tabIndex = 1">{{'Next' |
 							translate:actionBarKey}}</button>
 					</div>
-				</div>
+				</div> -->
+				<app-action-bar [form]="vehicleRegistrationForm" (tabIndex)="licenseConfiguration.onTabChange($event, vehicleDetails, vehicleRegistrationForm)"
+					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 				</form>
 
 			</mat-tab>
@@ -221,7 +223,7 @@
 
 				</div>
 
-				<div class="fotButtonBar mt-0 clearfix">
+				<!-- <div class="fotButtonBar mt-0 clearfix">
 					<div class="col-sm-12 col-md-12">
 						<button type="button" class="pull-left" color="primary" mat-raised-button
 							(click)="tabIndex = 0">{{'back' |
@@ -234,9 +236,10 @@
 							*ngIf="this.vehicleRegistrationForm.get('formStatus').value == 'SUBMITTED'" (click)="tabIndex = 2">{{'Next' |
 							translate:actionBarKey}}</button>
 
-						<!-- <button type="button" mat-raised-button color="warn" (click)="resetForm()">{{'clear' | translate: actionBarKey}}</button> -->
 					</div>
-				</div>
+				</div> -->
+				<app-action-bar [form]="vehicleRegistrationForm" (tabIndex)="licenseConfiguration.onTabChange($event, ownerDetails, vehicleRegistrationForm)"
+					[stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
             </form>
 			</mat-tab>
 			<!-- second step end-->
@@ -310,7 +313,7 @@
 					</div>
 				</div>
 
-				<div class="fotButtonBar mt-0 clearfix">
+				<!-- <div class="fotButtonBar mt-0 clearfix">
 					<div class="col-sm-12 col-md-12">
 						<button type="button" class="pull-left" mat-raised-button color="primary"
 							(click)="tabIndex = 1">{{'back' |
@@ -321,15 +324,17 @@
 							actionBarKey}}</button>
 						<button type="button" class="pull-right" mat-raised-button color="primary"
 							*ngIf="this.vehicleRegistrationForm.get('formStatus').value == 'SUBMITTED'" (click)="onTabChangeToDisableAttachment(3)">{{'Next' |
-							translate:actionBarKey}}</button>
+							translate:actionBarKey}}</button> -->
 						<!-- <button [disabled]="!isSubmitBtnVisible" mat-raised-button class="pull-right" color="success" (click)="onSubmit()">{{'submit'
 							| translate:
 							actionBarKey}}</button> -->
 						<!-- <button type="button" mat-raised-button color="warn" (click)="resetForm()">{{'clear' | translate: actionBarKey}}</button> -->
-					</div>
-				</div>
+					<!-- </div>
+				</div> -->
 				<!-- <button *ngIf="makePaymentBtn" mat-raised-button color="success" (click)="processPayment()">{{'process_payment' |
 						translate: actionBarKey}}</button> -->
+						<app-action-bar [form]="vehicleRegistrationForm" (tabIndex)="licenseConfiguration.onTabChange($event, taxDetails, vehicleRegistrationForm)"
+					[stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
 			</form>
 			</mat-tab>
 
@@ -360,12 +365,13 @@
 				<div class="fotButtonBar mt-0 clearfix">
 					<div class="col-sm-12 col-md-12">
 						<button type="button" class="pull-left" color="primary" type="button" mat-raised-button
-							(click)="tabIndex = 2">{{'back' | translate:actionBarKey}}</button>
-						<!-- <button *ngIf="isDeleteBtnShow" class="pull-right" mat-raised-button color="success" (click)="onSubmit()">{{'submit' | translate:actionBarKey}}</button> -->
+							(click)="licenseConfiguration.currentTabIndex = 2">{{'back' | translate:actionBarKey}}</button>
 						<ng-container *ngIf="this.vehicleRegistrationForm.get('formStatus').value == 'DRAFT'">
 							<button [disabled]="this.vehicleRegistrationForm.get('canEdit').value == false" mat-raised-button
 								class="pull-right" color="success" (click)="onSubmit()">{{'submit' | translate:
 								actionBarKey}}</button>
+								<button type="button" mat-raised-button color="primary" [disabled]="isSaveBtnDisabled" (click)="onTabChange(3,attachmentDetails ,vehicleRegistrationForm, true)" class="pull-right">{{'Save' |
+									translate:actionBarKey}}</button>
 						</ng-container>
 					</div>
 				</div>

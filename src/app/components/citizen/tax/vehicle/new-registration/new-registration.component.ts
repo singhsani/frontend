@@ -14,6 +14,7 @@ import * as _ from 'lodash';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { ProfessionalTaxService } from '../../../../../core/services/citizen/data-services/professional-tax.service';
 import { PftConfig } from '../../professional-tax/pftConfig';
+import { LicenseConfiguration } from '../../../licences/license-configuration';
 
 declare var $: any;
 
@@ -67,9 +68,10 @@ export class NewRegistrationComponent implements OnInit {
   attachmentList: any = [];
   showButton: boolean = false;
   placeHolderMessage = 'Please enter valid Registration no. e.g. GJ-06-AB-1234';
-
+  licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
 
   public config: PftConfig;
+  isSaveBtnDisabled: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -165,7 +167,9 @@ export class NewRegistrationComponent implements OnInit {
      })
     /* Step 3 controls end */
 
-
+    this.attachmentDetails = this.fb.group({
+      attachments: [],
+    })
 
     this.vehicleRegistrationForm = this.fb.group({
       id: null,
@@ -192,6 +196,7 @@ export class NewRegistrationComponent implements OnInit {
       dishonorCharges: [{ value: 0, disabled: true }],
       serviceFormId: null,
       formStatus: null,
+      apiType : 'vehicle',
     /* Step 4 controls start */
      attachments: [],
     /* Step 4 controls end */
@@ -216,6 +221,7 @@ export class NewRegistrationComponent implements OnInit {
     this.commonService.createCloneAbstractControl(this.vehicleDetails , this.vehicleRegistrationForm)
     this.commonService.createCloneAbstractControl(this.ownerDetails , this.vehicleRegistrationForm)
     this.commonService.createCloneAbstractControl(this.taxDetails , this.vehicleRegistrationForm)
+    this.commonService.createCloneAbstractControl(this.attachmentDetails , this.vehicleRegistrationForm)
   }
 
   /**
@@ -270,6 +276,7 @@ export class NewRegistrationComponent implements OnInit {
         this.vehicleDetails.patchValue(res);
         this.ownerDetails.patchValue(res);
         this.taxDetails.patchValue(res)
+        this.attachmentDetails.patchValue(res)
         this.showButton = true;
 
         if (!this.vehicleRegistrationForm.get('canEdit').value || this.vehicleRegistrationForm.get('formStatus').value == 'SUBMITTED') {
@@ -286,9 +293,9 @@ export class NewRegistrationComponent implements OnInit {
             value.receiptDate = moment(value.receiptDate).format("DD/MM/YYYY")
           });
         }
-        if (this.vehicleRegistrationForm.get('formStatus').value == "DRAFT") {
-          this.vehicleRegistrationForm.get('attachments').setValue([]);
-        }
+        // if (this.vehicleRegistrationForm.get('formStatus').value == "DRAFT") {
+        //   this.vehicleRegistrationForm.get('attachments').setValue([]);
+        // }
 
       });
   //  });
@@ -394,19 +401,19 @@ export class NewRegistrationComponent implements OnInit {
         switch (true) {
           case (count <= 16):
             this.markFormGroupTouched(this.vehicleDetails)
-            this.tabIndex = 0;
+            this.licenseConfiguration.currentTabIndex = 0;
             break;
           case (count <= 27):
             this.markFormGroupTouched(this.ownerDetails)
-            this.tabIndex = 1;
+            this.licenseConfiguration.currentTabIndex = 1;
             break;
           case (count <= 33):
             this.markFormGroupTouched(this.taxDetails)
-            this.tabIndex = 2;
+            this.licenseConfiguration.currentTabIndex = 2;
             break;
           default:
             this.markFormGroupTouched(this.vehicleDetails)
-            this.tabIndex = 0;
+            this.licenseConfiguration.currentTabIndex = 0;
         }
       });
       return;
@@ -618,7 +625,7 @@ export class NewRegistrationComponent implements OnInit {
 
         this.taxDetails.get('totalPayable').setValue(totalPayable);
       },err=>{
-        this.tabIndex=0;
+        this.licenseConfiguration.currentTabIndex=0;
       }
       );
     }
@@ -676,15 +683,16 @@ export class NewRegistrationComponent implements OnInit {
         organizationalAry.forEach((element:any) => {
           mainControl.get(element).setValue(controlName.get(element).value);
         });
-        this.tabIndex = index;
+        this.licenseConfiguration.currentTabIndex = index;
         if(isSubmitted){
-          this.onSubmit()
+          //this.onSubmit()
+          this.saveFrom()
         }
     }
   }
 
   onTabChangeToDisableAttachment(index: number) {
-    this.tabIndex = index;
+    this.licenseConfiguration.currentTabIndex = index;
     setTimeout( function(){
       $('.closeAttachFile').remove();
     }, 300);
@@ -755,4 +763,16 @@ export class NewRegistrationComponent implements OnInit {
     "totalPayable": 5294.2875,
   };
 
+  saveFrom(){
+    if(this.vehicleRegistrationForm.valid){
+      this.formService.saveFormData(this.vehicleRegistrationForm.getRawValue()).subscribe(
+        res => {
+          this.vehicleRegistrationForm.patchValue(res);
+        },
+        err => {
+         this.commonService.openAlert('error', err, 'error')
+        }
+      )
+    }
+  }
 }

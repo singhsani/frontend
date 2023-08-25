@@ -19,7 +19,7 @@
 <mat-card class="formClass cardBorder">
 	<!--Start  form  -->
 	<!-- <form [formGroup]="pecRegForm"> -->
-		<mat-tab-group mat-stretch-tabs class="stepperNav" [(selectedIndex)]="tabIndex" dynamicHeight="true">
+		<mat-tab-group mat-stretch-tabs class="stepperNav" [(selectedIndex)]="licenseConfiguration.currentTabIndex" dynamicHeight="true">
 
 			<!-- first step start-->
 			<mat-tab [label]="stepLable1 | translate: translateKey" disabled>
@@ -175,12 +175,14 @@
 						[addressFormGroup]="employerDetail.get('residentialAddress')"></app-address>
 				</div>
 
-				<div class="fotButtonBar1 clearfix">
+				<!-- <div class="fotButtonBar1 clearfix">
 					<div class="col-sm-12 col-md-12">
 						<button class="pull-right" type="button" mat-raised-button color="primary"
 							(click)="onTabChange(1,employerDetail, pecRegForm)">{{'next' | translate:actionBarKey}}</button>
 					</div>
-				</div>
+				</div> -->
+				<app-action-bar [form]="pecRegForm" (tabIndex)="licenseConfiguration.onTabChange($event, employerDetail, pecRegForm)"
+					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 </form>
 
 			</mat-tab>
@@ -213,14 +215,16 @@
 
 				</div>
 
-				<div class="fotButtonBar1 clearfix">
+				<!-- <div class="fotButtonBar1 clearfix">
 					<div class="col-sm-12 col-md-12">
 						<button class="liteBorder pull-left" type="button" mat-raised-button
 							(click)="tabIndex = 0">{{'back' | translate:actionBarKey}}</button>
 						<button class="pull-right" type="button" mat-raised-button color="primary"
 						(click)="onTabChange(2,bankDetail, pecRegForm)">{{'next' | translate:actionBarKey}}</button>
 					</div>
-				</div>
+				</div> -->
+				<app-action-bar [form]="pecRegForm" (tabIndex)="licenseConfiguration.onTabChange($event, bankDetail, pecRegForm)"
+					[stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 </form>
 			</mat-tab>
 			<!-- second step end-->
@@ -355,14 +359,16 @@
 						</div>
 					</div>
 				</div>
-				<div class="fotButtonBar1 clearfix">
+				<!-- <div class="fotButtonBar1 clearfix">
 					<div class="col-sm-12 col-md-12">
 						<button class="liteBorder pull-left" type="button" mat-raised-button
 							(click)="tabIndex = 1">{{'back' | translate:actionBarKey}}</button>
 						<button class="pull-right" type="button" mat-raised-button color="primary"
 						(click)="onTabChange(3,registrationDetail, pecRegForm)">{{'next' | translate:actionBarKey}}</button>
 					</div>
-				</div>
+				</div> -->
+				<app-action-bar [form]="pecRegForm" (tabIndex)="licenseConfiguration.onTabChange($event, registrationDetail, pecRegForm)"
+					[stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
 </form>
 			</mat-tab>
 			<!-- third step end-->
@@ -381,7 +387,7 @@
 					</div>
 
 					<div class="col-md-4 ngSelect selectCategoryDropdown subEntry asteriskmarkRequired" formGroupName="subEntry">
-						<ng-select placeholder="{{'sub_entry_no' | translate: translateKey}} " [disabled]="true"
+						<ng-select placeholder="{{'sub_entry_no' | translate: translateKey}} " 
 							[items]="subEntryNoArray" bindLabel="name" bindValue="code" formControlName="code"
 							title="{{findSubEntryName()}}" (change)="onSubEntryChange($event)">
 							<ng-template ng-option-tmp let-item="item">
@@ -424,14 +430,17 @@
 					</mat-form-field>
 				</div>
 
-				<div class="fotButtonBar1 clearfix">
+				<!-- <div class="fotButtonBar1 clearfix">
 					<div class="col-sm-12 col-md-12">
 						<button class="liteBorder pull-left" type="button" mat-raised-button
 							(click)="tabIndex = 2">{{'back' | translate:actionBarKey}}</button>
 						<button class="pull-right" type="button" mat-raised-button color="primary"
 						(click)="onTabChange(4,actDetail, pecRegForm)">{{'next' | translate:actionBarKey}}</button>
 					</div>
-				</div>
+				</div> -->
+
+				<app-action-bar [form]="pecRegForm" (tabIndex)="licenseConfiguration.onTabChange($event, actDetail, pecRegForm)"
+				[stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
 </form>
 			</mat-tab>
 
@@ -459,9 +468,11 @@
 				<div class="fotButtonBar1 clearfix">
 					<div class="col-sm-12 col-md-12">
 						<button class="liteBorder pull-left" type="button" mat-raised-button
-							(click)="tabIndex = 3">{{'back' | translate:actionBarKey}}</button>
+							(click)="licenseConfiguration.currentTabIndex = 3">{{'back' | translate:actionBarKey}}</button>
 						<button *ngIf="isDeleteBtnShow" class="pull-right" mat-raised-button color="success"
 							(click)="getUserDetailsAndSubmit()">{{'submit' | translate:actionBarKey}}</button>
+							<button *ngIf="isDeleteBtnShow" type="button" class="pull-right" mat-raised-button color="primary"
+							(click)="onTabChange(5, attachmentdetail, pecRegForm)">{{'save'  | translate:translateKey}}</button>
 					</div>
 				</div>
 </form>
