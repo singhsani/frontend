@@ -782,11 +782,15 @@ export class SwimmingPoolComponent implements OnInit {
         this.isCategoryName= true;
         this.swimmimgPoolBookingForm.get('isRenewalForm').setValue(true);
         this.generalDetails.get('birthDate').setValue(res.applicantBirthDate);
+        this.applicantDetail.get("applicantJoiningMonth").disable();
         this.CheckTypeRenewal(res.applicantIDProof.code)
         if(this.istodaydate.getDate() <= 20 ){
           this.chosenMonthHandler(this.startMinMonth.setMonth(this.startMinMonth.getMonth()));
         }else{
-        this.chosenMonthHandler(this.startMinMonth.setMonth(this.startMinMonth.getMonth() + 1));
+          let  month : number = this.startMinMonth.getMonth();
+          console.log('month == month+1:',month == month+1);
+          this.chosenMonthHandler(this.startMinMonth.setMonth(month == month+1 ? month : new Date().getMonth()+1));
+          console.log('Month:',month);
         }
         this.defaultAsperPool();
         // this.swimmimgPoolBookingForm.get('remarks').enable();
