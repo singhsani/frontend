@@ -252,6 +252,9 @@ export class SwimmingPoolComponent implements OnInit {
    * Filter details as per pool name selection
    */
   filterAsperBatchName(event: any) {
+    this.isBatchname=false;
+    this.generalDetails.get('batchName').get('name').setValidators(null);
+    this.generalDetails.get('batchName').get('name').updateValueAndValidity();
     let obj = {
        batchCode : event,
        poolName : this.generalDetails.get('swimmingPoolName').get('code').value,
