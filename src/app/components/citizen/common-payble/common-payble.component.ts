@@ -323,7 +323,9 @@ export class CommonPaybleComponent implements OnInit {
   updateIsProfessionalTax(paySerCode) {
     if (paySerCode === 'PAY_PROF_TAX' || paySerCode === 'PEC_REG' || paySerCode === 'PRC_REG') {
       this.isProfessionalTax = true;
-    } else {
+    } else if(paySerCode === 'VEHICLE'){
+      this.paymentsForm.get('refNumber').setValidators([Validators.required])
+    }else {
       this.isProfessionalTax = false;
       this.paymentsForm.get('refNumber').setValidators(null);
     }
@@ -537,7 +539,7 @@ export class CommonPaybleComponent implements OnInit {
           this.paymentsForm.get('refNumber').setValue(this.inputData[0].fileNumber);
           this.uniqueId = this.inputData[0].uniqueId;
         }else{
-          this.alertService.info('No Application Found!')
+          this.alertService.info('Enter all the required information')
         }
       }else{
         this.inputData = data.data;
