@@ -156,8 +156,8 @@
 					<app-action-bar [form]="vehicleRegistrationForm" (tabIndex)="licenseConfiguration.onTabChange($event, vehicleDetails, vehicleRegistrationForm)"
 						[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 				</ng-container>
-				<div class="fotButtonBar mt-0 clearfix">
-				<div class="col-sm-12 col-md-12" *ngIf="this.vehicleRegistrationForm.get('formStatus').value == 'SUBMITTED'">
+				<div class="fotButtonBar mt-0 clearfix"  *ngIf="this.vehicleRegistrationForm.get('formStatus').value == 'SUBMITTED'">
+					<div class="col-sm-12 col-md-12">
 					<button type="button" class=" pull-right" mat-raised-button color="primary"
 						(click)="licenseConfiguration.currentTabIndex = 1">{{'Next' |
 						translate:actionBarKey}}</button>
@@ -251,8 +251,10 @@
 				<app-action-bar [form]="vehicleRegistrationForm" (tabIndex)="licenseConfiguration.onTabChange($event, ownerDetails, vehicleRegistrationForm)"
 					[stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 				</ng-container>
-				<div class="fotButtonBar mt-0 clearfix">
-					<div class="col-sm-12 col-md-12" *ngIf="this.vehicleRegistrationForm.get('formStatus').value == 'SUBMITTED'">
+				<div class="fotButtonBar mt-0 clearfix" *ngIf="this.vehicleRegistrationForm.get('formStatus').value == 'SUBMITTED'">
+					<div class="col-sm-12 col-md-12" >
+						<button type="button" class="pull-left" color="primary" mat-raised-button (click)="licenseConfiguration.currentTabIndex = 0">{{'back' |
+							translate: actionBarKey}}</button>
 						<button type="button" class=" pull-right" mat-raised-button color="primary"
 							(click)="licenseConfiguration.currentTabIndex = 2">{{'Next' |
 							translate:actionBarKey}}</button>
@@ -357,6 +359,8 @@
 			    </ng-container>
 				<div class="fotButtonBar mt-0 clearfix">
 					<div class="col-sm-12 col-md-12" *ngIf="this.vehicleRegistrationForm.get('formStatus').value == 'SUBMITTED'">
+						<button type="button" class="pull-left" mat-raised-button color="primary" (click)="licenseConfiguration.currentTabIndex = 1">{{'back' |
+							translate: actionBarKey}}</button>
 						<button type="button" class=" pull-right" mat-raised-button color="primary"
 							(click)="licenseConfiguration.currentTabIndex = 3">{{'Next' |
 							translate:actionBarKey}}</button>
