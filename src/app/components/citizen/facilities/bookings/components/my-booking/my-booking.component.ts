@@ -648,6 +648,10 @@ export class MyBookingComponent implements OnInit {
 		if (element.resourceType === "SWIMMING_POOL") {
 			return false;
 		}
+		else if( element.resourceType == 'SWIMMING_POOL_RENEWAL') 
+        {
+            return false;
+        }
 		// ----------------------------------------------------------
 		return true;
 	}
