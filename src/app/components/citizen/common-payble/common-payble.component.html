@@ -93,6 +93,7 @@
                   <th>Interest {{rupeeSign}}</th>
                   <th>Penalty {{rupeeSign}}</th>
                   <th>Comp. Fee {{rupeeSign}}</th>
+                  <th>cheque return Penalty {{rupeeSign}}</th>
                   <th>Total Tax {{rupeeSign}}</th>
                   <th>Credit Amt {{rupeeSign}}</th>
                   <th>Fin. Year</th>
@@ -121,7 +122,8 @@
                     <td>{{dues.interest}}</td>
                     <td>{{dues.penaltyFee}}</td>
                     <td>{{dues.compFee}}</td>
-                    <td>{{dues.remainingProfessionalTax + dues.interest + dues.penaltyFee }}</td>
+                    <td>{{chequeReturn}}</td>
+                    <td>{{dues.remainingProfessionalTax + dues.interest + dues.penaltyFee + chequeReturn}}</td>
                     <td>{{dues.creditAmount ? dues.creditAmount: 0}}</td>
                     <td>{{dues.financialYearSlab}}</td>
                     <td>{{dues.dueDate ? (dues.dueDate | date: 'dd/MM/yyyy'): '-'}}</td>

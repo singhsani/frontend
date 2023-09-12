@@ -74,6 +74,8 @@ export class CommonPaybleComponent implements OnInit {
   rupeeSign='(₹)'
   isVehileTax : boolean = false;
   uniqueId: any;
+  chequeReturn = 0;
+  
 
   constructor(
     private formService: FormsActionsService,
@@ -442,6 +444,7 @@ export class CommonPaybleComponent implements OnInit {
             if (this.responseData.formType === 'BUS_REG_PEC') {
               if (this.responseData.pendingDemands && this.responseData.pendingDemands.length > 0) {
                 this.duesDetailsArr = _.cloneDeep(res.data.pendingDemands);
+                this.chequeReturn = res.data.chequeReturn
               }
             } else {
               if (this.responseData.prcPendingDemands && this.responseData.prcPendingDemands.length > 0) {
@@ -453,7 +456,7 @@ export class CommonPaybleComponent implements OnInit {
             }
 
             this.paymentsForm.get('id').setValue(this.responseData.serviceFormId);
-            this.paymentsForm.get('amount').setValue(this.responseData.dueAmount);
+            this.paymentsForm.get('amount').setValue(this.responseData.dueAmount + this.chequeReturn);
 
             if (res.data.messageForValidation != null) {
               this.toaster.warning(res.data.messageForValidation);
