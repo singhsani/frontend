@@ -25,7 +25,7 @@
 		</label>
 
 		<!-- delete button -->
-		<button title="Delete File" [hidden]="!canUpload || (form.get('canEdit') && !form.get('canEdit').value) || currentFileUpload" type="button" mat-icon-button color="warn" (click)="deleteFile()" class="closeAttachFile">
+		<button title="Delete File" [hidden]="!canUpload || (form.get('canEdit') && !form.get('canEdit').value) || currentFileUpload || isDeleteButtonShow" type="button" mat-icon-button color="warn" (click)="deleteFile()" class="closeAttachFile">
 			<mat-icon>delete</mat-icon>
 		</button>
 
