@@ -72,6 +72,7 @@ export class NewRegistrationComponent implements OnInit {
 
   public config: PftConfig;
   isSaveBtnDisabled: boolean;
+  ShowdeleteButton : boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -284,6 +285,7 @@ export class NewRegistrationComponent implements OnInit {
           this.vehicleDetails.disable();
           this.ownerDetails.disable();
           this.taxDetails.disable();
+          this.ShowdeleteButton = true
         }
 
 
@@ -683,10 +685,10 @@ export class NewRegistrationComponent implements OnInit {
         organizationalAry.forEach((element:any) => {
           mainControl.get(element).setValue(controlName.get(element).value);
         });
-        this.licenseConfiguration.currentTabIndex = index;
+        //this.licenseConfiguration.currentTabIndex = index;
         if(isSubmitted){
           //this.onSubmit()
-          this.saveFrom()
+          this.saveFrom(controlName, index)
         }
     }
   }
@@ -763,13 +765,15 @@ export class NewRegistrationComponent implements OnInit {
     "totalPayable": 5294.2875,
   };
 
-  saveFrom(){
-    if(this.vehicleRegistrationForm.valid){
+  saveFrom(controlName, index){
+    if(controlName.valid){
       this.formService.saveFormData(this.vehicleRegistrationForm.getRawValue()).subscribe(
         res => {
+          this.licenseConfiguration.currentTabIndex = index;
           this.vehicleRegistrationForm.patchValue(res);
         },
         err => {
+         this.licenseConfiguration.currentTabIndex  = 0
          this.commonService.openAlert('error', err, 'error')
         }
       )

@@ -40,6 +40,7 @@ export class FileUploadComponent implements OnInit {
 
 	getFile: any = "";
 	attachments: any[];
+	@Input() isDeleteButtonShow ;
 
 	/**
 	 *
@@ -67,7 +68,7 @@ export class FileUploadComponent implements OnInit {
 
 		if (this.attachments && this.attachments.length > 0) {
 			this.getFile = this.form.get('attachments').value.find(data => data.fieldIdentifier.toString() === this.uploadModel.fieldIdentifier.toString())
-		}
+		}	
 	}
 
 	/**
