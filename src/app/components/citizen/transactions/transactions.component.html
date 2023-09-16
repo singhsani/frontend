@@ -57,7 +57,7 @@
 				<button matTooltip="View Details" matTooltipPosition='right' (click)="openDailog(element)" mat-icon-button color="primary">
 					<mat-icon>lock_open</mat-icon>
 				</button>
-				<button *ngIf="element.serviceName == 'Professional Tax' && element.serviceFormId != null" matTooltip="Print Receipt" matTooltipPosition='right' (click)="print(element.refNumber)" mat-icon-button color="primary">
+				<button *ngIf="element.serviceName == 'Professional Tax' && element.serviceFormId != null" matTooltip="Print Receipt" matTooltipPosition='right' (click)="printPecPrcReceipt(element.serviceType,element.refNumber,element.serviceName)" mat-icon-button color="primary">
 					<mat-icon title="Print Receipt" color="primary">print</mat-icon>
 				</button>
 			</mat-cell>

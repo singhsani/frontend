@@ -72,6 +72,10 @@ export class TransactionsComponent implements OnInit {
 		});
 	}
 
+	printPecPrcReceipt(apiCode: string, apiName: string, id: number) {
+		this.router.navigate(['citizen/pec-prc-receipt', apiName, apiCode]);
+	}
+
 	/**
 	 * Method is used to open transaction dailog details
 	 * @param transaction - pass transaction object.

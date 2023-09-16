@@ -280,11 +280,19 @@
                                 {{'preview_application' | translate:translateKey}}
                             </button>
 
-                            <button mat-menu-item *ngIf="row.fileStatus == 'PAYMENT_RECEIVED'" color="primary"
+                            <button mat-menu-item *ngIf="row.fileStatus == 'PAYMENT_RECEIVED' && !(row.serviceType == 'PEC_REG' || row.serviceType == 'PRC_REG')" color="primary"
                                 (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
                                 <mat-icon class="m-1" title="{{'print_receipt' | translate:translateKey}}">print
                                 </mat-icon>
                                 {{'print_receipt' | translate:translateKey}}
+                            </button>
+
+                            <button mat-menu-item *ngIf="row.fileStatus == 'PAYMENT_RECEIVED' && (row.serviceType == 'PEC_REG' || row.serviceType == 'PRC_REG')" color="primary"
+                                (click)="printPecPrcReceipt(row.serviceDetail.code, row.serviceDetail.name, row.fileNumber )">
+                                <mat-icon class="m-1" title="View Receipt">remove_red_eye
+                                </mat-icon>
+                                View Receipt
+                                <!-- {{'print_receipt' | translate:translateKey}} -->
                             </button>
 
                             <button mat-menu-item *ngIf="row.serviceType == 'VEHICLE' && isRejectNoteOptDisplay(row)"

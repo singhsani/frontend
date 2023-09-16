@@ -17,6 +17,7 @@ import { GatewayResponseComponent } from './../../shared/components/gateway-resp
 import { CommonPaybleComponent } from './common-payble/common-payble.component';
 import { LoiPaymentComponent } from './loi-payment/loi-payment.component';
 import { LoiPaymentComponentBooking } from './loi-payment-booking/loi-payment.component-booking';
+import { ViewPecPrcReceiptComponent } from './view-pec-prc-receipt/view-pec-prc-receipt.component';
 
 /* Import citizen components other than auth end */
 
@@ -46,7 +47,8 @@ const routes: Routes = [
 			{ path: 'appointmant', loadChildren: './appointment/appointment.module#AppointmentModule', canLoad: [AuthGuard] },
 			{ path: 'gujPOC', component: GujPocComponent, canActivate: [AuthGuard] },
 			{ path: 'affordable-housing', loadChildren: './affordable-housing/affordable-housing.module#AffordableHousingModule', canLoad: [AuthGuard] },
-			{ path: 'engineering', loadChildren: './engineering/engineering.module#EngineeringModule', canLoad: [AuthGuard] }
+			{ path: 'engineering', loadChildren: './engineering/engineering.module#EngineeringModule', canLoad: [AuthGuard] },
+			{ path: 'pec-prc-receipt/:id/:apicode', component:ViewPecPrcReceiptComponent }
 		]
 	},
 	{ path: 'auth', loadChildren: './auth/auth.module#AuthModule' }
