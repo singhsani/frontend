@@ -276,6 +276,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		);
 	}
 
+	printPecPrcReceipt(apiCode: string, apiName: string, id: number) {
+		this.router.navigate(['citizen/pec-prc-receipt', id, apiCode]);
+	}
+
 	infoVehiclePending(amount, wardNumber) {
 		this.commonService.infoAlert('Payment Remarks', 'Please make the payment of amount Rs. ' + amount +' at Ward office no. ' + wardNumber, "success");
 	}

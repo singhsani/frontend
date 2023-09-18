@@ -1,0 +1,60 @@
+<app-title-bar title="Re-print Receipt">
+	
+</app-title-bar>
+<mat-card class="formClass formBorder">
+  <div class="p-15">
+    <!-- <div class="bigTitle">Search Result</div> -->
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Receipt No</th>
+            <th>Reg. Date</th>
+            <th>Collection Date</th>
+            <th>Paid Prof. Tax {{rupeeSign}}</th>
+            <th>Paid Interest {{rupeeSign}}</th>
+            <th>Paid Penalty {{rupeeSign}}</th>
+            <th>Total Amount {{rupeeSign}}</th>
+            <th>Credit Amount {{rupeeSign}}</th>
+            <th>Pay Mode</th>
+            <th>Cheque No</th>
+            <th>Cheque Date</th>
+            <th>Bank Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- <tr *ngIf="isRecordExixt"> -->
+            <ng-template [ngIf]="isRecordExixt">
+            <tr *ngFor="let item of dupReceiptObj">
+              <td>{{item.refNumber}}</td>
+              <td>{{item.registrationDate | date: 'dd/MM/yyyy'}}</td>
+              <td>{{item.receiptDate | date: 'dd/MM/yyyy'}}</td>
+              <td>{{item.paidProfessionalTax}}</td>
+              <td>{{item.paidInterest}}</td>
+              <td>{{item.paidPenalty}}</td>
+              <td>{{(item.amount)}}</td>
+              <td>{{item.creditAmount}}</td>
+              <td>{{item.paymentModeName}}</td>
+              <td>{{item.paymentMode == 'CASH' ? '-' : item.chequeNumber }}</td>
+              <td>{{item.paymentMode == 'CASH' ? '-' : item.chequeDate | date:
+                'dd/MM/yyyy' }}</td>
+              <td>{{item.paymentMode == 'CASH' ? '-' : item.bank==null?'-':item.bank['name']}}</td>
+              <td><button  matTooltip="Print Receipt" matTooltipPosition='right' (click)="OnereprintReceipt(item.registrationNumber,item.refNumber)" mat-icon-button color="primary">
+                <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+              </button></td>
+            </tr>
+          </ng-template>
+          <!-- </tr> -->
+          <tr *ngIf="!isRecordExixt" >
+            <td colspan="14" class="noRecord">
+              <h5 class="text-center">No record found !</h5>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</mat-card>
+
+<div id="sectionToPrint"></div>

@@ -148,4 +148,13 @@ export class ProfessionalTaxService {
 	getAllSlabMaster() {
         return this.http.get('api/form/pecForm/slabList');
     }
+
+	getReceiptDetails(receiptNo) {
+		return this.http.get(`api/professional/receipt/getReceipt/${receiptNo}`);
+	}
+
+	printDupOneReceipt(num,refNo) {
+		this.requestURL = `api/professional/receipt/duplicateOneRecepit/${num}/${refNo}`;
+		return this.http.get(this.requestURL, 'printReceipt');
+	}
 }
