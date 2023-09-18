@@ -25,7 +25,8 @@
 </div>
 
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-<mat-card class="formClass cardBox" [hidden]="showDowlLoadFileTab" *ngIf="!searchObj.isDisplayRenewLicenceForm">
+<ng-container *ngIf="!searchObj.isDisplayRenewLicenceForm && !isRenewalForm && showSwimmingPoolForm" >
+<mat-card class="formClass cardBox" [hidden]="showDowlLoadFileTab">
 	<div class="pageTitle d-flex justify-content-between">
 		<div *ngIf="!showSelectLanguage">{{'online_swimming_pool_bookings'| translate: translateKey}}</div>
 			<div *ngIf="showSelectLanguage">{{'online_swimming_pool_bookings'| translate: translateKey : 'gu'}}</div>
@@ -298,6 +299,7 @@
 		</div>
 	</div>
 </mat-card>
+</ng-container>
 
 
 <span [hidden]="showSwimmingPoolForm">
@@ -344,8 +346,7 @@
 
 						<div class="col-md-4 ngSelect" formGroupName="category" *ngIf="!isCategoryName">
 							<ng-select placeholder="{{'category' | translate:translateKey}} *"
-								formControlName="code" required (change)="filterAsperCategory($event);generalDetails.get('batchFor').reset();
-								generalDetails.get('batchDuration').reset()">
+								formControlName="code" required (change)="filterAsperCategory($event);">
 								<ng-option *ngFor="let cat of CATEGORY" [value]="cat.code">
 									{{cat.name}}</ng-option>
 							</ng-select>
@@ -354,8 +355,7 @@
 						</div>
 						<div class="col-md-4 ngSelect" formGroupName="category" *ngIf="isCategoryName ">
 							<ng-select placeholder="{{'category' | translate:translateKey}} *"
-								formControlName="name" required (change)="filterAsperCategory($event);generalDetails.get('batchFor').reset();
-								generalDetails.get('batchDuration').reset()">
+								formControlName="name" required (change)="filterAsperCategory($event);">
 								<ng-option *ngFor="let cat of CATEGORY" [value]="cat.name">
 									{{cat.name}}</ng-option>
 							</ng-select>
@@ -692,7 +692,7 @@
 									translate:translateKey}} *
 								</label>
 								<booking-file-upload (uploaded)="isFileUploaded5 = $event"
-									[deleteButtonIsDisabled]="navigatedRefNumber ? true : false"
+									[deleteButtonIsDisabled]="navigatedRefNumber == false ? true : navigatedRefNumber ? true : false"
 									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'5', labelName:'Photo Id Proof', formPart:'1.4', refNumber:
 							swimmimgPoolBookingForm.get('refNumber').value, variableName: 'photo_id_proof'}" [attachments]="attachments">
 								</booking-file-upload>
@@ -715,7 +715,7 @@
 									translate:translateKey}}
 								</label>
 								<booking-file-upload (uploaded)="isFileUploaded7 = $event"
-									[deleteButtonIsDisabled]="navigatedRefNumber ? true : false"
+									[deleteButtonIsDisabled]="navigatedRefNumber == false ? true : navigatedRefNumber ? true : false"
 									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'7', labelName:'Other Documents', formPart:'1.6', refNumber:
 							swimmimgPoolBookingForm.get('refNumber').value, variableName: 'other_documents'}" [attachments]="attachments">
 								</booking-file-upload>

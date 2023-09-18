@@ -96,6 +96,7 @@ export class SwimmingPoolComponent implements OnInit {
   session: any;
   durationisReadOnly: boolean = false;
   swimmingPoolRenewal: boolean = false;
+  navigatedRefNumber : string;
   /**
    * @param fb - Declare FormBuilder property.
    * @param validationError - Declare validation service property
@@ -227,9 +228,13 @@ export class SwimmingPoolComponent implements OnInit {
         err => {
           this.toastr.error("Server Error");
         })
+        if(this.swimmimgPoolBookingForm.get('memberNumber').value){
+          this.generalDetails.get('batchDuration').get('code').setValue('MONTHLY')
+        }
     }
     else {
-      this.toastr.error("Server Error");
+      this.generalDetails.get('batchDuration').reset();
+      this.generalDetails.get('batchFor').reset();
     }
 
     if (event == 'SWIMMER') {
@@ -267,15 +272,22 @@ export class SwimmingPoolComponent implements OnInit {
     },
       err => {
         this.openAlert("Warning", err.error[0].message, "warning" , true, "", cb => {
-          
-          this.generalDetails.get('birthDate').reset();
-          this.generalDetails.get('batchFor').get('code').reset();
-          this.applicantDetail.get('applicantBirthDate').reset();
+          if(this.swimmimgPoolBookingForm.get('memberNumber').value){
+            this.generalDetails.get('batchFor').get('code').reset();
+          }else{
+            this.generalDetails.get('birthDate').reset();
+            this.generalDetails.get('batchFor').get('code').reset();
+            this.applicantDetail.get('applicantBirthDate').reset();
+          }
         },
         cd => {
+          if(this.swimmimgPoolBookingForm.get('memberNumber').value){
+            this.generalDetails.get('batchFor').get('code').reset();
+          }else{
           this.generalDetails.get('birthDate').reset();
           this.generalDetails.get('batchFor').get('code').reset();
           this.applicantDetail.get('applicantBirthDate').reset();
+          }
          } ) ;
       })
   }
@@ -773,19 +785,25 @@ export class SwimmingPoolComponent implements OnInit {
           this.swimmimgPoolBookingForm.patchValue({ 'serviceFormId': res.bookingFormId });
         this.attachments = res.attachments;
         this.swimmimgPoolBookingForm.patchValue(res);
+        this.swimmimgPoolBookingForm.disable()
         this.generalDetails.patchValue(res)
+        this.generalDetails.disable()
         this.applicantDetail.patchValue(res)
+        this.applicantDetail.disable()
         // this.attachments = res.data;
         // this.swimmimgPoolBookingForm.disable();
         this.searchObj.isDisplayRenewLicenceForm = false;
         this.showDowlLoadFileTab = false;
-        this.showSwimmingPoolForm = true;
+        this.showSwimmingPoolForm = false;
         this.isRenewalForm = true;
-        this.isBatchname= true;
+       // this.isBatchname= true;
         this.isCategoryName= true;
         this.swimmimgPoolBookingForm.get('isRenewalForm').setValue(true);
         this.generalDetails.get('birthDate').setValue(res.applicantBirthDate);
         this.applicantDetail.get("applicantJoiningMonth").disable();
+        this.generalDetails.get('category').enable();
+        this.generalDetails.get('batchFor').enable();
+        this.generalDetails.get('batchName').enable();
         this.CheckTypeRenewal(res.applicantIDProof.code)
         if(this.istodaydate.getDate() <= 20 ){
           this.chosenMonthHandler(this.startMinMonth.setMonth(this.startMinMonth.getMonth()));
@@ -796,9 +814,9 @@ export class SwimmingPoolComponent implements OnInit {
           console.log('Month:',month);
         }
         this.defaultAsperPool();
-        // this.swimmimgPoolBookingForm.get('remarks').enable();
-        this.filterAsperBatchName(this.generalDetails.get('category').get('code').value);
-        
+        this.swimmimgPoolBookingForm.get('remarks').enable();
+        this.filterAsperBatchName(this.generalDetails.get('batchFor').get('code').value);
+        this.navigatedRefNumber = '1234';
       }, (error: any) => {
         this.commonService.openAlert("Error", error.error[0].message, "warning")
       })
