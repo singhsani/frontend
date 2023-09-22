@@ -310,7 +310,7 @@ export class ShopLicNewComponent implements OnInit {
 					this.shopLicNewForm.get('otherAddresses').setValue(res.otherAddresses);
 				}
 				if(res.otherDescription != null && (res.businessSubCategory.code == BookingConstants.ANY_METAL_AND_STEEL_SHOPS || res.businessSubCategory.code == BookingConstants.ANY_GARAGE_REPAIRING_Shopes
-					|| res.businessSubCategory.code == BookingConstants.ANY_OFFICES)){
+					|| res.businessSubCategory.code == BookingConstants.ANY_OFFICES || BookingConstants.OTHER)){
 					this.isSubCategory = true;
 					this.shopLicNewForm.get('otherDescription').setValue(res.otherDescription);
 				}
@@ -1963,7 +1963,7 @@ export class ShopLicNewComponent implements OnInit {
 
 	onChangeSubCategory(event){
 		if(event == BookingConstants.ANY_METAL_AND_STEEL_SHOPS || event == BookingConstants.ANY_GARAGE_REPAIRING_Shopes
-			|| event == BookingConstants.ANY_OFFICES){
+			|| event == BookingConstants.ANY_OFFICES || BookingConstants.OTHER){
 			 this.isSubCategory = true;
 		}else{
 			this.isSubCategory = false;

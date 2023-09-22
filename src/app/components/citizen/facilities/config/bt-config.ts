@@ -60,6 +60,7 @@ export class BTConstants {
     static ANY_METAL_AND_STEEL_SHOPS = "B26";
     static ANY_GARAGE_REPAIRING_Shopes = "B13";
     static ANY_OFFICES = "A01";
+    static OTHER = "A15";
 }
 
 export class BTConfig extends CitizenConfig {
