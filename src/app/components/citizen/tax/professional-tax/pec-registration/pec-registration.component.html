@@ -317,10 +317,27 @@
 							<div class="row" *ngFor="let item of registrationDetail.get('censusNo')['controls']; let i = index;"
 								[formGroupName]="i">
 								<div class="col-md-6">
-									<mat-form-field>
+									<mat-form-field *ngIf="!selectedCensusNo && registrationDetail.get('censusNo')['controls'][i].value">
 										<mat-select style="margin-top: 15px !important;"
 											(selectionChange)="selectCensusOrPropertyNo($event);"
 											placeholder="{{'census_no' | translate: translateKey}}">
+											<mat-option value="CensusNo">Census No</mat-option>
+											<mat-option value="PropertyNo">Property No</mat-option>
+										</mat-select>
+									</mat-form-field>
+									
+									<mat-form-field *ngIf="selectedCensusNo && registrationDetail.get('censusNo')['controls'][i].value.census.length > 18">
+										<mat-select style="margin-top: 15px !important;"
+											(selectionChange)="selectCensusOrPropertyNo($event);"
+											placeholder="{{'census_no' | translate: translateKey}}" value="CensusNo">
+											<mat-option value="CensusNo">Census No</mat-option>
+											<mat-option value="PropertyNo">Property No</mat-option>
+										</mat-select>
+									</mat-form-field>
+									<mat-form-field *ngIf="selectedCensusNo && registrationDetail.get('censusNo')['controls'][i].value.census.length <= 18">
+										<mat-select style="margin-top: 15px !important;"
+											(selectionChange)="selectCensusOrPropertyNo($event);"
+											placeholder="{{'census_no' | translate: translateKey}}" value="PropertyNo">
 											<mat-option value="CensusNo">Census No</mat-option>
 											<mat-option value="PropertyNo">Property No</mat-option>
 										</mat-select>
@@ -472,7 +489,7 @@
 						<button *ngIf="isDeleteBtnShow" class="pull-right" mat-raised-button color="success"
 							(click)="getUserDetailsAndSubmit()">{{'submit' | translate:actionBarKey}}</button>
 							<button *ngIf="isDeleteBtnShow" type="button" class="pull-right" mat-raised-button color="primary"
-							(click)="onTabChange(5, attachmentdetail, pecRegForm)">{{'save'  | translate:translateKey}}</button>
+							(click)="onTabChange(5, attachmentdetail, pecRegForm)">{{'Save'  | translate:translateKey}}</button>
 					</div>
 				</div>
 </form>
