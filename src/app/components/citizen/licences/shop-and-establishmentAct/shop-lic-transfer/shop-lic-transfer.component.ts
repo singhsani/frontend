@@ -470,7 +470,7 @@ export class ShopLicTransferComponent implements OnInit {
 				}
 
 				if(res.otherDescription != null && (res.businessSubCategory.code == BookingConstants.ANY_METAL_AND_STEEL_SHOPS || res.businessSubCategory.code == BookingConstants.ANY_GARAGE_REPAIRING_Shopes
-					|| res.businessSubCategory.code == BookingConstants.ANY_OFFICES || BookingConstants.OTHER)){
+					|| res.businessSubCategory.code == BookingConstants.ANY_OFFICES || res.businessSubCategory.code == BookingConstants.OTHER)){
 					this.isSubCategory = true;
 					this.employerdetails.get('otherDescription').setValue(res.otherDescription);
 				}
@@ -1966,7 +1966,7 @@ export class ShopLicTransferComponent implements OnInit {
 
 	onChangeSubCategory(event){
 		if(event == BookingConstants.ANY_METAL_AND_STEEL_SHOPS || event == BookingConstants.ANY_GARAGE_REPAIRING_Shopes
-			 || event == BookingConstants.ANY_OFFICES || BookingConstants.OTHER){
+			 || event == BookingConstants.ANY_OFFICES || event == BookingConstants.OTHER){
 			 this.isSubCategory = true;
 		}else{
 			this.isSubCategory = false;
