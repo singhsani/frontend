@@ -131,7 +131,7 @@ export class PecRegistrationComponent implements OnInit {
 			 * Update Permanent Address If 'officeResidentialAddressSame' is checked.
 			 */
 		this.pecRegForm.controls.officeAddress.valueChanges.subscribe(data => {
-			if (this.pecRegForm.get('officeResidentialAddressSame').value) {
+			if (this.employerDetail.get('officeResidentialAddressSame').value) {
 				this.onSameAddressChange({ checked: true });
 				return;
 			}
@@ -503,6 +503,7 @@ export class PecRegistrationComponent implements OnInit {
 	addMoreCenus() {
 		this.isCensusNo = true;
 		let isValid = true;
+		this.selectedCensusNo = false
 		if (this.registrationDetail.get('censusNo')['controls'].length == 5) {
 			this.toastr.warning('maximum 5 census number allow');
 			return;
@@ -739,6 +740,7 @@ export class PecRegistrationComponent implements OnInit {
 				if (!(res.censusNo.length == 0)) {
 					if (res.censusNo[0].census.length > 16) {
 						this.censusNo = true;
+						this.selectedCensusNo = true;
 					}
 					else {
 						this.censusNo = false;
@@ -751,6 +753,9 @@ export class PecRegistrationComponent implements OnInit {
 				}
 				if(res.formStatus == "DRAFT"){
 					this.getAllBlockNos(res.wardId)
+					if(res.officeResidentialAddressSame == true){
+						this.onSameAddressChange({ checked: true });
+					}
 				}
 			});
 
