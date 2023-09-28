@@ -325,7 +325,6 @@
 											<mat-option value="PropertyNo">Property No</mat-option>
 										</mat-select>
 									</mat-form-field>
-									
 									<mat-form-field *ngIf="selectedCensusNo && registrationDetail.get('censusNo')['controls'][i].value.census.length > 18">
 										<mat-select style="margin-top: 15px !important;"
 											(selectionChange)="selectCensusOrPropertyNo($event);"
@@ -482,12 +481,12 @@
 					</div>
 				</div>
 
-				<div class="fotButtonBar1 clearfix">
+				<div class="fotButtonBar1 clearfix"> 
 					<div class="col-sm-12 col-md-12">
 						<button class="liteBorder pull-left" type="button" mat-raised-button
-							(click)="licenseConfiguration.currentTabIndex = 3">{{'back' | translate:actionBarKey}}</button>
+							(click)="licenseConfiguration.currentTabIndex = 3">{{'back' | translate:translateKey}}</button>
 						<button *ngIf="isDeleteBtnShow" class="pull-right" mat-raised-button color="success"
-							(click)="getUserDetailsAndSubmit()">{{'submit' | translate:actionBarKey}}</button>
+							(click)="getUserDetailsAndSubmit()">{{'submit' | translate:translateKey}}</button>
 							<button *ngIf="isDeleteBtnShow" type="button" class="pull-right" mat-raised-button color="primary"
 							(click)="onTabChange(5, attachmentdetail, pecRegForm)">{{'Save'  | translate:translateKey}}</button>
 					</div>
