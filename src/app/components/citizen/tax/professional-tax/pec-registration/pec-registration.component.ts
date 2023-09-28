@@ -745,6 +745,9 @@ export class PecRegistrationComponent implements OnInit {
 					else {
 						this.censusNo = false;
 					}
+					
+					console.log(this.registrationDetail.get('censusNo')['controls']);
+					
 				}
 				if (res.formStatus == "SUBMITTED") {
 					this.pecRegForm.disable();
