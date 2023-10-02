@@ -342,7 +342,7 @@
                             <mat-label>{{'booking_date'| translate: stadiumTranslateKey }}<span class="asteriskmarkRequired-label"></span></mat-label>
                             <input  appDate matInput [min]="startMinDate" [max]="endMinDate"
                                 [matDatepicker]="townHallBookingfromPicker" formControlName="bookingFrom"
-                                (dateChange)="onDateChange('bookingFrom', $event.value)">
+                                (dateChange)="onDateChange('bookingFrom', $event.value)" readonly>
                             <mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker"></mat-datepicker-toggle>
                             <mat-datepicker #townHallBookingfromPicker touchUi="true"></mat-datepicker>
                             <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}
