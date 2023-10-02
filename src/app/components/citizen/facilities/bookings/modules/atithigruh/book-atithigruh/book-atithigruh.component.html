@@ -355,7 +355,7 @@
                             <mat-label>{{'choose_end_date'| translate: translateKey}}<span class="asteriskmarkRequired-label"></span></mat-label>
                             <input appDate matInput [min]="toStartDate" [max]="endMinDate"
                                 [matDatepicker]="townHallBookingtoPicker" formControlName="bookingTo"
-                                (dateChange)="onDateChange('bookingTo', $event.value)" >
+                                (dateChange)="onDateChange('bookingTo', $event.value)"  readonly>
                             <mat-datepicker-toggle matSuffix [for]="townHallBookingtoPicker"></mat-datepicker-toggle>
                             <mat-datepicker #townHallBookingtoPicker touchUi="true"></mat-datepicker>
                             <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}
