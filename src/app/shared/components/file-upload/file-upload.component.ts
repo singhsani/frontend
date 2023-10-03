@@ -196,7 +196,7 @@ export class FileUploadComponent implements OnInit {
 				this.commonService.openAlert("Warning", "Please Select File to Upload", "warning");
 			} else {
 				let photoFileTypes: String[] = ['image/jpg', 'image/jpeg', 'image/png'];
-				let fileTypes: string[] = ['application/pdf', 'image/jpg', 'image/jpeg'];
+				let fileTypes: string[] = ['application/pdf', 'image/jpg', 'image/jpeg', 'image/png'];
 
 				let size = this.uploadModel.maxFileSizeInMB ? Math.floor(this.uploadModel.maxFileSizeInMB * 1000000) : 5000000;
 				if (this.selectedFiles[0].size > size) {
