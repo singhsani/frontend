@@ -175,15 +175,15 @@
 						[addressFormGroup]="employerDetail.get('residentialAddress')"></app-address>
 				</div>
 
-				<!-- <div class="fotButtonBar1 clearfix">
+				<div class="fotButtonBar1 clearfix">
 					<div class="col-sm-12 col-md-12">
-						<button class="pull-right" type="button" mat-raised-button color="primary"
-							(click)="onTabChange(1,employerDetail, pecRegForm)">{{'next' | translate:actionBarKey}}</button>
+						<button *ngIf="pecRegForm.get('canEdit').value == true" type="button" class="pull-right" mat-raised-button color="primary"
+							(click)="onTabChange(1,employerDetail, pecRegForm)">{{'Save and Next'  | translate:translateKey}}</button>
+						<button  *ngIf="pecRegForm.get('canEdit').value == false" class="liteBorder" type="button" mat-raised-button color="primary"
+							(click)="licenseConfiguration.currentTabIndex = 1">{{'next' | translate:actionBarKey}}</button>
 					</div>
-				</div> -->
-				<app-action-bar [form]="pecRegForm" (tabIndex)="licenseConfiguration.onTabChange($event, employerDetail, pecRegForm)"
-					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
-</form>
+				</div>
+			</form>
 
 			</mat-tab>
 			<!-- end first step -->
@@ -351,6 +351,12 @@
 										mat-icon-button color="warn" (click)="removeCensus(i)">
 										<i class="fa fa-times"></i>
 									</button>
+									<mat-error class="mat-error error-msg"
+											*ngIf="item.get('census').invalid && (item.get('census').dirty || item.get('census').touched)">
+											<div *ngIf="item.get('census').errors.required">
+												Census No is Required.
+											</div>
+										</mat-error>
 									<mat-error *ngIf="placeHolderMessage !== null">{{placeHolderMessage}}</mat-error>
 								</mat-form-field>
 								<mat-form-field class="col-md-6" *ngIf="!isCensusNo">
@@ -362,6 +368,12 @@
 										mat-icon-button color="warn" (click)="removeCensus(i)">
 										<i class="fa fa-times"></i>
 									</button>
+									<mat-error class="mat-error error-msg"
+											*ngIf="item.get('census').invalid && (item.get('census').dirty || item.get('census').touched)">
+											<div *ngIf="item.get('census').errors.required">
+												Property No is Required.
+											</div>
+										</mat-error>
 									<mat-error *ngIf="placeHolderMessage !== null">{{placeHolderMessage}}</mat-error>
 								</mat-form-field>
 							</div>

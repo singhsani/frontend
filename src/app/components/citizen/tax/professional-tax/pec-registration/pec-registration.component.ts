@@ -270,7 +270,7 @@ export class PecRegistrationComponent implements OnInit {
 			/*If census is duplicate */
 
 		}
-			this.tabIndex = index;
+			//this.tabIndex = index;
 			if (!this.CanEdit) {
 				setTimeout( function(){ 
 					$('.closeAttachFile').remove();
@@ -278,8 +278,8 @@ export class PecRegistrationComponent implements OnInit {
 					$('.profession ng-select').addClass('ng-select-disabled');
 				}, 300);
 			}
-			if(index = 5){
-				this.saveFrom()
+			if(index == 5 || (index == 1)){
+				this.saveFrom(controlName, index)
 			}
 		}
 	}
@@ -1148,11 +1148,12 @@ export class PecRegistrationComponent implements OnInit {
 	};
 
 
-	saveFrom(){
-		if(this.pecRegForm.valid){
+	saveFrom(control, index){
+		if(control.valid){
 		  this.formService.saveFormData(this.pecRegForm.getRawValue()).subscribe(
 			res => {
 			  this.pecRegForm.patchValue(res);
+			  this.licenseConfiguration.currentTabIndex = index
 			},
 			err => {
 			 this.commonService.openAlert('error', err, 'error')
