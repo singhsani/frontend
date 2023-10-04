@@ -653,4 +653,27 @@ export class CommonPaybleComponent implements OnInit {
     this.propertyOccupierSearchSharingService.setIsOpenSearchForm(true);
   }
 
+  changeRefNumber(event) {
+    if (!event) {
+      // This is for professional tax record
+      this.duesDetailsArr = [];
+      this.isRecordExists = false;
+      this.isECRCSearch = false;
+
+      // This is for vehicle tax record
+      this.isVehileTax = false;
+      this.inputData = [];
+
+      // This is for Property tax record
+      this.isPropertyRecordExists = false;
+      this.collectionModel = [];
+      this.model = [];
+
+      // This is for Water tax record
+      this.isWaterRecordExists = false;
+      this.collectionWaterModel = [];
+      this.collectionWaterModel.collectedAmount = [];
+    }
+
+  }
 }
