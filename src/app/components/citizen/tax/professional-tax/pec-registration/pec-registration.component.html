@@ -266,7 +266,7 @@
 						</mat-form-field> -->
 
 					<mat-form-field class="col-md-6">
-						<input matInput autocomplete="off" maxlength="50" appAlphaNumeric formControlName="companyRegNo"
+						<input matInput autocomplete="off" maxlength="21" appAlphaNumeric formControlName="companyRegNo"
 							type="text" placeholder="{{'Company Registration Number' | translate: translateKey}}">
 						<control-messages [control]="registrationDetail.get('companyRegNo')"></control-messages>
 					</mat-form-field>
@@ -357,7 +357,7 @@
 												Census No is Required.
 											</div>
 										</mat-error>
-									<mat-error *ngIf="placeHolderMessage !== null">{{placeHolderMessage}}</mat-error>
+									<!-- <mat-error *ngIf="placeHolderMessage !== null">{{placeHolderMessage}}</mat-error> -->
 								</mat-form-field>
 								<mat-form-field class="col-md-6" *ngIf="!isCensusNo">
 									<input style="margin-top: 15px !important;" matInput autocomplete="off"
@@ -374,7 +374,7 @@
 												Property No is Required.
 											</div>
 										</mat-error>
-									<mat-error *ngIf="placeHolderMessage !== null">{{placeHolderMessage}}</mat-error>
+									<!-- <mat-error *ngIf="placeHolderMessage !== null">{{placeHolderMessage}}</mat-error> -->
 								</mat-form-field>
 							</div>
 
