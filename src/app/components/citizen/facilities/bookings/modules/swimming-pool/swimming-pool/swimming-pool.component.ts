@@ -595,7 +595,6 @@ export class SwimmingPoolComponent implements OnInit {
         res => {
           let refNumber = this.swimmimgPoolBookingForm.get("refNumber").value;
           // this.sendSms(refNumber, "SUBMIT");
-          if(this.isRenewalForm){
             if(res.status == 'PAYMENT_REQUIRED'){
               this.paymentRequest(res);
             }else{
@@ -608,19 +607,6 @@ export class SwimmingPoolComponent implements OnInit {
                   this.router.navigate(['../../my-bookings'], { relativeTo: this.route });
 
             });
-          });
-          }
-        }else{
-          this.sendMail(refNumber, "SUBMIT");
-          this.swimmingPoolService.printAcknowledgeReceipt(res.refNumber).subscribe(data => {
-            let sectionToPrint: any = document.getElementById('sectionToPrint');
-            sectionToPrint.innerHTML = data;
-            setTimeout(() => {
-              window.print();
-              
-                this.router.navigate(['../../my-bookings'], { relativeTo: this.route });
-            });
-          
           });
         }
           // this.swimmimgPoolBookingForm.get('refNumber').setValue(res.refNumber);
