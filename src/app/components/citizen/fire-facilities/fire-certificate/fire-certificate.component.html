@@ -39,7 +39,7 @@
 						<control-messages [control]="fireCertificateForm.get('applicationDate')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-4 mat-input">
 						<input matInput [max]="disablefutureDate" [matDatepicker]="DateOfincidentDate" formControlName="incidentDate"
 						 (dateChange)="dateFormat($event.value,'incidentDate')" placeholder="{{ 'incident_Date' | translate:translateKey }} *">
 						<mat-datepicker-toggle matSuffix [for]="DateOfincidentDate"></mat-datepicker-toggle>
