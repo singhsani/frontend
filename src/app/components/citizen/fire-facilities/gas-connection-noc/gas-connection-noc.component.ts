@@ -9,6 +9,8 @@ import * as moment from 'moment';
 import { TranslateService } from '../../../../shared/modules/translate/translate.service';
 import { FireFacilitiesService } from '../common/services/fire-facilities.service';
 import { ValidationService } from 'src/app/shared/services/validation.service';
+import { CommonService } from 'src/app/shared/services/common.service';
+import { LicenseConfiguration } from '../../licences/license-configuration';
 
 @Component({
 	selector: 'app-gas-connection-noc',
@@ -20,6 +22,9 @@ export class GasConnectionNocComponent implements OnInit {
 
 
 	gasConnectionForm: FormGroup;
+	applicantDetails : FormGroup;
+	formDetails : FormGroup;
+	attachmentDetails : FormGroup;
 	translateKey: string = 'gasConnectionScreen';
 
 	appId: number;
@@ -37,6 +42,7 @@ export class GasConnectionNocComponent implements OnInit {
 	// required attachment array
 	uploadFilesArray: Array<any> = [];
 	fireFacilityConfig: FireFacilityConfig = new FireFacilityConfig();
+	licenseConfiguration : LicenseConfiguration = new LicenseConfiguration();
 
 	constructor(
 		private fb: FormBuilder,
@@ -45,6 +51,7 @@ export class GasConnectionNocComponent implements OnInit {
 		public TranslateService: TranslateService,
 		private fireFacilitiesService: FireFacilitiesService,
 		private CD: ChangeDetectorRef,
+		private  commonService : CommonService
 	) { }
 
 	ngOnInit() {
@@ -66,11 +73,14 @@ export class GasConnectionNocComponent implements OnInit {
 	 */
 	getGasConnectionData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
-			this.gasConnectionForm.patchValue(res);
+			this.gasConnectionForm.patchValue(res)
+			this.applicantDetails.patchValue(res)
+			this.formDetails.patchValue(res)
+			this.attachmentDetails.patchValue(res)
 			this.fireFacilityConfig.isAttachmentButtonsVisible = true;
 			//convert applicant name and set in applicantNameGuj filds 
-			let applicantNameGujFields = this.gasConnectionForm.get('applicantNameGuj');
-			let applicantNameValue = this.gasConnectionForm.get('applicantName').value;
+			let applicantNameGujFields = this.applicantDetails.get('applicantNameGuj');
+			let applicantNameValue = this.applicantDetails.get('applicantName').value;
 			if (!applicantNameGujFields.value) {
 				applicantNameGujFields.setValue(this.TranslateService.getEngToGujTranslation(applicantNameValue))
 			}
@@ -97,21 +107,21 @@ export class GasConnectionNocComponent implements OnInit {
 	 * define all gas connection form controls
 	 */
 	gasConnectionFormControls() {
-		this.gasConnectionForm = this.fb.group({
-			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			serviceCode: 'FS-GAS',
 
-			/* Step 1 controls start */
+       /* Step 1 controls start */
+		this.applicantDetails = this.fb.group({
+		oldReferenceNumber: [null],
+		applicantName: [null, [Validators.required, Validators.maxLength(100)]],
+		applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
+		applicationDate: [null, Validators.required],
+		contactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), , Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
+		mobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
+		email: [null, [Validators.required, Validators.maxLength(50),Validators.email, ValidationService.emailValidator]],
+		})
+		/* Step 1 controls end */
 
-			oldReferenceNumber: [null],
-			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
-			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
-			applicationDate: [null, Validators.required],
-			contactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), , Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
-			mobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
-			email: [null, [Validators.required, Validators.maxLength(50),Validators.email, ValidationService.emailValidator]],
-
-			/* Step 2 controls start */
+		/* Step 2 controls start */
+		this.formDetails = this.fb.group({
 			gasConnectionNo: [null, [Validators.required, Validators.maxLength(15)]],
 			connectionHolderName: [null, [Validators.required, Validators.maxLength(100)]],
 			connectionHolderNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
@@ -135,12 +145,25 @@ export class GasConnectionNocComponent implements OnInit {
 			firePlaceAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
 			fireLossAmount: [null, [Validators.maxLength(10)]],
 			highRiseFireNOCTaken: [null],
+		})
+        /* Step 2 controls end */
 
-			/* Step 3 controls start */
+        /* Step 3 controls start */
+		this.attachmentDetails = this.fb.group({
 			attachments: [],
+		})
+		 /* Step 3  controls end */
 
-			/* Step 6 controls end */
+
+		this.gasConnectionForm = this.fb.group({
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+			serviceCode: 'FS-GAS',
+			attachments: [],
 		});
+
+		this.commonService.createCloneAbstractControl(this.applicantDetails,this.gasConnectionForm);
+		this.commonService.createCloneAbstractControl(this.formDetails,this.gasConnectionForm);
+		this.commonService.createCloneAbstractControl(this.attachmentDetails,this.gasConnectionForm);
 	}
 
 	/**
@@ -165,8 +188,19 @@ export class GasConnectionNocComponent implements OnInit {
 	 * @param controlType : form control name
 	 */
 	dateFormat(date, controlType: string) {
-		this.gasConnectionForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+		this.applicantDetails.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
 	}
+
+
+	/**
+	 * This method is change date format.
+	 * @param date : selected date
+	 * @param controlType : form control name
+	 */
+	dateFormatforFormDetails(date, controlType: string) {
+		this.formDetails.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+	}
+
 
 	/**
 	 * this method is used to get property tax status	 * 

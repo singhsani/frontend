@@ -1,17 +1,17 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
 <mat-card class="formClass cardBorder">
-	<form [formGroup]="fireCertificateForm">
-		<mat-tab-group [(selectedIndex)]="fireFacilityConfig.currentTabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+	<!-- <form [formGroup]="fireCertificateForm"> -->
+		<mat-tab-group [(selectedIndex)]="licenseConfiguration.currentTabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
 			<!-- step 1 Starts -->
-			<mat-tab>
+			<mat-tab disabled>
 				<ng-template mat-tab-label>
 					<div>{{'applicant_detail' | translate:translateKey}}</div>
 				</ng-template>
-
+			<form [formGroup]="applicantDetails">
 				<div class="row">
-					<mat-form-field class="col-md-4" *ngIf="fireCertificateForm.get('oldReferenceNumber').value">
+					<mat-form-field class="col-md-4" *ngIf="applicantDetails.get('oldReferenceNumber').value">
 						<input matInput readonly placeholder="{{'old_refrance_number' | translate:translateKey}}" formControlName="oldReferenceNumber">
 					</mat-form-field>
 				</div>
@@ -20,14 +20,14 @@
 					<mat-form-field class="col-md-4">
 						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" required maxlength="100"
 						 placeholder="{{'applicant_name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
-						 targetElement="applicantNameGuj" [form]="fireCertificateForm">
-						<control-messages [control]="fireCertificateForm.get('applicantName')"></control-messages>
+						 targetElement="applicantNameGuj" [form]="applicantDetails">
+						<control-messages [control]="applicantDetails.get('applicantName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget [form]="fireCertificateForm"
 						 placeholder="{{ 'applicant_name' | translate:translateKey:'gu' }}">
-						<control-messages [control]="fireCertificateForm.get('applicantNameGuj')"></control-messages>
+						<control-messages [control]="applicantDetails.get('applicantNameGuj')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -36,7 +36,7 @@
 						<mat-datepicker-toggle matSuffix [for]="DateOfapplicationDate"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #DateOfapplicationDate></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}</div>
-						<control-messages [control]="fireCertificateForm.get('applicationDate')"></control-messages>
+						<control-messages [control]="applicantDetails.get('applicationDate')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4 mat-input">
@@ -45,7 +45,7 @@
 						<mat-datepicker-toggle matSuffix [for]="DateOfincidentDate"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #DateOfincidentDate></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}</div>
-						<control-messages [control]="fireCertificateForm.get('incidentDate')"></control-messages>
+						<control-messages [control]="applicantDetails.get('incidentDate')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 pl-0 pr-0 ml-0 mr-0">
@@ -53,9 +53,9 @@
 							<mat-label>{{'incident_time' | translate:translateKey}}</mat-label>
 							<input (blur)="changeTimeFormat($event.target.value, 'incidentTime')" placeholder="HH:MM" matInput type="time"
 							 atp-time-picker theme="dark" formControlName="incidentTime" required />
-							<control-messages [control]="fireCertificateForm.get('incidentTime')"></control-messages>
+							<control-messages [control]="applicantDetails.get('incidentTime')"></control-messages>
 						</mat-form-field>
-						<button class="ml-0 pl-0 timeBut" [disabled]="!fireCertificateForm?.controls?.canEdit?.value" mat-icon-button type="button"
+						<button class="ml-0 pl-0 timeBut" [disabled]="!applicantDetails?.controls?.canEdit?.value" mat-icon-button type="button"
 						 (click)="openTimePicker('incidentTime')">
 							<mat-icon matTooltip="Select Time" color="primary">alarm</mat-icon>
 						</button>
@@ -75,7 +75,7 @@
 										{{'No' | translate:translateKey }}
 									</mat-radio-button>
 								</mat-radio-group>
-								<control-messages [control]="fireCertificateForm.get('whetherTheFireplaceInVMCAreaOrNot')"></control-messages>
+								<control-messages [control]="applicantDetails.get('whetherTheFireplaceInVMCAreaOrNot')"></control-messages>
 							</div>
 						</div>
 					</div>
@@ -84,81 +84,82 @@
 
 					<mat-form-field class="col-md-6">
 						<textarea matInput rows="2" cols="50" required maxlength="200" placeholder="{{'fire_place_address' | translate:translateKey}}"
-						 formControlName="firePlaceAddress" appGujInputSource targetElement="firePlaceAddressGuj" [form]="fireCertificateForm"></textarea>
-						<control-messages [control]="fireCertificateForm.get('firePlaceAddress')"></control-messages>
+						 formControlName="firePlaceAddress" appGujInputSource targetElement="firePlaceAddressGuj" [form]="applicantDetails"></textarea>
+						<control-messages [control]="applicantDetails.get('firePlaceAddress')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
 						<textarea matInput rows="2" cols="50" required maxlength="200" placeholder="{{'connection_holder_address' | translate:translateKey}}"
-						 formControlName="connectionHolderAddress" appGujInputSource targetElement="connectionHolderAddressGuj" [form]="fireCertificateForm"></textarea>
-						<control-messages [control]="fireCertificateForm.get('connectionHolderAddress')"></control-messages>
+						 formControlName="connectionHolderAddress" appGujInputSource targetElement="connectionHolderAddressGuj" [form]="applicantDetails"></textarea>
+						<control-messages [control]="applicantDetails.get('connectionHolderAddress')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 					<mat-form-field class="col-md-6">
 						<textarea matInput type="text" rows="2" cols="50" maxlength="600" required formControlName="firePlaceAddressGuj"
-						 appGujInputTarget [form]="fireCertificateForm" placeholder="{{ 'fire_place_address' | translate:translateKey:'gu' }}"></textarea>
-						<control-messages [control]="fireCertificateForm.get('firePlaceAddressGuj')"></control-messages>
+						 appGujInputTarget [form]="applicantDetails" placeholder="{{ 'fire_place_address' | translate:translateKey:'gu' }}"></textarea>
+						<control-messages [control]="applicantDetails.get('firePlaceAddressGuj')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
 						<textarea matInput type="text" rows="2" cols="50" maxlength="600" required formControlName="connectionHolderAddressGuj"
-						 appGujInputTarget [form]="fireCertificateForm" placeholder="{{ 'connection_holder_address' | translate:translateKey:'gu' }}"></textarea>
-						<control-messages [control]="fireCertificateForm.get('connectionHolderAddressGuj')"></control-messages>
+						 appGujInputTarget [form]="applicantDetails" placeholder="{{ 'connection_holder_address' | translate:translateKey:'gu' }}"></textarea>
+						<control-messages [control]="applicantDetails.get('connectionHolderAddressGuj')"></control-messages>
 					</mat-form-field>
 					<!--/ gujarati -->
 					<mat-form-field class="col-md-6">
 						<input matInput type="text" appAlphaNumeric maxlength="15" required formControlName="propertyNo" placeholder="{{ 'property_no' | translate:translateKey }}">
-						<control-messages [control]="fireCertificateForm.get('propertyNo')"></control-messages>
+						<control-messages [control]="applicantDetails.get('propertyNo')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-6 ngSelect" formGroupName="firePlaceType">
 						<ng-select placeholder="{{'fire_certificate_form' | translate:translateKey}} *" formControlName="code" (change) = "documentsManage()">
 							<ng-option *ngFor="let type of FS_FIRE_PLACE_TYPE" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="fireCertificateForm.get('firePlaceType').get('code')"></control-messages>
+						<control-messages [control]="applicantDetails.get('firePlaceType').get('code')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-6">
 						<input matInput type="text" formControlName="fireplaceNameOrVehicleNumber" placeholder="{{'fire_place_name_vehicle_no' | translate: translateKey }} *"
 						 maxlength="50">
-						<control-messages [control]="fireCertificateForm.get('fireplaceNameOrVehicleNumber')"></control-messages>
+						<control-messages [control]="applicantDetails.get('fireplaceNameOrVehicleNumber')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
 						<input matInput OnlyNumber required maxlength = "10" formControlName="fireLossAmount" placeholder="{{ 'fire_loss_amount' | translate:translateKey }}" type="tel">
-						<control-messages [control]="fireCertificateForm.get('fireLossAmount')"></control-messages>
+						<control-messages [control]="applicantDetails.get('fireLossAmount')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						
 						<input matInput OnlyNumber placeholder="Contact No" 
 						 formControlName="contactNo" required maxlength="10" minlength="10" type="tel">
-						<control-messages [control]="fireCertificateForm.get('contactNo')"></control-messages>
+						<control-messages [control]="applicantDetails.get('contactNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber placeholder="Mobile No" 
 						 formControlName="mobileNo" required maxlength="10" minlength="10" type="tel">
-						<control-messages [control]="fireCertificateForm.get('mobileNo')"></control-messages>
+						<control-messages [control]="applicantDetails.get('mobileNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput appPreventSpace placeholder="Email Id" type="email"
 						 formControlName="email" required maxlength="50">
-						<control-messages [control]="fireCertificateForm.get('email')"></control-messages>
+						<control-messages [control]="applicantDetails.get('email')"></control-messages>
 					</mat-form-field>
 
 				</div>
 
-				<app-action-bar [form]="fireCertificateForm" (handleOnSaveAndNext)="documentsManage()" (tabIndex)="fireFacilityConfig.onFormTabChange($event)" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+				<app-action-bar [form]="fireCertificateForm" (handleOnSaveAndNext)="documentsManage()" (tabIndex)="licenseConfiguration.onTabChange($event, applicantDetails, fireCertificateForm)" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+			</form>
 			</mat-tab>
 			<!-- step 1 Ends -->
 
-			<mat-tab>
+			<mat-tab disabled>
 				<ng-template mat-tab-label>
 					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
-
+			<form [formGroup]="attachmentDetails">
 				<div class="row">
 					<ng-container *ngFor="let doc of fireCertificateForm.get('serviceDetail').get('serviceUploadDocuments').value">
 						<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && fireFacilityConfig.isAttachmentButtonsVisible">
@@ -168,10 +169,11 @@
 					</ng-container>
 				</div>
 
-				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" [form]="fireCertificateForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
-				 (handleErrors)="handleErrorsOnSubmit($event)" [isstepper]="false" [stepInfo]="{step: 'final', next: 1, back: 0}"></app-action-bar>
-			</mat-tab>
+				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" [form]="fireCertificateForm" (tabIndex)="licenseConfiguration.onTabChange($event, attachmentDetails, fireCertificateForm)"
+				 (handleErrors)="handleErrorsOnSubmit($event)"  [stepInfo]="{step: 'final', next: 1, back: 0}"></app-action-bar>
+			</form>
+				</mat-tab>
 			<select-payment-gateway #paymentGateway></select-payment-gateway>
 		</mat-tab-group>
-	</form>
+	<!-- </form> -->
 </mat-card>

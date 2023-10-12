@@ -5,18 +5,18 @@
 </app-title-bar>
 
 <mat-card class="formClass cardBorder">
-	<form [formGroup]="electricConnectionForm">
+	<!-- <form [formGroup]="electricConnectionForm"> -->
 
-		<mat-tab-group [(selectedIndex)]="fireFacilityConfig.currentTabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+		<mat-tab-group [(selectedIndex)]="licenseConfiguration.currentTabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
 			<!-- step 1 Starts -->
-			<mat-tab>
+			<mat-tab disabled>
 				<ng-template mat-tab-label>
 					<div>{{'applicant_detail' | translate:translateKey}}</div>
 				</ng-template>
-
+			<form [formGroup]="applicantDetails">
 				<div class="row">
-					<mat-form-field class="col-md-4" *ngIf="electricConnectionForm.get('oldReferenceNumber').value">
+					<mat-form-field class="col-md-4" *ngIf="applicantDetails.get('oldReferenceNumber').value">
 						<input matInput readonly placeholder="{{'old_refrance_number' | translate:translateKey}}" formControlName="oldReferenceNumber">
 					</mat-form-field>
 				</div>
@@ -26,14 +26,14 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
 						 placeholder="{{'applicant_name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
-						 targetElement="applicantNameGuj" [form]="electricConnectionForm">
-						<control-messages [control]="electricConnectionForm.get('applicantName')"></control-messages>
+						 targetElement="applicantNameGuj" [form]="applicantDetails">
+						<control-messages [control]="applicantDetails.get('applicantName')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget [form]="electricConnectionForm"
 						 placeholder="{{ 'applicant_name' | translate:translateKey:'gu' }}">
-						<control-messages [control]="electricConnectionForm.get('applicantNameGuj')"></control-messages>
+						<control-messages [control]="applicantDetails.get('applicantNameGuj')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 
@@ -43,150 +43,151 @@
 						<mat-datepicker-toggle matSuffix [for]="DateOfapplicationDate"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #DateOfapplicationDate></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}</div>
-						<control-messages [control]="electricConnectionForm.get('applicationDate')"></control-messages>
+						<control-messages [control]="applicantDetails.get('applicationDate')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
 						<input matInput OnlyNumber placeholder="{{'contact_no' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.mobileNumber_maxLength"
 						[minlength]="fireFacilityConfig.mobileNumber_minLength" formControlName="contactNo" required>
-						<control-messages [control]="electricConnectionForm.get('contactNo')"></control-messages>
+						<control-messages [control]="applicantDetails.get('contactNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
 						<input matInput OnlyNumber placeholder="{{'mobile_no' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.mobileNumber_maxLength"
 						 [minlength]="fireFacilityConfig.mobileNumber_minLength" formControlName="mobileNo" required>
-						<control-messages [control]="electricConnectionForm.get('mobileNo')"></control-messages>
+						<control-messages [control]="applicantDetails.get('mobileNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput appPreventSpace placeholder="{{'email' | translate:translateKey}}" type="email" formControlName="email"
 						 required>
-						<control-messages [control]="electricConnectionForm.get('email')"></control-messages>
+						<control-messages [control]="applicantDetails.get('email')"></control-messages>
 					</mat-form-field>
 
 				</div>
-				<app-action-bar [form]="electricConnectionForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
+				<app-action-bar [form]="electricConnectionForm" (tabIndex)="licenseConfiguration.onTabChange($event, applicantDetails, electricConnectionForm)"
 				 (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
-
+            </form>
 			</mat-tab>
 			<!-- step 1 Ends -->
 
 
 			<!-- step 2 Starts -->
-			<mat-tab>
+			<mat-tab disabled>
 				<ng-template mat-tab-label>
 					<div>{{'forms_detail' | translate:translateKey}}</div>
 				</ng-template>
 
-
+			<form [formGroup]="formDetails">
 				<div class="row">
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appAlphaNumeric formControlName="electricityConnectionNo" placeholder="{{'electricity_connection_no' | translate: translateKey }}"
 						 maxlength="20" required>
-						<control-messages [control]="electricConnectionForm.get('electricityConnectionNo')"></control-messages>
+						<control-messages [control]="formDetails.get('electricityConnectionNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
 						 placeholder="{{'connection_holder_name' | translate:translateKey}}" formControlName="connectionHolderName"
-						 appGujInputSource targetElement="connectionHolderNameGuj" [form]="electricConnectionForm">
-						<control-messages [control]="electricConnectionForm.get('connectionHolderName')"></control-messages>
+						 appGujInputSource targetElement="connectionHolderNameGuj" [form]="formDetails">
+						<control-messages [control]="formDetails.get('connectionHolderName')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="300" required formControlName="connectionHolderNameGuj" appGujInputTarget
-						 [form]="electricConnectionForm" placeholder="{{ 'connection_holder_name' | translate:translateKey:'gu' }}">
-						<control-messages [control]="electricConnectionForm.get('connectionHolderNameGuj')"></control-messages>
+						 [form]="formDetails" placeholder="{{ 'connection_holder_name' | translate:translateKey:'gu' }}">
+						<control-messages [control]="formDetails.get('connectionHolderNameGuj')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 
 					<mat-form-field class="col-md-6">
 						<textarea matInput rows="2" cols="50" required  maxlength="125" placeholder="{{'connection_holder_address' | translate:translateKey}}"
-						 formControlName="connectionHolderAddress" appGujInputSource targetElement="connectionHolderAddressGuj" [form]="electricConnectionForm"></textarea>
-						<control-messages [control]="electricConnectionForm.get('connectionHolderAddress')"></control-messages>
+						 formControlName="connectionHolderAddress" appGujInputSource targetElement="connectionHolderAddressGuj" [form]="formDetails"></textarea>
+						<control-messages [control]="formDetails.get('connectionHolderAddress')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 					<mat-form-field class="col-md-6">
 						<textarea matInput rows="2" class="lineHeight20" cols="100"  required formControlName="connectionHolderAddressGuj"
-						 appGujInputTarget [form]="electricConnectionForm" placeholder="{{ 'connection_holder_address' | translate:translateKey:'gu' }}"></textarea>
-						<control-messages [control]="electricConnectionForm.get('connectionHolderAddressGuj')"></control-messages>
+						 appGujInputTarget [form]="formDetails" placeholder="{{ 'connection_holder_address' | translate:translateKey:'gu' }}"></textarea>
+						<control-messages [control]="formDetails.get('connectionHolderAddressGuj')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 
 					<mat-form-field class="col-md-4">
 						<input matInput [max]="disablefutureDate" [matDatepicker]="DateOfincidentDate" formControlName="incidentDate"
-						 (dateChange)="dateFormat($event.value,'incidentDate')" placeholder="{{ 'incident_date' | translate:translateKey }}" required>
+						 (dateChange)="dateFormatforFormDetails($event.value,'incidentDate')" placeholder="{{ 'incident_date' | translate:translateKey }}" required>
 						<mat-datepicker-toggle matSuffix [for]="DateOfincidentDate"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #DateOfincidentDate></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}</div>
-						<control-messages [control]="electricConnectionForm.get('incidentDate')"></control-messages>
+						<control-messages [control]="formDetails.get('incidentDate')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appAlphaNumeric formControlName="propertyNo" placeholder="{{'property_no' | translate: translateKey }}"
 						 maxlength="15" (change)="getPropertyStatus($event.target.value)">
-						<control-messages [control]="electricConnectionForm.get('propertyNo')"></control-messages>
-						<mat-error *ngIf="electricConnectionForm.get('propertyNo').hasError('outstandingRemainingProperty')">{{propertyStatusOutstanding?.message}}</mat-error>
+						<control-messages [control]="formDetails.get('propertyNo')"></control-messages>
+						<mat-error *ngIf="formDetails.get('propertyNo').hasError('outstandingRemainingProperty')">{{propertyStatusOutstanding?.message}}</mat-error>
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="firePlaceType">
 						<ng-select required placeholder="{{'fire_place_type' | translate:translateKey}} *" formControlName="code" (change)="documentManage()">
 							<ng-option *ngFor="let fire_place of FS_FIRE_PLACE_TYPE" [value]="fire_place.code">{{fire_place.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="electricConnectionForm.get('firePlaceType').get('code')"></control-messages>
+						<control-messages [control]="formDetails.get('firePlaceType').get('code')"></control-messages>
 					</div>
 
 					<div class="col-md-4 ngSelect" formGroupName="subject">
 						<ng-select required placeholder="{{'subject' | translate:translateKey}} *" formControlName="code" (change)="documentManage()">
 							<ng-option *ngFor="let fire_sub of FS_SUBJECT" [value]="fire_sub.code">{{fire_sub.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="electricConnectionForm.get('subject').get('code')"></control-messages>
+						<control-messages [control]="formDetails.get('subject').get('code')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber placeholder="{{'fire_loss_amount' | translate:translateKey}}" type="tel" maxlength="10"
 						 formControlName="fireLossAmount">
-						<control-messages [control]="electricConnectionForm.get('fireLossAmount')"></control-messages>
+						<control-messages [control]="formDetails.get('fireLossAmount')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-8">
 						<textarea matInput rows="2" cols="50" required maxlength="100" placeholder="{{'fire_place_address' | translate:translateKey}}"
 						 formControlName="firePlaceAddress"></textarea>
-						<control-messages [control]="electricConnectionForm.get('firePlaceAddress')"></control-messages>
+						<control-messages [control]="formDetails.get('firePlaceAddress')"></control-messages>
 					</mat-form-field>
 
 				</div>
-				<app-action-bar [form]="electricConnectionForm" (handleOnSaveAndNext)="documentManage()" (tabIndex)="fireFacilityConfig.onFormTabChange($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
-
+				<app-action-bar [form]="electricConnectionForm" (handleOnSaveAndNext)="documentManage()" (tabIndex)="licenseConfiguration.onTabChange($event, formDetails, electricConnectionForm)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
+            </form>
 			</mat-tab>
 			<!-- step 2 Ends -->
 
 			<!-- step 3 Starts -->
-			<mat-tab>
+			<mat-tab disabled>
 				<ng-template mat-tab-label>
 					<div>{{'attachment' | translate:translateKey}}</div>
 				</ng-template>
 
-
+			<form [formGroup]="attachmentDetails">
 				<div class="row">
 					<ng-container *ngFor="let doc of electricConnectionForm.get('serviceDetail').get('serviceUploadDocuments').value">
 						<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && fireFacilityConfig.isAttachmentButtonsVisible">
-							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory">*</span></label>
+							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory" class="mandatory">*</span></label>
 							<file-upload [form]="electricConnectionForm" [uploadModel]="doc"></file-upload>
 						</div>
 					</ng-container>
 				</div>
 
-				<app-action-bar [paymentGateway]="paymentGateway" (handleOnSaveAndNext)="documentManage()" [uploadFiles]="uploadFilesArray" [form]="electricConnectionForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event) "
+				<app-action-bar [paymentGateway]="paymentGateway" (handleOnSaveAndNext)="documentManage()" [uploadFiles]="uploadFilesArray" [form]="electricConnectionForm" (tabIndex)="licenseConfiguration.onTabChange($event, attachmentDetails, electricConnectionForm) "
 				 (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next: 3, back: 1}"></app-action-bar>
 
+			</form>
 			</mat-tab>
 			<!-- step 3 Ends -->
 			<select-payment-gateway #paymentGateway></select-payment-gateway>
 		</mat-tab-group>
 
-	</form>
+	<!-- </form> -->
 </mat-card>
