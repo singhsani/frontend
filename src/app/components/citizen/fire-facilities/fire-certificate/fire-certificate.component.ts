@@ -9,6 +9,8 @@ import { AmazingTimePickerService } from 'amazing-time-picker';
 import * as _ from 'lodash';
 import { TranslateService } from '../../../../shared/modules/translate/translate.service';
 import { ValidationService } from 'src/app/shared/services/validation.service';
+import { LicenseConfiguration } from '../../licences/license-configuration';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
   selector: 'app-fire-certificate',
@@ -18,6 +20,8 @@ import { ValidationService } from 'src/app/shared/services/validation.service';
 export class FireCertificateComponent implements OnInit {
 
   fireCertificateForm: FormGroup;
+  applicantDetails: FormGroup
+  attachmentDetails : FormGroup
   translateKey: string = 'fireCertificateScreen';
 
   appId: number;
@@ -28,6 +32,7 @@ export class FireCertificateComponent implements OnInit {
   // required attachment array
   uploadFilesArray: Array<any> = [];
   fireFacilityConfig: FireFacilityConfig = new FireFacilityConfig();
+  licenseConfiguration : LicenseConfiguration = new LicenseConfiguration();
 
   constructor(
     private fb: FormBuilder,
@@ -35,7 +40,8 @@ export class FireCertificateComponent implements OnInit {
     private formService: FormsActionsService,
     private atp: AmazingTimePickerService,
     private router: Router,
-    public TranslateService: TranslateService
+    public TranslateService: TranslateService,
+    private commonService : CommonService
   ) { }
 
   ngOnInit() {
@@ -63,10 +69,12 @@ export class FireCertificateComponent implements OnInit {
 
       // try {
       this.fireCertificateForm.patchValue(res);
+      this.applicantDetails.patchValue(res)
+      this.attachmentDetails.patchValue(res)
       this.fireFacilityConfig.isAttachmentButtonsVisible = true;
       //convert applicant name and set in applicantNameGuj filds 
-      let applicantNameGujFields = this.fireCertificateForm.get('applicantNameGuj');
-      let applicantNameValue = this.fireCertificateForm.get('applicantName').value;
+      let applicantNameGujFields = this.applicantDetails.get('applicantNameGuj');
+      let applicantNameValue = this.applicantDetails.get('applicantName').value;
       if (!applicantNameGujFields.value) {
         applicantNameGujFields.setValue(this.TranslateService.getEngToGujTranslation(applicantNameValue))
       }
@@ -102,9 +110,9 @@ export class FireCertificateComponent implements OnInit {
 	 * define all gas connection form controls
 	 */
   fireCertificateFormControls() {
-    this.fireCertificateForm = this.fb.group({
-      apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-      serviceCode: 'FS_FIRE_CERTIFICATE',
+
+    	/* Step 1 controls start */
+    this.applicantDetails = this.fb.group({
       applicantName: [null, [Validators.required, Validators.maxLength(100)]],
       applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
       applicationDate: [{ value: null, disabled: true }],
@@ -125,8 +133,23 @@ export class FireCertificateComponent implements OnInit {
       contactNo : [null, [Validators.required, Validators.maxLength(10)]],
       mobileNo : [null, [Validators.required, Validators.maxLength(10)]],
       email : [null, [Validators.required, Validators.maxLength(50),Validators.email,ValidationService.emailValidator]],
+    })
+   	/* Step 1 controls end */
+
+    /* Step 1 controls start */
+    this.attachmentDetails = this.fb.group({
+      attachments : []
+    })
+   /* Step 2 controls end */
+
+    this.fireCertificateForm = this.fb.group({
+      apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+      serviceCode: 'FS_FIRE_CERTIFICATE',
       attachments: []
     });
+
+    this.commonService.createCloneAbstractControl(this.applicantDetails,this.fireCertificateForm);
+    this.commonService.createCloneAbstractControl(this.attachmentDetails,this.fireCertificateForm);
   }
 
   /**
@@ -144,7 +167,7 @@ export class FireCertificateComponent implements OnInit {
 	 * @param controlType : form control name
 	 */
   dateFormat(date, controlType: string) {
-    this.fireCertificateForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+    this.applicantDetails.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
   }
 
 	/**
@@ -164,7 +187,7 @@ export class FireCertificateComponent implements OnInit {
   }
 
   documentsManage(){
-    const firePlaceType = this.fireCertificateForm.get('firePlaceType').value;
+    const firePlaceType = this.applicantDetails.get('firePlaceType').value;
 
     let licenseCopyMandotary = false;
     let rcBookMandotary = false;
@@ -201,7 +224,7 @@ export class FireCertificateComponent implements OnInit {
     if (ev && ev.length < 8) {
       ev = ev.concat(":00");
     }
-    this.fireCertificateForm.get(controlName).setValue(ev);
+    this.applicantDetails.get(controlName).setValue(ev);
   }
 
 

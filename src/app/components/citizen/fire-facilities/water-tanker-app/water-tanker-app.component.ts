@@ -10,6 +10,8 @@ import * as _ from 'lodash';
 import { FireFacilitiesService } from '../common/services/fire-facilities.service';
 import { TranslateService } from '../../../../shared/modules/translate/translate.service';
 import { ToastrService } from 'ngx-toastr';
+import { LicenseConfiguration } from '../../licences/license-configuration';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
 	selector: 'app-water-tanker-app',
@@ -19,12 +21,15 @@ import { ToastrService } from 'ngx-toastr';
 export class WaterTankerAppComponent implements OnInit {
 
 	waterTankerAppForm: FormGroup;
+	applicantDetails : FormGroup;
+	formDetails : FormGroup;
 	translateKey: string = 'waterSupplyScreen';
 
 	formId: number;
 	apiCode: string;
 
 	fireFacilityConfig: FireFacilityConfig = new FireFacilityConfig();
+	licenseConfiguration : LicenseConfiguration = new LicenseConfiguration();
 
 	//Lookups Array
 	FS_REQUIRE_IN: Array<any> = [];
@@ -57,7 +62,7 @@ export class WaterTankerAppComponent implements OnInit {
 		public TranslateService: TranslateService,
 		public fireFacilitiesService: FireFacilitiesService,
 		private toaster: ToastrService,
-
+		private commonService : CommonService
 	) { }
 
 	/**
@@ -88,10 +93,12 @@ export class WaterTankerAppComponent implements OnInit {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.waterTankerAppForm.patchValue(res);
+				this.applicantDetails.patchValue(res);
+				this.formDetails.patchValue(res)
         this.onChangeTime(res.requireIn.code);
        	this.fireFacilityConfig.isAttachmentButtonsVisible = true;
-        let applicantNameGujFields = this.waterTankerAppForm.get('applicantNameGuj');
-				let applicantNameValue = this.waterTankerAppForm.get('applicantName').value;
+        let applicantNameGujFields = this.applicantDetails.get('applicantNameGuj');
+				let applicantNameValue = this.applicantDetails.get('applicantName').value;
 				if (!applicantNameGujFields.value) {
 					applicantNameGujFields.setValue(this.TranslateService.getEngToGujTranslation(applicantNameValue))
 				}
@@ -119,7 +126,7 @@ export class WaterTankerAppComponent implements OnInit {
 			this.FS_MORNING = res.FS_MORNING;
 			this.FS_EVENING = res.FS_EVENING;
 			this.FS_AFTERNOON = res.FS_AFTERNOON;
-			this.onChangeTime(this.waterTankerAppForm.get('requireIn').value.code);
+			this.onChangeTime(this.formDetails.get('requireIn').value.code);
 		});
 	}
 
@@ -197,38 +204,46 @@ export class WaterTankerAppComponent implements OnInit {
 	* 'Guj' control is consider as a Gujarati fields
 	*/
 	waterTankerAppFormControls() {
-		this.waterTankerAppForm = this.fb.group({
+
+		/* Step 1 controls start */
+		this.applicantDetails = this.fb.group({
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			mobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
-			email: [null, [Validators.required, Validators.maxLength(50),Validators.email, ValidationService.emailValidator]],
+			email: [null, [Validators.required, Validators.maxLength(50), Validators.email, ValidationService.emailValidator]],
 			applicationDate: [null, [Validators.required]],//not now
-			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			serviceCode: 'FS-WATER',
-			/* Step 1 controls start */
+		})
+		/* Step 1 controls end */
+
+		/* Step 2 controls start */
+		this.formDetails = this.fb.group({
 			oldReferenceNumber: [null],
 			requiredOnFloor: this.fb.group({
-				"code": [null, Validators.required]
+				code: [null, Validators.required]
 			}),
 			purpose: this.fb.group({
-				"code": [null, Validators.required]
+				code: [null, Validators.required]
 			}),
-			whoSuggested: [null, [Validators.maxLength(150)]],
 			withinVMCBoundary: [null, [Validators.required]],
 			requiredOnDate: [null, Validators.required],
 			requireIn: this.fb.group({
-				"code": [null, Validators.required]
+				code: [null, Validators.required]
 			}),
 			requireAtTime: this.fb.group({
-				"code": [null, Validators.required]
+				code: [null, Validators.required]
 			}),
+			whoSuggested: [null, [Validators.maxLength(150)]],
 			totalTankRequired: [null, [Validators.required, Validators.maxLength(1)]],
 			totalAmount: [null, [Validators.maxLength(5)]],
-			tankDeliveryAddress: [null, [Validators.required, Validators.maxLength(250)]],
+			tankDeliveryAddress: [null, [Validators.required, Validators.maxLength(250)]]
+		})
+		/* Step 2 controls end */
 
-			// loinumber: [null]
-
-			/* Step 4 controls start*/
+		this.waterTankerAppForm = this.fb.group({
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+			serviceCode: 'FS-WATER',
+			withinVMCBoundary: [null, [Validators.required]],
+			requiredOnDate: [null, Validators.required],
 			attachments: [],
 			serviceDetail: this.fb.group({
 				code: [null],
@@ -237,18 +252,20 @@ export class WaterTankerAppComponent implements OnInit {
 				feesOnScrutiny: [null],
 				appointmentRequired: [null],
 				serviceUploadDocuments: this.fb.array([])
-			})
-			/* Step 4 controls end */
+			}),
+
 		});
+
+		this.commonService.createCloneAbstractControl(this.applicantDetails,this.waterTankerAppForm);
+		this.commonService.createCloneAbstractControl(this.formDetails,this.waterTankerAppForm);
 	}
 
 	/**
 	 * This method for reset dependent field.
 	 */
 	resetsuggestedfields() {
-		this.waterTankerAppForm.get('applicationDate').disable();
-
-		if (this.waterTankerAppForm.get('purpose').get('code').value == 'FS_SUGGESTED') {
+		this.applicantDetails.get('applicationDate').disable();
+		if (this.formDetails.get('purpose').get('code').value == 'FS_SUGGESTED') {
 			this.waterTankerAppForm.controls.whoSuggested.setValidators([Validators.required]);
 			// console.log(this.waterTankerAppForm.get('serviceDetail').get('serviceUploadDocuments').value[0].mandatory)
 			this.dependentAttachment('UPLOAD_LETTER');
@@ -267,20 +284,20 @@ export class WaterTankerAppComponent implements OnInit {
 	 * This method required for calculation of total tanks fee.
 	 */
 	calculateTotalAmount() {
-		if (this.waterTankerAppForm.get('totalTankRequired').value && this.waterTankerAppForm.controls.requiredOnFloor.get('code')) {
-			this.fireFacilitiesService.getWaterTankersFee(this.waterTankerAppForm.value).subscribe(
+		if (this.formDetails.get('totalTankRequired').value && this.formDetails.controls.requiredOnFloor.get('code')) {
+			this.fireFacilitiesService.getWaterTankersFee(this.formDetails.value).subscribe(
 				res => {
 					if(res.totalTanks != 9){
 						let maxTank = 9;
 						let tempTank = maxTank - res.totalTanks;
-						if(tempTank < Number(this.waterTankerAppForm.get('totalTankRequired').value)){
+						if(tempTank < Number(this.formDetails.get('totalTankRequired').value)){
 							this.toaster.warning('Water Tanker limit is fixed for 9. No booking is Acceptable');
-							this.waterTankerAppForm.get('totalTankRequired').reset();
+							this.formDetails.get('totalTankRequired').reset();
 						}else{
-							this.waterTankerAppForm.patchValue(res);
+							this.formDetails.patchValue(res);
 						}
 					}else{
-						this.waterTankerAppForm.patchValue(res);
+						this.formDetails.patchValue(res);
 					}
 
 				},
@@ -290,7 +307,7 @@ export class WaterTankerAppComponent implements OnInit {
 			);
 		}
 		else {
-			this.waterTankerAppForm.get('totalAmount').reset();
+			this.formDetails.get('totalAmount').reset();
 		}
 	}
 

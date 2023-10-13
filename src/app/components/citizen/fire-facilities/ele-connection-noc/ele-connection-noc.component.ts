@@ -13,6 +13,8 @@ import { TranslateService } from '../../../../shared/modules/translate/translate
 import { FireFacilitiesService } from '../common/services/fire-facilities.service';
 import { constants } from 'os';
 import { ValidatorService } from 'src/app/vmcshared/data-table/validator.service';
+import { LicenseConfiguration } from '../../licences/license-configuration';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
 	selector: 'app-ele-connection-noc',
@@ -23,6 +25,9 @@ export class EleConnectionNocComponent implements OnInit {
 
 
 	electricConnectionForm: FormGroup;
+	applicantDetails : FormGroup;
+    formDetails : FormGroup;
+	attachmentDetails : FormGroup;
 	translateKey: string = 'eleConnectionScreen';
 
 	appId: number;
@@ -40,6 +45,7 @@ export class EleConnectionNocComponent implements OnInit {
 	uploadFilesArray: Array<any> = [];
 
 	fireFacilityConfig: FireFacilityConfig = new FireFacilityConfig();
+	licenseConfiguration : LicenseConfiguration = new LicenseConfiguration();
 
 
 	constructor(
@@ -47,7 +53,8 @@ export class EleConnectionNocComponent implements OnInit {
 		private route: ActivatedRoute,
 		private formService: FormsActionsService,
 		public TranslateService: TranslateService,
-		private fireFacilitiesService: FireFacilitiesService
+		private fireFacilitiesService: FireFacilitiesService,
+		private commonService : CommonService
 	) { }
 
 	ngOnInit() {
@@ -66,12 +73,15 @@ export class EleConnectionNocComponent implements OnInit {
 	getElectricConnectionData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.electricConnectionForm.patchValue(res);
+			this.applicantDetails.patchValue(res);
+			this.formDetails.patchValue(res)
+			this.attachmentDetails.patchValue(res)
 
 			this.fireFacilityConfig.isAttachmentButtonsVisible = true;
 
 			//convert applicant name and set in applicantNameGuj filds 
-			let applicantNameGujFields = this.electricConnectionForm.get('applicantNameGuj');
-			let applicantNameValue = this.electricConnectionForm.get('applicantName').value;
+			let applicantNameGujFields = this.applicantDetails.get('applicantNameGuj');
+			let applicantNameValue = this.applicantDetails.get('applicantName').value;
 			if (!applicantNameGujFields.value) {
 				applicantNameGujFields.setValue(this.TranslateService.getEngToGujTranslation(applicantNameValue))
 			}
@@ -98,11 +108,9 @@ export class EleConnectionNocComponent implements OnInit {
 
 
 	electricConnectionFormControls() {
-		this.electricConnectionForm = this.fb.group({
-			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			serviceCode: 'FS-ELE',
 
-			/* Step 1 controls start */
+		/* Step 1 controls start */
+		this.applicantDetails = this.fb.group({
 			oldReferenceNumber: [null],
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
@@ -110,8 +118,11 @@ export class EleConnectionNocComponent implements OnInit {
 			contactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			mobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			email: [null, [Validators.required, Validators.maxLength(50),Validators.email, ValidationService.emailValidator]],
+		})
+	    /* Step 1 controls end */
 
-			/* Step 2 controls start */
+		/* Step 2 controls start */
+		this.formDetails = this.fb.group({
 			electricityConnectionNo: [null, [Validators.required, Validators.maxLength(20)]],
 			connectionHolderName: [null, [Validators.required, Validators.maxLength(100)]],
 			connectionHolderNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
@@ -128,11 +139,25 @@ export class EleConnectionNocComponent implements OnInit {
 				code: [null, Validators.required]
 			}),
 			fireLossAmount: [null, [Validators.maxLength(10)]],
+		})
+		 /* Step 2 controls end */
 
-			/* Step 3 controls start */
+		 /* Step 3 controls start */
+		this.attachmentDetails = this.fb.group({
+			attachments: []
+		})
+		 /* Step 3 controls end */
+
+		this.electricConnectionForm = this.fb.group({
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+			serviceCode: 'FS-ELE',
 			attachments: []
 			/* Step 6 controls end */
 		});
+
+		this.commonService.createCloneAbstractControl(this.applicantDetails,this.electricConnectionForm);
+		this.commonService.createCloneAbstractControl(this.formDetails,this.electricConnectionForm);
+		this.commonService.createCloneAbstractControl(this.attachmentDetails,this.electricConnectionForm);
 	}
 
 	/**
@@ -159,7 +184,17 @@ export class EleConnectionNocComponent implements OnInit {
 	 * @param controlType : form control name
 	 */
 	dateFormat(date, controlType: string) {
-		this.electricConnectionForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+		this.applicantDetails.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+	}
+
+
+	/**
+	 * This method is change date format.
+	 * @param date : selected date
+	 * @param controlType : form control name
+	 */
+	dateFormatforFormDetails(date, controlType: string) {
+		this.formDetails.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
 	}
 
 	/**
@@ -172,11 +207,11 @@ export class EleConnectionNocComponent implements OnInit {
 			if (res.success) {
 				if (res.data.outstanding) {
 					this.electricConnectionForm.get('canEdit').setValue(false);
-					this.electricConnectionForm.get('propertyNo').setErrors({ 'outstandingRemainingProperty': true });
+					this.formDetails.get('propertyNo').setErrors({ 'outstandingRemainingProperty': true });
 					this.propertyStatusOutstanding = res.data;
 				} else {
 					this.electricConnectionForm.get('canEdit').setValue(true);
-					this.electricConnectionForm.get('propertyNo').setErrors(null);
+					this.formDetails.get('propertyNo').setErrors(null);
 				}
 			}
 		}, (err: any) => {
@@ -201,13 +236,13 @@ export class EleConnectionNocComponent implements OnInit {
 			let count = flag;
 			// console.log(flag);
 			if (count <= step0) {
-				this.fireFacilityConfig.currentTabIndex = 0;
+				this.licenseConfiguration.currentTabIndex = 0;
 				return false;
 			} else if (count <= step1) {
-				this.fireFacilityConfig.currentTabIndex = 1;
+				this.licenseConfiguration.currentTabIndex = 1;
 				return false;
 			} else if (count <= step2) {
-				this.fireFacilityConfig.currentTabIndex = 2;
+				this.licenseConfiguration.currentTabIndex = 2;
 				return false;
 			}
 			// else if (count == 67) {
@@ -221,8 +256,8 @@ export class EleConnectionNocComponent implements OnInit {
 	}
 
 	documentManage(){
-		const subject = this.electricConnectionForm.get('subject').value;
-		const firePlaceType = this.electricConnectionForm.get('firePlaceType').value;
+		const subject = this.formDetails.get('subject').value;
+		const firePlaceType = this.formDetails.get('firePlaceType').value;
 		let buildingCollapseMandatory = false;
 		let samatiLetterMandatory = false;
 		if(subject && subject.code && subject.code == 'BUILDING_COLLAPSE'){

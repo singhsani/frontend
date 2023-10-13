@@ -112,7 +112,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	 * This method is used for save form as draft using API
 	 */
 	saveAsDraft() {
-		if(this.formService.apiType == 'MFLicense' || this.formService.apiType == 'APLicense' || this.formService.apiType == 'APLRenewal'|| this.formService.apiType == 'APLTransfer' || this.formService.apiType == 'shop' || this.formService.apiType == 'shop-transfer' || this.formService.apiType == 'vendor' || this.formService.apiType == 'MFTransfer' || this.formService.apiType == 'MFRenewal' || this.formService.apiType == 'vehicle' || this.formService.apiType == 'pecForm'){
+		if(this.formService.apiType == 'MFLicense' || this.formService.apiType == 'APLicense' || this.formService.apiType == 'APLRenewal'|| this.formService.apiType == 'APLTransfer' || this.formService.apiType == 'shop' || this.formService.apiType == 'shop-transfer' || this.formService.apiType == 'vendor' || this.formService.apiType == 'MFTransfer' || this.formService.apiType == 'MFRenewal' || this.formService.apiType == 'vehicle' || this.formService.apiType == 'pecForm' || this.formService.apiType == 'waterTankerSupply' || this.formService.apiType =='gasConnectionNoc' || this.formService.apiType == 'electricConnectionNoc' || this.formService.apiType == 'fireCertificate'){
 			if (this.isstepper) {
 				this.tabIndex.emit(this.stepInfo.next);
 			}
@@ -152,7 +152,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	}
 
 	getUserDetailsAndSubmit() {
-		
+		this.tabIndex.emit(this.stepInfo.next)
 		if (this.form.valid && (this.commonService.isGuestUser() || this.commonService.fromAdmin())) {
 			this.mandatoryFileCheck().then(data  =>  {
 
