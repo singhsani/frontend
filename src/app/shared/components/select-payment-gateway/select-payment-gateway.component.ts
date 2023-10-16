@@ -140,7 +140,8 @@ export class SelectPaymentGatewayComponent implements OnInit {
   }
 
   getBillDeskPage() {
-  
+
+
     /**
      * This condition is added as there are two transactions in swimming pool and each time bill desk needs different customerId so
      * instead of reference number of Gateway transaction Id is passed.
@@ -187,8 +188,19 @@ export class SelectPaymentGatewayComponent implements OnInit {
         this.alertService.error(error.error[0].message);      }
       );
     } else {
-    
+
       this.formService.getBillDeskPage(obj).subscribe(res => {
+      if(res.data.status== "Already Paid"){
+         this.commonService.openAlert('Error', res.data.status, 'error', '', performDelete => {
+            	//window.location.reload();
+            	this.onCancel();
+            	location.reload();
+            	//this.router.navigate(['/citizen/bookings/my-bookings']);
+
+            	//this.router.navigate(['/citizen/dashboard']);
+
+          });
+      }
         if(res.data== undefined){
           this.toastr.error("BillDesk Server Down Please Try After Some Time");
           this.onCancel();
