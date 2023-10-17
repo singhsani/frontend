@@ -146,7 +146,7 @@
 						<mat-error *ngIf="formDetails.get('propertyNo').hasError('outstandingRemainingProperty')">{{propertyStatusOutstanding?.message}}</mat-error>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4" *ngIf="formDetails.get('connectionPurpose').get('code').value=='COMMERCIAL'">
+					<mat-form-field class="col-md-4" *ngIf="formDetails.get('connectionPurpose').get('code').value=='COMMERCIAL' || formDetails.get('connectionPurpose').get('code').value=='INDUSTRIAL'">
 						<input matInput appAlphaNumeric placeholder="{{'shop_No' | translate:translateKey}} *" type="tel" maxlength="12"
 						 formControlName="shopNo">
 						<control-messages [control]="formDetails.get('shopNo')"></control-messages>
