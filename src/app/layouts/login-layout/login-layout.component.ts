@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginLayoutComponent implements OnInit {
 
+	date = new Date();
 	constructor() { }
 
 	ngOnInit() {
