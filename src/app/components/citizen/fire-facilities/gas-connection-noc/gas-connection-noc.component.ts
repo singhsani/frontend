@@ -113,7 +113,7 @@ export class GasConnectionNocComponent implements OnInit {
 		oldReferenceNumber: [null],
 		applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 		applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
-		applicationDate: [null, Validators.required],
+		applicationDate: [{ value: null, disabled: true }, Validators.required],
 		contactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), , Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 		mobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 		email: [null, [Validators.required, Validators.maxLength(50),Validators.email, ValidationService.emailValidator]],
@@ -250,14 +250,16 @@ export class GasConnectionNocComponent implements OnInit {
 
 
 	onChangeConnectionPurpose(event) {
-
-		if (event == "COMMERCIAL") {
-			this.gasConnectionForm.get('shopNo').reset();
-			this.gasConnectionForm.get('shopNo').setValidators([Validators.required, Validators.maxLength(12)]);
+debugger
+		if (event == "COMMERCIAL" || event == 'INDUSTRIAL') {
+			this.formDetails.get('shopNo').reset();
+			this.formDetails.get('shopNo').setValidators([Validators.required, Validators.maxLength(12)]);
+			this.formDetails.get('shopNo').updateValueAndValidity()
 		} else {
 			//this.gasConnectionForm.get('propertyNo').reset();
-			this.gasConnectionForm.get('shopNo').reset();
-			this.gasConnectionForm.get('shopNo').clearValidators();
+			this.formDetails.get('shopNo').reset();
+			this.formDetails.get('shopNo').clearValidators();
+			this.formDetails.get('shopNo').updateValueAndValidity()
 		}
 		this.CD.detectChanges();
 	}
