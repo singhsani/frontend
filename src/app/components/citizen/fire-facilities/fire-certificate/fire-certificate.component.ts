@@ -83,6 +83,16 @@ export class FireCertificateComponent implements OnInit {
         (<FormArray>this.fireCertificateForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
       });
       this.documentsManage();
+			if (res.canEdit == false) {
+				this.fireCertificateForm.disable()
+				this.applicantDetails.disable()
+				this.attachmentDetails.disable()
+			} else {
+				this.fireCertificateForm.enable()
+				this.applicantDetails.enable()
+				this.attachmentDetails.enable()
+        this.applicantDetails.get('applicationDate').disable()
+			}
       // } catch (error) {
       //   console.log(error.message)
       // }

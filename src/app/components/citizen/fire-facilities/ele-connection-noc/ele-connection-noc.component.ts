@@ -91,6 +91,18 @@ export class EleConnectionNocComponent implements OnInit {
 			});
 
 			this.documentManage();
+			if (res.canEdit == false) {
+				this.electricConnectionForm.disable()
+				this.applicantDetails.disable()
+				this.formDetails.disable()
+				this.attachmentDetails.disable()
+			} else {
+				this.electricConnectionForm.enable()
+				this.applicantDetails.enable()
+				this.formDetails.enable()
+				this.attachmentDetails.enable()
+				this.applicantDetails.get('applicationDate').disable()
+			}
 		});
 	}
 

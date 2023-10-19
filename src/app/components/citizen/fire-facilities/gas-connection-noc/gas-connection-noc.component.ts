@@ -89,6 +89,18 @@ export class GasConnectionNocComponent implements OnInit {
 			});
 
 			this.documentManage();
+			if (res.canEdit == false) {
+				this.gasConnectionForm.disable()
+				this.applicantDetails.disable()
+				this.formDetails.disable()
+				this.attachmentDetails.disable()
+			} else {
+				this.gasConnectionForm.enable()
+				this.applicantDetails.enable()
+				this.formDetails.enable()
+				this.attachmentDetails.enable()
+				this.applicantDetails.get('applicationDate').disable()
+			}
 		});
 	}
 
