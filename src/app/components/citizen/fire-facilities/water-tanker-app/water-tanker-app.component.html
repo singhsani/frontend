@@ -5,7 +5,7 @@
 		<mat-tab-group [(selectedIndex)]="licenseConfiguration.currentTabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
 				<!-- step 1 Starts -->
-				<mat-tab diasbled>
+				<mat-tab disabled>
 					<ng-template mat-tab-label>
 						<div>{{'applicant_detail' | translate:translateKey}}</div>
 					</ng-template>
@@ -36,8 +36,8 @@
 							 formControlName="email" required>
 							<control-messages [control]="applicantDetails.get('email')"></control-messages>
 						</mat-form-field>
-						<mat-form-field class="col-md-4">
-							<mat-label>{{'application_date'| translate: translateKey}} *</mat-label>
+						<mat-form-field class="col-md-4 ">
+							<mat-label>{{'application_date'| translate: translateKey}}<span style="color:red;">*</span></mat-label>
 							<input appDate matInput
 							[matDatepicker]="townHallBookingfromPicker"  [min]="appDate" [max]="appDate"  formControlName="applicationDate">
 							<mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker"></mat-datepicker-toggle>
@@ -69,18 +69,28 @@
 				</div>
 
 				<div class="row">
-					<div class="col-md-6 ngSelect" formGroupName="requiredOnFloor">
-						<ng-select required placeholder="{{'select_floor' | translate:translateKey}} *" formControlName="code">
+					<div class="col-md-6 ngSelect asteriskmarkRequired" formGroupName="requiredOnFloor">
+						<ng-select required placeholder="{{'select_floor' | translate:translateKey}}" formControlName="code">
 							<ng-option *ngFor="let FLOOR of FS_REQUIRED_ON_FLOOR" [value]="FLOOR.code">{{FLOOR.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="formDetails.get('requiredOnFloor').get('code')"></control-messages>
+						<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="formDetails.get('requiredOnFloor').get('code').invalid && (formDetails.get('requiredOnFloor').get('code').dirty || formDetails.get('requiredOnFloor').get('code').touched)">
+							<div *ngIf="formDetails.get('requiredOnFloor').get('code').errors.required">
+								Floor is Required.
+							</div>
+						</mat-error>
 					</div>
 
-					<div class="col-md-6 ngSelect" formGroupName="purpose">
-						<ng-select required placeholder="{{'tanker_purpose' | translate:translateKey}} *" formControlName="code" (change)="calculateTotalAmount();resetsuggestedfields()">
+					<div class="col-md-6 ngSelect asteriskmarkRequired" formGroupName="purpose">
+						<ng-select required placeholder="{{'tanker_purpose' | translate:translateKey}}" formControlName="code" (change)="calculateTotalAmount();resetsuggestedfields()">
 							<ng-option *ngFor="let PURPOSE of FS_WATER_TANKER_PURPOSE" [value]="PURPOSE.code">{{PURPOSE.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="formDetails.get('purpose').get('code')"></control-messages>
+						<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="formDetails.get('purpose').get('code').invalid && (formDetails.get('purpose').get('code').dirty || formDetails.get('purpose').get('code').touched)">
+							<div *ngIf="formDetails.get('purpose').get('code').errors.required">
+								Purpose is Required.
+							</div>
+						</mat-error>
 					</div>
 				</div>
 				<div class="row" *ngIf="formDetails.get('purpose').get('code').value == 'FS_SUGGESTED'">
@@ -121,17 +131,27 @@
 						<control-messages [control]="formDetails.get('requiredOnDate')"></control-messages>
 					</mat-form-field>
 
-					<div class="col-md-4 ngSelect" formGroupName="requireIn">
-						<ng-select required placeholder="{{'require_in' | translate:translateKey}} *" formControlName="code" (change)="onChangeTime($event);waterTankerAppForm.get('requireAtTime').reset()">
+					<div class="col-md-4 ngSelect asteriskmarkRequired" formGroupName="requireIn">
+						<ng-select required placeholder="{{'require_in' | translate:translateKey}}" formControlName="code" (change)="onChangeTime($event);waterTankerAppForm.get('requireAtTime').reset()">
 							<ng-option *ngFor="let time of FS_REQUIRE_IN" [value]="time.code">{{time.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="formDetails.get('requireIn').get('code')"></control-messages>
+						<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="formDetails.get('requireIn').get('code').invalid && (formDetails.get('requireIn').get('code').dirty || formDetails.get('requireIn').get('code').touched)">
+							<div *ngIf="formDetails.get('requireIn').get('code').errors.required">
+								Require In is Required.
+							</div>
+						</mat-error>
 					</div>
 					<div class="col-md-4 ngSelect" formGroupName="requireAtTime">
 						<ng-select required placeholder="{{'require_at_time' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let attime of REQUIRE_TIME" [value]="attime.code">{{attime.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="formDetails.get('requireAtTime').get('code')"></control-messages>
+						<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="formDetails.get('requireAtTime').get('code').invalid && (formDetails.get('requireAtTime').get('code').dirty || formDetails.get('requireAtTime').get('code').touched)">
+							<div *ngIf="formDetails.get('requireAtTime').get('code').errors.required">
+								 Time is Required.
+							</div>
+						</mat-error>
 					</div>
 					<!-- <mat-form-field class="col-md-4">
 						<input matInput formControlName="firmCity" appValidationFields validationFieldsType='onlyNameWithOutSpace'

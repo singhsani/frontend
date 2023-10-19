@@ -41,7 +41,7 @@
 
 					<mat-form-field class="col-md-4 mat-input">
 						<input matInput [max]="disablefutureDate" [matDatepicker]="DateOfincidentDate" formControlName="incidentDate"
-						 (dateChange)="dateFormat($event.value,'incidentDate')" placeholder="{{ 'incident_Date' | translate:translateKey }} *">
+						 (dateChange)="dateFormat($event.value,'incidentDate')" placeholder="{{ 'incident_Date' | translate:translateKey }}" required>
 						<mat-datepicker-toggle matSuffix [for]="DateOfincidentDate"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #DateOfincidentDate></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}</div>
@@ -111,11 +111,16 @@
 						<control-messages [control]="applicantDetails.get('propertyNo')"></control-messages>
 					</mat-form-field>
 
-					<div class="col-md-6 ngSelect" formGroupName="firePlaceType">
-						<ng-select placeholder="{{'fire_certificate_form' | translate:translateKey}} *" formControlName="code" (change) = "documentsManage()">
+					<div class="col-md-6 ngSelect asteriskmarkRequired" formGroupName="firePlaceType">
+						<ng-select placeholder="{{'fire_certificate_form' | translate:translateKey}}" formControlName="code" (change) = "documentsManage()">
 							<ng-option *ngFor="let type of FS_FIRE_PLACE_TYPE" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="applicantDetails.get('firePlaceType').get('code')"></control-messages>
+						<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="applicantDetails.get('firePlaceType').get('code').invalid && (applicantDetails.get('firePlaceType').get('code').dirty || applicantDetails.get('firePlaceType').get('code').touched)">
+							<div *ngIf="applicantDetails.get('firePlaceType').get('code').errors.required">
+								Fire Place Type is Required.
+							</div>
+						</mat-error>
 					</div>
 
 					<mat-form-field class="col-md-6">
@@ -163,7 +168,7 @@
 				<div class="row">
 					<ng-container *ngFor="let doc of fireCertificateForm.get('serviceDetail').get('serviceUploadDocuments').value">
 						<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && fireFacilityConfig.isAttachmentButtonsVisible">
-							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory">*</span></label>
+							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory" class="mandatory">*</span></label>
 							<file-upload [form]="fireCertificateForm" [uploadModel]="doc"></file-upload>
 						</div>
 					</ng-container>
