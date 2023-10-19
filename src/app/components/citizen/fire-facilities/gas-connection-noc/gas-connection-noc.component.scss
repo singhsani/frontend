@@ -1,3 +1,7 @@
 .mandatory{
     color: red;
 }
+.required-field::after {
+    content: "*";
+    color: red;
+  }

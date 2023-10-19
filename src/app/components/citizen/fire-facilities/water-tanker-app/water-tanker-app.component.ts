@@ -108,6 +108,16 @@ export class WaterTankerAppComponent implements OnInit {
 				});
 				this.requiredDocumentList();
 				this.resetsuggestedfields();
+				if (res.canEdit == false) {
+					this.waterTankerAppForm.disable()
+					this.applicantDetails.disable()
+					this.formDetails.disable()
+				} else {
+					this.waterTankerAppForm.enable()
+					this.applicantDetails.enable()
+					this.formDetails.enable()
+				}
+
 			} catch (error) {
 				console.log(error.message)
 			}
