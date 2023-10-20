@@ -136,14 +136,24 @@
 						<ng-select required placeholder="{{'fire_place_type' | translate:translateKey}} *" formControlName="code" (change)="documentManage()">
 							<ng-option *ngFor="let fire_place of FS_FIRE_PLACE_TYPE" [value]="fire_place.code">{{fire_place.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="formDetails.get('firePlaceType').get('code')"></control-messages>
+						<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="formDetails.get('firePlaceType').get('code').invalid && (formDetails.get('firePlaceType').get('code').dirty || formDetails.get('firePlaceType').get('code').touched)">
+							<div *ngIf="formDetails.get('firePlaceType').get('code').errors.required">
+								Fire Place Type is Required.
+							</div>
+						</mat-error>
 					</div>
 
 					<div class="col-md-4 ngSelect" formGroupName="subject">
 						<ng-select required placeholder="{{'subject' | translate:translateKey}} *" formControlName="code" (change)="documentManage()">
 							<ng-option *ngFor="let fire_sub of FS_SUBJECT" [value]="fire_sub.code">{{fire_sub.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="formDetails.get('subject').get('code')"></control-messages>
+						<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="formDetails.get('subject').get('code').invalid && (formDetails.get('subject').get('code').dirty || formDetails.get('subject').get('code').touched)">
+							<div *ngIf="formDetails.get('subject').get('code').errors.required">
+								Subject is Required.
+							</div>
+						</mat-error>
 					</div>
 
 					<mat-form-field class="col-md-4">

@@ -116,17 +116,27 @@
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect asteriskmarkRequired" formGroupName="firePlaceType">
-						<ng-select required placeholder="{{'fire_Place_Type' | translate:translateKey}}" formControlName="code">
+						<ng-select  placeholder="{{'fire_Place_Type' | translate:translateKey}}" formControlName="code">
 							<ng-option *ngFor="let fire_place of FS_FIRE_PLACE" [value]="fire_place.code">{{fire_place.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="formDetails.get('firePlaceType').get('code')"></control-messages>
+						<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="formDetails.get('firePlaceType').get('code').invalid && (formDetails.get('firePlaceType').get('code').dirty || formDetails.get('firePlaceType').get('code').touched)">
+							<div *ngIf="formDetails.get('firePlaceType').get('code').errors.required">
+								Fire Place Type is Required.
+							</div>
+						</mat-error>
 					</div>
 
 					<div class="col-md-4 ngSelect asteriskmarkRequired" formGroupName="subject">
 						<ng-select required placeholder="{{'subject' | translate:translateKey}}" formControlName="code" (change) = "documentManage()">
 							<ng-option *ngFor="let fire_sub of FS_SUBJECT" [value]="fire_sub.code">{{fire_sub.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="formDetails.get('subject').get('code')"></control-messages>
+						<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="formDetails.get('subject').get('code').invalid && (formDetails.get('subject').get('code').dirty || formDetails.get('subject').get('code').touched)">
+							<div *ngIf="formDetails.get('subject').get('code').errors.required">
+								Subject is Required.
+							</div>
+						</mat-error>
 					</div>
 
 				</div>
@@ -136,7 +146,12 @@
 						 (change)="onChangeConnectionPurpose($event)">
 							<ng-option *ngFor="let purpose of FS_CONNECTION_PURPOSE" [value]="purpose.code">{{purpose.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="formDetails.get('connectionPurpose').get('code')"></control-messages>
+						<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="formDetails.get('connectionPurpose').get('code').invalid && (formDetails.get('connectionPurpose').get('code').dirty || formDetails.get('connectionPurpose').get('code').touched)">
+							<div *ngIf="formDetails.get('connectionPurpose').get('code').errors.required">
+								Connection Purpose is Required.
+							</div>
+						</mat-error>
 					</div>
 
 					<mat-form-field class="col-md-4" *ngIf="formDetails.get('connectionPurpose').get('code').value">
@@ -194,7 +209,12 @@
 							required>
 							<ng-option *ngFor="let no of wardNo" [value]="no.code">{{no.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="formDetails.get('wardNo').get('code')"></control-messages>
+						<mat-error class="mat-error ng-star-inserted errors-massage"
+							*ngIf="formDetails.get('wardNo').get('code').invalid && (formDetails.get('wardNo').get('code').dirty || formDetails.get('wardNo').get('code').touched)">
+							<div *ngIf="formDetails.get('wardNo').get('code').errors.required">
+								Ward No  is Required.
+							</div>
+						</mat-error>
 					</div>
 
 				</div>
