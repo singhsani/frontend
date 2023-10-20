@@ -124,7 +124,7 @@ export class BookingFileUploadComponent implements OnInit, OnChanges {
                 this.fileName = ''
                 this.uploaded.emit(false);
                 this.canUpload = false;
-                this.commonService.openAlert("Warning", `File Type "${this.selectedFiles[0].type}" not valid, please select pdf/jpg/jpeg`, 'warning');
+                this.commonService.openAlert("Warning", `Uploaded file is not a valid format. Only JPG, PNG, GIF and PDF`, 'warning');
                 this.fileInput.nativeElement.value = "";
                 return;
             } else {
