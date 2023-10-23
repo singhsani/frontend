@@ -51,24 +51,90 @@
                     </button>
                 </div>
                 <div *ngIf="module.code == 'SHOP-ESTAB-NEW'" class="row" style="margin-left: 2px;">
-                    <div class="colBtn" style="width: 258px;">
-                        <p> <b>{{'For Women workers Form-J' }}</b>
+                    <div class="colBtn" style="width: 270px;">
+                        <p> <b>{{'APPLICATION FOR REGISTRATION 10 OR ABOVE 10 EMP. Form-A' }}</b>
+                            <button mat-button (click)="downloadGuidLineDocumemnt('Form-A')"
+                                color="primary" class="changeFontColor">Download</button>
+                        </p>
+                    </div>
+                    <div class="colBtn" style="width: 270px;">
+                        <p> <b>{{'FORMAT FOR INTIMATION LESS THAN 10 EMP. Form-D' }}</b>
+                            <button mat-button (click)="downloadGuidLineDocumemnt('Form-D')"
+                                color="primary" class="changeFontColor">Download</button>
+                        </p>
+                    </div>
+                    <div class="colBtn" style="width: 270px;">
+                        <p> <b>{{'NOTICE FOR CHANGE IN REGISTRATION CERTIFICATE AND INTIMATION Form-G' }}</b>
+                            <button mat-button (click)="downloadGuidLineDocumemnt('Form-G')"
+                                color="primary" class="changeFontColor">Download</button>
+                        </p>
+                    </div>
+                    <div class="colBtn" style="width: 270px;">
+                        <p> <b>{{'INTIMATION OF CLOSING OF BUSINESS Form-I' }}</b>
+                            <button mat-button (click)="downloadGuidLineDocumemnt('Form-I')"
+                                color="primary" class="changeFontColor">Download</button>
+                        </p>
+                    </div>
+                    <div class="colBtn" style="width: 270px;">
+                        <p> <b>{{'REGISTRATION OF CLOSING OF BUSINESS Form-H' }}</b>
+                            <button mat-button (click)="downloadGuidLineDocumemnt('Form-H')"
+                                color="primary" class="changeFontColor" >Download</button>
+                        </p>
+                    </div>
+                    <div class="colBtn" style="width: 270px;">
+                        <p> <b>{{'CONSENT OF WOMEN WORKER TO WORK IN NIGHTSHIFT Form-J' }}</b>
                             <button mat-button (click)="downloadGuidLineDocumemnt('Form-J')"
+                                color="primary" class="changeFontColor" >Download</button>
+                        </p>
+                    </div>
+                    <div class="colBtn" style="width: 270px;">
+                        <p> <b>{{'NOTICE FOR WEEKLY HOLIDAY Form-K' }}</b>
+                            <button mat-button (click)="downloadGuidLineDocumemnt('Form-K')"
+                                color="primary" class="changeFontColor" style="margin-top: 19px;">Download</button>
+                        </p>
+                    </div>
+                    <div class="colBtn" style="width: 270px;">
+                        <p> <b>{{'LIST OF WORKERS ENGAGED IN SHIFT Form-L' }}</b>
+                            <button mat-button (click)="downloadGuidLineDocumemnt('Form-L')"
+                                color="primary" class="changeFontColor" >Download</button>
+                        </p>
+                    </div>
+                    <div class="colBtn" style="width: 270px;">
+                        <p> <b>{{'IDENTITY CARD Form-M' }}</b>
+                            <button mat-button (click)="downloadGuidLineDocumemnt('Form-M')"
+                                color="primary" class="changeFontColor" style="margin-top: 19px;">Download</button>
+                        </p>
+                    </div>
+                    <div class="colBtn" style="width: 270px;">
+                        <p> <b>{{'LEAVE BOOK Form-N' }}</b>
+                            <button mat-button (click)="downloadGuidLineDocumemnt('Form-N')"
+                                color="primary" class="changeFontColor" style="margin-top: 19px;">Download</button>
+                        </p>
+                    </div>
+                    <div class="colBtn" style="width: 270px;">
+                        <p> <b>{{'NOTICE OF MAXIMUM LEAVE ACCUMULATED Form-O' }}</b>
+                            <button mat-button (click)="downloadGuidLineDocumemnt('Form-O')"
                                 color="primary" class="changeFontColor">Download</button>
                         </p>
                     </div>
-                    <div class="colBtn">
-                        <p> <b>{{'Notice for Weekly Holiday Form-K' }}</b>
-                            <button mat-button (click)="downloadGuidLineDocumemnt('Form-K')"
+                    <div class="colBtn" style="width: 270px;">
+                        <p> <b>{{'MUSTER-ROLL CUM WAGE REGISTER Form-P' }}</b>
+                            <button mat-button (click)="downloadGuidLineDocumemnt('Form-P')"
                                 color="primary" class="changeFontColor">Download</button>
                         </p>
                     </div>
-                    <!-- <div class="colBtn">
-                        <p> {{'Form Q' }}:
-                            <button mat-button (click)="downloadGuidLineDocumemnt('Form-K')"
-                                color="primary">Download</button>
+                    <div class="colBtn" style="width: 270px;">
+                        <p> <b>{{'DETAILS OF PERSONS DESCHARGING MANAGERIAL FUNCTIONS Form-S' }}</b>
+                            <button mat-button (click)="downloadGuidLineDocumemnt('Form-S')"
+                                color="primary" class="changeFontColor" style="margin-top: 19px;">Download</button>
                         </p>
-                    </div> -->
+                    </div>
+                    <div class="colBtn" style="width: 270px;">
+                        <p> <b>{{'DETAILS OF PERSONS OCCUPYING POSITION OF CONFIDENTIAL CHARACTER Form-T' }}</b>
+                            <button mat-button (click)="downloadGuidLineDocumemnt('Form-T')"
+                                color="primary" class="changeFontColor">Download</button>
+                        </p>
+                    </div>
                 </div>
             </div>
         </mat-tab>
