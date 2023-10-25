@@ -43,6 +43,8 @@ export class GasConnectionNocComponent implements OnInit {
 	uploadFilesArray: Array<any> = [];
 	fireFacilityConfig: FireFacilityConfig = new FireFacilityConfig();
 	licenseConfiguration : LicenseConfiguration = new LicenseConfiguration();
+	input: any;
+	value: string;
 
 	constructor(
 		private fb: FormBuilder,
@@ -262,7 +264,6 @@ export class GasConnectionNocComponent implements OnInit {
 
 
 	onChangeConnectionPurpose(event) {
-debugger
 		if (event == "COMMERCIAL" || event == 'INDUSTRIAL') {
 			this.formDetails.get('shopNo').reset();
 			this.formDetails.get('shopNo').setValidators([Validators.required, Validators.maxLength(12)]);

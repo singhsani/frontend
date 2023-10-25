@@ -55,7 +55,7 @@
 							 atp-time-picker theme="dark" formControlName="incidentTime" required />
 							<control-messages [control]="applicantDetails.get('incidentTime')"></control-messages>
 						</mat-form-field>
-						<button class="ml-0 pl-0 timeBut" [disabled]="!applicantDetails?.controls?.canEdit?.value" mat-icon-button type="button"
+						<button class="ml-0 pl-0 timeBut" [disabled]="canEdit == false" mat-icon-button type="button"
 						 (click)="openTimePicker('incidentTime')">
 							<mat-icon matTooltip="Select Time" color="primary">alarm</mat-icon>
 						</button>
@@ -66,7 +66,7 @@
 					<div class="col-md-4">
 						<div class="row">
 							<div class="radioBtnError">
-								<mat-label>{{'fire_place_in_vmc_area_or_not' | translate:translateKey }} *</mat-label>
+								<mat-label>{{'fire_place_in_vmc_area_or_not' | translate:translateKey }} <span class="mandatory">*</span></mat-label>
 								<mat-radio-group formControlName="whetherTheFireplaceInVMCAreaOrNot" required>
 									<mat-radio-button [value]="true">
 										Yes
@@ -107,7 +107,7 @@
 					</mat-form-field>
 					<!--/ gujarati -->
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" appAlphaNumeric maxlength="15" required formControlName="propertyNo" placeholder="{{ 'property_no' | translate:translateKey }}">
+						<input matInput type="text" appMaskPropertNumber maxlength="15" required formControlName="propertyNo" placeholder="{{ 'property_no' | translate:translateKey }}">
 						<control-messages [control]="applicantDetails.get('propertyNo')"></control-messages>
 					</mat-form-field>
 
@@ -124,8 +124,8 @@
 					</div>
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" formControlName="fireplaceNameOrVehicleNumber" placeholder="{{'fire_place_name_vehicle_no' | translate: translateKey }} *"
-						 maxlength="50">
+						<input matInput type="text" formControlName="fireplaceNameOrVehicleNumber" placeholder="{{'fire_place_name_vehicle_no' | translate: translateKey }}"
+						 maxlength="50" required>
 						<control-messages [control]="applicantDetails.get('fireplaceNameOrVehicleNumber')"></control-messages>
 					</mat-form-field>
 
