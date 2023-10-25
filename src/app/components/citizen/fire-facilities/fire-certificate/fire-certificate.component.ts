@@ -33,6 +33,7 @@ export class FireCertificateComponent implements OnInit {
   uploadFilesArray: Array<any> = [];
   fireFacilityConfig: FireFacilityConfig = new FireFacilityConfig();
   licenseConfiguration : LicenseConfiguration = new LicenseConfiguration();
+  canEdit = false;
 
   constructor(
     private fb: FormBuilder,
@@ -83,6 +84,7 @@ export class FireCertificateComponent implements OnInit {
         (<FormArray>this.fireCertificateForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
       });
       this.documentsManage();
+      this.canEdit = res.canEdit
 			if (res.canEdit == false) {
 				this.fireCertificateForm.disable()
 				this.applicantDetails.disable()
@@ -185,13 +187,14 @@ export class FireCertificateComponent implements OnInit {
 	 * @param controlName - control name.
 	 */
   openTimePicker(controlName: string) {
+    
     const amazingTimePicker = this.atp.open({
       changeToMinutes: true,
       theme: 'material-purple',
     });
     amazingTimePicker.afterClose().subscribe(time => {
       if (time.length == 5) {
-        this.fireCertificateForm.get(controlName).setValue(time + ":00");
+        this.applicantDetails.get(controlName).setValue(time + ":00");
       }
     });
   }

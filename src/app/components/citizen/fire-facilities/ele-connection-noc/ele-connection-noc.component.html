@@ -38,8 +38,9 @@
 					<!-- gujarati -->
 
 					<mat-form-field class="col-md-4">
+						<mat-label>{{ 'application_date' | translate:translateKey }}<span class="mandatory"> *</span></mat-label>
 						<input matInput [max]="disablefutureDate" [matDatepicker]="DateOfapplicationDate" formControlName="applicationDate"
-						 (dateChange)="dateFormat($event.value,'applicationDate')" placeholder="{{ 'application_date' | translate:translateKey }}" required>
+						 (dateChange)="dateFormat($event.value,'applicationDate')" required>
 						<mat-datepicker-toggle matSuffix [for]="DateOfapplicationDate"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #DateOfapplicationDate></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}</div>
@@ -126,14 +127,14 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" appAlphaNumeric formControlName="propertyNo" placeholder="{{'property_no' | translate: translateKey }}"
+						<input matInput type="text" appMaskPropertNumber formControlName="propertyNo" placeholder="{{'property_no' | translate: translateKey }}"
 						 maxlength="15" (change)="getPropertyStatus($event.target.value)">
 						<control-messages [control]="formDetails.get('propertyNo')"></control-messages>
 						<mat-error *ngIf="formDetails.get('propertyNo').hasError('outstandingRemainingProperty')">{{propertyStatusOutstanding?.message}}</mat-error>
 					</mat-form-field>
 
-					<div class="col-md-4 ngSelect" formGroupName="firePlaceType">
-						<ng-select required placeholder="{{'fire_place_type' | translate:translateKey}} *" formControlName="code" (change)="documentManage()">
+					<div class="col-md-4 ngSelect asteriskmarkRequired" formGroupName="firePlaceType">
+						<ng-select required placeholder="{{'fire_place_type' | translate:translateKey}}" formControlName="code" (change)="documentManage()">
 							<ng-option *ngFor="let fire_place of FS_FIRE_PLACE_TYPE" [value]="fire_place.code">{{fire_place.name}}</ng-option>
 						</ng-select>
 						<mat-error class="mat-error ng-star-inserted errors-massage"
@@ -144,8 +145,8 @@
 						</mat-error>
 					</div>
 
-					<div class="col-md-4 ngSelect" formGroupName="subject">
-						<ng-select required placeholder="{{'subject' | translate:translateKey}} *" formControlName="code" (change)="documentManage()">
+					<div class="col-md-4 ngSelect asteriskmarkRequired" formGroupName="subject">
+						<ng-select required placeholder="{{'subject' | translate:translateKey}}" formControlName="code" (change)="documentManage()">
 							<ng-option *ngFor="let fire_sub of FS_SUBJECT" [value]="fire_sub.code">{{fire_sub.name}}</ng-option>
 						</ng-select>
 						<mat-error class="mat-error ng-star-inserted errors-massage"

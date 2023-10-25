@@ -111,7 +111,7 @@
 				<div class="row">
 
 					<div class="col-md-4 radioBtnError">
-						<mat-label>{{'within_vmc_boundary' | translate:translateKey }} *</mat-label>
+						<mat-label>{{'within_vmc_boundary' | translate:translateKey }} <span class="mandatory">*</span></mat-label>
 						<mat-radio-group formControlName="withinVMCBoundary" required>
 							<mat-radio-button [value]="true">
 								{{'yes_txt' | translate:translateKey }}
@@ -142,8 +142,8 @@
 							</div>
 						</mat-error>
 					</div>
-					<div class="col-md-4 ngSelect" formGroupName="requireAtTime">
-						<ng-select required placeholder="{{'require_at_time' | translate:translateKey}} *" formControlName="code">
+					<div class="col-md-4 ngSelect asteriskmarkRequired" formGroupName="requireAtTime">
+						<ng-select required placeholder="{{'require_at_time' | translate:translateKey}}" formControlName="code">
 							<ng-option *ngFor="let attime of REQUIRE_TIME" [value]="attime.code">{{attime.name}}</ng-option>
 						</ng-select>
 						<mat-error class="mat-error ng-star-inserted errors-massage"
