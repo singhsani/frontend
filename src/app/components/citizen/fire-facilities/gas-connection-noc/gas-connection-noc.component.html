@@ -186,7 +186,7 @@
 
 					<mat-form-field class="col-md-4"
 						*ngIf="formDetails.get('connectionPurpose').get('code').value=='COMMERCIAL' || formDetails.get('connectionPurpose').get('code').value=='INDUSTRIAL'">
-						<input matInput placeholder="{{'shop_No' | translate:translateKey}}" type="tel" maxlength="12"
+						<input matInput placeholder="{{'shop_No' | translate:translateKey}}" type="tel" maxlength="20"
 							formControlName="shopNo" required>
 						<control-messages [control]="formDetails.get('shopNo')"></control-messages>
 					</mat-form-field>
