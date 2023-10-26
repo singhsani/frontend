@@ -214,7 +214,7 @@
                                     <td>{{emp.month | titlecase}}</td>
                                     <td>{{emp.totEmpCount}}</td>
                                     <td class="p-0">
-                                        <button mat-icon-button color="primary" (click)="editEmpModal(template, emp, i)" *ngIf="prcRegForm.get('formStatus').value != 'SUBMITTED'">
+                                        <button mat-icon-button color="primary" (click)="editEmpModal(template, emp, i)" *ngIf="isPreviewShow == false">
                                             <mat-icon title="Edit">edit</mat-icon>
                                         </button>
                                         <button *ngIf="!isPRCExist" mat-icon-button color="warn"
