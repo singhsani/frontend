@@ -300,12 +300,16 @@
                                 <mat-icon class="m-1" title="Why Rejected?">help_outline</mat-icon>
                                 Why Rejected
                             </button>
-
-                            <button mat-menu-item *ngIf="row.serviceType == 'VEHICLE' && row.fileStatus == 'PAYMENT'"
-                                color="primary" (click)="infoVehiclePending(row.amount, row.wardNumber)">
+                        <ng-container  *ngIf="row.serviceType == 'VEHICLE' && row.fileStatus == 'PAYMENT'">
+                            <button mat-menu-item color="primary" (click)="infoVehiclePending(row.amount, row.wardNumber)">
                                 <mat-icon class="m-1" title="Info">help_outline</mat-icon>Payment Remarks
                             </button>
-
+                            <button mat-menu-item color="primary" (click)="withdrawApplication(row.serviceDetail.code, row.serviceFormId)">
+                                <mat-icon class="m-1" title="{{'withdraw_application' | translate:translateKey}}">delete
+                                </mat-icon>
+                                {{'withdraw_application' | translate:translateKey}}
+                            </button>
+                        </ng-container>
                             <button mat-menu-item
                                 *ngIf="(row.serviceType == 'PEC_REG' || row.serviceType == 'PRC_REG') && isQueryRaiseDisplay(row)"
                                 color="primary"
