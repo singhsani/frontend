@@ -1678,7 +1678,11 @@ export class ShopLicNewComponent implements OnInit {
 				mandatory: false
 			},
 			{
-				documentIdentifier: 'FORM_Q',
+				documentIdentifier:'FORM_A',
+				mandatory: false
+			},
+			{
+				documentIdentifier:'FORM_D',
 				mandatory: false
 			}
 		
