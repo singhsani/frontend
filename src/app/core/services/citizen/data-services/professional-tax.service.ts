@@ -157,4 +157,11 @@ export class ProfessionalTaxService {
 		this.requestURL = `api/professional/receipt/duplicateOneRecepit/${num}/${refNo}`;
 		return this.http.get(this.requestURL, 'printReceipt');
 	}
+
+	downloadGuidLineDocumentPEC(filename: any, type: any) {
+		return this.http.getUploadedFile(`api/form/pecForm/download/${filename}`, type);
+	  }
+	downloadGuidLineDocumentPRC(filename: any, type: any) {
+		return this.http.getUploadedFile(`api/form/prcForm/download/${filename}`, type);
+	  }
 }

@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import * as _ from 'lodash';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { ShopAndEstablishmentService } from '../licences/shop-and-establishment/common/services/shop-and-establishment.service';
+import { ProfessionalTaxService } from 'src/app/core/services/citizen/data-services/professional-tax.service';
 
 @Component({
 	selector: 'app-dashboard',
@@ -245,7 +246,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 		private toastr: ToastrService,
 		private paginationService: PaginationService,
 		public commonService: CommonService,
-		private shopAndEstablishmentService: ShopAndEstablishmentService
+		private shopAndEstablishmentService: ShopAndEstablishmentService,
+		private professionalServices : ProfessionalTaxService
 
 	) {
 		this.getAllServices();
@@ -442,6 +444,56 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 		  })
 
 	  }
+	  downloadGuidLineDocumentPEC(fileName: any) {
+		this.professionalServices.downloadGuidLineDocumentPEC(fileName, 'application/pdf').subscribe(resp => {
+		 var newBlob = new Blob([resp], { type: "application/pdf" });
+		 if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+		   window.navigator.msSaveOrOpenBlob(newBlob);
+		   return;
+		 }
+		 const data = window.URL.createObjectURL(newBlob);
+		 var link = document.createElement('a');
+		 link.href = data;
+		 link.download = fileName;
+		 link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+
+		 setTimeout(function () {
+		   window.URL.revokeObjectURL(data);
+		   link.remove();
+		 }, 100);
+	   },
+
+		 err => {
+		   this.toastr.error("Server Error");
+		 })
+
+	}
+	
+
+	downloadGuidLineDocumentPRC(fileName: any) {
+		this.professionalServices.downloadGuidLineDocumentPRC(fileName, 'application/pdf').subscribe(resp => {
+		 var newBlob = new Blob([resp], { type: "application/pdf" });
+		 if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+		   window.navigator.msSaveOrOpenBlob(newBlob);
+		   return;
+		 }
+		 const data = window.URL.createObjectURL(newBlob);
+		 var link = document.createElement('a');
+		 link.href = data;
+		 link.download = fileName;
+		 link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+
+		 setTimeout(function () {
+		   window.URL.revokeObjectURL(data);
+		   link.remove();
+		 }, 100);
+	   },
+
+		 err => {
+		   this.toastr.error("Server Error");
+		 })
+
+	 }
 
 	  ngAfterViewInit(){
 		setTimeout(() => {
