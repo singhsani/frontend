@@ -283,7 +283,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	infoVehiclePending(amount, wardNumber) {
 		this.commonService.infoAlert('Payment Remarks', 'Please make the payment of amount Rs. ' + amount +' at Ward office no. ' + wardNumber, "success");
 	}
-
 	cancelReasonReceipt(row) {
 		this.formService.cancelReceiptForShop(row.fileNumber).subscribe(
 			receiptResponse => {
@@ -1163,5 +1162,21 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		document.execCommand('copy');
 		document.body.removeChild(selBox);
 		this.toastr.success("Content copied to clipboard")
+	}
+
+	//Withdraw Application
+	withdrawApplication(apiCode: string, id: number) {
+		this.commonService.confirmAlert('Are You Sure You Want To Withdraw Application?',"You won't be able to revert this!", 'warning','', performDelete =>{
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+			this.formService.deleteFormData(id).subscribe(
+				res => {
+					this.commonService.successAlert('Withdrawl!', '', 'success');
+					this.getAllData();
+				},
+				err => {
+					this.commonService.successAlert('Error!', err.error[0].message, 'error');
+				}
+			);
+		});
 	}
 }

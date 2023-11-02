@@ -50,6 +50,16 @@
                         {{ service.name }}
                     </button>
                 </div>
+                <div *ngIf="module.code == 'PROFESSIONAL'" class="row" style="margin-left: 2px;">
+                    <div class="colBtn" style="width: 270px;">
+                            <button mat-button (click)="downloadGuidLineDocumentPEC('Form-3')"
+                                color="primary" class="changeFontColor">Download Form-3 For PEC</button>
+                    </div>
+                    <div class="colBtn" style="width: 270px;">
+                        <button mat-button (click)="downloadGuidLineDocumentPRC('FORM-1')"
+                        color="primary" class="changeFontColor">Download Form-1 For PRC</button>
+                    </div>
+                </div>
                 <div *ngIf="module.code == 'SHOP-ESTAB-NEW'" class="row" style="margin-left: 2px;">
                     <div class="colBtn" style="width: 270px;">
                         <p> <b>{{'APPLICATION FOR REGISTRATION 10 OR ABOVE 10 EMP. Form-A' }}</b>
