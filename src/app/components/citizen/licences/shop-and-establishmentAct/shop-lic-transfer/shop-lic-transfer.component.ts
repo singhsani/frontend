@@ -1737,9 +1737,13 @@ export class ShopLicTransferComponent implements OnInit {
 				mandatory: false
 			},
 			{
-				documentIdentifier: 'FORM_Q',
+				documentIdentifier:'FORM_A',
 				mandatory: false
 			},
+			{
+				documentIdentifier:'FORM_D',
+				mandatory: false
+			}
 		];
 
 		if(this.totalNoOfWomanForDocu > 0){
