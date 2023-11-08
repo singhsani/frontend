@@ -141,11 +141,18 @@
 
             <div>
               <button
-                *ngIf="(element.resourceType == 'SWIMMING_POOL'  && (element.status == bookingConstant.SUBMITTED || element.status == bookingConstant.BOOKED || (element.status == bookingConstant.PAYMENT_REQUIRED && element.bookingType == 'Advance booking')) && element.formCharges !== null)"
+                *ngIf="(element.resourceType == 'SWIMMING_POOL'  && (element.status == bookingConstant.SUBMITTED || element.status == bookingConstant.BOOKED || element.status == this.bookingConstant.EXPIRED || (element.status == bookingConstant.PAYMENT_REQUIRED && element.bookingType == 'Advance booking')) && element.formCharges !== null)"
                 mat-menu-item color="primary"
                 (click)="printReceipt(element, bookingConstant.SWIMMING_POOL_ADMISSION_FEES)">
                 <mat-icon title="Print Receipt" color="primary">print</mat-icon>
                 {{'form_charges_receipt' | translate:translateKey}}
+              </button>
+            </div>
+
+            <div *ngIf="element.resourceType == 'SWIMMING_POOL' || element.resourceType == 'SWIMMING_POOL_RENEWAL'">
+              <button *ngIf="(element.resourceType == 'SWIMMING_POOL' || element.resourceType == 'SWIMMING_POOL_RENEWAL')  && (element.status == this.bookingConstant.EXPIRED  && element.paidLoI)"
+                mat-menu-item color="primary" (click)="printReceiptSwimming(element)">
+                <mat-icon title="Print Receipt" color="primary">print</mat-icon>Download LOI
               </button>
             </div>
 

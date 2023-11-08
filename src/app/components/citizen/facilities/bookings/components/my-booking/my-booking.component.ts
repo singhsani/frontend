@@ -441,7 +441,11 @@ export class MyBookingComponent implements OnInit {
 			});
 
 		}, err => {
+			if(err.status == 400){
+                this.commonService.openAlert('Warning', "Your payment status is Invalid.So Not elligible for Receipt Reprint.", 'warning');
+            } else {
 			this.commonService.openAlert('Error', err.message, 'warning');
+			}
 		});
 	}
 
@@ -749,7 +753,11 @@ export class MyBookingComponent implements OnInit {
 				window.print();
 			});
 		}, err => {
-			this.commonService.openAlert('Error', err.message, 'warning');
+			if(err.status == 400){
+                this.commonService.openAlert('Warning', "Your payment status is Invalid.So Not elligible for Receipt Reprint.", 'warning');
+            } else {
+				this.commonService.openAlert('Error', err.message, 'warning');
+			}
 		});
 	}
 
@@ -788,7 +796,7 @@ export class MyBookingComponent implements OnInit {
 
 
 	enableMoreAction(element) {
-		if (element.status == this.bookingConstant.DRAFT || element.status == this.bookingConstant.TRANSACTION_PENDING || element.status == this.bookingConstant.EXPIRED || (element.resourceType == 'SWIMMING_POOL' && element.status == this.bookingConstant.APPROVED) || (element.status == this.bookingConstant.APPROVED && element.resourceType == 'STADIUM')) {
+		if (element.status == this.bookingConstant.DRAFT || element.status == this.bookingConstant.TRANSACTION_PENDING || (element.status == this.bookingConstant.EXPIRED && element.resourceType != 'SWIMMING_POOL') || (element.resourceType == 'SWIMMING_POOL' && element.status == this.bookingConstant.APPROVED) || (element.status == this.bookingConstant.APPROVED && element.resourceType == 'STADIUM')) {
 			return false;
 		}
 		return true;
