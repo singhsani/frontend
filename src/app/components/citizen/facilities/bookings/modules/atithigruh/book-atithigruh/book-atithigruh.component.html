@@ -662,6 +662,15 @@
 
                     </div>
 
+                    <ng-container *ngIf="isRelationshipShow">
+                        <div class="col-md-6 ngSelect asteriskmarkRequired" formGroupName="relationShip">
+                            <ng-select placeholder="{{'relation' | translate:adminstadiumTranslateKey}}" formControlName="code">
+                                <ng-option *ngFor="let relation of relationType" [value]="relation.code">{{relation.name}}</ng-option>
+                            </ng-select>
+                            <control-messages [control]="applicationDetails.get('relationShip')"></control-messages>
+                        </div>
+                    </ng-container>
+
                     <div class="col-md-4" *ngIf = "applicationDetails.contains('samuhLaganCoupleCount')">
                         <mat-form-field>
                           <input matInput OnlyNumber formControlName="samuhLaganCoupleCount" maxlength="2"
