@@ -45,6 +45,7 @@ export class ShopLicNewComponent implements OnInit {
 	TotalNoOfPerson: number = 0;
 	totalNoOfWoman: number = 0;
 	totalNoOfWomanForDocu: number  = 0;
+	totalManAndWomanCount : number = 0;	
 	hidesave:boolean = false;
 	edit:boolean = true;
 	wardZoneLevel = [];
@@ -964,6 +965,7 @@ export class ShopLicNewComponent implements OnInit {
 	  	const	Rnumber = parseInt(row.controls.noOfWomen.value)
 		  this.totalNoOfWomanForDocu =  this.totalNoOfWomanForDocu + Rnumber;
 		  let grandTotal = 0;
+		  this.totalManAndWomanCount = row.controls.total.value;		  
 		if (this.registrationType === this.regiTyep[0].code) {
 			let control = this.personoccuping.get('workerCounts')['controls'];
 			for (let i = 0; i < control.length; i++) {
@@ -2001,9 +2003,14 @@ export class ShopLicNewComponent implements OnInit {
 
 	deletePersonRecord(persontype: string, index: any,item:any){
 		const	Rnumber = parseInt(item.controls.noOfWomen.value)
+		const Rnumber1 = parseInt(item.controls.noOfMen.value)
+        const sum = Rnumber + Rnumber1;
 		if(this.totalNoOfWomanForDocu > 0){
 			this.totalNoOfWomanForDocu = this.totalNoOfWomanForDocu - Rnumber
 		} 
+		if(this.totalManAndWomanCount>0){
+		 this.totalManAndWomanCount = this.totalManAndWomanCount -sum;
+		}
 		this.deleteWomenDocument();
 		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
 			this.getArrayByType(persontype).removeAt(index);

@@ -131,6 +131,8 @@ export class BookAtithigruhComponent implements OnInit {
 		{sno: '૧૮', atithigruh: 'માંજલપુર', rent: '૨૦૦૦૦', administrative_charge: '૧૦૦૦', gst:'૩૭૮૦' ,total_rent: '૨૪૭૮૦', deposit: '૩૦૦૦૦',total: '૫૪૭૮૦'},
 		{sno: '૧૯', atithigruh: 'મકરપુરા કોમ્યુનિટી હોલ', rent: '૨૫૦૦૦', administrative_charge: '૧૦૦૦', gst:'૪૬૮૦' ,total_rent: '૩૦૬૮૦', deposit: '૩૦૦૦૦',total: '૬૦૬૮૦'},
 	  ];
+	  isRelationshipShow = false
+	  relationType = []
 	
 	constructor(
 		private fb: FormBuilder,
@@ -177,6 +179,10 @@ export class BookAtithigruhComponent implements OnInit {
 				applicantEmailID: [null, [Validators.required, ValidationService.emailValidator, Validators.maxLength(50)]],
 				applicantAddress: this.fb.group(this.addressComp.addressControls()),
 				gstNo:[null,ValidationService.gstNoValidator],
+				relationShip : this.fb.group({
+					code : null,
+					name   : null
+				})
 			}),
 			/* Booking Details */
 			this.bookingDetails = this.fb.group({
@@ -290,8 +296,9 @@ export class BookAtithigruhComponent implements OnInit {
 	 */
 	bookingLookups() {
 		this.bookingService.getDataFromLookups().subscribe(resp => {
-			this.BOOKING_TYPE = resp.DRAW_TYPE.filter(_=>_.code =='Regular booking');
+			this.BOOKING_TYPE = resp.DRAW_TYPE
 			this.PURPOSE = resp.PURPOSE.filter(_ => _.code !== 'Funeral');
+			this.relationType = resp.ATIHIGRUH_RELATION
 			// this.BankOptions = resp.BANK;
 		});
 	}
@@ -721,6 +728,15 @@ export class BookAtithigruhComponent implements OnInit {
 				this.purpose = ele.name
 			}
 		})
+		if(event == 'Marriage'){
+			this.isRelationshipShow = true
+			this.applicationDetails.get('relationShip').get('code').setValidators([Validators.required])
+			this.applicationDetails.get('relationShip').updateValueAndValidity()
+		  }else{
+			this.isRelationshipShow = false
+			this.applicationDetails.get('relationShip').get('code').setValidators(null)
+			this.applicationDetails.get('relationShip').updateValueAndValidity()
+		  }
 	}
 
 	checkValidation(controlName,isSubmitted){
