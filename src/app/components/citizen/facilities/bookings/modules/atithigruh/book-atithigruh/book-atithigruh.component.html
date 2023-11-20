@@ -664,7 +664,7 @@
 
                     <ng-container *ngIf="isRelationshipShow">
                         <div class="col-md-6 ngSelect asteriskmarkRequired" formGroupName="relationShip">
-                            <ng-select placeholder="{{'relation' | translate:adminstadiumTranslateKey}}" formControlName="code">
+                            <ng-select placeholder="{{'relation' | translate:atithigruhScreen}}" formControlName="code">
                                 <ng-option *ngFor="let relation of relationType" [value]="relation.code">{{relation.name}}</ng-option>
                             </ng-select>
                             <control-messages [control]="applicationDetails.get('relationShip')"></control-messages>
