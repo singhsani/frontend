@@ -477,7 +477,7 @@
 				<div class="row">
 					<div class="col-md-4"
 
-						*ngFor="let doc of animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments').value">
+						*ngFor="let doc of documentsList">
 						<div *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
 							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn :
 								doc.documentLabelGuj }}
