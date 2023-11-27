@@ -57,22 +57,22 @@
 				<!-- gujarati -->
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj"
-							appGujInputTarget [form]="licenseHolderDetail" appValidationFields validationFieldsType='onlyNameWithOutSpace'
+						<input matInput  type="text" maxlength="90"  [readonly]="true" required formControlName="holderFirstNameGuj"
+							appGujInputTarget [form]="licenseHolderDetail"  validationFieldsType='onlyNameWithOutSpace'
 							placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">
 						<control-messages [control]="licenseHolderDetail.get('holderFirstNameGuj')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="90"
+						<input matInput type="text" maxlength="90" [readonly]="true"
 							placeholder="{{'holder_middlename' | translate:translateKey:'gu'}}"
-							appValidationFields validationFieldsType='onlyNameWithOutSpace'
+							 validationFieldsType='onlyNameWithOutSpace'
 							formControlName="holderMiddleNameGuj" appGujInputTarget [form]="licenseHolderDetail">
 						<control-messages [control]="licenseHolderDetail.get('holderMiddleNameGuj')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="90"
+						<input matInput type="text" required maxlength="90" [readonly]="true"
 							placeholder="{{'holder_lastname' | translate:translateKey:'gu'}}"
-							appValidationFields validationFieldsType='onlyNameWithOutSpace'
+						 validationFieldsType='onlyNameWithOutSpace'
 							formControlName="holderLastNameGuj" appGujInputTarget [form]="licenseHolderDetail">
 						<control-messages [control]="licenseHolderDetail.get('holderLastNameGuj')"></control-messages>
 					</mat-form-field>
@@ -91,7 +91,7 @@
 
 				<div class="row">
 					<h2>{{'permanat_address' | translate:translateKey}}</h2>
-					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="true"
+					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="true" 
 						[addressFormGroup]="licenseHolderDetail.get('permanantAddress')"></app-address>
 				</div>
 				<div class="col-md-4" formGroupName="isSameAsPermanantAddress">
