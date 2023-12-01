@@ -508,7 +508,11 @@ export class BookTheaterComponent implements OnInit {
     checkValidation(controlName, isSubmitted) {
         if (controlName.invalid) {
             this.handleErrorsOnSubmit(controlName)
-        } else {
+        } else if (controlName.value.organizationEmail != controlName.value.confirmEmailID) {
+            this.handleErrorsOnSubmit(controlName)
+        } else if (controlName.value.organizationNumber != controlName.value.confirmMobile) {
+            this.handleErrorsOnSubmit(controlName)
+        }  else {
             const organizationalAry = Object.keys(controlName.value);
             organizationalAry.forEach(element => {
                 this.theaterBookingForm.get(element).setValue(controlName.get(element).value);
