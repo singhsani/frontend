@@ -17,7 +17,7 @@
             <h5 class="titleHeader"> <b>"પ્રોસેસ" પર ક્લિક કરતા પહેલા ટાઉન હોલ મુજબના તમામ નિયમો વાંચો, એકવાર તમે "પ્રોસેસ"
                     પર ક્લિક કરો પછી અમે નિયમો અને નિયમોની તમારી સ્વીકૃતિને ધ્યાનમાં લઈશું.</b></h5>
             <mat-card-content>
-    
+
                 <div class="row p-3">
                     <div class="col-md-3">
                         <h5 class="text-center"><b> {{'મહાત્મા ગાંધી નગરગૃહ'| translate: translateKey}}: <br />
@@ -107,7 +107,7 @@
                 <p class="readline">ઉપરોક્ત સૂચનાનો ચૂસ્તપણે અમલ કરવાનો રહેશે અન્યથા કાર્યક્રમ બંધ કરવાની ફરજ પડશે.</p>
                 <!-- </p> -->
             </h4>
-    
+
         </mat-card-content>
         <mat-card-content class="p-4" *ngIf="!showSelectLanguage">
             <img _ngcontent-c1="" width=130 height=130 alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg"
@@ -140,43 +140,43 @@
             <h3 class="engTitle"><strong>{{'Important Instructions'| translate: translateKey}}</strong></h3>
             <h4>
                 <ol class="listSize">
-    
+
                     <li class="engInstructions">
                         <h4>It is compulsory to deposit ₹ 15,000 / - in reserve and Police Performance License in the town
                             house office before the date of the program.</h4>
                     </li>
-    
+
                     <li class="engInstructions">
                         <h4>Arranging metal detectors and dress code security staff is mandatory for the safety of the
                             spectators.</h4>
                     </li>
-    
+
                     <li class="engInstructions">
                         <h4>In any case, inviting more than 911 spectators is prohibited.</h4>
                     </li>
-    
+
                     <li class="engInstructions">
                         <h4>Experiments with flames and explosives, as well as incense-burning incense, are prohibited in
                             the town hall complex.</h4>
                     </li>
-    
+
                     <li class="engInstructions">
                         <h4> It is mandatory to write the name of the applicant and the name of the organization in the
                             banners and invitation cards or tickets prepared for the presentation of the program.</h4>
                     </li>
-    
+
                     <li class="engInstructions">
                         <h4>In any case, considering the safety of the public, the program must be started and completed
                             within the stipulated time in the first and second shifts and it is also mandatory to close the
                             program after 1:00 pm in the third shift.</h4>
                     </li>
-    
+
                     <li class="engInstructions">
                         <h4>First shift - 09-00 to 12-30 hours in the morning</h4>
                         <h4>Second shift - 03-00 to 6-30 hours</h4>
                         <h4>Third shift - 09:00 to 12-30 hours at night</h4>
                     </li>
-    
+
                     <li class="engInstructions">
                         <h4>In addition to the rules laid down by the township, taking into account the current site
                             conditions and. Considering the facilities and safety of the audience, the applicant and the
@@ -220,7 +220,7 @@
                 <div class="row mt-3 mb-3">
                     <div class="col-md-6 ngSelect">
                         <ng-select placeholder="{{'select_town_hall'| translate: translateKey}}" formControlName="code"
-                            (change)="onChangeTownHalls($event)">
+                            (change)="onChangeTownHalls($event)" class="asteriskmarkRequired">
                             <ng-option *ngFor="let townHall of townHalls" [value]="townHall.code">
                                 {{ townHall.name }}
                             </ng-option>
@@ -230,7 +230,7 @@
 
                     <div formGroupName="purpose" class="col-md-6 ngSelect">
                         <ng-select placeholder="{{'purpose_of_booking'| translate: translateKey}}"
-                            formControlName="code" (change)="onChangePurposeOfBooking($event)">
+                            formControlName="code" (change)="onChangePurposeOfBooking($event)" class="asteriskmarkRequired">
                             <ng-option *ngFor="let purpose of purposes" [value]="purpose.code">
                                 {{ purpose.name }}
                             </ng-option>
@@ -243,7 +243,7 @@
                         <mat-label>{{'choose_start_date'| translate: translateKey}}</mat-label>
                         <input appDate matInput [min]="startMinDate" [max]="maxEndDate"
                             (dateChange)="onDateChange($event.value)" [matDatepicker]="townHallBookingfromPicker"
-                            formControlName="startDate" placeholder="DD/MM/YYYY">
+                            formControlName="startDate" placeholder="DD/MM/YYYY" required>
                         <mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker"></mat-datepicker-toggle>
                         <mat-datepicker #townHallBookingfromPicker touchUi="true"></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}
@@ -256,7 +256,7 @@
                         <mat-label>{{'choose_end_date'| translate: translateKey}}</mat-label>
                         <input appDate matInput [min]="endMinDate" [max]="maxEndDate"
                             [matDatepicker]="townHallBookingtoPicker" formControlName="endDate"
-                            placeholder="DD/MM/YYYY">
+                            placeholder="DD/MM/YYYY" required>
                         <mat-datepicker-toggle matSuffix [for]="townHallBookingtoPicker"></mat-datepicker-toggle>
                         <mat-datepicker #townHallBookingtoPicker touchUi="true"></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}
