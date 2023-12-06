@@ -503,6 +503,7 @@
 									<th>Sr.No</th>
 									<th>{{'noOfMen' | translate:translateKey}}</th>
 									<th>{{'noOfWomen' | translate:translateKey}}</th>
+									<th>{{'Tick the box if Women Working In Night Shift' | translate:translateKey}}</th>
 									<th>{{'workerType' | translate:translateKey}}</th>
 									<th>{{'total' | translate:translateKey}}</th>
 									<th *ngIf="shopLicNewForm.get('canEdit').value"></th>
@@ -535,6 +536,18 @@
 										<control-messages *ngIf="item.isEditMode" [control]="item.get('noOfWomen')">
 											</control-messages>
 										</mat-form-field>
+									</td>
+
+									<td *ngIf="!item.isEditMode" class="womanWorkinginNightshift">
+										<p>
+											<mat-checkbox class="col-md-12 mt-2 isEditMode " formControlName="womanWorkinginNightshift" [disabled]="!iswomenWorkingNightShift"
+												(change)="womenWorkingInNight($event, indx)"></mat-checkbox>
+										</p>
+									</td>
+									<td *ngIf="item.isEditMode" class="womanWorkinginNightshift">
+										<mat-checkbox class="col-md-12 mt-2 isEditMode " formControlName="womanWorkinginNightshift" [disabled]="!iswomenWorkingNightShift" 
+											(change)="womenWorkingInNight($event, indx)"></mat-checkbox>
+									
 									</td>
 
 									<!-- <td>
