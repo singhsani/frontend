@@ -65,6 +65,8 @@ export class ShopLicNewComponent implements OnInit {
 	isSubCategory: boolean = false;
 	isDisabledBtn: boolean = true;
 	isDisabledOrgType: boolean = false;
+	iswomenWorkingNightShift: boolean = false;
+	workingInNightShift:boolean = false;
 
 	//regiTyep: string[] = ['CERTIFICATION', 'INTIMATION'];
 	regiTyep: Array<any> = [{
@@ -183,6 +185,12 @@ export class ShopLicNewComponent implements OnInit {
 	calculateWorkers(indx) {
 		let men = Number(this.personoccuping.get('workerCounts')['controls'][indx].get('noOfMen').value);
 		let woman = Number(this.personoccuping.get('workerCounts')['controls'][indx].get('noOfWomen').value);
+		if(woman > 0 ){
+			this.iswomenWorkingNightShift = true;
+		}else{
+			this.iswomenWorkingNightShift = false;
+			this.personoccuping.get('workerCounts')['controls'][indx].get('womanWorkinginNightshift').setValue(false);
+		}
 		if(this.personoccuping.get('workerCounts')['controls'][indx].get('noOfWomen').value != null){
 			if(men == 0 && woman == 0){
 				this.toastrService.warning("please enter woman or men number more than 0")
@@ -327,7 +335,12 @@ export class ShopLicNewComponent implements OnInit {
 				if (res.waterDrainageBlockId) {
 					this.getWardZone(res.waterDrainageWardId, 3);
 				}
-
+				let checkWomanCount = res.workerCounts.find( x => x.noOfWomen > 0)
+				if(checkWomanCount.noOfWomen > 0){
+					this.iswomenWorkingNightShift = true
+				}else{
+					this.iswomenWorkingNightShift = false
+				}
 			
 				// this.requiredDocumentList();
 
@@ -547,7 +560,8 @@ export class ShopLicNewComponent implements OnInit {
 			noOfWomen: [data.noOfWomen ? data.noOfWomen : 0,[Validators.required,Validators.min(0)]],
 			// //workerType: [data.workerType ? data.workerType : null, [Validators.required]],
 			workersType: [data.workersType,[Validators.required]],
-			total: [data.total ? data.total : null,{validators:[Validators.required,Validators.min(0) ]}]
+			total: [data.total ? data.total : null,{validators:[Validators.required,Validators.min(0) ]}],
+			womanWorkinginNightshift : data.womanWorkinginNightshift ? data.womanWorkinginNightshift : false
 		})
 
 	}
@@ -750,6 +764,7 @@ export class ShopLicNewComponent implements OnInit {
 	 * @param persontype : person array type
 	 */
 	addMorePersonwork(persontype: string) {
+		this.iswomenWorkingNightShift = false;
 		let workerGrid = <FormArray>this.personoccuping.get('workerCounts');
 		this.shopAndEstablishmentService.getSelectedWorkerType(this.workerTypeList,workerGrid);
 		this.edit = false;
@@ -917,6 +932,11 @@ export class ShopLicNewComponent implements OnInit {
 	}
 	
 	editRecordd(row: any) {
+		if(row.value.noOfWomen > 0 ){
+			this.iswomenWorkingNightShift = true;
+		}else{
+			this.iswomenWorkingNightShift = false;
+		}
 		if(this.edit){
 			console.log(this.totalNoOfWoman)
 			const Rnumber = parseInt(row.controls.noOfWomen.value)
@@ -959,6 +979,7 @@ export class ShopLicNewComponent implements OnInit {
 
 
 	savePersonOccupyingRecord(row: any) {
+		this.iswomenWorkingNightShift=false;
 		if(Number.isNaN(this.totalNoOfWomanForDocu)){
 			this.totalNoOfWomanForDocu = 0;
 		}
@@ -1511,8 +1532,8 @@ export class ShopLicNewComponent implements OnInit {
 						mandatory: true
 					}
 				];
-			
-					if(this.totalNoOfWomanForDocu > 0 && count == 0){
+			this.checkWomanWorkedonNightShift()
+					if(this.totalNoOfWomanForDocu > 0 && count == 0 && this.workingInNightShift == true){
 						docArray.push({
 							
 									documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
@@ -1543,7 +1564,7 @@ export class ShopLicNewComponent implements OnInit {
 				];
 
 				
-					if(this.totalNoOfWomanForDocu > 0 && count == 0){
+					if(this.totalNoOfWomanForDocu > 0 && count == 0 && this.personoccuping.get('womanWorkinginNightshift').value == true){
 						docArray.push({
 							
 									documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
@@ -1586,7 +1607,8 @@ export class ShopLicNewComponent implements OnInit {
 					count++;
 			}
 		}
-		if(this.totalNoOfWoman > 0){
+		this.checkWomanWorkedonNightShift()
+		if(this.totalNoOfWoman > 0 && this.workingInNightShift == true){
 				{
 					this.womanDocument = [
 						{
@@ -1600,7 +1622,7 @@ export class ShopLicNewComponent implements OnInit {
 				
 				}
 			
-			}else if(this.totalNoOfWomanForDocu > 0 && count == 0){
+			}else if(this.totalNoOfWomanForDocu > 0 && count > 0 && this.personoccuping.get('womanWorkinginNightshift').value == true){
 				{
 					this.womanDocument = [
 						{
@@ -1697,9 +1719,8 @@ export class ShopLicNewComponent implements OnInit {
 					mandatory: true
 				})
 			}
-
-		
-			if(this.totalNoOfWomanForDocu > 0){
+			this.checkWomanWorkedonNightShift()
+			if(this.totalNoOfWomanForDocu > 0 && this.workingInNightShift== true){
 					comonDocument.push({
 						
 								documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
@@ -2087,5 +2108,28 @@ export class ShopLicNewComponent implements OnInit {
 		this.establishmentdetails.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));	
 		console.log(this.establishmentdetails);
 		
+	}
+
+	womenWorkingInNight(event, index){
+		if(event.checked )
+		{
+			this.personoccuping.get('workerCounts')['controls'][index].get('womanWorkinginNightshift').setValue(true)
+		}else{
+			this.personoccuping.get('workerCounts')['controls'][index].get('womanWorkinginNightshift').setValue(false)
+		}
+	}
+
+	checkWomanWorkedonNightShift(){
+		let count = 0;
+		for(let i=0; i< this.personoccuping.get('workerCounts')['controls'].length; i++){
+			if(this.personoccuping.get('workerCounts')['controls'][i].value.womanWorkinginNightshift == true){
+					count++;
+		}
+	}
+		if(count >= 1 ){
+			this.workingInNightShift = true;
+		}else{
+			this.workingInNightShift = false;
+		}
 	}
 }

@@ -65,6 +65,9 @@ isDisabledBtn: boolean = true;
 hidesave:boolean = false;
 isSubCategory: boolean = false;
 
+iswomenWorkingNightShift: boolean = false;
+workingInNightShift:boolean = false;
+
 // workerTypes :Array<any> = [];
 
 //regiTyep: string[] = ['CERTIFICATION', 'INTIMATION'];
@@ -186,6 +189,12 @@ this.getWardZoneLevel();
 calculateWorkers(indx) {
 let men = Number(this.personoccuping.get('workerCounts')['controls'][indx].get('noOfMen').value);
 let woman = Number(this.personoccuping.get('workerCounts')['controls'][indx].get('noOfWomen').value);
+if(woman > 0 ){
+    this.iswomenWorkingNightShift = true;
+}else{
+    this.iswomenWorkingNightShift = false;
+    this.personoccuping.get('workerCounts')['controls'][indx].get('womanWorkinginNightshift').setValue(false);
+}
 if(this.personoccuping.get('workerCounts')['controls'][indx].get('noOfWomen').value != null){
 if(men == 0 && woman == 0){
 this.toastrService.warning("please enter woman or men number more than 0")
@@ -357,6 +366,12 @@ this.isGuideLineActive = false;
 }
 
 this.certificateNumber = res.transferCertificateNumber;
+let checkWomanCount = res.workerCounts.find( x => x.noOfWomen > 0)
+if(checkWomanCount.noOfWomen > 0){
+	this.iswomenWorkingNightShift = true
+}else{
+	this.iswomenWorkingNightShift = false
+}
 } catch (error) {
 console.log(error.message)
 }
@@ -661,7 +676,8 @@ noOfWomen: [data.noOfWomen ? data.noOfWomen : 0,{validators:[Validators.required
 ]}],
 //workerType: [data.workerType ? data.workerType : null, [Validators.required]],
 workersType: [data.workersType, [Validators.required]],
-total: [data.total ? data.total : null,{validators:[Validators.required,Validators.min(0)]}]
+total: [data.total ? data.total : null,{validators:[Validators.required,Validators.min(0)]}],
+womanWorkinginNightshift : data.womanWorkinginNightshift ? data.womanWorkinginNightshift : false
 })
 
 }
@@ -860,6 +876,8 @@ this.commonService.openAlert("Warning", "You can add new record after save exist
 * @param persontype : person array type
 */
 addMorePersonwork(persontype: string) {
+this.iswomenWorkingNightShift = false;
+
 let workerGrid = <FormArray>this.personoccuping.get('workerCounts');
 this.shopAndEstablishmentService.getSelectedWorkerType(this.workerTypeList,workerGrid);
 this.edit = false;
@@ -1030,6 +1048,11 @@ row.deepCopyInEditMode = Object.assign({}, row.value);
 }
 
 editRecordd(row: any) {
+    if(row.value.noOfWomen > 0 ){
+        this.iswomenWorkingNightShift = true;
+    }else{
+        this.iswomenWorkingNightShift = false;
+    }
 if(this.edit){
 console.log(this.totalNoOfWoman)
 const Rnumber = parseInt(row.controls.noOfWomen.value)
@@ -1595,7 +1618,9 @@ documentIdentifier: 'OWN_PREMISES_PROOF',
 mandatory: true
 }
 ];
-if(this.totalNoOfWomanForDocu > 0){
+this.checkWomanWorkedonNightShift()
+
+if(this.totalNoOfWomanForDocu > 0 && this.workingInNightShift == true){
 docArray.push({
 documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
 mandatory: true
@@ -1626,7 +1651,7 @@ mandatory: false
 }
 ];
 
-if(this.totalNoOfWomanForDocu > 0){
+if(this.totalNoOfWomanForDocu > 0 && this.personoccuping.get('womanWorkinginNightshift').value == true){
 docArray.push({
 documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
 mandatory: true
@@ -1722,7 +1747,8 @@ mandatory: false
 }
 ];
 
-if(this.totalNoOfWomanForDocu > 0){
+this.checkWomanWorkedonNightShift()
+if(this.totalNoOfWomanForDocu > 0 && this.workingInNightShift== true){
 comonDocument.push({
 documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
 mandatory: true
@@ -1787,7 +1813,8 @@ count++;
 }
 }
 if(count == 0){
-if(this.totalNoOfWoman > 0 && count == 0){
+    this.checkWomanWorkedonNightShift()
+    if(this.totalNoOfWoman > 0 && this.workingInNightShift == true && count == 0){
 {
 this.womanDocument = [
 {
@@ -1800,8 +1827,8 @@ mandatory: true
 }
 this.returnFile(this.womanDocument);
 }
-}else if(this.totalNoOfWomanForDocu > 0){
-{
+}else if(this.totalNoOfWomanForDocu > 0 && this.personoccuping.get('womanWorkinginNightshift').value == true){
+    {
 this.womanDocument = [
 {
 documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
@@ -1904,6 +1931,7 @@ this.formControlNameToTabIndex.set('agree',5)
 
 }
 savePersonOccupyingRecord(row: any) {
+    this.iswomenWorkingNightShift=false;
 if(Number.isNaN(this.totalNoOfWomanForDocu)){
 this.totalNoOfWomanForDocu = 0;
 }
@@ -1984,6 +2012,30 @@ this.totalNoOfWomanForDocu = this.totalNoOfWomanForDocu + element.value;
 });
 this.totalNoOfWoman = this.totalNoOfWomanForDocu;
 }
+}
+
+womenWorkingInNight(event, index){
+    if(event.checked )
+    {
+        this.personoccuping.get('workerCounts')['controls'][index].get('womanWorkinginNightshift').setValue(true)
+    }else{
+        this.personoccuping.get('workerCounts')['controls'][index].get('womanWorkinginNightshift').setValue(false)
+    } 
+}
+
+checkWomanWorkedonNightShift(){
+    let count = 0;
+    for(let i=0; i< this.personoccuping.get('workerCounts')['controls'].length; i++){        
+        if(this.personoccuping.get('workerCounts')['controls'][i].value.womanWorkinginNightshift == true){
+                count++;
+    }
+
+}
+    if(count >= 1 ){
+        this.workingInNightShift = true;
+    }else{
+        this.workingInNightShift = false;
+    }
 }
 
 
