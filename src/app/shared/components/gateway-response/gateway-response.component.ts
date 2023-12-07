@@ -240,7 +240,21 @@ export class GatewayResponseComponent implements OnInit {
 				}
 				//this.redirectToHome();
 			});
-		}else if(data.payableServiceType == 'VEHICLE'){
+			
+		}if (data.payableServiceType == "PFT_REG_CER") {
+			payData.amount = Number(data.amount);
+			this.formService.saveCertificatePaymentDetails(payData).subscribe(res => {
+				if (res && res.data) {
+					setTimeout(() => {
+						this.redirectToMyApplication('/citizen/my-applications', res.data.data, 'PFT_REG_CER', data.payableServiceType);
+					}, 10000);
+					this.interVal();
+				}
+			});
+		
+		}
+		
+		else if(data.payableServiceType == 'VEHICLE'){
 
 			payData.amount = Number(data.amount);
 			this.formService.saveVehicleTaxPaymentDetails(payData).subscribe(res => {

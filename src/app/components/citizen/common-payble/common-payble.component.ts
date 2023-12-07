@@ -73,6 +73,7 @@ export class CommonPaybleComponent implements OnInit {
   propertyModelSub: Subscription;
   rupeeSign='(₹)'
   isVehileTax : boolean = false;
+  isCertificateFees :boolean =false;
   uniqueId: any;
   chequeReturn = 0;
   
@@ -191,7 +192,7 @@ export class CommonPaybleComponent implements OnInit {
 
     let obj = {
       payableServiceType: updatePayableServiceType,
-      refNumber: updatePayableServiceType == 'VEHICLE' ?  this.uniqueId : payData.refNumber,
+      refNumber: updatePayableServiceType == 'VEHICLE'?  this.uniqueId : payData.refNumber,
       amount: updateAmount,
       paymentMode: "NETBANKING",
       returnUrl: retUrl,
@@ -327,7 +328,10 @@ export class CommonPaybleComponent implements OnInit {
       this.isProfessionalTax = true;
     } else if(paySerCode === 'VEHICLE'){
       this.paymentsForm.get('refNumber').setValidators([Validators.required])
-    }else {
+    } else if(paySerCode === 'PFT_REG_CER'){
+      this.paymentsForm.get('refNumber').setValidators([Validators.required])
+    }
+    else {
       this.isProfessionalTax = false;
       this.paymentsForm.get('refNumber').setValidators(null);
     }
@@ -343,6 +347,9 @@ export class CommonPaybleComponent implements OnInit {
       this.getAmountData();
     } else if (serviceType === 'PAY-WTR-TAX') {
       this.getAmountDataWater();
+    }
+    else if (serviceType === 'PFT_REG_CER') {
+      this.getCitizenForm1();
     }
     else {
       this.isPropertyTax = false;
@@ -516,7 +523,6 @@ export class CommonPaybleComponent implements OnInit {
   }
 
   getCitizenForm() {
-
     if (this.paymentsForm.invalid) {
       this.markFormGroupTouched(this.paymentsForm);
       this.commonService.openAlert("Warning", "Enter all the required information", "warning");
@@ -538,6 +544,43 @@ export class CommonPaybleComponent implements OnInit {
         if(resData.refNumber){
           this.isVehileTax = true;
           this.inputData = data.data;
+          this.paymentsForm.get('amount').setValue(this.inputData[0].amount);
+          this.paymentsForm.get('refNumber').setValue(this.inputData[0].fileNumber);
+          this.uniqueId = this.inputData[0].uniqueId;
+        }else{
+          this.alertService.info('Enter all the required information')
+        }
+      }else{
+        this.inputData = data.data;
+      }
+      console.log('input data', this.inputData);
+    }, error => {
+      console.log(error)
+    })
+  }
+
+  getCitizenForm1() {
+    if (this.paymentsForm.invalid) {
+      this.markFormGroupTouched(this.paymentsForm);
+      this.commonService.openAlert("Warning", "Enter all the required information", "warning");
+      return;
+    }
+
+    let serviceType = this.paymentsForm.get('payableServices').get('code').value;
+    let refNumber = this.paymentsForm.get('refNumber').value;
+
+    this.formService.apiType = 'appsByRef';
+
+    let resData = {
+      refNumber: refNumber,
+      serviceType: serviceType
+    }
+
+    this.formService.getCitizenForm(resData).subscribe(data => {
+      if( serviceType == 'PFT_REG_CER'){
+        if(resData.refNumber){
+          this.inputData = data.data;
+          this.isCertificateFees=true;
           this.paymentsForm.get('amount').setValue(this.inputData[0].amount);
           this.paymentsForm.get('refNumber').setValue(this.inputData[0].fileNumber);
           this.uniqueId = this.inputData[0].uniqueId;
@@ -585,7 +628,7 @@ export class CommonPaybleComponent implements OnInit {
           this.setPayableServices('PROFESSIONAL')
           this.paymentsForm.get('payableServices').get('code').setValue('PAY_PROF_TAX');
           this.showHideSearchable('PAY_PROF_TAX');
-        }
+                }
         else if (this.selected == 'PROPERTY-TAX') {
           this.paymentsForm.get('module').get('code').setValue(this.selected);
           this.setPayableServices('PROPERTY-TAX');
@@ -609,7 +652,7 @@ export class CommonPaybleComponent implements OnInit {
     const filteredModules = this.userServicesList.filter(module => module.code === code);
     if (filteredModules.length > 0) {
       if (filteredModules[0].code == 'PROFESSIONAL') {
-        this.PayableServices = filteredModules[0].services.filter(services => services.code == 'PAY_PROF_TAX');
+        this.PayableServices = filteredModules[0].services.filter(services => services.code == 'PAY_PROF_TAX' || services.code =='PFT_REG_CER');
       } else {
         this.PayableServices = filteredModules[0].services;
       }
@@ -673,6 +716,10 @@ export class CommonPaybleComponent implements OnInit {
       this.isWaterRecordExists = false;
       this.collectionWaterModel = [];
       this.collectionWaterModel.collectedAmount = [];
+
+      //This is for the certificate Fees for Professional
+      this.isCertificateFees=false;
+      this.inputData = [];
     }
 
   }

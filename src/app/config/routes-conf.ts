@@ -461,6 +461,10 @@ const ROUTEMAIN = {
         'main': 'prc-registration',
         'type': 'prcForm'
     },
+    'PFT_REG_CER':{
+        'main': 'certificate-registration',
+        'type': 'dupCertificateForm'  
+    },
 
     /**
      * Ticketing Facility Routes
@@ -1068,6 +1072,9 @@ const ROUTESLIST = {
     },
     'PRC_REG': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROFESSIONALMODULE + '/' + ROUTEMAIN["PRC_REG"].main
+    },
+    'PFT_REG_CER':{
+        'full':ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROFESSIONALMODULE + '/' + ROUTEMAIN["PFT_REG_CER"].main
     },
     'PAY_PROF_TAX': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEMAIN.CITIZENPAYABLESERVICES.main

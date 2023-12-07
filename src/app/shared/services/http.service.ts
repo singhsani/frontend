@@ -165,5 +165,9 @@ export class HttpService {
 		return environment.envAPIServer + url;
 	}
 	
+	getReportPDF(url: string, param: any) {
+		let headers = new HttpHeaders().append("Authorization", "Bearer " + this.session.get("access_token").token)
+		return this.httpClient.get(this.getFullUrl(url), { params: param, responseType: 'arraybuffer', headers: headers });
+	}
 
 }
