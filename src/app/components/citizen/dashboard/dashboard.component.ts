@@ -334,6 +334,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 				break;
 			case 'PRC_REG':
 			case 'PRO-ASS':
+			case 'PFT_REG_CER':
 			case 'PRO-EXT':
 			case 'PRO-TRAN':
 			case 'PRO-DUP':

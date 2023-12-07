@@ -164,4 +164,26 @@ export class ProfessionalTaxService {
 	downloadGuidLineDocumentPRC(filename: any, type: any) {
 		return this.http.getUploadedFile(`api/form/prcForm/download/${filename}`, type);
 	  }
+	saveDupCertificateDetails(formData) {
+		return this.http.post(`api/professional/certificate/generate`, formData);
+	}
+	getLookupDataForDupCertificate(hasPrc) {
+		return this.http.get(`api/pft-cert-fees/get/active/all/${hasPrc}`);
+	}
+	printReceipt(refNumber) {
+		this.requestURL = `api/professional/receipt/printReceipt/${refNumber}`;
+		return this.http.get(this.requestURL, 'printReceipt');
+	}
+	printCertificateGet(regNumber, cerificateNo) {
+		this.requestURL = `api/professional/duplicate/${regNumber}/certificate/${cerificateNo}`;
+		return this.http.getReportPDF(this.requestURL, regNumber);
+	}
+	createFormData() {
+		this.requestURL = `api/professional/certificate/create`;
+		return this.http.get(this.requestURL);
+	  }
+
+	  certificateRegistration(formData) {
+		return this.http.post(`api/professional/certificate/submit`, formData);
+	}  
 }

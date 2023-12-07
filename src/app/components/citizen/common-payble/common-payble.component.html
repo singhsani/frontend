@@ -451,12 +451,68 @@
         </div>
         </div>
     </div>
+
+
+    <div *ngIf="isCertificateFees">
+      <div class="row mt-4">
+        <ng-container>
+          <div class="table-responsive">
+            <table class="table" style="border: 1px solid #dee2e6;">
+              <thead>
+                <tr>
+                  <th class="pl-4">S.No.</th>
+                  <th>Applicant Name</th>
+                  <th>Applicant No</th>
+                  <th>Date of Application</th>
+                  <th>Department Name</th>
+                  <th>Service Name</th>
+                  <th>Payable Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="input?.length == 0">
+                  <td colspan="12" class="noRecord">
+                    <h5 class="text-center">No record found !</h5>
+                  </td>
+                </tr>
+                <ng-container *ngFor="let dues of inputData;let i=index">
+                  <tr>
+                    <td width="50">
+                      <mat-icon class="pull-left arrowCls">
+                      </mat-icon>{{i+1}}
+                    </td>
+                    <td>{{dues.applicantName}}</td>
+                    <td>{{dues.fileNumber}}</td>
+                    <td>{{dues.createdDate}}</td>
+                    <td>{{dues.departmentName}}</td>
+                    <td>{{dues.serviceType}}</td>
+                    <td>{{dues.fileStatus}}</td>
+                  </tr>
+
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </ng-container>
+
+        <div class="row m-0">
+          <div class="col-md-6 mt-4 mb-2 font16 font-weight-bold">Amount Payable : (₹) <span
+            style="color: #ff0000;">{{paymentsForm.get('amount').value}}</span> Only</div>
+        <div class="col-md-6 mb-3">
+          <button mat-raised-button class="paymentButton" color="primary" type="submit"
+            (click)="makePayment(paymentsForm.value)">
+            Proceed for Payment
+          </button>
+        </div>
+      </div>
+      </div>
+  </div>
     
   </form>
   <select-payment-gateway #paymentGateway></select-payment-gateway>
 </mat-card>
 
-<ng-container *ngIf="!isVehileTax">
+<ng-container *ngIf="!isVehileTax && !isCertificateFees">
   <app-my-applications [inputData]="inputData" [fromOtherModule]=true></app-my-applications>
 </ng-container>
 

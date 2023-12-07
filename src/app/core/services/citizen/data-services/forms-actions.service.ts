@@ -390,7 +390,9 @@ export class FormsActionsService {
 	saveVehicleTaxPaymentDetails(data) {
 		return this.http.post(`api/vehicle/taxPayment`, data);
 }
-
+	saveCertificatePaymentDetails(data) {
+		return this.http.post(`api/professional/certificatePayment`, data);
+	}
 
 
 	savePropertyTaxPaymentDetails(data: any) {
@@ -409,6 +411,17 @@ export class FormsActionsService {
 		this.requestURL = `api/professional/receipt/printReceipt/${refNumber}`;
 		return this.http.get(this.requestURL, 'printReceipt');
 	}
+
+	printProfReceipt1(refNumber) {
+		this.requestURL = `api/professional/receipt/printReceipt1/${refNumber}`;
+		return this.http.get(this.requestURL, 'printReceipt');
+	}
+
+	printProfCertificate(refNumber) {
+		this.requestURL = `api/professional/duplicate/${refNumber}/certificate1/${refNumber}`;
+		return this.http.getReportPDF(this.requestURL, refNumber);
+	}
+
 
 	ReprintProfReceipt(refNumber) {
 		this.requestURL = `api/professional/receipt/ReprintReceipt/${refNumber}`;

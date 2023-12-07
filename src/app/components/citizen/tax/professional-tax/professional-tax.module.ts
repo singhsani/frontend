@@ -11,11 +11,13 @@ import { SharedModule } from '../../../../shared/shared.module';
 
 import { PecRegistrationComponent } from './pec-registration/pec-registration.component';
 import { PrcRegistrationComponent } from './prc-registration/prc-registration.component';
+import { CertificateRegistrationComponent } from './certificate-registration/certificate-registration.component';
 
 const routes: Routes = [
 	{ path: 'pec-registration/:id/:apiCode', component: PecRegistrationComponent, canActivate: [AuthGuard] },
 	{ path: 'prc-registration', component: PrcRegistrationComponent, canActivate: [AuthGuard] },
-	{ path: 'prc-registration/:id/:apiCode', component: PrcRegistrationComponent, canActivate: [AuthGuard] }
+	{ path: 'prc-registration/:id/:apiCode', component: PrcRegistrationComponent, canActivate: [AuthGuard] },
+	{ path: 'certificate-registration', component: CertificateRegistrationComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
@@ -29,7 +31,8 @@ const routes: Routes = [
 	],
 	declarations: [
 		PecRegistrationComponent,
-		PrcRegistrationComponent
+		PrcRegistrationComponent,
+		CertificateRegistrationComponent
 	]
 })
 export class ProfessionalTaxModule { }

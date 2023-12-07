@@ -15,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../../environments/environment';
 import { OfflinePaymentComponent } from 'src/app/shared/components/offline-payment/offline-payment.component';
 import { Location } from '@angular/common';
-import { downloadFile } from 'src/app/vmcshared/downloadFile';
+import { downloadFile, downloadFileAndSave } from 'src/app/vmcshared/downloadFile';
 import { PaymentService } from 'src/app/vmcshared/component/payment/payment.service'
 import { PaymentNewService } from 'src/app/shared/services/paymentNew.service';
 
@@ -117,6 +117,13 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 					this.location.go(this.router.url.split('?')[0]);
 				}, 3000);
 			}
+
+			else if(d.serviceType == 'PFT_REG_CER'){
+				this.printReceipt1(d.resourceType, '', d.refNumber);
+				setTimeout(() => {
+					this.location.go(this.router.url.split('?')[0]);
+				}, 3000);
+			}
 		})
 	}
 	ngOnChanges() {
@@ -124,8 +131,8 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	}
 
 	swichCaseCondition(row) {
-		if (row.serviceType == 'VEHICLE' || row.serviceType == 'PEC_REG' ||
-			row.serviceType == 'PRC_REG' || row.serviceType == 'PAY_PROF_TAX') {
+		if (row.serviceType == 'VEHICLE' || row.serviceType == 'PEC_REG' 
+			|| row.serviceType == 'PRC_REG' || row.serviceType == 'PAY_PROF_TAX') {
 			return `case1`;
 		} else if (row.departmentName == 'Property Tax' || row.departmentName == 'WATER-SUPPLY') {
 			return `case2`;
@@ -139,11 +146,27 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return `case6`
 		} else if (row.departmentName == 'Vendor Registration' && row.fileStatusName == 'Payment Received' || row.fileStatusName == 'Payment Pending') {
 			return `case7`;	
-		}else{
+		}else if((row.serviceType=='PFT_REG_CER' && row.fileStatusName=='Payment Received') ||  (row.serviceType=='PFT_REG_CER' && row.fileStatusName=='Approved') || (row.serviceType=='PFT_REG_CER' && row.fileStatusName=='Submitted')){
+		    return `case9`;
+		}
+		else{
 			return `case3`
 		}
 	}
 
+
+	printCertificate1(apiCode: string, apiName: string, id: number) {
+		this.formService.printProfCertificate(id).subscribe(
+			receiptResponse => {
+				downloadFileAndSave(receiptResponse, "Certificate" + "-" + Date.now() + ".pdf");
+				setTimeout(() => {
+				}, 300);
+			},
+			err => {
+				this.commonService.openAlert('Error!', err.error[0].message, 'error');
+			}
+		);
+	}
 	/**
 	 * This method use to get all the citizen data with pagination.
 	 */
@@ -257,6 +280,28 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	printReceipt(apiCode: string, apiName: string, id: number) {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 		this.formService.printReceipt(id).subscribe(
+			receiptResponse => {
+
+				if (receiptResponse == null || receiptResponse == "") {
+					this.commonService.openAlert('Message!', "Print Receipt Not Available !!!", 'warning');
+					return false;
+				}
+
+				let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
+				sectionToPrintReceipt.innerHTML = receiptResponse;
+				setTimeout(() => {
+					window.print();
+				}, 300);
+			},
+			err => {
+				this.commonService.openAlert('Error!', err.error[0].message, 'error');
+			}
+		);
+	}
+
+	printReceipt1(apiCode: string, apiName: string, id: number) {
+		//this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+		this.formService.printProfReceipt1(id).subscribe(
 			receiptResponse => {
 
 				if (receiptResponse == null || receiptResponse == "") {

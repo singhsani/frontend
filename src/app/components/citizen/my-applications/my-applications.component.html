@@ -778,6 +778,29 @@
 
                      </ng-container>
 
+                      <!-- case9  Certificate registration -->
+                      <ng-container *ngSwitchCase="'case9'">
+
+                        <div class="mobile-label1">:</div>
+                        <button class="actionBtn" mat-button [matMenuTriggerFor]="menuTax">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menuTax="matMenu">
+                            <button mat-menu-item  *ngIf="row.fileStatus == 'PAYMENT_RECEIVED'" color="primary"
+                             (click)="printReceipt1(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                                <mat-icon class="m-1" title="{{'print_receipt' | translate:translateKey}}">print
+                                </mat-icon>
+                                {{'print_receipt' | translate:translateKey}}
+                            </button>
+
+                              <button mat-menu-item *ngIf="row.fileStatus == 'PAYMENT_RECEIVED'" color="primary"
+                             (click)="printCertificate1(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId )">
+                                <mat-icon class="m-1" title="{{'print_certificate' | translate:translateKey}}">print
+                                </mat-icon>
+                                {{'Print Certificate' | translate:translateKey}}
+                            </button>
+                            </mat-menu>
+                            </ng-container>
                 </div>
             </mat-cell>
         </ng-container>
