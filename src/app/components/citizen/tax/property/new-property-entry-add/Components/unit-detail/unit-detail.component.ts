@@ -5,7 +5,7 @@ import { NewPropertyEntryAddService } from '../../Services/new-property-entry-ad
 import { NewPropertyEntryAddDataSharingService } from '../../Services/new-property-entry-add-data-sharing.service';
 import { Constants } from 'src/app/vmcshared/Constants';
 import { Subscription } from 'rxjs';
-import { MatSort, MatTableDataSource, MatDatepickerInputEvent } from '@angular/material';
+import { MatSort, MatTableDataSource, MatDatepickerInputEvent, Sort } from '@angular/material';
 import { UnitDetailModel, MeasurementModel, RoomModel } from '../../Models/new-property-entry-add.model';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import * as moment from 'moment';
@@ -706,4 +706,32 @@ export class UnitDetailComponent implements OnInit {
 
   }
 
+  sortData(sort: Sort) {
+    const data = this.dataSourceRoom.data.slice();
+    if (!sort.active || sort.direction === '') {
+      this.dataSourceRoom.data = data;
+      return;
+    }
+    this.dataSourceRoom.data = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'roomTypeName':
+          return compare(a.roomTypeName, b.roomTypeName, isAsc);
+        case 'length':
+          return compare(a.length, b.length, isAsc);
+        case 'breadth':
+          return compare(a.breadth, b.breadth, isAsc);
+        case 'carpetArea':
+          return compare(a.carpetArea, b.carpetArea, isAsc);
+        default:
+          return 0;
+      }
+    });
+
+  }
+
+}
+
+function compare(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
