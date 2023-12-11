@@ -461,4 +461,9 @@ export class BookingService {
     getSlotAvillable(refNumber){
       return this.http.post(`api/booking/${this.resourceType}/getSlotAvailable`,refNumber);
     }
+
+    printDepositRefundReceipt(refNumber : any){
+        this.requestURL = `api/booking/atithigruh/refundApproveReport?refNumber=${refNumber}`;
+        return this.http.get(this.requestURL, 'printReceipt');
+     }
 }

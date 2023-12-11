@@ -652,7 +652,7 @@ export class MyBookingComponent implements OnInit {
 		if (element.resourceType === "SWIMMING_POOL") {
 			return false;
 		}
-		else if( element.resourceType == 'SWIMMING_POOL_RENEWAL') 
+		else if( element.resourceType == 'SWIMMING_POOL_RENEWAL')
         {
             return false;
         }
@@ -904,7 +904,7 @@ export class MyBookingComponent implements OnInit {
 
 	showAtithigruhDepositReceiptBtn(element) {
 		if ((element.resourceType == 'ATITHIGRUH')
-			&& (element.status == this.bookingConstant.BOOKED || element.status == this.bookingConstant.COMPLETED || element.status == this.bookingConstant.CANCELLATION_REQUEST || element.status == this.bookingConstant.REFUND_REQUEST)) {
+			&& (element.status == this.bookingConstant.BOOKED || element.status == this.bookingConstant.COMPLETED || element.status == this.bookingConstant.CANCELLATION_REQUEST || element.status == this.bookingConstant.REFUND_REQUEST || element.status == this.bookingConstant.REFUND_APPROVED)) {
 			return true;
 		} else {
 			return false;
@@ -922,4 +922,22 @@ export class MyBookingComponent implements OnInit {
 	getInnerHTML() {
 		return `<b>Cancellation Remarks :</b> ${this.rejectRemarks}`;
 	}
+
+	showAtithiDepositRefundReceiptBtn(element) {
+          if (element.resourceType == 'ATITHIGRUH'
+              && element.status == this.bookingConstant.REFUND_APPROVED) {
+              return true;
+          } else {
+              return false;
+          }
+      }
+
+      printDepositRefundReceipt(data: any) {
+              console.log('data', data);
+              this.bookingService.printDepositRefundReceipt(data.refNumber).subscribe(response => {
+                  this.print(response);
+              }, err => {
+                  this.commonService.openAlert('Error', err.message, 'warning');
+              });
+          }
 }
