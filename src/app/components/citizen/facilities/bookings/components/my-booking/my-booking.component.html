@@ -234,6 +234,14 @@
                 </button>
               </div>
 
+              <div *ngIf="showAtithiDepositRefundReceiptBtn(element)">
+                <button  mat-menu-item color="primary"
+                         (click)="printDepositRefundReceipt(element, bookingConstant.REFUND_APPROVED)">
+                  <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+                  {{'deposit_refund_receipt' | translate:translateKey}}
+                </button>
+              </div>
+
               <div *ngIf="element.resourceType == 'SWIMMING_POOL' || element.resourceType == 'SWIMMING_POOL_RENEWAL'">
                 <button
                   *ngIf="(element.resourceType == 'SWIMMING_POOL' || element.resourceType == 'SWIMMING_POOL_RENEWAL') && element.status == bookingConstant.PAYMENT_REQUIRED && element.showDownloadLOI"
