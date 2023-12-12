@@ -101,8 +101,8 @@
         </div>
         <div class="row">
             <div class="col-md-3">
-                <div class="ngSelect" style="min-width: 100%;">
-                    <ng-select style="overflow: visible;" required placeholder="Occupier Type *" [items]="occupierTypeList" bindValue="itemId" (change) ="occupierTypeChange($event.itemName)"
+                <div class="ngSelect asteriskmarkRequired" style="min-width: 100%;">
+                    <ng-select style="overflow: visible;" required placeholder="Occupier Type" [items]="occupierTypeList" bindValue="itemId" (change) ="occupierTypeChange($event.itemName)"
                         bindLabel="itemName" name="OccupierType" [(ngModel)]="model.occupierType" #OccupierType="ngModel"
                         [ngClass]="{'ng-invalid ng-touched':  form.submitted && OccupierType.invalid}">
                     </ng-select>
@@ -112,8 +112,8 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="ngSelect" style="min-width: 100%;">
-                    <ng-select style="overflow: visible;" required placeholder="Occupier Sub Type *" [items]="occupierSubTypeList" bindValue="itemId"
+                <div class="ngSelect asteriskmarkRequired" style="min-width: 100%;">
+                    <ng-select style="overflow: visible;" required placeholder="Occupier Sub Type" [items]="occupierSubTypeList" bindValue="itemId"
                         bindLabel="itemName" name="OccupierSubType" [(ngModel)]="model.occupierSubType" #OccupierSubType="ngModel"
                         [ngClass]="{'ng-invalid ng-touched':  form.submitted && OccupierSubType.invalid}">
                     </ng-select>
