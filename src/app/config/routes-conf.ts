@@ -557,6 +557,10 @@ const ROUTEMAIN = {
         'main': 'contractor',
         'type': 'contractor'
     },
+    'SHOP-ESTAB-CLOSING': {
+        'main': 'shop-close',
+        'type': 'shop-close'
+    },
 
 }
 
@@ -732,6 +736,9 @@ const ROUTESLIST = {
     },
     'SHOP-ESTAB-TRANSFER': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.SHOPANDESTAMODULE + '/' + ROUTEMAIN["SHOP-ESTAB-TRANSFER"].main
+    },
+    'SHOP-ESTAB-CLOSING': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.SHOPANDESTAMODULE + '/' + ROUTEMAIN["SHOP-ESTAB-CLOSING"].main
     },
     'SHOP-CAN': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.SHOPANDESTAMODULE + '/' + ROUTEMAIN["SHOP-CAN"].main
