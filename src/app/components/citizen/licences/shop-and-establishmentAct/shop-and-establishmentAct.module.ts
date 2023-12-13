@@ -17,13 +17,14 @@ import { ShopAndEstablishmentService } from './common/services/shop-and-establis
 import { FilterAttachmentPipe } from './common/pipes/filter-attachment.pipe';
 import { TaxRebateApplicationService } from '../../tax/property/tax-rebate-application/Services/tax-rebate-application.service';
 import { ShopLicTransferComponent } from './shop-lic-transfer/shop-lic-transfer.component';
+import { ShopLicCloseComponent } from './shop-lic-close/shop-lic-close.component';
 /* Import all shared, core and routing module end */
 
 const routes: Routes = [
   { path: '', redirectTo: 'shop', pathMatch: 'full' },
   { path: 'shop/:id/:apiCode', component: ShopLicNewComponent },
-  { path: 'shop-transfer/:id/:apiCode', component: ShopLicTransferComponent }
-
+  { path: 'shop-transfer/:id/:apiCode', component: ShopLicTransferComponent },
+  { path: 'shop-close/:id/:apiCode', component: ShopLicCloseComponent }
 ];
 
 @NgModule({
@@ -38,7 +39,9 @@ const routes: Routes = [
   declarations: [
     ShopLicNewComponent,
     FilterAttachmentPipe,
-    ShopLicTransferComponent],
+    ShopLicTransferComponent,
+    ShopLicCloseComponent
+  ],
 
   providers: [ShopAndEstablishmentService,TaxRebateApplicationService]
 })
