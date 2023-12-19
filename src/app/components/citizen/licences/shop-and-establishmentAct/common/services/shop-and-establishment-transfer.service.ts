@@ -21,4 +21,8 @@ export class ShopAndEstablishmentTransferService {
 	getLatestApplicationByCertificationNumber(certificationNumber){
 		return this.http.get(`api/form/shop-transfer/getLatestApplicationByCertificationNumber?certificationNumber=`+ certificationNumber);
 	}
+
+	getLatestApplicationByINtimationOrCertificationNumber(certificationNumber){
+		return this.http.get(`api/form/shop-transfer/getLatestApplicationByIntimationOrCertificationNumber?certificationNumber=`+ certificationNumber);
+	}
 }
