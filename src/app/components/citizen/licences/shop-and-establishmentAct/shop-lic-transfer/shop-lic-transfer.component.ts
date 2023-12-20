@@ -1651,7 +1651,7 @@ mandatory: false
 }
 ];
 
-if(this.totalNoOfWomanForDocu > 0 && this.personoccuping.get('womanWorkinginNightshift').value == true){
+if(this.totalNoOfWomanForDocu > 0 && this.workingInNightShift == true){
 docArray.push({
 documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
 mandatory: true
