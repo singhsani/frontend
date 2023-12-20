@@ -600,7 +600,7 @@
                             </button>
 
                             <button mat-menu-item
-                            *ngIf="(row.fileStatus === 'SUBMITTED' && (row.serviceType === 'SHOP_ESTAB_APPLICATION' || row.serviceType === 'SHOP_ESTAB_TRANSFER'))"
+                            *ngIf="(row.fileStatus === 'SUBMITTED' && (row.serviceType === 'SHOP_ESTAB_APPLICATION' || row.serviceType === 'SHOP_ESTAB_TRANSFER' || row.serviceType === 'SHOP_ESTAB_INTI_TO_CER'))"
                             color="primary"
                             (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
                             <mat-icon class="m-1" title="{{'print_acknolowdgement_receipt' | translate:translateKey}}">print
@@ -734,7 +734,7 @@
                                 </button>
                             </ng-container>
 
-                            <button mat-menu-item *ngIf="row.fileStatus == 'PAYMENT' && row.serviceType === 'SHOP_ESTAB_APPLICATION'" color="primary"
+                            <button mat-menu-item *ngIf="row.fileStatus == 'PAYMENT' && (row.serviceType === 'SHOP_ESTAB_APPLICATION' || row.serviceType === 'SHOP_ESTAB_INTI_TO_CER' )" color="primary"
                             (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
                             <mat-icon class="m-1" title="{{'preview_application' | translate:translateKey}}">
                                 remove_red_eye
@@ -743,7 +743,7 @@
                             </button> 
 
                             <button mat-menu-item
-                            *ngIf="(row.fileStatus === 'PAYMENT' && row.serviceType === 'SHOP_ESTAB_APPLICATION')"
+                            *ngIf="(row.fileStatus === 'PAYMENT' && row.serviceType === 'SHOP_ESTAB_APPLICATION' || row.serviceType === 'SHOP_ESTAB_INTI_TO_CER')"
                             color="primary" (click)="printPaymentReceipt(row.serviceDetail.code,row.serviceFormId)">
                             <mat-icon class="m-1" title="{{'print_acknolowdgement_receipt' | translate:translateKey}}">print
                             </mat-icon>

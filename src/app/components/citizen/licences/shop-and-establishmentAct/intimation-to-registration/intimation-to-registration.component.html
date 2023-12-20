@@ -1,0 +1,862 @@
+<app-title-bar [title]="'Intimatio To Registration' | translate: translateKey">
+
+</app-title-bar>
+
+<div *ngIf="isGuideLineActive">
+	<div class="row">
+		<div class="col-md-4 ngSelect">
+			<ng-select class="asteriskmarkRequired" placeholder="{{'working_in_organization_number_of_humans' | translate: translateKey}}" (change)="onChangeNoOfHumanWorking($event)"
+				[(ngModel)]="registrationType">
+				<ng-option *ngFor="let yes_no of regiTyep" [value]="yes_no.code">{{yes_no.name}}</ng-option>
+			</ng-select>
+		</div>
+
+		<mat-form-field class="col-md-4">
+		<!-- <div class="col-md-4"> -->
+			<input matInput type="text" maxlength="15" AlphaNumeric required
+				placeholder="{{'certificate_number' | translate: translateKey}}" [(ngModel)]="certificateNumber">
+		<!-- </div> -->
+		<!-- <control-messages [control]="shopLicTransferForm.get('certificateNumber')"></control-messages> -->
+		</mat-form-field>
+
+	</div>
+
+	  <div class="fotButtonBar">
+		<div class="col-sm-12 col-md-12 text-right">
+			<button [disabled]="isDisabledBtn"  mat-raised-button color="primary" type="button" (click)="hideGuideLine(false)">
+				<mat-icon>thumb_up_alt</mat-icon>
+				{{'proceed'| translate: translateKey}}
+			</button>
+		</div>
+	</div>
+
+</div>
+
+<mat-card class="formClass cardBorder" [hidden]="isGuideLineActive">
+	<!-- <form [formGroup]="shopLicTransferForm"> -->
+		<mat-tab-group [(selectedIndex)]="licenseConfiguration.currentTabIndex" dynamicHeight="true" mat-stretch-tabs
+			class="stepperNav">
+
+			<!-- step 1 Starts -->
+			<mat-tab disabled>
+				<ng-template mat-tab-label>
+					<div>{{'establishment_details' | translate:translateKey}}</div>
+				</ng-template>
+				<form [formGroup]="establishmentdetails">
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput required  maxlength="150"
+							placeholder="Name of Establishment"
+							formControlName="establishmentName" >
+						<control-messages [control]="establishmentdetails.get('establishmentName')"></control-messages>
+					</mat-form-field>
+
+					<!-- <mat-form-field  class="col-md-4">
+						<input matInput required  maxlength="150"
+							placeholder="Certificate Number"
+							formControlName="transferCertificateNumber" >
+						<control-messages [control]="shopLicTransferForm.get('transferCertificateNumber')"></control-messages>
+					</mat-form-field> -->
+
+
+					<!-- <mat-form-field *ngIf="isIntimation" class="col-md-4">
+						<input matInput  maxlength="150"
+							placeholder="{{'Previous Registration Number' | translate:translateKey}}"
+							formControlName="previousRegistrationNo" >
+					</mat-form-field> -->
+
+					<h2>{{'postal_address_of_establishment' | translate:translateKey}}</h2>
+					<app-address #postalAddressEstablishment [requiredFeilds]="true"
+						[addressFormGroup]="establishmentdetails.get('postalAddress')">
+					</app-address>
+
+				</div>
+
+				<div class="row">
+					<div class="col-md-4 ngSelect">
+						<div *ngIf="wardZoneLevel.length>=1">
+							<ng-select class="asteriskmarkRequired"
+								placeholder="Zone No."
+								formControlName="waterDrainageZoneId" (change)="onChangedWardZone($event,2)">
+								<ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.parentWardzoneId">
+									{{zone.wardzoneName}}</ng-option>
+							</ng-select>
+							<control-messages [control]="establishmentdetails.get('waterDrainageZoneId')">
+							</control-messages>
+						</div>
+					</div>
+					<div class="col-md-4 ngSelect">
+						<div *ngIf="wardZoneLevel.length>=2" class="selectSort">
+							<ng-select class="asteriskmarkRequired"
+								placeholder="Ward No."
+								formControlName="waterDrainageWardId" (change)="onChangedWardZone($event,3)">
+								<ng-option *ngFor="let ward of wardZoneLevel2List" [value]="ward.wardzoneId">
+									{{ward.wardzoneName}}</ng-option>
+							</ng-select>
+							<control-messages [control]="establishmentdetails.get('waterDrainageWardId')">
+							</control-messages>
+						</div>
+					</div>
+					<div class="col-md-4 ngSelect">
+						<div *ngIf="wardZoneLevel.length>=3">
+							<ng-select
+								placeholder="Block No."
+								formControlName="waterDrainageBlockId" (change)="onChangedWardZone($event,4)">
+								<ng-option *ngFor="let block of wardZoneLevel3List" [value]="block.wardzoneId">
+									{{block.wardzoneName}}</ng-option>
+							</ng-select>
+							<control-messages
+								[control]="establishmentdetails.get('waterDrainageBlockId')">
+							</control-messages>
+						</div>
+					</div>
+					<div class="col-md-4 ngSelect">
+						<div>
+							<ng-select class="asteriskmarkRequired" formControlName="ownershipType" placeholder="Select Ownership Type" (change)="ownershipChange($event)">
+								<ng-option *ngFor="let ownershipType of ownershipTypeList" [value]="ownershipType.code">{{ownershipType.name}}</ng-option>
+							</ng-select>
+							<!-- <control-messages [control]="shopL	icNewForm.get('ownershipType')"> -->
+							<!-- </control-messages> -->
+						</div>
+					</div>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text"
+							maxlength="12"
+							appAlphaNumeric
+							placeholder="PEC Number"
+							formControlName="pecNumber"
+							(blur)="validatePecNumber(establishmentdetails.get('pecNumber'))"/>
+							<control-messages [control]="establishmentdetails.get('pecNumber')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text"
+							maxlength="12"
+							appAlphaNumeric
+							placeholder="PRC Number"
+							formControlName="prcNumber"
+							(blur)="validatePRCNumber(establishmentdetails.get('prcNumber'))"/>
+						<control-messages [control]="establishmentdetails.get('prcNumber')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text"
+							maxlength="21"
+							appMaskCensusNumber
+							required
+							placeholder="Census Number"
+							formControlName="censusNumber"/>
+							<!-- (blur)="validatePecPropertyNumber(shopLicTransferForm.get('censusOrPropertyNumber'))" -->
+						<control-messages [control]="establishmentdetails.get('censusNumber')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput
+							AlphaNumeric
+							maxlength="50"
+							placeholder="Old Registration Number"
+							formControlName="oldRegistrationNumber" />
+						<control-messages [control]="establishmentdetails.get('oldRegistrationNumber')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput [max]="disablefutureDate" autocomplete="off" appDate
+								[matDatepicker]="oldRegistrationDate" formControlName="oldRegistrationDate"
+								(dateChange)="oldRegistrationDatedateFormat($event.value,'oldRegistrationDate')"
+								placeholder="Old Registration Date">
+							<mat-datepicker-toggle matSuffix [for]="oldRegistrationDate"></mat-datepicker-toggle>
+							<mat-datepicker touchUi="true" #oldRegistrationDate></mat-datepicker>
+							<div align="end" class="default-show-hint mat-hint mat-right">
+								{{licenseConfiguration.DATE_HINT_MSG}}</div>
+							<control-messages [control]="establishmentdetails.get('oldRegistrationDate')">
+							</control-messages>
+					</mat-form-field>
+				</div>
+
+
+				<div class="row">
+
+					<h2>{{'situation_label'| translate:translateKey}}</h2>
+
+					<mat-form-field class="col-md-8">
+						<textarea matInput type="text"  maxlength="100" formControlName="otherAddresses"
+							placeholder="{{'situation_of_establishment' | translate:translateKey}}"></textarea>
+						<control-messages [control]="establishmentdetails.get('otherAddresses')"></control-messages>
+					</mat-form-field>
+				</div>
+				<app-action-bar [form]="shopLicTransferForm" (tabIndex)="licenseConfiguration.onTabChange($event,establishmentdetails,shopLicTransferForm)"
+					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+				</form>
+			</mat-tab>
+			<!-- step 1 Ends -->
+
+			<!-- step 2 Starts -->
+			<mat-tab disabled>
+				<ng-template mat-tab-label>
+					<div>{{'employer_details' | translate:translateKey}}</div>
+				</ng-template>
+				<form [formGroup]="employerdetails">
+				<div class="row">
+
+					<mat-form-field class="col-md-6">
+						<input matInput type="text" required maxlength="100"
+							placeholder="{{'name_of_employer' | translate:translateKey}}"
+							formControlName="nameOfEmployer"  targetElement="nameOfEmployerGuj"
+							appValidationFields [validationFieldsType]="'onlyNameWithSpace'">
+						<control-messages [control]="employerdetails.get('nameOfEmployer')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-6">
+						<input matInput type="text" required maxlength="250"
+							placeholder="{{'residential_address_of_employer' | translate:translateKey}}"
+							formControlName="residentialAddressOfEmployer"
+							>
+						<control-messages [control]="employerdetails.get('residentialAddressOfEmployer')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-6">
+						<input matInput type="text" required maxlength="100"
+							placeholder="Employer Designation"
+							formControlName="employerDesignation"  appValidationFields [validationFieldsType]="'onlyNameWithSpace'">
+						<control-messages [control]="employerdetails.get('employerDesignation')"></control-messages>
+					</mat-form-field>
+
+
+
+					<mat-form-field class="col-md-6">
+						<input matInput OnlyNumber type="text"  maxlength="10" minlength="10"
+							placeholder="Employer Mobile Number"
+							formControlName="employerMobileNumber" required>
+						<control-messages [control]="employerdetails.get('employerMobileNumber')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-6">
+						<input matInput type="text"
+							placeholder="Employer Email ID" maxlength="50"
+							formControlName="employerEmailId"  appValidationFields >
+						<control-messages [control]="employerdetails.get('employerEmailId')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-6">
+						 <input matInput OnlyNumber type="text" maxlength="10" minlength="10"
+							placeholder="Alternate Mobile Number"
+							formControlName="alternateMobileNumber" />
+						<control-messages [control]="employerdetails.get('alternateMobileNumber')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-6">
+						<input matInput OnlyNumber type="text" maxlength="11" minlength="11"
+						placeholder="Landline Number"
+						formControlName="landlineNumber" />
+						<control-messages [control]="employerdetails.get('landlineNumber')">
+						</control-messages>
+					</mat-form-field>
+
+
+
+					<h2>{{'category_label' | translate:translateKey}}</h2>
+
+					<div class="col-md-6 ngSelect" formGroupName="establishmentCategory">
+						<ng-select class="asteriskmarkRequired" placeholder="{{'category_of_business' | translate:translateKey}} "
+							formControlName="code" (change)="onChangeCategorySelect($event)">
+							<ng-option *ngFor="let category of businessCategory" [value]="category.code">
+								{{category.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="employerdetails.get('establishmentCategory').get('code')">
+						</control-messages>
+					</div>
+
+					<div class="col-md-6 ngSelect selectCategoryDropdown" formGroupName="businessSubCategory">
+						<ng-select class="asteriskmarkRequired" placeholder="{{'sub_category_of_business' | translate:translateKey}} "
+							formControlName="code" (change)="onChangeSubCategory($event)">
+							<ng-option *ngFor="let sub_category of businessSubCategoryList" [value]="sub_category.code">
+								{{sub_category.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="employerdetails.get('businessSubCategory').get('code')">
+						</control-messages>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-6 ngSelect" formGroupName="natureOfBusiness">
+						<ng-select class="asteriskmarkRequired" placeholder="Nature Of Business"
+							formControlName="code" >
+							<ng-option *ngFor="let category of businessNature" [value]="category.code">
+								{{category.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="employerdetails.get('natureOfBusiness').get('code')">
+						</control-messages>
+					</div>
+
+					<mat-form-field class="col-md-4">
+						<input matInput required [max]="disablefutureDate" autocomplete="off" appDate
+							[matDatepicker]="DateOfCommencementOfBusiness" formControlName="commencementOfBusinessDate"
+							(dateChange)="dateFormat($event.value,'commencementOfBusinessDate')"
+							placeholder="{{ 'date_of_commencement_of_business' | translate:translateKey }}">
+						<mat-datepicker-toggle matSuffix [for]="DateOfCommencementOfBusiness"></mat-datepicker-toggle>
+						<mat-datepicker touchUi="true" #DateOfCommencementOfBusiness></mat-datepicker>
+						<div align="end" class="default-show-hint mat-hint mat-right">
+							{{licenseConfiguration.DATE_HINT_MSG}}</div>
+						<control-messages [control]="employerdetails.get('commencementOfBusinessDate')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-6" *ngIf="isSubCategory">
+						<input matInput type="text"
+							placeholder="Other Description"
+							formControlName="otherDescription" >
+						<control-messages [control]="employerdetails.get('otherDescription')"></control-messages>
+					</mat-form-field>
+				</div>
+
+
+				<app-action-bar [form]="shopLicTransferForm" (tabIndex)="licenseConfiguration.onTabChange($event,employerdetails,shopLicTransferForm)"
+					[stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
+				</form>
+			</mat-tab>
+			<!-- step 2 Ends -->
+
+			<!-- step 3 employer family Starts -->
+			<mat-tab disabled>
+				<ng-template mat-tab-label>
+					<div>{{'employer_family' | translate: translateKey}}</div>
+				</ng-template>
+				<form [formGroup]="employerfamily">
+				<div class="row  pb-3">
+					<div class="col-md-10">
+						<h2 class="pl-0">{{ 'employer_family_table_label' | translate:translateKey}}</h2>
+					</div>
+					<div class="col-md-2 pt-3" style="text-align: right;">
+						<button type="button" *ngIf="shopLicTransferForm.get('canEdit').value"
+							[disabled]="!(employerfamily.get('shopPersonList')['controls'].length < 5)"
+							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
+							(click)="addMorePerson('EMPLOYER_FAMILY')">{{'add'| translate:translateKey}}</button>
+					</div>
+				</div>
+
+				<div *ngIf="employerfamily.get('shopPersonList')['controls'].length" class="col-md-12 mb-5">
+					<div>
+						<table class="table table-striped responsiveTableRow tableLayout">
+							<thead>
+								<tr class="mo-d-none">
+
+									<th width="150" >{{'Name' | translate:translateKey}}</th>
+									<th>{{'Address' | translate:translateKey}}</th>
+									<th width="140">{{'relationship' | translate:translateKey}}</th>
+									<th width="140">{{'Designation / Status' | translate:translateKey}}</th>
+									<th width="130">{{'gender' | translate:translateKey}}</th>
+									<th width="110">{{'mobileNo' | translate:translateKey}}</th>
+									<th width="150">{{'emailId' | translate:translateKey}}</th>
+									<th width="60" *ngIf="shopLicTransferForm.get('canEdit').value"></th>
+									<th width="60" *ngIf="!(shopLicTransferForm.get('canEdit').value)"></th>
+								</tr>
+							</thead>
+							<tbody formArrayName="shopPersonList">
+								<tr *ngFor="let item of employerfamily.get('shopPersonList')['controls']; let indx = index;"
+									[formGroupName]="indx">
+
+
+
+									<td>
+										<div class="d-md-none">{{'name' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput appValidationFields
+												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
+												required>
+									<control-messages class="matErrorTwoLine" [control]="item.get('name')"></control-messages>
+										</mat-form-field>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'address' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput formControlName="address" required>
+											<control-messages class="matErrorTwoLine" [control]="item.get('address')"></control-messages>
+										</mat-form-field>
+									</td>
+
+
+									<td>
+										<div class="d-md-none">{{'relationship' | translate:translateKey}}</div>
+										<div class="ngSelect" required style="min-width:100px" formGroupName="relationshipType">
+											<p *ngIf="!item.isEditMode">
+												 {{getSelectedDataFromLookUps(relationshipTypeList,item.get('relationshipType').value.code)?.name}}
+											</p>
+											<div class="ngSelect" *ngIf="item.isEditMode">
+												<ng-select *ngIf="item.isEditMode" placeholder="{{'Relationship Type' | translate:translateKey}}"
+													formControlName="code">
+													<ng-option *ngFor="let relation of relationshipTypeList" [value]="relation.code">
+														{{relation.name}}</ng-option>
+												</ng-select>
+												<control-messages [control]="item.get('relationshipType').get('code')">
+												</control-messages>
+											</div>
+										</div>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'Designation / Status' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('designation').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput appValidationFields
+												[validationFieldsType]="'onlyNameWithSpace'" formControlName="designation"
+												required>
+											<control-messages class="matErrorTwoLine" [control]="item.get('designation')"></control-messages>
+										</mat-form-field>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'gender' | translate:translateKey}}</div>
+										<div class="ngSelect" formGroupName="gender" required style="min-width:100px">
+											<p class="width80" *ngIf="!item.isEditMode">
+												{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}
+											</p>
+											<div class="ngSelect" *ngIf="item.isEditMode"  style="min-width:100px">
+												<ng-select *ngIf="item.isEditMode" formControlName="code">
+													<ng-option *ngFor="let gender of gender" [value]="gender.code">
+														{{gender.name}}</ng-option>
+												</ng-select>
+												<control-messages [control]="item.get('gender').get('code')">
+												</control-messages>
+											</div>
+										</div>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'mobileNo' | translate:translateKey}}</div>
+										<div class="mobileCon adjustError">
+											<p *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</p>
+											<mat-form-field *ngIf="item.isEditMode">
+												<input matInput maxlength="10" minlength="10" OnlyNumber formControlName="mobileNo">
+												<control-messages [control]="item.get('mobileNo')"></control-messages>
+											</mat-form-field>
+										</div>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'emailId' | translate:translateKey}}</div>
+										<div class="mobileCon adjustError">
+											<p *ngIf="!item.isEditMode">{{item.get('emailId').value}}</p>
+											<mat-form-field *ngIf="item.isEditMode">
+												<input matInput maxlength="50"  formControlName="emailId">
+												<control-messages [control]="item.get('emailId')"></control-messages>
+											</mat-form-field>
+										</div>
+									</td>
+
+									<td>
+										<span *ngIf="shopLicTransferForm.get('canEdit').value">
+											<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
+												(click)="editRecord(item)">
+												<mat-icon title="Edit">edit</mat-icon>
+											</button>
+											<button type="submit" [disabled]="item.invalid" mat-icon-button
+												color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
+												<mat-icon title="save">save</mat-icon>
+											</button>
+										</span>
+										<span *ngIf="shopLicTransferForm.get('canEdit').value">
+											<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
+												(click)="deleteRecord('EMPLOYER_FAMILY',indx)">
+												<mat-icon title="Delete">delete</mat-icon>
+											</button>
+											<button mat-icon-button color="warn" *ngIf="item.isEditMode"
+												(click)="cancelRecordWithPersonType(item,indx,'EMPLOYER_FAMILY')">
+												<mat-icon title="Cancel">cancel</mat-icon>
+											</button>
+										</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+
+
+				</div>
+				<app-action-bar [form]="shopLicTransferForm" (tabIndex)="licenseConfiguration.onTabChange($event,employerfamily,shopLicTransferForm)"
+					[stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
+				</form>
+			</mat-tab>
+			<!-- step 3 employer family Ends -->
+
+			<!-- step 4 occupancy person Starts -->
+			 <mat-tab disabled>
+				<ng-template mat-tab-label>
+					<div>{{'person_occuping' | translate: translateKey}}</div>
+				</ng-template>
+				<form [formGroup]="personoccuping">
+				<div class="row pb-3">
+					<div class="col-md-10">
+						<h2 class="pl-0">{{'occupying_position_of_management_table_label' | translate: translateKey }}</h2>
+					</div>
+					<div class="col-md-2 pt-3" style="text-align: right;">
+						<button type="button" *ngIf="shopLicTransferForm.get('canEdit').value"[disabled]="isDisabledMorePerson"
+							matTooltip="Add More Person Occuping" mat-raised-button color="primary"
+							(click)="addMorePersonwork('OCCUPANCY')">{{'add' | translate: translateKey}}</button>
+					</div>
+				</div>
+
+				<div *ngIf="personoccuping.get('workerCounts')['controls'].length" class="col-md-12 mb-5">
+					<div>
+						<table class="table table-striped responsiveTableRow">
+							<thead>
+								<tr class="mo-d-none">
+									<th>Sr.No</th>
+									<th>{{'noOfMen' | translate:translateKey}}</th>
+									<th>{{'noOfWomen' | translate:translateKey}}</th>
+									<th>{{'womenWorkingInNightShift' | translate:translateKey}}</th>
+									<th>{{'workerType' | translate:translateKey}}</th>
+									<th>{{'total' | translate:translateKey}}</th>
+									<th *ngIf="shopLicTransferForm.get('canEdit').value"></th>
+									<th *ngIf="!(shopLicTransferForm.get('canEdit').value)"></th>
+								</tr>
+							</thead>
+							<tbody formArrayName="workerCounts">
+								<tr *ngFor="let item of personoccuping.get('workerCounts')['controls']; let indx = index;"
+									[formGroupName]="indx">
+									<td>
+										<div class="d-md-none">#</div> {{indx+1}}
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'noOfMen' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('noOfMen').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input  matInput  (change)="calculateWorkers(indx);" onKeyPress="if(this.value.length==6) return false;"
+												 formControlName="noOfMen" type="number" required>
+											<control-messages [control]="item.get('noOfMen')"></control-messages>
+										</mat-form-field>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'noOfWomen' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('noOfWomen').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input type="number" matInput min=0 (change)="calculateWorkers(indx);" onKeyPress="if(this.value.length==6) return false;"
+											formControlName="noOfWomen" required>
+											<control-messages *ngIf="item.isEditMode" [control]="item.get('noOfWomen')">
+											</control-messages>
+										</mat-form-field>
+									</td>
+
+									<td *ngIf="!item.isEditMode" class="womanWorkinginNightshift">
+										<p>
+											<mat-checkbox class="col-md-12 mt-2 isEditMode" formControlName="womanWorkinginNightshift" [disabled]="!iswomenWorkingNightShift"
+												(change)="womenWorkingInNight($event, indx)"></mat-checkbox>
+										</p>
+									</td>
+									<td *ngIf="item.isEditMode" class="womanWorkinginNightshift">
+										<mat-checkbox class="col-md-12 mt-2 isEditMode" formControlName="womanWorkinginNightshift" [disabled]="!iswomenWorkingNightShift"
+											(change)="womenWorkingInNight($event, indx)"></mat-checkbox>
+									
+									</td>
+
+									<!-- <td>
+										<div class="d-md-none">{{'workerType' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('workerType').value}}</p>
+										<div class="ngSelect" *ngIf="item.isEditMode"  style="min-width:100px">
+											<ng-select *ngIf="item.isEditMode" formControlName="workerType">
+												<ng-option *ngFor="let gender of workerTypeList" [value]="gender.code">
+													{{gender.name}}</ng-option>
+											</ng-select>
+											<control-messages [control]="item.get('workerType')">
+											</control-messages>
+										</div>
+									</td>
+									   -->
+
+								<td>
+										<div class="d-md-none">{{'workerType' | translate:translateKey}}</div>
+										<div  class="ngSelect"  style="min-width:100px" >
+										 <!-- <p *ngIf="!item.isEditMode">{{item.get('workersType').value}}</p>  -->
+										  <p class="width80" *ngIf="!item.isEditMode">
+											{{getSelectedDataFromLookUps(workerTypeList,item.get('workersType').value)?.name}}
+									   	</p>
+											<div col-md-6 class="ngSelect" *ngIf="item.isEditMode" >
+												<ng-select *ngIf="item.isEditMode" formControlName="workersType"  (ngModelChange)="getCommonWorkerType()">
+													<ng-container *ngFor="let gender of workerTypeList">
+														<ng-option *ngIf="!gender.selected" [value]="gender.code">
+															{{gender.name}}
+														</ng-option>
+													</ng-container>
+												</ng-select>
+												<control-messages [control]="item.get('workersType')">
+												</control-messages>
+											</div>
+										</div>
+									</td>
+
+
+									<td>
+										<div class="d-md-none">{{'total' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('total').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input onlyNumber matInput formControlName="total" readonly>
+											<control-messages *ngIf="item.isEditMode" [control]="item.get('total')">
+											</control-messages>
+										</mat-form-field>
+									</td>
+
+									<td>
+										<span *ngIf="shopLicTransferForm.get('canEdit').value">
+											<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
+												(click)="editRecordd(item)">
+												<mat-icon title="Edit">edit</mat-icon>
+											</button>
+											<button type="submit" [disabled]="item.invalid || hidesave" mat-icon-button
+												color="primary" *ngIf="item.isEditMode" (click)="savePersonOccupyingRecord(item)" >
+												<mat-icon title="save">save</mat-icon>
+											</button>
+										</span>
+										<span *ngIf="shopLicTransferForm.get('canEdit').value">
+											<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
+												(click)="deleteShopRecord('OCCUPANCY',indx,item)">
+												<mat-icon title="Delete">delete</mat-icon>
+											</button>
+											<button mat-icon-button color="warn" *ngIf="item.isEditMode"
+												(click)="cancelRecordWithPersonType(item,indx,'OCCUPANCY')">
+												<mat-icon title="Cancel">cancel</mat-icon>
+											</button>
+										</span>
+									</td>
+
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+
+
+				</div>
+
+        <div class="row pb-3">
+
+          <mat-form-field class="col-md-4" *ngIf="intiToCre">
+						<input matInput [min]="maxdate" [max]='disablefutureDate' autocomplete="off" appDate
+								[matDatepicker]="dateofhavingmorethan10Emp" formControlName="dateofhavingmorethan10Emp"
+                (dateChange)="dateFormats($event.value,'dateofhavingmorethan10Emp')"
+								placeholder="Date of Having More Than 10Emp">
+							<mat-datepicker-toggle matSuffix [for]="dateofhavingmorethan10Emp"></mat-datepicker-toggle>
+							<mat-datepicker touchUi="true" #dateofhavingmorethan10Emp></mat-datepicker>
+							<div align="end" class="default-show-hint mat-hint mat-right">
+								{{licenseConfiguration.DATE_HINT_MSG}}</div>
+							<control-messages [control]="personoccuping.get('dateofhavingmorethan10Emp')">
+							</control-messages>
+					</mat-form-field>
+		</div>
+
+        <!-- <div>
+          
+        </div> -->
+
+				<app-action-bar [form]="shopLicTransferForm" (tabIndex)="licenseConfiguration.onTabChange($event,personoccuping,shopLicTransferForm)"
+					[stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
+				</form>
+			</mat-tab>
+			<!-- step 4 occupancy person Ends -->
+
+			<!-- step 5 partner list Starts -->
+			<mat-tab disabled>
+				<ng-template mat-tab-label>
+					<div>{{'partner_list' | translate: translateKey}}</div>
+				</ng-template>
+				<form [formGroup]="partnerlist">
+				<div class="stepperMinHeight">
+					<div class="row pb-3">
+						<h2>{{'type_of_organization_label' | translate: translateKey}}</h2>
+
+						<div class="col-md-4 ngSelect" formGroupName="organizationType">
+							<ng-select class="asteriskmarkRequired" formControlName="code"
+								placeholder="{{ 'shop_lic_org_type' | translate:translateKey }} "
+								(change)="onChangeTypeOfOrganization($event)">
+								<ng-option *ngFor="let org_type of SHOP_LIC_TYPE_OF_ORGANIZATION"
+									[value]="org_type.code">{{org_type.name}}</ng-option>
+							</ng-select>
+							<control-messages [control]="partnerlist.get('organizationType').get('code')">
+							</control-messages>
+						</div>
+					</div>
+
+				</div>
+
+				<div *ngIf="isPatners" class="row  pb-3">
+					<div class="col-md-10">
+						<h2 class="pl-0">Name of member of partner's employed in Establishment.</h2>
+					</div>
+					<div class="col-md-2 pt-3" style="text-align: right;">
+						<button type="button"   *ngIf="shopLicTransferForm.get('canEdit').value"
+							[disabled]="!(partnerlist.get('shopPartnerList')['controls'].length < 5)"
+							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
+							(click)="addMorePersonPataner('PATNERS')">{{'add'| translate:translateKey}}</button>
+					</div>
+				</div>
+				<div *ngIf="isPatners">
+				<div *ngIf="partnerlist.get('shopPartnerList')['controls'].length" class="col-md-12">
+					<div>
+						<table class="table table-striped responsiveTableRow">
+							<thead>
+								<tr class="mo-d-none">
+
+									<th>{{'Name' | translate:translateKey}}</th>
+									<th>{{'Address' | translate:translateKey}}</th>
+									<th>{{'Designation / Status' | translate:translateKey}}</th>
+									<th >{{'Mobile Number' | translate:translateKey}}</th>
+									<th >{{'emailId' | translate:translateKey}}</th>
+									<th *ngIf="shopLicTransferForm.get('canEdit').value"></th>
+									<th *ngIf="!(shopLicTransferForm.get('canEdit').value)"></th>
+								</tr>
+							</thead>
+							<tbody formArrayName="shopPartnerList">
+								<tr *ngFor="let item of partnerlist.get('shopPartnerList')['controls']; let indx = index;"
+									[formGroupName]="indx">
+
+									<td>
+										<div class="d-md-none">{{'name' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput appValidationFields
+												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
+												required>
+											<control-messages [control]="item.get('name')"></control-messages>
+										</mat-form-field>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'address' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput formControlName="address" required>
+											<control-messages [control]="item.get('address')"></control-messages>
+										</mat-form-field>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'Designation / Status' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('designation').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput appValidationFields
+												[validationFieldsType]="'onlyNameWithSpace'" formControlName="designation"
+												required>
+											<control-messages [control]="item.get('designation')"></control-messages>
+										</mat-form-field>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'mobileNo' | translate:translateKey}}</div>
+										<div class="mobileCon adjustError">
+											<p class="width50" *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</p>
+											<mat-form-field *ngIf="item.isEditMode">
+												<input matInput minlength="10" maxlength="10" OnlyNumber formControlName="mobileNo" required>
+												<control-messages [control]="item.get('mobileNo')"></control-messages>
+											</mat-form-field>
+										</div>
+									</td>
+
+									<td >
+										<div class="d-md-none">{{'emailId' | translate:translateKey}}</div>
+										<div class="mobileCon  adjustError">
+											<p  *ngIf="!item.isEditMode">{{item.get('emailId').value}}</p>
+											<mat-form-field *ngIf="item.isEditMode">
+												<input matInput maxlength="50"  formControlName="emailId" required>
+												<control-messages [control]="item.get('emailId')"></control-messages>
+											</mat-form-field>
+										</div>
+									</td>
+
+									<td>
+										<span *ngIf="shopLicTransferForm.get('canEdit').value">
+											<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
+												(click)="editRecord(item)">
+												<mat-icon title="Edit">edit</mat-icon>
+											</button>
+											<button type="submit" [disabled]="item.invalid" mat-icon-button
+												color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
+												<mat-icon title="save">save</mat-icon>
+											</button>
+										</span>
+										<span *ngIf="shopLicTransferForm.get('canEdit').value">
+											<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
+												(click)="deleteRecord('PATNERS',indx)">
+												<mat-icon title="Delete">delete</mat-icon>
+											</button>
+											<button mat-icon-button color="warn" *ngIf="item.isEditMode"
+												(click)="cancelRecordWithPersonType(item,indx,'PATNERS')">
+												<mat-icon title="Cancel">cancel</mat-icon>
+											</button>
+										</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+
+
+				</div>
+			</div>
+
+				<app-action-bar [form]="shopLicTransferForm" (tabIndex)="licenseConfiguration.onTabChange($event,partnerlist,shopLicTransferForm)"
+					[stepInfo]="{step: 'step5', next: 5, back: 3}"></app-action-bar>
+				</form>
+			</mat-tab>
+			<!-- step 5 partner list Ends -->
+
+
+			<!-- step Attachment Starts -->
+			<mat-tab >
+				<ng-template mat-tab-label>
+					<div>{{'Attachment' | translate: translateKey}}</div>
+				</ng-template>
+
+        <div class="alert alert-warning">
+          {{'Note' | translate:translateKey}} :
+          {{'File size more than 2 MB not allowed; Upload only JPG, JPEG and PDF file.' |
+          translate:translateKey}}
+        </div>
+
+        <form [formGroup]="attachmentdetail">
+				<div class="row">
+
+					<h2 *ngIf="!establishmentdetails.get('ownershipType').value">
+						Please Select Ownership Type
+					</h2>
+					
+					<ng-container *ngIf="establishmentdetails.get('ownershipType').value">
+						<ng-container *ngFor="let doc of displayDocs">
+							<div class="col-md-4"
+								*ngIf="doc.requiredOnCitizenPortal && doc.isActive && licenseConfiguration.isAttachmentButtonsVisible">
+								<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
+									<span *ngIf="doc.mandatory"  class="mandatory">*</span></label>
+								<file-upload [form]="shopLicTransferForm" [uploadModel]="doc"></file-upload>
+							</div>
+						</ng-container>
+					</ng-container>
+				</div>
+				</form>
+				<form [formGroup]="shopLicTransferForm">
+				<div class="row" *ngIf="partnerlist.get('organizationType').value.code">
+					<mat-checkbox class="d-block ml-4"  labelPosition="after" formControlName="agree">
+						{{'i_agree' | translate:translateKey}} </mat-checkbox>
+						<control-messages [control]="shopLicTransferForm.get('agree')"></control-messages>
+				</div>
+				<app-action-bar [uploadFiles]="uploadFilesArray" [paymentGateway]="paymentGateway"
+					[form]="shopLicTransferForm" (handleErrors)="handleErrorsOnSubmit($event) "
+					(tabIndex)="licenseConfiguration.onTabChange($event,attachmentdetail,shopLicTransferForm)"
+					[stepInfo]="{step: 'final', next:7, back: 4} "></app-action-bar>
+				</form>
+
+			</mat-tab>
+			<!-- step Attachment Ends -->
+			<select-payment-gateway #paymentGateway></select-payment-gateway>
+		</mat-tab-group>
+	<!-- </form> -->
+	<!-- {{ shopLicTransferForm.value | json }} -->
+</mat-card>

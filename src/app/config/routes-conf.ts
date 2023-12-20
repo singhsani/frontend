@@ -104,6 +104,10 @@ const ROUTEMAIN = {
         'main': 'shop-transfer',
         'type': 'shop-transfer'
     },
+    'SHOP-ESTAB-INTI-TO-CER': {
+        'main': 'shop-intimation-to-certification',
+        'type': 'shop-intimation-to-certification'
+    },
     'SHOP-CAN': {
         'main': 'shopLicenseCancellation',
         'type': 'shopLicenseCancellation'
@@ -736,6 +740,9 @@ const ROUTESLIST = {
     },
     'SHOP-ESTAB-TRANSFER': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.SHOPANDESTAMODULE + '/' + ROUTEMAIN["SHOP-ESTAB-TRANSFER"].main
+    },
+    'SHOP-ESTAB-INTI-TO-CER': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.SHOPANDESTAMODULE + '/' + ROUTEMAIN["SHOP-ESTAB-INTI-TO-CER"].main
     },
     'SHOP-ESTAB-CLOSING': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.SHOPANDESTAMODULE + '/' + ROUTEMAIN["SHOP-ESTAB-CLOSING"].main

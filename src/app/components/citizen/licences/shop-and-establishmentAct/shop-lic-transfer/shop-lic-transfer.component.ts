@@ -1631,14 +1631,14 @@ export class ShopLicTransferComponent implements OnInit {
                     }
                 ];
 
-                if (this.totalNoOfWomanForDocu > 0 && this.personoccuping.get('womanWorkinginNightshift').value == true) {
-                    docArray.push({
-                        documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
-                        mandatory: true
-                    })
-                }
-                return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument());
-                //return docArray.concat(this.commonUploadDocument());
+if(this.totalNoOfWomanForDocu > 0 && this.workingInNightShift == true){
+docArray.push({
+documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
+mandatory: true
+})
+}
+return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument());
+//return docArray.concat(this.commonUploadDocument());
 
             }
             else {

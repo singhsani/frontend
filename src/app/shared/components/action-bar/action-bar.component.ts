@@ -112,7 +112,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	 * This method is used for save form as draft using API
 	 */
 	saveAsDraft() {
-		if(this.formService.apiType == 'MFLicense' || this.formService.apiType == 'APLicense' || this.formService.apiType == 'APLRenewal'|| this.formService.apiType == 'APLTransfer' || this.formService.apiType == 'shop' || this.formService.apiType == 'shop-transfer' || this.formService.apiType == 'vendor' || this.formService.apiType == 'MFTransfer' || this.formService.apiType == 'MFRenewal' || this.formService.apiType == 'vehicle' || this.formService.apiType == 'pecForm' || this.formService.apiType == 'waterTankerSupply' || this.formService.apiType =='gasConnectionNoc' || this.formService.apiType == 'electricConnectionNoc' || this.formService.apiType == 'fireCertificate'){
+		if(this.formService.apiType == 'MFLicense' || this.formService.apiType == 'APLicense' || this.formService.apiType == 'APLRenewal'|| this.formService.apiType == 'APLTransfer' || this.formService.apiType == 'shop' || this.formService.apiType == 'shop-transfer' || this.formService.apiType == 'vendor' || this.formService.apiType == 'MFTransfer' || this.formService.apiType == 'MFRenewal' || this.formService.apiType == 'vehicle' || this.formService.apiType == 'pecForm' || this.formService.apiType == 'waterTankerSupply' || this.formService.apiType =='gasConnectionNoc' || this.formService.apiType == 'electricConnectionNoc' || this.formService.apiType == 'fireCertificate' || this.formService.apiType == 'shop-intimation-to-certification'){
 			if (this.isstepper) {
 				this.tabIndex.emit(this.stepInfo.next);
 			}
@@ -309,7 +309,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 						this.isSubmitBtnDisabled = false;
 						this.isBtnsDisabled = false;
 						this.form.disable();
-						if(this.form.getRawValue().serviceDetail.code == "SHOP-ESTAB-LIC-NEW"  || this.form.getRawValue().serviceDetail.code == "SHOP-ESTAB-TRANSFER"){
+						if(this.form.getRawValue().serviceDetail.code == "SHOP-ESTAB-LIC-NEW"  || this.form.getRawValue().serviceDetail.code == "SHOP-ESTAB-TRANSFER" || this.form.getRawValue().serviceDetail.code == "SHOP-ESTAB-INTI-TO-CER"){
 							const url = '/citizen/my-applications' +'?id=' +this.form.getRawValue().serviceFormId + '&apiCode=' +this.form.getRawValue().serviceCode
 							this.router.navigateByUrl(url);
 						}
