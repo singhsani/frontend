@@ -116,7 +116,7 @@ export class BookAtithigruhComponent implements OnInit {
 		{sno: '૩', atithigruh: 'સયાજીબાગ ૩', rent: '૫૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૦૮૦' ,total_rent: '૭૦૮૦', deposit: '૭૫૦૦',total: '૧૪૫૮૦'},
 		{sno: '૪', atithigruh: 'સયાજી લોન', rent: '૭૫૦૦', administrative_charge: '૧૦૦૦', gst:'૧૫૩૦' ,total_rent: '૧૦૦૩૦', deposit: '૧૦૦૦૦',total: '૨૦૦૩૦'},
 		{sno: '૫', atithigruh: 'અકોટા', rent: '૧૨૦૦૦', administrative_charge: '૧૦૦૦', gst:'૨૩૪૦' ,total_rent: '૧૫૩૪૦', deposit: '૨૦૦૦૦',total: '૩૫૩૪૦'},
-		{sno: '૬', atithigruh: 'સયાજીબાગ', rent: '૧૨૦૦૦', administrative_charge: '૧૦૦૦', gst:'૨૩૪૦' ,total_rent: '૧૫૩૪૦', deposit: '૨૦૦૦૦',total: '૩૫૩૪૦'},
+		{sno: '૬', atithigruh: 'સરદારબાગ', rent: '૧૨૦૦૦', administrative_charge: '૧૦૦૦', gst:'૨૩૪૦' ,total_rent: '૧૫૩૪૦', deposit: '૨૦૦૦૦',total: '૩૫૩૪૦'},
 		{sno: '૭', atithigruh: 'નિઝામપુરા', rent: '૧૨૦૦૦', administrative_charge: '૧૦૦૦', gst:'૨૩૪૦' ,total_rent: '૧૫૩૪૦', deposit: '૨૦૦૦૦',total: '૩૫૩૪૦'},
 		{sno: '૮', atithigruh: 'સુભાનપુરા', rent: '૧૨૦૦૦', administrative_charge: '૧૦૦૦', gst:'૨૩૪૦' ,total_rent: '૧૫૩૪૦', deposit: '૨૦૦૦૦',total: '૩૫૩૪૦'},
 		{sno: '૯', atithigruh: 'ડો.બાબાસાહેબ આંબેડકર', rent: '૧૨૦૦૦', administrative_charge: '૧૦૦૦', gst:'૨૩૪૦' ,total_rent: '૧૫૩૪૦', deposit: '૨૦૦૦૦',total: '૩૫૩૪૦'},
