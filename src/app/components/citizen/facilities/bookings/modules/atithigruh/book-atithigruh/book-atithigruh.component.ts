@@ -44,7 +44,7 @@ export class BookAtithigruhComponent implements OnInit {
 	guj_line : string;
 
 	startMinDate: Date = moment(new Date()).add(3, 'day').toDate();
-	endMinDate = moment(new Date()).add(2, 'day').add(4, 'months').format('YYYY-MM-DD');
+	endMinDate = moment(new Date()).add(120, 'days').format('YYYY-MM-DD');
 	toStartDate: Date;
 
 	toStartBookDate;
