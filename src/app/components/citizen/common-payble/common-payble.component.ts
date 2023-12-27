@@ -76,6 +76,7 @@ export class CommonPaybleComponent implements OnInit {
   isCertificateFees :boolean =false;
   uniqueId: any;
   chequeReturn = 0;
+  showAmount = false
   
 
   constructor(
@@ -552,6 +553,9 @@ export class CommonPaybleComponent implements OnInit {
         }
       }else{
         this.inputData = data.data;
+        if(serviceType == 'VEHICLE'){
+          this.getVehicleAmount()
+        }
       }
       console.log('input data', this.inputData);
     }, error => {
@@ -722,5 +726,9 @@ export class CommonPaybleComponent implements OnInit {
       this.inputData = [];
     }
 
+  }
+
+  getVehicleAmount(){
+    this.inputData[0].deptFileStatus == 'PAYMENT' ?  this.showAmount = true : this.showAmount = false
   }
 }
