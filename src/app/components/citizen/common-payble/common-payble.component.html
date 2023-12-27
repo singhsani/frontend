@@ -410,7 +410,8 @@
                     <th>Date of Application</th>
                     <th>Department Name</th>
                     <th>Service Name</th>
-                    <th>Payable Amount</th>
+                    <th *ngIf="showAmount">Payable Amount(₹)</th>
+                    <th *ngIf="!showAmount">Payable Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -430,7 +431,12 @@
                       <td>{{dues.createdDate}}</td>
                       <td>{{dues.departmentName}}</td>
                       <td>{{dues.serviceType}}</td>
-                      <td>{{dues.fileStatus}}</td>
+                      <ng-container *ngIf="dues.deptFileStatus == 'PAYMENT'">
+                        <td >{{dues.amount}}</td>
+                      </ng-container>
+                      <ng-container *ngIf="dues.deptFileStatus != 'PAYMENT'">
+                        <td >{{dues.fileStatusName}}</td>
+                      </ng-container>
                     </tr>
 
                   </ng-container>

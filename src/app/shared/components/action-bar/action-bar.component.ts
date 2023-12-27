@@ -112,7 +112,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	 * This method is used for save form as draft using API
 	 */
 	saveAsDraft() {
-		if(this.formService.apiType == 'MFLicense' || this.formService.apiType == 'APLicense' || this.formService.apiType == 'APLRenewal'|| this.formService.apiType == 'APLTransfer' || this.formService.apiType == 'shop' || this.formService.apiType == 'shop-transfer' || this.formService.apiType == 'vendor' || this.formService.apiType == 'MFTransfer' || this.formService.apiType == 'MFRenewal' || this.formService.apiType == 'vehicle' || this.formService.apiType == 'pecForm' || this.formService.apiType == 'waterTankerSupply' || this.formService.apiType =='gasConnectionNoc' || this.formService.apiType == 'electricConnectionNoc' || this.formService.apiType == 'fireCertificate' || this.formService.apiType == 'shop-intimation-to-certification'){
+		if(this.formService.apiType == 'MFLicense' || this.formService.apiType == 'APLicense' || this.formService.apiType == 'APLRenewal'|| this.formService.apiType == 'APLTransfer' || this.formService.apiType == 'shop' || this.formService.apiType == 'shop-transfer' || this.formService.apiType == 'vendor' || this.formService.apiType == 'MFTransfer' || this.formService.apiType == 'MFRenewal' || this.formService.apiType == 'vehicle' || this.formService.apiType == 'pecForm' || this.formService.apiType == 'waterTankerSupply' || this.formService.apiType =='gasConnectionNoc' || this.formService.apiType == 'electricConnectionNoc' || this.formService.apiType == 'fireCertificate'  || this.formService.apiType == 'shop-intimation-to-certification'){
 			if (this.isstepper) {
 				this.tabIndex.emit(this.stepInfo.next);
 			}
@@ -259,7 +259,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 					// }
 
 					if(this.form.get('apiType').value == 'shop' || 
-					this.form.get('apiType').value == 'shop-transfer' || this.form.get('apiType').value == 'afhForm' || this.form.get('apiType').value == 'vendor' || this.form.get('apiType').value == 'marriageReg') {
+					this.form.get('apiType').value == 'shop-transfer' || this.form.get('apiType').value == 'afhForm' || this.form.get('apiType').value == 'vendor' || this.form.get('apiType').value == 'marriageReg' || this.form.get('apiType').value == 'shop-intimation-to-certification') {
 						this.handleErrors.emit(key);
 						break;
 					}
@@ -696,7 +696,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 
 	// Bug #14031 check I agree after the document upload
 	checkForIAgress() {
-		if ((this.form.get('apiType').value == "shop" || this.form.get('apiType').value == "shop-transfer") && !this.form.get('agree').value) {
+		if ((this.form.get('apiType').value == "shop" || this.form.get('apiType').value == "shop-transfer" || this.form.get('apiType').value == "shop-intimation-to-certification") && !this.form.get('agree').value) {
 			this.commonService.openAlert("Field Error", "Should be agree with given details", 'warning');
 			this.isSubmitBtnDisabled = false;
 			return false;
