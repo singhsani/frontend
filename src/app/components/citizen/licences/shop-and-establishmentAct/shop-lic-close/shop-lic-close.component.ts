@@ -1589,7 +1589,21 @@ export class ShopLicCloseComponent implements OnInit {
 	 */
 	filterDocumentList(ownershipType,organizationCode) {
 		let docArray=[];
-		return docArray.concat(this.commonUploadDocument());	
+
+		 if(this.registrationType=='INTIMATION'){
+			 docArray.push({
+			documentIdentifier: 'FORM_I',
+			mandatory: true
+		})
+	}else{
+		docArray.push({
+			documentIdentifier: 'FORM_H',
+			mandatory: true
+		})
+	}
+	docArray=docArray.concat(this.commonUploadDocument());	
+
+		 return docArray;
 
 	}
 	
@@ -1631,14 +1645,6 @@ export class ShopLicCloseComponent implements OnInit {
 				mandatory : true
 			},
 			{
-				documentIdentifier: 'FORM_H',
-				mandatory: true
-			},
-			{
-				documentIdentifier: 'FORM_I',
-				mandatory: true
-			},
-			{
 				documentIdentifier: 'INTIMATION_CERTIFICATION',
 				mandatory: true
 			},
@@ -1674,8 +1680,8 @@ export class ShopLicCloseComponent implements OnInit {
 				documentIdentifier: 'OTHER_DOC4',
 				mandatory: false
 			}
+			
 		];
-
 		return comonDocument;
 	}
 
