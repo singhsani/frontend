@@ -161,3 +161,18 @@ table { width: 100%; }
         content:' *';
         color:red !important;
 } 
+
+.termsandconditionsSection{
+    .listSize{
+        font-size: 15px;
+        line-height: 1.4;
+    }
+    .checkbox{
+        font-size: 15px;
+        font-weight: bolder;
+    }
+    .termsandconditionsTitle{
+        font-size: 15px;
+        font-weight: bolder;
+    }
+}
