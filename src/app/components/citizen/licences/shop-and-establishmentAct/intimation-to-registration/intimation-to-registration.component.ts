@@ -338,7 +338,7 @@ export class IntimationToRegistrationComponent implements OnInit {
       this.getWardZone(res.waterDrainageWardId, 3);
     }
 
-     this.maxdate = res.applicationCreatedDateAndTime
+     this.maxdate = res.commencementOfBusinessDate
     this.formService.saveFormData(formObj).subscribe(saveResp => {
       this.shopLicTransferForm.patchValue(saveResp);
       this.setDropdownAndListDataFromRes(saveResp);
