@@ -176,3 +176,16 @@ table { width: 100%; }
         font-weight: bolder;
     }
 }
+.atithigruh-table{
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+    //width: 735px;
+    .table{
+        th, td{
+            border: 1px solid #dee2e6;
+            text-align: center;
+            font-size: 16px;
+        }
+    }
+}
