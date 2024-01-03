@@ -548,14 +548,12 @@ export class CommonPaybleComponent implements OnInit {
           this.paymentsForm.get('amount').setValue(this.inputData[0].amount);
           this.paymentsForm.get('refNumber').setValue(this.inputData[0].fileNumber);
           this.uniqueId = this.inputData[0].uniqueId;
+          this.getVehicleAmount()
         }else{
           this.alertService.info('Enter all the required information')
         }
       }else{
         this.inputData = data.data;
-        if(serviceType == 'VEHICLE'){
-          this.getVehicleAmount()
-        }
       }
       console.log('input data', this.inputData);
     }, error => {
