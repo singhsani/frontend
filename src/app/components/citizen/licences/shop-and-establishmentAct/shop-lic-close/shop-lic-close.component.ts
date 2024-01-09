@@ -178,6 +178,9 @@ export class ShopLicCloseComponent implements OnInit {
 
 
 		}
+		this.shopLicCloseForm.disable();
+		this.shopLicCloseForm.get('agree').enable();
+		this.isDisabledMorePerson= true;
 		
   }
 
@@ -217,7 +220,7 @@ export class ShopLicCloseComponent implements OnInit {
 				}
 				this.shopLicCloseForm.disable();
 				this.shopLicCloseForm.get('agree').enable();
-
+				this.isDisabledMorePerson= true;
 				return;
 			}, err => {
 				console.error("Error ", err);

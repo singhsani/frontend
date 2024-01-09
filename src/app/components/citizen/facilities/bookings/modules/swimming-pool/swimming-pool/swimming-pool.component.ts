@@ -243,6 +243,8 @@ export class SwimmingPoolComponent implements OnInit {
     else {
       this.isSwimmingTestReportShow = false;
     }
+    this.generalDetails.get('batchFor').reset();
+    this.generalDetails.get('batchName').reset();
   }
   defaultAsperPool() {
     this.bookingService.filterPoolCode(this.generalDetails.get('swimmingPoolName').get('code').value).subscribe(rep => {
@@ -784,6 +786,7 @@ export class SwimmingPoolComponent implements OnInit {
     this.bookingService.searchRenewSwimmingPool(this.memberNumber.value).subscribe(
       res => {
         res = res.data;
+        debugger;
         if (res && res.bookingFormId)
           this.swimmimgPoolBookingForm.patchValue({ 'serviceFormId': res.bookingFormId });
         this.attachments = res.attachments;
