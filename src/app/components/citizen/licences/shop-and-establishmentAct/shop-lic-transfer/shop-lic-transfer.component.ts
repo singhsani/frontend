@@ -1578,7 +1578,6 @@ export class ShopLicTransferComponent implements OnInit {
     */
     filterDocumentList(ownershipType, organizationCode) {
         const isPartnerShipSelected = (organizationCode == 'PARTNERSHIP') ? true : false;
-
         if (this.isIntimation) {
             return isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument();
             //return this.commonUploadDocument();
@@ -1606,6 +1605,17 @@ export class ShopLicTransferComponent implements OnInit {
                         mandatory: true
                     })
                 }
+                if(this.registrationType=='INTIMATION'){
+                    docArray.push({
+                   documentIdentifier: 'FORM_D',
+                   mandatory: true
+               })
+           }else{
+               docArray.push({
+                   documentIdentifier: 'FORM_A',
+                   mandatory: true
+               })
+           }
 
                 return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument());
                 // return docArray.concat(this.commonUploadDocument());
@@ -1715,14 +1725,6 @@ return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartn
                 documentIdentifier: 'NOTICE_OF_WEEKLY_HOLIDAY_FORM_K',
                 mandatory: false
             },
-            {
-                documentIdentifier: 'FORM_A',
-                mandatory: false
-            },
-            {
-                documentIdentifier: 'FORM_D',
-                mandatory: false
-            }
         ];
 
         this.checkWomanWorkedonNightShift()
@@ -1739,6 +1741,24 @@ return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartn
                 })
             }
         }
+        else if(this.isIntimation)
+			{
+				
+				comonDocument.push({
+						
+				documentIdentifier: 'FORM_D',
+				mandatory: true
+	})
+			}
+			else
+			{
+				comonDocument.push({
+						
+					documentIdentifier: 'FORM_A',
+					mandatory: true
+		})
+			
+			}
 
         return comonDocument;
     }
