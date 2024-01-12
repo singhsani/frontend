@@ -1701,18 +1701,18 @@ export class ShopLicNewComponent implements OnInit {
 				documentIdentifier: 'NOTICE_OF_WEEKLY_HOLIDAY_FORM_K',
 				mandatory: false
 			},
-			{
-				documentIdentifier:'FORM_A',
-				mandatory: false
-			},
-			{
-				documentIdentifier:'FORM_D',
-				mandatory: false
-			}
+			// {
+			// 	documentIdentifier:'FORM_A',
+			// 	mandatory: false
+			// },
+			// {
+			// 	documentIdentifier:'FORM_D',
+			// 	mandatory: false
+			// }
 		
 		];
 		
-		if(this.commonService.fromAdmin()){
+		if(this.commonService.fromAdmin()){	
 				
 			comonDocument.push({
 					documentIdentifier: 'REVIEW_APPLICATION',
@@ -1727,7 +1727,24 @@ export class ShopLicNewComponent implements OnInit {
 								mandatory: true
 					})
 				}
+			else if(this.isIntimation)
+			{
+				
+				comonDocument.push({
+						
+				documentIdentifier: 'FORM_D',
+				mandatory: true
+	})
+			}
+			else
+			{
+				comonDocument.push({
+						
+					documentIdentifier: 'FORM_A',
+					mandatory: true
+		})
 			
+			}
 		
 		return comonDocument;
 	}
