@@ -296,7 +296,12 @@ export class BookAtithigruhComponent implements OnInit {
 	 */
 	bookingLookups() {
 		this.bookingService.getDataFromLookups().subscribe(resp => {
-			this.BOOKING_TYPE = resp.DRAW_TYPE
+			resp.DRAW_TYPE.forEach(res =>{
+				if(res.code != 'All'){
+				  this.BOOKING_TYPE.push(res)
+				}
+			  })
+			//this.BOOKING_TYPE = resp.DRAW_TYPE
 			this.PURPOSE = resp.PURPOSE.filter(_ => _.code !== 'Funeral');
 			this.relationType = resp.ATIHIGRUH_RELATION
 			// this.BankOptions = resp.BANK;
