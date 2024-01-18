@@ -13,7 +13,8 @@ import { ManageRoutes } from 'src/app/config/routes-conf';
 import { ValidationService } from 'src/app/shared/services/validation.service';
 import { CitizenConfig } from '../../citizen-config';
 import { SessionStorageService } from 'angular-web-storage';
-import { ValidatorService } from 'src/app/vmcshared/data-table/validator.service';
+
+import { LicenseConfiguration } from '../../licences/license-configuration';
 @Component({
   selector: 'app-contractor-regsitration',
   templateUrl: './contractor-regsitration.component.html',
@@ -36,6 +37,10 @@ export class ContractorRegsitrationComponent implements OnInit {
   tabIndex: number = 0;
 
   contractorRegistrationForm: FormGroup;
+  contractorDetailForm : FormGroup;
+  businessDetail1Form : FormGroup;
+  businessDetail2Form  : FormGroup;
+  attachmentFrom : FormGroup
   maxDate: Date = new Date();
   minDate = moment().subtract(2, 'months').format('YYYY-MM-DD');
   attachmentList: any = [];
@@ -53,6 +58,8 @@ export class ContractorRegsitrationComponent implements OnInit {
   anotherOrganisations :boolean =  false;
   anotherOrganisationss :boolean =  false;
   qualifictionType : any = [];
+  licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
+
   constructor(
     private fb: FormBuilder,
 
@@ -73,8 +80,8 @@ export class ContractorRegsitrationComponent implements OnInit {
   ngOnInit() {
     this.contractorRegistrationControl();
     //this.contractorRegistrationForm.addControl('ownerShipDetail', this.ownerShipDetail);
-    this.contractorRegistrationForm.addControl('firmEmployeeDetail', this.firmEmployeeDetailList);
-    this.contractorRegistrationForm.addControl('partnerDetails', this.partnerShipDetailList);
+    this.businessDetail1Form.addControl('firmEmployeeDetail', this.firmEmployeeDetailList);
+    this.contractorDetailForm.addControl('partnerDetails', this.partnerShipDetailList);
 
     this.activatedRoute.paramMap.subscribe(param => {
       this.formId = Number(param.get('id'));
@@ -85,7 +92,7 @@ export class ContractorRegsitrationComponent implements OnInit {
     * Update Permanent Address If 'officeResidentialAddressSame' is checked.
     */
      this.contractorRegistrationForm.controls.factoryAddress.valueChanges.subscribe(data => {
-      if (this.contractorRegistrationForm.get('officeResidentialAddressSame').value) {
+      if (this.contractorDetailForm.get('officeResidentialAddressSame').value) {
         this.onSameAddressChange({ checked: true });
         return;
       }
@@ -143,94 +150,110 @@ export class ContractorRegsitrationComponent implements OnInit {
   }
 
   onSameAddressChange(event) {
-    let id = this.contractorRegistrationForm.get('registeredAddress.id').value;
+    let id = this.contractorDetailForm.get('registeredAddress.id').value;
     if (event.checked) {
-      this.contractorRegistrationForm.get('registeredAddress').patchValue(this.contractorRegistrationForm.get('factoryAddress').value);
-      if (this.contractorRegistrationForm.get('factoryAddress').get('country').value) {
-        this.resAddrComponent.getStateLists(this.contractorRegistrationForm.get('factoryAddress').get('country').value);
+      this.contractorDetailForm.get('registeredAddress').patchValue(this.contractorDetailForm.get('factoryAddress').value);
+      if (this.contractorDetailForm.get('factoryAddress').get('country').value) {
+        this.resAddrComponent.getStateLists(this.contractorDetailForm.get('factoryAddress').get('country').value);
       }
     } else {
-      this.contractorRegistrationForm.get('registeredAddress').reset();
+      this.contractorDetailForm.get('registeredAddress').reset();
 
     }
-    this.contractorRegistrationForm.get('registeredAddress.addressType').setValue('FIRM_ADDRESS');
-    this.contractorRegistrationForm.get('registeredAddress.id').setValue(id);
+    this.contractorDetailForm.get('registeredAddress.addressType').setValue('FIRM_ADDRESS');
+    this.contractorDetailForm.get('registeredAddress.id').setValue(id);
   }
 
 
   contractorRegistrationControl() {
 
-    this.contractorRegistrationForm = this.fb.group({
-
-      apiType: "contractor",
-      serviceCode: null,
-      serviceFormId: null,
-      applicationNumber: null,
-      canEdit: [true],
+    //  Tab 1 Starts 
+    this.contractorDetailForm = this.fb.group({
+      registrationGroup:[null],
+      applyingFor: [null],
       nameOfTheFirm: [null, [Validators.required, Validators.maxLength(50)]],
       middleName: [null, [Validators.maxLength(50)]],
       lastName: [null, [Validators.required, Validators.maxLength(50)]],
       officeContactNumber: [null, [Validators.required]],
       emailId: [null, [ValidationService.emailValidator]],
-      gstNo: [null,[Validators.required, ValidationService.gstNoValidator]],
-      panNo: [null, [Validators.required, ValidationService.panValidator]],
+      factoryAddress: this.fb.group(this.officeAddrComponent.addressControls()),
       ownerFirstName: [null, [Validators.required, Validators.maxLength(50)]],
       ownerMiddleName: [null, [Validators.maxLength(50)]],
       ownerLastName: [null, [Validators.required, Validators.maxLength(50)]],
       ownerMobileNumber: [null, [Validators.required]],
       ownerEmailId: [null, [ValidationService.emailValidator]],
+      officeResidentialAddressSame: [null],
+      registeredAddress: this.fb.group(this.resAddrComponent.addressControls()),
+      partnerShipp: [null],
+      partnerDetails: this.partnerShipDetailList,
       businessName: [null, [Validators.required, Validators.maxLength(50)]],
       businessMobileNo: [null, [Validators.required]],
+      panNo: [null, [Validators.required, ValidationService.panValidator]],
+      gstNo: [null ,[Validators.required, ValidationService.gstNoValidator]],
+      businessAddress: this.fb.group(this.bussinessAddressComponent.addressControls()),
       bankAccountNo: [null, [Validators.required]],
-      branchName: [null, [Validators.required, Validators.maxLength(50)]],
       registrationBank: this.fb.group({
-        code: [null],
+        code: [null,[Validators.required]],
         name: null
       }),
+      branchName: [null, [Validators.required, Validators.maxLength(50)]],
+    })
+   //Tab 1 Finish 
 
-      locationOfContractorWorks: this.fb.group({
-        code: null,
-        name: null
-      }),
-      applyingFor: [null],
-      partnerShipp: [null],
+   // Tab 2 Starts
+   this.businessDetail1Form = this.fb.group({
+    threeYearDetails: [null],
+    firmEmployeeDetails: this.firmEmployeeDetailList,
+    turnOverDetails: [null],
+    workShopPlantRate: [null],
+   })
+    //Tab 2 Finish 
 
-      whichDepartment: [null],
+  /// Tab 3 Starts 
+    this.businessDetail2Form = this.fb.group({
+      ownerAccountDepartment: [null],
+      anotherOrganisation: [null],
+      departmentOrInstitution :[null],
       pastRegistrationDetails: [null],
       engineerDetails: [null],
       incomeTaxDetails: [null],
       anyAnotherOrganisationShareholder: [null],
-      registrationDateOrReNewDate: [null],
+      corporationAnyDepartment : [null],
       solvencyAmountAndBankDetail: [null],
-      oldRegistrationNumber: [null],
       oldRegistrationDate: [null],
+      oldRegistrationNumber: [null],
       notCompletedReasonDetails: [null],
       amountRemainsInCorporationOrOrganization: [null],
-      partnerDetails: this.partnerShipDetailList,
+    })
+    //Tab 3 Finish 
+
+    this.attachmentFrom = this.fb.group({
+      attachments: [],
+    })
+
+    this.contractorRegistrationForm = this.fb.group({
+      apiType: "contractor",
+      serviceCode: null,
+      serviceFormId: null,
+      applicationNumber: null,
+      canEdit: [true],
+      locationOfContractorWorks: this.fb.group({
+        code: null,
+        name: null
+      }),
+      whichDepartment: [null],
+      registrationDateOrReNewDate: [null],
       contractorWorkDetails: null,
       // serviceCode:'Contractor-Registration',
-      firmEmployeeDetails: this.firmEmployeeDetailList,
-
       registrationDetails: [null],
-      threeYearDetails: [null],
-      workShopPlantRate: [null],
-      ownerAccountDepartment: [null],
-      turnOverDetails: [null],
-      anotherOrganisation: [null],
-      factoryAddress: this.fb.group(this.officeAddrComponent.addressControls()),
-      registeredAddress: this.fb.group(this.resAddrComponent.addressControls()),
-      businessAddress: this.fb.group(this.bussinessAddressComponent.addressControls()),
       attachments: [],
-      createdByCitizen: [true],
-      officeResidentialAddressSame: [null],
-      registrationGroup :[null],
-      departmentOrInstitution : [null],
-      corporationAnyDepartment : [null],
-
     });
 
+    this.commonService.createCloneAbstractControl(this.contractorDetailForm, this.contractorRegistrationForm);
+    this.commonService.createCloneAbstractControl(this.businessDetail1Form, this.contractorRegistrationForm);
+    this.commonService.createCloneAbstractControl(this.businessDetail2Form, this.contractorRegistrationForm);
+    this.commonService.createCloneAbstractControl(this.attachmentFrom, this.contractorRegistrationForm);
     this.firmEmployeeDetailList.push(this.createFirmEmployeeDetail());
-   // this.partnerShipDetailList.push(this.createPartnerShipDetail());
   }
 
   addRowPartnweShipDetail() {
@@ -292,6 +315,10 @@ export class ContractorRegsitrationComponent implements OnInit {
       }
       console.log("tresr", res)
       this.contractorRegistrationForm.patchValue(res);
+      this.contractorDetailForm.patchValue(res);
+      this.businessDetail1Form.patchValue(res);
+      this.businessDetail2Form.patchValue(res);
+      this.attachmentFrom.patchValue(res);
       //this.showButtons = true;
       //this.contractorRegistrationForm.disable();
       this.locationChange(res.applyingFor);
@@ -301,11 +328,11 @@ export class ContractorRegsitrationComponent implements OnInit {
         this.contractorRegistrationForm.get('canEdit').setValue(false);
       }
       res.firmEmployeeDetails.forEach(app => {
-        (<FormArray>this.contractorRegistrationForm.get('firmEmployeeDetails')).push(this.createFormGroupVendor('firmEmployeeDetails', app));
+        (<FormArray>this.businessDetail1Form.get('firmEmployeeDetails')).push(this.createFormGroupVendor('firmEmployeeDetails', app));
       });
       this.isFirmNameDetail = true;
       res.partnerDetails.forEach(app => {
-        (<FormArray>this.contractorRegistrationForm.get('partnerDetails')).push(this.createFormGroupVendor('partnerDetails', app));
+        (<FormArray>this.contractorDetailForm.get('partnerDetails')).push(this.createFormGroupVendor('partnerDetails', app));
       });
       this.isPreviewVendorNameDetail = true;
 
@@ -361,8 +388,8 @@ export class ContractorRegsitrationComponent implements OnInit {
   }
 
   onDateChange(fieldName, date) {
-    console.log("sdfgdg " + this.contractorRegistrationForm.get(fieldName).value + " " + fieldName + " " + date);
-    this.contractorRegistrationForm.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
+    console.log("sdfgdg " + this.businessDetail2Form.get(fieldName).value + " " + fieldName + " " + date);
+    this.businessDetail2Form.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
   }
 
   // onDateChangePurchaseDate(control, date, obj) {
@@ -370,10 +397,10 @@ export class ContractorRegsitrationComponent implements OnInit {
   // }
 
   locationChange(event) {
-    this.engineer.getFeeFromLocationn(event.value).subscribe(res => {
-      this.contractorRegistrationForm.get('solvencyAmountAndBankDetail').setValue(res.fee);
-    })
-    this.contractorRegistrationForm.get('locationOfContractorWorks').get('code').setValue(event.value);
+      this.engineer.getFeeFromLocationn(event.value).subscribe(res => {
+        this.businessDetail2Form.get('solvencyAmountAndBankDetail').setValue(res.fee);
+      })
+      this.contractorRegistrationForm.get('locationOfContractorWorks').get('code').setValue(event.value);
   }
 
   getAllDocumentLists() {
@@ -409,11 +436,6 @@ export class ContractorRegsitrationComponent implements OnInit {
       }
     });
   }
-
-  onTabChange(evt) {
-    this.tabIndex = evt;
-  }
-
 
   mandatoryFileCheck(serviceFormId, attachmentList) {
     return new Promise<any>((resolve, reject) => {
