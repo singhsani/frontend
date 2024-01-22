@@ -629,9 +629,28 @@
 
 
 				</div>
-
-				<app-action-bar [form]="shopLicNewForm" (tabIndex)="licenseConfiguration.onTabChange($event,personoccuping, shopLicNewForm)"
-					[stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
+				<div class="fotButtonBar clearfix mt-5">
+					<div class="col-sm-12 col-md-12">
+						<button class="liteBorder pull-left" type="button" mat-raised-button
+							*ngIf="shopLicNewForm.get('canEdit').value" (click)="licenseConfiguration.currentTabIndex = 2">{{'Back'
+							|
+							translate: translateKey}}</button>
+						<button class="pull-right" type="button" mat-raised-button color="primary"
+							*ngIf="shopLicNewForm.get('canEdit').value"
+							(click)="onTabChange(4,personoccuping,shopLicNewForm)">{{'Save & Next' |
+							translate: translateKey}}</button>
+						<button class="liteBorder pull-left" type="button" mat-raised-button
+							*ngIf="!(shopLicNewForm.get('canEdit').value)"
+							(click)="licenseConfiguration.currentTabIndex = 2">{{'Back' |
+							translate: translateKey}}</button>
+						<button class="pull-left" type="button" mat-raised-button *ngIf="!(shopLicNewForm.get('canEdit').value)"
+							(click)="licenseConfiguration.currentTabIndex = 5">{{'Next' |
+							translate: translateKey}}</button>
+				
+					</div>
+				</div>
+				<!-- <app-action-bar [form]="shopLicNewForm" (tabIndex)="licenseConfiguration.onTabChange($event,personoccuping, shopLicNewForm)"
+					[stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar> -->
 				</form>
 			</mat-tab>
 			<!-- step 4 occupancy person Ends -->
