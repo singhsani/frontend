@@ -17,7 +17,7 @@ import { Constants } from 'src/app/vmcshared/Constants';
 import { ProfessionalTaxService } from 'src/app/core/services/citizen/data-services/professional-tax.service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { ShopAndEstablishmentTransferService } from '../common/services/shop-and-establishment-transfer.service';
-import { BookingConstants } from '../../../facilities/bookings/config/booking-config';
+import { BookingConstants, BookingUtils } from '../../../facilities/bookings/config/booking-config';
 import { identity } from 'rxjs';
 @Component({
     selector: 'app-shop-lic-transfer',
@@ -131,6 +131,7 @@ export class ShopLicTransferComponent implements OnInit {
     public serverUploadFilesArray: Array<any> = [];
 
     public formControlNameToTabIndex = new Map();
+    totalCount: number;
 
     /**
     * @param fb - Declare FormBuilder property.
@@ -1946,13 +1947,13 @@ return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartn
             if (max > 0) {
                 this.hideAdd = true;
                 this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");
-
             }
 
             else {
                 row.isEditMode = false;
                 row.newRecordAdded = false;
             }
+            this.totalCount = max
         }
         else {
             this.saveRecord(row);
@@ -2036,5 +2037,42 @@ return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartn
     }
 
 
+    /**
+     * This method use to get output event of tab change
+     * @param index - current index
+     */
+    public onTabChange(index: number, controlName, mainControl) {
+        if(index > this.licenseConfiguration.currentTabIndex){
+            if (controlName.invalid) {
+                this.commonService.markFormGroupTouched(controlName)
+            } else if(this.totalCount > 9){
+                this.hideAdd = true;
+                this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");
+            }
+            else {
+                const formGroupAry = this.licenseConfiguration.createArray(controlName.get('workerCounts'));
+                mainControl.get('workerCounts').removeAt()
+                for(let i = 0; i < controlName.get('workerCounts').controls.length; i++) {
+                    mainControl.get('workerCounts').value.push(formGroupAry.value[i]);
+                    mainControl.get('workerCounts').controls.push(formGroupAry.controls[i]);
+                }   
+                this.saveAsDraft(mainControl)
+                this.licenseConfiguration.currentTabIndex = index;
+            }
+        }else{
+            this.licenseConfiguration.currentTabIndex= index;
+        }
 
+    }
+
+    saveAsDraft(mainControl){
+        this.formService.saveFormData(mainControl.getRawValue()).subscribe(
+            res => {
+                this.shopLicTransferForm.patchValue(res);
+            },
+            err => {
+               this.commonService.openAlert('Error', err, 'error')
+            }
+        );
+    }
 }

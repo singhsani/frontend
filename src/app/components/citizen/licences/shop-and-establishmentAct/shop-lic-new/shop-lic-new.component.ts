@@ -128,6 +128,7 @@ export class ShopLicNewComponent implements OnInit {
 	// Map for the formcontrol to tabIndex id;
 
 	public formControlNameToTabIndex = new Map();
+	totalCount: number;
 
     /**
      * @param fb - Declare FormBuilder property.
@@ -1003,6 +1004,7 @@ export class ShopLicNewComponent implements OnInit {
 				row.isEditMode = false;
 				row.newRecordAdded = false;
 			}
+			this.totalCount = max
 		}
 		else {
 			this.saveRecord(row);
@@ -2149,4 +2151,43 @@ export class ShopLicNewComponent implements OnInit {
 			this.workingInNightShift = false;
 		}
 	}
+
+/**
+     * This method use to get output event of tab change
+     * @param index - current index
+     */
+public onTabChange(index: number, controlName, mainControl) {
+	if(index > this.licenseConfiguration.currentTabIndex){
+		if (controlName.invalid) {
+			this.commonService.markFormGroupTouched(controlName)
+		} else if(this.totalCount > 9){
+			this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");
+		}
+		else {
+			const formGroupAry = this.licenseConfiguration.createArray(controlName.get('workerCounts'));
+			mainControl.get('workerCounts').removeAt()
+			for(let i = 0; i < controlName.get('workerCounts').controls.length; i++) {
+				mainControl.get('workerCounts').value.push(formGroupAry.value[i]);
+				mainControl.get('workerCounts').controls.push(formGroupAry.controls[i]);
+			}   
+			this.saveAsDraft(mainControl)
+			this.licenseConfiguration.currentTabIndex = index;
+		}
+	}else{
+		this.licenseConfiguration.currentTabIndex= index;
+	}
+
+}
+
+saveAsDraft(mainControl){
+	this.formService.saveFormData(mainControl.getRawValue()).subscribe(
+		res => {
+			this.shopLicNewForm.patchValue(res);
+		},
+		err => {
+		   this.commonService.openAlert('Error', err, 'error')
+		}
+	);
+}
+
 }
