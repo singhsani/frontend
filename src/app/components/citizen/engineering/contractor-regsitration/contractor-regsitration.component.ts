@@ -80,7 +80,7 @@ export class ContractorRegsitrationComponent implements OnInit {
   ngOnInit() {
     this.contractorRegistrationControl();
     //this.contractorRegistrationForm.addControl('ownerShipDetail', this.ownerShipDetail);
-    this.businessDetail1Form.addControl('firmEmployeeDetail', this.firmEmployeeDetailList);
+    this.businessDetail1Form.addControl('firmEmployeeDetails', this.firmEmployeeDetailList);
     this.contractorDetailForm.addControl('partnerDetails', this.partnerShipDetailList);
 
     this.activatedRoute.paramMap.subscribe(param => {
@@ -293,8 +293,8 @@ export class ContractorRegsitrationComponent implements OnInit {
       employeeName: [null],
       employeeStatus: [null],
       employeeExperienceYears: [null],
-      joiningDate: [null],
-      projectStartDate: [null],
+      joiningDate: [null, [Validators.required]],
+      projectStartDate: [null, [Validators.required]],
     });
   }
 
