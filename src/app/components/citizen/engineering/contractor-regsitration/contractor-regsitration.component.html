@@ -25,18 +25,20 @@
         
               <div class="col-md-6">
                 <div class="mb-4 mt-4">
-                  <mat-label><strong>{{'Registration Group' | translate : translateKey}}</strong></mat-label>
+                  <mat-label><strong>{{'Registration Group' | translate : translateKey}} <span class="mandatory"> *</span></strong></mat-label>
                 </div>
                 <mat-radio-group class="radioGroup" formControlName="registrationGroup" required>
                   <mat-radio-button value="A">A</mat-radio-button>
                   <mat-radio-button value="B">B</mat-radio-button>
                 </mat-radio-group>
+                <control-messages [control]="contractorDetailForm.get('registrationGroup')">
+                </control-messages>
               </div>
         
               <div class="col-md-6">
                 <div class="mb-4 mt-4">
                   <!-- <mat-label><strong>Registration Category *</strong></mat-label> -->
-                  <mat-label><strong>{{'Registration class' | translate: translateKey}}</strong></mat-label>
+                  <mat-label><strong>{{'Registration class' | translate: translateKey}}</strong><span class="mandatory"> *</span></mat-label>
                 </div>
                 <mat-radio-group formControlName="applyingFor" required class="radioGroup">
                   <mat-radio-button value="AA" (change)="locationChange($event)" class="mr-3">
@@ -61,6 +63,8 @@
                     {{'E2'}}
                   </mat-radio-button>
                 </mat-radio-group>
+                <control-messages [control]="contractorDetailForm.get('applyingFor')">
+                </control-messages>
               </div>
             </div>
         
@@ -70,8 +74,12 @@
                 <input matInput type="text" formControlName="nameOfTheFirm" appValidationFields
                   validationFieldsType='onlyNameWithOutSpace' required maxlength="50"
                   placeholder="{{'first_name'  | translate: translateKey}}">
-                <control-messages [control]="contractorDetailForm.get('nameOfTheFirm')">
-                </control-messages>
+                  <mat-error class="mat-error ng-star-inserted"
+                  *ngIf="contractorDetailForm.get('nameOfTheFirm').invalid && (contractorDetailForm.get('nameOfTheFirm').dirty || contractorDetailForm.get('nameOfTheFirm').touched)">
+                  <div class="validation-msg" *ngIf="contractorDetailForm.get('nameOfTheFirm').errors.required">
+                    First Name is Required.
+                  </div>
+                </mat-error>
               </mat-form-field>
         
               <mat-form-field class="col-md-4">
@@ -93,8 +101,12 @@
               <mat-form-field class="col-md-6">
                 <input matInput formControlName="officeContactNumber" type="text" required OnlyNumber maxlength="10"
                   placeholder="{{'mobile_no' | translate: translateKey}}">
-                <control-messages [control]="contractorDetailForm.get('officeContactNumber')">
-                </control-messages>
+                  <mat-error class="mat-error ng-star-inserted"
+                  *ngIf="contractorDetailForm.get('officeContactNumber').invalid && (contractorDetailForm.get('officeContactNumber').dirty || contractorDetailForm.get('officeContactNumber').touched)">
+                  <div class="validation-msg" *ngIf="contractorDetailForm.get('officeContactNumber').errors.required">
+                    Mobile Number is Required.
+                  </div>
+                </mat-error>
               </mat-form-field>
         
               <mat-form-field class="col-md-6">
@@ -268,12 +280,15 @@
                 </control-messages>
               </mat-form-field>
         
-              <div class="col-md-4 ngSelect" formGroupName="registrationBank">
-                <ng-select placeholder="{{'bank_name' | translate: translateKey}} *" formControlName="code">
+              <div class="col-md-4 ngSelect asteriskmarkRequired" formGroupName="registrationBank">
+                <ng-select placeholder="{{'bank_name' | translate: translateKey}}" formControlName="code">
                   <ng-option *ngFor="let bank of bankNameArray" [value]="bank.code">{{bank.name}}</ng-option>
                 </ng-select>
-                <control-messages [control]="contractorDetailForm.get('registrationBank').get('code')">
-                </control-messages>
+                <mat-error class="mat-error ng-star-inserted errors-massage"
+                  *ngIf="contractorDetailForm.get('registrationBank').get('code').invalid && (contractorDetailForm.get('registrationBank').get('code').dirty || contractorDetailForm.get('registrationBank').get('code').touched)">
+                  <div *ngIf="contractorDetailForm.get('registrationBank').get('code').errors.required">
+                    Bank Name is Required.</div>
+                </mat-error>
               </div>
         
         
