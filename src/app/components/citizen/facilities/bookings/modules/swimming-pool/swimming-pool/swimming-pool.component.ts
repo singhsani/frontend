@@ -210,6 +210,11 @@ export class SwimmingPoolComponent implements OnInit {
           this.generalDetails.reset();
         })
       }
+      else if(event == "RAJIV_GANDHI_SWIMMING_POOL"){
+        this.commonService.openAlert("Warning", 'Rajiv Gandhi Swimming Pool is temporarily closed for necessary civil work and maintenance work', "warning" , "", cb => {
+          this.generalDetails.reset();
+        })
+      }
     },
       err => {
         this.toastr.error("Server Error");
@@ -640,10 +645,10 @@ export class SwimmingPoolComponent implements OnInit {
   }
 
   paymentRequest(element) {
-    debugger;
+    
     this.bookingService.getTransactionDetails(element.refNumber).subscribe(transactionData => {
     }, err => {
-      debugger
+      
       if (err.status == 402) {
         // if (err.status == 402) {
         // this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService);
@@ -786,7 +791,7 @@ export class SwimmingPoolComponent implements OnInit {
     this.bookingService.searchRenewSwimmingPool(this.memberNumber.value).subscribe(
       res => {
         res = res.data;
-        debugger;
+        
         if (res && res.bookingFormId)
           this.swimmimgPoolBookingForm.patchValue({ 'serviceFormId': res.bookingFormId });
         this.attachments = res.attachments;
