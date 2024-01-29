@@ -393,6 +393,8 @@
                           [min]="maxDate" [matDatepicker]="joiningDate">
                         <mat-datepicker-toggle matSuffix [for]="joiningDate"></mat-datepicker-toggle>
                         <mat-datepicker touchUi="true" #joiningDate></mat-datepicker>
+                        <control-messages [control]="row.get('joiningDate')">
+                        </control-messages>
                         <div align="end" ></div>
                       </mat-form-field>
                       <!-- <mat-form-field>
@@ -402,13 +404,15 @@
                         </control-messages>
                       </mat-form-field> -->
                     </td>
-                    <td style="max-width:100px;">
+                    <td style="max-width:500px;">
                       <mat-form-field>
                         <input matInput autocomplete="off" appDate [formControl]="row.get('projectStartDate')"
                           [min]="maxDate" [matDatepicker]="projectStartDate">
                         <mat-datepicker-toggle matSuffix [for]="projectStartDate"></mat-datepicker-toggle>
                         <mat-datepicker touchUi="true" #projectStartDate></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right"></div>
+                        <control-messages [control]="row.get('projectStartDate')">
+                        </control-messages>
                       </mat-form-field>
                       <!-- <mat-form-field>
                         <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
