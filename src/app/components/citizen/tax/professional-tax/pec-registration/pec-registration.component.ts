@@ -504,10 +504,10 @@ export class PecRegistrationComponent implements OnInit {
 		this.isCensusNo = true;
 		let isValid = true;
 		this.selectedCensusNo = false
-		if (this.registrationDetail.get('censusNo')['controls'].length == 5) {
-			this.toastr.warning('maximum 5 census number allow');
-			return;
-		}
+		// if (this.registrationDetail.get('censusNo')['controls'].length == 5) {
+		// 	this.toastr.warning('maximum 5 census number allow');
+		// 	return;
+		// }
 		for (let i = 0; i < this.registrationDetail.get('censusNo')['controls'].length; i++) {
 			if (this.registrationDetail.get('censusNo')['controls'][i].invalid) {
 				isValid = false;

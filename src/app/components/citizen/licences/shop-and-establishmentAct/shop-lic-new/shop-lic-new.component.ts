@@ -2160,7 +2160,7 @@ public onTabChange(index: number, controlName, mainControl) {
 	if(index > this.licenseConfiguration.currentTabIndex){
 		if (controlName.invalid) {
 			this.commonService.markFormGroupTouched(controlName)
-		} else if(this.totalCount > 9){
+		} else if(this.totalCount > 0){
 			this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");
 		}
 		else {
