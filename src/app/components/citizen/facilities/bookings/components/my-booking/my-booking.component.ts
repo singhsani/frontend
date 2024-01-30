@@ -824,6 +824,14 @@ export class MyBookingComponent implements OnInit {
 		this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-mg' }));
 	}
 
+	redirectToEdit(id:any, resourceType:any) {
+		
+		if (resourceType == 'SWIMMING_POOL') {
+			
+			this.router.navigate(['/citizen/bookings/swimming-pool/swimmingPool'],  {queryParams: { 'fromId': id }});
+    	}	
+	}
+
 	acknowledgmentReceipt(element) {
 		if ((element.status == this.bookingConstant.SUBMITTED || element.status == this.bookingConstant.CANCELLED && (element.resourceType == 'STADIUM' || element.resourceType == 'CHILDREN_THEATER'))) {
 			return true;

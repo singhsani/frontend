@@ -466,4 +466,9 @@ export class BookingService {
         this.requestURL = `api/booking/atithigruh/refundApproveReport?refNumber=${refNumber}`;
         return this.http.get(this.requestURL, 'printReceipt');
      }
+     getAllData(id:any)
+     {
+      this.requestURL = `api/booking/swimming/getAllData/${id}`;
+      return this.http.get(this.requestURL);
+     }
 }
