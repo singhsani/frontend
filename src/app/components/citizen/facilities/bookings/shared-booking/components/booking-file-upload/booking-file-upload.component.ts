@@ -57,12 +57,14 @@ export class BookingFileUploadComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         if (changes && changes.attachments) {
             if (this.attachments && this.attachments.length) {
-                for (const attachment of this.attachments) {
+                for (const attachment of this.attachments) {                 
+                    if (attachment.portalVariableName === this.uploadModel.variableName && attachment.formPart === this.uploadModel.formPart) {
                     this.getFile = attachment;
                     this.canUpload = true;
                     this.id = attachment.id;
                     this.type = attachment.mimeType;
                 }
+            }
             }
         }
     }

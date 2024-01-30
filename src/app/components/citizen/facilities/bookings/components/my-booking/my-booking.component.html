@@ -307,6 +307,14 @@
                 <mat-icon title="View Booking Details" color="primary">details</mat-icon>
                 {{'details' | translate:translateKey}}
               </button>
+
+              <button mat-menu-item
+                *ngIf="element.status == 'REJECTED' && (element.resourceType === 'SWIMMING_POOL')"
+                data-toggle="modal" color="primary"
+                (click)="redirectToEdit(element.id,element.resourceType);">
+                <mat-icon title="View Booking Details" color="primary">remove_red_eye</mat-icon>
+                {{'preview' | translate:translateKey}}
+              </button>
             </div>
 
             <button *ngIf="acknowledgmentReceipt(element)" mat-menu-item color="primary"
