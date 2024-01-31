@@ -328,6 +328,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	infoVehiclePending(amount, wardNumber) {
 		this.commonService.infoAlert('Payment Remarks', 'Please make the payment of amount Rs. ' + amount +' at Ward office no. ' + wardNumber, "success");
 	}
+	infoVehiclePaymentRefund(amount, wardNumber) {
+		this.commonService.infoAlert('Payment Done', 'Please wait for the refund amount Rs. ' + amount +' at Ward office no. ' + wardNumber, "success");
+	}
 	cancelReasonReceipt(row) {
 		this.formService.cancelReceiptForShop(row.fileNumber).subscribe(
 			receiptResponse => {
@@ -1216,9 +1219,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 
 	//Withdraw Application
 	withdrawApplication(apiCode: string, id: number) {
-		this.commonService.confirmAlert('Are You Sure You Want To Withdraw Application?',"You won't be able to revert this!", 'warning','', performDelete =>{
+		this.commonService.confirmAlert('Are You Sure You Want To Withdraw Application?',"You won't be able to revert this!", 'warning','', performWithdrawl =>{
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
-			this.formService.deleteFormData(id).subscribe(
+			this.formService.withdrawApplication(id).subscribe(
 				res => {
 					this.commonService.successAlert('Withdrawl!', '', 'success');
 					this.getAllData();
