@@ -425,6 +425,11 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	remarksDisplay(data) {
 		this.rejectRemarks = data.remarks;
 	}
+	remarksForPec(data){
+		    this.queryrraiseRemarks = data.remarks;
+			this.statusHeader = data.fileStatusName;
+			this.queryrraisereason = data.reason;
+	}
 	/**
 	 * This method is use for copy text.
 	 */

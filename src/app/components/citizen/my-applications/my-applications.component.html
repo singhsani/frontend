@@ -279,6 +279,17 @@
                                 </mat-icon>
                                 {{'preview_application' | translate:translateKey}}
                             </button>
+                            <button mat-menu-item *ngIf="row.fileStatus == 'SCRUTINY' && row.serviceType == 'PEC_REG' " color="primary"
+                                (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
+                                <mat-icon class="m-1" title="{{'edit_application' | translate:translateKey}}">edit
+                                </mat-icon>
+                                {{'edit_application' | translate:translateKey}}
+                            </button>
+                            <button mat-menu-item *ngIf="row.fileStatus == 'SCRUTINY' && row.serviceType == 'PEC_REG' " color="primary"
+                            (click)="openModal(queryRaiseReasonRemarkTemplate);remarksForPec(row)">
+                            <mat-icon class="m-1" title="Remark">help_outline</mat-icon>
+                            Remark
+                         </button>
 
                             <button mat-menu-item *ngIf="row.fileStatus == 'PAYMENT_RECEIVED' && !(row.serviceType == 'PEC_REG' || row.serviceType == 'PRC_REG')" color="primary"
                                 (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
@@ -310,14 +321,19 @@
                                 {{'withdraw_application' | translate:translateKey}}
                             </button>
                         </ng-container>
-                            <button mat-menu-item
-                                *ngIf="(row.serviceType == 'PEC_REG' || row.serviceType == 'PRC_REG') && isQueryRaiseDisplay(row)"
-                                color="primary"
-                                (click)="openModal(queryRaiseReasonRemarkTemplate);remarksDisplayForQueryRaise(row)">
-                                <mat-icon class="m-1" title="Why Rejected?">help_outline</mat-icon>
-                                Why Rejected
+                    <!-- <ng-container *ngIf="row.file_status == 'SCRUTINY' ">
+                        <button mat-menu-item *ngIf="isEditOptDisplay(row)" color="primary"
+                                (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
+                                <mat-icon class="m-1" title="{{'edit_application' | translate:translateKey}}">edit
+                                </mat-icon>
+                                {{'edit_application' | translate:translateKey}}
                             </button>
-
+                        <button mat-menu-item *ngIf="isQueryRaiseDisplay(row)" color="primary"
+                            (click)="openModal(queryRaiseTemplate);remarksDisplayForQueryRaise(row)">
+                            <mat-icon class="m-1" title="Remark">help_outline</mat-icon>
+                            Remark
+                         </button>
+                    </ng-container> -->
                             <ng-container *ngIf="row.serviceType === 'VEHICLE' || row.serviceType === 'PEC_REG'">
                                 <button mat-menu-item *ngIf="isEditOptDisplay(row)" color="primary"
                                     (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
