@@ -1060,6 +1060,7 @@ export class ShopLicTransferComponent implements OnInit {
     }
 
     deleteShopRecord(persontype: string, index: any, item: any) {
+        this.totalCount -= item.controls.total.value
         const Rnumber = parseInt(item.controls.noOfWomen.value)
         const Rnumber1 = parseInt(item.controls.noOfMen.value)
         const sum = Rnumber + Rnumber1;
@@ -1771,6 +1772,7 @@ return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartn
     cancelRecordWithPersonType(row: any, index: number, personType: string) {
         try {
             if (row.newRecordAdded) {
+                this.totalCount -= row.controls.total.value
                 console.log('array', this.getArrayByType(personType))
                 this.getArrayByType(personType).removeAt(index);
             } else {
