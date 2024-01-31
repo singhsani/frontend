@@ -311,16 +311,21 @@
                                 <mat-icon class="m-1" title="Why Rejected?">help_outline</mat-icon>
                                 Why Rejected
                             </button>
-                        <ng-container  *ngIf="row.serviceType == 'VEHICLE' && row.fileStatus == 'PAYMENT'">
-                            <button mat-menu-item color="primary" (click)="infoVehiclePending(row.amount, row.wardNumber)">
-                                <mat-icon class="m-1" title="Info">help_outline</mat-icon>Payment Remarks
-                            </button>
-                            <button mat-menu-item color="primary" (click)="withdrawApplication(row.serviceDetail.code, row.serviceFormId)">
-                                <mat-icon class="m-1" title="{{'withdraw_application' | translate:translateKey}}">delete
-                                </mat-icon>
-                                {{'withdraw_application' | translate:translateKey}}
-                            </button>
-                        </ng-container>
+                            <ng-container  *ngIf="row.serviceType == 'VEHICLE' && row.fileStatus == 'PAYMENT' && row.canWithdraw == true ">
+                                <button mat-menu-item color="primary" (click)="infoVehiclePending(row.amount, row.wardNumber)">
+                                    <mat-icon class="m-1" title="Info">help_outline</mat-icon>Payment Remarks
+                                </button>
+                                <button mat-menu-item color="primary" (click)="withdrawApplication(row.serviceDetail.code, row.serviceFormId)">
+                                    <mat-icon class="m-1" title="{{'withdraw_application' | translate:translateKey}}">delete
+                                    </mat-icon>
+                                    {{'withdraw_application' | translate:translateKey}}
+                                </button>
+                            </ng-container>
+                            <ng-container  *ngIf="row.serviceType == 'VEHICLE' && row.fileStatus == 'PAYMENT'  && row.canWithdraw == false ">
+                                <button mat-menu-item color="primary" (click)="infoVehiclePaymentRefund(row.amount, row.wardNumber)">
+                                    <mat-icon class="m-1" title="Info">help_outline</mat-icon>Wait For Refund
+                                </button>
+                            </ng-container>
                     <!-- <ng-container *ngIf="row.file_status == 'SCRUTINY' ">
                         <button mat-menu-item *ngIf="isEditOptDisplay(row)" color="primary"
                                 (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">

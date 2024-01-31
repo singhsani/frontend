@@ -616,4 +616,8 @@ export class FormsActionsService {
 		return this.http.delete(this.requestURL);
 	}
 
+	withdrawApplication(appId){
+		this.requestURL = `api/form/${this.apiType}/withdrawApplication/${appId}`;
+		return this.http.get(this.requestURL, 'withdrawApplication');
+	}
 }
