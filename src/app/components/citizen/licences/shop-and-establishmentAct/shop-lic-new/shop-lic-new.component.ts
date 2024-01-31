@@ -1756,8 +1756,8 @@ export class ShopLicNewComponent implements OnInit {
 	* @param row: table row id
 	*/
 	cancelRecordWithPersonType(row: any, index: number,personType : string) {
-		
 		try {
+			this.totalCount -= row.controls.total.value
 			if (row.newRecordAdded) {
 				console.log('array',this.getArrayByType(personType))
 				this.getArrayByType(personType).removeAt(index);
@@ -2042,6 +2042,7 @@ export class ShopLicNewComponent implements OnInit {
 	}
 
 	deletePersonRecord(persontype: string, index: any,item:any){
+		this.totalCount -= item.controls.total.value
 		const	Rnumber = parseInt(item.controls.noOfWomen.value)
 		const Rnumber1 = parseInt(item.controls.noOfMen.value)
         const sum = Rnumber + Rnumber1;
