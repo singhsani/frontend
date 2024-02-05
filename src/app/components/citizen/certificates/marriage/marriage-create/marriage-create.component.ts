@@ -17,6 +17,7 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { SlotDetails } from '../../../appointment/schedule-appointment/slot-booking/slot-booking.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { FireFacilityConfig } from '../../../fire-facilities/config/FireFacilityConfig';
+import { LicenseConfiguration } from '../../../licences/license-configuration';
 
 
 @Component({
@@ -449,6 +450,17 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     isSearch = false;
     translateKey: string = 'marriageRegScreen';
     marriageFormGroup: FormGroup;
+    bridegroomDetails : FormGroup;
+    brideDetails : FormGroup;
+    fatherOfBridegroom : FormGroup;
+    fatherOfBride : FormGroup;
+    marriageSolemnizerDetails : FormGroup;
+    firstWitnessDetails : FormGroup;
+    secondWitnessDetails : FormGroup;
+    detailsOfBridegroomNRIWitness : FormGroup;
+    detailsOfBrideNRIWitness : FormGroup;
+    applicantDetails : FormGroup;
+    attachmentDetail : FormGroup;
     appointmentForm: FormGroup;
     formSlotId: string;
 
@@ -540,6 +552,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     The services of Virtual Civic Center can be accessed without paying any additional charge.`;
     isViewMode: boolean;
     gujName: any;
+    licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
 
     /**
      * @param fb - Declare FormBuilder property.
@@ -602,23 +615,17 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     * This method is listed form controls.
     */
     marriageFormControls() {
-
-        this.marriageFormGroup = this.fb.group({
-            // extra's important controls 
-            apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-            serviceCode: null,
-            applicantAadharNumber: [''],
-            applicantEmail: [''],
-
-            // first step**
+       
+        // first step**
+        this.bridegroomDetails = this.fb.group({
             marriageDate: [null, Validators.required],
-            // marriageRegistrationDate: [''],
             marriagePlace: this.fb.group(this.addrComponent.addressControls()),
-            // for NRI marriage
-            isNriMarriage: [false, Validators.required],
             groomFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             groomMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             groomLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+            groomFirstNameGuj: ['', [Validators.maxLength(150)]],
+            groomMiddleNameGuj: ['', [Validators.maxLength(150)]],
+            groomLastNameGuj: ['', [Validators.maxLength(150)]],
             groomBirthDate: ['', Validators.required],
             groomAge: [null, Validators.max(120)],//ValidationService.groomAgeValidator
             groomReligion: this.fb.group({
@@ -626,134 +633,13 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 gujName: [null],
                 name: [null]
             }),
-            groomAadharNumber: ['', Validators.maxLength(12)],
             marriageTimeGroomStatus: this.fb.group({
                 code: [null, Validators.required]
             }),
             aliveWives: ['', [Validators.maxLength(1), Validators.minLength(0)]],
-            groomAddress: this.fb.group(this.addrComponent.addressControls()),
-
-            // second step**
-            brideFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            brideMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
-            brideLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            brideBirthDate: ['', Validators.required],
-            brideAge: [null],// ValidationService.brideAgeValidator
-            brideReligion: this.fb.group({
-                code: [null, [Validators.required]],
-                gujName: [null],
-                name: [null]
-            }),
-            brideAadharNumber: ['', Validators.maxLength(12)],
-            marriageTimeBrideStatus: this.fb.group({
-                code: [null, Validators.required]
-            }),
-            brideAddress: this.fb.group(this.addrComponent.addressControls()),
-
-            //third step**
-            groomParentsFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            groomParentsMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
-            groomParentsLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            groomParentsBirthDate: [null],
-            groomParentsAge: [null, [Validators.required , Validators.min(18)]],
-            groomParentsAadharNumber: ['', Validators.maxLength(12)],
-            groomParentsAddress: this.fb.group(this.addrComponent.addressControls()),
-            groomParentsAddressResidence: this.fb.group(this.addrComponent.addressControls()),
-            isGroomParResAddressSame: this.fb.group({
-                code: [null]
-            }),
-            isParentsAddressSameAsGroomAddress: this.fb.group({
-                code: [null]
-            }),
-
-            //forth step
-            brideParentsFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            brideParentsMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
-            brideParentsLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            brideParentsBirthDate: [null],
-            brideParentsAge: [null, [Validators.required , Validators.min(18)]],
-            brideParentsAadharNumber: ['', Validators.maxLength(12)],
-            brideParentsAddress: this.fb.group(this.addrComponent.addressControls()),
-            brideParentsAddressResidence: this.fb.group(this.addrComponent.addressControls()),
-            isBrideParResAddressSame: this.fb.group({
-                code: [null]
-            }),
-            isParentsAddressSameAsBrideAddress: this.fb.group({
-                code: [null]
-            }),
-
-            //fifth step
-            priestFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            priestMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
-            priestLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            priestBirthDate: [null],
-            priestAge: [null, [Validators.required , Validators.min(18)]],
-            priestAadharNumber: ['', Validators.maxLength(12)],
-            priestAddress: this.fb.group(this.addrComponent.addressControls()),
-            priestAddressResidence: this.fb.group(this.addrComponent.addressControls()),
-            isPriestParResAddressSame: this.fb.group({
-                code: [null]
-            }),
-
-            //sixth step
-            firstWitnessFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            firstWitnessMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
-            firstWitnessLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            firstWitnessBirthDate: [null],
-            firstWitnessAge: [null, [Validators.required , Validators.min(18)]],
-            firstWitnessAadharNumber: ['', Validators.maxLength(12)],
-            firstWitnessAddress: this.fb.group(this.addrComponent.addressControls()),
-
-            //seventh step
-            secondWitnessFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            secondWitnessMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
-            secondWitnessLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            secondWitnessBirthDate: [null],
-            secondWitnessAge: [null, [Validators.required , Validators.min(18)]],
-            secondWitnessAadharNumber: ['', Validators.maxLength(12)],
-            secondWitnessAddress: this.fb.group(this.addrComponent.addressControls()),
-
-            //eighth step 63 count
-            applicantRelation: this.fb.group({
-                code: [null, Validators.required]
-            }),
-            applicantRelationOther: [''],
-            uniqueIdProofLable: this.fb.group({
-                code: [null]
-            }),
-            uniqueIdProof: [''],
-
-            attachments: [''],
-
-            // gujarati field
-            groomFirstNameGuj: ['', [Validators.maxLength(150)]],
-            groomMiddleNameGuj: ['', [Validators.maxLength(150)]],
-            groomLastNameGuj: ['', [Validators.maxLength(150)]],
-
-            brideFirstNameGuj: ['', [Validators.maxLength(150)]],
-            brideMiddleNameGuj: ['', [Validators.maxLength(150)]],
-            brideLastNameGuj: ['', [Validators.maxLength(150)]],
-
-            groomParentsFirstNameGuj: ['', [Validators.maxLength(150)]],
-            groomParentsMiddleNameGuj: ['', [Validators.maxLength(150)]],
-            groomParentsLastNameGuj: ['', [Validators.maxLength(150)]],
-
-            brideParentsFirstNameGuj: ['', [Validators.maxLength(150)]],
-            brideParentsMiddleNameGuj: ['', [Validators.maxLength(150)]],
-            brideParentsLastNameGuj: ['', [Validators.maxLength(150)]],
-
-            priestFirstNameGuj: ['', [Validators.maxLength(150)]],
-            priestMiddleNameGuj: ['', [Validators.maxLength(150)]],
-            priestLastNameGuj: ['', [Validators.maxLength(150)]],
-
-            firstWitnessFirstNameGuj: ['', [Validators.maxLength(150)]],
-            firstWitnessMiddleNameGuj: ['', [Validators.maxLength(150)]],
-            firstWitnessLastNameGuj: ['', [Validators.maxLength(150)]],
-
-            secondWitnessFirstNameGuj: ['', [Validators.maxLength(150)]],
-            secondWitnessMiddleNameGuj: ['', [Validators.maxLength(150)]],
-            secondWitnessLastNameGuj: ['', [Validators.maxLength(150)]],
-
+            groomAadharNumber: ['', Validators.maxLength(12)],
+            // for NRI marriage
+            isNriMarriage: [false, Validators.required],
             // for NRI groom
             isGroomVisa: null,
             groomNriStatus: ['', [Validators.maxLength(50)]],
@@ -765,13 +651,37 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             groomSocialSecurityNumber: ['', [Validators.maxLength(9)]],
             groomEligibility: ['', [Validators.maxLength(50)]],
             groomDesignation: ['', [Validators.maxLength(50)]],
+            groomCompanyName: ['', [Validators.maxLength(100)]],
+            groomCompanyPhoneNumber: ['', [Validators.maxLength(10)]],
             groomPhoneNumber: [''],
             groomEmail: [''],
             nriGroomAddress: ['', [Validators.maxLength(500)]],
-            groomCompanyName: ['', [Validators.maxLength(100)]],
-            groomCompanyPhoneNumber: ['', [Validators.maxLength(10)]],
             groomCompanyAddress: ['', [Validators.maxLength(500)]],
+            groomAddress: this.fb.group(this.addrComponent.addressControls()),
+            groomDays: [null, Validators.max(365)],
+        })
+        // first end**
 
+
+        // second step**
+        this.brideDetails = this.fb.group({
+            brideFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+            brideMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
+            brideLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+            brideFirstNameGuj: ['', [Validators.maxLength(150)]],
+            brideMiddleNameGuj: ['', [Validators.maxLength(150)]],
+            brideLastNameGuj: ['', [Validators.maxLength(150)]],
+            brideBirthDate: ['', Validators.required],
+            brideAge: [null],// ValidationService.brideAgeValidator
+            brideReligion: this.fb.group({
+                code: [null, [Validators.required]],
+                gujName: [null],
+                name: [null]
+            }),
+            marriageTimeBrideStatus: this.fb.group({
+                code: [null, Validators.required]
+            }),
+            brideAadharNumber: ['', Validators.maxLength(12)],
             // for NRI bride
             isBrideVisa: [false],
             brideNriStatus: ['', [Validators.maxLength(50)]],
@@ -783,16 +693,115 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             brideSocialSecurityNumber: ['', [Validators.maxLength(9)]],
             brideEligibility: ['', [Validators.maxLength(50)]],
             brideDesignation: ['', [Validators.maxLength(50)]],
-            brideEmail: ['', [Validators.maxLength(50), ValidationService.emailValidator]],
             bridePhoneNumber: ['', [Validators.maxLength(10)]],
+            brideEmail: ['', [Validators.maxLength(50), ValidationService.emailValidator]],
             nriBrideAddress: ['', [Validators.maxLength(500)]],
             brideCompanyName: ['', [Validators.maxLength(100)]],
             brideCompanyPhoneNumber: ['', [Validators.maxLength(10)]],
             brideCompanyAddress: ['', [Validators.maxLength(500)]],
+            brideAddress: this.fb.group(this.addrComponent.addressControls()),
+            brideDays: [null, Validators.max(365)],
+        })
+        // second end**
 
+        //third step**
+        this.fatherOfBridegroom = this.fb.group({
+            groomParentsFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+            groomParentsMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
+            groomParentsLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+            groomParentsFirstNameGuj: ['', [Validators.maxLength(150)]],
+            groomParentsMiddleNameGuj: ['', [Validators.maxLength(150)]],
+            groomParentsLastNameGuj: ['', [Validators.maxLength(150)]],
+            groomParentsBirthDate: [null],
+            groomParentsAge: [null, [Validators.required, Validators.min(18)]],
+            groomParentsAadharNumber: ['', Validators.maxLength(12)],
+            isParentsAddressSameAsGroomAddress: this.fb.group({
+                code: [null]
+            }),
             nriGroomParentsAddress: ['', [Validators.maxLength(500)]],
-            nriBrideParentsAddress: ['', [Validators.maxLength(500)]],
+            groomParentsAddress: this.fb.group(this.addrComponent.addressControls()),
+            groomParentsAddressResidence: this.fb.group(this.addrComponent.addressControls()),
+            isGroomParResAddressSame: this.fb.group({
+                code: [null]
+            }),
+        })
+        //third end**
 
+        //forth step **
+        this.fatherOfBride = this.fb.group({
+            brideParentsFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+            brideParentsMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
+            brideParentsLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+            brideParentsFirstNameGuj: ['', [Validators.maxLength(150)]],
+            brideParentsMiddleNameGuj: ['', [Validators.maxLength(150)]],
+            brideParentsLastNameGuj: ['', [Validators.maxLength(150)]],
+            brideParentsBirthDate: [null],
+            brideParentsAge: [null, [Validators.required, Validators.min(18)]],
+            brideParentsAadharNumber: ['', Validators.maxLength(12)],
+            isParentsAddressSameAsBrideAddress: this.fb.group({
+                code: [null]
+            }),
+            nriBrideParentsAddress: ['', [Validators.maxLength(500)]],
+            brideParentsAddress: this.fb.group(this.addrComponent.addressControls()),
+            brideParentsAddressResidence: this.fb.group(this.addrComponent.addressControls()),
+            isBrideParResAddressSame: this.fb.group({
+                code: [null]
+            }),
+        })
+        //forth end**
+
+        //Fifth step**
+        this.marriageSolemnizerDetails = this.fb.group({
+            priestFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+            priestMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
+            priestLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+            // gujarati field
+            priestFirstNameGuj: ['', [Validators.maxLength(150)]],
+            priestMiddleNameGuj: ['', [Validators.maxLength(150)]],
+            priestLastNameGuj: ['', [Validators.maxLength(150)]],
+            priestBirthDate: [null],
+            priestAge: [null, [Validators.required, Validators.min(18)]],
+            priestAadharNumber: ['', Validators.maxLength(12)],
+            priestAddress: this.fb.group(this.addrComponent.addressControls()),
+            priestAddressResidence: this.fb.group(this.addrComponent.addressControls()),
+            isPriestParResAddressSame: this.fb.group({
+                code: [null]
+            }),
+        })
+        //Fifth end**
+
+        //sixth step**
+        this.firstWitnessDetails = this.fb.group({
+            firstWitnessFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+            firstWitnessMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
+            firstWitnessLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+            firstWitnessFirstNameGuj: ['', [Validators.maxLength(150)]],
+            firstWitnessMiddleNameGuj: ['', [Validators.maxLength(150)]],
+            firstWitnessLastNameGuj: ['', [Validators.maxLength(150)]],
+            firstWitnessBirthDate: [null],
+            firstWitnessAge: [null, [Validators.required, Validators.min(18)]],
+            firstWitnessAadharNumber: ['', Validators.maxLength(12)],
+            firstWitnessAddress: this.fb.group(this.addrComponent.addressControls()),
+        })
+        //sixth end**
+
+        //seventh step**
+        this.secondWitnessDetails = this.fb.group({
+            secondWitnessFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+            secondWitnessMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
+            secondWitnessLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+            secondWitnessFirstNameGuj: ['', [Validators.maxLength(150)]],
+            secondWitnessMiddleNameGuj: ['', [Validators.maxLength(150)]],
+            secondWitnessLastNameGuj: ['', [Validators.maxLength(150)]],
+            secondWitnessBirthDate: [null],
+            secondWitnessAge: [null, [Validators.required, Validators.min(18)]],
+            secondWitnessAadharNumber: ['', Validators.maxLength(12)],
+            secondWitnessAddress: this.fb.group(this.addrComponent.addressControls()),
+        })
+        //seventh end**
+
+        //eighth start**
+        this.detailsOfBridegroomNRIWitness = this.fb.group({
             // nri witness
             groomNriFirstWitnessFirstName: [null, Validators.maxLength(50)],
             groomNriFirstWitnessMiddlName: [null, Validators.maxLength(50)],
@@ -803,8 +812,6 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             groomNriFirstWitnessAddress: [null, Validators.maxLength(500)],
             groomNriFirstWitnessAddressGuj: [null, Validators.maxLength(1500)],
             groomNriFirstWitnessBirthDate: [null],
-            groomNriFirstWitnessAge: [null],
-
             groomNriSecondWitnessFirstName: [null, Validators.maxLength(50)],
             groomNriSecondWitnessMiddlName: [null, Validators.maxLength(50)],
             groomNriSecondWitnessLastName: [null, Validators.maxLength(50)],
@@ -815,7 +822,12 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             groomNriSecondWitnessAddressGuj: [null, Validators.maxLength(1500)],
             groomNriSecondWitnessBirthDate: [null],
             groomNriSecondWitnessAge: [null],
+            groomNriFirstWitnessAge: [null],
+        })
+        //eighth end**
 
+
+        this.detailsOfBrideNRIWitness = this.fb.group({
             brideNriFirstWitnessFirstName: [null, Validators.maxLength(50)],
             brideNriFirstWitnessMiddlName: [null, Validators.maxLength(50)],
             brideNriFirstWitnessLastName: [null, Validators.maxLength(50)],
@@ -826,7 +838,6 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             brideNriFirstWitnessAddressGuj: [null, Validators.maxLength(1500)],
             brideNriFirstWitnessBirthDate: [null],
             brideNriFirstWitnessAge: [null],
-
             brideNriSecondWitnessFirstName: [null, Validators.maxLength(50)],
             brideNriSecondWitnessMiddlName: [null, Validators.maxLength(50)],
             brideNriSecondWitnessLastName: [null, Validators.maxLength(50)],
@@ -837,11 +848,48 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             brideNriSecondWitnessAddressGuj: [null, Validators.maxLength(1500)],
             brideNriSecondWitnessBirthDate: [null],
             brideNriSecondWitnessAge: [null],
-            groomDays: [null, Validators.max(365)],
-            brideDays: [null, Validators.max(365)],
+        })
 
+        //ten start**
+        this.applicantDetails = this.fb.group({
+            applicantRelation: this.fb.group({
+                code: [null, Validators.required]
+            }),
+            applicantRelationOther: [''],
+        })
+        //ten end**
+
+        this.attachmentDetail = this.fb.group({
+            attachments: []
+        })
+
+
+        this.marriageFormGroup = this.fb.group({
+            // extra's important controls 
+            apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+            serviceCode: null,
+            applicantAadharNumber: [''],
+            applicantEmail: [''],
+            // marriageRegistrationDate: [''],
+            //eighth step 63 count
+            uniqueIdProofLable: this.fb.group({
+                code: [null]
+            }),
+            uniqueIdProof: [''],
+            attachments: [''],
         });
 
+        this.commonService.createCloneAbstractControl(this.bridegroomDetails, this.marriageFormGroup)
+        this.commonService.createCloneAbstractControl(this.brideDetails, this.marriageFormGroup)
+        this.commonService.createCloneAbstractControl(this.fatherOfBridegroom, this.marriageFormGroup)
+        this.commonService.createCloneAbstractControl(this.fatherOfBride, this.marriageFormGroup)
+        this.commonService.createCloneAbstractControl(this.marriageSolemnizerDetails, this.marriageFormGroup)
+        this.commonService.createCloneAbstractControl(this.firstWitnessDetails, this.marriageFormGroup)
+        this.commonService.createCloneAbstractControl(this.secondWitnessDetails, this.marriageFormGroup)
+        this.commonService.createCloneAbstractControl(this.detailsOfBridegroomNRIWitness, this.marriageFormGroup)
+        this.commonService.createCloneAbstractControl(this.detailsOfBrideNRIWitness, this.marriageFormGroup) 
+        this.commonService.createCloneAbstractControl(this.applicantDetails, this.marriageFormGroup)
+        this.commonService.createCloneAbstractControl(this.attachmentDetail, this.marriageFormGroup)
     }
 
     controlName() {
@@ -1032,12 +1080,12 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         this.formControlNameToTabIndex.set('groomDays', 8);
         this.formControlNameToTabIndex.set('brideDays', 8);
 
-        if ((this.marriageFormGroup.get('isNriMarriage').value && this.marriageFormGroup.get('isGroomVisa').value) || (this.marriageFormGroup.get('isNriMarriage').value && this.marriageFormGroup.get('isBrideVisa').value)) {
+        if ((this.marriageFormGroup.get('isNriMarriage').value && this.bridegroomDetails.get('isGroomVisa').value) || (this.marriageFormGroup.get('isNriMarriage').value && this.brideDetails.get('isBrideVisa').value)) {
             this.formControlNameToTabIndex.set('applicantRelation', 8);
             this.formControlNameToTabIndex.set('applicantRelationOther', 8);
         }
 
-        else if (this.marriageFormGroup.get('isNriMarriage').value && (this.marriageFormGroup.get('isGroomVisa').value && this.marriageFormGroup.get('isBrideVisa').value)) {
+        else if (this.marriageFormGroup.get('isNriMarriage').value && (this.bridegroomDetails.get('isGroomVisa').value && this.brideDetails.get('isBrideVisa').value)) {
             this.formControlNameToTabIndex.set('applicantRelation', 9);
             this.formControlNameToTabIndex.set('applicantRelationOther', 9);
         }
@@ -1086,7 +1134,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 }
                 else {
                     this.addObject['checkedPar1'] = false;
-                    this.setValue('isGroomParResAddressSame', 'NO');
+                    this.setValue('isGroomParResAddressSame', 'NO', this.fatherOfBridegroom);
                 }
                 if (res.isBrideParResAddressSame.code == "YES") {
                     this.addObject['checkedPar2'] = true;
@@ -1094,7 +1142,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 }
                 else {
                     this.addObject['checkedPar2'] = false;
-                    this.setValue('isBrideParResAddressSame', 'NO');
+                    this.setValue('isBrideParResAddressSame', 'NO', this.fatherOfBride);
                 }
                 if (res.isPriestParResAddressSame.code == "YES") {
                     this.addObject['checkedPar3'] = true;
@@ -1102,24 +1150,34 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 }
                 else {
                     this.addObject['checkedPar3'] = false;
-                    this.setValue('isPriestParResAddressSame', 'NO');
+                    this.setValue('isPriestParResAddressSame', 'NO', this.marriageSolemnizerDetails);
                 }
                 if (res.isParentsAddressSameAsGroomAddress.code == "YES") {
                     this.addObject['checkedPar4'] = true;
                 }
                 else {
                     this.addObject['checkedPar4'] = false;
-                    this.setValue('isParentsAddressSameAsGroomAddress', 'NO');
+                    this.setValue('isParentsAddressSameAsGroomAddress', 'NO', this.fatherOfBridegroom);
                 }
                 if (res.isParentsAddressSameAsBrideAddress.code == "YES") {
                     this.addObject['checkedPar5'] = true;
                 }
                 else {
                     this.addObject['checkedPar5'] = false;
-                    this.setValue('isParentsAddressSameAsBrideAddress', 'NO');
+                    this.setValue('isParentsAddressSameAsBrideAddress', 'NO', this.fatherOfBride);
                 }
 
                 this.marriageFormGroup.patchValue(res);
+                this.bridegroomDetails.patchValue(res);
+                this.brideDetails.patchValue(res);
+                this.marriageSolemnizerDetails.patchValue(res)
+                this.applicantDetails.patchValue(res);
+                this.detailsOfBrideNRIWitness.patchValue(res);
+                this.detailsOfBridegroomNRIWitness.patchValue(res);
+                this.secondWitnessDetails.patchValue(res);
+                this.fatherOfBridegroom.patchValue(res);
+                this.firstWitnessDetails.patchValue(res);
+                this.fatherOfBride.patchValue(res)
                 this.checkReligion();
                 this.showButtons = true;
 
@@ -1161,11 +1219,21 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
                 if (!this.marriageFormGroup.controls.canEdit.value) {
                     this.marriageFormGroup.disable();
+                    this.bridegroomDetails.disable();
+                    this.brideDetails.disable();
+                    this.marriageSolemnizerDetails.disable(res)
+                    this.applicantDetails.disable(res);
+                    this.detailsOfBrideNRIWitness.disable(res);
+                    this.detailsOfBridegroomNRIWitness.disable(res);
+                    this.secondWitnessDetails.disable(res);
+                    this.fatherOfBridegroom.disable(res);
+                    this.firstWitnessDetails.disable(res);
+                    this.fatherOfBride.disable(res)
                 }
 
-                let groomVisa = this.marriageFormGroup.get("isGroomVisa").value;
+                let groomVisa = this.bridegroomDetails.get("isGroomVisa").value;
                 if (groomVisa == null) {
-                    this.marriageFormGroup.get("isGroomVisa").setValue(false);
+                    this.bridegroomDetails.get("isGroomVisa").setValue(false);
                 }
 
                 this.changeDocument();
@@ -1184,12 +1252,12 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
     disableAddress() {
 
-        this.marriageFormGroup.get('marriagePlace').get('country').setValue('INDIA');
-        this.marriageFormGroup.get('marriagePlace').get('state').setValue('GUJARAT');
-        this.marriageFormGroup.get('marriagePlace').get('city').setValue('Vadodara');
-        this.marriageFormGroup.get('marriagePlace').get('country').disable();
-        this.marriageFormGroup.get('marriagePlace').get('state').disable();
-        this.marriageFormGroup.get('marriagePlace').get('city').disable();
+        this.bridegroomDetails.get('marriagePlace').get('country').setValue('INDIA');
+        this.bridegroomDetails.get('marriagePlace').get('state').setValue('GUJARAT');
+        this.bridegroomDetails.get('marriagePlace').get('city').setValue('Vadodara');
+        // this.bridegroomDetails.get('marriagePlace').get('country').disable();
+        // this.bridegroomDetails.get('marriagePlace').get('state').disable();
+        // this.bridegroomDetails.get('marriagePlace').get('city').disable();
     }
 
 
@@ -1223,9 +1291,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * @param date : Input date(any format).
      * @param controlType : Input From Control.
      */
-    dateFormate(date, controlType: string) {
+    dateFormate(date, controlType: string, controllerName) {
         if (date) {
-            this.marriageFormGroup.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+            controllerName.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
         }
     }
 
@@ -1242,7 +1310,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     CalculateAge(controType: string) {
         if (controType) {
 
-            let marriagedate = this.marriageFormGroup.get("marriageDate").value;
+            let marriagedate = this.bridegroomDetails.get("marriageDate").value;
 
             if (marriagedate) {
                 // if (marriagedate == null) {
@@ -1250,32 +1318,32 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 // }
 
                 //display days and years
-                let mday = moment(this.marriageFormGroup.get("marriageDate").value, "YYYY-MM-DD");
+                let mday = moment(this.bridegroomDetails.get("marriageDate").value, "YYYY-MM-DD");
 
-                if (this.marriageFormGroup.get("groomBirthDate").value) {
-                    let bday = moment(this.marriageFormGroup.get("groomBirthDate").value, "YYYY-MM-DD");
+                if (this.bridegroomDetails.get("groomBirthDate").value) {
+                    let bday = moment(this.bridegroomDetails.get("groomBirthDate").value, "YYYY-MM-DD");
                     this.groomage = mday.diff(bday, 'years', false);
                     this.groomdays = mday.diff(bday.add(this.groomage, 'years'), 'days', false);
 
-                    this.marriageFormGroup.get("groomAge").setValue(this.groomage);
-                    this.marriageFormGroup.get("groomDays").setValue(this.groomdays);
+                    this.bridegroomDetails.get("groomAge").setValue(this.groomage);
+                    this.bridegroomDetails.get("groomDays").setValue(this.groomdays);
                 }
 
-                if (this.marriageFormGroup.get("brideBirthDate").value) {
-                    let bday = moment(this.marriageFormGroup.get("brideBirthDate").value, "YYYY-MM-DD");
+                if (this.brideDetails.get("brideBirthDate").value) {
+                    let bday = moment(this.brideDetails.get("brideBirthDate").value, "YYYY-MM-DD");
                     this.brideage = mday.diff(bday, 'years', false);
                     this.bridedays = mday.diff(bday.add(this.brideage, 'years'), 'days', false);
 
-                    this.marriageFormGroup.get("brideAge").setValue(this.brideage);
-                    this.marriageFormGroup.get("brideDays").setValue(this.bridedays);
+                    this.brideDetails.get("brideAge").setValue(this.brideage);
+                    this.brideDetails.get("brideDays").setValue(this.bridedays);
                 }
             } else {
                 this.touchedField('marriageDate');
                 this.commonService.openAlert("Warning", "Please select Date of Marriage", "warning");
-                this.marriageFormGroup.get("groomAge").setValue(null);
-                this.marriageFormGroup.get("brideAge").setValue(null);
-                this.marriageFormGroup.get("groomDays").setValue(null);
-                this.marriageFormGroup.get("brideDays").setValue(null);
+                this.bridegroomDetails.get("groomAge").setValue(null);
+                this.brideDetails.get("brideAge").setValue(null);
+                this.bridegroomDetails.get("groomDays").setValue(null);
+                this.brideDetails.get("brideDays").setValue(null);
                 this.groomage = null;
                 this.groomdays = null;
                 this.brideage = null;
@@ -1289,6 +1357,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * This Method is set Datepicker when marriage date selected.
      */
     birthCalendar() {
+        console.log(this.bridegroomDetails);
+        
         let marriagedate = this.marriageFormGroup.get("marriageDate").value;
 
         // this is year of Child marriage prevent
@@ -1336,15 +1406,15 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * This method is calculate age.
      * @param date : parents birth date
      */
-    parentAge(date: string, filed: string) {
+    parentAge(date: string, filed: string, controllerName) {
         let days = 0;
         let year = 0;
-        if (this.marriageFormGroup.get(date).value != null) {
-            let bday = moment(this.marriageFormGroup.get(date).value, "YYYY-MM-DD");
+        if (controllerName.get(date).value != null) {
+            let bday = moment(controllerName.get(date).value, "YYYY-MM-DD");
             year = moment().diff(bday, 'years', false);
             days = moment().diff(bday.add(year, 'years'), 'days', false);
             if (filed != '') {
-                this.marriageFormGroup.get(filed).setValue(year + " Year " + days + " Days");
+                controllerName.get(filed).setValue(year + " Year " + days + " Days");
             }
             return [year + " Year " + days + " Days"]
         }
@@ -1359,44 +1429,44 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     */
     changeFieldReset() {
         // nri witness fields
-        if (this.marriageFormGroup.get('isGroomVisa').value) {
-            this.nriWitenessFields('groom');
-            this.changeReflection('groom');
+        if (this.bridegroomDetails.get('isGroomVisa').value) {
+            this.nriWitenessFields('groom', this.detailsOfBridegroomNRIWitness);
+            this.changeReflection('groom', this.bridegroomDetails);
         }
-        if (this.marriageFormGroup.get('isBrideVisa').value) {
-            this.nriWitenessFields('bride');
-            this.changeReflection('bride');
+        if (this.brideDetails.get('isBrideVisa').value) {
+            this.nriWitenessFields('bride', this.detailsOfBrideNRIWitness);
+            this.changeReflection('bride', this.brideDetails);
         }
 
-        this.marriageFormGroup.get('isGroomVisa').setValue(false);
-        this.marriageFormGroup.get('isBrideVisa').setValue(false);
+        this.bridegroomDetails.get('isGroomVisa').setValue(false);
+        this.brideDetails.get('isBrideVisa').setValue(false);
 
-        this.marriageFormGroup.get('groomAddress').reset();
-        this.marriageFormGroup.get('brideAddress').reset();
+        this.bridegroomDetails.get('groomAddress').reset();
+        this.brideDetails.get('brideAddress').reset();
 
-        this.marriageFormGroup.get('groomParentsAddress').reset();
-        this.marriageFormGroup.get('groomParentsAddressResidence').reset();
+        this.fatherOfBridegroom.get('groomParentsAddress').reset();
+        this.fatherOfBridegroom.get('groomParentsAddressResidence').reset();
 
-        this.marriageFormGroup.get('brideParentsAddress').reset();
-        this.marriageFormGroup.get('brideParentsAddressResidence').reset();
+        this.fatherOfBride.get('brideParentsAddress').reset();
+        this.fatherOfBride.get('brideParentsAddressResidence').reset();
 
         this.addObject['checkedPar1'] = false;
         this.addObject['checkedPar2'] = false;
         this.addObject['checkedPar3'] = false;
         this.addObject['checkedPar4'] = false;
         this.addObject['checkedPar5'] = false;
-        this.marriageFormGroup.get('isGroomParResAddressSame').get('code').setValue('NO');
-        this.marriageFormGroup.get('isBrideParResAddressSame').get('code').setValue('NO');
-        this.marriageFormGroup.get('isParentsAddressSameAsGroomAddress').get('code').setValue('NO');
-        this.marriageFormGroup.get('isParentsAddressSameAsBrideAddress').get('code').setValue('NO');
+        this.fatherOfBridegroom.get('isGroomParResAddressSame').get('code').setValue('NO');
+        this.fatherOfBride.get('isBrideParResAddressSame').get('code').setValue('NO');
+        this.fatherOfBridegroom.get('isParentsAddressSameAsGroomAddress').get('code').setValue('NO');
+        this.fatherOfBride.get('isParentsAddressSameAsBrideAddress').get('code').setValue('NO');
 
-        this.marriageFormGroup.get('groomAddress').get('addressType').setValue('GROOM_ADDRESS');
-        this.marriageFormGroup.get('brideAddress').get('addressType').setValue('BRIDE_ADDRESS');
+        this.bridegroomDetails.get('groomAddress').get('addressType').setValue('GROOM_ADDRESS');
+        this.brideDetails.get('brideAddress').get('addressType').setValue('BRIDE_ADDRESS');
 
-        this.marriageFormGroup.get('groomParentsAddress').get('addressType').setValue('GROOM_PARENTS_ADDRESS');
-        this.marriageFormGroup.get('groomParentsAddressResidence').get('addressType').setValue('GROOM_PARENTS_ADDRESS_RESIDENCE');
-        this.marriageFormGroup.get('brideParentsAddress').get('addressType').setValue('BRIDE_PARENTS_ADDRESS');
-        this.marriageFormGroup.get('brideParentsAddressResidence').get('addressType').setValue('GROOM_PARENTS_ADDRESS_RESIDENCE');
+        this.fatherOfBridegroom.get('groomParentsAddress').get('addressType').setValue('GROOM_PARENTS_ADDRESS');
+        this.fatherOfBridegroom.get('groomParentsAddressResidence').get('addressType').setValue('GROOM_PARENTS_ADDRESS_RESIDENCE');
+        this.fatherOfBride.get('brideParentsAddress').get('addressType').setValue('BRIDE_PARENTS_ADDRESS');
+        this.fatherOfBride.get('brideParentsAddressResidence').get('addressType').setValue('GROOM_PARENTS_ADDRESS_RESIDENCE');
         this.requiredDocumentList()
     }
 
@@ -1404,70 +1474,38 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * This method is Reset Visa related field.
      * @param person : Groom or Bride (Change Event).
      */
-    changeReflection(person: string) {
-        this.marriageFormGroup.get(`${person}PassportNumber`).reset();
-        this.marriageFormGroup.get(`${person}NriStatus`).reset();
-        this.marriageFormGroup.get(`${person}CountryName`).reset();
-        this.marriageFormGroup.get(`${person}VisaNumber`).reset();
-        this.marriageFormGroup.get(`${person}VisaFrom`).reset();
-        this.marriageFormGroup.get(`${person}VisaTo`).reset();
-        this.marriageFormGroup.get(`${person}SocialSecurityNumber`).reset();
-        this.marriageFormGroup.get(`${person}Eligibility`).reset();
-        this.marriageFormGroup.get(`${person}Designation`).reset();
-        this.marriageFormGroup.get(`${person}PhoneNumber`).reset();
-        this.marriageFormGroup.get(`${person}Email`).reset();
-        this.marriageFormGroup.get(`${person}CompanyName`).reset();
-        this.marriageFormGroup.get(`${person}CompanyAddress`).reset();
-        this.marriageFormGroup.get(`${person}CompanyPhoneNumber`).reset();
+    changeReflection(person: string, controllerName) {
+        controllerName.get(`${person}PassportNumber`).reset();
+        controllerName.get(`${person}NriStatus`).reset();
+        controllerName.get(`${person}CountryName`).reset();
+        controllerName.get(`${person}VisaNumber`).reset();
+        controllerName.get(`${person}VisaFrom`).reset();
+        controllerName.get(`${person}VisaTo`).reset();
+        controllerName.get(`${person}SocialSecurityNumber`).reset();
+        controllerName.get(`${person}Eligibility`).reset();
+        controllerName.get(`${person}Designation`).reset();
+        controllerName.get(`${person}PhoneNumber`).reset();
+        controllerName.get(`${person}Email`).reset();
+        controllerName.get(`${person}CompanyName`).reset();
+        controllerName.get(`${person}CompanyAddress`).reset();
+        controllerName.get(`${person}CompanyPhoneNumber`).reset();
 
         // convert uppercase
         let getName = this.capitalizeFirstLetter(person);
-        this.marriageFormGroup.get(`nri${getName}Address`).reset();
-        this.marriageFormGroup.get(`nri${getName}ParentsAddress`).reset();
+        controllerName.get(`nri${getName}Address`).reset();
+        person == 'bride' ? this.fatherOfBride.get(`nri${getName}ParentsAddress`).reset() :this.fatherOfBridegroom.get(`nri${getName}ParentsAddress`).reset();
 
-        if (this.marriageFormGroup.get(`is${getName}Visa`).value) {
-
-            this.marriageFormGroup.get(`${person}PassportNumber`).setValidators([Validators.required, Validators.maxLength(9)]);
-            this.marriageFormGroup.get(`${person}NriStatus`).setValidators([Validators.required, Validators.maxLength(50)]);
-            this.marriageFormGroup.get(`${person}CountryName`).setValidators(Validators.required);
-            this.marriageFormGroup.get(`${person}VisaNumber`).setValidators([Validators.required, Validators.maxLength(9)]);
-            this.marriageFormGroup.get(`${person}VisaFrom`).setValidators(Validators.required);
-            this.marriageFormGroup.get(`${person}VisaTo`).setValidators(Validators.required);
-            this.marriageFormGroup.get(`${person}SocialSecurityNumber`).setValidators([Validators.required, Validators.maxLength(9)]);
-            this.marriageFormGroup.get(`${person}Eligibility`).setValidators([Validators.required, Validators.maxLength(50)]);
-            this.marriageFormGroup.get(`${person}Designation`).setValidators([Validators.required, Validators.maxLength(50)]);
-            this.marriageFormGroup.get(`${person}PhoneNumber`).setValidators([Validators.required, Validators.maxLength(10),Validators.minLength(10)]);
-            this.marriageFormGroup.get(`${person}Email`).setValidators([Validators.required, Validators.maxLength(50),Validators.email, ValidationService.emailValidator]);
-            this.marriageFormGroup.get(`${person}CompanyName`).setValidators([Validators.maxLength(100)]);
-            this.marriageFormGroup.get(`${person}CompanyAddress`).setValidators([Validators.maxLength(500)]);
-            this.marriageFormGroup.get(`${person}CompanyPhoneNumber`).setValidators([Validators.maxLength(10),Validators.minLength(10)]);
-
-            this.marriageFormGroup.get(`nri${getName}Address`).setValidators(Validators.required);
-            this.marriageFormGroup.get(`nri${getName}ParentsAddress`).setValidators(Validators.required);
+        if(person == 'bride'){
+            this.getValidationOnBride(person , this.detailsOfBrideNRIWitness , getName)
+            this.removeValidationOnBride(person , this.brideDetails, getName)
+        }else{
+            this.getValidationOnGroom(person , this.detailsOfBridegroomNRIWitness, getName)
+            this.removeValidationOnBride(person , this.bridegroomDetails, getName)
         }
-        else {
-
-            this.marriageFormGroup.get(`${person}PassportNumber`).clearValidators();
-            this.marriageFormGroup.get(`${person}NriStatus`).clearValidators();
-            this.marriageFormGroup.get(`${person}CountryName`).clearValidators();
-            this.marriageFormGroup.get(`${person}VisaNumber`).clearValidators();
-            this.marriageFormGroup.get(`${person}VisaFrom`).clearValidators();
-            this.marriageFormGroup.get(`${person}VisaTo`).clearValidators();
-            this.marriageFormGroup.get(`${person}SocialSecurityNumber`).clearValidators();
-            this.marriageFormGroup.get(`${person}Eligibility`).clearValidators();
-            this.marriageFormGroup.get(`${person}Designation`).clearValidators();
-            this.marriageFormGroup.get(`${person}PhoneNumber`).clearValidators();
-            this.marriageFormGroup.get(`${person}Email`).clearValidators();
-            this.marriageFormGroup.get(`${person}CompanyName`).clearValidators();
-            this.marriageFormGroup.get(`${person}CompanyAddress`).clearValidators();
-            this.marriageFormGroup.get(`${person}CompanyPhoneNumber`).clearValidators();
-
-            this.marriageFormGroup.get(`nri${getName}Address`).clearValidators();
-            this.marriageFormGroup.get(`nri${getName}ParentsAddress`).clearValidators();
-        }
-        this.marriageFormGroup.get(`${person}CountryName`).updateValueAndValidity();
+        
+        controllerName.get(`${person}CountryName`).updateValueAndValidity();
         this.CD.detectChanges();
-
+        this.changeInMainController(person)
     }
 
     capitalizeFirstLetter(s: string) {
@@ -1477,58 +1515,38 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * This method is Reset Visa related field.
      * @param person : Groom or Bride (Change Event).
      */
-    nriWitenessFields(person: string) {
+    nriWitenessFields(person: string, controllerName) {
 
-        this.marriageFormGroup.get(`${person}NriFirstWitnessFirstName`).reset();
-        this.marriageFormGroup.get(`${person}NriFirstWitnessMiddlName`).reset();
-        this.marriageFormGroup.get(`${person}NriFirstWitnessLastName`).reset();
-        this.marriageFormGroup.get(`${person}NriFirstWitnessFirstNameGuj`).reset();
-        this.marriageFormGroup.get(`${person}NriFirstWitnessMiddlNameGuj`).reset();
-        this.marriageFormGroup.get(`${person}NriFirstWitnessLastNameGuj`).reset();
-        this.marriageFormGroup.get(`${person}NriFirstWitnessAddress`).reset();
-        this.marriageFormGroup.get(`${person}NriFirstWitnessAddressGuj`).reset();
-        this.marriageFormGroup.get(`${person}NriFirstWitnessBirthDate`).setValue('');
+        controllerName.get(`${person}NriFirstWitnessFirstName`).reset();
+        controllerName.get(`${person}NriFirstWitnessMiddlName`).reset();
+        controllerName.get(`${person}NriFirstWitnessLastName`).reset();
+        controllerName.get(`${person}NriFirstWitnessFirstNameGuj`).reset();
+        controllerName.get(`${person}NriFirstWitnessMiddlNameGuj`).reset();
+        controllerName.get(`${person}NriFirstWitnessLastNameGuj`).reset();
+        controllerName.get(`${person}NriFirstWitnessAddress`).reset();
+        controllerName.get(`${person}NriFirstWitnessAddressGuj`).reset();
+        controllerName.get(`${person}NriFirstWitnessBirthDate`).setValue('');
 
-        this.marriageFormGroup.get(`${person}NriSecondWitnessFirstName`).reset();
-        this.marriageFormGroup.get(`${person}NriSecondWitnessMiddlName`).reset();
-        this.marriageFormGroup.get(`${person}NriSecondWitnessLastName`).reset();
-        this.marriageFormGroup.get(`${person}NriSecondWitnessFirstNameGuj`).reset();
-        this.marriageFormGroup.get(`${person}NriSecondWitnessMiddlNameGuj`).reset();
-        this.marriageFormGroup.get(`${person}NriSecondWitnessLastNameGuj`).reset();
-        this.marriageFormGroup.get(`${person}NriSecondWitnessAddress`).reset();
-        this.marriageFormGroup.get(`${person}NriSecondWitnessAddressGuj`).reset();
-        this.marriageFormGroup.get(`${person}NriSecondWitnessBirthDate`).reset();
+        controllerName.get(`${person}NriSecondWitnessFirstName`).reset();
+        controllerName.get(`${person}NriSecondWitnessMiddlName`).reset();
+        controllerName.get(`${person}NriSecondWitnessLastName`).reset();
+        controllerName.get(`${person}NriSecondWitnessFirstNameGuj`).reset();
+        controllerName.get(`${person}NriSecondWitnessMiddlNameGuj`).reset();
+        controllerName.get(`${person}NriSecondWitnessLastNameGuj`).reset();
+        controllerName.get(`${person}NriSecondWitnessAddress`).reset();
+        controllerName.get(`${person}NriSecondWitnessAddressGuj`).reset();
+        controllerName.get(`${person}NriSecondWitnessBirthDate`).reset();
 
         // convert uppercase
         let getName = this.capitalizeFirstLetter(person);
-        this.marriageFormGroup.get(`nri${getName}Address`).reset();
-
-        if (this.marriageFormGroup.get(`is${getName}Visa`).value) {
-
-            this.marriageFormGroup.get(`${person}NriFirstWitnessFirstName`).setValidators([Validators.required, Validators.maxLength(50)]);
-            this.marriageFormGroup.get(`${person}NriFirstWitnessLastName`).setValidators([Validators.required, Validators.maxLength(50)]);
-            this.marriageFormGroup.get(`${person}NriFirstWitnessAddress`).setValidators([Validators.required, Validators.maxLength(500)]);
-            this.marriageFormGroup.get(`${person}NriFirstWitnessBirthDate`).setValidators(Validators.required);
-
-            this.marriageFormGroup.get(`${person}NriSecondWitnessFirstName`).setValidators([Validators.required, Validators.maxLength(50)]);
-            this.marriageFormGroup.get(`${person}NriSecondWitnessLastName`).setValidators([Validators.required, Validators.maxLength(50)]);
-            this.marriageFormGroup.get(`${person}NriSecondWitnessAddress`).setValidators([Validators.required, Validators.maxLength(500)]);
-            this.marriageFormGroup.get(`${person}NriSecondWitnessBirthDate`).setValidators(Validators.required);
-
+        person == 'bride' ? this.brideDetails.get(`nri${getName}Address`).reset() :   this.bridegroomDetails.get(`nri${getName}Address`).reset();
+        
+        if(person == 'bride'){
+            this.getValidationOnBride(person , this.detailsOfBrideNRIWitness, getName)
+        }else{
+            this.getValidationOnGroom(person , this.detailsOfBridegroomNRIWitness, getName)
         }
-        else {
-
-            this.marriageFormGroup.get(`${person}NriFirstWitnessFirstName`).clearValidators();
-            this.marriageFormGroup.get(`${person}NriFirstWitnessLastName`).clearValidators();
-            this.marriageFormGroup.get(`${person}NriFirstWitnessAddress`).clearValidators();
-            this.marriageFormGroup.get(`${person}NriFirstWitnessBirthDate`).clearValidators();
-
-            this.marriageFormGroup.get(`${person}NriSecondWitnessFirstName`).clearValidators();
-            this.marriageFormGroup.get(`${person}NriSecondWitnessLastName`).clearValidators();
-            this.marriageFormGroup.get(`${person}NriSecondWitnessAddress`).clearValidators();
-            this.marriageFormGroup.get(`${person}NriSecondWitnessBirthDate`).clearValidators();
-
-        }
+        
         // this.marriageFormGroup.get(`${person}Country`).updateValueAndValidity();
         this.CD.detectChanges();
     }
@@ -1538,9 +1556,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * @param person : Groom or Bride(Change Event).
      * @param type : Addrerss Type.
      */
-    resetAddress(person: string, type: string) {
-        this.marriageFormGroup.get(person).reset();
-        this.marriageFormGroup.get(person).get('addressType').setValue(type);
+    resetAddress(person: string, type: string, controllerName) {
+        controllerName.get(person).reset();
+        controllerName.get(person).get('addressType').setValue(type);
     }
 
     /**
@@ -1564,8 +1582,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     changeDocument() {
 
 
-        let marriageTimeGroomStatus = this.marriageFormGroup.get('marriageTimeGroomStatus').get('code').value;
-        let marriageTimeBrideStatus = this.marriageFormGroup.get('marriageTimeBrideStatus').get('code').value;
+        let marriageTimeGroomStatus = this.bridegroomDetails.get('marriageTimeGroomStatus').get('code').value;
+        let marriageTimeBrideStatus = this.brideDetails.get('marriageTimeBrideStatus').get('code').value;
 
         _.forEach(this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
             if (value['documentIdentifier'] === 'VALID_DIVORCE_PAPER' || value['documentIdentifier'] == "DEATH_CERTIFICATE") {
@@ -1617,9 +1635,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
         this.uploadFilesArray = [];
 
-        let organizationCategory = this.marriageFormGroup.get('groomReligion').value.code;
-        let groomVisa = this.marriageFormGroup.get("isGroomVisa").value;
-        let brideVisa = this.marriageFormGroup.get('isBrideVisa').value;
+        let organizationCategory = this.bridegroomDetails.get('groomReligion').value.code;
+        let groomVisa = this.bridegroomDetails.get("isGroomVisa").value;
+        let brideVisa = this.brideDetails.get('isBrideVisa').value;
         this.listOfDependentAtt = [];
         this.listOfDependentAtt.push(organizationCategory);
         this.listOfDependentAtt.push(groomVisa);
@@ -1739,8 +1757,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     }
 
     onChangeWitnessNameValidation(event, firstNameWitness) {
-        if (event.target.value === "" || this.marriageFormGroup.get(firstNameWitness).invalid) {
-            this.marriageFormGroup.get(firstNameWitness).setValue(null);
+        if (event.target.value === "" || this.firstWitnessDetails.get(firstNameWitness).invalid) {
+            this.firstWitnessDetails.get(firstNameWitness).setValue(null);
             this.commonService.openAlert("Warning", "Please fill all the field correctly", "warning");
         }
     }
@@ -1750,13 +1768,13 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      */
     checkReligion() {
         //check religion is same or not    
-        let groomreligionChange = this.marriageFormGroup.controls.groomReligion.get("code").value;
-        let bridereligionChange = this.marriageFormGroup.controls.brideReligion.get("code").value;
+        let groomreligionChange = this.bridegroomDetails.controls.groomReligion.get("code").value;
+        let bridereligionChange = this.brideDetails.controls.brideReligion.get("code").value;
         this.requiredDocumentList();
 
         if (!_.isEmpty(groomreligionChange) && !_.isEmpty(bridereligionChange)) {
             if (bridereligionChange != groomreligionChange) {
-                this.marriageFormGroup.get('brideReligion').reset();
+                this.brideDetails.get('brideReligion').reset();
                 this.religionGujbride = "";
                 this.commonService.openAlert("Warning", "Bride Groom and Bride religion must be same. Your Marriage has to be Registered under Special Marriage Act. Kindly contact office of Special Marriage Registration at Kuber Bhavan, Kothi char Rasta, Vadodara", "warning");
             }
@@ -1789,19 +1807,19 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     /**
      * This method is use reset value. 
      */
-    changeReset(controlName: string) {
+    changeReset(controlName: string, controllerName) {
 
-        this.marriageFormGroup.get('nriGroomParentsAddress').clearValidators();
-        this.marriageFormGroup.get('nriBrideParentsAddress').clearValidators();
-        this.marriageFormGroup.get(controlName).reset();
+        this.fatherOfBridegroom.get('nriGroomParentsAddress').clearValidators();
+        this.fatherOfBride.get('nriBrideParentsAddress').clearValidators();
+        controllerName.get(controlName).reset();
 
-        if (this.marriageFormGroup.get('applicantRelation').get('code').valid) {
-            if (this.marriageFormGroup.get('applicantRelation').get('code').value == 'MR_OTHER_APPLICANT_RELATION') {
-                this.marriageFormGroup.get('applicantRelationOther').setValidators([Validators.required]);
+        if (this.applicantDetails.get('applicantRelation').get('code').valid) {
+            if (this.applicantDetails.get('applicantRelation').get('code').value == 'MR_OTHER_APPLICANT_RELATION') {
+                this.applicantDetails.get('applicantRelationOther').setValidators([Validators.required]);
             } else {
-                this.marriageFormGroup.get('applicantRelationOther').clearValidators();
+                this.applicantDetails.get('applicantRelationOther').clearValidators();
             }
-            this.marriageFormGroup.get('applicantRelationOther').updateValueAndValidity();
+            this.applicantDetails.get('applicantRelationOther').updateValueAndValidity();
             this.CD.detectChanges();
         }
     }
@@ -1819,8 +1837,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * @param controlName : From control name.
      * @param value : control value.
      */
-    setValue(controlName: string, value: string) {
-        this.marriageFormGroup.get(controlName).get('code').setValue(value);
+    setValue(controlName: string, value: string, controllerName) {
+        controllerName.get(controlName).get('code').setValue(value);
     }
 
     /**
@@ -1831,155 +1849,51 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * @param controlsecond : for copy address.
      * @param add : Static variable index.
      */
-    checkBox(event, ischeck: string, controlfirst: string, controlsecond: string, add: string) {
+    checkBox(event, ischeck: string, controlfirst: string, controlsecond: string, add: string, controllerName, secondControllerName) {
 
-        let firstControl = this.marriageFormGroup.get(controlfirst);
-        let secondControl = this.marriageFormGroup.get(controlsecond);
-        let addressType = this.marriageFormGroup.get(controlsecond).get('addressType').value;
-        let resAddressType = this.marriageFormGroup.get(controlfirst).get('addressType').value;
+        let firstControl = controllerName.get(controlfirst);
+        let secondControl = secondControllerName.get(controlsecond);
+        let addressType = secondControllerName.get(controlsecond).get('addressType').value;
+        let resAddressType = controllerName.get(controlfirst).get('addressType').value;
 
         if (event.checked) {
             this.addObject[`checkedPar${add}`] = true;
             // this.marriageFormGroup.get(ischeck).get('code').setValue("YES");
-            this.setValue(ischeck, 'YES');
+            this.setValue(ischeck, 'YES', controllerName);
             firstControl.setValue(secondControl.value);
             firstControl.disable();
-            this.marriageFormGroup.get(controlsecond).get('addressType').setValue(addressType);
-            this.marriageFormGroup.get(controlfirst).get('addressType').setValue(resAddressType);
+            secondControllerName.get(controlsecond).get('addressType').setValue(addressType);
+            controllerName.get(controlfirst).get('addressType').setValue(resAddressType);
         }
         else {
             this.addObject[`checkedPar${add}`] = false;
             firstControl.reset();
             firstControl.enable();
-            this.marriageFormGroup.get(controlsecond).get('addressType').setValue(addressType);
-            this.marriageFormGroup.get(controlfirst).get('addressType').setValue(resAddressType);
+            secondControllerName.get(controlsecond).get('addressType').setValue(addressType);
+            controllerName.get(controlfirst).get('addressType').setValue(resAddressType);
             // this.marriageFormGroup.get(ischeck).get('code').setValue("NO");
-            this.setValue(ischeck, 'NO');
+            this.setValue(ischeck, 'NO', controllerName);
         }
-        this.marriageFormGroup.controls.groomParentsAddress.valueChanges.subscribe(data => {
-            if (this.marriageFormGroup.get('isGroomParResAddressSame').get('code').value == "YES") {
+        this.fatherOfBridegroom.controls.groomParentsAddress.valueChanges.subscribe(data => {
+            if (this.fatherOfBridegroom.get('isGroomParResAddressSame').get('code').value == "YES") {
                 this.addressPatchValue({ checked: true });
             }
         });
-        this.marriageFormGroup.controls.brideParentsAddress.valueChanges.subscribe(data => {
-            if (this.marriageFormGroup.get('isBrideParResAddressSame').get('code').value == "YES") {
+        this.fatherOfBride.controls.brideParentsAddress.valueChanges.subscribe(data => {
+            if (this.fatherOfBride.get('isBrideParResAddressSame').get('code').value == "YES") {
                 this.addressPatchValue({ checked: true });
             }
         });
-        this.marriageFormGroup.controls.priestAddress.valueChanges.subscribe(data => {
-            if (this.marriageFormGroup.get('isPriestParResAddressSame').get('code').value == "YES") {
+        this.marriageSolemnizerDetails.controls.priestAddress.valueChanges.subscribe(data => {
+            if (this.marriageSolemnizerDetails.get('isPriestParResAddressSame').get('code').value == "YES") {
                 this.addressPatchValue({ checked: true });
             }
         });
     }
 
-
-    /**
-     * This method required for final form submition.
-     * @param flag - flag of invalid control.
-     */
-    // handleErrorsOnSubmit(flag) {
-    //     let step1 = 17;
-    //     let step2 = 26;
-    //     let step3 = 34;
-    //     let step4 = 42;
-    //     let step5 = 50;
-    //     let step6 = 56;
-    //     let step7 = 62;
-    //     let step8 = 65;
-    //     let step11 = 140;
-    //     if (flag != null) {
-    //         //Check validation for step by step
-    //         let count = flag;
-    //         //second condition for NIR marriage
-    //         if ((count <= step1) || (count >= 90 && count <= 103)) {
-    //             this.tabIndex = 0;
-    //             return false;
-    //         } else if ((count <= step2) || (count >= 103 && count <= 118)) {
-    //             this.tabIndex = 1;
-    //             return false;
-    //         } else if ((count <= step3) || (count == 119)) {
-    //             this.tabIndex = 2;
-    //             return false;
-    //         } else if ((count <= step4) || (count == 120)) {
-    //             this.tabIndex = 3;
-    //             return false;
-    //         } else if (count <= step5) {
-    //             this.tabIndex = 4;
-    //             return false;
-    //         } else if (count <= step6) {
-    //             this.tabIndex = 5;
-    //             return false;
-    //         } else if (count <= step7) {
-    //             this.tabIndex = 6;
-    //             return false;
-    //         }
-    //         else if ((count >= 121 && count <= 138) && (this.marriageFormGroup.get('isGroomVisa').value)) {
-    //             this.tabIndex = 7;
-    //             return false;
-    //         }
-    //         else if ((count >= 139 && count <= 156) && (this.marriageFormGroup.get('isBrideVisa').value)) {
-    //             if (!this.marriageFormGroup.get('isGroomVisa').value) {
-    //                 this.tabIndex = 7;
-    //             }
-    //             else {
-    //                 this.tabIndex = 8;
-    //             }
-    //             return false;
-    //         }
-    //         else if (count <= step8) {
-
-    //             if (this.marriageFormGroup.get('isGroomVisa').value && (this.marriageFormGroup.get('isBrideVisa').value)) {
-    //                 this.tabIndex = 9;
-    //             }
-    //             else if (this.marriageFormGroup.get('isGroomVisa').value || (this.marriageFormGroup.get('isBrideVisa').value)) {
-    //                 this.tabIndex = 8;
-    //             }
-    //             else {
-    //                 this.tabIndex = 7;
-    //             }
-    //             return false;
-    //         }
-    //         else if (count == 67 || count <= step11) {
-
-    //             this.checkReligion();
-
-    //             if (this.marriageFormGroup.get('isGroomVisa').value && (this.marriageFormGroup.get('isBrideVisa').value)) {
-    //                 this.tabIndex = 10;
-    //             }
-    //             else if (this.marriageFormGroup.get('isGroomVisa').value || (this.marriageFormGroup.get('isBrideVisa').value)) {
-    //                 this.tabIndex = 9;
-    //             }
-    //             else {
-    //                 this.tabIndex = 8;
-    //             }
-    //         }
-    //         else {
-
-    //             if (this.marriageFormGroup.get('isGroomVisa').value && (this.marriageFormGroup.get('isBrideVisa').value)) {
-    //                 this.tabIndex = 10;
-    //             }
-    //             else if (this.marriageFormGroup.get('isGroomVisa').value || (this.marriageFormGroup.get('isBrideVisa').value)) {
-    //                 this.tabIndex = 9;
-    //             }
-    //             else {
-    //                 this.tabIndex = 8;
-    //             }
-    //         }
-
-    //     }
-    // }
-
-    /**
-     * This method use to get output event of tab change
-     * @param evt - Tab index
-     */
-    onTabChange(evt) {
-        this.tabIndex = evt;
-    }
 
     touchedField(formControlName: string) {
-        this.marriageFormGroup.get(formControlName).markAsTouched();
+        this.bridegroomDetails.get(formControlName).markAsTouched();
     }
 
     /**
@@ -2043,9 +1957,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     }
 
     setBrideReligion(evt) {
-        console.log(this.marriageFormGroup.get('groomReligion').value);
-        this.marriageFormGroup.get('brideReligion').setValue(this.marriageFormGroup.get('groomReligion').value);
-        this.religionGujbride = this.marriageFormGroup.get('groomReligion').get('gujName').value
+        console.log(this.bridegroomDetails.get('groomReligion').value);
+        this.brideDetails.get('brideReligion').setValue(this.bridegroomDetails.get('groomReligion').value);
+        this.religionGujbride = this.bridegroomDetails.get('groomReligion').get('gujName').value
 
     }
 
@@ -2101,14 +2015,270 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     /**
     * This method is change date format 
     */
-    dateFormateOne(date, controlType) {
+    dateFormateOne(date, controlType, ) {
         this.appointmentForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
         this.resetFormValue();
     }
 
     addressPatchValue(event) {
-        this.marriageFormGroup.get('groomParentsAddressResidence').setValue(this.marriageFormGroup.get('groomParentsAddress').value);
-        this.marriageFormGroup.get('brideParentsAddressResidence').setValue(this.marriageFormGroup.get('brideParentsAddress').value);
-        this.marriageFormGroup.get('priestAddressResidence').setValue(this.marriageFormGroup.get('priestAddress').value);
+        this.fatherOfBridegroom.get('groomParentsAddressResidence').setValue(this.fatherOfBridegroom.get('groomParentsAddress').value);
+        this.fatherOfBride.get('brideParentsAddressResidence').setValue(this.fatherOfBride.get('brideParentsAddress').value);
+        this.marriageSolemnizerDetails.get('priestAddressResidence').setValue(this.marriageSolemnizerDetails.get('priestAddress').value);
     }
+
+    changeInMainController(person: string) {
+        this.marriageFormGroup.get(`${person}PassportNumber`).reset();
+        this.marriageFormGroup.get(`${person}NriStatus`).reset();
+        this.marriageFormGroup.get(`${person}CountryName`).reset();
+        this.marriageFormGroup.get(`${person}VisaNumber`).reset();
+        this.marriageFormGroup.get(`${person}VisaFrom`).reset();
+        this.marriageFormGroup.get(`${person}VisaTo`).reset();
+        this.marriageFormGroup.get(`${person}SocialSecurityNumber`).reset();
+        this.marriageFormGroup.get(`${person}Eligibility`).reset();
+        this.marriageFormGroup.get(`${person}Designation`).reset();
+        this.marriageFormGroup.get(`${person}PhoneNumber`).reset();
+        this.marriageFormGroup.get(`${person}Email`).reset();
+        this.marriageFormGroup.get(`${person}CompanyName`).reset();
+        this.marriageFormGroup.get(`${person}CompanyAddress`).reset();
+        this.marriageFormGroup.get(`${person}CompanyPhoneNumber`).reset();
+
+        // convert uppercase
+        let getName = this.capitalizeFirstLetter(person);
+        this.marriageFormGroup.get(`nri${getName}Address`).reset();
+        this.marriageFormGroup.get(`nri${getName}ParentsAddress`).reset();
+
+        if (this.marriageFormGroup.get(`is${getName}Visa`).value) {
+
+            this.marriageFormGroup.get(`${person}PassportNumber`).setValidators([Validators.required, Validators.maxLength(9)]);
+            this.marriageFormGroup.get(`${person}NriStatus`).setValidators([Validators.required, Validators.maxLength(50)]);
+            this.marriageFormGroup.get(`${person}CountryName`).setValidators(Validators.required);
+            this.marriageFormGroup.get(`${person}VisaNumber`).setValidators([Validators.required, Validators.maxLength(9)]);
+            this.marriageFormGroup.get(`${person}VisaFrom`).setValidators(Validators.required);
+            this.marriageFormGroup.get(`${person}VisaTo`).setValidators(Validators.required);
+            this.marriageFormGroup.get(`${person}SocialSecurityNumber`).setValidators([Validators.required, Validators.maxLength(9)]);
+            this.marriageFormGroup.get(`${person}Eligibility`).setValidators([Validators.required, Validators.maxLength(50)]);
+            this.marriageFormGroup.get(`${person}Designation`).setValidators([Validators.required, Validators.maxLength(50)]);
+            this.marriageFormGroup.get(`${person}PhoneNumber`).setValidators([Validators.required, Validators.maxLength(10), Validators.minLength(10)]);
+            this.marriageFormGroup.get(`${person}Email`).setValidators([Validators.required, Validators.maxLength(50), Validators.email, ValidationService.emailValidator]);
+            this.marriageFormGroup.get(`${person}CompanyName`).setValidators([Validators.maxLength(100)]);
+            this.marriageFormGroup.get(`${person}CompanyAddress`).setValidators([Validators.maxLength(500)]);
+            this.marriageFormGroup.get(`${person}CompanyPhoneNumber`).setValidators([Validators.maxLength(10), Validators.minLength(10)]);
+
+            this.marriageFormGroup.get(`nri${getName}Address`).setValidators(Validators.required);
+            this.marriageFormGroup.get(`nri${getName}ParentsAddress`).setValidators(Validators.required);
+        }
+        else {
+
+            this.marriageFormGroup.get(`${person}PassportNumber`).clearValidators();
+            this.marriageFormGroup.get(`${person}NriStatus`).clearValidators();
+            this.marriageFormGroup.get(`${person}CountryName`).clearValidators();
+            this.marriageFormGroup.get(`${person}VisaNumber`).clearValidators();
+            this.marriageFormGroup.get(`${person}VisaFrom`).clearValidators();
+            this.marriageFormGroup.get(`${person}VisaTo`).clearValidators();
+            this.marriageFormGroup.get(`${person}SocialSecurityNumber`).clearValidators();
+            this.marriageFormGroup.get(`${person}Eligibility`).clearValidators();
+            this.marriageFormGroup.get(`${person}Designation`).clearValidators();
+            this.marriageFormGroup.get(`${person}PhoneNumber`).clearValidators();
+            this.marriageFormGroup.get(`${person}Email`).clearValidators();
+            this.marriageFormGroup.get(`${person}CompanyName`).clearValidators();
+            this.marriageFormGroup.get(`${person}CompanyAddress`).clearValidators();
+            this.marriageFormGroup.get(`${person}CompanyPhoneNumber`).clearValidators();
+
+            this.marriageFormGroup.get(`nri${getName}Address`).clearValidators();
+            this.marriageFormGroup.get(`nri${getName}ParentsAddress`).clearValidators();
+        }
+        this.marriageFormGroup.get(`${person}CountryName`).updateValueAndValidity();
+        this.CD.detectChanges();
+
+    }
+
+    nriWitenessFieldsChangeMainController(person: string) {
+
+        this.marriageFormGroup.get(`${person}NriFirstWitnessFirstName`).reset();
+        this.marriageFormGroup.get(`${person}NriFirstWitnessMiddlName`).reset();
+        this.marriageFormGroup.get(`${person}NriFirstWitnessLastName`).reset();
+        this.marriageFormGroup.get(`${person}NriFirstWitnessFirstNameGuj`).reset();
+        this.marriageFormGroup.get(`${person}NriFirstWitnessMiddlNameGuj`).reset();
+        this.marriageFormGroup.get(`${person}NriFirstWitnessLastNameGuj`).reset();
+        this.marriageFormGroup.get(`${person}NriFirstWitnessAddress`).reset();
+        this.marriageFormGroup.get(`${person}NriFirstWitnessAddressGuj`).reset();
+        this.marriageFormGroup.get(`${person}NriFirstWitnessBirthDate`).setValue('');
+
+        this.marriageFormGroup.get(`${person}NriSecondWitnessFirstName`).reset();
+        this.marriageFormGroup.get(`${person}NriSecondWitnessMiddlName`).reset();
+        this.marriageFormGroup.get(`${person}NriSecondWitnessLastName`).reset();
+        this.marriageFormGroup.get(`${person}NriSecondWitnessFirstNameGuj`).reset();
+        this.marriageFormGroup.get(`${person}NriSecondWitnessMiddlNameGuj`).reset();
+        this.marriageFormGroup.get(`${person}NriSecondWitnessLastNameGuj`).reset();
+        this.marriageFormGroup.get(`${person}NriSecondWitnessAddress`).reset();
+        this.marriageFormGroup.get(`${person}NriSecondWitnessAddressGuj`).reset();
+        this.marriageFormGroup.get(`${person}NriSecondWitnessBirthDate`).reset();
+
+        // convert uppercase
+        let getName = this.capitalizeFirstLetter(person);
+        this.marriageFormGroup.get(`nri${getName}Address`).reset();
+
+        if (this.marriageFormGroup.get(`is${getName}Visa`).value) {
+
+            this.marriageFormGroup.get(`${person}NriFirstWitnessFirstName`).setValidators([Validators.required, Validators.maxLength(50)]);
+            this.marriageFormGroup.get(`${person}NriFirstWitnessLastName`).setValidators([Validators.required, Validators.maxLength(50)]);
+            this.marriageFormGroup.get(`${person}NriFirstWitnessAddress`).setValidators([Validators.required, Validators.maxLength(500)]);
+            this.marriageFormGroup.get(`${person}NriFirstWitnessBirthDate`).setValidators(Validators.required);
+
+            this.marriageFormGroup.get(`${person}NriSecondWitnessFirstName`).setValidators([Validators.required, Validators.maxLength(50)]);
+            this.marriageFormGroup.get(`${person}NriSecondWitnessLastName`).setValidators([Validators.required, Validators.maxLength(50)]);
+            this.marriageFormGroup.get(`${person}NriSecondWitnessAddress`).setValidators([Validators.required, Validators.maxLength(500)]);
+            this.marriageFormGroup.get(`${person}NriSecondWitnessBirthDate`).setValidators(Validators.required);
+
+        }
+        else {
+
+            this.marriageFormGroup.get(`${person}NriFirstWitnessFirstName`).clearValidators();
+            this.marriageFormGroup.get(`${person}NriFirstWitnessLastName`).clearValidators();
+            this.marriageFormGroup.get(`${person}NriFirstWitnessAddress`).clearValidators();
+            this.marriageFormGroup.get(`${person}NriFirstWitnessBirthDate`).clearValidators();
+
+            this.marriageFormGroup.get(`${person}NriSecondWitnessFirstName`).clearValidators();
+            this.marriageFormGroup.get(`${person}NriSecondWitnessLastName`).clearValidators();
+            this.marriageFormGroup.get(`${person}NriSecondWitnessAddress`).clearValidators();
+            this.marriageFormGroup.get(`${person}NriSecondWitnessBirthDate`).clearValidators();
+
+        }
+        // this.marriageFormGroup.get(`${person}Country`).updateValueAndValidity();
+        this.CD.detectChanges();
+    }
+
+    getValidationOnBride(person , controllerName, getName){
+        if (this.brideDetails.get(`is${getName}Visa`).value) {
+
+            controllerName.get(`${person}NriFirstWitnessFirstName`).setValidators([Validators.required, Validators.maxLength(50)]);
+            controllerName.get(`${person}NriFirstWitnessLastName`).setValidators([Validators.required, Validators.maxLength(50)]);
+            controllerName.get(`${person}NriFirstWitnessAddress`).setValidators([Validators.required, Validators.maxLength(500)]);
+            controllerName.get(`${person}NriFirstWitnessBirthDate`).setValidators(Validators.required);
+
+            controllerName.get(`${person}NriSecondWitnessFirstName`).setValidators([Validators.required, Validators.maxLength(50)]);
+            controllerName.get(`${person}NriSecondWitnessLastName`).setValidators([Validators.required, Validators.maxLength(50)]);
+            controllerName.get(`${person}NriSecondWitnessAddress`).setValidators([Validators.required, Validators.maxLength(500)]);
+            controllerName.get(`${person}NriSecondWitnessBirthDate`).setValidators(Validators.required);
+
+        }
+        else {
+
+            controllerName.get(`${person}NriFirstWitnessFirstName`).clearValidators();
+            controllerName.get(`${person}NriFirstWitnessLastName`).clearValidators();
+            controllerName.get(`${person}NriFirstWitnessAddress`).clearValidators();
+            controllerName.get(`${person}NriFirstWitnessBirthDate`).clearValidators();
+
+            controllerName.get(`${person}NriSecondWitnessFirstName`).clearValidators();
+            controllerName.get(`${person}NriSecondWitnessLastName`).clearValidators();
+            controllerName.get(`${person}NriSecondWitnessAddress`).clearValidators();
+            controllerName.get(`${person}NriSecondWitnessBirthDate`).clearValidators();
+
+        }
+            controllerName.get(`${person}NriFirstWitnessFirstName`).updateValueAndValidity()
+            controllerName.get(`${person}NriFirstWitnessLastName`).updateValueAndValidity()
+            controllerName.get(`${person}NriFirstWitnessAddress`).updateValueAndValidity();
+            controllerName.get(`${person}NriFirstWitnessBirthDate`).updateValueAndValidity();
+
+            controllerName.get(`${person}NriSecondWitnessFirstName`).updateValueAndValidity();
+            controllerName.get(`${person}NriSecondWitnessLastName`).updateValueAndValidity();
+            controllerName.get(`${person}NriSecondWitnessAddress`).updateValueAndValidity();
+            controllerName.get(`${person}NriSecondWitnessBirthDate`).updateValueAndValidity();
+    }
+
+    getValidationOnGroom(person, controllerName, getName){
+        if ( this.bridegroomDetails.get(`is${getName}Visa`).value) {
+
+            controllerName.get(`${person}NriFirstWitnessFirstName`).setValidators([Validators.required, Validators.maxLength(50)]);
+            controllerName.get(`${person}NriFirstWitnessLastName`).setValidators([Validators.required, Validators.maxLength(50)]);
+            controllerName.get(`${person}NriFirstWitnessAddress`).setValidators([Validators.required, Validators.maxLength(500)]);
+            controllerName.get(`${person}NriFirstWitnessBirthDate`).setValidators(Validators.required);
+
+            controllerName.get(`${person}NriSecondWitnessFirstName`).setValidators([Validators.required, Validators.maxLength(50)]);
+            controllerName.get(`${person}NriSecondWitnessLastName`).setValidators([Validators.required, Validators.maxLength(50)]);
+            controllerName.get(`${person}NriSecondWitnessAddress`).setValidators([Validators.required, Validators.maxLength(500)]);
+            controllerName.get(`${person}NriSecondWitnessBirthDate`).setValidators(Validators.required);
+
+        }
+        else {
+
+            controllerName.get(`${person}NriFirstWitnessFirstName`).clearValidators();
+            controllerName.get(`${person}NriFirstWitnessLastName`).clearValidators();
+            controllerName.get(`${person}NriFirstWitnessAddress`).clearValidators();
+            controllerName.get(`${person}NriFirstWitnessBirthDate`).clearValidators();
+
+            controllerName.get(`${person}NriSecondWitnessFirstName`).clearValidators();
+            controllerName.get(`${person}NriSecondWitnessLastName`).clearValidators();
+            controllerName.get(`${person}NriSecondWitnessAddress`).clearValidators();
+            controllerName.get(`${person}NriSecondWitnessBirthDate`).clearValidators();
+
+        }
+        controllerName.get(`${person}NriFirstWitnessFirstName`).updateValueAndValidity()
+            controllerName.get(`${person}NriFirstWitnessLastName`).updateValueAndValidity()
+            controllerName.get(`${person}NriFirstWitnessAddress`).updateValueAndValidity();
+            controllerName.get(`${person}NriFirstWitnessBirthDate`).updateValueAndValidity();
+
+            controllerName.get(`${person}NriSecondWitnessFirstName`).updateValueAndValidity();
+            controllerName.get(`${person}NriSecondWitnessLastName`).updateValueAndValidity();
+            controllerName.get(`${person}NriSecondWitnessAddress`).updateValueAndValidity();
+            controllerName.get(`${person}NriSecondWitnessBirthDate`).updateValueAndValidity();
+    }
+
+    removeValidationOnBride(person , controllerName, getName){
+        if (controllerName.get(`is${getName}Visa`).value) {
+
+            controllerName.get(`${person}PassportNumber`).setValidators([Validators.required, Validators.maxLength(9)]);
+            controllerName.get(`${person}NriStatus`).setValidators([Validators.required, Validators.maxLength(50)]);
+            controllerName.get(`${person}CountryName`).setValidators(Validators.required);
+            controllerName.get(`${person}VisaNumber`).setValidators([Validators.required, Validators.maxLength(9)]);
+            controllerName.get(`${person}VisaFrom`).setValidators(Validators.required);
+            controllerName.get(`${person}VisaTo`).setValidators(Validators.required);
+            controllerName.get(`${person}SocialSecurityNumber`).setValidators([Validators.required, Validators.maxLength(9)]);
+            controllerName.get(`${person}Eligibility`).setValidators([Validators.required, Validators.maxLength(50)]);
+            controllerName.get(`${person}Designation`).setValidators([Validators.required, Validators.maxLength(50)]);
+            controllerName.get(`${person}PhoneNumber`).setValidators([Validators.required, Validators.maxLength(10), Validators.minLength(10)]);
+            controllerName.get(`${person}Email`).setValidators([Validators.required, Validators.maxLength(50), Validators.email, ValidationService.emailValidator]);
+            controllerName.get(`${person}CompanyName`).setValidators([Validators.maxLength(100)]);
+            controllerName.get(`${person}CompanyAddress`).setValidators([Validators.maxLength(500)]);
+            controllerName.get(`${person}CompanyPhoneNumber`).setValidators([Validators.maxLength(10), Validators.minLength(10)]);
+            controllerName.get(`${person}Address`).setValidators(Validators.required);
+            controllerName.get(`nri${getName}Address`).setValidators(Validators.required);
+        }
+        else {
+
+            controllerName.get(`${person}PassportNumber`).clearValidators();
+            controllerName.get(`${person}NriStatus`).clearValidators();
+            controllerName.get(`${person}CountryName`).clearValidators();
+            controllerName.get(`${person}VisaNumber`).clearValidators();
+            controllerName.get(`${person}VisaFrom`).clearValidators();
+            controllerName.get(`${person}VisaTo`).clearValidators();
+            controllerName.get(`${person}SocialSecurityNumber`).clearValidators();
+            controllerName.get(`${person}Eligibility`).clearValidators();
+            controllerName.get(`${person}Designation`).clearValidators();
+            controllerName.get(`${person}PhoneNumber`).clearValidators();
+            controllerName.get(`${person}Email`).clearValidators();
+            controllerName.get(`${person}CompanyName`).clearValidators();
+            controllerName.get(`${person}CompanyAddress`).clearValidators();
+            controllerName.get(`${person}CompanyPhoneNumber`).clearValidators();
+            controllerName.get(`${person}Address`).clearValidators();
+            controllerName.get(`nri${getName}Address`).clearValidators();
+        }
+        controllerName.get(`${person}PassportNumber`).updateValueAndValidity();
+        controllerName.get(`${person}NriStatus`).updateValueAndValidity();
+        controllerName.get(`${person}CountryName`).updateValueAndValidity();
+        controllerName.get(`${person}VisaNumber`).updateValueAndValidity();
+        controllerName.get(`${person}VisaFrom`).updateValueAndValidity();
+        controllerName.get(`${person}VisaTo`).updateValueAndValidity();
+        controllerName.get(`${person}SocialSecurityNumber`).updateValueAndValidity();
+        controllerName.get(`${person}Eligibility`).updateValueAndValidity();
+        controllerName.get(`${person}Designation`).updateValueAndValidity();
+        controllerName.get(`${person}PhoneNumber`).updateValueAndValidity();
+        controllerName.get(`${person}Email`).updateValueAndValidity();
+        controllerName.get(`${person}CompanyName`).updateValueAndValidity();
+        controllerName.get(`${person}CompanyAddress`).updateValueAndValidity();
+        controllerName.get(`${person}CompanyPhoneNumber`).updateValueAndValidity();
+        controllerName.get(`${person}Address`).updateValueAndValidity();
+        controllerName.get(`nri${getName}Address`).updateValueAndValidity();
+    }
+
 }

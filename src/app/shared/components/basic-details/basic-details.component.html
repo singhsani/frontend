@@ -23,7 +23,13 @@
         <span matPrefix>+91 &nbsp;</span>
         <input matInput  OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" maxlength="10" minlength="10"
         formControlName="contactNo" required>
-        <control-messages [control]="basicFormGroup.get('contactNo')"></control-messages>
+        <!-- <control-messages [control]="basicFormGroup.get('contactNo')"></control-messages> -->
+        <mat-error class="mat-error ng-star-inserted errors-massage"
+            *ngIf="basicFormGroup.get('contactNo').invalid && (basicFormGroup.get('contactNo').dirty || basicFormGroup.get('contactNo').touched)">
+            <div *ngIf="basicFormGroup.get('contactNo').errors.required">
+                Applicant Mobile is Required.
+            </div>
+        </mat-error>
     </mat-form-field>
 
     <mat-form-field class="col-md-4">

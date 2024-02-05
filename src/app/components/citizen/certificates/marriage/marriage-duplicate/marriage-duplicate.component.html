@@ -137,17 +137,17 @@
 <div [hidden]="isVisibeDuplicateForm">
 
 	<mat-card class="formClass cardBorder">
-		<form [formGroup]="marriageDuplicateForm" autocomplete="off">
-			<mat-tab-group mat-stretch-tabs [(selectedIndex)]="tabIndex" class="stepperNav" dynamicHeight='true'
+		<!-- <form [formGroup]="marriageDuplicateForm" autocomplete="off"> -->
+			<mat-tab-group mat-stretch-tabs [(selectedIndex)]="licenseConfiguration.currentTabIndex" class="stepperNav" dynamicHeight='true'
 				mat-stretch-tabs>
 				<!-- First step -->
-				<mat-tab>
+				<mat-tab disabled>
 					<ng-template mat-tab-label>
 						<div>{{'duplicate_copy_details' | translate: translateKey}}</div>
 					</ng-template>
-
+					<form [formGroup]="duplicateCopyDetailsForm" autocomplete="off">
 					<div class="row">
-						<mat-form-field formGroupName="duplicateCopyMode" class="col-md-4">
+						<mat-form-field formGroupName="duplicateCopyMode" class="col-md-4 asteriskmarkRequired">
 							<mat-select placeholder="{{'duplicate_copy_mode' | translate:translateKey}}"
 								formControlName="code">
 								<mat-option *ngFor="let duplicatemode of DUPLICATE_COPY_MODE_DUPLICATE_MARRIAGE"
@@ -155,7 +155,7 @@
 									{{duplicatemode.name}}
 								</mat-option>
 							</mat-select>
-							<control-messages [control]="marriageDuplicateForm.get('duplicateCopyMode').get('code')">
+							<control-messages [control]="duplicateCopyDetailsForm.get('duplicateCopyMode').get('code')">
 							</control-messages>
 						</mat-form-field>
 
@@ -167,25 +167,26 @@
 						<mat-form-field class="col-md-6">
 							<input matInput [max]="100"  type="number" [min]="1 "  OnlyNumber (keypress)="getlength($event)"
 								placeholder="{{'total_copies' | translate:translateKey}} *" formControlName="totalCopies">
-							<control-messages [control]="marriageDuplicateForm.get('totalCopies')"></control-messages>
+							<control-messages [control]="duplicateCopyDetailsForm.get('totalCopies')"></control-messages>
 						</mat-form-field>
 
 					</div>
-
-					<app-action-bar (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"
+                    </form>
+					<app-action-bar (tabIndex)="licenseConfiguration.onTabChange($event, duplicateCopyDetailsForm, marriageDuplicateForm)" (handleErrors)="handleErrorsOnSubmit($event)"
 						[form]="marriageDuplicateForm" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 				</mat-tab>
 
-				<mat-tab>
+				<mat-tab disabled>
 
 					<ng-template mat-tab-label>
 						<div>{{'applicant_details' | translate: translateKey}}</div>
 					</ng-template>
-
+					<form [formGroup]="applicantDetailsForm" autocomplete="off">
 					<div>
 						<app-basic-details [basicFormGroup]="marriageDuplicateForm">
 						</app-basic-details>
 					</div>
+					</form>
 
 					<!-- <ng-container>
 						<div class= "col-md-12">
@@ -201,14 +202,14 @@
 						</div>
 						</ng-container> -->
 
-					<app-action-bar [paymentGateway]="paymentGateway" (tabIndex)="onTabChange($event)"
+					<app-action-bar [paymentGateway]="paymentGateway" (tabIndex)="licenseConfiguration.onTabChange($event)"
 						(handleErrors)="handleErrorsOnSubmit($event)" [form]="marriageDuplicateForm"
 						[stepInfo]="{step: 'final', next: 1, back: 0}"></app-action-bar>
 
 				</mat-tab>
 				<select-payment-gateway #paymentGateway></select-payment-gateway>
 			</mat-tab-group>
-		</form>
+		<!-- </form> -->
 	</mat-card>
 </div>
 
