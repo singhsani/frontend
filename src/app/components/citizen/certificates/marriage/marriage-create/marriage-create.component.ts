@@ -653,7 +653,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             groomDesignation: ['', [Validators.maxLength(50)]],
             groomCompanyName: ['', [Validators.maxLength(100)]],
             groomCompanyPhoneNumber: ['', [Validators.maxLength(10)]],
-            groomPhoneNumber: [''],
+            groomPhoneNumber: ['', [Validators.maxLength(10)]],
             groomEmail: [''],
             nriGroomAddress: ['', [Validators.maxLength(500)]],
             groomCompanyAddress: ['', [Validators.maxLength(500)]],

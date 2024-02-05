@@ -402,7 +402,7 @@
 
 						<mat-form-field class="col-md-4">
 							<input matInput OnlyNumber required placeholder="{{'mobile_no' | translate:translateKey}}"
-								formControlName="groomPhoneNumber" type="tel">
+								formControlName="groomPhoneNumber" type="tel" maxlength="10">
 							<control-messages [control]="bridegroomDetails.get('groomPhoneNumber')"></control-messages>
 						</mat-form-field>
 
@@ -944,7 +944,7 @@
 				<!-- For NIR Marrige -->
 				<div class="row" *ngIf="bridegroomDetails.get('isNriMarriage').value == true">
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="500" formControlName="nriBrideParentsAddress" [required]="brideDetails.get('isBrideVisa').value == true"
+						<textarea matInput  [required]="brideDetails.get('isBrideVisa').value == false" rows="3" cols="50" maxlength="500" formControlName="nriBrideParentsAddress"
 							placeholder="{{ 'foreign_address' | translate:translateKey }}"> </textarea>
 						<control-messages [control]="fatherOfBride.get('nriBrideParentsAddress')">
 						</control-messages>
