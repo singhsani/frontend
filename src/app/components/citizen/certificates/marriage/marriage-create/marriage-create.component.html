@@ -32,9 +32,9 @@
 			<form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
 
 				<div class="row">
-					<div class="col-md-7 ngSelect" formGroupName='resources'>
+					<div class="col-md-7 ngSelect asteriskmarkRequired" formGroupName='resources'>
 						<ng-select formControlName="code" required (change)="resetFormValue()"
-							placeholder="{{'select_venue' | translate: translateKey}} *">
+							placeholder="{{'select_venue' | translate: translateKey}}">
 							<ng-option *ngFor="let resources of resources" [value]="resources.code">{{resources.name}}
 							</ng-option>
 						</ng-select>
@@ -53,7 +53,7 @@
 					</mat-form-field>
 
 					<div class="col-md-2">
-						<button mat-stroked-button color="primary" class="w-52 mt-2" type="submit">
+						<button mat-stroked-button color="primary" class="w-52 mt-2" type="submit" [disabled]="appointmentForm.invalid">
 							{{'search' | translate: translateKey}}
 							<mat-icon>search</mat-icon>
 						</button>
@@ -275,7 +275,7 @@
 				<div class="row">
 					<div class="col-md-4 ">
 						<div class="radioBtnError">
-							<mat-label>{{'is_NRI_marriage' | translate:translateKey }}<span class="mandatory">*</span></mat-label>
+							<mat-label>{{'is_NRI_marriage' | translate:translateKey }}<span class="mandatory"> *</span></mat-label>
 							<mat-radio-group formControlName="isNriMarriage" (change)="changeFieldReset()" required>
 								<mat-radio-button [value]="true">
 									Yes
@@ -289,7 +289,7 @@
 					</div>
 					<div class="col-md-4" *ngIf="bridegroomDetails.get('isNriMarriage').value == true">
 						<div class="radioBtnError">
-							<mat-label>{{'is_visa' | translate:translateKey }}</mat-label>
+							<mat-label>{{'is_visa' | translate:translateKey }}<span class="mandatory"> *</span></mat-label>
 							<mat-radio-group formControlName="isGroomVisa"
 								(change)="nriWitenessFields('groom', detailsOfBridegroomNRIWitness);changeReflection('groom', bridegroomDetails);onChangeVisaStatus();changeReset('nriGroomAddress', bridegroomDetails);changeReset('nriGroomParentsAddress',fatherOfBridegroom);resetAddress('groomAddress','GROOM_ADDRESS', bridegroomDetails);"
 								required>
@@ -438,9 +438,11 @@
 				</div>
 
 				</form>
-				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
-					(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="licenseConfiguration.onTabChange($event, bridegroomDetails, marriageFormGroup)"
-					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+				<div class="mt-6">
+					<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
+						(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="licenseConfiguration.onTabChange($event, bridegroomDetails, marriageFormGroup)"
+						[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+				</div>
 			</mat-tab>
 			<!-- End First step -->
 
@@ -526,8 +528,8 @@
 								<mat-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.name}}</mat-option>
 							</mat-select>
 						</mat-form-field> -->
-					<div class="col-md-4 ngSelect" formGroupName="brideReligion">
-						<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}*"
+					<div class="col-md-4 ngSelect asteriskmarkRequired" formGroupName="brideReligion">
+						<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}"
 							(change)="onChange($event,religionArray,'religionGujbride');checkReligion();changeReset('marriageTimeBrideStatus', brideDetails);removeGuj('maritalstatusGujbride')">
 							<ng-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.name}}
 							</ng-option>
@@ -537,7 +539,7 @@
 					</div>
 					<div class="col-md-4" formGroupName="marriageTimeBrideStatus">
 						<div class="radioBtnError">
-							<mat-label>{{'marital_status' | translate:translateKey }}*</mat-label>
+							<mat-label>{{'marital_status' | translate:translateKey }}<span class="mandatory"> *</span></mat-label>
 							<mat-radio-group formControlName="code" required
 								(change)="onChange($event.value,maritalStatusArray,'maritalstatusGujbride')"
 								(change)="changeDocument()">
@@ -577,7 +579,7 @@
 				<!-- For NIR Marrige -->
 				<div class="row" *ngIf="bridegroomDetails.get('isNriMarriage').value == true">
 					<div class="col-md-4">
-						<mat-label>{{'is_visa' | translate:translateKey }}</mat-label>
+						<mat-label>{{'is_visa' | translate:translateKey }}<span class="mandatory"> *</span></mat-label>
 						<mat-radio-group formControlName="isBrideVisa"
 							(change)="nriWitenessFields('bride',detailsOfBrideNRIWitness);changeReflection('bride',brideDetails);onChangeVisaStatus();changeReset('nriBrideAddress', brideDetails);changeReset('nriBrideParentsAddress', fatherOfBride);resetAddress('brideAddress','BRIDE_ADDRESS', brideDetails)"
 							required>
@@ -718,9 +720,11 @@
 				</div>
 
 				</form>
+				<div class="mt-6">
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
 					(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="licenseConfiguration.onTabChange($event, brideDetails , marriageFormGroup)"
 					[stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
+					</div>
 
 			</mat-tab>
 			<!-- End Second step -->
@@ -846,9 +850,11 @@
 					[addressFormGroup]="fatherOfBridegroom.get('groomParentsAddressResidence')"></app-address>
 
 					</form>
+					<div class="mt-6">
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
 					(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="licenseConfiguration.onTabChange($event, fatherOfBridegroom, marriageFormGroup)"
 					[stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
+					</div>
 
 			</mat-tab>
 			<!-- End Third step -->
@@ -970,9 +976,10 @@
 					[addressFormGroup]="fatherOfBride.get('brideParentsAddressResidence')"></app-address>
 
 					</form>
+					<div class="mt-6">
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
 					(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="licenseConfiguration.onTabChange($event, fatherOfBride, marriageFormGroup)" [stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
-
+               </div>
 			</mat-tab>
 			<!-- End Forth step -->
 
@@ -1073,9 +1080,10 @@
 				</app-address>
 
 				</form>
+				<div class="mt-6">
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
 					(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="licenseConfiguration.onTabChange($event, marriageSolemnizerDetails, marriageFormGroup)" [stepInfo]="{step: 'step5', next: 5, back:3 }"></app-action-bar>
-
+				</div>
 
 			</mat-tab>
 			<!-- End Fifth step -->
@@ -1170,9 +1178,10 @@
 
 				</div>
                 </form>
+				<div class="mt-6">
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
 					(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="licenseConfiguration.onTabChange($event, firstWitnessDetails, marriageFormGroup)" [stepInfo]="{step: 'step6', next: 6, back: 4}"></app-action-bar>
-
+                </div>
 			</mat-tab>
 			<!-- End sixth step -->
 
@@ -1265,9 +1274,10 @@
 
 				</div>
                </form>
+			   <div class="mt-6">
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
 					(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="licenseConfiguration.onTabChange($event, secondWitnessDetails, marriageFormGroup)" [stepInfo]="{step: 'step7', next: 7, back: 5}"></app-action-bar>
-
+                </div>
 			</mat-tab>
 			<!-- End Seventh step -->
 
@@ -1282,8 +1292,8 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="groomNriFirstWitnessFirstName"
-							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
-							placeholder="{{ 'first_name' | translate:translateKey }} *" appGujInputSource
+							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" required
+							placeholder="{{ 'first_name' | translate:translateKey }}" appGujInputSource
 							targetElement="groomNriFirstWitnessFirstNameGuj" [form]="detailsOfBridegroomNRIWitness">
 						<control-messages [control]="detailsOfBridegroomNRIWitness.get('groomNriFirstWitnessFirstName')">
 						</control-messages>
@@ -1291,7 +1301,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="groomNriFirstWitnessMiddlName"
-							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" 
 							placeholder="{{ 'middlename_name' | translate:translateKey }}" appGujInputSource
 							targetElement="groomNriFirstWitnessMiddlNameGuj" [form]="detailsOfBridegroomNRIWitness">
 						<control-messages [control]="detailsOfBridegroomNRIWitness.get('groomNriFirstWitnessMiddlName')">
@@ -1300,8 +1310,8 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="groomNriFirstWitnessLastName"
-							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
-							placeholder="{{ 'last_name' | translate:translateKey }} *" appGujInputSource
+							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"required
+							placeholder="{{ 'last_name' | translate:translateKey }}" appGujInputSource
 							targetElement="groomNriFirstWitnessLastNameGuj" [form]="detailsOfBridegroomNRIWitness">
 						<control-messages [control]="detailsOfBridegroomNRIWitness.get('groomNriFirstWitnessLastName')">
 						</control-messages>
@@ -1333,8 +1343,8 @@
 				<div class="row">
 					<mat-form-field class="col-md-6">
 						<textarea matInput rows="2" cols="50" maxlength="500"
-							formControlName="groomNriFirstWitnessAddress"
-							placeholder="{{ 'address' | translate:translateKey }} *" appGujInputSource
+							formControlName="groomNriFirstWitnessAddress" required
+							placeholder="{{ 'address' | translate:translateKey }}" appGujInputSource
 							targetElement="groomNriFirstWitnessAddressGuj" [form]="detailsOfBridegroomNRIWitness"> </textarea>
 						<control-messages [control]="detailsOfBridegroomNRIWitness.get('groomNriFirstWitnessAddress')">
 						</control-messages>
@@ -1349,9 +1359,9 @@
 
 					<mat-form-field class="col-md-6">
 						<input matInput [max]="adultPerson" appDate [matDatepicker]="pickerNIRGroomWitness"
-							formControlName="groomNriFirstWitnessBirthDate"
+							formControlName="groomNriFirstWitnessBirthDate" required
 							(dateChange)="dateFormate($event.value,'groomNriFirstWitnessBirthDate', detailsOfBridegroomNRIWitness)"
-							placeholder="{{'date_of_birth' | translate:translateKey }} *">
+							placeholder="{{'date_of_birth' | translate:translateKey }}">
 						<mat-datepicker-toggle matSuffix [for]="pickerNIRGroomWitness"></mat-datepicker-toggle>
 						<mat-datepicker #pickerNIRGroomWitness touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
@@ -1370,8 +1380,8 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="groomNriSecondWitnessFirstName"
-							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
-							placeholder="{{ 'first_name' | translate:translateKey }} *" appGujInputSource
+							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" required
+							placeholder="{{ 'first_name' | translate:translateKey }}" appGujInputSource
 							targetElement="groomNriSecondWitnessFirstNameGuj" [form]="detailsOfBridegroomNRIWitness">
 						<control-messages [control]="detailsOfBridegroomNRIWitness.get('groomNriSecondWitnessFirstName')">
 						</control-messages>
@@ -1388,8 +1398,8 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="groomNriSecondWitnessLastName"
-							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
-							placeholder="{{ 'last_name' | translate:translateKey }} *" appGujInputSource
+							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" required
+							placeholder="{{ 'last_name' | translate:translateKey }}" appGujInputSource
 							targetElement="groomNriSecondWitnessLastNameGuj" [form]="detailsOfBridegroomNRIWitness">
 						<control-messages [control]="detailsOfBridegroomNRIWitness.get('groomNriSecondWitnessLastName')">
 						</control-messages>
@@ -1422,8 +1432,8 @@
 
 					<mat-form-field class="col-md-6">
 						<textarea matInput rows="2" cols="50" maxlength="500"
-							formControlName="groomNriSecondWitnessAddress"
-							placeholder="{{ 'address' | translate:translateKey }} *" appGujInputSource
+							formControlName="groomNriSecondWitnessAddress" required
+							placeholder="{{ 'address' | translate:translateKey }}" appGujInputSource
 							targetElement="groomNriSecondWitnessAddressGuj" [form]="detailsOfBridegroomNRIWitness"> </textarea>
 						<control-messages [control]="detailsOfBridegroomNRIWitness.get('groomNriSecondWitnessAddress')">
 						</control-messages>
@@ -1438,9 +1448,9 @@
 
 					<mat-form-field class="col-md-6">
 						<input matInput [max]="adultPerson" appDate [matDatepicker]="pickerNIRGroomWitness2"
-							formControlName="groomNriSecondWitnessBirthDate"
+							formControlName="groomNriSecondWitnessBirthDate" required
 							(dateChange)="dateFormate($event.value,'groomNriSecondWitnessBirthDate', detailsOfBridegroomNRIWitness)"
-							placeholder="{{'date_of_birth' | translate:translateKey }} *">
+							placeholder="{{'date_of_birth' | translate:translateKey }}">
 						<mat-datepicker-toggle matSuffix [for]="pickerNIRGroomWitness2"></mat-datepicker-toggle>
 						<mat-datepicker #pickerNIRGroomWitness2 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
@@ -1454,9 +1464,10 @@
 					</mat-form-field>
 				</div>
                </form>
+			   <div class="mt-6">
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
 					(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="licenseConfiguration.onTabChange($event, detailsOfBridegroomNRIWitness, marriageFormGroup)" [stepInfo]="{step: 'step8', next: 8, back: 6}"></app-action-bar>
-
+                </div>
 			</mat-tab>
 
 			<!-- if NIR bride  -->
@@ -1470,8 +1481,8 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="brideNriFirstWitnessFirstName"
-							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
-							placeholder="{{ 'first_name' | translate:translateKey }} *" appGujInputSource
+							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" required
+							placeholder="{{ 'first_name' | translate:translateKey }}" appGujInputSource
 							targetElement="brideNriFirstWitnessFirstNameGuj" [form]="detailsOfBrideNRIWitness">
 						<control-messages [control]="detailsOfBrideNRIWitness.get('brideNriFirstWitnessFirstName')">
 						</control-messages>
@@ -1488,8 +1499,8 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="brideNriFirstWitnessLastName"
-							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
-							placeholder="{{ 'last_name' | translate:translateKey }} *" appGujInputSource
+							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" required
+							placeholder="{{ 'last_name' | translate:translateKey }}" appGujInputSource
 							targetElement="brideNriFirstWitnessLastNameGuj" [form]="detailsOfBrideNRIWitness">
 						<control-messages [control]="detailsOfBrideNRIWitness.get('brideNriFirstWitnessLastName')">
 						</control-messages>
@@ -1522,8 +1533,8 @@
 
 					<mat-form-field class="col-md-6">
 						<textarea matInput rows="2" cols="50" maxlength="500"
-							formControlName="brideNriFirstWitnessAddress"
-							placeholder="{{ 'address' | translate:translateKey }} *" appGujInputSource
+							formControlName="brideNriFirstWitnessAddress" required
+							placeholder="{{ 'address' | translate:translateKey }}" appGujInputSource
 							targetElement="brideNriFirstWitnessAddressGuj" [form]="detailsOfBrideNRIWitness"> </textarea>
 						<control-messages [control]="detailsOfBrideNRIWitness.get('brideNriFirstWitnessAddress')">
 						</control-messages>
@@ -1538,9 +1549,9 @@
 
 					<mat-form-field class="col-md-6">
 						<input matInput [max]="adultPerson" appDate [matDatepicker]="pickerNIRBrideWitness"
-							formControlName="brideNriFirstWitnessBirthDate"
+							formControlName="brideNriFirstWitnessBirthDate" required
 							(dateChange)="dateFormate($event.value,'brideNriFirstWitnessBirthDate',detailsOfBrideNRIWitness )"
-							placeholder="{{'date_of_birth' | translate:translateKey }} *">
+							placeholder="{{'date_of_birth' | translate:translateKey }}">
 						<mat-datepicker-toggle matSuffix [for]="pickerNIRBrideWitness"></mat-datepicker-toggle>
 						<mat-datepicker #pickerNIRBrideWitness touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
@@ -1558,8 +1569,8 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="brideNriSecondWitnessFirstName"
-							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
-							placeholder="{{ 'first_name' | translate:translateKey }} *" appGujInputSource
+							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" required
+							placeholder="{{ 'first_name' | translate:translateKey }}" appGujInputSource
 							targetElement="brideNriSecondWitnessFirstNameGuj" [form]="detailsOfBrideNRIWitness">
 						<control-messages [control]="detailsOfBrideNRIWitness.get('brideNriSecondWitnessFirstName')">
 						</control-messages>
@@ -1576,8 +1587,8 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="brideNriSecondWitnessLastName"
-							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
-							placeholder="{{ 'last_name' | translate:translateKey }} *" appGujInputSource
+							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" required
+							placeholder="{{ 'last_name' | translate:translateKey }}" appGujInputSource
 							targetElement="brideNriSecondWitnessLastNameGuj" [form]="detailsOfBrideNRIWitness">
 						<control-messages [control]="detailsOfBrideNRIWitness.get('brideNriSecondWitnessLastName')">
 						</control-messages>
@@ -1610,8 +1621,8 @@
 
 					<mat-form-field class="col-md-6">
 						<textarea matInput rows="2" cols="50" maxlength="500"
-							formControlName="brideNriSecondWitnessAddress"
-							placeholder="{{ 'address' | translate:translateKey }} *" appGujInputSource
+							formControlName="brideNriSecondWitnessAddress" required
+							placeholder="{{ 'address' | translate:translateKey }}" appGujInputSource
 							targetElement="brideNriSecondWitnessAddressGuj" [form]="detailsOfBrideNRIWitness"> </textarea>
 						<control-messages [control]="detailsOfBrideNRIWitness.get('brideNriSecondWitnessAddress')">
 						</control-messages>
@@ -1626,9 +1637,9 @@
 
 					<mat-form-field class="col-md-6">
 						<input matInput [max]="adultPerson" appDate [matDatepicker]="pickerNIRBrideWitness2"
-							formControlName="brideNriSecondWitnessBirthDate"
+							formControlName="brideNriSecondWitnessBirthDate" required
 							(dateChange)="dateFormate($event.value,'brideNriSecondWitnessBirthDate', detailsOfBrideNRIWitness)"
-							placeholder="{{'date_of_birth' | translate:translateKey }} *">
+							placeholder="{{'date_of_birth' | translate:translateKey }}">
 						<mat-datepicker-toggle matSuffix [for]="pickerNIRBrideWitness2"></mat-datepicker-toggle>
 						<mat-datepicker #pickerNIRBrideWitness2 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
@@ -1643,6 +1654,7 @@
 				</div>
 
 				</form>
+				<div class="mt-6">
 				<span *ngIf="bridegroomDetails.get('isGroomVisa').value == true">
 					<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
 						(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="licenseConfiguration.onTabChange($event, detailsOfBrideNRIWitness, marriageFormGroup)" [stepInfo]="{step: 'step9', next: 9, back: 7}">
@@ -1653,6 +1665,7 @@
 						(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="licenseConfiguration.onTabChange($event, detailsOfBrideNRIWitness, marriageFormGroup)" [stepInfo]="{step: 'step8', next: 8, back: 6}">
 					</app-action-bar>
 				</span>
+				</div>
 			</mat-tab>
 
 			<!-- applicant step -->
@@ -1673,9 +1686,9 @@
 					<h2>{{'applicant_relation'| translate: translateKey}}</h2>
 
 					<div class="row">
-						<div class="col-md-4 ngSelect" formGroupName="applicantRelation">
+						<div class="col-md-4 ngSelect asteriskmarkRequired" formGroupName="applicantRelation">
 							<ng-select formControlName="code"
-								placeholder="{{ 'applicant_relation' | translate:translateKey }} *"
+								placeholder="{{ 'applicant_relation' | translate:translateKey }} "
 								(change)="onChange($event,applicantrelationArray,'applicantrelationGuj');changeReset('applicantRelationOther',applicantDetails)">
 								<ng-option *ngFor="let relation of applicantrelationArray" [value]="relation.code">
 									{{relation.name}}</ng-option>
@@ -1723,14 +1736,15 @@
 
 				</div>
                 </form>
+				<div class="mt-6">
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
 					(handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="licenseConfiguration.onTabChange($event, applicantDetails, marriageFormGroup)" [stepInfo]="{step: 'step10', next: 10, back: 6}"></app-action-bar>
-
+                </div>
 			</mat-tab>
 			<!-- End applicant step -->
 
 			<!-- Start nine step -->
-			<mat-tab disabled>
+			<mat-tab >
 				<ng-template mat-tab-label>
 					<div>{{'upload' | translate: translateKey}}</div>
 				</ng-template>
@@ -1749,7 +1763,7 @@
 						<!-- marriageFormGroup.get('groomReligion').value:marriageFormGroup.get('isGroomVisa').value:marriageFormGroup.get('isBrideVisa').value -->
 						<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons && doc.documentIdentifier != 'RELIGIOUS_CERTIFICATE'">
 							<label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
-								<span *ngIf="doc.mandatory">*</span>
+								<span *ngIf="doc.mandatory" class="mandatory">*</span>
 
 								<!-- <span
 									*ngIf="doc.mandatory && (doc.dependentFieldName == 'HINDU') && (marriageFormGroup.get('groomReligion').get('code').value != 'HINDU') && (marriageFormGroup.get('brideReligion').get('code').value != 'HINDU') && (marriageFormGroup.get('groomReligion').get('code').value != null)">*
@@ -1832,11 +1846,12 @@
 					</div>
 				</ng-container> -->
 				</form>
-
+				<div class="mt-6">
 				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray"
 					[form]="marriageFormGroup" (tabIndex)="licenseConfiguration.onTabChange($event, attachmentDetail, marriageFormGroup)"
 					(handleOnSaveAndNext)="handleOnSaveAndNext($event)" [stepInfo]="{step: 'final', next: 10, back: 7}" (handleErrors)="handleErrorsOnSubmit($event)">
 				</app-action-bar>
+				</div>
 			</mat-tab>
 			<!-- End nine step -->
 			<select-payment-gateway #paymentGateway></select-payment-gateway>
