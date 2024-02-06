@@ -83,9 +83,9 @@
 	<form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
 
 		<div class="row">
-			<div class="col-md-6 ngSelect" formGroupName='resources'>
+			<div class="col-md-6 ngSelect asteriskmarkRequired" formGroupName='resources'>
 				<ng-select formControlName="code" required
-					placeholder="{{'select_venue' | translate: translateKey}} *">
+					placeholder="{{'select_venue' | translate: translateKey}}">
 					<ng-option *ngFor="let resources of resources" [value]="resources.code">{{resources.name}}
 					</ng-option>
 				</ng-select>
@@ -103,7 +103,7 @@
 			</mat-form-field>
 
 			<div class="col-md-2">
-				<button mat-stroked-button color="primary" class="w-57 mt-2" type="submit">
+				<button mat-stroked-button color="primary" class="w-57 mt-2" type="submit" [disabled]="appointmentForm.invalid">
 					{{'search' | translate: translateKey}}
 					<mat-icon>search</mat-icon>
 				</button>

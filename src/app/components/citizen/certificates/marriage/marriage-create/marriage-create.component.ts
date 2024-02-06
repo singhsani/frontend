@@ -1969,7 +1969,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     onSubmit() {
         if (this.appointmentForm.invalid) {
             this.config.getAllErrors(this.appointmentForm);
-            this.commonService.openAlert("Error", this.config.ALL_FEILD_REQUIRED_MESSAGE, "warning");
+            return false
+            //this.commonService.openAlert("Error", this.config.ALL_FEILD_REQUIRED_MESSAGE, "warning");
         } else {
             this.getSlot();
         }
