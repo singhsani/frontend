@@ -13,6 +13,7 @@ import { CertificateConfig } from '../../certificate-config';
 import { CommonService } from '../../../../../shared/services/common.service';
 import { Location } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { LicenseConfiguration } from '../../../licences/license-configuration';
 
 @Component({
 	selector: 'app-marriage-duplicate',
@@ -34,7 +35,8 @@ export class MarriageDuplicateComponent implements OnInit {
 
 	marriageDuplicateForm: FormGroup;
 	marriageSearchForm: FormGroup;
-
+	duplicateCopyDetailsForm : FormGroup;
+	applicantDetailsForm : FormGroup;
 	translateKey: string = 'duplicateMarriageRegScreen';
 
 	appId: number;
@@ -103,6 +105,7 @@ export class MarriageDuplicateComponent implements OnInit {
 	YES_NO: Array<any> = [];
 	MARITAL_STATUS: Array<any> = [];
 	RELIGION: Array<any> = [];
+	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
 
     /**
      * @param fb - Declare FormBuilder property.
@@ -163,13 +166,8 @@ export class MarriageDuplicateComponent implements OnInit {
 	 * Method is used to create duplicate form controls.
 	 */
 	marriageDuplicateControls() {
-		this.marriageDuplicateForm = this.fb.group({
-			//step1
-			// duplicateCopies: this.fb.group({
-			// 	code: [null, [Validators.required]],
-			// 	id: null,
-			// 	name: null,
-			// }),
+       
+		this.duplicateCopyDetailsForm = this.fb.group({
 			duplicateCopyMode: this.fb.group({
 				code: [null, [Validators.required]],
 				gujName: null,
@@ -181,6 +179,19 @@ export class MarriageDuplicateComponent implements OnInit {
 				version: null
 			}),
 			totalCopies: [null, Validators.required],
+		})
+
+         this.applicantDetailsForm = this.fb.group({
+
+		 })
+
+		this.marriageDuplicateForm = this.fb.group({
+			//step1
+			// duplicateCopies: this.fb.group({
+			// 	code: [null, [Validators.required]],
+			// 	id: null,
+			// 	name: null,
+			// }),
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			// deptFileStatus: null,
 			serviceCode: "HEL-DUPMR",
@@ -240,6 +251,9 @@ export class MarriageDuplicateComponent implements OnInit {
 			// duplicateCopies:" {},"
 			// totalCopies:" null"
 		});
+
+		this.commonService.createCloneAbstractControl(this.duplicateCopyDetailsForm, this.marriageDuplicateForm);
+		this.commonService.createCloneAbstractControl(this.applicantDetailsForm , this.marriageDuplicateForm)
 	}
 
 	/**
@@ -249,6 +263,8 @@ export class MarriageDuplicateComponent implements OnInit {
 	createDuplicateMRRecord(data) {
 		this.formService.createFormData().subscribe(res => {
 			this.marriageDuplicateForm.patchValue(res);
+			this.marriageDuplicateForm.patchValue(res);
+			this.duplicateCopyDetailsForm.patchValue(res);
 			this.updateDuplicateRecordValue(data);
 			this.appId = res.serviceFormId;
 			let cururl = this.location.path().replace('false', this.appId.toString());
@@ -292,6 +308,8 @@ export class MarriageDuplicateComponent implements OnInit {
 	getMarriageDuplicateData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.marriageDuplicateForm.patchValue(res);
+			this.duplicateCopyDetailsForm.patchValue(res)
+			this.marriageDuplicateForm.patchValue(res)
 		});
 	}
 
