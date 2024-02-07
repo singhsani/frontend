@@ -822,7 +822,7 @@
 				<!-- For NIR Marrige -->
 				<div class="row" *ngIf="bridegroomDetails.get('isNriMarriage').value == true">
 					<mat-form-field class="col-md-4">
-						<textarea matInput [required]="bridegroomDetails.get('isNriMarriage').value == true" rows="3"
+						<textarea matInput rows="3"
 							cols="50" maxlength="500" formControlName="nriGroomParentsAddress"
 							placeholder="{{ 'foreign_address' | translate:translateKey }}"> </textarea>
 						<control-messages [control]="fatherOfBridegroom.get('nriGroomParentsAddress')">
@@ -950,7 +950,7 @@
 				<!-- For NIR Marrige -->
 				<div class="row" *ngIf="bridegroomDetails.get('isNriMarriage').value == true">
 					<mat-form-field class="col-md-4">
-						<textarea matInput  [required]="brideDetails.get('isBrideVisa').value == false" rows="3" cols="50" maxlength="500" formControlName="nriBrideParentsAddress"
+						<textarea matInput rows="3" cols="50" maxlength="500" formControlName="nriBrideParentsAddress"
 							placeholder="{{ 'foreign_address' | translate:translateKey }}"> </textarea>
 						<control-messages [control]="fatherOfBride.get('nriBrideParentsAddress')">
 						</control-messages>
