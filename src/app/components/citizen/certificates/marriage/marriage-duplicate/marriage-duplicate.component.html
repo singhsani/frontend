@@ -69,10 +69,10 @@
 	<!-- Search Form Ends Here -->
 
 	<!-- Table start-->
-	<div class="pl-1 pr-1 mt-4  scroll">
+	<div class="pl-1 pr-1 mt-4">
 		<div class="example-container mat-elevation-z8" [hidden]="resultsLength == 0 ">
 
-			<table mat-table #table [dataSource]="dataSource" matSort matSortActive="created" matSortDisableClear
+			<table class="table-border" mat-table #table [dataSource]="dataSource" matSort matSortActive="created" matSortDisableClear
 				matSortDirection="asc">
 
 				<ng-container matColumnDef="id">
@@ -147,16 +147,23 @@
 					</ng-template>
 					<form [formGroup]="duplicateCopyDetailsForm" autocomplete="off">
 					<div class="row">
-						<mat-form-field formGroupName="duplicateCopyMode" class="col-md-4 asteriskmarkRequired">
-							<mat-select placeholder="{{'duplicate_copy_mode' | translate:translateKey}}"
+						<mat-form-field formGroupName="duplicateCopyMode" class="col-md-4">
+							<mat-label>{{'duplicate_copy_mode' | translate:translateKey}} <span style="color: red;">*</span></mat-label>
+							<mat-select
 								formControlName="code">
 								<mat-option *ngFor="let duplicatemode of DUPLICATE_COPY_MODE_DUPLICATE_MARRIAGE"
 									[value]="duplicatemode.code">
 									{{duplicatemode.name}}
 								</mat-option>
 							</mat-select>
-							<control-messages [control]="duplicateCopyDetailsForm.get('duplicateCopyMode').get('code')">
-							</control-messages>
+							<mat-error class="mat-error ng-star-inserted errors-massage"
+								*ngIf="duplicateCopyDetailsForm.get('duplicateCopyMode').get('code').invalid && (duplicateCopyDetailsForm.get('duplicateCopyMode').get('code').dirty || duplicateCopyDetailsForm.get('duplicateCopyMode').get('code').touched)">
+								<div *ngIf="duplicateCopyDetailsForm.get('duplicateCopyMode').get('code').errors.required">
+									Duplicate Copy Mode is Required.
+								</div>
+							</mat-error>
+							<!-- <control-messages [control]="duplicateCopyDetailsForm.get('duplicateCopyMode').get('code')">
+							</control-messages> -->
 						</mat-form-field>
 
 						<!-- <mat-form-field class="col-md-4">
@@ -166,7 +173,7 @@
 						</mat-form-field> -->
 						<mat-form-field class="col-md-6">
 							<input matInput [max]="100"  type="number" [min]="1 "  OnlyNumber (keypress)="getlength($event)"
-								placeholder="{{'total_copies' | translate:translateKey}} *" formControlName="totalCopies">
+								placeholder="{{'total_copies' | translate:translateKey}}" formControlName="totalCopies" required>
 							<control-messages [control]="duplicateCopyDetailsForm.get('totalCopies')"></control-messages>
 						</mat-form-field>
 
