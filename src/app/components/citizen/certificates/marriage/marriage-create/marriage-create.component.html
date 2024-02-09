@@ -325,7 +325,7 @@
 					<div *ngIf="bridegroomDetails.get('isGroomVisa').value  == true">
 						<mat-form-field class="col-md-4">
 							<input matInput maxlength="9" minlength="9" type="tel" formControlName="groomPassportNumber"
-								appValidationFields validationFieldsType="onlyNameWithOutSpace"
+							OnlyNumber
 								required placeholder="{{'passport_number' | translate:translateKey }}">
 							<control-messages [control]="bridegroomDetails.get('groomPassportNumber')">
 							</control-messages>
@@ -608,7 +608,7 @@
 
 						<mat-form-field class="col-md-4">
 							<input matInput required maxlength="9" minlength="9" type="tel" formControlName="bridePassportNumber"
-								appValidationFields validationFieldsType="onlyNameWithOutSpace"
+							OnlyNumber
 								placeholder="{{'passport_number' | translate:translateKey }}">
 							<control-messages [control]="brideDetails.get('bridePassportNumber')">
 							</control-messages>
@@ -1744,7 +1744,7 @@
 			<!-- End applicant step -->
 
 			<!-- Start nine step -->
-			<mat-tab >
+			<mat-tab disabled>
 				<ng-template mat-tab-label>
 					<div>{{'upload' | translate: translateKey}}</div>
 				</ng-template>

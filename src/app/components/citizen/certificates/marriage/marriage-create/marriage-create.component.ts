@@ -1321,9 +1321,11 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 let mday = moment(this.bridegroomDetails.get("marriageDate").value, "YYYY-MM-DD");
 
                 if (this.bridegroomDetails.get("groomBirthDate").value) {
+                    let selectdate=  new Date(this.bridegroomDetails.get("groomBirthDate").value).getFullYear()
+                    this.groomage =  new Date().getFullYear() - selectdate
                     let bday = moment(this.bridegroomDetails.get("groomBirthDate").value, "YYYY-MM-DD");
-                    this.groomage = mday.diff(bday, 'years', false);
-                    this.groomdays = mday.diff(bday.add(this.groomage, 'years'), 'days', false);
+                    let groomAge = mday.diff(bday, 'years', false);
+                    this.groomdays = mday.diff(bday.add(groomAge, 'years'), 'days', false);
 
                     this.bridegroomDetails.get("groomAge").setValue(this.groomage);
                     this.bridegroomDetails.get("groomDays").setValue(this.groomdays);
