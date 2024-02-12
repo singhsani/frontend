@@ -393,7 +393,7 @@
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput OnlyNumber type="tel"
+							<input matInput OnlyNumber type="tel" maxlength="10"
 								formControlName="groomCompanyPhoneNumber"
 								placeholder="{{'company_contact_number' | translate:translateKey }}">
 							<control-messages [control]="bridegroomDetails.get('groomCompanyPhoneNumber')">
@@ -407,7 +407,7 @@
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput appPreventSpace required
+							<input matInput appValidationFields required 
 								placeholder="{{'email' | translate:translateKey}}" type="email"
 								formControlName="groomEmail">
 							<control-messages [control]="bridegroomDetails.get('groomEmail')"></control-messages>
@@ -675,7 +675,7 @@
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput appPreventSpace maxlength="50"
+							<input matInput appValidationFields maxlength="50"
 								placeholder="{{'email' | translate:translateKey}}" type="email"
 								formControlName="brideEmail" required>
 							<control-messages [control]="brideDetails.get('brideEmail')"></control-messages>

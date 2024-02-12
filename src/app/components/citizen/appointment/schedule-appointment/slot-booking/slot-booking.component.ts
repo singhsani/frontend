@@ -159,9 +159,10 @@ export class SlotBookingComponent implements OnInit {
 	}
 
 	disableSunday(d: Date) {
-		if(d.getDay() != 0) {
-		  return d;
-		}
+		const day = d.getDay(); 
+		const month = Math.floor((d.getDate() -1) / 7) + 1;
+		// disable  2 and 4 Saturday and sunday 
+		return !((day === 6 && (month === 2 || month === 4 )) || day === 0);                   
 	  }
 
 	/**

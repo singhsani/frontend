@@ -654,7 +654,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             groomCompanyName: ['', [Validators.maxLength(100)]],
             groomCompanyPhoneNumber: ['', [Validators.maxLength(10)]],
             groomPhoneNumber: ['', [Validators.maxLength(10)]],
-            groomEmail: [''],
+            groomEmail: ['', [Validators.maxLength(50), ValidationService.emailValidator]],
             nriGroomAddress: ['', [Validators.maxLength(500)]],
             groomCompanyAddress: ['', [Validators.maxLength(500)]],
             groomAddress: this.fb.group(this.addrComponent.addressControls()),
@@ -869,7 +869,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
             serviceCode: null,
             applicantAadharNumber: [''],
-            applicantEmail: [''],
+            applicantEmail: ['', [Validators.maxLength(50), ValidationService.emailValidator]],
             // marriageRegistrationDate: [''],
             //eighth step 63 count
             uniqueIdProofLable: this.fb.group({
@@ -2010,9 +2010,10 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     }
 
     disableSunday(d: Date) {
-        if (d.getDay() != 0) {
-            return d;
-        }
+        const day = d.getDay(); 
+		const month = Math.floor((d.getDate() -1) / 7) + 1;
+		// disable  2 and 4 Saturday and sunday 
+		return !((day === 6 && (month === 2 || month === 4 )) || day === 0); 
     }
 
     /**
