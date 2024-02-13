@@ -1332,9 +1332,11 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 }
 
                 if (this.brideDetails.get("brideBirthDate").value) {
+                    let selectdate=  new Date(this.brideDetails.get("brideBirthDate").value).getFullYear()
+                    this.brideage =  new Date().getFullYear() - selectdate
                     let bday = moment(this.brideDetails.get("brideBirthDate").value, "YYYY-MM-DD");
-                    this.brideage = mday.diff(bday, 'years', false);
-                    this.bridedays = mday.diff(bday.add(this.brideage, 'years'), 'days', false);
+                    let brideAge = mday.diff(bday, 'years', false);
+                    this.bridedays = mday.diff(bday.add(brideAge, 'years'), 'days', false);
 
                     this.brideDetails.get("brideAge").setValue(this.brideage);
                     this.brideDetails.get("brideDays").setValue(this.bridedays);
@@ -2169,7 +2171,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         else {
 
             controllerName.get(`${person}NriFirstWitnessFirstName`).clearValidators();
+            controllerName.get(`${person}NriFirstWitnessFirstNameGuj`).clearValidators();
             controllerName.get(`${person}NriFirstWitnessLastName`).clearValidators();
+            controllerName.get(`${person}NriFirstWitnessLastNameGuj`).clearValidators();
             controllerName.get(`${person}NriFirstWitnessAddress`).clearValidators();
             controllerName.get(`${person}NriFirstWitnessBirthDate`).clearValidators();
 
@@ -2180,7 +2184,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
         }
             controllerName.get(`${person}NriFirstWitnessFirstName`).updateValueAndValidity()
+            controllerName.get(`${person}NriFirstWitnessFirstNameGuj`).updateValueAndValidity();
             controllerName.get(`${person}NriFirstWitnessLastName`).updateValueAndValidity()
+            controllerName.get(`${person}NriFirstWitnessLastNameGuj`).updateValueAndValidity();
             controllerName.get(`${person}NriFirstWitnessAddress`).updateValueAndValidity();
             controllerName.get(`${person}NriFirstWitnessBirthDate`).updateValueAndValidity();
 
@@ -2194,7 +2200,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         if ( this.bridegroomDetails.get(`is${getName}Visa`).value) {
 
             controllerName.get(`${person}NriFirstWitnessFirstName`).setValidators([Validators.required, Validators.maxLength(50)]);
+            controllerName.get(`${person}NriFirstWitnessFirstNameGuj`).setValidators([Validators.required, Validators.maxLength(50)]);
             controllerName.get(`${person}NriFirstWitnessLastName`).setValidators([Validators.required, Validators.maxLength(50)]);
+            controllerName.get(`${person}NriFirstWitnessLastNameGuj`).setValidators([Validators.required, Validators.maxLength(50)]);
             controllerName.get(`${person}NriFirstWitnessAddress`).setValidators([Validators.required, Validators.maxLength(500)]);
             controllerName.get(`${person}NriFirstWitnessBirthDate`).setValidators(Validators.required);
 
@@ -2207,7 +2215,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         else {
 
             controllerName.get(`${person}NriFirstWitnessFirstName`).clearValidators();
+            controllerName.get(`${person}NriFirstWitnessFirstNameGuj`).clearValidators();
             controllerName.get(`${person}NriFirstWitnessLastName`).clearValidators();
+            controllerName.get(`${person}NriFirstWitnessLastNameGuj`).clearValidators();
             controllerName.get(`${person}NriFirstWitnessAddress`).clearValidators();
             controllerName.get(`${person}NriFirstWitnessBirthDate`).clearValidators();
 
@@ -2218,12 +2228,16 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
         }
         controllerName.get(`${person}NriFirstWitnessFirstName`).updateValueAndValidity()
+        controllerName.get(`${person}NriFirstWitnessFirstNameGuj`).updateValueAndValidity()
             controllerName.get(`${person}NriFirstWitnessLastName`).updateValueAndValidity()
+            controllerName.get(`${person}NriFirstWitnessLastNameGuj`).updateValueAndValidity()
             controllerName.get(`${person}NriFirstWitnessAddress`).updateValueAndValidity();
             controllerName.get(`${person}NriFirstWitnessBirthDate`).updateValueAndValidity();
 
             controllerName.get(`${person}NriSecondWitnessFirstName`).updateValueAndValidity();
+            controllerName.get(`${person}NriSecondWitnessFirstNameGuj`).updateValueAndValidity();
             controllerName.get(`${person}NriSecondWitnessLastName`).updateValueAndValidity();
+            controllerName.get(`${person}NriSecondWitnessLastNameGuj`).updateValueAndValidity();
             controllerName.get(`${person}NriSecondWitnessAddress`).updateValueAndValidity();
             controllerName.get(`${person}NriSecondWitnessBirthDate`).updateValueAndValidity();
     }
