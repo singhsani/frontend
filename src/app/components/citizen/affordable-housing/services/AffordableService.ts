@@ -41,5 +41,8 @@ export class AffodableService {
 		this.requestURL = `api/afhForm/getApplicationStatus/${appNo}`;
 		return this.http.get(this.requestURL);
 	}
+	getWardZone() {
+		return this.http.get(`api/afhForm/ward`);
+	}
 
 }

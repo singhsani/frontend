@@ -635,13 +635,13 @@
 				</ng-template>
 
 				<div class="row">
-					<div class="col-md-4 ngSelect" formGroupName="ward">
-						<ng-select placeholder="{{'Ward ' | translate: translateKey}} *" formControlName="code">
-							<ng-option *ngFor="let ward of wardNameArray" [value]="ward.code">
-								{{ward.name}}
+					<div class="col-md-4 ngSelect">
+						<ng-select placeholder="{{'Ward ' | translate: translateKey}} *" formControlName="ward">
+							<ng-option *ngFor="let ward of wardNameArray" [value]="ward.wardzoneId">
+								{{ward.wardzoneName}}
 							</ng-option>
 						</ng-select>
-						<control-messages [control]="affordableHousingForm.get('ward').get('code')">
+						<control-messages [control]="affordableHousingForm.get('ward')">
 						</control-messages>
 					</div>
 				</div>

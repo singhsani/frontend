@@ -115,6 +115,7 @@ export class NewAffordableHousingComponent implements OnInit {
 			});
 		this.affordableHousingFormControls();
 		this.getLookupData();
+		this.getWardZoneData();
 		this.getLookupDataApplyFor();
 		this.getHouseType();
 		this.getAllDocumentLists();
@@ -128,6 +129,11 @@ export class NewAffordableHousingComponent implements OnInit {
 
 		this.setFormControlToTabIndexMap();
 
+	}
+	getWardZoneData() {
+		this.affodableService.getWardZone().subscribe(res=>{
+			this.wardNameArray=res.filter(_ => _.wardzoneName !== '-');
+		});
 	}
 
 	getHouseType() {
@@ -439,7 +445,6 @@ export class NewAffordableHousingComponent implements OnInit {
 			this.bankNameArray = res.AH_BANKS;
 			this.personTypeArray = res.PERSON_TYPE;
 			this.maritalStatusArray = res.MARITAL_STATUS;
-			this.wardNameArray = res.WARD;
 		});
 	}
 
@@ -507,10 +512,8 @@ export class NewAffordableHousingComponent implements OnInit {
 				name: null,
 			}),
 
-			ward: this.fb.group({
-				code: [null, [Validators.required]],
-				name: null,
-			}),
+			ward: [null, [Validators.required]],
+			
 			howLongLivingInVadodara: [null, [Validators.required]],
 			sqMetersPresentBuilding: [null, [Validators.required]],
 			hasCurrentHouseKacchaOrPucca: [null, [Validators.required]],
