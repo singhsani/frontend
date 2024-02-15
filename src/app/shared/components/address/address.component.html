@@ -32,7 +32,7 @@
 	<div class="row" *ngIf="isDisplayGujFields">
 
 		<mat-form-field class="col-md-4">
-			<input matInput type="text" placeholder="{{'building_name' | translate: translateKey:'gu' }}"
+			<input matInput type="text" placeholder="{{'building_name' | translate: translateKey:'gu' }}" [required]="requiredFeilds"
 				maxlength="180" formControlName="buildingNameGuj" appGujInputTarget [form]="addressFormGroup">
 			<control-messages [control]="addressFormGroup.get('buildingNameGuj')"></control-messages>
 		</mat-form-field>
