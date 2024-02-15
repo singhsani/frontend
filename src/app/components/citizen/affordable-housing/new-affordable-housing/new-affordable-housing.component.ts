@@ -629,6 +629,9 @@ export class NewAffordableHousingComponent implements OnInit {
 			// Attachment //
 			attachments: [''],
 			licenseAgreed: [true],
+			isSameAsPermanantAddress: this.fb.group({
+				code: null
+			}),
 
 			// // applicantCorrespondenceAddress: this.fb.group(this.applicantCorrespondenceAddrComponent.addressControls()),
 			// correspondanceAddress: this.fb.group(this.applicantCorrespondenceAddrComponent.addressControls()),
@@ -1243,5 +1246,18 @@ export class NewAffordableHousingComponent implements OnInit {
            
         }
     
+	}
+	onSameAddressChange(event){
+		if (event.checked) {
+
+			this.affordableHousingForm.get('permanentAddress').patchValue(this.affordableHousingForm.get('currentAddress').value);
+			this.affordableHousingForm.get('permanentAddress.addressType').setValue('PERMANENT_ADDRESS');
+			this.affordableHousingForm.get('isSameAsPermanantAddress').get('code').setValue("YES");
+			this.affordableHousingForm.get('permanentAddress').disable();
+		} else {
+			this.affordableHousingForm.get('permanentAddress').enable();
+			this.affordableHousingForm.get('permanentAddress').reset();
+			this.affordableHousingForm.get('isSameAsPermanantAddress').get('code').setValue("NO");
+		}
 	}
 }

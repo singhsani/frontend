@@ -650,6 +650,12 @@
 					<app-address #currentAddress [requiredFeilds]="true"
 						[addressFormGroup]="affordableHousingForm.get('currentAddress')"></app-address>
 				</div>
+				<div class="col-md-4" formGroupName="isSameAsPermanantAddress">
+					<mat-checkbox class="col-md-12 mt-2 isEditMode"
+						[checked]="affordableHousingForm.get('isSameAsPermanantAddress').get('code').value == 'YES'? true : false"
+					 (change)="onSameAddressChange($event)">{{'Temporary Address Is Same As
+						Permanent Address ?' | translate: translateKey}}</mat-checkbox>
+				</div>
 
 				<div class="row">
 					<h2><b>{{'Permanent Address' | translate: translateKey}}</b></h2>
