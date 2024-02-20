@@ -534,9 +534,9 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 			this.commonService.openAlert("Warning", "Enter PEC Number", "warning");
 			return;
 		}
-
-		let isMatch = ecrcNo.match(/PEC/g);
 		ecrcNo = ecrcNo.toUpperCase();
+		let isMatch = ecrcNo.match(/PEC/g);
+	
 
 		if (!isMatch) {
 			this.commonService.openAlert("Warning", "Only can be search with PEC number", "warning");
