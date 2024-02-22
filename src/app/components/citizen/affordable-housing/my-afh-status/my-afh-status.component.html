@@ -24,7 +24,7 @@
 
 
 
-<mat-card>
+<mat-card class="cardBorder remove-top-border">
   <div class="row">
 
     <div class="col-md-6">
@@ -100,8 +100,6 @@
     </div>
 
   </div>
-</mat-card>
-<mat-card>
   <button mat-raised-button color="accent" [disabled]="isFormApproved">Submitted</button>
   <button mat-raised-button color="accent" [disabled]="isShortListed">Form Shortlist</button>
   <button mat-raised-button color="accent" [disabled]="isFinalDraw">Final Draw</button>
@@ -109,7 +107,12 @@
   <button mat-raised-button color="accent" [disabled]="isGenerateNoc">NOC Generated</button>
   <button mat-raised-button color="accent" [disabled]="isSaleDeedLetter">Sale Deed Letter</button>
   <button mat-raised-button color="accent" [disabled]="isFinalPossession">Final Possession</button>
+
 </mat-card>
-<button type="button" class="liteBorder pull-left" mat-raised-button
-  (click)="onCitizen()">{{'back' |
-  translate: actionBarKey}}</button>
+<div class="fotButtonBar mt-0">
+  <div class="row mx-3">
+    <button type="button" color="primary" class="col-md-2 pull-left" mat-raised-button
+      (click)="onCitizen()">{{'back' |
+      translate: actionBarKey}}</button>
+  </div>
+</div>
