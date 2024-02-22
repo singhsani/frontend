@@ -25,7 +25,8 @@ export class MyAfhStatusComponent implements OnInit {
   isGenerateNoc: boolean = true;
   isSaleDeedLetter: boolean = true;
   isFinalPossession: boolean = true;
-
+  isShowValidationlessthen12 :boolean = false
+  isShowValidationGreaterThen22 : boolean = false
   ngOnInit() {
   }
 
@@ -67,6 +68,20 @@ export class MyAfhStatusComponent implements OnInit {
   onCitizen()
   {
     this.router.navigate(['/citizen/dashboard']);
+  }
+
+  getBarAndApplicationNo(event) {
+    let countLength = event.target.value.length
+    if (countLength < 12) {
+      this.isShowValidationGreaterThen22 = false
+      this.isShowValidationlessthen12 = true
+    } else if (countLength >= 13 && countLength < 22) {
+      this.isShowValidationGreaterThen22 = true
+      this.isShowValidationlessthen12 = false
+    } else {
+      this.isShowValidationGreaterThen22 = false
+      this.isShowValidationlessthen12 = false
+    }
   }
 
 
