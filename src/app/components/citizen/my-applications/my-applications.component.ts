@@ -370,6 +370,11 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}
 		else if (row.serviceType === 'DUPLICATE_BILL') {
 			url = "/api/form/duplicateBill/printBill?serviceFormId=" + row.serviceFormId;
+		}else if (row.serviceType === 'VACANT_PREMISES_CERTIFICATE' && row.fileStatus === 'APPROVED') {
+			url = "/api/form/vacantPremisesCertificate/printApprovedCertificate?applicationNo=" + row.fileNumber;
+		}
+		else if (row.serviceType === 'VACANT_PREMISES_CERTIFICATE' && row.fileStatus === 'REJECTED') {
+			url = "/api/form/vacantPremisesCertificate/printRejectedCertificate?applicationNo=" + row.fileNumber;
 		}
 		this.paymentService.downloadFile(url).subscribe(
 			(data) => {

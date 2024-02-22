@@ -418,6 +418,18 @@
                                     {{'download_certificate' | translate:translateKey}}
                                 </button>
                             </div>
+                            <button mat-menu-item color="primary"
+                                *ngIf="row.serviceType === 'VACANT_PREMISES_CERTIFICATE' && row.fileStatus === 'APPROVED' " (click)="printCertificate(row)">
+                                <mat-icon class="m-1" title="{{'print_certificate' | translate:translateKey}}">
+                                    arrow_downward</mat-icon>
+                                {{'download_certificate' | translate:translateKey}}
+                            </button>
+                            <button mat-menu-item color="primary"
+                            *ngIf="row.serviceType === 'VACANT_PREMISES_CERTIFICATE' && row.fileStatus === 'REJECTED' " (click)="printCertificate(row)">
+                            <mat-icon class="m-1" title="{{'print_certificate' | translate:translateKey}}">
+                                arrow_downward</mat-icon>
+                            {{'download_certificate' | translate:translateKey}}
+                        </button>
 
                             <button mat-menu-item *ngIf="isQueryRaiseDisplay(row)" color="primary"
                                 (click)="openModal(queryRaiseTemplate);remarksDisplayForQueryRaise(row)">
