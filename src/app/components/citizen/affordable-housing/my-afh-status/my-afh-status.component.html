@@ -4,13 +4,19 @@
     <div class="p-15">
       <form autocomplete="off" ngNativeValidate>
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-4 ngSelect">
             <mat-form-field>
               <input matInput autocomplete="off" trim="blur" #regNoTextBox #searchInput="matInput" type="text"
-                placeholder="Barcode/Application No">
+                placeholder="Barcode/Application No" maxlength="22" minlength="12" (change)="getBarAndApplicationNo($event)">
             </mat-form-field>
+            <mat-error *ngIf="isShowValidationlessthen12">
+              <div>Minimum length should be 12 digit</div>
+            </mat-error>
+            <mat-error *ngIf="isShowValidationGreaterThen22">
+              <div>Maximum length should be 22 digit</div>
+            </mat-error>
           </div>
-
+      
           <div class="col-md-2">
             <button mat-button matSuffix mat-icon-button (click)="searchApplication($event, regNoTextBox.value)">
               <mat-icon>search</mat-icon>
@@ -107,7 +113,6 @@
   <button mat-raised-button color="accent" [disabled]="isGenerateNoc">NOC Generated</button>
   <button mat-raised-button color="accent" [disabled]="isSaleDeedLetter">Sale Deed Letter</button>
   <button mat-raised-button color="accent" [disabled]="isFinalPossession">Final Possession</button>
-
 </mat-card>
 <div class="fotButtonBar mt-0">
   <div class="row mx-3">
