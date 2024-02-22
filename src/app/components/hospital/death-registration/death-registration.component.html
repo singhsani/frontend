@@ -24,7 +24,7 @@
 				</ng-template>
 
 				<div class="row col-md-12 radioBtnError" formGroupName="unknownCategory">
-					<mat-label>{{'is_deceased_unknown' | translate:translateKey}} *</mat-label>
+					ss<mat-label>{{'is_deceased_unknown' | translate:translateKey}} <span class="mandatory">*</span></mat-label>
 					<mat-radio-group formControlName="code" (change)="decider($event.value)">
 						<mat-radio-button *ngFor="let yesno of ISYESNO" [value]="yesno.code">
 							{{yesno.name}}
