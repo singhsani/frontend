@@ -92,14 +92,14 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="ngSelect">
-                  <ng-select required placeholder="Action on Vacancy Amount *" [items]="actionOnList" bindValue="itemId"
+                  <ng-select required placeholder="Reason for Vacancy Premise *" [items]="actionOnList" bindValue="itemId" class="ng-select-vacancy-premises"
                     bindLabel="itemName" name="titleId" [(ngModel)]="model.actionOnVacancyAmountLookupId"
                     #ActionOnVacancyAmountLookupId="ngModel" (ngModelChange)="onActionOnVacancy($event)"
                     [ngClass]="{'ng-invalid ng-touched':  formDetail.submitted && ActionOnVacancyAmountLookupId.invalid}">
                   </ng-select>
                   <div
                     *ngIf="(formDetail.submitted && ActionOnVacancyAmountLookupId.invalid)  || (ActionOnVacancyAmountLookupId.invalid && ActionOnVacancyAmountLookupId.touched)">
-                    <mat-error *ngIf="ActionOnVacancyAmountLookupId.errors.required">*Action on Vacancy Amount is
+                    <mat-error *ngIf="ActionOnVacancyAmountLookupId.errors.required">*Reason for Vacancy Premise is
                       required.
                     </mat-error>
                   </div>
@@ -180,7 +180,7 @@
                 </div>
               </div>
             </div>
-            <div class="row">
+            <div class="row mt-5">
                <div class="col-md-12">
                 <button mat-raised-button class="ml-3"  class="pull-left" color="primary" type="button" (click)="cancelForm()">
                   <mat-icon>skip_previous</mat-icon> Back
