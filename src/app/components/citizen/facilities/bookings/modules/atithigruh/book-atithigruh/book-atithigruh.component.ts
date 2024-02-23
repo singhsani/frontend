@@ -750,6 +750,11 @@ export class BookAtithigruhComponent implements OnInit {
 			this.commonService.openAlert("Warning", 'Akota Atithigruh has been ordered to be closed due to dilapidated and dangerous condition', "warning" , "") 
 			this.BookingTypeForm.reset();		
 		}
+		else if(event == 'HARANIVIJAYNAGARCOMMUNITYHALL')
+		{
+			this.commonService.openAlert("Warning", 'Vijay Nagar Community hall has been ordered to be closed due to dilapidated and dangerous condition', "warning" , "") 
+			this.BookingTypeForm.reset();		
+		}
 		this.Dates = [];
 		this.ATITHIGRUH.forEach(element => {
 			if (element.code == event) {
