@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AffodableService } from '../services/AffordableService';
 import * as _ from 'lodash';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { LicenseConfiguration } from '../../licences/license-configuration';
 
 @Component({
 	selector: 'app-new-affordable-housing',
@@ -32,6 +33,14 @@ export class NewAffordableHousingComponent implements OnInit {
 	// @ViewChild('occupationAddr') occupationAddrComponent: any;
 	@ViewChild('nomineeAddr') nomineeAddrComponent: any;
 	affordableHousingForm: FormGroup;
+	firstBeneficiaryDetail: FormGroup;
+	secondBeneficiaryDetail: FormGroup;
+	addressOfResidence: FormGroup;
+	bankDetails: FormGroup;
+	familyDetails: FormGroup;
+	detailsOfNominee:FormGroup;
+	chequeDetails:FormGroup;
+	attachmentDetails: FormGroup;
 	translateKey: string = 'affordableHousingScreen';
 	actionBarKey: string = 'adminActionBar';
 	tabIndex: number = 0;
@@ -87,6 +96,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	// Map for the formcontrol to tabIndex id;
 
 	public formControlNameToTabIndex = new Map();
+	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
 
 	constructor(
 		private route: ActivatedRoute,
@@ -103,7 +113,6 @@ export class NewAffordableHousingComponent implements OnInit {
 	}
 
 	ngOnInit() {
-
 		this.route.paramMap.subscribe(param => {
 			this.formId = Number(param.get('id'));
 			this.apiCode = param.get('apiCode');
@@ -242,7 +251,7 @@ export class NewAffordableHousingComponent implements OnInit {
 
 
 	changeMarriageStatus() {
-		var value = this.affordableHousingForm.get('marriageStatus').get('code').value
+		var value = this.firstBeneficiaryDetail.get('marriageStatus').get('code').value
 		if (value) {
 			if (value == "MARRIED") {
 				this.mandotoryFileds(true);
@@ -256,7 +265,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	}
 
 	rentChange() {
-		var values = this.affordableHousingForm.get('hasCurrentHouseRentedOrPurchased').value;
+		var values = this.addressOfResidence.get('hasCurrentHouseRentedOrPurchased').value;
 		this.setServiceDetailsOnInit(values);
 	}
 
@@ -319,68 +328,68 @@ export class NewAffordableHousingComponent implements OnInit {
 	mandotoryFileds(flag) {
 		this.secondPersonrequiredFeilds = flag
 		if (flag) {
-			this.affordableHousingForm.get('secondPersonTypeTitle').get('code').setValidators([Validators.required]);
-			this.affordableHousingForm.get('secondApplicantFirstName').setValidators([Validators.required]);
-			this.affordableHousingForm.get('secondApplicantMiddleName').setValidators([Validators.maxLength(100)]);
-			this.affordableHousingForm.get('secondApplicantLastName').setValidators([Validators.required, Validators.maxLength(100)]);
-			this.affordableHousingForm.get('secondAppHusWifeFirstName').setValidators([Validators.required, Validators.maxLength(100)]);
-			this.affordableHousingForm.get('secondAppHusWifeMiddleName').setValidators([Validators.maxLength(100)]);
-			this.affordableHousingForm.get('secondAppHusWifeLastName').setValidators([Validators.required, Validators.maxLength(100)]);
-			this.affordableHousingForm.get('secondAppDateOfBirth').setValidators([Validators.required]);
-			this.affordableHousingForm.get('secondAppTelephoneNumber').setValidators([Validators.maxLength(11)]);
-			this.affordableHousingForm.get('secondAppMobileNumOne').setValidators([Validators.required, Validators.maxLength(10)]);
-			this.affordableHousingForm.get('secondAppMobileNumTwo').setValidators([Validators.maxLength(10)]);
-			this.affordableHousingForm.get('secondAppEmail').setValidators([ValidationService.emailValidator, Validators.maxLength(50)]);
-			this.affordableHousingForm.get('secondAppOrganizationName').setValidators([Validators.required, Validators.maxLength(20)]);
-			this.affordableHousingForm.get('secondAppOccupation').setValidators([Validators.required, Validators.maxLength(10)]);
-			this.affordableHousingForm.get('secondAppOccupationDesignation').setValidators([Validators.required, Validators.maxLength(10)]);
-			this.affordableHousingForm.get('secondAppDrivingLicenseNumber').setValidators([ValidationService.drivingLicenseValidator]);
-			this.affordableHousingForm.get('secondAppVoterIdNumber').setValidators([ValidationService.electionCardValidator]);
-			this.affordableHousingForm.get('secondAppAadharCardNumber').setValidators([Validators.required, Validators.maxLength(12)]);
-			this.affordableHousingForm.get('secondAppPanCardNumber').setValidators([Validators.required, ValidationService.panValidator]);
-			this.affordableHousingForm.get('secondAppRationCardNumber').setValidators([Validators.maxLength(10)]);
+			this.secondBeneficiaryDetail.get('secondPersonTypeTitle').get('code').setValidators([Validators.required]);
+			this.secondBeneficiaryDetail.get('secondApplicantFirstName').setValidators([Validators.required]);
+			this.secondBeneficiaryDetail.get('secondApplicantMiddleName').setValidators([Validators.maxLength(100)]);
+			this.secondBeneficiaryDetail.get('secondApplicantLastName').setValidators([Validators.required, Validators.maxLength(100)]);
+			this.secondBeneficiaryDetail.get('secondAppHusWifeFirstName').setValidators([Validators.required, Validators.maxLength(100)]);
+			this.secondBeneficiaryDetail.get('secondAppHusWifeMiddleName').setValidators([Validators.maxLength(100)]);
+			this.secondBeneficiaryDetail.get('secondAppHusWifeLastName').setValidators([Validators.required, Validators.maxLength(100)]);
+			this.secondBeneficiaryDetail.get('secondAppDateOfBirth').setValidators([Validators.required]);
+			this.secondBeneficiaryDetail.get('secondAppTelephoneNumber').setValidators([Validators.maxLength(11)]);
+			this.secondBeneficiaryDetail.get('secondAppMobileNumOne').setValidators([Validators.required, Validators.maxLength(10)]);
+			this.secondBeneficiaryDetail.get('secondAppMobileNumTwo').setValidators([Validators.maxLength(10)]);
+			this.secondBeneficiaryDetail.get('secondAppEmail').setValidators([ValidationService.emailValidator, Validators.maxLength(50)]);
+			this.secondBeneficiaryDetail.get('secondAppOrganizationName').setValidators([Validators.required, Validators.maxLength(20)]);
+			this.secondBeneficiaryDetail.get('secondAppOccupation').setValidators([Validators.required, Validators.maxLength(10)]);
+			this.secondBeneficiaryDetail.get('secondAppOccupationDesignation').setValidators([Validators.required, Validators.maxLength(10)]);
+			this.secondBeneficiaryDetail.get('secondAppDrivingLicenseNumber').setValidators([ValidationService.drivingLicenseValidator]);
+			this.secondBeneficiaryDetail.get('secondAppVoterIdNumber').setValidators([ValidationService.electionCardValidator]);
+			this.secondBeneficiaryDetail.get('secondAppAadharCardNumber').setValidators([Validators.required, Validators.maxLength(12)]);
+			this.secondBeneficiaryDetail.get('secondAppPanCardNumber').setValidators([Validators.required, ValidationService.panValidator]);
+			this.secondBeneficiaryDetail.get('secondAppRationCardNumber').setValidators([Validators.maxLength(10)]);
 		} else {
-			this.affordableHousingForm.get('secondPersonTypeTitle').get('code').clearValidators();
-			this.affordableHousingForm.get('secondApplicantFirstName').clearValidators();
-			this.affordableHousingForm.get('secondApplicantMiddleName').clearValidators();
-			this.affordableHousingForm.get('secondApplicantLastName').clearValidators();
-			this.affordableHousingForm.get('secondAppHusWifeFirstName').clearValidators();
-			this.affordableHousingForm.get('secondAppHusWifeMiddleName').clearValidators();
-			this.affordableHousingForm.get('secondAppHusWifeLastName').clearValidators();
-			this.affordableHousingForm.get('secondAppDateOfBirth').clearValidators();
-			this.affordableHousingForm.get('secondAppTelephoneNumber').clearValidators();
-			this.affordableHousingForm.get('secondAppMobileNumOne').clearValidators();
-			this.affordableHousingForm.get('secondAppMobileNumTwo').clearValidators();
-			this.affordableHousingForm.get('secondAppEmail').clearValidators();
-			this.affordableHousingForm.get('secondAppOrganizationName').clearValidators();
-			this.affordableHousingForm.get('secondAppOccupation').clearValidators();
-			this.affordableHousingForm.get('secondAppOccupationDesignation').clearValidators();
-			this.affordableHousingForm.get('secondAppDrivingLicenseNumber').clearValidators();
-			this.affordableHousingForm.get('secondAppVoterIdNumber').clearValidators();
-			this.affordableHousingForm.get('secondAppAadharCardNumber').clearValidators();
-			this.affordableHousingForm.get('secondAppPanCardNumber').clearValidators();
-			this.affordableHousingForm.get('secondAppRationCardNumber').clearValidators();
+			this.secondBeneficiaryDetail.get('secondPersonTypeTitle').get('code').clearValidators();
+			this.secondBeneficiaryDetail.get('secondApplicantFirstName').clearValidators();
+			this.secondBeneficiaryDetail.get('secondApplicantMiddleName').clearValidators();
+			this.secondBeneficiaryDetail.get('secondApplicantLastName').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppHusWifeFirstName').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppHusWifeMiddleName').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppHusWifeLastName').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppDateOfBirth').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppTelephoneNumber').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppMobileNumOne').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppMobileNumTwo').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppEmail').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppOrganizationName').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppOccupation').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppOccupationDesignation').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppDrivingLicenseNumber').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppVoterIdNumber').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppAadharCardNumber').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppPanCardNumber').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppRationCardNumber').clearValidators();
 		}
-		this.affordableHousingForm.get('secondPersonTypeTitle').get('code').updateValueAndValidity();
-		this.affordableHousingForm.get('secondApplicantFirstName').updateValueAndValidity();
-		this.affordableHousingForm.get('secondApplicantMiddleName').updateValueAndValidity();
-		this.affordableHousingForm.get('secondApplicantLastName').updateValueAndValidity();
-		this.affordableHousingForm.get('secondAppHusWifeFirstName').updateValueAndValidity();
-		this.affordableHousingForm.get('secondAppHusWifeMiddleName').updateValueAndValidity();
-		this.affordableHousingForm.get('secondAppHusWifeLastName').updateValueAndValidity();
-		this.affordableHousingForm.get('secondAppDateOfBirth').updateValueAndValidity();
-		this.affordableHousingForm.get('secondAppTelephoneNumber').updateValueAndValidity();
-		this.affordableHousingForm.get('secondAppMobileNumOne').updateValueAndValidity();
-		this.affordableHousingForm.get('secondAppMobileNumTwo').updateValueAndValidity();
-		this.affordableHousingForm.get('secondAppEmail').updateValueAndValidity();
-		this.affordableHousingForm.get('secondAppOrganizationName').updateValueAndValidity();
-		this.affordableHousingForm.get('secondAppOccupation').updateValueAndValidity();
-		this.affordableHousingForm.get('secondAppOccupationDesignation').updateValueAndValidity();
-		this.affordableHousingForm.get('secondAppDrivingLicenseNumber').updateValueAndValidity();
-		this.affordableHousingForm.get('secondAppVoterIdNumber').updateValueAndValidity();
-		this.affordableHousingForm.get('secondAppAadharCardNumber').updateValueAndValidity();
-		this.affordableHousingForm.get('secondAppPanCardNumber').updateValueAndValidity();
-		this.affordableHousingForm.get('secondAppRationCardNumber').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondPersonTypeTitle').get('code').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondApplicantFirstName').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondApplicantMiddleName').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondApplicantLastName').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppHusWifeFirstName').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppHusWifeMiddleName').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppHusWifeLastName').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppDateOfBirth').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppTelephoneNumber').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppMobileNumOne').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppMobileNumTwo').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppEmail').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppOrganizationName').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppOccupation').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppOccupationDesignation').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppDrivingLicenseNumber').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppVoterIdNumber').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppAadharCardNumber').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppPanCardNumber').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppRationCardNumber').updateValueAndValidity();
 		this.CD.detectChanges();
 	}
 
@@ -405,27 +414,36 @@ export class NewAffordableHousingComponent implements OnInit {
 				}
 
 				this.affordableHousingForm.patchValue(res);
+				this.firstBeneficiaryDetail.patchValue(res);
+				this.secondBeneficiaryDetail.patchValue(res);
+				this.addressOfResidence.patchValue(res);
+				this.bankDetails.patchValue(res);
+				this.familyDetails.patchValue(res);
+				this.detailsOfNominee.patchValue(res);
+				this.chequeDetails.patchValue(res);
+				this.attachmentDetails.patchValue(res);
 
+				
 				res.familyMembers.forEach(app => {
-					(<FormArray>this.affordableHousingForm.get('familyMembers')).push(this.createFormGroup('familyMembers', app));
+					(<FormArray>this.familyDetails.get('familyMembers')).push(this.createFormGroup('familyMembers', app));
 				});
 
 				res.ownHouseDetail.forEach(app => {
-					(<FormArray>this.affordableHousingForm.get('ownHouseDetail')).push(this.createFormGroup('ownHouseDetail', app));
+					(<FormArray>this.familyDetails.get('ownHouseDetail')).push(this.createFormGroup('ownHouseDetail', app));
 				});
 
 				res.ownLandPlotDetail.forEach(app => {
-					(<FormArray>this.affordableHousingForm.get('ownLandPlotDetail')).push(this.createFormGroup('ownLandPlotDetail', app));
+					(<FormArray>this.familyDetails.get('ownLandPlotDetail')).push(this.createFormGroup('ownLandPlotDetail', app));
 				});
 
 				this.setServiceDetailsOnInits(res);
 				this.showButtons = true;
 
-				this.affordableHousingForm.get('ddBank').get('code').setValue(res.paymentAcceptance[0].ddBank.code);
-				this.affordableHousingForm.get('ddBankBranch').setValue(res.paymentAcceptance[0].ddBankBranch);
-				this.affordableHousingForm.get('ddNumber').setValue(res.paymentAcceptance[0].ddNumber);
-				this.affordableHousingForm.get('ddAmount').setValue(res.paymentAcceptance[0].ddAmount);
-				this.affordableHousingForm.get('ddIssuingDate').setValue(res.paymentAcceptance[0].ddIssuingDate);
+				this.chequeDetails.get('ddBank').get('code').setValue(res.paymentAcceptance[0].ddBank.code);
+				this.chequeDetails.get('ddBankBranch').setValue(res.paymentAcceptance[0].ddBankBranch);
+				this.chequeDetails.get('ddNumber').setValue(res.paymentAcceptance[0].ddNumber);
+				this.chequeDetails.get('ddAmount').setValue(res.paymentAcceptance[0].ddAmount);
+				this.chequeDetails.get('ddIssuingDate').setValue(res.paymentAcceptance[0].ddIssuingDate);
 
 				this.projectChange(res.projectId);
 
@@ -474,10 +492,10 @@ export class NewAffordableHousingComponent implements OnInit {
 
 	resetLookUpField() {
 		this.projectData = [];
-		this.affordableHousingForm.get('projectId').setValue(null);
-		this.affordableHousingForm.get('location').setValue(null);
-		this.affordableHousingForm.get('tpNumber').setValue(null);
-		this.affordableHousingForm.get('fpNumber').setValue(null);
+		this.firstBeneficiaryDetail.get('projectId').setValue(null);
+		this.firstBeneficiaryDetail.get('location').setValue(null);
+		this.firstBeneficiaryDetail.get('tpNumber').setValue(null);
+		this.firstBeneficiaryDetail.get('fpNumber').setValue(null);
 	}
 
 	/**
@@ -489,6 +507,9 @@ export class NewAffordableHousingComponent implements OnInit {
 			serviceCode: 'AFFORD-HOUSE',
 			serviceFormId: null,
 			refNumber: null,
+			attachments: [],
+		})
+		this.firstBeneficiaryDetail = this.fb.group({
 			/* Step 1 controls start */
 			schemeId: [null, [Validators.required, Validators.maxLength(100)]],
 			projectId: [null, [Validators.required, Validators.maxLength(100)]],
@@ -506,20 +527,6 @@ export class NewAffordableHousingComponent implements OnInit {
 				code: [null, [Validators.required]],
 				name: null,
 			}),
-
-			secondPersonTypeTitle: this.fb.group({
-				code: [null, [Validators.required]],
-				name: null,
-			}),
-
-			ward: [null, [Validators.required]],
-			
-			howLongLivingInVadodara: [null, [Validators.required]],
-			sqMetersPresentBuilding: [null, [Validators.required]],
-			hasCurrentHouseKacchaOrPucca: [null, [Validators.required]],
-			hasCurrentHouseRentedOrPurchased: [null, [Validators.required]],
-			rationCardType: [null, [Validators.required]],
-
 			marriageStatus: this.fb.group({
 				code: [null, Validators.required]
 			}),
@@ -529,7 +536,6 @@ export class NewAffordableHousingComponent implements OnInit {
 			fpNumber: [{ value: null, disabled: true }],
 
 			firstAppAge: [{ value: null, disabled: true }],
-			secondAppAge: [{ value: null, disabled: true }],
 
 			// /* First Beneficiary controls Start *//
 			firstApplicantFirstName: [null, [Validators.required, Validators.maxLength(100)]],
@@ -556,10 +562,11 @@ export class NewAffordableHousingComponent implements OnInit {
 			firstAppOccupationAddress: this.fb.group(this.firstAppOccupationAddressComponent.addressControls()),
 			// /* First Beneficiary controls End *//
 
-			currentAddress: this.fb.group(this.currentAddressComponent.addressControls()),
 			permanentAddress: this.fb.group(this.permanentAddressComponent.addressControls()),
+		})
 
-			// /* Second Beneficiary controls Start *//
+		// /* Second Beneficiary controls Start *//
+		this.secondBeneficiaryDetail = this.fb.group({
 			secondApplicantFirstName: [null, [Validators.required, Validators.maxLength(100)]],
 			secondApplicantMiddleName: [null, [Validators.maxLength(100)]],
 			secondApplicantLastName: [null, [Validators.required, Validators.maxLength(100)]],
@@ -579,12 +586,34 @@ export class NewAffordableHousingComponent implements OnInit {
 			secondAppAadharCardNumber: [null, [Validators.required, Validators.maxLength(12)]],
 			secondAppPanCardNumber: [null, [Validators.required, ValidationService.panValidator]],
 			secondAppRationCardNumber: [null, [Validators.maxLength(20)]],
+			secondAppAge: [{ value: null, disabled: true }],
+			secondPersonTypeTitle: this.fb.group({
+				code: [null, [Validators.required]],
+				name: null,
+			}),
+	
 
 			//secondAppCorrespondenceAddress: this.fb.group(this.secondAppCorrespondenceAddressComponent.addressControls()),
 			secondAppOccupationAddress: this.fb.group(this.secondAppOccupationAddressComponent.addressControls()),
-			// /* Second Beneficiary controls End *//
+		})
+		// /* Second Beneficiary controls End *//
 
-			// /* Bank Details controls Start *//
+		this.addressOfResidence = this.fb.group({
+			ward: [null, [Validators.required]],
+			currentAddress: this.fb.group(this.currentAddressComponent.addressControls()),
+			isSameAsPermanantAddress: this.fb.group({
+				code: null
+			}),
+			permanentAddress: this.fb.group(this.permanentAddressComponent.addressControls()),
+			howLongLivingInVadodara: [null, [Validators.required]],
+			sqMetersPresentBuilding: [null, [Validators.required]],
+			hasCurrentHouseKacchaOrPucca: [null, [Validators.required]],
+			hasCurrentHouseRentedOrPurchased: [null, [Validators.required]],
+			rationCardType: [null, [Validators.required]],
+		})
+
+		// /* Bank Details controls Start *//
+		this.bankDetails = this.fb.group({
 			bankAccountNumber: [null, [Validators.required, Validators.maxLength(16),Validators.minLength(16)]],
 			bank: this.fb.group({
 				code: [null, [Validators.required]],
@@ -593,20 +622,12 @@ export class NewAffordableHousingComponent implements OnInit {
 			bankBranch: [null, [Validators.required, Validators.maxLength(40)]],
 			bankIFSC: [null, [Validators.required, ValidationService.ifscCodeValidator]],
 			bankMicrCode: [null, [Validators.maxLength(25)]],
-			ddBank: this.fb.group({
-				code: [null, [Validators.required]],
-				name: null,
-			}),
-			ddBankBranch: [null, [Validators.required, Validators.maxLength(200)]],
-			ddNumber: [null, [Validators.required]],
-			ddAmount: [{ value: null, disabled: true }, [Validators.required, Validators.maxLength(6)]],
-			ddIssuingDate: [null, [Validators.required]],
-
-			// /* Bank Details controls End *//
-
-			// /* Annual Income controls Start *//
 			aggregateAnnualIncomeAmount: [null, [Validators.required, Validators.maxLength(7)]],
 			aggregateAnnualIncomeAmountInWords: [null, [Validators.required, Validators.maxLength(200)]],
+
+		})
+		// /* Bank Details controls End *//
+		this.familyDetails = this.fb.group({
 			familyMembers: this.fb.array([]),
 			//placeOfChoice: this.fb.array([]),
 			canEdit: [true],
@@ -619,31 +640,52 @@ export class NewAffordableHousingComponent implements OnInit {
 			// /* Own plot Detail controls Start *//
 			ownLandPlotDetail: this.fb.array([]),
 			// /* Own plot Detail controls End *//
+		})
 
-			// /* Nominee controls Start *//
+		// /* Nominee controls Start *//
+		this.detailsOfNominee = this.fb.group({
 			nomineeName: [null, [Validators.required, Validators.maxLength(100)]],
 			nomineeApplicantRelationShip: [null, [Validators.required, Validators.maxLength(100)]],
 			nomineeAddress: this.fb.group(this.nomineeAddrComponent.addressControls()),
-			// /* Nominee controls End *//
+		})
+		// /* Nominee controls End *//
 
-			// Attachment //
-			attachments: [''],
-			licenseAgreed: [true],
-			isSameAsPermanantAddress: this.fb.group({
-				code: null
+
+		this.chequeDetails = this.fb.group({
+			ddBank: this.fb.group({
+				code: [null, [Validators.required]],
+				name: null,
 			}),
+			ddBankBranch: [null, [Validators.required, Validators.maxLength(200)]],
+			ddNumber: [null, [Validators.required]],
+			ddAmount: [{ value: null, disabled: true }, [Validators.required, Validators.maxLength(6)]],
+			ddIssuingDate: [null, [Validators.required]],
+		})
 
+		// Attachment //
+		this.attachmentDetails = this.fb.group({
+			// attachments: [''],
+			attachments: [],
+			licenseAgreed: [true],
+		})
+		this.commonService.createCloneAbstractControl(this.firstBeneficiaryDetail , this.affordableHousingForm)
+		this.commonService.createCloneAbstractControl(this.secondBeneficiaryDetail , this.affordableHousingForm)
+		this.commonService.createCloneAbstractControl(this.addressOfResidence , this.affordableHousingForm)
+		this.commonService.createCloneAbstractControl(this.bankDetails , this.affordableHousingForm)
+		this.commonService.createCloneAbstractControl(this.familyDetails , this.affordableHousingForm)
+		this.commonService.createCloneAbstractControl(this.detailsOfNominee , this.affordableHousingForm)
+		this.commonService.createCloneAbstractControl(this.chequeDetails , this.affordableHousingForm)
+		this.commonService.createCloneAbstractControl(this.attachmentDetails , this.affordableHousingForm)
 			// // applicantCorrespondenceAddress: this.fb.group(this.applicantCorrespondenceAddrComponent.addressControls()),
 			// correspondanceAddress: this.fb.group(this.applicantCorrespondenceAddrComponent.addressControls()),
 			// occupationAddress: this.fb.group(this.occupationAddrComponent.addressControls()),
-
-		});
+		
 	}
 
 	getWordAmount(value) {
 		let words = this.getToWords(value);
 		let statusword = words + " Rs. Only"
-		this.affordableHousingForm.get('aggregateAnnualIncomeAmountInWords').setValue(statusword);
+		this.bankDetails.get('aggregateAnnualIncomeAmountInWords').setValue(statusword);
 	}
 
 
@@ -666,10 +708,10 @@ export class NewAffordableHousingComponent implements OnInit {
 			this.affodableService.getProjectLocation(projectId).subscribe(
 				(res: any) => {
 					let Obj = res[0];
-					this.affordableHousingForm.get('location').setValue(Obj.location);
-					this.affordableHousingForm.get('tpNumber').setValue(Obj.locationTPNo);
-					this.affordableHousingForm.get('fpNumber').setValue(Obj.locationFPNo);
-					this.affordableHousingForm.get('ddAmount').setValue(Obj.depositAmount);
+					this.firstBeneficiaryDetail.get('location').setValue(Obj.location);
+					this.firstBeneficiaryDetail.get('tpNumber').setValue(Obj.locationTPNo);
+					this.firstBeneficiaryDetail.get('fpNumber').setValue(Obj.locationFPNo);
+					this.chequeDetails.get('ddAmount').setValue(Obj.depositAmount);
 				}, (err: any) => {
 
 				})
@@ -689,8 +731,8 @@ export class NewAffordableHousingComponent implements OnInit {
 		let age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365.25);
 		console.log(age);
 
-		this.affordableHousingForm.get('firstAppAge').setValue(age);
-		this.affordableHousingForm.get(field).setValue(moment(value).format("YYYY-MM-DD"));
+		this.firstBeneficiaryDetail.get('firstAppAge').setValue(age);
+		this.firstBeneficiaryDetail.get(field).setValue(moment(value).format("YYYY-MM-DD"));
 		return age
 	}
 
@@ -699,24 +741,64 @@ export class NewAffordableHousingComponent implements OnInit {
 		let age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365.25);
 		console.log(age);
 
-		this.affordableHousingForm.get('secondAppAge').setValue(age);
-		this.affordableHousingForm.get(field).setValue(moment(value).format("YYYY-MM-DD"));
+		this.secondBeneficiaryDetail.get('secondAppAge').setValue(age);
+		this.secondBeneficiaryDetail.get(field).setValue(moment(value).format("YYYY-MM-DD"));
 		return age
 	}
 	/**
 	 * This method use to get output event of tab change
 	 * @param evt - Tab index
 	 */
-	onTabChange(evt) {
+	onTabChange1(evt) {
 		this.tabIndex = evt;
 	}
+	onTabChange(index: number, controlName, mainControl, isSubmitted) {
+		if (controlName.invalid) {
+			this.markFormGroupTouched(controlName)
+		} else {
+			const organizationalAry = Object.keys(controlName.getRawValue());
+			organizationalAry.forEach((element:any) => {
+				if (controlName.get(element) instanceof FormArray) {
+					const formGroupAry = this.licenseConfiguration.createArray(controlName.get(element));
+					if(mainControl.get(element).value){
+						mainControl.get(element).value = []
+						mainControl.get(element).controls = []
+					  }
+				   // mainControl.get(element).removeAt()
+					for(let i = 0; i < controlName.get(element).controls.length; i++) {
+						mainControl.get(element).value.push(formGroupAry.value[i]);
+						mainControl.get(element).controls.push(formGroupAry.controls[i]);
+					}   
+				}
+				else {
+					mainControl.get(element).setValue(controlName.get(element).value);
+				}
+			});
+			if(isSubmitted){
+			//   this.onSubmit()
+			  this.saveFrom(controlName, index)
+			}
+		}
+	}
+
+	markFormGroupTouched(formGroup: FormGroup) {
+		if (Reflect.getOwnPropertyDescriptor(formGroup, 'controls')) {
+		  (<any>Object).values(formGroup.controls).forEach(control => {
+			if (control instanceof FormGroup) {
+			  // FormGroup
+			  this.markFormGroupTouched(control);
+			}
+			// FormControl
+			control.markAsTouched();
+		  });
+		}
+	  }
 
 	/**
 	 * This method required for final form submition.
 	 * @param flag - flag of invalid control.
 	 */
 	handleErrorsOnSubmit(key) {
-
 		const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 0;
 
 		this.tabIndex = index;
@@ -866,16 +948,16 @@ export class NewAffordableHousingComponent implements OnInit {
 		let formArrayData: FormArray;
 		switch (key) {
 			case 'familyMembers':
-				formArrayData = this.affordableHousingForm.get('familyMembers') as FormArray;
+				formArrayData = this.familyDetails.get('familyMembers') as FormArray;
 				break;
 			// case 'placeOfChoice':
 			// 	formArrayData = this.affordableHousingForm.get('placeOfChoice') as FormArray;
 			// 	break;
 			case 'ownHouseDetail':
-				formArrayData = this.affordableHousingForm.get('ownHouseDetail') as FormArray;
+				formArrayData = this.familyDetails.get('ownHouseDetail') as FormArray;
 				break;
 			case 'ownLandPlotDetail':
-				formArrayData = this.affordableHousingForm.get('ownLandPlotDetail') as FormArray;
+				formArrayData = this.familyDetails.get('ownLandPlotDetail') as FormArray;
 				break;
 
 			default:
@@ -889,7 +971,6 @@ export class NewAffordableHousingComponent implements OnInit {
 	 * @param key - identify for form array
 	 */
 	addRecordFormArray(key: string): void {
-		debugger
 		switch (key) {
 			case 'familyMembers':
 				this.getFormsArray('familyMembers').push(this.createFormGroup("familyMembers", {}));
@@ -979,7 +1060,6 @@ export class NewAffordableHousingComponent implements OnInit {
 	 * This method is used to submit the PEC registration data
 	 */
 	onSubmit() {
-
 		if (this.affordableHousingForm.invalid) {
 			//this.commonService.prrintInvalidForm(this.affordableHousingForm);
 			let count = this.affordableHousingConfiguration.getAllErrors(this.affordableHousingForm);
@@ -1250,14 +1330,30 @@ export class NewAffordableHousingComponent implements OnInit {
 	onSameAddressChange(event){
 		if (event.checked) {
 
-			this.affordableHousingForm.get('permanentAddress').patchValue(this.affordableHousingForm.get('currentAddress').value);
-			this.affordableHousingForm.get('permanentAddress.addressType').setValue('PERMANENT_ADDRESS');
-			this.affordableHousingForm.get('isSameAsPermanantAddress').get('code').setValue("YES");
-			this.affordableHousingForm.get('permanentAddress').disable();
+			this.addressOfResidence.get('permanentAddress').patchValue(this.addressOfResidence.get('currentAddress').value);
+			this.addressOfResidence.get('permanentAddress.addressType').setValue('PERMANENT_ADDRESS');
+			this.addressOfResidence.get('isSameAsPermanantAddress').get('code').setValue("YES");
+			this.addressOfResidence.get('permanentAddress').disable();
 		} else {
-			this.affordableHousingForm.get('permanentAddress').enable();
-			this.affordableHousingForm.get('permanentAddress').reset();
-			this.affordableHousingForm.get('isSameAsPermanantAddress').get('code').setValue("NO");
+			this.addressOfResidence.get('permanentAddress').enable();
+			this.addressOfResidence.get('permanentAddress').reset();
+			this.addressOfResidence.get('isSameAsPermanantAddress').get('code').setValue("NO");
 		}
 	}
+
+	saveFrom(controlName, index){
+		if(controlName.valid){
+		  this.formService.saveFormData(this.affordableHousingForm.getRawValue()).subscribe(
+			res => {
+			  this.tabIndex = index ;
+			  this.affordableHousingForm.patchValue(res);
+			},
+			err => {
+			 this.tabIndex  = 0
+			 this.commonService.openAlert('error', err, 'error')
+			}
+		  )
+		}
+	  }
+	      
 }
