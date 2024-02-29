@@ -653,8 +653,8 @@
 				</div>
 				<div class="col-md-4" formGroupName="isSameAsPermanantAddress">
 					<mat-checkbox class="col-md-12 mt-2 isEditMode"
-						[checked]="addressOfResidence.get('isSameAsPermanantAddress').get('code').value == 'YES'? true : false"
-					 (change)="onSameAddressChange($event)">{{'Temporary Address Is Same As
+						[checked]="affordableHousingForm.get('isSameAsPermanantAddress').get('code').value == 'YES'? true : false"
+					 (change)="onSameAddressChange($event)">{{'Current Address Is Same As
 						Permanent Address ?' | translate: translateKey}}</mat-checkbox>
 				</div>
 
