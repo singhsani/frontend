@@ -329,9 +329,9 @@ export class CommonPaybleComponent implements OnInit {
       this.isProfessionalTax = true;
     } else if(paySerCode === 'VEHICLE'){
       this.paymentsForm.get('refNumber').setValidators([Validators.required])
-    } else if(paySerCode === 'PFT_REG_CER'){
-      this.paymentsForm.get('refNumber').setValidators([Validators.required])
-    }
+    }// } else if(paySerCode === 'PFT_REG_CER'){
+    //   this.paymentsForm.get('refNumber').setValidators([Validators.required])
+    // }
     else {
       this.isProfessionalTax = false;
       this.paymentsForm.get('refNumber').setValidators(null);
