@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, OnDestroy, DebugElement } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatInput } from '@angular/material';
@@ -632,7 +632,12 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 			}*/
 
 			if (res.data.hasPrc) {
+				if(res.data.prcNo == null){
+					this.commonService.openAlert("You have already Submiited the Application", "", "warning", `Please Visit the Ward Office For Further Enquiry`);
+				}
+				else{
 				this.commonService.openAlert("PRC Is Already Exists", "", "warning", `Your PRC number is<br> <b>${res.data.prcNo}</b>`);
+				}
 				return;
 			}
 			
