@@ -398,7 +398,7 @@
 						</div>
 
 						<div class="col-md-4 ngSelect" formGroupName="batchName">
-							<ng-select placeholder="{{'batch_name' | translate:translateKey}} *"
+							<ng-select placeholder="{{'Batch Time' | translate:translateKey}} *"
 								formControlName="code" (change)="filterBatch($event)" required>
 								<ng-option *ngFor="let batchName of BATCH_NAME" [value]="batchName.code">
 									{{batchName.name}}
@@ -409,7 +409,7 @@
 						</div>
 					 </div>
 
-					 <div class="row mt-4 fotButtonBar">
+					 <div class="row mt-0 fotButtonBar">
 						<div class="col-sm-12 col-md-12 justify-content-between d-flex">
 							<button type="button" color="primary" mat-raised-button
 								(click)="showDowlLoadFileTab = false; showSwimmingPoolForm = true;">
@@ -585,7 +585,7 @@
 						     [addressFormGroup]="applicantDetail.get('applicantAddress')" ></app-address>
 
 
-					   <div class="row mt-4 fotButtonBar">
+					   <div class="row mt-0 fotButtonBar">
 						    <div class="col-sm-12 col-md-12 justify-content-between d-flex">
 							     <button type="button" color="primary" mat-raised-button (click)="tabIndex= tabIndex -1; ">
 								  <mat-icon>navigate_before</mat-icon>
@@ -711,7 +711,7 @@
 
 					</div>
 
-					<div class="row mt-4 fotButtonBar">
+					<div class="row mt-0 fotButtonBar">
 						<div class="col-sm-12 col-md-12 justify-content-between d-flex">
 							<button type="button" color="primary" mat-raised-button (click)="tabIndex= tabIndex -1; ">
 								<mat-icon>navigate_before</mat-icon>
