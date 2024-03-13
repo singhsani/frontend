@@ -398,7 +398,7 @@
 						</div>
 
 						<div class="col-md-4 ngSelect" formGroupName="batchName">
-							<ng-select placeholder="{{'Batch Time' | translate:translateKey}} *"
+							<ng-select placeholder="{{'Batch Time' | translate:translateKey}} *" class="city_dropdown"
 								formControlName="code" (change)="filterBatch($event)" required>
 								<ng-option *ngFor="let batchName of BATCH_NAME" [value]="batchName.code">
 									{{batchName.name}}
