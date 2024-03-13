@@ -132,7 +132,11 @@ export class TicketingFileUploadComponent implements OnInit {
               this.selectedFiles = undefined;
               this.fileInput.nativeElement.value = "";
               this.uploaded.emit(true);
-          });
+          },failureResponse => {
+            this.fileName = ''
+            this.uploaded.emit(false);
+            this.canUpload = false;
+        });
       }else{
         this.uploadFileService.processFileToServer(formData, setProgressBar => {
           this.progress.percentage = setProgressBar;
@@ -146,7 +150,11 @@ export class TicketingFileUploadComponent implements OnInit {
           this.selectedFiles = undefined;
           this.fileInput.nativeElement.value = "";
           this.uploaded.emit(true);
-        });
+        },failureResponse => {
+          this.fileName = ''
+          this.uploaded.emit(false);
+          this.canUpload = false;
+      });
       }
 
       }

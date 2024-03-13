@@ -21,7 +21,7 @@ export class HosUploadFileService {
     this.uploadDMSFileUrl = 'api/attachment/uploadForDMS';
   }
 
-  processFileToServer(formData: FormData, setProgress?: any, successResponse?: any) {
+  processFileToServer(formData: FormData, setProgress?: any, successResponse?: any,failureResponse?: any) {
 
     this.httpService.uploadFilePost(this.uploadFileUrl, formData).subscribe(event => {
       switch (event.type) {
@@ -34,6 +34,9 @@ export class HosUploadFileService {
         case HttpEventType.Response:
           return successResponse(event.body);
       }
+    },err =>{
+      console.log(err.error[0].message);
+			  return failureResponse();
     });
   }
 
@@ -43,7 +46,7 @@ export class HosUploadFileService {
 	 * @param setProgress 
 	 * @param successResponse 
 	 */
-	processFileToDMSServer(formData: FormData, setProgress?: any, successResponse?: any) {
+	processFileToDMSServer(formData: FormData, setProgress?: any, successResponse?: any,failureResponse?: any) {
 
 		this.httpService.uploadFilePost(this.uploadDMSFileUrl, formData).subscribe(postEvent => {
 			switch (postEvent.type) {
@@ -56,7 +59,10 @@ export class HosUploadFileService {
 				case HttpEventType.Response:
 					return successResponse(postEvent.body);
 			}
-		});
+		},err =>{
+      console.log(err.error[0].message);
+			  return failureResponse();
+    });
 	}
 
   getFileFromServer(serviceFormId, fileId, type) {

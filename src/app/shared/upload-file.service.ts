@@ -15,14 +15,15 @@ export class UploadFileService {
 	progress: { percentage: number } = { percentage: 0 }
 
 	constructor(
-		private httpService: HttpService
+		private httpService: HttpService,
+		private commonService: CommonService
 	) {
 		this.uploadFileUrl = 'api/attachment/upload';
 		this.uploadDMSFileUrl = 'api/attachment/uploadForDMS';
 		this.uploadDMSFileUrlBooking = 'api/attachment/booking/uploadForDMS';
 	}
 
-	processFileToServer(formData: FormData, setProgress?: any, successResponse?: any) {
+	processFileToServer(formData: FormData, setProgress?: any, successResponse?: any,failureResponse? : any) {
 
 		this.httpService.uploadFilePost(this.uploadFileUrl, formData).subscribe(event => {
 			switch (event.type) {
@@ -35,7 +36,10 @@ export class UploadFileService {
 				case HttpEventType.Response:
 					return successResponse(event.body);
 			}
-		});
+		}, err=>{
+			console.log(err.error[0].message);
+			  return failureResponse();
+		  });
 	}
 
 	    /**
@@ -44,7 +48,7 @@ export class UploadFileService {
 	 * @param setProgress 
 	 * @param successResponse 
 	 */
-	processFileToDMSServerBooking(formData: FormData, setProgress?: any, successResponse?: any) {
+	processFileToDMSServerBooking(formData: FormData, setProgress?: any, successResponse?: any,failureResponse? : any) {
 
 		this.httpService.uploadFilePost(this.uploadDMSFileUrlBooking, formData).subscribe(postEvent => {
 			switch (postEvent.type) {
@@ -57,7 +61,10 @@ export class UploadFileService {
 				case HttpEventType.Response:
 					return successResponse(postEvent.body);
 			}
-		});
+		},err=>{
+			console.log(err.error[0].message);
+			  return failureResponse();
+		  });
 	}
 
 	/**
@@ -66,7 +73,7 @@ export class UploadFileService {
 	 * @param setProgress 
 	 * @param successResponse 
 	 */
-	processFileToDMSServer(formData: FormData, setProgress?: any, successResponse?: any) {
+	processFileToDMSServer(formData: FormData, setProgress?: any, successResponse?: any,failureResponse? : any) {
 
 		this.httpService.uploadFilePost(this.uploadDMSFileUrl, formData).subscribe(postEvent => {
 			switch (postEvent.type) {
@@ -79,7 +86,10 @@ export class UploadFileService {
 				case HttpEventType.Response:
 					return successResponse(postEvent.body);
 			}
-		});
+		}, err=>{
+			console.log(err.error[0].message);
+			  return failureResponse();
+		  });
 	}
 
 	/**
