@@ -245,6 +245,9 @@ export class FileUploadComponent implements OnInit {
 							this.currentFileUpload = undefined;
 							this.selectedFiles = undefined;
 							this.fileInput.nativeElement.value = "";
+						},failureResponse => {
+							this.fileName = '';
+							this.canUpload = false;
 						});
 					}else{
 						this.uploadFileService.processFileToServer(formData, setProgressBar => {
@@ -258,6 +261,9 @@ export class FileUploadComponent implements OnInit {
 							this.currentFileUpload = undefined;
 							this.selectedFiles = undefined;
 							this.fileInput.nativeElement.value = "";
+						},failureResponse => {
+							this.fileName = '';
+							this.canUpload = false;
 						});
 					}
 
@@ -305,6 +311,9 @@ export class FileUploadComponent implements OnInit {
 							this.currentFileUpload = undefined;
 							this.selectedFiles = undefined;
 							this.fileInput.nativeElement.value = "";
+						},failureResponse => {
+							this.fileName = '';
+							this.canUpload = false;
 						});
 					}else{
 						this.uploadFileService.processFileToServer(formData, setProgressBar => {
@@ -318,6 +327,9 @@ export class FileUploadComponent implements OnInit {
 							this.currentFileUpload = undefined;
 							this.selectedFiles = undefined;
 							this.fileInput.nativeElement.value = "";
+						},failureResponse => {
+							this.fileName = '';
+							this.canUpload = false;
 						});
 					}
 					// this.uploadFileService.processFileToServer(formData, setProgressBar => {

@@ -148,6 +148,9 @@ export class FileUploadComponentWaterTax implements OnInit {
 						this.currentFileUpload = undefined;
 						this.selectedFiles = undefined;
 						this.fileInput.nativeElement.value = "";
+					},failureResponse => {
+						this.fileName = ''
+						this.canUpload = false;
 					});
 				}
 			}

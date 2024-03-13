@@ -106,9 +106,9 @@ export class TokenInterceptor implements HttpInterceptor {
 									// 	}
 									// });
 									break;
-								// case 400:
-								// 	this.commonService.openAlert('Error', err ? (err.error.error_description ? err.error.error_description : err.error[0].message ) : 'Bad Request', 'error');
-								// 	break;
+								 case 400:
+								 	this.commonService.openAlert('Error', err ? (err.error.error_description ? err.error.error_description : err.error[0].message ) : 'Bad Request', 'error');
+								 	break;
 								case 401:
 									this.toaster.error(err.error.message ? err.error.message : err.error.error);
 									if (this.commonService.getUserType()) {

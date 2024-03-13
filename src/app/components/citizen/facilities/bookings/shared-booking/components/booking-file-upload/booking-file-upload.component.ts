@@ -152,6 +152,10 @@ export class BookingFileUploadComponent implements OnInit, OnChanges {
                         this.selectedFiles = undefined;
                         this.fileInput.nativeElement.value = "";
                         this.uploaded.emit(true);
+                    }, failureResponse => {
+                        this.fileName = ''
+                        this.uploaded.emit(false);
+                        this.canUpload = false;
                     });
                 } else {
 
@@ -166,6 +170,10 @@ export class BookingFileUploadComponent implements OnInit, OnChanges {
                         this.selectedFiles = undefined;
                         this.fileInput.nativeElement.value = "";
                         this.uploaded.emit(true);
+                    }, failureResponse => {
+                        this.fileName = ''
+                        this.uploaded.emit(false);
+                        this.canUpload = false;
                     });
 
                 }
