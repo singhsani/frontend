@@ -357,13 +357,13 @@
 			<!-- step 1 Starts -->
 			<mat-tab disabled> 
 
+				<form [formGroup]="secondBeneficiaryDetail">
 				<ng-template mat-tab-label>
 					<div>{{'Second Beneficiary Detail' | translate:translateKey}}</div>
 				</ng-template>
-			<form [formGroup]="secondBeneficiaryDetail">
 				<div class="row">
 					<div class="col-md-3 ngSelect" formGroupName="secondPersonTypeTitle">
-						<ng-select placeholder="{{'Title' | translate: translateKey}} {{secondPersonrequiredFeilds?'*':''}}" formControlName="code" >
+						<ng-select placeholder="{{'Title' | translate: translateKey}} {{secondPersonrequiredFeilds?'*':''}}" formControlName="code" [required]="secondPersonrequiredFeilds">
 							<ng-option *ngFor="let person of personTypeArray" [value]="person.code">
 								{{person.name}}
 							</ng-option>
@@ -630,11 +630,11 @@
 			<!-- step 3 Starts -->
 
 			<mat-tab disabled>
+				<form [formGroup]="addressOfResidence">
 				<ng-template mat-tab-label disabled>
 					<div>{{'Address Of Residence'}}
 					</div>
 				</ng-template>
-			<form [formGroup]="addressOfResidence">
 				<div class="row">
 					<div class="col-md-4 ngSelect">
 						<ng-select placeholder="{{'Ward ' | translate: translateKey}} *" formControlName="ward">

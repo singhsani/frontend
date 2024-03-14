@@ -254,11 +254,13 @@ export class NewAffordableHousingComponent implements OnInit {
 		var value = this.firstBeneficiaryDetail.get('marriageStatus').get('code').value
 		if (value) {
 			if (value == "MARRIED") {
-				this.mandotoryFileds(true);
+				// this.mandotoryFileds(true);
+				this.mandotoryFiledsForMainControl(true);
 				this.setSecoundApplciatPhoto(true);
 			}
 			else {
-				this.mandotoryFileds(false);
+				// this.mandotoryFileds(false);
+				this.mandotoryFiledsForMainControl(false);
 				this.setSecoundApplciatPhoto(false);
 			}
 		}
@@ -325,72 +327,71 @@ export class NewAffordableHousingComponent implements OnInit {
 		this.manadoty();
 	}
 
-	mandotoryFileds(flag) {
+	mandotoryFiledsForMainControl(flag) {
 		this.secondPersonrequiredFeilds = flag
 		if (flag) {
-			this.secondBeneficiaryDetail.get('secondPersonTypeTitle').get('code').setValidators([Validators.required]);
-			this.secondBeneficiaryDetail.get('secondApplicantFirstName').setValidators([Validators.required]);
-			this.secondBeneficiaryDetail.get('secondApplicantMiddleName').setValidators([Validators.maxLength(100)]);
-			this.secondBeneficiaryDetail.get('secondApplicantLastName').setValidators([Validators.required, Validators.maxLength(100)]);
-			this.secondBeneficiaryDetail.get('secondAppHusWifeFirstName').setValidators([Validators.required, Validators.maxLength(100)]);
-			this.secondBeneficiaryDetail.get('secondAppHusWifeMiddleName').setValidators([Validators.maxLength(100)]);
-			this.secondBeneficiaryDetail.get('secondAppHusWifeLastName').setValidators([Validators.required, Validators.maxLength(100)]);
-			this.secondBeneficiaryDetail.get('secondAppDateOfBirth').setValidators([Validators.required]);
-			this.secondBeneficiaryDetail.get('secondAppTelephoneNumber').setValidators([Validators.maxLength(11)]);
-			this.secondBeneficiaryDetail.get('secondAppMobileNumOne').setValidators([Validators.required, Validators.maxLength(10)]);
-			this.secondBeneficiaryDetail.get('secondAppMobileNumTwo').setValidators([Validators.maxLength(10)]);
-			this.secondBeneficiaryDetail.get('secondAppEmail').setValidators([ValidationService.emailValidator, Validators.maxLength(50)]);
-			this.secondBeneficiaryDetail.get('secondAppOrganizationName').setValidators([Validators.required, Validators.maxLength(20)]);
-			this.secondBeneficiaryDetail.get('secondAppOccupation').setValidators([Validators.required, Validators.maxLength(10)]);
-			this.secondBeneficiaryDetail.get('secondAppOccupationDesignation').setValidators([Validators.required, Validators.maxLength(10)]);
-			this.secondBeneficiaryDetail.get('secondAppDrivingLicenseNumber').setValidators([ValidationService.drivingLicenseValidator]);
-			this.secondBeneficiaryDetail.get('secondAppVoterIdNumber').setValidators([ValidationService.electionCardValidator]);
-			this.secondBeneficiaryDetail.get('secondAppAadharCardNumber').setValidators([Validators.required, Validators.maxLength(12)]);
-			this.secondBeneficiaryDetail.get('secondAppPanCardNumber').setValidators([Validators.required, ValidationService.panValidator]);
-			this.secondBeneficiaryDetail.get('secondAppRationCardNumber').setValidators([Validators.maxLength(10)]);
+			this.affordableHousingForm.get('secondPersonTypeTitle').get('code').setValidators([Validators.required]);
+			this.affordableHousingForm.get('secondApplicantFirstName').setValidators([Validators.required]);
+			this.affordableHousingForm.get('secondApplicantMiddleName').setValidators([Validators.maxLength(100)]);
+			this.affordableHousingForm.get('secondApplicantLastName').setValidators([Validators.required, Validators.maxLength(100)]);
+			this.affordableHousingForm.get('secondAppHusWifeFirstName').setValidators([Validators.required, Validators.maxLength(100)]);
+			this.affordableHousingForm.get('secondAppHusWifeMiddleName').setValidators([Validators.maxLength(100)]);
+			this.affordableHousingForm.get('secondAppHusWifeLastName').setValidators([Validators.required, Validators.maxLength(100)]);
+			this.affordableHousingForm.get('secondAppDateOfBirth').setValidators([Validators.required]);
+			this.affordableHousingForm.get('secondAppTelephoneNumber').setValidators([Validators.maxLength(11)]);
+			this.affordableHousingForm.get('secondAppMobileNumOne').setValidators([Validators.required, Validators.maxLength(10)]);
+			this.affordableHousingForm.get('secondAppMobileNumTwo').setValidators([Validators.maxLength(10)]);
+			this.affordableHousingForm.get('secondAppEmail').setValidators([ValidationService.emailValidator, Validators.maxLength(50)]);
+			this.affordableHousingForm.get('secondAppOrganizationName').setValidators([Validators.required, Validators.maxLength(20)]);
+			this.affordableHousingForm.get('secondAppOccupation').setValidators([Validators.required, Validators.maxLength(10)]);
+			this.affordableHousingForm.get('secondAppOccupationDesignation').setValidators([Validators.required, Validators.maxLength(10)]);
+			this.affordableHousingForm.get('secondAppDrivingLicenseNumber').setValidators([ValidationService.drivingLicenseValidator]);
+			this.affordableHousingForm.get('secondAppVoterIdNumber').setValidators([ValidationService.electionCardValidator]);
+			this.affordableHousingForm.get('secondAppAadharCardNumber').setValidators([Validators.required, Validators.maxLength(12)]);
+			this.affordableHousingForm.get('secondAppPanCardNumber').setValidators([Validators.required, ValidationService.panValidator]);
+			this.affordableHousingForm.get('secondAppRationCardNumber').setValidators([Validators.maxLength(10)]);
 		} else {
-			this.secondBeneficiaryDetail.get('secondPersonTypeTitle').get('code').clearValidators();
-			this.secondBeneficiaryDetail.get('secondApplicantFirstName').clearValidators();
-			this.secondBeneficiaryDetail.get('secondApplicantMiddleName').clearValidators();
-			this.secondBeneficiaryDetail.get('secondApplicantLastName').clearValidators();
-			this.secondBeneficiaryDetail.get('secondAppHusWifeFirstName').clearValidators();
-			this.secondBeneficiaryDetail.get('secondAppHusWifeMiddleName').clearValidators();
-			this.secondBeneficiaryDetail.get('secondAppHusWifeLastName').clearValidators();
-			this.secondBeneficiaryDetail.get('secondAppDateOfBirth').clearValidators();
-			this.secondBeneficiaryDetail.get('secondAppTelephoneNumber').clearValidators();
-			this.secondBeneficiaryDetail.get('secondAppMobileNumOne').clearValidators();
-			this.secondBeneficiaryDetail.get('secondAppMobileNumTwo').clearValidators();
-			this.secondBeneficiaryDetail.get('secondAppEmail').clearValidators();
-			this.secondBeneficiaryDetail.get('secondAppOrganizationName').clearValidators();
-			this.secondBeneficiaryDetail.get('secondAppOccupation').clearValidators();
-			this.secondBeneficiaryDetail.get('secondAppOccupationDesignation').clearValidators();
-			this.secondBeneficiaryDetail.get('secondAppDrivingLicenseNumber').clearValidators();
-			this.secondBeneficiaryDetail.get('secondAppVoterIdNumber').clearValidators();
-			this.secondBeneficiaryDetail.get('secondAppAadharCardNumber').clearValidators();
-			this.secondBeneficiaryDetail.get('secondAppPanCardNumber').clearValidators();
-			this.secondBeneficiaryDetail.get('secondAppRationCardNumber').clearValidators();
+			this.affordableHousingForm.get('secondPersonTypeTitle').get('code').clearValidators();
+			this.affordableHousingForm.get('secondApplicantFirstName').clearValidators();
+			this.affordableHousingForm.get('secondApplicantMiddleName').clearValidators();
+			this.affordableHousingForm.get('secondApplicantLastName').clearValidators();
+			this.affordableHousingForm.get('secondAppHusWifeFirstName').clearValidators();
+			this.affordableHousingForm.get('secondAppHusWifeMiddleName').clearValidators();
+			this.affordableHousingForm.get('secondAppHusWifeLastName').clearValidators();
+			this.affordableHousingForm.get('secondAppDateOfBirth').clearValidators();
+			this.affordableHousingForm.get('secondAppTelephoneNumber').clearValidators();
+			this.affordableHousingForm.get('secondAppMobileNumOne').clearValidators();
+			this.affordableHousingForm.get('secondAppMobileNumTwo').clearValidators();
+			this.affordableHousingForm.get('secondAppEmail').clearValidators();
+			this.affordableHousingForm.get('secondAppOrganizationName').clearValidators();
+			this.affordableHousingForm.get('secondAppOccupation').clearValidators();
+			this.affordableHousingForm.get('secondAppOccupationDesignation').clearValidators();
+			this.affordableHousingForm.get('secondAppDrivingLicenseNumber').clearValidators();
+			this.affordableHousingForm.get('secondAppVoterIdNumber').clearValidators();
+			this.affordableHousingForm.get('secondAppAadharCardNumber').clearValidators();
+			this.affordableHousingForm.get('secondAppPanCardNumber').clearValidators();
+			this.affordableHousingForm.get('secondAppRationCardNumber').clearValidators();
 		}
-		this.secondBeneficiaryDetail.get('secondPersonTypeTitle').get('code').updateValueAndValidity();
-		this.secondBeneficiaryDetail.get('secondApplicantFirstName').updateValueAndValidity();
-		this.secondBeneficiaryDetail.get('secondApplicantMiddleName').updateValueAndValidity();
-		this.secondBeneficiaryDetail.get('secondApplicantLastName').updateValueAndValidity();
-		this.secondBeneficiaryDetail.get('secondAppHusWifeFirstName').updateValueAndValidity();
-		this.secondBeneficiaryDetail.get('secondAppHusWifeMiddleName').updateValueAndValidity();
-		this.secondBeneficiaryDetail.get('secondAppHusWifeLastName').updateValueAndValidity();
-		this.secondBeneficiaryDetail.get('secondAppDateOfBirth').updateValueAndValidity();
-		this.secondBeneficiaryDetail.get('secondAppTelephoneNumber').updateValueAndValidity();
-		this.secondBeneficiaryDetail.get('secondAppMobileNumOne').updateValueAndValidity();
-		this.secondBeneficiaryDetail.get('secondAppMobileNumTwo').updateValueAndValidity();
-		this.secondBeneficiaryDetail.get('secondAppEmail').updateValueAndValidity();
-		this.secondBeneficiaryDetail.get('secondAppOrganizationName').updateValueAndValidity();
-		this.secondBeneficiaryDetail.get('secondAppOccupation').updateValueAndValidity();
-		this.secondBeneficiaryDetail.get('secondAppOccupationDesignation').updateValueAndValidity();
-		this.secondBeneficiaryDetail.get('secondAppDrivingLicenseNumber').updateValueAndValidity();
-		this.secondBeneficiaryDetail.get('secondAppVoterIdNumber').updateValueAndValidity();
-		this.secondBeneficiaryDetail.get('secondAppAadharCardNumber').updateValueAndValidity();
-		this.secondBeneficiaryDetail.get('secondAppPanCardNumber').updateValueAndValidity();
-		this.secondBeneficiaryDetail.get('secondAppRationCardNumber').updateValueAndValidity();
-		this.CD.detectChanges();
+		this.affordableHousingForm.get('secondPersonTypeTitle').get('code').updateValueAndValidity();
+		this.affordableHousingForm.get('secondApplicantFirstName').updateValueAndValidity();
+		this.affordableHousingForm.get('secondApplicantMiddleName').updateValueAndValidity();
+		this.affordableHousingForm.get('secondApplicantLastName').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppHusWifeFirstName').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppHusWifeMiddleName').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppHusWifeLastName').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppDateOfBirth').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppTelephoneNumber').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppMobileNumOne').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppMobileNumTwo').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppEmail').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppOrganizationName').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppOccupation').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppOccupationDesignation').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppDrivingLicenseNumber').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppVoterIdNumber').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppAadharCardNumber').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppPanCardNumber').updateValueAndValidity();
+		this.affordableHousingForm.get('secondAppRationCardNumber').updateValueAndValidity();
 	}
 
 	setServiceDetailsOnInits(res) {
