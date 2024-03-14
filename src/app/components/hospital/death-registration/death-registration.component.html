@@ -24,7 +24,7 @@
 				</ng-template>
 
 				<div class="row col-md-12 radioBtnError" formGroupName="unknownCategory">
-					ss<mat-label>{{'is_deceased_unknown' | translate:translateKey}} <span class="mandatory">*</span></mat-label>
+					<mat-label>{{'is_deceased_unknown' | translate:translateKey}} <span class="mandatory">*</span></mat-label>
 					<mat-radio-group formControlName="code" (change)="decider($event.value)">
 						<mat-radio-button *ngFor="let yesno of ISYESNO" [value]="yesno.code">
 							{{yesno.name}}
@@ -135,7 +135,7 @@
 				<div class="row">
 
 					<div formGroupName="maritalStatus" class="col-md-4 ngSelect">
-						<ng-select placeholder="{{'marital_Status' | translate:translateKey}} {{requiredFeild?'*':''}}"
+						<ng-select placeholder="{{'marital_Status' | translate:translateKey}} " [class.asteriskmarkRequired]="requiredFeild"
 							formControlName="code" (change)="resetSpouseCntrl($event)">
 							<ng-option *ngFor="let maritalStatusObj of MaritalStatusData"
 								[value]="maritalStatusObj.code">
@@ -240,9 +240,9 @@
 					</mat-form-field>
 
 					<div formGroupName="occupation" class="col-md-6 ngSelect">
-						<ng-select placeholder="{{'occupation' | translate:translateKey}} {{requiredFeild?'*':''}}"
+						<ng-select placeholder="{{'occupation' | translate:translateKey}}" [class.asteriskmarkRequired]="requiredFeild" [required]="requiredFeild"
 							(change)="config.gujNameFinder($event,deathCertificateForm,'occupation',DeceasedOccupation)"
-							formControlName="code">
+							formControlName="code" [required]="requiredFeild">
 							<ng-option *ngFor="let deceasedoccupation of DeceasedOccupation"
 								[value]="deceasedoccupation.code">
 								{{deceasedoccupation.name}}
@@ -260,7 +260,7 @@
 					</mat-form-field>
 
 					<div formGroupName="education" class="col-md-6 ngSelect">
-						<ng-select placeholder="{{'education' | translate:translateKey}} {{requiredFeild?'*':''}}"
+						<ng-select placeholder="{{'education' | translate:translateKey}} " [class.asteriskmarkRequired]="requiredFeild" [required]="requiredFeild"
 							(change)="config.gujNameFinder($event,deathCertificateForm, 'education',DeceasedEducations)"
 							formControlName="code">
 							<ng-option *ngFor="let deceasededucation of DeceasedEducations"
@@ -289,7 +289,7 @@
 					</div>
 
 					<div formGroupName="religion" class="col-md-6 ngSelect">
-						<ng-select placeholder="{{'religion' | translate:translateKey}} {{requiredFeild?'*':''}}"
+						<ng-select placeholder="{{'religion' | translate:translateKey}} " [class.asteriskmarkRequired]="requiredFeild" [required]="requiredFeild"
 							formControlName="code"
 							(change)="config.changeHandler($event, 'OTHER_RELIGION', deathCertificateForm, 'religionOther')">
 							<ng-option *ngFor="let religion of Religion" [value]="religion.code">
@@ -319,7 +319,7 @@
 
 					<div class="col-md-6" formGroupName="gender">
 						<div class="radioBtnError">
-							<mat-label>{{'gender' | translate:translateKey}} *</mat-label>
+							<mat-label>{{'gender' | translate:translateKey}} <span class="mandatory">*</span></mat-label>
 							<mat-radio-group formControlName="code"
 								(change)="deathCertificateForm.get('gender').get('code').value != 'FEMALE'?deathCertificateForm.get('femaleDeathReason').reset() : ''">
 								<!-- (change)="config.changeHandler($event.value, 'FEMALE', deathCertificateForm,'femaleDeathReason')" -->
@@ -334,8 +334,7 @@
 
 					<div *ngIf="deathCertificateForm.get('gender').get('code').value == 'FEMALE'"
 						class="col-md-6 radioBtnError" formGroupName="femaleDeathReason">
-						<mat-label>{{'female_death_region' | translate:translateKey}} {{deathCertificateForm.get('gender').get('code').value
-							== 'FEMALE' ?'*':''}}</mat-label>
+						<mat-label>{{'female_death_region' | translate:translateKey}} <span class="mandatory" *ngIf="deathCertificateForm.get('gender').get('code').value == 'FEMALE'">*</span></mat-label>
 						<mat-radio-group formControlName="code">
 							<mat-radio-button *ngFor="let yesNo of ISYESNO" [value]="yesNo.code">
 								{{yesNo.name}}
@@ -361,10 +360,10 @@
 
 				<div class="row">
 
-					<div class="col-md-4 ngSelect" formGroupName="deathPlace">
+					<div class="col-md-4 ngSelect asteriskmarkRequired" formGroupName="deathPlace">
 						<ng-select
 							(change)="config.changeHandler($event, 'OTHER_PLACE',deathCertificateForm, 'otherPlace')"
-							placeholder="{{'place_of_death' | translate:translateKey}} *"
+							placeholder="{{'place_of_death' | translate:translateKey}} "
 							formControlName="code">
 							<ng-option *ngFor="let deathplace of deathPlaces" [value]="deathplace.code">
 								{{deathplace.name}}
@@ -385,7 +384,7 @@
 					<div class="col-md-5 ngSelect" formGroupName="medicalTreatment">
 						<ng-select
 							(change)="config.gujNameFinder($event,deathCertificateForm,'medicalTreatment',MedicalTreatmentOptions);changeMedicalTreatment($event)"
-							placeholder="{{'medical_treatment' | translate:translateKey}} {{requiredFeild?'*':''}}"
+							placeholder="{{'medical_treatment' | translate:translateKey}} " [class.asteriskmarkRequired]="requiredFeild" [required]="requiredFeild"
 							formControlName="code">
 							<ng-option *ngFor="let mto of MedicalTreatmentOptions" [value]="mto.code">
 								{{mto.name}}
@@ -453,7 +452,7 @@
 					</div> -->
 
 					<div class="col-md-6 radioBtnError" formGroupName="reportedToCoronor">
-						<mat-label>{{'reported_to_coroner' | translate:translateKey}} *</mat-label>
+						<mat-label>{{'reported_to_coroner' | translate:translateKey}} <span class="mandatory">*</span></mat-label>
 						<mat-radio-group formControlName="code">
 							<mat-radio-button class="example-radio-button"
 								*ngFor="let report_coroner_obj of DEATH_REPORT_CORONER_Data"
@@ -465,8 +464,8 @@
 						</control-messages>
 					</div>
 
-					<div class="col-md-6 ngSelect" formGroupName="immediateCOD1">
-						<ng-select placeholder="{{'immediateCOD1' | translate:translateKey}} *" formControlName="code">
+					<div class="col-md-6 ngSelect asteriskmarkRequired" formGroupName="immediateCOD1">
+						<ng-select placeholder="{{'immediateCOD1' | translate:translateKey}} " formControlName="code">
 							<ng-option *ngFor="let Immediate_COD_Obj of IMMEDIATE_COD_Data"
 								[value]="Immediate_COD_Obj.code">
 								{{Immediate_COD_Obj.name}}</ng-option>
@@ -500,7 +499,7 @@
 
 				<div class="row">
 					<div class="col-md-12 radioBtnError" formGroupName="medicalReason">
-						<label>{{'medical_reason' | translate:translateKey}} {{requiredFeild?'*':''}} </label>
+						<label>{{'medical_reason' | translate:translateKey}} <span class="mandatory" *ngIf="requiredFeild">*</span> </label>
 						<mat-radio-group formControlName="code">
 							<mat-radio-button *ngFor="let prove of ISYESNO" [value]="prove.code">
 								{{prove.name}}
@@ -518,7 +517,7 @@
 								<td class="p-3">
 									<div class="radioBtnError" formGroupName="smokingAddiction">
 										<mat-label>{{'smoking_addiction' | translate:translateKey}}
-											{{requiredFeild?'*':''}}</mat-label>
+											<span class="mandatory" *ngIf="requiredFeild">*</span></mat-label>
 										<mat-radio-group formControlName="code" class="example-radio-button">
 											<mat-radio-button *ngFor="let yesno of ISYESNO" [value]="yesno.code">
 												{{yesno.name}}
@@ -546,7 +545,7 @@
 								<td class="p-3">
 									<div class="radioBtnError" formGroupName="tobaccoAddiction">
 										<mat-label>{{'tobacco_addiction' | translate:translateKey}}
-											{{requiredFeild?'*':''}}</mat-label>
+											<span class="mandatory" *ngIf="requiredFeild">*</span></mat-label>
 										<mat-radio-group formControlName="code" class="example-radio-button">
 											<mat-radio-button *ngFor="let yesno of ISYESNO" [value]="yesno.code">
 												{{yesno.name}}
@@ -574,7 +573,7 @@
 								<td class="p-3">
 									<div class="radioBtnError" formGroupName="sopariAddiction">
 										<mat-label>{{'sopari_panmasala_addiction' | translate:translateKey}}
-											{{requiredFeild?'*':''}}</mat-label>
+											<span class="mandatory" *ngIf="requiredFeild">*</span></mat-label>
 										<mat-radio-group formControlName="code" class="example-radio-button">
 											<mat-radio-button *ngFor="let yesno of ISYESNO" [value]="yesno.code">
 												{{yesno.name}}
@@ -604,7 +603,7 @@
 								<td class="p-3">
 									<div class="radioBtnError" formGroupName="alcoholAddiction">
 										<mat-label>{{'alcohol_addiction' | translate:translateKey}}
-											{{requiredFeild?'*':''}}</mat-label>
+											<span class="mandatory" *ngIf="requiredFeild">*</span></mat-label>
 										<mat-radio-group formControlName="code" class="example-radio-button">
 											<mat-radio-button *ngFor="let yesno of ISYESNO" [value]="yesno.code">
 												{{yesno.name}}
@@ -665,7 +664,7 @@
 					</div>
 
 					<div class="col-md-4 radioBtnError" formGroupName="withinCityLimits">
-						<mat-label>{{'Within_City_Limits' | translate:translateKey}} *</mat-label>
+						<mat-label>{{'Within_City_Limits' | translate:translateKey}} <span class="mandatory">*</span></mat-label>
 						<mat-radio-group formControlName="code"
 							(change)="deathCertificateForm.get('wardNo').get('code').reset();wardNoChange()">
 							<mat-radio-button class="example-radio-button" *ngFor="let opt of ISYESNO"
@@ -677,9 +676,9 @@
 						</control-messages>
 					</div>
 
-					<div formGroupName="wardNo" class="col-md-4 ngSelect"
+					<div formGroupName="wardNo" class="col-md-4 ngSelect asteriskmarkRequired"
 						*ngIf="deathCertificateForm.get('withinCityLimits').get('code').value=='YES'">
-						<ng-select placeholder="{{'ward_No' | translate:translateKey}} *" formControlName="code">
+						<ng-select placeholder="{{'ward_No' | translate:translateKey}} " formControlName="code">
 							<ng-option *ngFor="let wardObj of wardNoData" [value]="wardObj.code">
 								{{wardObj.name}}
 							</ng-option>
@@ -713,10 +712,10 @@
 				<div>
 					<app-basic-details [basicFormGroup]="deathCertificateForm"></app-basic-details>
 					<div class="row">
-						<div formGroupName="applicantRelation" class="col-md-6 ngSelect">
+						<div formGroupName="applicantRelation" class="col-md-6 ngSelect asteriskmarkRequired">
 							<ng-select
 								(change)="config.changeHandler($event,'OTHER_RELATIONSHIP', deathCertificateForm, 'relationOther')"
-								placeholder="{{'applicant_relation' | translate:translateKey}} *"
+								placeholder="{{'applicant_relation' | translate:translateKey}} "
 								formControlName="code">
 								<ng-option *ngFor="let app_rel of RelationShip" [value]="app_rel.code">
 									{{app_rel.name}}
@@ -767,7 +766,7 @@
 					<div class="col-md-4" *ngFor="let doc of uploadFileArray">
 						<div>
 							<label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
-								<span *ngIf="doc.mandatory">*</span></label>
+								<span *ngIf="doc.mandatory" class="mandatory">*</span></label>
 							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="doc">
 							</app-hos-file-upload>
 						</div>

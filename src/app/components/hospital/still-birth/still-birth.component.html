@@ -21,9 +21,9 @@
                 </ng-template>
                 <div class="row">
 
-                    <div formGroupName="birthPlace" class="col-md-4 ngSelect">
+                    <div formGroupName="birthPlace" class="col-md-4 ngSelect asteriskmarkRequired">
                         <ng-select (change)="changeBirthPlace($event);requiredDocumentList()"
-                            placeholder="{{'birth_place' | translate:translateKey}} *" formControlName="code">
+                            placeholder="{{'birth_place' | translate:translateKey}} " formControlName="code">
                             <ng-option *ngFor="let birthplace of BirthPlaces" [value]="birthplace.code">
                                 {{birthplace.name}}</ng-option>
                         </ng-select>
@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="col-md-4 radioBtnError" formGroupName="isOrphan">
-                        <mat-label>{{'is_orphan' | translate:translateKey }} *</mat-label>
+                        <mat-label>{{'is_orphan' | translate:translateKey }} <span class="mandatory">*</span></mat-label>
                         <mat-radio-group class="example-radio-group" formControlName="code">
                             <mat-radio-button class="example-radio-button" *ngFor="let orphan of ISYESNO"
                                 [value]="orphan.code">
@@ -165,8 +165,8 @@
 
                         </mat-form-field> -->
 
-                        <div class="col-md-4 ngSelect" formGroupName="weightKg">
-                            <ng-select placeholder="{{'child_weight_kg' | translate:translateKey}} *"
+                        <div class="col-md-4 ngSelect asteriskmarkRequired" formGroupName="weightKg">
+                            <ng-select placeholder="{{'child_weight_kg' | translate:translateKey}} "
                                 formControlName="code" (change)="calculateChildWeight(i,'weightKg','weightGram')">
                                 <ng-option *ngFor="let childweight of ChildWeights" [value]="childweight.code">
                                     {{childweight.name}}
@@ -177,8 +177,8 @@
                             </control-messages>
                         </div>
 
-                        <div class="col-md-4 ngSelect" formGroupName="weightGram">
-                            <ng-select placeholder="{{'child_weight_gms' | translate:translateKey}} *"
+                        <div class="col-md-4 ngSelect asteriskmarkRequired" formGroupName="weightGram">
+                            <ng-select placeholder="{{'child_weight_gms' | translate:translateKey}} "
                                 formControlName="code" (change)="calculateChildWeight(i,'weightKg','weightGram')">
                                 <ng-option *ngFor="let childweightgrm of CHILD_WEIGHT_GM" [value]="childweightgrm.code">
                                     {{childweightgrm.name}}
@@ -191,7 +191,7 @@
 
                         <div class="col-md-4 radioBtnError" formGroupName="sex">
                             <div>
-                                <mat-label>{{'gender' | translate:translateKey}} *</mat-label>
+                                <mat-label>{{'gender' | translate:translateKey}} <span class="mandatory">*</span></mat-label>
                                 <mat-radio-group class="example-radio-group" formControlName="code">
                                     <mat-radio-button class="example-radio-button" *ngFor="let sex of Gender"
                                         [value]="sex.code">
@@ -219,8 +219,8 @@
 
                             <div class="row">
 
-                                <div class="col-md-4 ngSelect" formGroupName="immediateCOD1">
-                                    <ng-select placeholder="{{'immediateCOD1' | translate:translateKey}} *"
+                                <div class="col-md-4 ngSelect asteriskmarkRequired" formGroupName="immediateCOD1">
+                                    <ng-select placeholder="{{'immediateCOD1' | translate:translateKey}} "
                                         formControlName="code">
                                         <ng-option *ngFor="let Immediate_COD_Obj of IMMEDIATE_COD_Data"
                                             [value]="Immediate_COD_Obj.code">
@@ -334,8 +334,8 @@
                         </control-messages>
                     </mat-form-field>
 
-                    <div formGroupName="fatherEducation" class="col-md-6 ngSelect">
-                        <ng-select placeholder="{{'education' | translate:translateKey}} *"
+                    <div formGroupName="fatherEducation" class="col-md-6 ngSelect asteriskmarkRequired">
+                        <ng-select placeholder="{{'education' | translate:translateKey}} "
                             (change)="gujNameFinder($event,'fatherEducation',FatherEducations)" formControlName="code">
                             <ng-option *ngFor="let fathereducation of FatherEducations" [value]="fathereducation.code">
                                 {{fathereducation.name}}
@@ -359,8 +359,8 @@
                         </mat-form-field>
                     </div>
 
-                    <div formGroupName="fatherOccupations" class="col-md-6 ngSelect">
-                        <ng-select placeholder="{{'occupation' | translate:translateKey}} *"
+                    <div formGroupName="fatherOccupations" class="col-md-6 ngSelect asteriskmarkRequired">
+                        <ng-select placeholder="{{'occupation' | translate:translateKey}} "
                             (change)="gujNameFinder($event,'fatherOccupations',FatherOccupation)"
                             formControlName="code">
                             <ng-option *ngFor="let fatheroccupation of FatherOccupation"
@@ -460,8 +460,8 @@
                         </control-messages>
                     </mat-form-field>
 
-                    <div formGroupName="motherEducation" class="col-md-6 ngSelect">
-                        <ng-select placeholder="{{'education' | translate:translateKey}} *"
+                    <div formGroupName="motherEducation" class="col-md-6 ngSelecta asteriskmarkRequired">
+                        <ng-select placeholder="{{'education' | translate:translateKey}} "
                             (change)="gujNameFinder($event,'motherEducation',MotherEducations)" formControlName="code">
                             <ng-option matTooltip="{{mothereducation.name}}"
                                 *ngFor="let mothereducation of MotherEducations" [value]="mothereducation.code">
@@ -486,8 +486,8 @@
                         </mat-form-field>
                     </div>
 
-                    <div formGroupName="motherOccupations" class="col-md-6 ngSelect">
-                        <ng-select placeholder="{{'occupation' | translate:translateKey}} *"
+                    <div formGroupName="motherOccupations" class="col-md-6 ngSelect asteriskmarkRequired">
+                        <ng-select placeholder="{{'occupation' | translate:translateKey}} "
                             (change)="gujNameFinder($event,'motherOccupations',MotherOccupation)"
                             formControlName="code">
                             <ng-option matTooltip="{{motheroccupation.name}}"
@@ -567,9 +567,9 @@
                         </control-messages>
                     </div>
 
-                    <div formGroupName="motherMarriageAge" class="col-md-4 ngSelect">
+                    <div formGroupName="motherMarriageAge" class="col-md-4 ngSelect asteriskmarkRequired">
                         <ng-select OnlyNumber
-                            placeholder="{{'mother_age_at_time_of_marriage' | translate:translateKey}} *"
+                            placeholder="{{'mother_age_at_time_of_marriage' | translate:translateKey}} "
                             formControlName="code">
                             <ng-option matTooltip="{{maamt.name}}" *ngFor="let maamt of MOTHER_MARRIAGE_AGE"
                                 [value]="maamt.code">
@@ -580,9 +580,9 @@
                         </control-messages>
                     </div>
 
-                    <div formGroupName="motherDeliveryAge" class="col-md-4 ngSelect">
+                    <div formGroupName="motherDeliveryAge" class="col-md-4 ngSelect asteriskmarkRequired">
                         <ng-select OnlyNumber
-                            placeholder="{{'mother_age_at_time_of_said_delivery' | translate:translateKey}} *"
+                            placeholder="{{'mother_age_at_time_of_said_delivery' | translate:translateKey}} "
                             formControlName="code">
                             <ng-option matTooltip="{{maasd.name}}" *ngFor="let maasd of MOTHER_DELIVERY_AGE"
                                 [value]="maasd.code">
@@ -597,8 +597,8 @@
                 <h2>{{'child_born_with_mother' | translate:translateKey}}</h2>
 
                 <div class="row">
-                    <div formGroupName="deliveryTreatment" class="col-md-4 ngSelect">
-                        <ng-select placeholder="{{'treatment_taken_during_delivery' | translate:translateKey}} *"
+                    <div formGroupName="deliveryTreatment" class="col-md-4 ngSelect asteriskmarkRequired">
+                        <ng-select placeholder="{{'treatment_taken_during_delivery' | translate:translateKey}} "
                             formControlName="code">
                             <ng-option *ngFor="let dto of DeliveryTreatmentOptions" [value]="dto.code">
                                 {{dto.name}}
@@ -608,8 +608,8 @@
                         </control-messages>
                     </div>
 
-                    <div formGroupName="deliveryType" class="col-md-4 ngSelect">
-                        <ng-select placeholder="{{'delivery_type' | translate:translateKey}} *" formControlName="code">
+                    <div formGroupName="deliveryType" class="col-md-4 ngSelect asteriskmarkRequired">
+                        <ng-select placeholder="{{'delivery_type' | translate:translateKey}} " formControlName="code">
                             <ng-option *ngFor="let deliverytype of TypeOfDelivery" [value]="deliverytype.code">
                                 {{deliverytype.name}}
                             </ng-option>
@@ -639,9 +639,9 @@
                     <div>{{stepLabel4 | translate: translateKey}}</div>
                 </ng-template>
                 <div class="row">
-                    <div formGroupName="familyReligion" class="col-md-4 ngSelect">
+                    <div formGroupName="familyReligion" class="col-md-4 ngSelect asteriskmarkRequired">
                         <ng-select (change)="changeFamilyReligion($event)"
-                            placeholder="{{'religion' | translate:translateKey}} *" formControlName="code" required>
+                            placeholder="{{'religion' | translate:translateKey}} " formControlName="code" required>
                             <ng-option *ngFor="let relegion of Religion" [value]="relegion.code">
                                 {{relegion.name}}
                             </ng-option>
@@ -681,7 +681,7 @@
                     </div>
 
                     <div class="col-md-4 radioBtnError" formGroupName="withinCityLimits">
-                        <mat-label>{{'Within_City_Limits' | translate:translateKey}} *</mat-label>
+                        <mat-label>{{'Within_City_Limits' | translate:translateKey}} <span class="mandatory">*</span></mat-label>
                         <mat-radio-group formControlName="code"
                             (change)="stillBirthCertificateForm.get('wardNo').get('code').reset();validationWord($event)">
                             <mat-radio-button class="example-radio-button" *ngFor="let opt of ISYESNO"
@@ -693,9 +693,9 @@
                         </control-messages>
                     </div>
 
-                    <div formGroupName="wardNo" class="col-md-4 ngSelect"
+                    <div formGroupName="wardNo" class="col-md-4 ngSelect asteriskmarkRequired"
                         *ngIf="stillBirthCertificateForm.get('withinCityLimits').get('code').value=='YES'">
-                        <ng-select placeholder="{{'ward_No' | translate:translateKey}} *" formControlName="code"
+                        <ng-select placeholder="{{'ward_No' | translate:translateKey}} " formControlName="code"
                         required="{{stillBirthCertificateForm.get('withinCityLimits').get('code').value=='YES'}}">
                             <ng-option *ngFor="let wardObj of wardNoData" [value]="wardObj.code">
                                 {{wardObj.name}}
@@ -759,7 +759,7 @@
                                          birthCertificateForm.get('serviceDetail').get('serviceUploadDocuments').value-->
                         <div>
                             <label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
-                                <span *ngIf="doc.mandatory">*</span></label>
+                                <span *ngIf="doc.mandatory" class="mandatory">*</span></label>
                             <app-hos-file-upload [form]="stillBirthCertificateForm" [uploadModel]="doc">
                             </app-hos-file-upload>
                         </div>

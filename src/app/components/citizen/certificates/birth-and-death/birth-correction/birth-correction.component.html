@@ -20,8 +20,8 @@
                 <mat-error *ngIf="regStatusForm.get('birthDate').invalid">Birth Date is Required.</mat-error>
             </mat-form-field>
 
-            <div formGroupName="typeOfCorrection" class="col-md-12 ngSelect">
-                <ng-select placeholder="{{'type_of_correction' | translate:translateKey}}*" formControlName="code">
+            <div formGroupName="typeOfCorrection" class="col-md-12 ngSelect asteriskmarkRequired">
+                <ng-select placeholder="{{'type_of_correction' | translate:translateKey}}" formControlName="code">
                     <ng-option *ngFor="let type of TypeOfCorrection" [value]="type.code">
                         {{type.name}}
                     </ng-option>
@@ -48,8 +48,8 @@
                     <div class="row">
 
                       <mat-form-field formGroupName="birthCorrectionCopyMode" class="col-md-4">
-                        <mat-select placeholder="{{'BIRTH_CORRECTION_COPY_MODE' | translate:translateKey}} *"
-                                    formControlName="code">
+                        <mat-label>{{'BIRTH_CORRECTION_COPY_MODE' | translate:translateKey}} <span class="mandatory">*</span></mat-label>
+                        <mat-select  formControlName="code">
                           <mat-option *ngFor="let birthCorrectionCopyMode of BirthCorrectionCopyMode" [value]="birthCorrectionCopyMode.code">
                             {{birthCorrectionCopyMode.name}}
                           </mat-option>
@@ -60,7 +60,7 @@
 
                       <mat-form-field class="col-md-4">
                         <input matInput [max]="100"  type="number" [min]="1 "  OnlyNumber (keypress)="getlength($event)"
-                               placeholder="{{'total_copies' | translate:translateKey}} *" formControlName="totalCopies">
+                               placeholder="{{'total_copies' | translate:translateKey}} " formControlName="totalCopies" required>
                         <control-messages [control]="birthCorrectionForm.get('totalCopies')"></control-messages>
                       </mat-form-field>
 
@@ -260,8 +260,8 @@
                     <div class="row">
 
                       <mat-form-field formGroupName="birthCorrectionCopyMode" class="col-md-4">
-                        <mat-select placeholder="{{'BIRTH_CORRECTION_COPY_MODE' | translate:translateKey}} *"
-                                    formControlName="code">
+                        <mat-label>{{'BIRTH_CORRECTION_COPY_MODE' | translate:translateKey}} <span class="mandatory">*</span></mat-label>
+                        <mat-select formControlName="code">
                           <mat-option *ngFor="let birthCorrectionCopyMode of BirthCorrectionCopyMode" [value]="birthCorrectionCopyMode.code">
                             {{birthCorrectionCopyMode.name}}
                           </mat-option>
@@ -272,7 +272,7 @@
 
                       <mat-form-field class="col-md-4">
                         <input matInput [max]="100"  type="number" [min]="1 "  OnlyNumber (keypress)="getlength($event)"
-                               placeholder="{{'total_copies' | translate:translateKey}} *" formControlName="totalCopies">
+                               placeholder="{{'total_copies' | translate:translateKey}} " formControlName="totalCopies" required>
                         <control-messages [control]="birthCorrectionForm.get('totalCopies')"></control-messages>
                       </mat-form-field>
 
@@ -545,7 +545,8 @@
                         <div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
                             <label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn :
                                 doc.documentLabelGuj }}
-                                <span *ngIf="doc.mandatory">*</span></label>
+                                <span *ngIf="doc.mandatory" class="mandatory">*</span></label>
+
                             <file-upload [form]="birthCorrectionForm" [uploadModel]="doc"></file-upload>
                         </div>
                     </ng-container>

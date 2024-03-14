@@ -52,7 +52,8 @@
                 <div class="row">
 
                   <mat-form-field formGroupName="deathCorrectionCopyMode" class="col-md-6">
-                    <mat-select placeholder="{{'DEATH_CORRECTION_COPY_MODE' | translate:translateKey}} *"
+                    <mat-label>{{'DEATH_CORRECTION_COPY_MODE' | translate:translateKey}} <span class="mandatory">*</span></mat-label>
+                    <mat-select 
                                 formControlName="code">
                       <mat-option *ngFor="let deathCorrectionCopyMode of DeathCorrectionCopyMode" [value]="deathCorrectionCopyMode.code">
                         {{deathCorrectionCopyMode.name}}
@@ -64,7 +65,7 @@
 
                   <mat-form-field class="col-md-6">
                     <input matInput [max]="100"  type="number" [min]="1 "  OnlyNumber (keypress)="getlength($event)"
-                           placeholder="{{'total_copies' | translate:translateKey}} *" formControlName="totalCopies">
+                           placeholder="{{'total_copies' | translate:translateKey}} " formControlName="totalCopies" required>
                     <control-messages [control]="deathCorrectionForm.get('totalCopies')"></control-messages>
                   </mat-form-field>
 
@@ -267,7 +268,7 @@
                         <div class="col-md-4"
                             *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
                             <label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
-                                <span *ngIf="doc.mandatory">*</span></label>
+                                <span *ngIf="doc.mandatory" class="mandatory">*</span></label>
                             <file-upload [form]="deathCorrectionForm" [uploadModel]="doc"></file-upload>
                         </div>
                     </ng-container>

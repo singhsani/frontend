@@ -65,7 +65,7 @@
                     </mat-form-field>
 
                     <div formGroupName="gender" class="col-md-6 radioBtnError">
-                        <mat-label>{{'gender' | translate: translateKey}} *</mat-label>
+                        <mat-label>{{'gender' | translate: translateKey}} <span class="mandatory">*</span></mat-label>
                         <mat-radio-group formControlName="code">
                             <mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name}}
                             </mat-radio-button>
@@ -102,8 +102,8 @@
                     <app-address #address [requiredFeilds]="true"
                         [addressFormGroup]="cremationForm.get('applicantAddress')"></app-address>
 
-                    <div formGroupName="applicantRelation" class="col-md-6 ngSelect">
-                        <ng-select placeholder="{{'relation_with_applicant' | translate: translateKey}} *"
+                    <div formGroupName="applicantRelation" class="col-md-6 ngSelect asteriskmarkRequired">
+                        <ng-select placeholder="{{'relation_with_applicant' | translate: translateKey}} "
                             name="relation" formControlName="code" (change)="applicantRelChange($event)">
                             <ng-option *ngFor="let relation of relationshipArray" [value]="relation.code">
                                 {{relation.name}}</ng-option>
@@ -160,7 +160,7 @@
                         *ngFor="let doc of cremationForm.get('serviceDetail').get('serviceUploadDocuments').value">
                         <div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
                             <label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
-                                <span *ngIf="doc.mandatory">*</span></label>
+                                <span *ngIf="doc.mandatory" class="mandatory">*</span></label>
                             <file-upload [form]="cremationForm" [uploadModel]="doc"></file-upload>
                         </div>
                     </ng-container>
