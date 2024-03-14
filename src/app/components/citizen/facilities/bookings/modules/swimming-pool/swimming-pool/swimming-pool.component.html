@@ -329,7 +329,7 @@
 					   <div class="row">
 
 						<div formGroupName="swimmingPoolName" class="col-md-4 ngSelect">
-							<ng-select required placeholder="{{'swimming_pool_name' | translate:translateKey}} *"
+							<ng-select class="asteriskmarkRequired" required placeholder="{{'swimming_pool_name' | translate:translateKey}}"
 								formControlName="code"
 								(change)="filterAsperPool($event);generalDetails.get('batchName').reset();generalDetails.get('batchFor').reset()">
 								<ng-option *ngFor="let pool of SWIMMING_POOL_NAME" [value]="pool.code">
@@ -341,7 +341,7 @@
 						</div>
 
 						<div class="col-md-4 ngSelect" formGroupName="membershipType">
-							<ng-select placeholder="{{'membership_type' | translate:translateKey}} *"
+							<ng-select class="asteriskmarkRequired" placeholder="{{'membership_type' | translate:translateKey}}"
 								formControlName="code">
 								<ng-option *ngFor="let member of MEMBERSHIP_TYPE" [value]="member.code">{{member.name}}
 								</ng-option>
@@ -351,7 +351,7 @@
 						</div>
 
 						<div class="col-md-4 ngSelect" formGroupName="category" >
-							<ng-select placeholder="{{'category' | translate:translateKey}} *"
+							<ng-select class="asteriskmarkRequired" placeholder="{{'category' | translate:translateKey}}"
 								formControlName="code" required (change)="filterAsperCategory($event);">
 								<ng-option *ngFor="let cat of CATEGORY" [value]="cat.code">
 									{{cat.name}}</ng-option>
@@ -362,7 +362,7 @@
 				
 
 						<div class="col-md-4 ngSelect" formGroupName="batchDuration">
-							<ng-select placeholder="{{'batch_duration' | translate:translateKey}} *"
+							<ng-select class="asteriskmarkRequired" placeholder="{{'batch_duration' | translate:translateKey}}"
 								formControlName="code" required>
 								<ng-option *ngFor="let time of BATCH_DURATION" [value]="time.code"
 									[disabled]='durationisReadOnly'>{{time.name}}
@@ -387,7 +387,7 @@
 
 
 						<div class="col-md-4 ngSelect" formGroupName="batchFor">
-							<ng-select placeholder="{{'batch_for' | translate:translateKey}} *" formControlName="code"
+							<ng-select class="asteriskmarkRequired" placeholder="{{'batch_for' | translate:translateKey}}" formControlName="code"
 								required
 								(change)="filterAsperBatchName($event);generalDetails.get('batchName').reset()">
 								<ng-option *ngFor="let batchFor of BATCH_FOR" [value]="batchFor.code">{{batchFor.name}}
@@ -398,7 +398,7 @@
 						</div>
 
 						<div class="col-md-4 ngSelect" formGroupName="batchName">
-							<ng-select placeholder="{{'Batch Time' | translate:translateKey}} *" class="city_dropdown"
+							<ng-select placeholder="{{'Batch Time' | translate:translateKey}}" class="city_dropdown asteriskmarkRequired"
 								formControlName="code" (change)="filterBatch($event)" required>
 								<ng-option *ngFor="let batchName of BATCH_NAME" [value]="batchName.code">
 									{{batchName.name}}
