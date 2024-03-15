@@ -24,9 +24,9 @@
                             </mat-radio-group>
                         </div> -->
 
-                        <div class="col-md-6 ngSelect" formGroupName="duplicateCopyMode">
+                        <div class="col-md-6 ngSelect asteriskmarkRequired" formGroupName="duplicateCopyMode">
                             <ng-select formControlName="code"
-                                placeholder="{{ 'duplicate_copy_mode' | translate:translateKey }}*">
+                                placeholder="{{ 'duplicate_copy_mode' | translate:translateKey }}">
                                 <ng-option *ngFor="let duplicatemode of DuplicateCopyMode" [value]="duplicatemode.code">
                                     {{duplicatemode.name}}
                                 </ng-option>
