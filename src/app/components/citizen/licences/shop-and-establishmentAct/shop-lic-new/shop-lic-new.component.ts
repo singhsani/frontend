@@ -991,7 +991,7 @@ export class ShopLicNewComponent implements OnInit {
 		if (this.registrationType === this.regiTyep[0].code) {
 			let control = this.personoccuping.get('workerCounts')['controls'];
 			for (let i = 0; i < control.length; i++) {
-				grandTotal += control[i].get('total').value;
+				grandTotal = control[i].get('total').value;
 			}
 
 			let max = grandTotal - 9;
@@ -2164,7 +2164,11 @@ public onTabChange(index: number, controlName, mainControl) {
 		} else if(this.totalCount > 0){
 			this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");
 		}
-		else {
+		else {		
+			let newindex = this.getpersonDetails(index)	
+			if(newindex == 3){
+				return
+			}
 			const formGroupAry = this.licenseConfiguration.createArray(controlName.get('workerCounts'));
 			mainControl.get('workerCounts').removeAt()
 			for(let i = 0; i < controlName.get('workerCounts').controls.length; i++) {
@@ -2191,4 +2195,17 @@ saveAsDraft(mainControl){
 	);
 }
 
+
+getpersonDetails(index){
+	for(let i =0; i < this.personoccuping.get('workerCounts')['controls'].length; i++){
+	if(this.personoccuping.get('workerCounts')['controls'][i].isEditMode == true){
+		this.commonService.openAlert("Person Occupying", "Please Save Occupying Detail", "warning");
+		index = 3 
+		return index
+	}
+	else{
+		index = index 
+	}
+	}
+}
 }
