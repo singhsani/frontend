@@ -635,7 +635,7 @@
 								{{'Attachments' | translate:translateKey}}
 							</h2>
 							<div class="col-md-4">
-								<label labelPosition="after">{{'photo' | translate:translateKey}} *
+								<label labelPosition="after">{{'photo' | translate:translateKey}} <span class="mandatory">*</span>
 								</label>
 								<booking-file-upload (uploaded)="isFileUploaded1 = $event" [attachments]="attachments"
 									[deleteButtonIsDisabled]="isRenewalForm" [form]="swimmimgPoolBookingForm"
@@ -655,7 +655,7 @@
 							</div> -->
 							<div *ngIf="isApplicateAgeGreaterThanEighteen" class="col-md-4">
 								<label labelPosition="after">{{'parents_or_gauardians_permission_letter' |
-									translate:translateKey}} *
+									translate:translateKey}} <span class="mandatory">*</span>
 								</label>
 								<booking-file-upload (uploaded)="isFileUploaded3 = $event" [attachments]="attachments"
 									[deleteButtonIsDisabled]="isRenewalForm" [form]="swimmimgPoolBookingForm"
@@ -666,7 +666,7 @@
 
 							<div class="col-md-4">
 								<label labelPosition="after">{{'certified_doctors_certificate' |
-									translate:translateKey}} *
+									translate:translateKey}} <span class="mandatory">*</span>
 								</label>
 								<booking-file-upload (uploaded)="isFileUploaded4 = $event" [attachments]="attachments"
 									[deleteButtonIsDisabled]="isRenewalForm" [form]="swimmimgPoolBookingForm"
@@ -676,7 +676,7 @@
 							</div>
 							<div class="col-md-4">
 								<label labelPosition="after">{{'photo_id_proof' |
-									translate:translateKey}} *
+									translate:translateKey}} <span class="mandatory">*</span>
 								</label>
 								<booking-file-upload (uploaded)="isFileUploaded5 = $event"
 									[deleteButtonIsDisabled]="navigatedRefNumber == false ? true : navigatedRefNumber ? true : false"
