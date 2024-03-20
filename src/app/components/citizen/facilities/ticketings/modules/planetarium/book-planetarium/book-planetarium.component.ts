@@ -798,4 +798,9 @@ export class BookPlanetariumComponent implements OnInit {
 	      this.btnProceed = true;
 	    }
 	  }
+
+    showPopup(){
+      this.commonService.openAlert("Info","Planetarium is closed due to technical maintenance", "info");
+      return;
+    }
 }
