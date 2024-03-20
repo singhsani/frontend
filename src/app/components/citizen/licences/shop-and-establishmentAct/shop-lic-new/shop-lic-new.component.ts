@@ -979,7 +979,7 @@ export class ShopLicNewComponent implements OnInit {
 	}
 
 
-	savePersonOccupyingRecord(row: any) {
+	savePersonOccupyingRecord(row: any,index:any) {
 		this.iswomenWorkingNightShift=false;
 		if(Number.isNaN(this.totalNoOfWomanForDocu)){
 			this.totalNoOfWomanForDocu = 0;
@@ -990,7 +990,7 @@ export class ShopLicNewComponent implements OnInit {
 		  this.totalManAndWomanCount = row.controls.total.value;		  
 		if (this.registrationType === this.regiTyep[0].code) {
 			let control = this.personoccuping.get('workerCounts')['controls'];
-			for (let i = 0; i < control.length; i++) {
+			for (let i = index; i <= index; i++) {
 				grandTotal = control[i].get('total').value;
 			}
 
@@ -998,6 +998,25 @@ export class ShopLicNewComponent implements OnInit {
 			if (max > 0) {
 			
 				this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");
+			}
+			
+			else {
+				row.isEditMode = false;
+				row.newRecordAdded = false;
+			}
+			this.totalCount = max
+		}
+		else if (this.registrationType === this.regiTyep[1].code) {
+			let control = this.personoccuping.get('workerCounts')['controls'];
+			for (let i = index; i <=index; i++) {
+				grandTotal = control[i].get('total').value;
+			}
+
+			let max = grandTotal - 9;
+			if (max < 0 && this.registrationType === 'CERTIFICATION') {
+				debugger
+			
+				this.commonService.openAlert("Person Occupying", "Less than 9 person are not allowed ", "warning");
 			}
 			
 			else {
@@ -2140,6 +2159,7 @@ export class ShopLicNewComponent implements OnInit {
 	}
 
 	checkWomanWorkedonNightShift(){
+		debugger
 		let count = 0;
 		for(let i=0; i< this.personoccuping.get('workerCounts')['controls'].length; i++){
 			if(this.personoccuping.get('workerCounts')['controls'][i].value.womanWorkinginNightshift == true){
@@ -2161,9 +2181,10 @@ public onTabChange(index: number, controlName, mainControl) {
 	if(index > this.licenseConfiguration.currentTabIndex){
 		if (controlName.invalid) {
 			this.commonService.markFormGroupTouched(controlName)
-		} else if(this.totalCount > 0){
-			this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");
-		}
+		} 
+		// else if(this.totalCount > 0){
+		// 	this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");
+		// }
 		else {		
 			let newindex = this.getpersonDetails(index)	
 			if(newindex == 3){
