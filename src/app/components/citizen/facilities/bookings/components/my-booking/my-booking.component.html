@@ -5,8 +5,8 @@
 <mat-card class="mb-4">
   <form [formGroup]="searchBookingsForm" (ngSubmit)="getAllBooking()" autocomplete="off" ngNativeValidate>
     <div class="row">
-      <div class="col-md-4 ngSelect">
-        <ng-select placeholder="{{'select_booking_resources' | translate:translateKey}} *" formControlName="resourceType"
+      <div class="col-md-4 ngSelect asteriskmarkRequired">
+        <ng-select placeholder="{{'select_booking_resources' | translate:translateKey}}" formControlName="resourceType"
           (change)="selectBookingResource($event)">
           <ng-option *ngFor="let resource of resources" [value]="resource.type">
             {{ resource.name }}
