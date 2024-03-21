@@ -603,7 +603,7 @@
 											</button>
 
 											<button type="submit" [disabled]="item.invalid || hidesave" mat-icon-button
-												color="primary" *ngIf="item.isEditMode" (click)="savePersonOccupyingRecord(item)"
+												color="primary" *ngIf="item.isEditMode" (click)="savePersonOccupyingRecord(item,indx)"
 												>
 												<!-- (click)="saveRecord(item)" -->
 												<mat-icon title="save">save</mat-icon>

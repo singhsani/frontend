@@ -1931,7 +1931,7 @@ return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartn
         this.formControlNameToTabIndex.set('agree', 5)
 
     }
-    savePersonOccupyingRecord(row: any) {
+    savePersonOccupyingRecord(row: any, index : any) {
         this.iswomenWorkingNightShift = false;
         if (Number.isNaN(this.totalNoOfWomanForDocu)) {
             this.totalNoOfWomanForDocu = 0;
@@ -1942,13 +1942,14 @@ return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartn
         let grandTotal = 0;
         if (this.registrationType === this.regiTyep[0].code) {
             let control = this.personoccuping.get('workerCounts')['controls'];
-            for (let i = 0; i < control.length; i++) {
-                grandTotal += control[i].get('total').value;
-            }
-            let max = grandTotal - 10;
+            for (let i = index; i <= index; i++) {
+                grandTotal = control[i].get('total').value;
+            
+            let max = grandTotal - 9;
             if (max > 0) {
                 this.hideAdd = true;
-                this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");
+                this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");   
+                return   
             }
 
             else {
@@ -1956,7 +1957,26 @@ return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartn
                 row.newRecordAdded = false;
             }
             this.totalCount = max
+            break;
         }
+        
+        }
+        if (this.registrationType === this.regiTyep[1].code) {
+			let control = this.personoccuping.get('workerCounts')['controls'];
+			for (let i = index; i <= index; i++) {
+				grandTotal = control[i].get('total').value;
+			}
+
+			let max = grandTotal - 9;
+			if (max < 0 && this.registrationType === 'CERTIFICATION') {
+				this.commonService.openAlert("Person Occupying", "Less than 9 person are not allowed ", "warning");
+            }
+     else {
+				row.isEditMode = false;
+				row.newRecordAdded = false;
+			}
+			this.totalCount = max
+		}
         else {
             this.saveRecord(row);
 
@@ -2047,11 +2067,16 @@ return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartn
         if(index > this.licenseConfiguration.currentTabIndex){
             if (controlName.invalid) {
                 this.commonService.markFormGroupTouched(controlName)
-            } else if(this.totalCount > 0){
-                this.hideAdd = true;
-                this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");
             }
+            //  else if(this.totalCount > 0){
+            //     this.hideAdd = true;
+            //     this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");
+            // }
             else {
+                let newindex = this.getpersonDetails(index)	
+			if(newindex == 3){
+				return
+			}
                 const formGroupAry = this.licenseConfiguration.createArray(controlName.get('workerCounts'));
                 mainControl.get('workerCounts').removeAt()
                 for(let i = 0; i < controlName.get('workerCounts').controls.length; i++) {
@@ -2076,5 +2101,17 @@ return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartn
                this.commonService.openAlert('Error', err, 'error')
             }
         );
+    }
+    getpersonDetails(index){
+        for(let i =0; i < this.personoccuping.get('workerCounts')['controls'].length; i++){
+        if(this.personoccuping.get('workerCounts')['controls'][i].isEditMode == true){
+            this.commonService.openAlert("Person Occupying", "Please Save Occupying Detail", "warning");
+            index = 3 
+            return index
+        }
+        else{
+            index = index 
+        }
+        }
     }
 }
