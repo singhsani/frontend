@@ -266,11 +266,11 @@ export class SwimmingPoolComponent implements OnInit {
           this.generalDetails.reset();
         })
       } 
-      else if(event == "KARELIBAUG_SWIMMING_POOL"){
-        this.commonService.openAlert("Warning", 'KareliBaug Swimming Pool is temporarily closed for filtration plant Motor repairing work and maintenance work', "warning" , "", cb => {
-          this.generalDetails.reset();
-        })
-      }
+      // else if(event == "KARELIBAUG_SWIMMING_POOL"){
+      //   this.commonService.openAlert("Warning", 'KareliBaug Swimming Pool is temporarily closed for filtration plant Motor repairing work and maintenance work', "warning" , "", cb => {
+      //     this.generalDetails.reset();
+      //   })
+      // }
     },
       err => {
         this.toastr.error("Server Error");
