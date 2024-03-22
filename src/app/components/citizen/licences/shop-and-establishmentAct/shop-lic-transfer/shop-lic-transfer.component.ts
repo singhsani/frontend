@@ -1730,18 +1730,46 @@ return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartn
         ];
 
         this.checkWomanWorkedonNightShift()
-        if (this.totalNoOfWomanForDocu > 0 && this.workingInNightShift == true) {
+        if(this.totalNoOfWomanForDocu > 0 && this.workingInNightShift== true &&  this.isIntimation){
             comonDocument.push({
                 documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
                 mandatory: true
             })
+            comonDocument.push({
+                
+                documentIdentifier: 'FORM_D',
+                mandatory: true
+    })
+        }
+        else if(this.totalNoOfWomanForDocu > 0 && this.workingInNightShift== false &&  this.isIntimation){
+        
+            comonDocument.push({
+                
+                documentIdentifier: 'FORM_D',
+                mandatory: true
+    })
+        }
 
-            if (this.totalNoOfWomanForDocu > 0) {
-                comonDocument.push({
-                    documentIdentifier: 'NOTICE_OF_WEEKLY_HOLIDAY_FORM_K',
-                    mandatory: true
-                })
-            }
+        if(this.totalNoOfWomanForDocu > 0 && this.workingInNightShift== true &&  !this.isIntimation){
+            comonDocument.push({
+                
+                        documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
+                        mandatory: true
+            })
+            comonDocument.push({
+                
+                documentIdentifier: 'FORM_A',
+                mandatory: true
+    })
+        }
+        
+        else if(this.totalNoOfWomanForDocu > 0 && this.workingInNightShift== false &&  !this.isIntimation){
+
+            comonDocument.push({
+                
+                documentIdentifier: 'FORM_A',
+                mandatory: true
+    })
         }
         else if(this.isIntimation)
 			{
@@ -1822,6 +1850,10 @@ return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartn
                             documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
                             mandatory: true
                         },
+                        {
+							documentIdentifier: 'FORM_A',
+							mandatory: true
+						},
 
                     ];
 
@@ -1833,6 +1865,10 @@ return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartn
                 this.womanDocument = [
                     {
                         documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
+                        mandatory: true
+                    },
+                    {
+                        documentIdentifier: 'FORM_D',
                         mandatory: true
                     },
 
@@ -1968,8 +2004,8 @@ return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartn
 			}
 
 			let max = grandTotal - 9;
-			if (max < 0 && this.registrationType === 'CERTIFICATION') {
-				this.commonService.openAlert("Person Occupying", "Less than 9 person are not allowed ", "warning");
+			if (max <= 0 && this.registrationType === 'CERTIFICATION') {
+				this.commonService.openAlert("Person Occupying", "Less than 10 person are not allowed ", "warning");
             }
      else {
 				row.isEditMode = false;
