@@ -1955,7 +1955,7 @@ export class IntimationToRegistrationComponent implements OnInit {
     this.formControlNameToTabIndex.set('agree', 5)
 
   }
-  savePersonOccupyingRecord(row: any) {
+  savePersonOccupyingRecord(row: any, index:any) {
     this.iswomenWorkingNightShift = false;
     if (Number.isNaN(this.totalNoOfWomanForDocu)) {
       this.totalNoOfWomanForDocu = 0;
@@ -1966,23 +1966,23 @@ export class IntimationToRegistrationComponent implements OnInit {
     let grandTotal = 0;
     if (this.registrationType === this.regiTyep[0].code) {
       let control = this.personoccuping.get('workerCounts')['controls'];
-      for (let i = 0; i < control.length; i++) {
-        grandTotal += control[i].get('total').value;
+      for (let i = index; i <=index; i++) {
+        grandTotal = control[i].get('total').value;
       }
-      let max = grandTotal - 10;
-      // if (max > 0) {
-      //   this.hideAdd = true;
-      //   // this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");
-      //   // this.intiToCre = true;
+      let max = grandTotal - 9;
+      if (max <= 0) {
+        this.hideAdd = true;
+        this.commonService.openAlert("Person Occupying", "More Then 9 person are allowed ", "warning");
+        this.intiToCre = true;
 
-      // }
+      }
 
-      // else {
+       else {
         row.isEditMode = false;
-      //   row.newRecordAdded = false;
-      //   // this.intiToCre = false;
+        row.newRecordAdded = false;
+         this.intiToCre = false;
 
-      // }
+      }
     }
     else {
       this.saveRecord(row);
@@ -2086,6 +2086,45 @@ export class IntimationToRegistrationComponent implements OnInit {
     }
   }
 
+  getpersonDetails(index){
+    for(let i =0; i < this.personoccuping.get('workerCounts')['controls'].length; i++){
+    if(this.personoccuping.get('workerCounts')['controls'][i].isEditMode == true){
+      this.commonService.openAlert("Person Occupying", "Please Save Occupying Detail", "warning");
+      index = 3 
+      return index
+    }
+    else{
+      index = index 
+    }
+    }
+  }
 
+  public onTabChange(index: number, controlName, mainControl) {
+    if(index > this.licenseConfiguration.currentTabIndex){
+      if (controlName.invalid) {
+        this.commonService.markFormGroupTouched(controlName)
+      } 
+      // else if(this.totalCount > 0){
+      // 	this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");
+      // }
+      else {		
+        let newindex = this.getpersonDetails(index)	
+        if(newindex == 3){
+          return
+        }
+        const formGroupAry = this.licenseConfiguration.createArray(controlName.get('workerCounts'));
+        mainControl.get('workerCounts').removeAt()
+        for(let i = 0; i < controlName.get('workerCounts').controls.length; i++) {
+          mainControl.get('workerCounts').value.push(formGroupAry.value[i]);
+          mainControl.get('workerCounts').controls.push(formGroupAry.controls[i]);
+        }   
+       // this.saveAsDraft(mainControl)
+        this.licenseConfiguration.currentTabIndex = index;
+      }
+    }else{
+      this.licenseConfiguration.currentTabIndex= index;
+    }
+  
+  }
 
 }
