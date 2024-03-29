@@ -286,12 +286,12 @@
 	<div class="fotButtonBar mt-0">
 		<div class="row px-4 checkbox">
 			<div class="col-sm-6 col-md-6 " *ngIf="showSelectLanguage">
-				<mat-checkbox labelPosition="after" (change)="termsConditionClick($event)" class="swimming-style">
+				<mat-checkbox labelPosition="after" [checked]="swimmimgPoolBookingForm.controls['termsCondition'].value" (change)="termsConditionClick($event)" class="swimming-style">
 					<span class="listSize font-weight-bold">{{'મેં માર્ગદર્શિકા/નિયમો અને શરતો વાંચી છે અને સંમત છું.'}}</span>
 				</mat-checkbox>
 			</div>
 			<div class="col-sm-6 col-md-6 " *ngIf="!showSelectLanguage">
-				<mat-checkbox labelPosition="after" (change)="termsConditionClick($event)" class="swimming-style">
+				<mat-checkbox labelPosition="after" [checked]="swimmimgPoolBookingForm.controls['termsCondition'].value" (change)="termsConditionClick($event)" class="swimming-style">
 					<span class="listSize font-weight-bold">{{'I have read and agree with terms and conditions.'}}</span>
 				</mat-checkbox>
 			</div>
