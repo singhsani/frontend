@@ -102,12 +102,13 @@ export class BookAtithigruhComponent implements OnInit {
 		{sno: 11, atithigruh: 'Premanand', rent: '8000', administrative_charge: '1000', gst:'1620' ,total_rent: '10620', deposit: '10000',total: '20620'},
 		{sno: 12, atithigruh: 'Indrapuri', rent: '10000', administrative_charge: '1000', gst:'1980' ,total_rent: '12980', deposit: '20000',total: '32980'},
 		{sno: 13, atithigruh: 'Sharad Nagar', rent: '8000', administrative_charge: '1000', gst:'1620' ,total_rent: '10620', deposit: '7500',total: '18120'},
-		{sno: 14, atithigruh: 'Vijaynagarko Hall', rent: '3500', administrative_charge: '1000', gst:'810 ' ,total_rent: '5310', deposit: '5000',total: '10310'},
+		{sno: 14, atithigruh: 'Harani Vijaynagar Community Hall', rent: '3500', administrative_charge: '1000', gst:'810 ' ,total_rent: '5310', deposit: '5000',total: '10310'},
 		{sno: 15, atithigruh: 'Tarasali Hall', rent: '3000', administrative_charge: '1000', gst:'720' ,total_rent: '4720', deposit: '5000',total: '9720'},
 		{sno: 16, atithigruh: 'Chatrapati Shivaji', rent: '8000', administrative_charge: '1000', gst:'1620' ,total_rent: '10620', deposit: '7500',total: '18120'},
 		{sno: 17, atithigruh: 'Diwali Pura', rent: '17000', administrative_charge: '1000', gst:'3240' ,total_rent: '21240', deposit: '20000',total: '41240'},
 		{sno: 18, atithigruh: 'Manjalpur', rent: '20000', administrative_charge: '1000', gst:'3780' ,total_rent: '24780', deposit: '30000',total: '54780'},
-		{sno: 19, atithigruh: 'Makarpura Community Hall', rent: '25000', administrative_charge: '1000', gst:'4680' ,total_rent: '30680', deposit: '30000',total: '60680'}
+		{sno: 19, atithigruh: 'Makarpura Community Hall', rent: '25000', administrative_charge: '1000', gst:'4680' ,total_rent: '30680', deposit: '30000',total: '60680'},
+		{sno: 20, atithigruh: 'Warshiya Community Hall', rent: '7000', administrative_charge: '1000', gst:'1440' ,total_rent: '9440', deposit: '7000',total: '16440'}
 	  ];
 
 	  gujratifeeDetails: any [] = [
@@ -124,12 +125,13 @@ export class BookAtithigruhComponent implements OnInit {
 		{sno: '૧૧', atithigruh: 'પ્રેમાનંદ', rent: '૮૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૬૨૦' ,total_rent: '૧૦૬૨૦', deposit: '૧૦૦૦૦',total: '૨૦૬૨૦'},
 		{sno: '૧૨', atithigruh: 'ઇન્દ્રપુરી', rent: '૧૦૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૯૮૦' ,total_rent: '૧૨૯૮૦', deposit: '૨૦૦૦૦',total: '૩૨૯૮૦'},
 		{sno: '૧૩', atithigruh: 'શરદ નગર', rent: '૮૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૬૨૦' ,total_rent: '૧૦૬૨૦', deposit: '૭૫૦૦',total: '૧૮૧૨૦'},
-		{sno: '૧૪', atithigruh: 'વિજય નગર', rent: '૩૫૦૦', administrative_charge: '૧૦૦૦', gst:'૮૧૦ ' ,total_rent: '૫૩૧૦', deposit: '૫૦૦૦',total: '૧૦૩૧૦'},
+		{sno: '૧૪', atithigruh: 'હરણી વિજયનગર કોમ્યુનિટી હોલ', rent: '૩૫૦૦', administrative_charge: '૧૦૦૦', gst:'૮૧૦ ' ,total_rent: '૫૩૧૦', deposit: '૫૦૦૦',total: '૧૦૩૧૦'},
 		{sno: '૧૫', atithigruh: 'તરસાલી હોલ', rent: '૩૦૦૦', administrative_charge: '૧૦૦૦', gst:'૭૨૦' ,total_rent: '૪૭૨૦', deposit: '૫૦૦૦',total: '૯૭૨૦'},
 		{sno: '૧૬', atithigruh: 'છત્રપતિ શિવાજી', rent: '૮૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૬૨૦' ,total_rent: '૧૦૬૨૦', deposit: '૭૫૦૦',total: '૧૮૧૨૦'},
 		{sno: '૧૭', atithigruh: 'દિવાળી પુરા', rent: '૧૭૦૦૦', administrative_charge: '૧૦૦૦', gst:'૩૨૪૦' ,total_rent: '૨૧૨૪૦', deposit: '૨૦૦૦૦',total: '૪૧૨૪૦'},
 		{sno: '૧૮', atithigruh: 'માંજલપુર', rent: '૨૦૦૦૦', administrative_charge: '૧૦૦૦', gst:'૩૭૮૦' ,total_rent: '૨૪૭૮૦', deposit: '૩૦૦૦૦',total: '૫૪૭૮૦'},
 		{sno: '૧૯', atithigruh: 'મકરપુરા કોમ્યુનિટી હોલ', rent: '૨૫૦૦૦', administrative_charge: '૧૦૦૦', gst:'૪૬૮૦' ,total_rent: '૩૦૬૮૦', deposit: '૩૦૦૦૦',total: '૬૦૬૮૦'},
+		{sno: '૨૦', atithigruh: 'વારશીયા કોમ્યુનિટી હોલ', rent: '૭૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૪૪૦' ,total_rent: '૯૪૪૦', deposit: '૭૦૦૦',total: '૧૬૪૪૦'}
 	  ];
 	  isRelationshipShow = false
 	  relationType = []
