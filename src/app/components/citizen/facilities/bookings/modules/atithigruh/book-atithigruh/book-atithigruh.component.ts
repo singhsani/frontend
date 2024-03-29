@@ -125,7 +125,7 @@ export class BookAtithigruhComponent implements OnInit {
 		{sno: '૧૧', atithigruh: 'પ્રેમાનંદ', rent: '૮૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૬૨૦' ,total_rent: '૧૦૬૨૦', deposit: '૧૦૦૦૦',total: '૨૦૬૨૦'},
 		{sno: '૧૨', atithigruh: 'ઇન્દ્રપુરી', rent: '૧૦૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૯૮૦' ,total_rent: '૧૨૯૮૦', deposit: '૨૦૦૦૦',total: '૩૨૯૮૦'},
 		{sno: '૧૩', atithigruh: 'શરદ નગર', rent: '૮૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૬૨૦' ,total_rent: '૧૦૬૨૦', deposit: '૭૫૦૦',total: '૧૮૧૨૦'},
-		{sno: '૧૪', atithigruh: 'હરાણી વિજયનગર કોમ્યુનિટી હોલ', rent: '૩૫૦૦', administrative_charge: '૧૦૦૦', gst:'૮૧૦ ' ,total_rent: '૫૩૧૦', deposit: '૫૦૦૦',total: '૧૦૩૧૦'},
+		{sno: '૧૪', atithigruh: 'હરણી વિજયનગર કોમ્યુનિટી હોલ', rent: '૩૫૦૦', administrative_charge: '૧૦૦૦', gst:'૮૧૦ ' ,total_rent: '૫૩૧૦', deposit: '૫૦૦૦',total: '૧૦૩૧૦'},
 		{sno: '૧૫', atithigruh: 'તરસાલી હોલ', rent: '૩૦૦૦', administrative_charge: '૧૦૦૦', gst:'૭૨૦' ,total_rent: '૪૭૨૦', deposit: '૫૦૦૦',total: '૯૭૨૦'},
 		{sno: '૧૬', atithigruh: 'છત્રપતિ શિવાજી', rent: '૮૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૬૨૦' ,total_rent: '૧૦૬૨૦', deposit: '૭૫૦૦',total: '૧૮૧૨૦'},
 		{sno: '૧૭', atithigruh: 'દિવાળી પુરા', rent: '૧૭૦૦૦', administrative_charge: '૧૦૦૦', gst:'૩૨૪૦' ,total_rent: '૨૧૨૪૦', deposit: '૨૦૦૦૦',total: '૪૧૨૪૦'},
