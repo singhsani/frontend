@@ -254,12 +254,12 @@ export class NewAffordableHousingComponent implements OnInit {
 		var value = this.firstBeneficiaryDetail.get('marriageStatus').get('code').value
 		if (value) {
 			if (value == "MARRIED") {
-				// this.mandotoryFileds(true);
+				this.mandotoryFileds(true);
 				this.mandotoryFiledsForMainControl(true);
 				this.setSecoundApplciatPhoto(true);
 			}
 			else {
-				// this.mandotoryFileds(false);
+				this.mandotoryFileds(false);
 				this.mandotoryFiledsForMainControl(false);
 				this.setSecoundApplciatPhoto(false);
 			}
@@ -1356,5 +1356,73 @@ export class NewAffordableHousingComponent implements OnInit {
 		  )
 		}
 	  }
+
+	  mandotoryFileds(flag) {
+		this.secondPersonrequiredFeilds = flag
+		if (flag) {
+			this.secondBeneficiaryDetail.get('secondPersonTypeTitle').get('code').setValidators([Validators.required]);
+			this.secondBeneficiaryDetail.get('secondApplicantFirstName').setValidators([Validators.required]);
+			this.secondBeneficiaryDetail.get('secondApplicantMiddleName').setValidators([Validators.maxLength(100)]);
+			this.secondBeneficiaryDetail.get('secondApplicantLastName').setValidators([Validators.required, Validators.maxLength(100)]);
+			this.secondBeneficiaryDetail.get('secondAppHusWifeFirstName').setValidators([Validators.required, Validators.maxLength(100)]);
+			this.secondBeneficiaryDetail.get('secondAppHusWifeMiddleName').setValidators([Validators.maxLength(100)]);
+			this.secondBeneficiaryDetail.get('secondAppHusWifeLastName').setValidators([Validators.required, Validators.maxLength(100)]);
+			this.secondBeneficiaryDetail.get('secondAppDateOfBirth').setValidators([Validators.required]);
+			this.secondBeneficiaryDetail.get('secondAppTelephoneNumber').setValidators([Validators.maxLength(11)]);
+			this.secondBeneficiaryDetail.get('secondAppMobileNumOne').setValidators([Validators.required, Validators.maxLength(10)]);
+			this.secondBeneficiaryDetail.get('secondAppMobileNumTwo').setValidators([Validators.maxLength(10)]);
+			this.secondBeneficiaryDetail.get('secondAppEmail').setValidators([ValidationService.emailValidator, Validators.maxLength(50)]);
+			this.secondBeneficiaryDetail.get('secondAppOrganizationName').setValidators([Validators.required, Validators.maxLength(20)]);
+			this.secondBeneficiaryDetail.get('secondAppOccupation').setValidators([Validators.required, Validators.maxLength(10)]);
+			this.secondBeneficiaryDetail.get('secondAppOccupationDesignation').setValidators([Validators.required, Validators.maxLength(10)]);
+			this.secondBeneficiaryDetail.get('secondAppDrivingLicenseNumber').setValidators([ValidationService.drivingLicenseValidator]);
+			this.secondBeneficiaryDetail.get('secondAppVoterIdNumber').setValidators([ValidationService.electionCardValidator]);
+			this.secondBeneficiaryDetail.get('secondAppAadharCardNumber').setValidators([Validators.required, Validators.maxLength(12)]);
+			this.secondBeneficiaryDetail.get('secondAppPanCardNumber').setValidators([Validators.required, ValidationService.panValidator]);
+			this.secondBeneficiaryDetail.get('secondAppRationCardNumber').setValidators([Validators.maxLength(10)]);
+		} else {
+			this.secondBeneficiaryDetail.get('secondPersonTypeTitle').get('code').clearValidators();
+			this.secondBeneficiaryDetail.get('secondApplicantFirstName').clearValidators();
+			this.secondBeneficiaryDetail.get('secondApplicantMiddleName').clearValidators();
+			this.secondBeneficiaryDetail.get('secondApplicantLastName').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppHusWifeFirstName').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppHusWifeMiddleName').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppHusWifeLastName').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppDateOfBirth').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppTelephoneNumber').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppMobileNumOne').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppMobileNumTwo').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppEmail').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppOrganizationName').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppOccupation').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppOccupationDesignation').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppDrivingLicenseNumber').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppVoterIdNumber').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppAadharCardNumber').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppPanCardNumber').clearValidators();
+			this.secondBeneficiaryDetail.get('secondAppRationCardNumber').clearValidators();
+		}
+		this.secondBeneficiaryDetail.get('secondPersonTypeTitle').get('code').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondApplicantFirstName').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondApplicantMiddleName').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondApplicantLastName').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppHusWifeFirstName').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppHusWifeMiddleName').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppHusWifeLastName').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppDateOfBirth').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppTelephoneNumber').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppMobileNumOne').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppMobileNumTwo').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppEmail').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppOrganizationName').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppOccupation').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppOccupationDesignation').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppDrivingLicenseNumber').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppVoterIdNumber').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppAadharCardNumber').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppPanCardNumber').updateValueAndValidity();
+		this.secondBeneficiaryDetail.get('secondAppRationCardNumber').updateValueAndValidity();
+		this.CD.detectChanges();
+	}
 	      
 }
