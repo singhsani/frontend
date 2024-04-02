@@ -282,6 +282,7 @@ export class SwimmingPoolComponent implements OnInit {
   */
   filterAsperCategory(event: any) {
     let poolName = this.generalDetails.get('swimmingPoolName').get('code').value;
+    this.generalDetails.get('batchDuration').get('code').reset()
     if (event) {
       this.bookingService.filterBatchDuration(event, poolName).subscribe(rep => {
         this.BATCH_DURATION = rep;
