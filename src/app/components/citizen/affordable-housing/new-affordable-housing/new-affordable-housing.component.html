@@ -14,8 +14,8 @@
 
 				<div class="row">
 
-					<div class="col-md-4 ngSelect">
-						<ng-select placeholder="{{'appliedFor' | translate: translateKey}} *" formControlName="schemeId"
+					<div class="col-md-4 ngSelect asteriskmarkRequired">
+						<ng-select placeholder="{{'appliedFor' | translate: translateKey}}" formControlName="schemeId"
 							(change)="schemeChange($event)">
 							<ng-container *ngFor="let applied of appliedForData">
 								<ng-option *ngIf="applied.isAppliedFor == 'ACTIVE'" [value]="applied.id">
@@ -27,8 +27,8 @@
 						</control-messages>
 					</div>
 
-					<div class="col-md-4 ngSelect">
-						<ng-select placeholder="{{'project' | translate: translateKey}} *"
+					<div class="col-md-4 ngSelect asteriskmarkRequired">
+						<ng-select placeholder="{{'project' | translate: translateKey}}"
 							(change)="projectChange($event)" formControlName="projectId">
 							<ng-container *ngFor="let project of projectData">
 								<ng-option *ngIf="project?.isAppliedFor == 'ACTIVE'" [value]="project.id">
@@ -63,8 +63,8 @@
 						</control-messages>
 					</mat-form-field>
 
-					<div class="col-md-4 ngSelect" formGroupName="category">
-						<ng-select placeholder="{{'category' | translate: translateKey}} *" formControlName="code">
+					<div class="col-md-4 ngSelect asteriskmarkRequired" formGroupName="category">
+						<ng-select placeholder="{{'category' | translate: translateKey}} " formControlName="code">
 							<ng-option *ngFor="let category of MF_CATEGORY_TYPE" [value]="category.code">
 								{{category.name}}
 							</ng-option>
@@ -73,8 +73,8 @@
 						</control-messages>
 					</div>
 
-					<div class="col-md-4 ngSelect" formGroupName="categoryCode">
-						<ng-select placeholder="{{'House Type' | translate: translateKey}} *" formControlName="code">
+					<div class="col-md-4 ngSelect asteriskmarkRequired" formGroupName="categoryCode">
+						<ng-select placeholder="{{'House Type' | translate: translateKey}}" formControlName="code">
 							<ng-option *ngFor="let type of houseTypes" [value]="type.code">
 								{{type.name}}
 							</ng-option>
@@ -88,8 +88,8 @@
 								translateKey}}</b></h2>
 					</div>
 
-					<div class="col-md-3 ngSelect" formGroupName="firstPersonTypeTitle">
-						<ng-select placeholder="{{'Title' | translate: translateKey}} *" formControlName="code">
+					<div class="col-md-3 ngSelect asteriskmarkRequired" formGroupName="firstPersonTypeTitle">
+						<ng-select placeholder="{{'Title' | translate: translateKey}}" formControlName="code">
 							<ng-option *ngFor="let person of personTypeArray" [value]="person.code">
 								{{person.name}}
 							</ng-option>
@@ -232,7 +232,7 @@
 				</div> -->
 
 				<div class="col-md-3">
-					<h2 style="margin-left: -16px;"><b>Marital Status</b></h2>
+					<h2 style="margin-left: -16px;"><b>Marital Status</b><span class="text-danger"> *</span></h2>
 				</div>
 
 				<div class="col-md-3 ngSelect" formGroupName="marriageStatus">
@@ -363,7 +363,7 @@
 				</ng-template>
 				<div class="row">
 					<div class="col-md-3 ngSelect" formGroupName="secondPersonTypeTitle">
-						<ng-select placeholder="{{'Title' | translate: translateKey}} {{secondPersonrequiredFeilds?'*':''}}" formControlName="code" [required]="secondPersonrequiredFeilds">
+						<ng-select placeholder="{{'Title' | translate: translateKey}}" formControlName="code" [required]="secondPersonrequiredFeilds" [class.asteriskmarkRequired]="secondPersonrequiredFeilds">
 							<ng-option *ngFor="let person of personTypeArray" [value]="person.code">
 								{{person.name}}
 							</ng-option>
@@ -636,8 +636,8 @@
 					</div>
 				</ng-template>
 				<div class="row">
-					<div class="col-md-4 ngSelect">
-						<ng-select placeholder="{{'Ward ' | translate: translateKey}} *" formControlName="ward">
+					<div class="col-md-4 ngSelect asteriskmarkRequired">
+						<ng-select placeholder="{{'Ward ' | translate: translateKey}}" formControlName="ward">
 							<ng-option *ngFor="let ward of wardNameArray" [value]="ward.wardzoneId">
 								{{ward.wardzoneName}}
 							</ng-option>
@@ -666,7 +666,7 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" formControlName="howLongLivingInVadodara" type="text"
-							maxlength="3" minlength="1"
+							maxlength="3" minlength="1" OnlyNumber
 							placeholder="{{'How long have you been living in Vadodara?' | translate: translateKey}}"
 							required>
 						<control-messages [control]="addressOfResidence.get('howLongLivingInVadodara')">
@@ -675,7 +675,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" formControlName="sqMetersPresentBuilding" type="text"
-							maxlength="14"
+							maxlength="14"  OnlyNumber
 							placeholder="{{'How many square meters is the present building?' | translate: translateKey}}"
 							required>
 							<div align="end" class="default-show-hint mat-hint mat-right">Hint:-50000 SQ. MTR.</div>
@@ -683,8 +683,8 @@
 						</control-messages>
 					</mat-form-field>
 
-					<div class="col-md-4 ngSelect">
-						<ng-select placeholder="{{'is your house kaccha or pucca ?' | translate: translateKey}} *"
+					<div class="col-md-4 ngSelect asteriskmarkRequired">
+						<ng-select placeholder="{{'is your house kaccha or pucca ?' | translate: translateKey}}"
 							formControlName="hasCurrentHouseKacchaOrPucca">
 							<ng-option *ngFor="let impl of houseOldOrNew" [value]="impl">{{impl}}
 							</ng-option>
@@ -693,9 +693,9 @@
 						</control-messages>
 					</div>
 
-					<div class="col-md-4 ngSelect">
+					<div class="col-md-4 ngSelect asteriskmarkRequired">
 						<ng-select (change)="rentChange();"
-							placeholder="{{'Is house Rented or Own Property ?' | translate: translateKey}} *"
+							placeholder="{{'Is house Rented or Own Property ?' | translate: translateKey}}"
 							formControlName="hasCurrentHouseRentedOrPurchased">
 							<ng-option *ngFor="let impl of implYesNorray" [value]="impl.code">{{impl.name}}
 							</ng-option>
@@ -704,8 +704,8 @@
 						</control-messages>
 					</div>
 
-					<div class="col-md-4 ngSelect">
-						<ng-select placeholder="{{'is your ration card APL or BPL ?' | translate: translateKey}} *"
+					<div class="col-md-4 ngSelect asteriskmarkRequired">
+						<ng-select placeholder="{{'is your ration card APL or BPL ?' | translate: translateKey}}"
 							formControlName="rationCardType">
 							<ng-option *ngFor="let impl of rationCard" [value]="impl">{{impl}}
 							</ng-option>
@@ -748,8 +748,8 @@
 						</control-messages>
 					</mat-form-field>
 
-					<div class="col-md-4 ngSelect" formGroupName="bank">
-						<ng-select placeholder="{{'bank' | translate: translateKey}} *" formControlName="code">
+					<div class="col-md-4 ngSelect asteriskmarkRequired" formGroupName="bank">
+						<ng-select placeholder="{{'bank' | translate: translateKey}}" formControlName="code">
 							<ng-option *ngFor="let bank of bankNameArray" [value]="bank.code">
 								{{bank.name}}
 							</ng-option>
@@ -1245,8 +1245,8 @@
 					</ng-template>
 				<form [formGroup]="chequeDetails">
 					<div class="row">
-						<div class="col-md-4 ngSelect" formGroupName="ddBank">
-							<ng-select placeholder="{{'Bank Name *' | translate: translateKey}}" formControlName="code">
+						<div class="col-md-4 ngSelect asteriskmarkRequired" formGroupName="ddBank">
+							<ng-select placeholder="{{'Bank Name' | translate: translateKey}}" formControlName="code">
 								<ng-option *ngFor="let ddbank of bankNameArray" [value]="ddbank.code">{{ ddbank.name
 									}}
 						</ng-option>
@@ -1259,9 +1259,9 @@
 					</mat-error>
 					</div>
 						<mat-form-field class="col-md-4">
-							<input matInput placeholder="{{'Branch Name *' | translate: translateKey}}"
+							<input matInput placeholder="{{'Branch Name' | translate: translateKey}}"
 								formControlName="ddBankBranch" type="text" appValidationFields
-								validationFieldsType='onlyNameWithSpace' maxlength="50">
+								validationFieldsType='onlyNameWithSpace' maxlength="50" required>
 								<mat-error class="mat-error ng-star-inserted errors-massage"
 								*ngIf="chequeDetails.get('ddBankBranch').invalid && (chequeDetails.get('ddBankBranch').dirty || chequeDetails.get('ddBankBranch').touched)">
 								<div *ngIf="chequeDetails.get('ddBankBranch').errors.required">
@@ -1271,7 +1271,7 @@
 						</mat-form-field>
 						<mat-form-field class="col-md-4">
 							<input matInput OnlyNumber maxlength="6" formControlName="ddNumber"
-								placeholder="{{'DD Number' | translate: translateKey}} *">
+								placeholder="{{'DD Number' | translate: translateKey}}" required>
 								<mat-error class="mat-error ng-star-inserted errors-massage"
 								*ngIf="chequeDetails.get('ddNumber').invalid && (chequeDetails.get('ddNumber').dirty || chequeDetails.get('ddNumber').touched)">
 								<div *ngIf="chequeDetails.get('ddNumber').errors.required">
@@ -1286,7 +1286,7 @@
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<mat-label>{{'Cheque/DD Issuing date *'| translate: translateKey}}</mat-label>
+							<mat-label>{{'Cheque/DD Issuing date'| translate: translateKey}}<span class="text-danger"> *</span></mat-label>
 							<input appDate matInput [min]="minDate" [max]="maxDate" [matDatepicker]="chequeDate"
 								formControlName="ddIssuingDate">
 							<mat-datepicker-toggle matSuffix [for]="chequeDate"></mat-datepicker-toggle>
