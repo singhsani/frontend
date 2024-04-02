@@ -548,7 +548,7 @@ export class TownHallBookComponent implements OnInit {
 
 	onChangeTownHalls(data) {
 		this.bookingService.getAvailableStots(data).subscribe(respData => {
-			this.maxEndDate = moment(respData.data.endDate, "DD-MM-YYYY").toDate();
+			//this.maxEndDate = moment(respData.data.endDate, "DD-MM-YYYY").toDate();
 		})
 		this.Dates=[];
 	}
