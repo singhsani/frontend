@@ -636,7 +636,7 @@
                         <mat-form-field class="col-md-4">
                             <input matInput maxlength="100" formControlName="programmeName" appValidationFields
                                 [validationFieldsType]="'onlyNameWithSpace'" type="text"
-                                placeholder="{{'programme_name' | translate: translateKey}} *">
+                                placeholder="{{'programme_name' | translate: translateKey}}" required>
                             <control-messages [control]="organizationDetails.get('programmeName')">
                             </control-messages>
                         </mat-form-field>
