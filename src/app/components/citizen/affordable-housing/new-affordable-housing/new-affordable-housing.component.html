@@ -684,7 +684,7 @@
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect asteriskmarkRequired">
-						<ng-select placeholder="{{'is your house kaccha or pucca ?' | translate: translateKey}}"
+						<ng-select placeholder="{{'is your house kaccha or pakka ?' | translate: translateKey}} *"
 							formControlName="hasCurrentHouseKacchaOrPucca">
 							<ng-option *ngFor="let impl of houseOldOrNew" [value]="impl">{{impl}}
 							</ng-option>

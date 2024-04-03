@@ -82,7 +82,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	personTypeArray = [];
 	relationArray: Array<any> = ["Father", "Mother", "Husband", "Wife", "Brother", "Son ", "Sister", "Daughter"];
 	implYesNorray: Array<any> = [{ name: 'YES', code: true }, { name: 'NO', code: false }];
-	houseOldOrNew: Array<any> = ["Kuccha", "Pucca"];
+	houseOldOrNew: Array<any> = ["Kaccha", "Pakka"];
 	rationCard: Array<any> = ["APL", "BPL", "Not Applicable"];
 
 	LOOKUP: any;
