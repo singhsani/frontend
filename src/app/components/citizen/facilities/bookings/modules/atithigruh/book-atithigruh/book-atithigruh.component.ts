@@ -131,7 +131,7 @@ export class BookAtithigruhComponent implements OnInit {
 		{sno: '૧૭', atithigruh: 'દિવાળી પુરા', rent: '૧૭૦૦૦', administrative_charge: '૧૦૦૦', gst:'૩૨૪૦' ,total_rent: '૨૧૨૪૦', deposit: '૨૦૦૦૦',total: '૪૧૨૪૦'},
 		{sno: '૧૮', atithigruh: 'માંજલપુર', rent: '૨૩૦૦૦', administrative_charge: '૧૦૦૦', gst:'૪૩૨૦' ,total_rent: '૨૮૩૨૦', deposit: '૩૦૦૦૦',total: '૮૬૬૪૦'},
 		{sno: '૧૯', atithigruh: 'મકરપુરા કોમ્યુનિટી હોલ', rent: '૨૫૦૦૦', administrative_charge: '૧૦૦૦', gst:'૪૬૮૦' ,total_rent: '૩૦૬૮૦', deposit: '૩૦૦૦૦',total: '૬૦૬૮૦'},
-		{sno: '૨૦', atithigruh: 'વારશીયા કોમ્યુનિટી હોલ', rent: '૭૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૪૪૦' ,total_rent: '૯૪૪૦', deposit: '૭૦૦૦',total: '૧૬૯૪૦'}
+		{sno: '૨૦', atithigruh: 'વારશીયા કોમ્યુનિટી હોલ', rent: '૭૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૪૪૦' ,total_rent: '૯૪૪૦', deposit: '૭૫૦૦',total: '૧૬૯૪૦'}
 	  ];
 	  isRelationshipShow = false
 	  relationType = []
