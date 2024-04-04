@@ -108,7 +108,7 @@ export class BookAtithigruhComponent implements OnInit {
 		{sno: 17, atithigruh: 'Diwali Pura', rent: '17000', administrative_charge: '1000', gst:'3240' ,total_rent: '21240', deposit: '20000',total: '41240'},
 		{sno: 18, atithigruh: 'Manjalpur', rent: '23000', administrative_charge: '1000', gst:'4320' ,total_rent: '28320', deposit: '30000',total: '31320'},
 		{sno: 19, atithigruh: 'Makarpura Community Hall', rent: '25000', administrative_charge: '1000', gst:'4680' ,total_rent: '30680', deposit: '30000',total: '60680'},
-		{sno: 20, atithigruh: 'Warshiya Community Hall', rent: '7000', administrative_charge: '1000', gst:'1440' ,total_rent: '9440', deposit: '7000',total: '16440'}
+		{sno: 20, atithigruh: 'Warshiya Community Hall', rent: '7000', administrative_charge: '1000', gst:'1440' ,total_rent: '9440', deposit: '7500',total: '16940'}
 	  ];
 
 	  gujratifeeDetails: any [] = [
@@ -131,7 +131,7 @@ export class BookAtithigruhComponent implements OnInit {
 		{sno: '૧૭', atithigruh: 'દિવાળી પુરા', rent: '૧૭૦૦૦', administrative_charge: '૧૦૦૦', gst:'૩૨૪૦' ,total_rent: '૨૧૨૪૦', deposit: '૨૦૦૦૦',total: '૪૧૨૪૦'},
 		{sno: '૧૮', atithigruh: 'માંજલપુર', rent: '૨૩૦૦૦', administrative_charge: '૧૦૦૦', gst:'૪૩૨૦' ,total_rent: '૨૮૩૨૦', deposit: '૩૦૦૦૦',total: '૮૬૬૪૦'},
 		{sno: '૧૯', atithigruh: 'મકરપુરા કોમ્યુનિટી હોલ', rent: '૨૫૦૦૦', administrative_charge: '૧૦૦૦', gst:'૪૬૮૦' ,total_rent: '૩૦૬૮૦', deposit: '૩૦૦૦૦',total: '૬૦૬૮૦'},
-		{sno: '૨૦', atithigruh: 'વારશીયા કોમ્યુનિટી હોલ', rent: '૭૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૪૪૦' ,total_rent: '૯૪૪૦', deposit: '૭૦૦૦',total: '૧૬૪૪૦'}
+		{sno: '૨૦', atithigruh: 'વારશીયા કોમ્યુનિટી હોલ', rent: '૭૦૦૦', administrative_charge: '૧૦૦૦', gst:'૧૪૪૦' ,total_rent: '૯૪૪૦', deposit: '૭૦૦૦',total: '૧૬૯૪૦'}
 	  ];
 	  isRelationshipShow = false
 	  relationType = []
