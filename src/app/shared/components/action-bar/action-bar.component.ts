@@ -704,6 +704,12 @@ export class ActionBarComponent implements OnInit, OnChanges {
 			this.commonService.openAlert("Field Error", "Should be agree with given details", 'warning');
 			this.isSubmitBtnDisabled = false;
 			return false;
+		}else if(this.form.get('serviceCode').value == 'AFFORD-HOUSE'){
+			if(this.form.value.licenseAgreed == false){
+				this.commonService.openAlert('Field Error','Should be agree with the terms and conditions','warning');
+				this.isSubmitBtnDisabled = false;
+				return false;
+			}
 		}
 		return true;
 	}

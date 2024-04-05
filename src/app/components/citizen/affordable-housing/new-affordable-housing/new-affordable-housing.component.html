@@ -1333,11 +1333,11 @@
 
 					<div class="row">
 						<div>
-							<mat-checkbox class="col accept-terms" required formControlName="licenseAgreed">
+							<mat-checkbox class="col accept-terms" (change)="clickProcess($event)"  [checked]="checkProceed" required formControlName="licenseAgreed">
 
 							</mat-checkbox>
 						</div>
-						<a (click)="openTermModel(termCondition);" style="margin-top: 5px; margin-left: -25px"> I have
+						<a (click)="openTermModel(termCondition);" style="margin-top: 5px; margin-left: -21px"> I have
 							read and agree with <u style="color: rebeccapurple;">Terms and conditions</u> </a>
 					</div>
 

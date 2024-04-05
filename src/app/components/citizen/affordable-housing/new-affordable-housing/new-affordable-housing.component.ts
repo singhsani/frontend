@@ -509,6 +509,7 @@ export class NewAffordableHousingComponent implements OnInit {
 			serviceFormId: null,
 			refNumber: null,
 			attachments: [],
+			licenseAgreed: [false],
 		})
 		this.firstBeneficiaryDetail = this.fb.group({
 			/* Step 1 controls start */
@@ -667,7 +668,6 @@ export class NewAffordableHousingComponent implements OnInit {
 		this.attachmentDetails = this.fb.group({
 			// attachments: [''],
 			attachments: [],
-			licenseAgreed: [true],
 		})
 		this.commonService.createCloneAbstractControl(this.firstBeneficiaryDetail , this.affordableHousingForm)
 		this.commonService.createCloneAbstractControl(this.secondBeneficiaryDetail , this.affordableHousingForm)
@@ -1424,5 +1424,13 @@ export class NewAffordableHousingComponent implements OnInit {
 		this.secondBeneficiaryDetail.get('secondAppRationCardNumber').updateValueAndValidity();
 		this.CD.detectChanges();
 	}
+
+	clickProcess(event) {
+        if (event.checked == true) {
+			this.affordableHousingForm.get('licenseAgreed').setValue(true);
+        } else {
+			 this.affordableHousingForm.get('licenseAgreed').setValue(false);
+        }
+    }
 	      
 }
