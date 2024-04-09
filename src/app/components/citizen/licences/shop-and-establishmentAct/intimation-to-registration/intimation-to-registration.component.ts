@@ -2117,7 +2117,10 @@ export class IntimationToRegistrationComponent implements OnInit {
         for(let i = 0; i < controlName.get('workerCounts').controls.length; i++) {
           mainControl.get('workerCounts').value.push(formGroupAry.value[i]);
           mainControl.get('workerCounts').controls.push(formGroupAry.controls[i]);
-        }   
+        }
+        if(this.personoccuping.get('dateofhavingmorethan10Emp').value){
+          mainControl.get('dateofhavingmorethan10Emp').setValue(controlName.get('dateofhavingmorethan10Emp').value)
+         }   
        // this.saveAsDraft(mainControl)
         this.licenseConfiguration.currentTabIndex = index;
       }
