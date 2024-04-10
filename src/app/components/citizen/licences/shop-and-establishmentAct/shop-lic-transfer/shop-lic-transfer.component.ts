@@ -215,7 +215,7 @@ export class ShopLicTransferComponent implements OnInit {
     hideGuideLine(flag: boolean) {
         console.log("Regis ", this.registrationType);
 
-        
+
             this.shopAndEstablishmentTransferService.getLatestApplicationByINtimationOrCertificationNumber(this.certificateNumber).subscribe(res => {
                 console.log('Res', res)
                 if (res.otherDescription != null) {
@@ -1736,46 +1736,68 @@ return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartn
                 mandatory: true
             })
             comonDocument.push({
-                
+
                 documentIdentifier: 'FORM_D',
                 mandatory: true
     })
+      comonDocument.push({
+
+        documentIdentifier: 'NOTICE_OF_WEEKLY_HOLIDAY_FORM_K',
+        mandatory: true
+     })
+
         }
         else if(this.totalNoOfWomanForDocu > 0 && this.workingInNightShift== false &&  this.isIntimation){
-        
+
             comonDocument.push({
-                
+
                 documentIdentifier: 'FORM_D',
                 mandatory: true
     })
+    comonDocument.push({
+
+      documentIdentifier: 'NOTICE_OF_WEEKLY_HOLIDAY_FORM_K',
+      mandatory: false
+})
+
         }
 
         if(this.totalNoOfWomanForDocu > 0 && this.workingInNightShift== true &&  !this.isIntimation){
             comonDocument.push({
-                
+
                         documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
                         mandatory: true
             })
             comonDocument.push({
-                
+
                 documentIdentifier: 'FORM_A',
                 mandatory: true
     })
+    comonDocument.push({
+
+      documentIdentifier: 'NOTICE_OF_WEEKLY_HOLIDAY_FORM_K',
+      mandatory: true
+})
         }
-        
+
         else if(this.totalNoOfWomanForDocu > 0 && this.workingInNightShift== false &&  !this.isIntimation){
 
             comonDocument.push({
-                
+
                 documentIdentifier: 'FORM_A',
                 mandatory: true
     })
+    comonDocument.push({
+
+      documentIdentifier: 'NOTICE_OF_WEEKLY_HOLIDAY_FORM_K',
+      mandatory: false
+})
         }
         else if(this.isIntimation)
 			{
-				
+
 				comonDocument.push({
-						
+
 				documentIdentifier: 'FORM_D',
 				mandatory: true
 	})
@@ -1783,11 +1805,11 @@ return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartn
 			else
 			{
 				comonDocument.push({
-						
+
 					documentIdentifier: 'FORM_A',
 					mandatory: true
 		})
-			
+
 			}
 
         return comonDocument;
@@ -1980,12 +2002,12 @@ return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartn
             let control = this.personoccuping.get('workerCounts')['controls'];
             for (let i = index; i <= index; i++) {
                 grandTotal = control[i].get('total').value;
-            
+
             let max = grandTotal - 9;
             if (max > 0) {
                 this.hideAdd = true;
-                this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");   
-                return   
+                this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");
+                return
             }
 
             else {
@@ -1995,7 +2017,7 @@ return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartn
             this.totalCount = max
             break;
         }
-        
+
         }
         if (this.registrationType === this.regiTyep[1].code) {
 			let control = this.personoccuping.get('workerCounts')['controls'];
@@ -2109,7 +2131,7 @@ return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartn
             //     this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");
             // }
             else {
-                let newindex = this.getpersonDetails(index)	
+                let newindex = this.getpersonDetails(index)
 			if(newindex == 3){
 				return
 			}
@@ -2118,7 +2140,7 @@ return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartn
                 for(let i = 0; i < controlName.get('workerCounts').controls.length; i++) {
                     mainControl.get('workerCounts').value.push(formGroupAry.value[i]);
                     mainControl.get('workerCounts').controls.push(formGroupAry.controls[i]);
-                }   
+                }
                 this.saveAsDraft(mainControl)
                 this.licenseConfiguration.currentTabIndex = index;
             }
@@ -2142,11 +2164,11 @@ return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartn
         for(let i =0; i < this.personoccuping.get('workerCounts')['controls'].length; i++){
         if(this.personoccuping.get('workerCounts')['controls'][i].isEditMode == true){
             this.commonService.openAlert("Person Occupying", "Please Save Occupying Detail", "warning");
-            index = 3 
+            index = 3
             return index
         }
         else{
-            index = index 
+            index = index
         }
         }
     }

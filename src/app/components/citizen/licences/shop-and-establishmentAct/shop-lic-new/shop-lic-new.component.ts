@@ -45,7 +45,7 @@ export class ShopLicNewComponent implements OnInit {
 	TotalNoOfPerson: number = 0;
 	totalNoOfWoman: number = 0;
 	totalNoOfWomanForDocu: number  = 0;
-	totalManAndWomanCount : number = 0;	
+	totalManAndWomanCount : number = 0;
 	hidesave:boolean = false;
 	edit:boolean = true;
 	wardZoneLevel = [];
@@ -133,7 +133,7 @@ export class ShopLicNewComponent implements OnInit {
     /**
      * @param fb - Declare FormBuilder property.
      * @param validationError - Declare validation service property
-     * @param formService - Declare form service property 
+     * @param formService - Declare form service property
      * @param uploadFileService - Declare upload file service property.
      * @param commonService - Declare sweet alert.
 	 * @param shopAndEstablishmentService - Call only shop licence api.
@@ -197,21 +197,21 @@ export class ShopLicNewComponent implements OnInit {
 				this.toastrService.warning("please enter woman or men number more than 0")
 				this.personoccuping.get('workerCounts')['controls'][indx].get('noOfMen').reset();
 				this.personoccuping.get('workerCounts')['controls'][indx].get('noOfWomen').reset();
-			}	
-		} 
+			}
+		}
 		let total = men + woman;
 		if(total == 0){
 			this.personoccuping.get('workerCounts')['controls'][indx].get('total').reset();
 		}else{
 			this.personoccuping.get('workerCounts')['controls'][indx].get('total').setValue(total);
-		}	
+		}
 	}
-	
+
 	hideGuideLine(flag: boolean) {
 		if(this.registrationType == "INTIMATION"){
 			if (this.partnerlist.get('organizationType').value != null) {
 				this.isGuideLineActive = flag;
-				
+
 			}else{
 				this.alertService.error("Error in fetching data")
 			}
@@ -279,14 +279,14 @@ export class ShopLicNewComponent implements OnInit {
 					this.personoccuping.enable();
 					this.partnerlist.enable();
 				}
-	
+
 				this.getSubCategoryDropdownData(this.shopLicNewForm.get('establishmentCategory').value.code);
 
 				this.serverUploadFilesArray = res.serviceDetail.serviceUploadDocuments;
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 				});
-				
+
 				this.totalNoOfWomanForJDocument(res);
 
 				if (this.shopLicNewForm.get('ownershipType').value,this.shopLicNewForm.get('organizationType').get('code').value) {
@@ -299,7 +299,7 @@ export class ShopLicNewComponent implements OnInit {
 				// if(res.serviceDetail)
 				// //this.isGuideLineActive = false;
 
-				
+
 				if(this.establishmentdetails.get('waterDrainageZoneId')){
 					this.establishmentdetails.get('zone').setValue(res.waterDrainageZoneName);
 				}
@@ -342,10 +342,10 @@ export class ShopLicNewComponent implements OnInit {
 				}else{
 					this.iswomenWorkingNightShift = false
 				}
-			
+
 				// this.requiredDocumentList();
 
-				
+
 			} catch (error) {
 				console.log(error.message)
 			}
@@ -356,7 +356,7 @@ export class ShopLicNewComponent implements OnInit {
 	* Method is used to get lookup data
 	*/
 	getLookupData() {
-	
+
 		this.formService.getDataFromLookups().subscribe(res => {
 			this.SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP = res.SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP;
 			this.SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP = res.SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP;
@@ -391,14 +391,14 @@ export class ShopLicNewComponent implements OnInit {
 		// });
 			/* Step 1 controls start */
 			//previousRegistrationNo :  [null, [Validators.maxLength(150)]],//count=4
-		this.establishmentdetails = this.fb.group({	
+		this.establishmentdetails = this.fb.group({
 			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],//count=4
 			postalAddress: this.fb.group(this.postalAddressEstablishment.addressControls()),
-			
+
 			zone: [null],
       		ward: [null],
 			block: [null],
-			 
+
 			waterDrainageZoneId: [null,Validators.required],
 			waterDrainageWardId: [null,Validators.required],
 			waterDrainageBlockId: [null],
@@ -415,7 +415,7 @@ export class ShopLicNewComponent implements OnInit {
 			/* Step 1 controls end */
 
 			/* Step 2 controls start */
-		this.employerdetails = this.fb.group({	
+		this.employerdetails = this.fb.group({
 			nameOfEmployer: [null, [Validators.required, Validators.maxLength(100)]],
 
 			employerDesignation: [null, [Validators.required, Validators.maxLength(100)]],
@@ -423,7 +423,7 @@ export class ShopLicNewComponent implements OnInit {
 			alternateMobileNumber:[null, [ValidationService.mobileNumberValidation]],
 			landlineNumber:null,
 			 employerEmailId: [null,ValidationService.emailValidator],
-			
+
 			residentialAddressOfEmployer: [null, [Validators.required, Validators.maxLength(500)]],
 
 			//nameOfManager: [null, [Validators.required, Validators.maxLength(60)]],
@@ -456,7 +456,7 @@ export class ShopLicNewComponent implements OnInit {
 
 
 			/* Step 4 controls start */
-		this.personoccuping = this.fb.group({	
+		this.personoccuping = this.fb.group({
 			workerCounts: this.fb.array([])
 		});
 
@@ -491,7 +491,7 @@ export class ShopLicNewComponent implements OnInit {
 
 		this.attachmentdetail = this.fb.group({
 			attachments: [''],
-			
+
 			/*  */
 		});
 		//this.addMorePerson('EMPLOYER_FAMILY');
@@ -507,14 +507,14 @@ export class ShopLicNewComponent implements OnInit {
 		// this.shopLicNewForm.get('block').valueChanges.subscribe(data => {
 		// 	this.shopLicNewForm.get('waterDrainageBlockId').setValue(data);
 		// });
-	
+
 		this.commonService.createCloneAbstractControl(this.establishmentdetails,this.shopLicNewForm);
 		this.commonService.createCloneAbstractControl(this.employerdetails,this.shopLicNewForm);
 		this.commonService.createCloneAbstractControl(this.employerfamily,this.shopLicNewForm);
 		this.commonService.createCloneAbstractControl(this.personoccuping,this.shopLicNewForm);
 		this.commonService.createCloneAbstractControl(this.partnerlist,this.shopLicNewForm);
 		this.commonService.createCloneAbstractControl(this.attachmentdetail,this.shopLicNewForm);
-		
+
 	}
 
 
@@ -568,8 +568,8 @@ export class ShopLicNewComponent implements OnInit {
 	}
 	/**
 	 * Method is used to return array
-	 * @param data : person data array 
-	 * @param persontype : person array type 
+	 * @param data : person data array
+	 * @param persontype : person array type
 	 */
 	createArray(data?: any): FormGroup {
 		return this.fb.group({
@@ -585,7 +585,7 @@ export class ShopLicNewComponent implements OnInit {
 			relationshipType:this.fb.group({
 				code:[data.relationshipType ? (data.relationshipType.code ? data.relationshipType.code : null) :  null,[Validators.required]]
 			}),
-			
+
 			mobileNo: [data.mobileNo ? data.mobileNo : null],
 			emailId: [data.emailId ? data.emailId : null, [ ValidationService.emailValidator]],
 		})
@@ -642,7 +642,7 @@ export class ShopLicNewComponent implements OnInit {
 		if(value) {
 			this.getWardZone(value, level)
 		}
-		
+
 	}
 
 	onChangedWardZone(value, level) {
@@ -696,7 +696,7 @@ export class ShopLicNewComponent implements OnInit {
 						this.wardZoneLevel2List = data.body;
 						this.wardZoneLevel2List.sort((a, b) => {
 							return a.shortCode - b.shortCode;
-						});						
+						});
 					}
 					else if (level == 3) {
 						this.wardZoneLevel3List = data.body;
@@ -774,7 +774,7 @@ export class ShopLicNewComponent implements OnInit {
 
 			if (persontype === "OCCUPANCY" && this.getArrayByType(persontype).controls.length >= 5) {
 				this.isDisabledMorePerson = true;
-			    this.commonService.openAlert("Warning", "Only 5 Worker Type Available", "warning");	
+			    this.commonService.openAlert("Warning", "Only 5 Worker Type Available", "warning");
 				return false;
 			}
 
@@ -812,7 +812,7 @@ export class ShopLicNewComponent implements OnInit {
 				this.toastrService.warning("Employer family not allowed more than 5");
 				return false;
 			}
-			
+
 			if (persontype === "PARTNER") {
 				if (this.partnerlist.get('organizationType').value.code === 'SHOP_LIC_SELF_OWNERSHIP' && this.getArrayByType(persontype).controls.length >= 1) {
 					this.toastrService.warning("You can add only one partner becouse you are self ownership");
@@ -823,12 +823,12 @@ export class ShopLicNewComponent implements OnInit {
 					return false;
 				}
 			}
-			
+
 				this.getArrayByType(persontype).push(this.createArray({
 					personType: persontype
 				}));
-				
-			
+
+
 			 this.employerfamily.get('shopPersonList').clearValidators();
 			 this.CD.detectChanges();
 			let newlyadded = this.getArrayByType(persontype).controls;
@@ -852,7 +852,7 @@ export class ShopLicNewComponent implements OnInit {
 	}
 
 	/**
-	 * This method is set gujarati value in change event. 
+	 * This method is set gujarati value in change event.
 	 * @param event : dropdown event
 	 * @param lookupArray : item list
 	 * @param varName : static varialbel
@@ -926,12 +926,12 @@ export class ShopLicNewComponent implements OnInit {
 			console.log(this.totalNoOfWoman)
 			// this.deleteWomenDocument();
 			// this.addWomenDocument();
-		}	
+		}
 		this.edit = true;
 		row.isEditMode = true;
 		row.deepCopyInEditMode = Object.assign({}, row.value);
 	}
-	
+
 	editRecordd(row: any) {
 		if(row.value.noOfWomen > 0 ){
 			this.iswomenWorkingNightShift = true;
@@ -946,10 +946,10 @@ export class ShopLicNewComponent implements OnInit {
 			// this.addWomenDocument();
 			if(this.totalNoOfWomanForDocu > 0){
 				this.totalNoOfWomanForDocu = this.totalNoOfWomanForDocu - Rnumber
-			}	
+			}
 			this.deleteWomenDocument();
 			this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value,this.shopLicNewForm.get('organizationType').get('code').value)
-		}	
+		}
 		this.edit = true;
 		row.isEditMode = true;
 		row.deepCopyInEditMode = Object.assign({}, row.value);
@@ -972,7 +972,7 @@ export class ShopLicNewComponent implements OnInit {
 	*/
 	saveRecord(row: any) {
 		if (row.valid) {
-				
+
 			row.isEditMode = false;
 			row.newRecordAdded = false;
 		}
@@ -987,7 +987,7 @@ export class ShopLicNewComponent implements OnInit {
 	  	const	Rnumber = parseInt(row.controls.noOfWomen.value)
 		  this.totalNoOfWomanForDocu =  this.totalNoOfWomanForDocu + Rnumber;
 		  let grandTotal = 0;
-		  this.totalManAndWomanCount = row.controls.total.value;		  
+		  this.totalManAndWomanCount = row.controls.total.value;
 		if (this.registrationType === this.regiTyep[0].code) {
 			let control = this.personoccuping.get('workerCounts')['controls'];
 			for (let i = index; i <= index; i++) {
@@ -996,10 +996,10 @@ export class ShopLicNewComponent implements OnInit {
 
 			let max = grandTotal - 9;
 			if (max > 0) {
-			
+
 				this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");
 			}
-			
+
 			else {
 				row.isEditMode = false;
 				row.newRecordAdded = false;
@@ -1013,10 +1013,10 @@ export class ShopLicNewComponent implements OnInit {
 			}
 
 			let max = grandTotal - 9;
-			if (max <=0 && this.registrationType === 'CERTIFICATION') {			
+			if (max <=0 && this.registrationType === 'CERTIFICATION') {
 				this.commonService.openAlert("Person Occupying", "Less than 10 person are not allowed ", "warning");
 			}
-			
+
 			else {
 				row.isEditMode = false;
 				row.newRecordAdded = false;
@@ -1036,7 +1036,7 @@ export class ShopLicNewComponent implements OnInit {
 		* @param row: table row id
 		*/
 		cancelRecord(row: any, index: number) {
-			
+
 			try {
 				if (row.newRecordAdded) {
 					this.getArrayByType(row.get('personType').value).removeAt(index);
@@ -1078,7 +1078,7 @@ export class ShopLicNewComponent implements OnInit {
 		* @event is value of NoOfHumanWorking dropdown
 		*/
 	onChangeNoOfHumanWorking(event) {
-		// 
+		//
 		if (event)
 			this.isDisabledBtn = false;
 		else
@@ -1118,7 +1118,7 @@ export class ShopLicNewComponent implements OnInit {
 		 this.addWomenDocument();
 		try {
 			// this.updateServiceUploadDocument(event);
-			// when organization Type change Partner List clear  
+			// when organization Type change Partner List clear
 			if (this.partnerlist.get('shopPartnerList').value.length > 0) {
 				for (let i = 0; i < this.partnerlist.get('shopPartnerList').value.length; i++) {
 					this.getArrayByType('PATNERS').removeAt(i);
@@ -1166,7 +1166,7 @@ export class ShopLicNewComponent implements OnInit {
 	handleErrorsOnSubmit(key) {
 
 		const index = this.formControlNameToTabIndex.get(key)
-		
+
 		if(index == 5) {
 			this.licenseConfiguration.currentTabIndex = 5;
 				this.commonService.openAlert('Field Error', 'Should be agree with given details', 'warning');
@@ -1453,12 +1453,12 @@ export class ShopLicNewComponent implements OnInit {
 		const documentCodeList = this.filterDocumentList(ownershipType,organizationCode);
 		const localUploadArray = [...this.serverUploadFilesArray];
 		this.displayDocs = [];
-		this.uploadFilesArray = [];	
+		this.uploadFilesArray = [];
 		for (let file of localUploadArray) {
 			if (this.checkFileNeedToAddInDocumentList(file, documentCodeList)) {
 				file['mandatory'] = this.isFileMandatory(file, documentCodeList);
 				this.displayDocs.push(file);
-				
+
 				if (file['mandatory']) {
 					this.uploadFilesArray.push({
 						'labelName': file.documentLabelEn,
@@ -1473,7 +1473,7 @@ export class ShopLicNewComponent implements OnInit {
 			}
 		}
 
-	
+
 		// switch (event) {
 		// 	case 'SHOP_LIC_COMPANY':
 		// 	case 'SHOP_LIC_TRUST':
@@ -1501,9 +1501,9 @@ export class ShopLicNewComponent implements OnInit {
 
 	}
 
-   
+
 	checkFileNeedToAddInDocumentList(file,documentCodeList){
-	
+
       if(documentCodeList.filter( obj => obj.documentIdentifier == file.documentIdentifier).length > 0){
 		  return true;
 	  } else {
@@ -1515,7 +1515,7 @@ export class ShopLicNewComponent implements OnInit {
 	isFileMandatory(file,documentCodeList){
 		return documentCodeList.filter( obj => obj.documentIdentifier == file.documentIdentifier)[0].mandatory
 	}
-	
+
 
 	ownershipChange(ownershipType) {
 		this.shopLicNewForm.get('ownershipType').setValue(ownershipType);
@@ -1525,7 +1525,7 @@ export class ShopLicNewComponent implements OnInit {
 
 	/**
 	 * This method return upload document list based on registration type and ownership type.
-	 * @param ownershipType 
+	 * @param ownershipType
 	 */
 	filterDocumentList(ownershipType, organizationCode) {
 		let count = 0
@@ -1534,7 +1534,7 @@ export class ShopLicNewComponent implements OnInit {
 			if(file.documentIdentifier == 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J'){
 					count++;
 			}
-		}		
+		}
 
 		if (this.isIntimation) {
 			return isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument();
@@ -1554,14 +1554,14 @@ export class ShopLicNewComponent implements OnInit {
 			this.checkWomanWorkedonNightShift()
 					if(this.totalNoOfWomanForDocu > 0 && count == 0 && this.workingInNightShift == true){
 						docArray.push({
-							
+
 									documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
 									mandatory: true
 						})
 						}
 
 			return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument());
-	
+
 			} else if (ownershipType == "RENTED") {
 				let docArray = [
 					{
@@ -1582,10 +1582,10 @@ export class ShopLicNewComponent implements OnInit {
 					}
 				];
 
-				
+
 					if(this.totalNoOfWomanForDocu > 0 && count == 0 && this.workingInNightShift == true){
 						docArray.push({
-							
+
 									documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
 									mandatory: true
 						})
@@ -1601,7 +1601,7 @@ export class ShopLicNewComponent implements OnInit {
 
 
 	commonUploadDocumentForPartnerShip(){
-		
+
 		const docs = this.commonUploadDocument();
 		docs.push({
 			documentIdentifier: 'PARTNERSHIP_DEED',
@@ -1640,12 +1640,12 @@ export class ShopLicNewComponent implements OnInit {
 						},
 
 
-					];				
+					];
 
 						this.returnFile(this.womanDocument);
-				
+
 				}
-			
+
 			}else if(this.totalNoOfWomanForDocu > 0 && count > 0 && this.personoccuping.get('womanWorkinginNightshift').value == true){
 				{
 					this.womanDocument = [
@@ -1659,16 +1659,16 @@ export class ShopLicNewComponent implements OnInit {
 							mandatory: true
 						},
 
-					];				
+					];
 
 				}
 				this.returnFile(this.womanDocument);
 			}
-			
+
 	}
 
 	deleteWomenDocument(){
-		
+
 		 if(this.totalNoOfWomanForDocu == 0)
 		{
 			this.displayDocs.forEach((file,index)=> {
@@ -1691,8 +1691,8 @@ export class ShopLicNewComponent implements OnInit {
 			if(file.documentIdentifier == 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J'){
 					count++;
 			}
-		}		
-		
+		}
+
 	 	const comonDocument = [
 			{
 				documentIdentifier: 'EMPLOYER_ID_PROOF',
@@ -1726,10 +1726,10 @@ export class ShopLicNewComponent implements OnInit {
 				documentIdentifier: 'PEC_OR_PRC_RECEIPT',
 				mandatory: false
 			},
-			{
-				documentIdentifier: 'NOTICE_OF_WEEKLY_HOLIDAY_FORM_K',
-				mandatory: false
-			},
+			// {
+			// 	documentIdentifier: 'NOTICE_OF_WEEKLY_HOLIDAY_FORM_K',
+			// 	mandatory: false
+			// },
 			// {
 			// 	documentIdentifier:'FORM_A',
 			// 	mandatory: false
@@ -1738,11 +1738,11 @@ export class ShopLicNewComponent implements OnInit {
 			// 	documentIdentifier:'FORM_D',
 			// 	mandatory: false
 			// }
-		
+
 		];
-		
-		if(this.commonService.fromAdmin()){	
-				
+
+		if(this.commonService.fromAdmin()){
+
 			comonDocument.push({
 					documentIdentifier: 'REVIEW_APPLICATION',
 					mandatory: true
@@ -1751,51 +1751,71 @@ export class ShopLicNewComponent implements OnInit {
 			this.checkWomanWorkedonNightShift()
 			if(this.totalNoOfWomanForDocu > 0 && this.workingInNightShift== true &&  this.isIntimation){
 					comonDocument.push({
-						
+
 								documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
 								mandatory: true
 					})
 					comonDocument.push({
-						
+
 						documentIdentifier: 'FORM_D',
 						mandatory: true
 			})
+      comonDocument.push({
+
+        documentIdentifier: 'NOTICE_OF_WEEKLY_HOLIDAY_FORM_K',
+        mandatory: true
+  })
 				}
 				else if(this.totalNoOfWomanForDocu > 0 && this.workingInNightShift== false &&  this.isIntimation){
-				
+
 					comonDocument.push({
-						
+
 						documentIdentifier: 'FORM_D',
 						mandatory: true
 			})
+      comonDocument.push({
+
+        documentIdentifier: 'NOTICE_OF_WEEKLY_HOLIDAY_FORM_K',
+        mandatory: false
+  })
 				}
 
 				if(this.totalNoOfWomanForDocu > 0 && this.workingInNightShift== true &&  !this.isIntimation){
 					comonDocument.push({
-						
+
 								documentIdentifier: 'CONSENT_OF_WOMAN_WOEKER_TO_WORK_IN_NIGHT_SHIFT_FORM_J',
 								mandatory: true
 					})
+          comonDocument.push({
+
+            documentIdentifier: 'NOTICE_OF_WEEKLY_HOLIDAY_FORM_K',
+            mandatory: true
+      })
 					comonDocument.push({
-						
+
 						documentIdentifier: 'FORM_A',
 						mandatory: true
 			})
 				}
-				
+
 				else if(this.totalNoOfWomanForDocu > 0 && this.workingInNightShift== false &&  !this.isIntimation){
 
 					comonDocument.push({
-						
+
 						documentIdentifier: 'FORM_A',
 						mandatory: true
 			})
+      comonDocument.push({
+
+        documentIdentifier: 'NOTICE_OF_WEEKLY_HOLIDAY_FORM_K',
+        mandatory: false
+  })
 				}
 			else if(this.isIntimation)
 			{
-				
+
 				comonDocument.push({
-						
+
 				documentIdentifier: 'FORM_D',
 				mandatory: true
 	})
@@ -1803,13 +1823,13 @@ export class ShopLicNewComponent implements OnInit {
 			else
 			{
 				comonDocument.push({
-						
+
 					documentIdentifier: 'FORM_A',
 					mandatory: true
 		})
-			
+
 			}
-		
+
 		return comonDocument;
 	}
 
@@ -1837,7 +1857,7 @@ export class ShopLicNewComponent implements OnInit {
 
 	// validatePecPrcNumber(formControl : FormControl){
 	// 	  console.log("Pec/Prc ", formControl);
-		  
+
 	// 	  if(!formControl.value || formControl.value == ""){
 	// 		  return true;
 	// 	  } else {
@@ -1854,7 +1874,7 @@ export class ShopLicNewComponent implements OnInit {
 	// }
 
 	validatePECNumber(formControl:any){
-		
+
 		let numberValue = formControl.value.substring(0,3)
 		if(!formControl.value || formControl.value == ""){
 			return true;
@@ -1862,12 +1882,12 @@ export class ShopLicNewComponent implements OnInit {
 		else if("PEC"== numberValue){
 			if(false == numberValue){
 				formControl.setValue("");
-			 	this.commonService.openAlert("Error", "Please enter valid PEC number","error");	 
+			 	this.commonService.openAlert("Error", "Please enter valid PEC number","error");
 			}error=>{
 				formControl.setValue("");
 				console.error("error",error);
 			}
-			
+
 			// this.professionalTaxService.getVerifyNumber(numberValue,formControl.value).subscribe(res => {
 			// 	console.log(res);
 			// 	console.log(res.data);
@@ -1883,11 +1903,11 @@ export class ShopLicNewComponent implements OnInit {
 			formControl.setValue("");
 			this.commonService.openAlert("Error", "Please enter valid PEC number","error");
 		}
-		
+
 	}
 
 	validatePRCNumber(formControl:any){
-		
+
 		let numberValue = formControl.value.substring(0,3)
 		if(!formControl.value || formControl.value == ""){
 			return true;
@@ -1914,11 +1934,11 @@ export class ShopLicNewComponent implements OnInit {
 		}
 	}
 
-	
-	
+
+
 
 	validatePecPropertyNumber(formControl : FormControl){
-		
+
 		if(!formControl.value || formControl.value == ""){
 			return true;
 		} else {
@@ -1931,7 +1951,7 @@ export class ShopLicNewComponent implements OnInit {
 				} else {
 					this.commonService.openAlert("Error", "Property/Census No Not found", "error");
 				}
-					
+
 			})
 		}
   }
@@ -1959,9 +1979,9 @@ export class ShopLicNewComponent implements OnInit {
   }
 
   patchValue2(){
-	 
+
 	const data = {
- 
+
 		"contactNo": "9898433579",
 		"mobileNo": "9898433579",
 		"email": "jil.patel@nascentinfo.com",
@@ -2000,15 +2020,15 @@ export class ShopLicNewComponent implements OnInit {
 		"commencementOfBusinessDate": "2021-01-07",
 		"otherAddresses": "gfh  gfghfh",
 		"nameOfEmployer": "ghgfhf",
-	   
+
 		"residentialAddressOfEmployer": "ghfghgfh",
 		"employerDesignation": "ghgfhgf",
 		"employerMobileNumber": "4874584554",
 		"employerEmailId": null,
-		
+
 		"shopPersonList": [
 		  {
-			
+
 			"mobileNo": "5695266566",
 			"canReceiptPrint": false,
 			"fieldView": "ALL",
@@ -2029,7 +2049,7 @@ export class ShopLicNewComponent implements OnInit {
 		],
 		"workerCounts": [
 		  {
-		   
+
 			"canReceiptPrint": false,
 			"fieldView": "ALL",
 			"noOfMen": 1,
@@ -2048,7 +2068,7 @@ export class ShopLicNewComponent implements OnInit {
 		"waterDrainageBlockName": "Block 01",
 		"shopPartnerList": [],
 		"ownershipType": "OWN",
-		
+
 		"alternateMobileNumber": null,
 		"landlineNumber": null,
 		"prcNumber": null,
@@ -2077,16 +2097,16 @@ export class ShopLicNewComponent implements OnInit {
 			this.isSubCategory = false;
 		}
 	}
-	
+
 	returnFile(womanDocument:any){
 		const localUploadArray = [...this.serverUploadFilesArray];
 		const fileDocument = womanDocument[0];
 		for (let file of localUploadArray) {
-			if(file.documentIdentifier == fileDocument.documentIdentifier)	{	
+			if(file.documentIdentifier == fileDocument.documentIdentifier)	{
 				if (this.checkFileNeedToAddInDocumentList(file, this.womanDocument)) {
 					file['mandatory'] = this.isFileMandatory(file, this.womanDocument);
 					this.displayDocs.push(file);
-					
+
 					if (file['mandatory']) {
 						this.uploadFilesArray.push({
 							'labelName': file.documentLabelEn,
@@ -2095,7 +2115,7 @@ export class ShopLicNewComponent implements OnInit {
 							'mandatory' : file.mandatory
 						})
 					}
-		
+
 				} else {
 					file['mandatory'] = false;
 				}
@@ -2110,7 +2130,7 @@ export class ShopLicNewComponent implements OnInit {
         const sum = Rnumber + Rnumber1;
 		if(this.totalNoOfWomanForDocu > 0){
 			this.totalNoOfWomanForDocu = this.totalNoOfWomanForDocu - Rnumber
-		} 
+		}
 		if(this.totalManAndWomanCount>0){
 		 this.totalManAndWomanCount = this.totalManAndWomanCount -sum;
 		}
@@ -2121,7 +2141,7 @@ export class ShopLicNewComponent implements OnInit {
          this.getCommonWorkerType()
 		});
 		this.isDisabledMorePerson = false;
-	}     
+	}
 
 	moreThanZeroWomenDocument(res,ownershipType,organizationType){
 		this.totalNoOfWoman = 0;
@@ -2147,14 +2167,14 @@ export class ShopLicNewComponent implements OnInit {
 							mandatory: true
 						},
 
-					];				
+					];
 
 				}
-				
+
 			}
 			this.returnFile(this.womanDocument);
-		}	
-				
+		}
+
 	}
 
 	totalNoOfWomanForJDocument(res){
@@ -2185,11 +2205,11 @@ export class ShopLicNewComponent implements OnInit {
 		  });
 		}
 	  }
-	 
+
 	  oldRegistrationDatedateFormat(date, controlType: string) {
-		this.establishmentdetails.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));	
+		this.establishmentdetails.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
 		console.log(this.establishmentdetails);
-		
+
 	}
 
 	womenWorkingInNight(event, index){
@@ -2224,12 +2244,12 @@ public onTabChange(index: number, controlName, mainControl) {
 	if(index > this.licenseConfiguration.currentTabIndex){
 		if (controlName.invalid) {
 			this.commonService.markFormGroupTouched(controlName)
-		} 
+		}
 		// else if(this.totalCount > 0){
 		// 	this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");
 		// }
-		else {		
-			let newindex = this.getpersonDetails(index)	
+		else {
+			let newindex = this.getpersonDetails(index)
 			if(newindex == 3){
 				return
 			}
@@ -2238,7 +2258,7 @@ public onTabChange(index: number, controlName, mainControl) {
 			for(let i = 0; i < controlName.get('workerCounts').controls.length; i++) {
 				mainControl.get('workerCounts').value.push(formGroupAry.value[i]);
 				mainControl.get('workerCounts').controls.push(formGroupAry.controls[i]);
-			}   
+			}
 			this.saveAsDraft(mainControl)
 			this.licenseConfiguration.currentTabIndex = index;
 		}
@@ -2264,11 +2284,11 @@ getpersonDetails(index){
 	for(let i =0; i < this.personoccuping.get('workerCounts')['controls'].length; i++){
 	if(this.personoccuping.get('workerCounts')['controls'][i].isEditMode == true){
 		this.commonService.openAlert("Person Occupying", "Please Save Occupying Detail", "warning");
-		index = 3 
+		index = 3
 		return index
 	}
 	else{
-		index = index 
+		index = index
 	}
 	}
 }
