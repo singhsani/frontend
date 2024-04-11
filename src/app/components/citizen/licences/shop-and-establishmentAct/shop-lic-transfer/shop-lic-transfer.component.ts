@@ -1723,10 +1723,10 @@ return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartn
                 documentIdentifier: 'PEC_OR_PRC_RECEIPT',
                 mandatory: false
             },
-            {
-                documentIdentifier: 'NOTICE_OF_WEEKLY_HOLIDAY_FORM_K',
-                mandatory: false
-            },
+            // {
+            //     documentIdentifier: 'NOTICE_OF_WEEKLY_HOLIDAY_FORM_K',
+            //     mandatory: false
+            // },
         ];
 
         this.checkWomanWorkedonNightShift()
