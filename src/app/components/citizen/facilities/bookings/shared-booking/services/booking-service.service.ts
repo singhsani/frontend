@@ -277,6 +277,11 @@ export class BookingService {
     this.requestURL = `api/${this.moduleName}/${this.resourceType}/filter/batchDuration/${categotyCode}/${poolName}`;
     return this.http.get(this.requestURL);
   }
+
+  checkSwimmingpoolOpenOrClose(poolname) {
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/checkSwimmingpoolOpenOrClose?poolName=${poolname}`;
+    return this.http.get(this.requestURL);
+  }
   // api/booking/swimming/submit
 
   /**
@@ -471,4 +476,9 @@ export class BookingService {
       this.requestURL = `api/booking/swimming/getAllData/${id}`;
       return this.http.get(this.requestURL);
      }
+
+     checkswimmingpoolAvailability() {
+      this.requestURL = `api/${this.moduleName}/${this.resourceType}/checkswimmingpoolAvailability`;
+      return this.http.get(this.requestURL);
+    }
 }

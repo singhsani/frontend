@@ -72,6 +72,7 @@ export class SwimmingPoolComponent implements OnInit {
   cityListArray: any = [];
   isBuildinAreaReq: boolean = false;
   attachments = [];
+  closeswimmingPoolList = [];
   /**
   * Loading Booking Configuration
   */
@@ -149,6 +150,8 @@ export class SwimmingPoolComponent implements OnInit {
     // this.getCountryLists();
     this.getUserProfile();
     this.defaultAsperPool();
+
+    this.checkswimmingpoolAvailability();
 
     console.log(this.router.url);
     if (this.router.url.indexOf('swimmingPoolRenewal') > -1) {
@@ -256,21 +259,14 @@ export class SwimmingPoolComponent implements OnInit {
   filterAsperPool(event: any) {
     this.bookingService.filterPoolCode(event).subscribe(rep => {
       this.BATCH_FOR = rep;
-      if(event == "SARDARBAUG_SWIMMING_POOL"){
-        this.commonService.openAlert("Info", 'Sardar Baug Swimming Pool Is Under Construction Kindly select another "Swimming Pool!"', "info" , "", cb => {
+        this.bookingService.checkSwimmingpoolOpenOrClose(event).subscribe( res =>{
+
+        },
+        err => {
+          this.commonService.openAlert('Info',err.error[0].message,'Info');
           this.generalDetails.reset();
-        })
-      }
-      else if(event == "RAJIV_GANDHI_SWIMMING_POOL"){
-        this.commonService.openAlert("Warning", 'Rajiv Gandhi Swimming Pool is temporarily closed for necessary civil work and maintenance work', "warning" , "", cb => {
-          this.generalDetails.reset();
-        })
-      } 
-      // else if(event == "KARELIBAUG_SWIMMING_POOL"){
-      //   this.commonService.openAlert("Warning", 'KareliBaug Swimming Pool is temporarily closed for filtration plant Motor repairing work and maintenance work', "warning" , "", cb => {
-      //     this.generalDetails.reset();
-      //   })
-      // }
+
+        });
     },
       err => {
         this.toastr.error("Server Error");
@@ -1107,5 +1103,11 @@ export class SwimmingPoolComponent implements OnInit {
 		})
 	}
 
-
+  checkswimmingpoolAvailability(){
+    this.bookingService.checkswimmingpoolAvailability().subscribe(res => {
+      this.closeswimmingPoolList = res;
+    })
   }
+
+
+}

@@ -48,7 +48,10 @@
         <div class="department-name">
 			<h4 class="text-center"><b>{{'department_name'| translate: translateKey}}</b></h4>
 		</div>
-		<h4 class="titleHeader"> <b>Rajiv Gandhi swimming pool is temporarily closed for necessary civil work and maintenance work, so member of this pool can use any other vmc swimming pool till Rajiv Gandhi swimming pool is opened. </b></h4>
+		<ng-container *ngFor="let s of closeswimmingPoolList">				
+			<h4 class="titleHeader"> <b>{{s.instructionForSwimmingPool}}</b></h4>
+		</ng-container>
+		<!-- <h4 class="titleHeader"> <b>Rajiv Gandhi swimming pool is temporarily closed for necessary civil work and maintenance work, so member of this pool can use any other vmc swimming pool till Rajiv Gandhi swimming pool is opened. </b></h4> -->
 		<!-- <h4 class="titleHeader"> <b>Karelibaug Swimming Pool  is temporarily closed for filtration plant Motor repairing work and maintenance work , so member of this pool can use any other vmc swimming pool till  Karelibaug Swimming Pool is opened. </b></h4> -->
                     <br/>
 		<div class="swimmingPool-table-eng">
@@ -167,7 +170,9 @@
 				<div class="department-name">
 					<h4 class="text-center"><b>{{'department_name'| translate: translateKey : 'gu'}}</b></h4>
 				</div>
-				<h4 class="titleHeader"> <b>રાજીવ ગાંધી સ્વિમિંગ પૂલ જરૂરી સિવિલ વર્ક અને મેઇન્ટેનન્સના કામ માટે અસ્થાયી રૂપે બંધ છે, તેથી આ પૂલના સભ્ય રાજીવ ગાંધી સ્વિમિંગ પૂલ ખોલવામાં ન આવે ત્યાં સુધી અન્ય કોઈપણ vmc સ્વિમિંગ પૂલનો ઉપયોગ કરી શકશે. </b></h4>
+				<ng-container *ngFor="let s of closeswimmingPoolList">				
+					<h4 class="titleHeader"> <b>{{s.instructionForSwimmingPoolGuj}}</b></h4>
+				</ng-container>
 				<!-- <h4 class="titleHeader"><b>કારેલીબાગ સ્વિમિંગ પૂલ ફિલ્ટરેશન પ્લાન્ટ મોટર રિપેરિંગ કામ અને જાળવણી કાર્ય માટે અસ્થાયી ધોરણે બંધ છે, તેથી આ પૂલના સભ્ય કારેલીબાગ સ્વિમિંગ પૂલ ખોલવામાં ન આવે ત્યાં સુધી અન્ય કોઈપણ vmc સ્વિમિંગ પૂલનો ઉપયોગ કરી શકશે. </b></h4> -->
                     <br/>
 				<div class="swimmingPool-table-guj">
