@@ -233,7 +233,7 @@ export class SwimmingPoolComponent implements OnInit {
         this.BATCH_DURATION = rep;
       },
         err => {
-          this.toastr.error("Server Error");
+          this.toastr.error("Batch Duration Not Found..");
         })
      if(res.attachments.length > 0) 
      {
