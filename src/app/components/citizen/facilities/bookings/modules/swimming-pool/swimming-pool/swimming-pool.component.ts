@@ -191,7 +191,7 @@ export class SwimmingPoolComponent implements OnInit {
       this.SWIMMING_POOL_NAME = resp.SWIMMING_POOL_NAME;
       this.CATEGORY = resp.CATEGORY;
       this.MEMBERSHIP_TYPE = resp.MEMBERSHIP_TYPE;
-      this.BATCH_DURATION = resp.BATCH_DURATION;
+     // this.BATCH_DURATION = resp.BATCH_DURATION;
       this.BLOOD_GROUP = resp.BLOOD_GROUP;
      // this.APPLICANT_PROOF = resp.APPLICANT_PROOF;
       resp.APPLICANT_PROOF.forEach(element => {
@@ -229,6 +229,12 @@ export class SwimmingPoolComponent implements OnInit {
       this.swimmimgPoolBookingForm.patchValue(res);
       this.swimmimgPoolBookingForm.get('id').setValue(id);
       this.CheckType(res.applicantIDProof)
+      this.bookingService.filterBatchDuration(res.category.code, res.swimmingPoolName.code).subscribe(rep => {
+        this.BATCH_DURATION = rep;
+      },
+        err => {
+          this.toastr.error("Server Error");
+        })
      if(res.attachments.length > 0) 
      {
        this.isFileUploaded1 = true;
