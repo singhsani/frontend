@@ -737,11 +737,6 @@ export class BookAtithigruhComponent implements OnInit {
 			this.commonService.openAlert("Warning", 'Premanand Sanskar kendra Atithigruh has been ordered to be closed due to dilapidated and dangerous condition', "warning" , "") 
 			this.BookingTypeForm.reset();		
 		}
-		else if(event == 'MANJALPURATITHIGRUH')
-		{
-			this.commonService.openAlert("Warning", 'Manjalpur Atithigruh has been ordered to be closed due to dilapidated and dangerous condition', "warning" , "") 
-			this.BookingTypeForm.reset();		
-		}
 		else if(event == 'SARDARBAUGATITHIGRU')
 		{
 			this.commonService.openAlert("Warning", 'Sardarbaug Atithigruh has been ordered to be closed due to dilapidated and dangerous condition', "warning" , "") 
