@@ -301,7 +301,7 @@
 				</mat-checkbox>
 			</div>
 			<div class="col-sm-6 col-md-6 text-right">
-				<button mat-raised-button (click)="showDowlLoadFileTab = true; showSwimmingPoolForm= false;"
+				<button mat-raised-button (click)="showDowlLoadFileTab = true; showSwimmingPoolForm= false;checkAllowBooking();"
 					color="primary" [disabled]="!swimmimgPoolBookingForm.get('termsCondition').value">
 					<mat-icon>thumb_up_alt</mat-icon>
 					{{'proceed'| translate: translateKey}}
