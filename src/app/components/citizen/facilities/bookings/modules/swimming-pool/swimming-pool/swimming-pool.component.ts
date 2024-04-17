@@ -1114,6 +1114,15 @@ export class SwimmingPoolComponent implements OnInit {
       this.closeswimmingPoolList = res;
     })
   }
-
+  
+  checkAllowBooking(){
+    if(this.istodaydate.getDate()>=20 && this.istodaydate.getDate()<=24){
+      this.showSwimmingPoolForm=true;
+      this.showSelectLanguage=false;
+      this.showDowlLoadFileTab= false;
+      this.commonService.openAlert("Info","New Applications are not allowed from 20 to 24.", "info");
+      return;
+    }
+  }
 
 }
