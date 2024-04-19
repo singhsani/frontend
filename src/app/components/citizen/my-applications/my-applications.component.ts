@@ -331,6 +331,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	infoVehiclePaymentRefund(amount, wardNumber) {
 		this.commonService.infoAlert('Payment Done', 'Please wait for the refund amount Rs. ' + amount +' at Ward office no. ' + wardNumber, "success");
 	}
+	infoProfessionalPaymentPending(){
+		this.commonService.infoAlert('Payment Remarks','Please Contact to Ward Office & Make a Payment',"success");
+	}
 	cancelReasonReceipt(row) {
 		this.formService.cancelReceiptForShop(row.fileNumber).subscribe(
 			receiptResponse => {
@@ -863,6 +866,11 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 					this.commonService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
 				}
 			});
+	}
+
+	/* Method to redirect to payable service from professional tax appoved application to make payment*/
+	redirectToPayableService() {
+		this.router.navigate(['/citizen/payable-services']);
 	}
 	/**
 	 * This method is use to show For Query Raise remarks.

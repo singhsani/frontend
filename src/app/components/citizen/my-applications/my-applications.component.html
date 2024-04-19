@@ -305,6 +305,25 @@
                                 View Receipt
                                 <!-- {{'print_receipt' | translate:translateKey}} -->
                             </button>
+                            <button mat-menu-item *ngIf="(row.serviceType == 'PEC_REG' || row.serviceType == 'PRC_REG')  && isRejectNoteOptDisplay(row)"
+                                color="primary" (click)="openModal(rejectTemplate);remarksDisplay(row)">
+                                <mat-icon class="m-1" title="Why Rejected?">help_outline</mat-icon>
+                                Why Rejected
+                            </button>
+
+                            <button mat-menu-item *ngIf="(row.serviceType == 'PEC_REG') && (row.fileStatus === 'APPROVED')" color="primary"
+                                (click)="redirectToPayableService()">
+                                <i class="fa fa-inr m-1" title="{{'attach_money' | translate:translateKey}}"
+                                    aria-hidden="true"></i>
+                                    {{'make_payment' | translate:translateKey}}
+                            </button>
+                            <button mat-menu-item *ngIf="(row.serviceType == 'PRC_REG') && (row.fileStatus === 'APPROVED')" color="primary"
+                            (click)="infoProfessionalPaymentPending()">
+                                <i class="fa fa-inr m-1" title="{{'attach_money' | translate:translateKey}}"
+                                    aria-hidden="true"></i>
+                                    {{'make_payment' | translate:translateKey}}
+                            </button>
+                    
 
                             <button mat-menu-item *ngIf="row.serviceType == 'VEHICLE' && isRejectNoteOptDisplay(row)"
                                 color="primary" (click)="openModal(rejectTemplate);remarksDisplay(row)">
