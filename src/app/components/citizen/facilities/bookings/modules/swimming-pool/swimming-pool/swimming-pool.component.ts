@@ -158,7 +158,7 @@ export class SwimmingPoolComponent implements OnInit {
       this.searchObj.isDisplayRenewLicenceForm = true;
       // this.swimmingPoolRenewal = true;
     }
-    if(this.istodaydate.getDate() <= 20 ){
+    if(this.istodaydate.getDate() <=19 ){
       this.chosenMonthHandler(this.startMinMonth.setMonth(this.startMinMonth.getMonth()));
     }else{
     this.chosenMonthHandler(this.startMinMonth.setMonth(this.startMinMonth.getMonth() + 1));
