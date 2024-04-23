@@ -315,7 +315,15 @@ export class BookAtithigruhComponent implements OnInit {
 	 */
 	getAtithigruhLists() {
 		this.bookingService.atithigruhList().subscribe(resp => {
-			this.ATITHIGRUH = resp.data;
+			//this.ATITHIGRUH = resp.data;
+			resp.data.forEach(element => {
+				if(element.code != 'NIZAMPURAATITHIGRUH'){
+				  element.disabledOption = false
+				}else{
+				  element.disabledOption = true
+				}
+				this.ATITHIGRUH.push(element)
+			  });
 		});
 	}
 

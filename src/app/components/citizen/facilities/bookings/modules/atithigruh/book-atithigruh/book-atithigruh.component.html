@@ -465,7 +465,7 @@
 
                     <div class="col-md-4 ngSelect" formGroupName="atithiGruhName">
                         <ng-select placeholder="{{'atithiguh'| translate: translateKey}}" formControlName="code"  (change)="onAtithiGruhNameChange($event)" class="asteriskmarkRequired">
-                            <ng-option *ngFor="let at of ATITHIGRUH" [value]="at.code">
+                            <ng-option *ngFor="let at of ATITHIGRUH" [value]="at.code" [disabled]="at.disabledOption">
                                 {{ at.name }}
                             </ng-option>
                         </ng-select>
