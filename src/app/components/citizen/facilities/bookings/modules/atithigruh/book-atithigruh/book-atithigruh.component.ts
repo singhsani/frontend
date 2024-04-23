@@ -135,6 +135,7 @@ export class BookAtithigruhComponent implements OnInit {
 	  ];
 	  isRelationshipShow = false
 	  relationType = []
+	programendDate: string;
 	
 	constructor(
 		private fb: FormBuilder,
@@ -543,6 +544,7 @@ export class BookAtithigruhComponent implements OnInit {
 			this.atithigruhName = this.atithigruhName,
 			this.purpose = this.purpose
 			this.startDate = this.selectedShift[0].start
+			this.programendDate = this.selectedShift[1].start ? moment(new Date(this.selectedShift[1].start)).format('DD-MM-YYYY'): ''
 			this.endDate = this.selectedShift[1].end
 	}
 
