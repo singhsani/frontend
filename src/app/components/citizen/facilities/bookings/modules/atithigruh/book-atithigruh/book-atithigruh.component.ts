@@ -723,7 +723,6 @@ export class BookAtithigruhComponent implements OnInit {
 	  }
 	
 	onAtithiGruhNameChange(event) {
-		
 		if(event == 'SAYAJIBAUGATITHIGRUHNO3')
 		{
 			this.commonService.openAlert("Warning", 'Sayaji Bagh Atihtigruh No 3 has been ordered to be closed due to dilapidated and dangerous condition', "warning" , "") 
@@ -759,6 +758,11 @@ export class BookAtithigruhComponent implements OnInit {
 			this.commonService.openAlert("Warning", 'Warshiya Community hall has been ordered to be closed due to dilapidated and dangerous condition', "warning" , "") 
 			this.BookingTypeForm.reset();		
 		}
+		else if(event == 'NIZAMPURAATITHIGRUH')
+			{
+			  this.commonService.openAlert("Warning", 'Nizampura Atithigruh  hall has been ordered to be closed due to dilapidated and dangerous condition', "warning" , "") 
+			  this.BookingTypeForm.reset();		
+			}
 		this.Dates = [];
 		this.ATITHIGRUH.forEach(element => {
 			if (element.code == event) {
