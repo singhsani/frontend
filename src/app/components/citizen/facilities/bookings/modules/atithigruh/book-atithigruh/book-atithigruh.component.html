@@ -686,8 +686,7 @@
                 <tbody>
                     <tr>
                         <td scope="col">{{bookingUtils.returnProperDate(paymentObject.bookingDate)}}</td>
-                        <td scope="col">{{startDate | date:'dd-MM-yyy'}} </td>
-                         <td scope="col">{{atithigruhName}}</td>
+                        <td scope="col">{{startDate | date:'dd-MM-yyy'}}  {{programendDate ? ',' : ''}} {{programendDate ? programendDate: '' }}                          <td scope="col">{{atithigruhName}}</td>
                          <td scope="col">{{purpose}}</td>
                          <td scope="col" *ngIf='paymentObject.bookingType=="Advance booking"'>{{paymentObject.FORM_CHARGES}}</td>
 
