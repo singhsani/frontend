@@ -308,7 +308,7 @@
                             <button mat-menu-item *ngIf="(row.serviceType == 'PEC_REG' || row.serviceType == 'PRC_REG')  && isRejectNoteOptDisplay(row)"
                                 color="primary" (click)="openModal(rejectTemplate);remarksDisplay(row)">
                                 <mat-icon class="m-1" title="Why Rejected?">help_outline</mat-icon>
-                                Why Rejected
+                                Why the Application Rejected
                             </button>
 
                             <button mat-menu-item *ngIf="(row.serviceType == 'PEC_REG') && (row.fileStatus === 'APPROVED')" color="primary"
