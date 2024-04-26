@@ -332,7 +332,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		this.commonService.infoAlert('Payment Done', 'Please wait for the refund amount Rs. ' + amount +' at Ward office no. ' + wardNumber, "success");
 	}
 	infoProfessionalPaymentPending(){
-		this.commonService.infoAlert('Payment Remarks','Please Contact to Ward Office & Make a Payment',"success");
+		this.commonService.infoAlert('Payment Remarks','Please Contact to Department & Make Payment',"success");
 	}
 	cancelReasonReceipt(row) {
 		this.formService.cancelReceiptForShop(row.fileNumber).subscribe(
