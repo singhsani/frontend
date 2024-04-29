@@ -679,7 +679,8 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 					}
 				}
 			}
-
+			let date = new Date();
+			this.prcRegForm.get('registrationDate').setValue(moment(date).format("YYYY-MM-DD"));
 			/*if country name is exist then Call get state list with country name */
 			if (this.prcRegForm.get('officeAddress').get('country').value)
 				this.officeAddrComponent.getStateLists(this.prcRegForm.get('officeAddress').get('country').value);
