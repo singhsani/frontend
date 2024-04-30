@@ -79,6 +79,13 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
+						<span matPrefix>+91 &nbsp;</span>
+						<input matInput OnlyNumber placeholder="{{'Mobile Number' | translate:translateKey}}"
+							type="tel" maxlength="10" minlength="10" formControlName="mobileNo" >
+						<control-messages [control]="employerDetail.get('mobileNo')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" maxlength="50"
 							placeholder="{{'email' | translate:translateKey}}" type="email" formControlName="email">
 						<control-messages [control]="employerDetail.get('email')"></control-messages>

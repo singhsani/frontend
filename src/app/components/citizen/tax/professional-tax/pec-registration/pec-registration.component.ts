@@ -151,6 +151,7 @@ export class PecRegistrationComponent implements OnInit {
 			}),
 			establishmentName: null,
 			contactNo: null,
+			mobileNo: null,
 			email: [null, ValidationService.emailValidator],
 			ward: this.fb.group({
 				wardzoneId: null,
@@ -317,6 +318,7 @@ export class PecRegistrationComponent implements OnInit {
 			}),
 			establishmentName: null,
 			contactNo: null,
+			mobileNo:null,
 			email: [null, ValidationService.emailValidator],
 			ward: this.fb.group({
 				wardzoneId: null,
@@ -1052,6 +1054,7 @@ export class PecRegistrationComponent implements OnInit {
 		},
 		"establishmentName": "Tea Stall",
 		"contactNo": "8962749074",
+		"mobileNo":"8962749074",
 		"email": "chetan.porwal@nascentinfo.com",
 		"ward": {
 			"wardzoneId": "5",
