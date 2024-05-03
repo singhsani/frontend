@@ -74,14 +74,14 @@
 						<mat-label>{{'contact_no' | translate:translateKey}} <span class="required-field" *ngIf="isFieldDisabled()"></span></mat-label>
 						<span matPrefix>+91 &nbsp;</span>
 						<input matInput OnlyNumber  type="tel"
-							maxlength="11" minlength="10" formControlName="contactNo" required [disabled]="isFieldDisabled()">
+							maxlength="10" minlength="10" formControlName="contactNo" required [disabled]="isFieldDisabled()">
 						<control-messages [control]="employerDetail.get('contactNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<span matPrefix>+91 &nbsp;</span>
 						<input matInput OnlyNumber placeholder="{{'Mobile Number' | translate:translateKey}}"
-							type="tel" maxlength="10" minlength="10" formControlName="mobileNo" >
+							type="tel" maxlength="10" minlength="10" formControlName="mobileNo" required [disabled]="isFieldDisabled()">
 						<control-messages [control]="employerDetail.get('mobileNo')"></control-messages>
 					</mat-form-field>
 
