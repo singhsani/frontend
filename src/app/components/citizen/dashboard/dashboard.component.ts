@@ -110,14 +110,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 					"appointmentRequired": false,
 					"active": true
 				},
-				// {
-				// 	"code": "SWIMMINGPOOLRENEWAL",
-				// 	"fieldView": "ALL",
-				// 	"name": "Swimming Pool Renewal",
-				// 	"gujName": "સ્નાનાગાર",
-				// 	"appointmentRequired": false,
-				// 	"active": true
-				// },
+				{
+					"code": "SWIMMINGPOOLRENEWAL",
+					"fieldView": "ALL",
+					"name": "Swimming Pool Renewal",
+					"gujName": "સ્નાનાગાર",
+					"appointmentRequired": false,
+					"active": true
+				},
 				// {
 				// 	"code": "SWIMMINGPOOLDASHBOARD",
 				// 	"fieldView": "ALL",
