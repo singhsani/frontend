@@ -229,6 +229,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 			officeAddress: this.fb.group(this.officeAddrComponent.addressControls()),
 			residentialAddress: this.fb.group(this.resAddrComponent.addressControls()),
 			contactNo: null,
+			mobileNo: null,
 			email: ['', ValidationService.emailValidator],
 			rcDate: null,
 			ward: this.fb.group({

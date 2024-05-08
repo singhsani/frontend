@@ -71,13 +71,20 @@
                             formControlName="establishmentName" required>
                     </mat-form-field>
 
+                    <mat-form-field class="col-md-4"></mat-form-field>
+                        <mat-label>
+                            {{'contact_no' | translate:pecTranslateKey}}   
+                        </mat-label>
+                        <input matInput OnlyNumber type="tel" maxlength="10" minlength="10" formControlName="contactNo" >
+                    </mat-form-field>
+
                     <mat-form-field class="col-md-4">
                         <span matPrefix>+91 &nbsp;</span>
                         <mat-label>
-                            {{'contact_no' | translate:pecTranslateKey}}
+                            {{'Mobile Number' | translate:pecTranslateKey}}
                             <span class="required-field"></span>
                         </mat-label>
-                        <input matInput OnlyNumber type="tel" maxlength="10" minlength="10" formControlName="contactNo" required>
+                        <input matInput OnlyNumber type="tel" maxlength="10" minlength="10" formControlName="mobileNo" required>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
