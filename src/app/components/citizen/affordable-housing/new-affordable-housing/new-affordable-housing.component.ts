@@ -209,7 +209,7 @@ export class NewAffordableHousingComponent implements OnInit {
 		this.formControlNameToTabIndex.set('permanentAddress', 2)
 		this.formControlNameToTabIndex.set('howLongLivingInVadodara', 2)
 		this.formControlNameToTabIndex.set('sqMetersPresentBuilding', 2)
-		this.formControlNameToTabIndex.set('hasCurrentHouseKacchaOrPucca', 2)
+		this.formControlNameToTabIndex.set('hasCurrentHouseKacchaOrPakka', 2)
 		this.formControlNameToTabIndex.set('hasCurrentHouseRentedOrPurchased', 2)
 
 		this.formControlNameToTabIndex.set('bankAccountNumber', 3)
@@ -609,7 +609,7 @@ export class NewAffordableHousingComponent implements OnInit {
 			permanentAddress: this.fb.group(this.permanentAddressComponent.addressControls()),
 			howLongLivingInVadodara: [null, [Validators.required]],
 			sqMetersPresentBuilding: [null, [Validators.required]],
-			hasCurrentHouseKacchaOrPucca: [null, [Validators.required]],
+			hasCurrentHouseKacchaOrPakka: [null, [Validators.required]],
 			hasCurrentHouseRentedOrPurchased: [null, [Validators.required]],
 			rationCardType: [null, [Validators.required]],
 		})
