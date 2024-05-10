@@ -685,11 +685,11 @@
 
 					<div class="col-md-4 ngSelect asteriskmarkRequired">
 						<ng-select placeholder="{{'is your house kaccha or pakka ?' | translate: translateKey}}"
-							formControlName="hasCurrentHouseKacchaOrPucca">
+							formControlName="hasCurrentHouseKacchaOrPakka">
 							<ng-option *ngFor="let impl of houseOldOrNew" [value]="impl">{{impl}}
 							</ng-option>
 						</ng-select>
-						<control-messages [control]="addressOfResidence.get('hasCurrentHouseKacchaOrPucca')">
+						<control-messages [control]="addressOfResidence.get('hasCurrentHouseKacchaOrPakka')">
 						</control-messages>
 					</div>
 
