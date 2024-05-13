@@ -214,8 +214,18 @@ export class SwimmingPoolComponent implements OnInit {
         this.toastr.error("Server Error");
       })
   }
-
-
+  onBack(){
+    if(this.isRenewalForm == true){
+      this.searchObj.isDisplayRenewLicenceForm=true;
+    this.showSwimmingPoolForm = true;
+    //this.navigatedRefNumber = false;
+    }
+    else{
+    this.searchObj.isDisplayRenewLicenceForm=false;
+    this.showSwimmingPoolForm = true;
+   // this.navigatedRefNumber = true;
+    }
+  }
   getSwimmingPoolAllData(id: any) {
     
     this.bookingService.getAllData(id).subscribe(res => {
@@ -1003,6 +1013,8 @@ export class SwimmingPoolComponent implements OnInit {
     }
 
   }
+
+  
 
   getNumber(event){
     if(event.target.value.length >= 1 && event.target.value.length <= 11 ){
