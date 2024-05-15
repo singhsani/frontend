@@ -87,11 +87,11 @@ export class SwimmingPoolRenewalComponent implements OnInit {
           this.serachObj.isDisplayRenewLicenceForm = true;
           this.createRecordPatchSerachData(res.data);
         } else {
-          this.serachObj.isDisplayRenewLicenceForm = false;
+          this.serachObj. isDisplayRenewLicenceForm = false;  
         }
       }, (err: any) => {
 
-        this.serachObj.isDisplayRenewLicenceForm = false;
+        this.serachObj.isDisplayRenewLicenceForm = true;
         if (err.error && err.error.length) {
           this.commonService.openAlert("Warning", err.error[0].message, "warning");
         }
