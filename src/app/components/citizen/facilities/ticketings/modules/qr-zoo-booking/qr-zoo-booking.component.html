@@ -1,0 +1,536 @@
+<!-- <app-title-bar [title]="'Zoo Ticket Booking' | translate: translateKey"></app-title-bar> -->
+
+<!-- Guildelines section starts here -->
+
+<mat-card class="cardBox" *ngIf="guideLineFlag">
+
+  <div class="pageTitle d-flex justify-content-between">
+    <div *ngIf="!showSelectLanguage">{{'online_zoo_ticket_booking'| translate: translateKey}}</div>
+    <div *ngIf="showSelectLanguage">{{'ઑનલાઇન ઝૂ ટિકિટ બુકિંગ'| translate: translateKey}}</div>
+    <button mat-raised-button color="primary" type="button" (click)="selectLanguage('en')" *ngIf="showSelectLanguage">English</button>
+    <button mat-raised-button color="primary" type="button" (click)="selectLanguage('gu')" *ngIf="!showSelectLanguage">ગુજરાતી</button>
+  </div>
+  <img _ngcontent-c1="" width=130 height=130 alt="Vadodara Municipal Corporation" src="assets/images/VMC_LOGO.jpg"
+  class="center"/>
+  <!-- Card Content showing Zoo Ticketing Rates and Visiting Time in Gujrati-->
+  <mat-card-content class="px-4"  *ngIf="!showSelectLanguage">
+
+     <div class="d-flex justify-content-between pb-2">
+       <h4 class="mt16 note">{{'zoo_closed' | translate : translateKey}}</h4>
+       <div class="guideline-intro">
+         <span>{{'ticket_details'| translate: translateKey}} </span>
+         <mat-icon class="middle-align">arrow_forward</mat-icon>
+         <span> {{'enter_tickets'| translate: translateKey}} </span>
+         <mat-icon class="middle-align">arrow_forward</mat-icon>
+         <span> {{'print_ticket'| translate: translateKey}}</span>
+       </div>
+     </div>
+
+    <!-- <p class="pb-2">{{head_lines| translate: translateKey}}</p> -->
+ 
+    <h2 class="ticketDetails"><strong>{{'ticket_rate_details'| translate: translateKey}}</strong></h2>
+
+    <div class="example-container mat-elevation-z8 borderOne mt16">
+
+      <table mat-table [dataSource]="dataSourceForPricing" class="myTicketPricingTabel">
+
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef class="mat-header text-center">Sr.No.</mat-header-cell>
+          <mat-cell *matCellDef="let row; let i = index;" class="fullWidth mat-cell" >
+            <div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
+            <div class="mobile-label1">:</div>
+            <div class="row-inside text-center"> {{i+1}} </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef class="mat-header text-center">{{'particulars' | translate:translateKey}}</mat-header-cell>
+          <mat-cell *matCellDef="let row" class="fullWidth mat-cell">
+            <div class="mobile-label">{{'particulars' | translate:translateKey}}</div>
+            <div class="mobile-label1">:</div>
+            <div class="row-inside text-left"> {{ row.description | translate:translateKey }}</div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Withoutprice">
+          <mat-header-cell *matHeaderCellDef class="mat-header text-center">{{'Without Walk-in Aviary' | translate:translateKey}}</mat-header-cell>
+          <mat-cell *matCellDef="let row" class="fullWidth">
+            <div class="mobile-label">{{'Without Walk-in Aviary' | translate:translateKey}}</div>
+            <div class="mobile-label1">:</div>
+            <div class="row-inside text-center"> {{ zooVisitingRates[row.WithoutpriceField] ? zooVisitingRates[row.WithoutpriceField] : 'Free' }}</div>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Withprice">
+          <mat-header-cell *matHeaderCellDef class="mat-header text-center">{{'With Walk-in Aviary' | translate:translateKey}}</mat-header-cell>
+          <mat-cell *matCellDef="let row" class="fullWidth">
+            <div class="mobile-label">{{'With Walk-in Aviary' | translate:translateKey}}</div>
+            <div class="mobile-label1">:</div>
+            <div class="row-inside text-center"> {{ zooVisitingRates[row.WithpriceField] ? zooVisitingRates[row.WithpriceField] : 'Free' }}</div>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumnsForPricingTable"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumnsForPricingTable;"></mat-row>
+      </table>
+    </div>
+
+    <br />
+
+    <h2 class="ticketDetails"><strong>{{'zoo_timings'| translate: translateKey}}</strong></h2>
+
+    <div class="example-container mat-elevation-z8 borderOne mt16">
+
+      <table mat-table [dataSource]="dataSourceForTiming" class="myTicketPricingTabel">
+
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef class="mat-header text-center">Sr.No.</mat-header-cell>
+          <mat-cell *matCellDef="let row; let i = index;" class="fullWidth mat-cell">
+            <div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
+            <div class="mobile-label1">:</div>
+            <div class="row-inside text-center"> {{i+1}} </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="months">
+          <mat-header-cell *matHeaderCellDef class="mat-header text-center">{{'months' | translate:translateKey}}</mat-header-cell>
+          <mat-cell *matCellDef="let row" class="fullWidth">
+            <div class="mobile-label">{{'months' | translate:translateKey}}</div>
+            <div class="mobile-label1">:</div>
+            <div class="row-inside text-center"> {{ row.months }}</div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="slot">
+          <mat-header-cell *matHeaderCellDef class="mat-header text-center">{{'slot' | translate:translateKey}}</mat-header-cell>
+          <mat-cell *matCellDef="let row" class="fullWidth">
+            <div class="mobile-label">{{'slot' | translate:translateKey}}</div>
+            <div class="mobile-label1">:</div>
+            <div class="row-inside text-center"> {{ row.slot }}</div>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumnsForTimingTable"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumnsForTimingTable;"></mat-row>
+      </table>
+    </div>
+
+  </mat-card-content>
+  <!-- Card Content showing Zoo Ticketing Rates and Visiting Time in English -->
+  <mat-card-content class="px-4"  *ngIf="showSelectLanguage">
+
+    <div class="d-flex justify-content-between pb-2">
+      <h4 class="mt16 note">{{'નોંધ: પ્રાણી સંગ્રહાલય દર ગુરુવારે બંધ રહેશે.' | translate : translateKey}}</h4>
+      <div class="guideline-intro">
+        <span>{{'ટિકિટ વિગતો'| translate: translateKey}} </span>
+        <mat-icon class="middle-align">arrow_forward</mat-icon>
+        <span> {{'ટિકિટ દાખલ કરો'| translate: translateKey}} </span>
+        <mat-icon class="middle-align">arrow_forward</mat-icon>
+        <span> {{'પ્રિન્ટ ટિકિટ'| translate: translateKey}}</span>
+      </div>
+    </div>
+
+   <!-- <p class="pb-2">{{head_lines| translate: translateKey}}</p> -->
+
+   <h2 class="ticketDetails"><strong>{{'ટિકિટ દર વિગતો'| translate: translateKey}}</strong></h2>
+
+   <div class="example-container mat-elevation-z8 borderOne mt16">
+
+     <table mat-table [dataSource]="dataSourceForGujPricing" class="myTicketPricingTabel">
+
+       <ng-container matColumnDef="id">
+         <mat-header-cell *matHeaderCellDef class="mat-header text-center">ક્રમ.નં.</mat-header-cell>
+         <mat-cell *matCellDef="let row; let i = index;" class="fullWidth mat-cell" >
+           <div class="mobile-label">{{'ક્રમ નં.' | translate:translateKey}}</div>
+           <div class="mobile-label1">:</div>
+           <div class="row-inside text-center"> {{row.srNo}} </div>
+         </mat-cell>
+       </ng-container>
+
+       <ng-container matColumnDef="description">
+         <mat-header-cell *matHeaderCellDef class="mat-header text-center">{{'વિગતો' | translate:translateKey}}</mat-header-cell>
+         <mat-cell *matCellDef="let row" class="fullWidth mat-cell1">
+           <div class="mobile-label">{{'વિગતો' | translate:translateKey}}</div>
+           <div class="mobile-label1">:</div>
+           <div class="row-inside text-left"> {{ row.description | translate:translateKey }}</div>
+         </mat-cell>
+       </ng-container>
+
+       <ng-container matColumnDef="Withoutprice">
+         <mat-header-cell *matHeaderCellDef class="mat-header text-center">{{'વૉક-ઇન એવિઅરી વિના' | translate:translateKey}}</mat-header-cell>
+         <mat-cell *matCellDef="let row" class="fullWidth">
+           <div class="mobile-label">{{'વૉક-ઇન એવિઅરી વિના' | translate:translateKey}}</div>
+           <div class="mobile-label1">:</div>
+           <div class="row-inside text-center"> {{ row.WithoutpriceField }}</div>
+         </mat-cell>
+       </ng-container>
+       <ng-container matColumnDef="Withprice">
+         <mat-header-cell *matHeaderCellDef class="mat-header text-center">{{'વોક-ઇન એવિઅરી સાથે' | translate:translateKey}}</mat-header-cell>
+         <mat-cell *matCellDef="let row" class="fullWidth">
+           <div class="mobile-label">{{'વોક-ઇન એવિઅરી સાથે' | translate:translateKey}}</div>
+           <div class="mobile-label1">:</div>
+           <div class="row-inside text-center"> {{ row.WithpriceField}}</div>
+         </mat-cell>
+       </ng-container>
+       <mat-header-row *matHeaderRowDef="displayedColumnsForPricingTable"></mat-header-row>
+       <mat-row *matRowDef="let row; columns: displayedColumnsForPricingTable;"></mat-row>
+     </table>
+   </div>
+
+   <br />
+
+   <h2 class="ticketDetails"><strong>{{'ઝૂ સમય'| translate: translateKey}}</strong></h2>
+
+   <div class="example-container mat-elevation-z8 borderOne mt16">
+
+     <table mat-table [dataSource]="dataSourceForgujTiming" class="myTicketPricingTabel">
+
+       <ng-container matColumnDef="id">
+         <mat-header-cell *matHeaderCellDef class="mat-header text-center">ક્રમ.નં.</mat-header-cell>
+         <mat-cell *matCellDef="let row; let i = index;" class="fullWidth mat-cell">
+           <div class="mobile-label">{{'ક્રમ.નં.' | translate:translateKey}}</div>
+           <div class="mobile-label1">:</div>
+           <div class="row-inside text-center"> {{row.srNo}} </div>
+         </mat-cell>
+       </ng-container>
+
+       <ng-container matColumnDef="months">
+         <mat-header-cell *matHeaderCellDef class="text-center">{{'મહિનાઓ' | translate:translateKey}}</mat-header-cell>
+         <mat-cell *matCellDef="let row" class="fullWidth">
+           <div class="mobile-label">{{'મહિનાઓ' | translate:translateKey}}</div>
+           <div class="mobile-label1">:</div>
+           <div class="row-inside text-center"> {{ row.months }}</div>
+         </mat-cell>
+       </ng-container>
+
+       <ng-container matColumnDef="slot">
+         <mat-header-cell *matHeaderCellDef class="text-center">{{'સ્લોટ' | translate:translateKey}}</mat-header-cell>
+         <mat-cell *matCellDef="let row" class="fullWidth">
+           <div class="mobile-label">{{'સ્લોટ' | translate:translateKey}}</div>
+           <div class="mobile-label1">:</div>
+           <div class="row-inside text-center"> {{ row.slot }}</div>
+         </mat-cell>
+       </ng-container>
+       <mat-header-row *matHeaderRowDef="displayedColumnsForTimingTable"></mat-header-row>
+       <mat-row *matRowDef="let row; columns: displayedColumnsForTimingTable;"></mat-row>
+     </table>
+   </div>
+
+ </mat-card-content>
+  <!-- Card Content showing Zoo Ticketing Rates and Visiting Time Ends here -->
+
+    <div class="col-sm-12 col-md-12 text-right wt mt40">
+      <button mat-raised-button (click)="guideLineFlag = false; showTicketsBookingForm= true;" color="primary">
+        {{'processed'| translate: translateKey}}
+      </button>
+    </div>
+</mat-card>
+<!-- Guildelines section ends here -->
+
+<form [formGroup]="ticketBookingForm">
+  <!-- Ticket Booking Section Starts Here -->
+
+  <mat-card class="cardBox" *ngIf="showTicketsBookingForm">
+    <div class="pageTitle">{{'ticket_details'| translate: translateKey}}</div>
+    <mat-card-content class="p-4">
+      <p class="pb-2">{{head_lines| translate: translateKey}}</p>
+      <h2><strong>Note: Zoo will be closed on every Thursday</strong></h2>
+      <h2>{{'ticket_rate_details'| translate: translateKey}}</h2>
+<div class="col-md-12">
+      <mat-form-field class="col-md-6 col-sm-12 col-xs-4">
+        <mat-label>{{'visiting_date'| translate: translateKey}}</mat-label>
+        <input matInput [min]="startMinDate" [matDatepickerFilter]="disableThursday"
+          [matDatepicker]="zooTicketDatePicker" (dateChange)="changeDateFormat($event)" formControlName="visitingDate"
+          placeholder="DD/MM/YYYY" required>
+        <mat-datepicker-toggle matSuffix [for]="zooTicketDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #zooTicketDatePicker touchUi="true"></mat-datepicker>
+        <control-messages [control]="ticketBookingForm.get('visitingDate')">
+        </control-messages>
+      </mat-form-field>
+      <div class="rate-details px-3">
+      <div class=" ngSelect width-size-lg" formGroupName="typeOfTicket">
+      <ng-select placeholder="Type of Ticket" [items]="ticketTypes" [ngModel]="selectedAtt" class="asteriskmarkRequired" bindLabel="name" bindValue="code" formControlName="code" (change)="setVisitorsType()" required>
+        <ng-template ng-option-tmp let-item="item">
+        <div title="{{item.name}}">{{item.name}}</div>
+        </ng-template>
+    </ng-select>
+        <!-- <control-messages [control]="ticketBookingForm.get('typeOfTicket').get('code')">
+        </control-messages> -->
+      </div>
+      <div class="width-size-lg ngSelect" formGroupName="typeOfVisitor">
+        <ng-select placeholder="Type of Visitors"  [items]="visitorsTypesChange" class="asteriskmarkRequired" bindLabel="name" bindValue="name" formControlName="name" (change)="getChargesValue($event);ticketBookingForm.get('amounts').reset();ticketBookingForm.get('numberOfVisitors').reset()" required >
+          <ng-template ng-option-tmp let-item="item">
+          <div title="{{item.name}}">{{item.name}}</div>
+          </ng-template>
+      </ng-select>
+        <!-- <control-messages [control]="ticketBookingForm.get('typeOfVisitor').get('name')">
+        </control-messages> -->
+      </div>
+      <div  class="width-size-ml pr-3" >
+        <mat-form-field formGroupName="charges">
+          <input #catRef matInput  OnlyNumber
+            placeholder="Charges"  formControlName="code" required>
+            <!-- <control-messages [control]="ticketBookingForm.get('charges').get('code')">
+            </control-messages> -->
+        </mat-form-field>
+     
+      </div>
+      <div class="width-size-ml pr-3">
+        <mat-form-field formGroupName="numberOfVisitors" >
+          <input #catRef matInput  maxlength="3" formControlName="code" OnlyNumber
+            placeholder="Count"
+            (change)="getTotalAmount($event)" required>
+            <!-- <control-messages [control]="ticketBookingForm.get('numberOfVisitors').get('code')">
+            </control-messages> -->
+        </mat-form-field>
+      </div>
+
+      <div class="width-size-ml pr-3">
+        <mat-form-field  formGroupName="amounts">
+          <input #catRef matInput  formControlName="code" OnlyNumber
+            placeholder="Amount (₹)" required >
+            <!-- <control-messages [control]="ticketBookingForm.get('amounts').get('code')">
+            </control-messages> -->
+        </mat-form-field>
+     
+      </div>
+
+      <div class="add-button-left width-size-ml pl-2">
+        <button type="button" [disabled]="checkValidRateDetails()"
+           class="Add-button" mat-raised-button (click)="getTicketData()"
+          color="primary">{{'Add'|
+          translate:translateKey}}</button>
+   
+      </div>
+    </div>
+  </div>
+    <div>
+        <div class="col-md-12" *ngIf="ticketBookingForm.get('withAndWithoutWalkList')['controls'].length >0">
+
+          <div style="margin-top: 15px;" formArrayName = "withAndWithoutWalkList" >
+            <div style="width:100%;overflow-x:auto">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col" width="56">Sr.No.</th>
+                  <th scope="col">Type of Ticket</th>
+                  <th scope="col">Type of Visitors</th>
+                  <th scope="col"  class="text-right">Charges (₹)</th>
+                  <th scope="col"  class="text-right countVisitors">Count</th>
+                  <th scope="col"  class="text-right">Amount (₹)</th>
+
+                  <th scope="col"  class="text-center">{{'Action'| translate: translateKey}}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of ticketBookingForm.get('withAndWithoutWalkList')['controls']; let i = index;"
+                  [formGroupName]="i">
+                  <td scope="row">{{i + 1}}</td>
+                  <td class="td">{{item.get('typeOfTicketName').value}}</td>
+                  <td class="td">{{item.get('typeOfVisitor').value}}</td>
+                  <td class="td text-right">{{item.get('charges').value}}</td>
+                  <td *ngIf="item.isEditMode" class="text-right countVisitors">
+                    <!-- <div> -->
+                      <mat-form-field>
+                        <input #catRef matInput maxlength="3" OnlyNumber
+                        (change)="changeData($event,i,item)" value = "{{item.get('numberOfVisitors').value}}" required>
+                      </mat-form-field>
+                    <!-- </div> -->
+                  </td>
+                  <td  *ngIf="!item.isEditMode" class="td text-right countVisitors">{{item.get('numberOfVisitors').value}}</td>
+                  <td class="td text-right">{{item.get('amounts').value}}</td>
+                  <td>
+                    <button mat-icon-button type="button" color="primary" *ngIf="!item.isEditMode" class="m-1 alignment"
+                      (click)="editRecord(item)">
+                      <mat-icon title="Edit">edit</mat-icon>
+                    </button> 
+                    <button type="button" [disabled]="item.invalid" *ngIf="item.isEditMode"
+                      (click)="saveRecord(i,item)" mat-icon-button color="primary">
+                      <mat-icon title="save">save</mat-icon>
+                    </button>
+                    <button type="button" mat-icon-button class="m-1 alignment" (click)="deleteRecord(i,item.value,'withAndWithoutWalkList')">
+                      <mat-icon color="warn">delete</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="4"></td>
+                  <th class="text-right">Total Visitors : {{totalVisitorZoo}} </th>
+                  <th class="text-right">Total Amount (₹) : {{totalAmountZoo}}</th> 
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          </div>
+        </div>
+
+
+      </div>
+
+
+      <!-- Contact Details -->
+      <h2>Mobile Number for E-Ticket</h2>
+      <div class="row col-md-12">
+        <mat-form-field class="col-md-6" style="display:none">
+          <input matInput maxlength="25" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text"
+            formControlName="applicantName" placeholder="{{'name' | translate: translateKey}}" required>
+          <control-messages [control]="ticketBookingForm.get('applicantName')"></control-messages>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-6">
+          <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobile"
+            placeholder="{{'mobile' | translate: translateKey}}" required>
+          <control-messages [control]="ticketBookingForm.get('applicantMobile')"></control-messages>
+        </mat-form-field>
+
+        <div class="col-md-6 ngSelect" formGroupName="idType" style="display:none">
+          <ng-select placeholder="{{'id_type'| translate: translateKey}}" formControlName="code" class="asteriskmarkRequired"
+            (change)="CheckType($event)">
+            <ng-option *ngFor="let id of idTypes" [value]="id.code">
+              {{ id?.name }}
+            </ng-option>
+          </ng-select>
+          <control-messages [control]="ticketBookingForm.get('idType').get('code')">
+          </control-messages>
+        </div>
+        <mat-form-field class="col-md-6" *ngIf="isVisibleIdNumber" style="display:none">
+          <input matInput formControlName="idNumber" class="aadharcard" OnlyNumber minlength="4" maxlength="4"
+            placeholder="{{'id_number' | translate: translateKey}}" required>
+          <control-messages [control]="ticketBookingForm.get('idNumber')"></control-messages>
+          <mat-hint class="mt-3 font-weight-bold fsLarge">
+            ({{'last_4_digit_of_ID'| translate: translateKey}})</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="col-md-6" *ngIf="isPanCardVisibleIdNumber" style="display:none">
+          <input matInput formControlName="idNumber" class="pancard" minlength="4" maxlength="4"
+            placeholder="{{'id_number' | translate: translateKey}}" required class="capitalCase">
+          <control-messages [control]="ticketBookingForm.get('idNumber')"></control-messages>
+          <mat-hint class="mt-3 font-weight-bold fsLarge">
+            ({{'last_4_digit_of_ID'| translate: translateKey}})</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="col-md-6" *ngIf="!isVisibleIdNumber && !isPanCardVisibleIdNumber" style="display:none">
+          <input matInput formControlName="idNumber" class="others" appAlphaNumeric minlength="4" maxlength="4"
+            placeholder="{{'id_number' | translate: translateKey}}" required>
+          <control-messages [control]="ticketBookingForm.get('idNumber')"></control-messages>
+          <mat-hint class="mt-3 font-weight-bold fsLarge">
+            ({{'last_4_digit_of_ID'| translate: translateKey}})</mat-hint>
+        </mat-form-field>
+
+
+      </div>
+      <!-- Contact Details ends here-->
+
+    </mat-card-content>
+
+    <div class="col-md-12 fotButtonBar mt-0">
+      <div class="col-sm-12 col-md-12 text-right">
+        <button mat-raised-button type="button" (click)="resetForm()" color="primary">
+          <mat-icon>clear_all</mat-icon>
+          {{'reset'| translate: translateKey}}
+        </button>
+        <button mat-raised-button color="primary" type="button"
+          [disabled]="checkFormInvalid()"
+          (click)="redirecToPayment()">
+          <mat-icon>check_circle_outline</mat-icon>
+          {{'book_ticket'| translate: translateKey}}
+        </button>
+      </div>
+    </div>
+
+  </mat-card>
+
+  <!-- Ticket Booking Section Ends Here -->
+
+  <!-- bank details -->
+  <!-- <mat-card class="cardBox" *ngIf="bankDetailsFlag">
+        <div class="pageTitle">{{'bank_details'| translate: translateKey}}</div>
+        <mat-card-content class="p-4">
+          <ng-template mat-tab-label>
+            <div>
+              {{'bank_details' | translate:translateKey}}
+            </div>
+          </ng-template>
+
+          <h2>
+            {{'bank_details' | translate:translateKey}}
+          </h2>
+
+          <div class="row">
+            <div formGroupName="bankName" class="col-md-6 ngSelect">
+              <ng-select placeholder="{{'bank_name' | translate:translateKey}} *" formControlName="code">
+                <ng-option *ngFor="let bank of BANKS" [value]="bank.code">
+                  {{bank.name}}
+                </ng-option>
+              </ng-select>
+              <control-messages [control]="ticketBookingForm.get('bankName').get('code')"></control-messages>
+            </div>
+
+            <mat-form-field class="col-md-6">
+              <input matInput type="text" maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
+                formControlName="accountHolderName" placeholder="{{'account_holder_name' | translate: translateKey}}"
+                required>
+              <control-messages [control]="ticketBookingForm.get('accountHolderName')"></control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-6">
+              <input matInput OnlyNumber maxlength="20" minlength="20" formControlName="accountNo"
+                placeholder="{{'account_no' | translate: translateKey}}" required>
+              <control-messages [control]="ticketBookingForm.get('accountNo')"></control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-6">
+              <input matInput type="text" maxlength="11" formControlName="ifscCode"
+                placeholder="{{'ifsc_code' | translate: translateKey}}" required>
+              <control-messages [control]="ticketBookingForm.get('ifscCode')"></control-messages>
+            </mat-form-field>
+
+            <h2 class="col-md-12">
+              {{'terms_and_conditions' | translate:translateKey }}
+            </h2>
+            <div class="pl-3">
+              <mat-checkbox class="d-block" labelPosition="after" formControlName="agree">
+                {{'i_agree_with_above_bank_details_are_correct' | translate:translateKey}} </mat-checkbox>
+              <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition">
+                {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}} </mat-checkbox>
+            </div>
+
+          </div>
+
+
+          <div class="row mt-4 fotButtonBar">
+            <div class="col-sm-12 col-md-12 justify-content-between d-flex">
+              <button type="button" color="primary" mat-raised-button (click)="showTicketsBookingForm = true; bankDetailsFlag = false;; ">
+                <mat-icon>navigate_before</mat-icon>
+                {{'back' | translate:translateKey}}
+              </button>
+              <button mat-raised-button color="primary" type="button" (click)="redirecToPayment()">
+                <mat-icon>check_circle_outline</mat-icon>
+                {{'submit_application'| translate: translateKey}}
+              </button>
+            </div>
+          </div>
+        </mat-card-content>
+
+
+
+
+      </mat-card> -->
+  <select-payment-gateway #paymentGateway [applicationType]="'Zooticketing'"></select-payment-gateway>
+  <!-- bank details ends here -->
+
+</form>
+
+<!-- </mat-tab> -->
+<!-- Ticket Booking Tab Ends Here -->
+
+
+<!-- Animal Adaption Tab Starts Here -->
+<!-- <mat-tab>
+    <ng-template mat-tab-label>
+      <div>{{'Animal Adaption' | translate:translateKey}}</div>
+    </ng-template>
+  </mat-tab> -->
+<!-- Ticket Booking Tab Ends Here -->
+
+<!-- </mat-tab-group> -->
+<!-- </div> -->

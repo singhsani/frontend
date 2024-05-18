@@ -12,6 +12,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { LoginThroughAdminComponent } from './login-through-admin/login-through-admin.component';
 import { LoginLayoutComponent } from './../../../layouts/login-layout/login-layout.component';
 import { LoginResendOTPComponent } from './login-resend-otp/login-resend-otp.component';
+import { QRZooBookingComponent } from '../facilities/ticketings/modules/zoo-ticketing/qr-zoo-booking/qr-zoo-booking.component';
 
 const routes: Routes = [
 	{
@@ -24,7 +25,8 @@ const routes: Routes = [
 			{ path: 'forgot-password', component: ForgotPasswordComponent },
 			{ path: 'reset-password', component: ResetPasswordComponent },
 			{ path: 'login-through-admin', component: LoginThroughAdminComponent },
-      { path :'login-resend-otp', component:LoginResendOTPComponent}
+      { path :'login-resend-otp', component:LoginResendOTPComponent},
+	  { path :'qr-booking', component: QRZooBookingComponent}
 		]
 	}
 ];

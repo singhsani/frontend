@@ -17,6 +17,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { LoginThroughAdminComponent } from './login-through-admin/login-through-admin.component';
 import { LoginLayoutComponent } from './../../../layouts/login-layout/login-layout.component';
 import { LoginResendOTPComponent } from './login-resend-otp/login-resend-otp.component';
+import { QRZooBookingComponent } from '../facilities/ticketings/modules/zoo-ticketing/qr-zoo-booking/qr-zoo-booking.component';
 /* Import citizen auth components end */
 
 @NgModule({
@@ -36,7 +37,8 @@ import { LoginResendOTPComponent } from './login-resend-otp/login-resend-otp.com
 		ForgotPasswordComponent,
 		LoginThroughAdminComponent,
 		LoginLayoutComponent,
-		LoginResendOTPComponent
+		LoginResendOTPComponent,
+		QRZooBookingComponent
 	]
 })
 export class AuthModule { }
