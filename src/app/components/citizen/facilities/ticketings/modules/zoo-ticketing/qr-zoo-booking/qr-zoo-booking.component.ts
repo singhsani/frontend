@@ -29,6 +29,7 @@ export class QRZooBookingComponent implements OnInit {
   Charge:number;
   isDisable = false;
   isPanCardVisibleIdNumber = false;
+  
   /**
    * language translate key.
   */
