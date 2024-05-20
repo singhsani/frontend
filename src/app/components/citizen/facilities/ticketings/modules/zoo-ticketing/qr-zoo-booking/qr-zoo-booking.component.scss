@@ -1,0 +1,265 @@
+
+
+@import "src/assets/scss/variables";
+
+/* Structure */
+.example-container { position: relative; }
+.example-table-container { position: relative; max-height: 400px; overflow: auto; }
+table { width: 100%; }
+.example-loading-shade { position: absolute; top: 0; left: 0; bottom: 56px; right: 0; background: rgba(0, 0, 0, 0.15); z-index: 1; display: flex; align-items: center; justify-content: center; }
+.example-rate-limit-reached { color: #980000; max-width: 360px; text-align: center; padding-top: 110px; }
+/* Column Widths */
+
+.mat-column-number, .mat-column-state { max-width: 64px; }
+.mat-column-created { max-width: 124px; }
+.textjson { color: #9cdcfe; background: #212529; overflow: scroll; height: 400px; width: 100%; }
+.remarks { color: #9cdcfe; background: #212529; overflow: scroll; height: 250px; width: 100%; font-size: 14px;}
+
+
+
+/***  NEW my Application  ***/
+.borderOne {box-shadow:none !important; border:1px solid #b9b9b9;}
+.myTicketPricingTabel {
+    mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat-header-cell {border-color: #b9b9b9;}
+
+    .mat-cell {font-size:17px; color:#000; padding-left: 5px; padding-right: 5px;}
+    .mat-header-cell {font-size:17px; color:#000; padding-left: 5px; padding-right: 5px; border: 1px solid #b9b9b9;}
+    .mat-column-id {max-width: 70px; text-align: center;}
+    .mat-column-fileNumber {min-width: 220px;}
+    // .mat-column-applicantName {width: 250px;}
+    // .mat-column-applicantName {width: 250px;}
+     .mat-column-dateOfApplication {max-width: 100px;}
+    // .mat-column-serviceType {width: 220px;}
+    .mat-column-fileStatus {max-width: 145px; /*width: 100px; justify-content: center;*/}
+    .mat-column-action {max-width: 60px; padding-right: 0;
+        .mat-icon-button {background:#fff;margin:2px 5px 2px 0; border: 1px solid $colorBlue; width:28px; height:28px; line-height: normal;
+             .mat-icon-button .mat-icon, .mat-icon-button i {line-height: 22px;}
+             .mat-icon {font-size: 17px;}
+             &:hover {background:$colorBlue;
+                .mat-icon {color:#fff;}
+             }
+             &:disabled {background:#fff;
+                .mat-icon {color:#bdbdbd;}
+             }
+        }
+    }
+    .actionBtn {min-width: 36px !important; border-radius:50%; padding: 0;
+        .mat-icon {color: rgb(68, 55, 55);}
+    }
+}
+
+.mat-table .text-label.badge {color: #fff; padding: 7px 5px 7px 18px; min-width: 100px; position: relative; text-align: left;}
+.mat-table .text-label.badge::before {content: " "; position: absolute; top: 50%; left: 4px; margin-top: -4px; width: 6px; height: 6px; border-radius:50%; background: #000;}
+.mat-table .text-label.badge:hover::before {margin-top: -5px; width: 8px; height: 8px;}
+.mat-table .text-label.badge-primary, .mat-table .text-label.primary {color:$colorBlue; border: 0px solid $colorBlue; background: none;
+    &:hover {background: #fff; color:$colorBlue;}
+    &::before {background: $colorBlue;}
+}
+
+.mat-table .text-label.badge-danger, .mat-table .text-label.rejected {color:#ed5d7b; border: 0px solid #ed5d7b; background: none;
+    &:hover {background: #fff; color:#ed5d7b}
+    &::before {background: #ed5d7b;}
+}
+
+.mat-table .text-label.badge-success, .mat-table .text-label.submited {color:#78da71; border: 0px solid #78da71; background: none;
+    &:hover {background: #fff; color:#78da71}
+    &::before {background: #78da71;}
+}
+
+.mat-table .text-label.badge-warning, .mat-table .text-label.draft {color:#fbb03b; border: 0px solid #fbb03b; background: none;
+    &:hover {background: #fff; color:#fbb03b}
+    &::before {background: #fbb03b;}
+ }
+
+.mat-table .text-label.badge-info, .mat-table .text-label.file {color:#17a2b8; border: 0px solid #17a2b8; background: none;
+    &:hover {background: #fff; color:#17a2b8}
+    &::before {background: #17a2b8;}
+}
+
+
+
+.mat-table .text-label.badge-secondary {border: 1px solid #6c757d; color: #6c757d;}
+.mat-table .text-label.badge-success {border: 1px solid #22b573; color: #22b573;}
+.mat-table .text-label.badge-dark {border: 1px solid #343a40; color: #343a40;}
+
+
+// .example-container {
+//     display: flex;
+//     flex-direction: column;
+//     max-height: 500px;
+//     min-width: 300px;
+//   }
+
+  .mat-table {
+    overflow: auto;
+    max-height: 500px;
+  }
+
+  .mobile-label, .mobile-label1 {
+    display: none;
+  }
+
+@media(max-width: 767px) {
+    .myTicketPricingTabel {
+        .mat-cell {padding-left: 0; max-width: inherit;}
+        .mat-cell:first-child {padding-left: 0px;}
+        .mat-cell:last-child {padding-right: 0px;}
+        .mat-column-id {max-width:inherit;}
+        .mat-column-fileStatus {justify-content: left;}
+        .mobile-label {
+            width: 120px;
+            min-width: 120px;
+            display: inline-block;
+            font-weight: bold;
+        }
+        .mobile-label1 {
+            width: auto;
+            padding-right: 10px;
+            display: inline-block;
+            font-weight: bold;
+        }
+        .row-inside {
+            display: inline-block;
+            font-weight: bold;
+            padding-left: 4px;
+        }
+        .mat-header-row {
+            display: none;
+        }
+        .mat-row {
+            flex-direction: column;
+            align-items: start;
+            padding: 8px 10px;
+        }
+        .fullWidth {
+            width: 100% !important;
+            font-size: 12px !important;
+        }
+        .mat-icon-button {
+            margin-bottom: 5px;
+        }
+        .mat-column-fileStatus {
+            width: inherit;
+            text-align: left;
+            padding: 0 0px;
+        }
+    }
+
+
+    .mat-footer-row::after, .mat-header-row::after, .mat-row::after {min-height: initial !important;}
+
+}
+
+
+.middle-align {
+    vertical-align: middle;
+}
+
+
+.row {
+  margin: 0;
+}
+
+.fsLarge {
+    font-size: small;
+}
+
+.iconSign {
+    font-size: 45px;
+    color: black
+}
+.p-5{
+    margin-top: -50px ;
+    height: 596px
+}
+.wt{
+    width: 98%;
+}
+
+
+.mt40{
+    margin-top: 40px;
+}
+
+.cardBox{
+    .pageTitle{
+        margin-bottom: 7px;
+    }    
+    .guideline-intro {
+        font-size: 18px;
+    }
+    .note{
+        font-size: 18px;
+        line-height: 1.5;
+    }
+    .ticketDetails{
+        text-align: center;
+        padding-bottom: 8px;
+        font-size: 24px;
+        margin-bottom: 0px;
+    }
+    table, .myTicketPricingTabel{
+        .mat-header,.fullWidth, mat-cell, mat-footer-cell, mat-header-cell {
+            border: 1px solid #b9b9b9;
+            display: block;
+            padding: 8px;
+            padding-top: 13px;
+        }
+    }
+
+  table td {
+    vertical-align: middle !important;
+  }
+  .rate-details {
+      display: flex;
+
+      .width-size-lg {
+          width: 257px;
+          padding-right: 12px;
+      }
+
+      .width-size-ml {
+          width: 120px;
+      }
+
+      .add-button-left {
+          .Add-button {
+              width: 110px;
+          }
+      }
+  }
+}
+
+@media(max-width: 767px) {
+    .cardBox{
+        .rate-details{
+            display: grid;
+            .width-size-lg {
+                width: 100%;
+            }
+      
+            .width-size-ml {
+                width: 100%;
+                text-align: right;
+            }
+        }
+    }
+}
+
+.width-size-count {
+    width: 30%;
+    text-align: right;
+}
+
+.countVisitors {
+    max-width: 100px !important;
+}
+.alignment{
+    width: auto;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
