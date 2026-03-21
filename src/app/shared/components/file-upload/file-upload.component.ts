@@ -234,6 +234,7 @@ export class FileUploadComponent implements OnInit {
 					formData.append('file', this.currentFileUpload);
 
 					if(this.uploadModel.dmsEnabled){
+						debugger
 						this.uploadFileService.processFileToDMSServer(formData, setProgressBar => {
 							this.progress.percentage = setProgressBar;
 						}, successResponse => {
